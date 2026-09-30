@@ -1310,7 +1310,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 <!-- 列表视图（卡片铺满宽度；底部留出悬浮按钮的空间） -->
-<div v-else class="absolute inset-0 overflow-y-auto hide-scroll px-4 pt-4 pb-52" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-list">
+<div v-else class="absolute inset-0 overflow-y-auto hide-scroll px-4 py-4" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-list">
 <div v-if="chargeLoading" class="text-[13px] text-[#999] text-center pt-12">设备加载中…</div>
 <template v-else>
 <kv-card v-for="(d,i) in chargeDevices" :key="'cglst-'+i" label-width="5rem" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'charge-list-item-'+i" data-cp @click="openChargeDevice(d)">
@@ -1325,7 +1325,7 @@ body.host-single-m #root-user{display:none}
 </template>
 </div>
 <!-- 视图切换 + 定位（地图/列表两视图共用） -->
-<div class="absolute right-3 bottom-[96px] z-[25] flex flex-col gap-2.5" data-od-id="charge-side-actions">
+<div class="absolute right-3 top-1/2 -translate-y-1/2 z-[25] flex flex-col gap-2.5" data-od-id="charge-side-actions">
 <div data-cp @click="chargeToggleView" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="charge-view-btn">
 <span v-html="luci(chargeView==='map'?'list':'map','w-5 h-5')"></span>
 </div>
