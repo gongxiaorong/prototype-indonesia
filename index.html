@@ -1297,7 +1297,7 @@ body.host-single-m #root-user{display:none}
 </svg>
 <div v-for="(d,i) in chargeDevices" :key="'cgd-'+i" data-cp class="absolute z-[15] -translate-x-1/2 -translate-y-full cursor-pointer active:opacity-80 transition-transform" :style="{left:d.x+'%',top:d.y+'%'}" :data-od-id="'charge-device-'+i" @click="openChargeDevice(d)">
 <div class="flex flex-col items-center">
-<div class="mb-1 px-2 py-0.5 rounded-md text-[11px] font-medium text-[#111] bg-white whitespace-nowrap" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.1)">{{ d.no }} · {{ d.idle }}/{{ d.ports }}</div>
+<div class="mb-1 px-2 py-0.5 rounded-md text-[11px] font-medium text-[#111] bg-white whitespace-nowrap" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.1)">{{ d.no }} · {{ d.status }}</div>
 <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background:#2B3F5F;box-shadow:0 2px 10px rgba(43,63,95,.4)">
 <span v-html="luci('plug-zap','w-5 h-5')"></span>
 </div>
@@ -1321,7 +1321,7 @@ body.host-single-m #root-user{display:none}
 <div class="flex-1 min-w-0">
 <div class="flex items-center gap-2">
 <span class="text-[15px] font-semibold text-[#111]">{{ d.no }}</span>
-<span class="text-[11px] font-semibold px-1.5 py-0.5 rounded shrink-0" :style="d.idle?{background:'#E8F7EE',color:'#17A34A'}:{background:'#F0F0F0',color:'#999'}">{{ d.idle?'空闲 '+d.idle+'/'+d.ports:'已满' }}</span>
+<span class="text-[11px] font-semibold px-1.5 py-0.5 rounded shrink-0" :style="d.status==='空闲'?{background:'#E8F7EE',color:'#17A34A'}:{background:'#F0F0F0',color:'#999'}">{{ d.status }}</span>
 </div>
 <div class="text-[12px] text-[#999] truncate mt-1">{{ d.addr }}</div>
 <div class="text-[12px] text-[#666] mt-1">距您 <span class="font-mono text-[#111]">{{ d.dist }}</span> 米 · <span class="font-semibold" style="color:#FF6A00">{{ fmtRp(d.price,0) }}</span> / 度</div>
@@ -1352,7 +1352,7 @@ body.host-single-m #root-user{display:none}
 <div class="rounded-xl px-4 py-3.5 mb-3" style="background:#F6F7F9">
 <div class="flex items-center justify-between mb-1">
 <span class="text-[15px] font-semibold text-[#111]">{{ chargeDevice?chargeDevice.no:'' }}</span>
-<span class="text-[12px] font-semibold" :style="{color:chargeDevice&&chargeDevice.idle?'#17A34A':'#999'}">{{ chargeDevice?(chargeDevice.idle?'空闲 '+chargeDevice.idle+' / '+chargeDevice.ports:'已满'):'' }}</span>
+<span class="text-[12px] font-semibold" :style="{color:chargeDevice&&chargeDevice.status==='空闲'?'#17A34A':'#999'}">{{ chargeDevice?chargeDevice.status:'' }}</span>
 </div>
 <div class="text-[13px] text-[#666] leading-relaxed">{{ chargeDevice?chargeDevice.addr:'' }}</div>
 </div>
@@ -6571,13 +6571,13 @@ function locFocusVehicle(){locFocus.value='device'}
 function locRingDevice(){if(locRinging.value)return;locRinging.value=true;setTimeout(()=>{locRinging.value=false},1800)}
 function locOpenNav(){}
 /* ══ 充电服务（印尼版：地图找桩 → 点设备弹窗看地址/定价 → 拉起外部导航；底部扫码充电） ══
-   两轮车充电设备为演示数据；配色沿用品牌蓝 --accent，定价随全局货币切换（fmtRp）。 */
+   两轮车充电设备为演示数据（每台设备仅 1 个充电口，状态取 空闲/使用）；配色沿用品牌蓝 --accent，定价随全局货币切换（fmtRp）。 */
 const CHARGE_DEVICES=[
-  {no:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:2500,serviceFee:500,ports:6,idle:4,x:58,y:34,dist:180},
-  {no:'CHG-A02',addr:'Sudirman 大厦东侧非机动车停放区',price:2500,serviceFee:500,ports:8,idle:0,x:76,y:50,dist:320},
-  {no:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:2200,serviceFee:400,ports:4,idle:3,x:44,y:72,dist:460},
-  {no:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:2800,serviceFee:600,ports:6,idle:2,x:22,y:28,dist:540},
-  {no:'CHG-A05',addr:'Plaza Senayan 3 号门非机动车区',price:2500,serviceFee:500,ports:10,idle:6,x:66,y:80,dist:680}
+  {no:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:2500,serviceFee:500,status:'空闲',x:58,y:34,dist:180},
+  {no:'CHG-A02',addr:'Sudirman 大厦东侧非机动车停放区',price:2500,serviceFee:500,status:'使用',x:76,y:50,dist:320},
+  {no:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:2200,serviceFee:400,status:'空闲',x:44,y:72,dist:460},
+  {no:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:2800,serviceFee:600,status:'空闲',x:22,y:28,dist:540},
+  {no:'CHG-A05',addr:'Plaza Senayan 3 号门非机动车区',price:2500,serviceFee:500,status:'使用',x:66,y:80,dist:680}
 ];
 const showChargePage=ref(false),chargeLoading=ref(false),chargeDeviceSheet=ref(false),chargeDevice=ref(null);
 const chargeDevices=ref([]);
