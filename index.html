@@ -2679,20 +2679,16 @@ body.host-single-m #root-user{display:none}
 <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" style="background:#F0F0F0" data-page-node-id="4YxbwVbgcgeKGCbcAxunle"><span v-html="luci('credit-card','w-8 h-8 text-[#BBB]')" data-page-node-id="QRGdC837q89B6Ku5poAEcF"></span></div>
 <div class="text-[15px] font-semibold text-[#333] mb-1.5" data-page-node-id="cJ6cu2YPJpY8rRSdmmL3er">暂无订单</div>
 </div>
-<template v-for="o in currentRechargeList" :key="o.orderNo" data-page-node-id="Mbl0DMDdGLyRHhhJEWscEx">
-<div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openRechargeOrderFromList(o)" data-page-node-id="cxVUFNN1TlaHfKO5SWO2le">
-<div class="flex items-center justify-between mb-2" data-page-node-id="gQkKRvFYhImF3uUHv9DwI5">
-<span class="text-[13px] font-semibold text-[#333] truncate pr-2" data-page-node-id="HKWFme6J7PZDu8hT2fqQQh">{{ o.orderNo }}</span>
-<span class="text-[14px] font-semibold" :style="'color:'+rechargeStatusTag(o.payStatus).color" data-page-node-id="GujuqiijIR10E4Cu3g5Bbj">{{ rechargeStatusTag(o.payStatus).text }}</span>
-</div>
-<div class="flex items-center justify-between" data-page-node-id="2v7l7acTxJyxUxIxRJVM4m">
-<span class="text-[13px] text-[#999]" data-page-node-id="3U0fcQXHWRLMApVh3j2QZK">{{ o.createTime }}</span>
-<span class="text-[12px] text-[#999]" data-page-node-id="1fk9GDjb0YU34UqrhWHDDE">{{ rechargeChannelText(o.payChannel) }}</span>
-</div>
-<div class="pt-2 space-y-1.5" data-page-node-id="B8mRD6AdAhh1SM7iEUXKUL">
-<div v-if="o.amount" class="flex items-center justify-between" data-page-node-id="p9yXfKwgUOSDq975zi2CCL"><span class="text-[12px] text-[#999]" data-page-node-id="RDrDNUDrBiGyB1GRGdqLVg">充值金额</span><span class="text-[15px] font-semibold" style="color:#FF6A00" data-page-node-id="HxMZCNsMHLEw39jVyk6XkD">{{ fmtRp(o.amount) }}</span></div>
-<div v-if="o.giftAmount" class="flex items-center justify-between" data-page-node-id="Phz7y2Wu7VuAI8hywHzkjG"><span class="text-[12px] text-[#999]" data-page-node-id="iVMe1wJf57dNl7atsvjJeO">赠送金额</span><span class="text-[14px] font-semibold" style="color:#FF6A00" data-page-node-id="tNsN2Eyhivev9kDvntzJRh">{{ fmtRp(o.giftAmount) }}</span></div>
-</div>
+<template v-for="(o,i) in currentRechargeList" :key="o.orderNo">
+<div data-cp @click="openRechargeOrderFromList(o)" :data-od-id="'recharge-order-item-'+i">
+<kv-card label-width="6rem" class="mb-3">
+<template #title>{{ o.orderNo }}</template>
+<template #extra><span class="text-[12px] font-semibold" :style="{color:rechargeStatusTag(o.payStatus).color}">{{ rechargeStatusTag(o.payStatus).text }}</span></template>
+<kv-row label="充值金额" :value="fmtRp(o.amount)" value-class="font-semibold !text-[#FF6A00]"></kv-row>
+<kv-row v-if="o.giftAmount" label="赠送金额" :value="fmtRp(o.giftAmount)" value-class="font-semibold !text-[#FF6A00]"></kv-row>
+<kv-row label="支付渠道" :value="rechargeChannelText(o.payChannel)"></kv-row>
+<kv-row label="创建时间" :value="o.createTime"></kv-row>
+</kv-card>
 </div>
 </template>
 </div>
