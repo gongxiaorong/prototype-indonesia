@@ -951,7 +951,7 @@ body.host-single-m #root-user{display:none}
 </div>
 <div v-if="!searchQ.trim()" class="sp-sec">附近换电站点</div>
 <div v-if="!searchQ.trim()" class="sp-loc">
-<span class="nav" v-html="luci('navigation','w-4 h-4')"></span>
+<span class="nav" v-html="luci('crosshair','w-4 h-4')"></span>
 <span class="tx"><em>{{ locReady ? locNearby : '未获取到您的位置信息' }}</em></span>
 <span v-if="locReady" class="re" data-cp @click="relocate()" data-od-id="search-relocate">重新定位</span>
 <span v-else class="re" data-cp @click="goEnableLoc()" data-od-id="search-relocate">去开启</span>
@@ -1346,7 +1346,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="absolute right-3 top-1/2 -translate-y-1/2 z-[25] flex flex-col gap-2.5">
-<div class="w-11 h-11 rounded-full bg-white flex items-center justify-center" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F"><span v-html="luci('navigation','w-5 h-5')"></span></div>
+<div class="w-11 h-11 rounded-full bg-white flex items-center justify-center" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F"><span v-html="luci('crosshair','w-5 h-5')"></span></div>
 <div class="w-11 h-11 rounded-full bg-white flex items-center justify-center" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F"><span v-html="luci('battery-charging','w-5 h-5')"></span></div>
 </div>
 </div>
