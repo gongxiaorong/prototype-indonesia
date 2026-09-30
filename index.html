@@ -1367,10 +1367,7 @@ body.host-single-m #root-user{display:none}
 <kv-row label="最大充电时长" :value="chargeDevice?chargeDevice.maxMinutes+' 分钟':'-'"></kv-row>
 </kv-card>
 <div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="charge-order-duration">
-<div class="flex items-center justify-between mb-3">
-<div class="text-[14px] font-semibold text-[#111]">充电时长</div>
-<div class="text-[13px] text-[#666]">最大充电时长 {{ chargeMaxMinutes }} 分钟</div>
-</div>
+<div class="text-[14px] font-semibold text-[#111] mb-3">充电时长</div>
 <div class="conf-pay-row mb-3" v-long-pan>
 <div v-for="(o,i) in chargeDurationOptions" :key="'cd-'+i" class="conf-pay" :class="chargeEffectiveMinutes===o?'is-selected':''" data-cp @click="chargePickDuration(o)" :data-od-id="'charge-duration-opt-'+i">{{ fmtChargeMinutes(o) }}</div>
 </div>
