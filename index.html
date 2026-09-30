@@ -6557,10 +6557,10 @@ function locOpenNav(){}
    两轮车充电设备为演示数据（每台设备仅 1 个充电口，状态取 空闲/使用）；配色沿用品牌蓝 --accent，定价随全局货币切换（fmtRp）。 */
 const CHARGE_DEVICES=[
   {no:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:245,status:'空闲',x:58,y:34,dist:180},
-  {no:'CHG-A02',addr:'Sudirman 大厦东侧非机动车停放区',price:245,status:'使用',x:76,y:50,dist:320},
+  {no:'CHG-A02',addr:'Sudirman 大厦东侧非机动车停放区',price:245,status:'使用中',x:76,y:50,dist:320},
   {no:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:245,status:'空闲',x:44,y:72,dist:460},
   {no:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:245,status:'空闲',x:22,y:28,dist:540},
-  {no:'CHG-A05',addr:'Plaza Senayan 3 号门非机动车区',price:245,status:'使用',x:66,y:80,dist:680}
+  {no:'CHG-A05',addr:'Plaza Senayan 3 号门非机动车区',price:245,status:'使用中',x:66,y:80,dist:680}
 ];
 const showChargePage=ref(false),chargeLoading=ref(false),chargeDeviceSheet=ref(false),chargeDevice=ref(null);
 const chargeDevices=ref([]);
