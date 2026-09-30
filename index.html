@@ -1759,23 +1759,14 @@ body.host-single-m #root-user{display:none}
 <div class="text-[15px] font-semibold text-[#333] mb-1.5">暂无订单</div>
 </div>
 <template v-for="(o,i) in currentChargeOrderList" :key="o.orderId">
-<div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openChargeOrderFromList(o)" :data-od-id="'charge-order-item-'+i">
-<div class="flex items-center justify-between mb-2">
-<span class="text-[13px] font-semibold text-[#333] truncate pr-2">{{ o.orderId }}</span>
-<span class="text-[14px] font-semibold" :style="'color:'+chargeStatusTag(o.status).color">{{ chargeStatusTag(o.status).text }}</span>
-</div>
-<div class="flex gap-3 mb-2">
-<div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0" style="background:#F6F7F9"><span v-html="luci('plug-zap','w-8 h-8 text-[#666]')"></span></div>
-<div class="flex-1 min-w-0">
-<div class="text-[14px] font-medium text-[#1A1A1A] truncate">{{ o.deviceNo }}</div>
-<div class="text-[12px] text-[#999] mt-0.5 truncate">{{ o.addr }}</div>
-<div class="text-[12px] text-[#999] mt-0.5 flex gap-1"><span class="text-[#bbb]">创建时间:</span><span class="truncate">{{ o.createdAt }}</span></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-2" style="border-top:1px solid #F0F0F0">
-<span class="text-[12px] text-[#999]">充电时长 {{ o.minutes }} 分钟</span>
-<span class="text-[15px] font-semibold shrink-0" style="color:#FF6A00">{{ fmtRp(o.amount,2) }}</span>
-</div>
+<div data-cp @click="openChargeOrderFromList(o)" :data-od-id="'charge-order-item-'+i">
+<kv-card label-width="6rem" class="mb-3">
+<template #title>{{ o.deviceNo }}</template>
+<template #extra><span class="text-[12px] font-semibold" :style="{color:chargeStatusTag(o.status).color}">{{ o.status }}</span></template>
+<kv-row label="充电时长" :value="o.minutes+' 分钟'"></kv-row>
+<kv-row label="订单金额" :value="fmtRp(o.amount,2)" value-class="font-semibold !text-[#FF6A00]"></kv-row>
+<kv-row label="创建时间" :value="o.createdAt"></kv-row>
+</kv-card>
 </div>
 </template>
 </div>
@@ -6746,19 +6737,19 @@ function commitChargeMinutes(e){
   if(e&&e.target)e.target.value=String(chargeEffectiveMinutes.value);
 }
 function chargePayLabel(){return chargePayType.value==='2c2p'?'2C2P':'钱包'}
-function confirmChargeOrder(){var d=chargeDevice.value;if(!d)return;if(chargePayType.value==='balance'){var need=chargeOrderAmount.value;if(!walletActive.value||walletActive.value.totalBalance<need){toast('钱包余额不足，请充值','warn');return}}chargeOrderInfo.value={orderId:'CG'+String(Date.now()).slice(-10),deviceNo:d.no,addr:d.addr,price:d.price,minutes:chargeEffectiveMinutes.value,amount:chargeOrderAmount.value,payType:chargePayLabel(),status:'待充电',createdAt:formatNow()};CHARGE_ORDERS.value.unshift(chargeOrderInfo.value);navSwap('chargeOrderDetail');toast('下单成功','success')}
+function confirmChargeOrder(){var d=chargeDevice.value;if(!d)return;if(chargePayType.value==='balance'){var need=chargeOrderAmount.value;if(!walletActive.value||walletActive.value.totalBalance<need){toast('钱包余额不足，请充值','warn');return}}chargeOrderInfo.value={orderId:'CG'+String(Date.now()).slice(-10),deviceNo:d.no,addr:d.addr,price:d.price,minutes:chargeEffectiveMinutes.value,amount:chargeOrderAmount.value,payType:chargePayLabel(),status:'已创建',createdAt:formatNow()};CHARGE_ORDERS.value.unshift(chargeOrderInfo.value);navSwap('chargeOrderDetail');toast('下单成功','success')}
 /* ══ 充电订单列表（我的 → 我的订单 → 充电订单）：数据 + 筛选 + 详情复用 charge-order-detail-page ══ */
 const showChargeOrderList=ref(false);
 const CHARGE_ORDERS=ref([
   {orderId:'CG202609280001',deviceNo:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:245,minutes:20,amount:4900,payType:'2C2P',status:'已完成',createdAt:'2026-09-28 14:20:00'},
   {orderId:'CG202609290002',deviceNo:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:245,minutes:30,amount:7350,payType:'钱包',status:'充电中',createdAt:'2026-09-29 09:10:00'},
-  {orderId:'CG202609300003',deviceNo:'CHG-A06',addr:'Taman Mini 景区北门停车区',price:245,minutes:15,amount:3675,payType:'2C2P',status:'待充电',createdAt:'2026-09-30 08:30:00'},
+  {orderId:'CG202609300003',deviceNo:'CHG-A06',addr:'Taman Mini 景区北门停车区',price:245,minutes:15,amount:3675,payType:'2C2P',status:'已创建',createdAt:'2026-09-30 08:30:00'},
   {orderId:'CG202609250004',deviceNo:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:245,minutes:5,amount:1225,payType:'2C2P',status:'已取消',createdAt:'2026-09-25 19:40:00'}
 ]);
-const chargeFilterTabs=['全部','待充电','充电中','已完成','已取消'];
+const chargeFilterTabs=['全部','已创建','充电中','已完成','已取消'];
 const chargeFilter=ref('all');
-const chargeStatusOrder={'待充电':1,'充电中':2,'已完成':3,'已取消':4};
-function chargeStatusTag(s){var m={'待充电':'#FF8C1B','充电中':'#1A82F4','已完成':'#17A34A','已取消':'#999'};return {text:s||'-',color:m[s]||'#999'}}
+const chargeStatusOrder={'已创建':1,'充电中':2,'已完成':3,'已取消':4};
+function chargeStatusTag(s){var m={'已创建':'#FF8C1B','充电中':'#1A82F4','已完成':'#17A34A','已取消':'#999'};return {text:s||'-',color:m[s]||'#999'}}
 const currentChargeOrderList=computed(function(){if(demoListEmpty.value)return[];var list=CHARGE_ORDERS.value.slice().sort(function(a,b){return (chargeStatusOrder[a.status]||99)-(chargeStatusOrder[b.status]||99)});return chargeFilter.value==='all'?list:list.filter(function(o){return o.status===chargeFilter.value})});
 function openChargeOrderList(){chargeFilter.value='all';navOpen('chargeOrderList')}
 function setChargeFilter(v){chargeFilter.value=v;showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false},400)}
