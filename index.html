@@ -1324,7 +1324,7 @@ body.host-single-m #root-user{display:none}
 <span class="text-[11px] font-semibold px-1.5 py-0.5 rounded shrink-0" :style="d.status==='空闲'?{background:'#E8F7EE',color:'#17A34A'}:{background:'#F0F0F0',color:'#999'}">{{ d.status }}</span>
 </div>
 <div class="text-[12px] text-[#999] truncate mt-1">{{ d.addr }}</div>
-<div class="text-[12px] text-[#666] mt-1">距您 <span class="font-mono text-[#111]">{{ d.dist }}</span> 米 · <span class="font-semibold" style="color:#FF6A00">{{ fmtRp(d.price,0) }}</span> / 度</div>
+<div class="text-[12px] text-[#666] mt-1">距您 <span class="font-mono text-[#111]">{{ d.dist }}</span> 米 · <span class="font-semibold" style="color:#FF6A00">{{ fmtRp(d.price,0) }}</span> / 分钟</div>
 </div>
 <span class="shrink-0" style="color:#C9C9C9" v-html="luci('chevron-right','w-4 h-4')"></span>
 </div>
@@ -1348,22 +1348,13 @@ body.host-single-m #root-user{display:none}
 
 <!-- 充电设备弹窗（BottomSheet：设备地址 + 充电定价 + 导航拉起） -->
 <bottom-sheet :open="chargeDeviceSheet" title="设备详情" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
-<div class="px-4 pb-1" data-od-id="charge-device-body">
-<div class="rounded-xl px-4 py-3.5 mb-3" style="background:#F6F7F9">
-<div class="flex items-center justify-between mb-1">
-<span class="text-[15px] font-semibold text-[#111]">{{ chargeDevice?chargeDevice.no:'' }}</span>
-<span class="text-[12px] font-semibold" :style="{color:chargeDevice&&chargeDevice.status==='空闲'?'#17A34A':'#999'}">{{ chargeDevice?chargeDevice.status:'' }}</span>
-</div>
-<div class="text-[13px] text-[#666] leading-relaxed">{{ chargeDevice?chargeDevice.addr:'' }}</div>
-</div>
-<div class="rounded-xl px-4 py-3.5 mb-3" style="background:#F6F7F9">
-<div class="text-[12px] text-[#999] mb-1">充电定价</div>
-<div class="flex items-baseline gap-1">
-<span class="text-[20px] font-bold" style="color:#FF6A00">{{ chargeDevice?fmtRp(chargeDevice.price,0):'-' }}</span>
-<span class="text-[12px] text-[#999]">/ 度</span>
-</div>
-<div class="text-[12px] text-[#999] mt-1.5">服务费 {{ chargeDevice?fmtRp(chargeDevice.serviceFee,0):'-' }} / 度 · 充满自动断电</div>
-</div>
+<kv-card divider label-width="5rem" class="mx-4 mb-3" data-od-id="charge-device-card">
+<kv-row label="设备编号" :value="chargeDevice?chargeDevice.no:'-'" :copyable="!!chargeDevice" @copy="t=>copyText(t,'设备编号')"></kv-row>
+<kv-row label="状态" :value="chargeDevice?chargeDevice.status:'-'" :value-style="chargeDevice&&chargeDevice.status==='空闲'?{color:'#17A34A'}:{color:'#999'}"></kv-row>
+<kv-row label="地址" :value="chargeDevice?chargeDevice.addr:'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="充电费用" :value="fmtRp(chargeDevice?chargeDevice.price:0,0)+' / 分钟'"></kv-row>
+</kv-card>
+<div class="px-4 pb-1">
 <button data-cp @click="openChargeNav" class="w-full h-12 rounded-xl text-white text-[15px] font-semibold cursor-pointer active:opacity-90 transition-opacity flex items-center justify-center gap-1.5" style="background:var(--accent);border:0" data-od-id="charge-nav-btn">
 <span v-html="luci('navigation','w-4 h-4')"></span><span>导航前往</span>
 </button>
@@ -6573,11 +6564,11 @@ function locOpenNav(){}
 /* ══ 充电服务（印尼版：地图找桩 → 点设备弹窗看地址/定价 → 拉起外部导航；底部扫码充电） ══
    两轮车充电设备为演示数据（每台设备仅 1 个充电口，状态取 空闲/使用）；配色沿用品牌蓝 --accent，定价随全局货币切换（fmtRp）。 */
 const CHARGE_DEVICES=[
-  {no:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:2500,serviceFee:500,status:'空闲',x:58,y:34,dist:180},
-  {no:'CHG-A02',addr:'Sudirman 大厦东侧非机动车停放区',price:2500,serviceFee:500,status:'使用',x:76,y:50,dist:320},
-  {no:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:2200,serviceFee:400,status:'空闲',x:44,y:72,dist:460},
-  {no:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:2800,serviceFee:600,status:'空闲',x:22,y:28,dist:540},
-  {no:'CHG-A05',addr:'Plaza Senayan 3 号门非机动车区',price:2500,serviceFee:500,status:'使用',x:66,y:80,dist:680}
+  {no:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:245,status:'空闲',x:58,y:34,dist:180},
+  {no:'CHG-A02',addr:'Sudirman 大厦东侧非机动车停放区',price:245,status:'使用',x:76,y:50,dist:320},
+  {no:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:245,status:'空闲',x:44,y:72,dist:460},
+  {no:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:245,status:'空闲',x:22,y:28,dist:540},
+  {no:'CHG-A05',addr:'Plaza Senayan 3 号门非机动车区',price:245,status:'使用',x:66,y:80,dist:680}
 ];
 const showChargePage=ref(false),chargeLoading=ref(false),chargeDeviceSheet=ref(false),chargeDevice=ref(null);
 const chargeDevices=ref([]);
