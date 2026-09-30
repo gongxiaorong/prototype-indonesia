@@ -1310,27 +1310,20 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 <!-- 列表视图（卡片铺满宽度；底部留出悬浮按钮的空间） -->
-<div v-else class="absolute inset-0 overflow-y-auto hide-scroll px-4 pt-4 pb-24" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-list">
+<div v-else class="absolute inset-0 overflow-y-auto hide-scroll px-4 pt-4 pb-52" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-list">
 <div v-if="chargeLoading" class="text-[13px] text-[#999] text-center pt-12">设备加载中…</div>
 <template v-else>
-<div v-for="(d,i) in chargeDevices" :key="'cglst-'+i" data-cp @click="openChargeDevice(d)" class="bg-white rounded-2xl px-4 py-3.5 mb-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" :data-od-id="'charge-list-item-'+i">
-<div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style="background:#EEF4FF;color:#2B3F5F">
-<span v-html="luci('plug-zap','w-6 h-6')"></span>
-</div>
-<div class="flex-1 min-w-0">
-<div class="flex items-center gap-2">
-<span class="text-[15px] font-semibold text-[#111]">{{ d.no }}</span>
-<span class="text-[11px] font-semibold px-1.5 py-0.5 rounded shrink-0" :style="d.status==='空闲'?{background:'#E8F7EE',color:'#17A34A'}:{background:'rgba(220,38,38,.1)',color:'#DC2626'}">{{ d.status }}</span>
-</div>
-<div class="text-[12px] text-[#999] truncate mt-1">{{ d.addr }}</div>
-<div class="text-[12px] text-[#666] mt-1">距您 <span class="font-mono text-[#111]">{{ d.dist }}</span> 米 · <span class="font-semibold" style="color:#FF6A00">{{ fmtRp(d.price,0) }}</span> / 分钟</div>
-</div>
-<span class="shrink-0" style="color:#C9C9C9" v-html="luci('chevron-right','w-4 h-4')"></span>
-</div>
+<kv-card v-for="(d,i) in chargeDevices" :key="'cglst-'+i" label-width="5rem" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'charge-list-item-'+i" data-cp @click="openChargeDevice(d)">
+<kv-row label="设备编号" :value="d.no"></kv-row>
+<kv-row label="状态" :value="d.status" :value-style="d.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}"></kv-row>
+<kv-row label="地址" :value="d.addr" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="距离" :value="d.dist+' 米'"></kv-row>
+<kv-row label="充电费用" :value="fmtRp(d.price,0)+' / 分钟'"></kv-row>
+</kv-card>
 </template>
 </div>
 <!-- 视图切换 + 定位（地图/列表两视图共用） -->
-<div class="absolute right-3 top-1/2 -translate-y-1/2 z-[25] flex flex-col gap-2.5" data-od-id="charge-side-actions">
+<div class="absolute right-3 z-[25] flex flex-col gap-2.5 transition-all duration-300" :style="chargeView==='map'?{top:'50%',transform:'translateY(-50%)'}:{bottom:'96px'}" data-od-id="charge-side-actions">
 <div data-cp @click="chargeToggleView" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="charge-view-btn">
 <span v-html="luci(chargeView==='map'?'list':'map','w-5 h-5')"></span>
 </div>
@@ -1353,6 +1346,7 @@ body.host-single-m #root-user{display:none}
 <kv-row label="地址" align="top">
 <template #value><div class="flex items-start justify-end gap-2"><span class="min-w-0 whitespace-normal break-words">{{ chargeDevice?chargeDevice.addr:'-' }}</span><span data-cp @click="openChargeNav" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" data-od-id="charge-nav-btn"><span v-html="luci('navigation','w-3.5 h-3.5')" style="color:#FF6A00"></span></span></div></template>
 </kv-row>
+<kv-row label="距离" :value="chargeDevice?chargeDevice.dist+' 米':'-'"></kv-row>
 <kv-row label="充电费用" :value="fmtRp(chargeDevice?chargeDevice.price:0,0)+' / 分钟'"></kv-row>
 </kv-card>
 </bottom-sheet>
