@@ -1267,7 +1267,7 @@ body.host-single-m #root-user{display:none}
 <div class="flex-1 min-w-0" data-page-node-id="eKi9HnwsGUHzGmtrWhrJoS">
 <div class="text-[15px] font-semibold text-[#111] leading-snug" data-page-node-id="JrSbwiT9lX2MnKQISz8QpE">{{ locAddressFull }}</div>
 <div class="mt-1.5 flex items-center gap-2.5 text-[12px] text-[#6B6B6B]" data-page-node-id="Z0hWmbzXL3Wxyq5J8AmVoI">
-<span data-page-node-id="cIzehhD9yLcp0rkE7GJcHE">距您 <span class="font-semibold text-[#111] font-mono" data-page-node-id="bEkZTLlMEVwJ32ehcCZ6KQ">{{ locDistM }}</span> 米</span>
+<span data-page-node-id="cIzehhD9yLcp0rkE7GJcHE">距您 <span class="font-semibold text-[#111] font-mono" data-page-node-id="bEkZTLlMEVwJ32ehcCZ6KQ">{{ locDistM }}</span>m</span>
 <span class="w-px h-3 bg-[#E5E5E5]" data-page-node-id="rNA51txFzEXzxVhuIvB7Yo"></span>
 <span data-page-node-id="JD7pVIBuVpNjKd1P2PvaPW">步行 <span class="font-semibold text-[#111] font-mono" data-page-node-id="2nCakoJmviNEGFGKmRmbzs">{{ locWalkMin }}</span> 分钟</span>
 </div>
@@ -3543,7 +3543,7 @@ body.host-single-m #root-user{display:none}
 <div class="flex-1 min-w-0">
 <div class="text-[15px] font-semibold text-[#111] leading-snug">{{ locAddressFull }}</div>
 <div class="mt-1.5 flex items-center gap-2.5 text-[12px] text-[#6B6B6B]">
-<span>距您 <span class="font-semibold text-[#111] font-mono">{{ locDistM }}</span> 米</span>
+<span>距您 <span class="font-semibold text-[#111] font-mono">{{ locDistM }}</span>m</span>
 <span class="w-px h-3 bg-[#E5E5E5]"></span>
 <span>步行 <span class="font-semibold text-[#111] font-mono">{{ locWalkMin }}</span> 分钟</span>
 </div>
@@ -4033,7 +4033,7 @@ body.host-single-m #root-user{display:none}
 <div class="flex-1 min-w-0">
 <div class="text-[15px] font-semibold text-[#111] leading-snug">{{ battLocAddressFull }}</div>
 <div class="mt-1.5 flex items-center gap-2.5 text-[12px] text-[#6B6B6B]">
-<span>距您 <span class="font-semibold text-[#111] font-mono">{{ battLocDistM }}</span> 米</span>
+<span>距您 <span class="font-semibold text-[#111] font-mono">{{ battLocDistM }}</span>m</span>
 <span class="w-px h-3 bg-[#E5E5E5]"></span>
 <span>步行 <span class="font-semibold text-[#111] font-mono">{{ battLocWalkMin }}</span> 分钟</span>
 </div>
@@ -6648,8 +6648,8 @@ const chargeDevices=ref([]);
 const chargeUserPt=ref({x:28,y:62});
 const chargeNearestDist=ref(0);
 const chargeView=ref('map');
-/* 距离格式化：≥1000 米换算为 km（如 1.2km），写法与门店卡片 2.4km 一致；不足 1km 保持「米」 */
-function fmtDist(m){return m>=1000?(m/1000).toFixed(1)+'km':m+' 米'}
+/* 距离格式化（全站统一英文单位）：≥1000 用 km（1.2km），不足 1km 用 m（180m）；写法与门店卡片 2.4km 一致 */
+function fmtDist(m){return m>=1000?(m/1000).toFixed(1)+'km':m+'m'}
 function buildChargeDevices(){chargeDevices.value=CHARGE_DEVICES.map(function(d){return Object.assign({},d)});chargeNearestDist.value=Math.min.apply(null,chargeDevices.value.map(function(d){return d.dist}))}
 function loadChargeData(){chargeLoading.value=true;chargeNearestDist.value=0;chargeDevices.value=[];setTimeout(function(){buildChargeDevices();chargeLoading.value=false},380)}
 function openChargePage(){navOpen('chargePage');closeChargeDevice();chargeView.value='map';loadChargeData()}
