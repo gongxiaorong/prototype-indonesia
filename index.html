@@ -2089,7 +2089,6 @@ body.host-single-m #root-user{display:none}
 <div class="conf-pay" :class="paymentType==='offline'?'is-selected':''" data-cp @click="paymentType='offline'" data-page-node-id="wgIaibQx2jWoBRsoqhVusX">线下支付</div>
 <div class="conf-pay" :class="paymentType==='balance'?'is-selected':''" data-cp @click="paymentType='balance'" data-page-node-id="2QJUxXdzIUzZ7ZHWMuzw0p"><span class="text-[11px]" data-page-node-id="hQ94HnoiCg6HxerZsdCLOH">钱包</span><span class="text-[10px] text-[#999]" data-page-node-id="WDWFVwhDxeRsfAUQNHcU0j">{{ walletActive?fmtRp(walletActive.totalBalance,2):'-' }}</span></div>
 </div>
-<div v-if="paymentType==='balance'&&walletActive&&walletActive.totalBalance<(payTarget?payTarget.amount:0)" class="text-[12px] mt-2" style="color:#DC2626" data-page-node-id="IMP8R2G889WX7I6E1C2cDu">余额不足，请选择其他支付方式或去充值</div>
 </div>
 <div class="px-5 shrink-0" data-page-node-id="4B1sFvXG3k6vCvftW8LRI2"><button data-cp @click="confirmPayment" :disabled="paymentBusy" class="w-full h-12 rounded-xl text-[15px] font-semibold text-white flex items-center justify-center disabled:opacity-50" style="background:var(--accent)" data-page-node-id="6nffh7by1EuxYgurgHYmLt">立即支付</button></div></bottom-sheet>
 
@@ -6707,7 +6706,7 @@ function commitChargeMinutes(e){
   if(e&&e.target)e.target.value=String(chargeEffectiveMinutes.value);
 }
 function chargePayLabel(){return chargePayType.value==='2c2p'?'2C2P':'钱包'}
-function confirmChargeOrder(){var d=chargeDevice.value;if(!d)return;chargeOrderInfo.value={orderId:'CG'+String(Date.now()).slice(-10),deviceNo:d.no,addr:d.addr,price:d.price,minutes:chargeEffectiveMinutes.value,amount:chargeOrderAmount.value,payType:chargePayLabel(),status:'待充电',createdAt:formatNow()};navSwap('chargeOrderDetail');toast('下单成功','success')}
+function confirmChargeOrder(){var d=chargeDevice.value;if(!d)return;if(chargePayType.value==='balance'){var need=chargeOrderAmount.value;if(!walletActive.value||walletActive.value.totalBalance<need){toast('钱包余额不足，请充值','warn');return}}chargeOrderInfo.value={orderId:'CG'+String(Date.now()).slice(-10),deviceNo:d.no,addr:d.addr,price:d.price,minutes:chargeEffectiveMinutes.value,amount:chargeOrderAmount.value,payType:chargePayLabel(),status:'待充电',createdAt:formatNow()};navSwap('chargeOrderDetail');toast('下单成功','success')}
 const trackStart=ref({year:2025,month:8,day:6,hour:17,min:8});
 const trackEnd=ref({year:2025,month:8,day:6,hour:17,min:28});
 const trackDraft=ref({year:2025,month:10,day:24,hour:13,min:52});
