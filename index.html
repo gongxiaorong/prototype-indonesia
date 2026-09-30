@@ -909,7 +909,7 @@ body.host-single-m #root-user{display:none}
 
 <!-- 充电服务入口（印尼版新增：进入充电地图找桩 + 扫码充电；与租赁入口等大卡，品牌蓝渐变） -->
 <div data-cp @click="openChargePage()" class="rounded-2xl overflow-hidden mb-4 cursor-pointer active:opacity-90 transition-opacity" style="height:110px;background:linear-gradient(135deg,#2B3F5F 0%,#3D5680 100%)" data-od-id="home-charge-entry">
-<div class="w-full h-full flex flex-col items-center justify-center gap-1.5"><span v-html="luci('plug-zap','w-12 h-12 text-white/90')"></span><span class="text-[15px] font-semibold text-white">充电服务</span></div>
+<div class="w-full h-full flex flex-col items-center justify-center gap-1.5"><span v-html="luci('plug-zap','w-12 h-12 text-white/40')"></span><span class="text-[13px] text-white/40">充电服务</span></div>
 </div>
 
 <div class="bg-white rounded-2xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="home-my-vehicles" data-page-node-id="pSece90YQgqAUxP9s2C8jg">
@@ -1327,7 +1327,7 @@ body.host-single-m #root-user{display:none}
 </page>
 
 <!-- 充电设备弹窗（BottomSheet：设备地址 + 充电定价 + 导航拉起） -->
-<bottom-sheet :open="chargeDeviceSheet" title="充电设备" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
+<bottom-sheet :open="chargeDeviceSheet" title="设备详情" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
 <div class="px-4 pb-1" data-od-id="charge-device-body">
 <div class="rounded-xl px-4 py-3.5 mb-3" style="background:#F6F7F9">
 <div class="flex items-center justify-between mb-1">
