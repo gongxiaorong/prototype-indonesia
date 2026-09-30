@@ -1361,8 +1361,9 @@ body.host-single-m #root-user{display:none}
 <div class="flex-1 overflow-y-auto hide-scroll px-4 pt-4 pb-28" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-order-scroll">
 <kv-card label-width="6rem" class="mb-3" data-od-id="charge-order-device-card">
 <template #title>{{ chargeDevice?chargeDevice.no:'-' }}</template>
-<template #extra><span class="text-[12px] font-semibold" style="color:#17A34A">{{ chargeDevice?chargeDevice.status:'' }}</span></template>
+<template #extra><span class="text-[12px] font-semibold" :style="chargeDevice&&chargeDevice.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}">{{ chargeDevice?chargeDevice.status:'' }}</span></template>
 <kv-row label="地址" :value="chargeDevice?chargeDevice.addr:'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="距离" :value="chargeDevice?fmtDist(chargeDevice.dist):'-'"></kv-row>
 <kv-row label="单价" :value="fmtRp(chargeDevice?chargeDevice.price:0,0)+' / 分钟'"></kv-row>
 <kv-row label="最大充电时长" :value="chargeDevice?chargeDevice.maxMinutes+' 分钟':'-'"></kv-row>
 </kv-card>
