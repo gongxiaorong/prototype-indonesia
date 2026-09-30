@@ -1313,13 +1313,14 @@ body.host-single-m #root-user{display:none}
 <div v-else class="absolute inset-0 overflow-y-auto hide-scroll px-4 py-4" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-list">
 <div v-if="chargeLoading" class="text-[13px] text-[#999] text-center pt-12">设备加载中…</div>
 <template v-else>
-<kv-card v-for="(d,i) in chargeDevices" :key="'cglst-'+i" label-width="5rem" class="mb-3" :data-od-id="'charge-list-item-'+i">
+<kv-card v-for="(d,i) in chargeDevices" :key="'cglst-'+i" label-width="6rem" class="mb-3" :data-od-id="'charge-list-item-'+i">
 <template #title>{{ d.no }}</template>
 <template #extra><span class="text-[12px] font-semibold" :style="d.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}">{{ d.status }}</span></template>
 <kv-row label="地址" align="top">
 <template #value><div class="flex items-start justify-end gap-2"><span class="min-w-0 whitespace-normal break-words">{{ d.addr }}</span><span data-cp @click.stop="openChargeNav" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" :data-od-id="'charge-list-nav-'+i"><span v-html="luci('navigation','w-3.5 h-3.5')" style="color:#FF6A00"></span></span></div></template>
 </kv-row>
 <kv-row label="距离" :value="d.dist+' 米'"></kv-row>
+<kv-row label="最大充电时长" :value="d.maxMinutes+' 分钟'"></kv-row>
 <kv-row label="单价" :value="fmtRp(d.price,0)+' / 分钟'"></kv-row>
 </kv-card>
 </template>
@@ -1342,13 +1343,14 @@ body.host-single-m #root-user{display:none}
 
 <!-- 充电设备弹窗（BottomSheet：设备地址 + 充电定价 + 导航拉起） -->
 <bottom-sheet :open="chargeDeviceSheet" title="设备详情" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
-<kv-card label-width="5rem" class="mx-4" data-od-id="charge-device-card">
+<kv-card label-width="6rem" class="mx-4" data-od-id="charge-device-card">
 <template #title>{{ chargeDevice?chargeDevice.no:'-' }}</template>
 <template #extra><span class="text-[12px] font-semibold" :style="chargeDevice&&chargeDevice.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}">{{ chargeDevice?chargeDevice.status:'' }}</span></template>
 <kv-row label="地址" align="top">
 <template #value><div class="flex items-start justify-end gap-2"><span class="min-w-0 whitespace-normal break-words">{{ chargeDevice?chargeDevice.addr:'-' }}</span><span data-cp @click="openChargeNav" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" data-od-id="charge-nav-btn"><span v-html="luci('navigation','w-3.5 h-3.5')" style="color:#FF6A00"></span></span></div></template>
 </kv-row>
 <kv-row label="距离" :value="chargeDevice?chargeDevice.dist+' 米':'-'"></kv-row>
+<kv-row label="最大充电时长" :value="chargeDevice?chargeDevice.maxMinutes+' 分钟':'-'"></kv-row>
 <kv-row label="单价" :value="fmtRp(chargeDevice?chargeDevice.price:0,0)+' / 分钟'"></kv-row>
 </kv-card>
 </bottom-sheet>
@@ -1357,10 +1359,11 @@ body.host-single-m #root-user{display:none}
 <page :open="showChargeOrder" :z="1910" :swipe-close="navBack" oid="charge-order-page" data-od-id="charge-order-page">
 <nav-bar title="充电下单" border-color="#E5E5E5" @back="navBack()"></nav-bar>
 <div class="flex-1 overflow-y-auto hide-scroll px-4 pt-4 pb-28" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-order-scroll">
-<kv-card label-width="5rem" class="mb-3" data-od-id="charge-order-device-card">
+<kv-card label-width="6rem" class="mb-3" data-od-id="charge-order-device-card">
 <template #title>{{ chargeDevice?chargeDevice.no:'-' }}</template>
 <template #extra><span class="text-[12px] font-semibold" style="color:#17A34A">{{ chargeDevice?chargeDevice.status:'' }}</span></template>
 <kv-row label="地址" :value="chargeDevice?chargeDevice.addr:'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="最大充电时长" :value="chargeDevice?chargeDevice.maxMinutes+' 分钟':'-'"></kv-row>
 <kv-row label="单价" :value="fmtRp(chargeDevice?chargeDevice.price:0,0)+' / 分钟'"></kv-row>
 </kv-card>
 <div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="charge-order-duration">
@@ -6633,11 +6636,11 @@ function locOpenNav(){}
 /* ══ 充电服务（印尼版：地图找桩 → 点设备弹窗看地址/定价 → 拉起外部导航；底部扫码充电） ══
    两轮车充电设备为演示数据（每台设备仅 1 个充电口，状态取 空闲/使用）；配色沿用品牌蓝 --accent，定价随全局货币切换（fmtRp）。 */
 const CHARGE_DEVICES=[
-  {no:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:245,status:'空闲',x:58,y:34,dist:180},
-  {no:'CHG-A02',addr:'Sudirman 大厦东侧非机动车停放区',price:245,status:'使用中',x:76,y:50,dist:320},
-  {no:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:245,status:'空闲',x:44,y:72,dist:460},
-  {no:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:245,status:'空闲',x:22,y:28,dist:540},
-  {no:'CHG-A05',addr:'Plaza Senayan 3 号门非机动车区',price:245,status:'使用中',x:66,y:80,dist:680}
+  {no:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:245,status:'空闲',maxMinutes:30,x:58,y:34,dist:180},
+  {no:'CHG-A02',addr:'Sudirman 大厦东侧非机动车停放区',price:245,status:'使用中',maxMinutes:30,x:76,y:50,dist:320},
+  {no:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:245,status:'空闲',maxMinutes:30,x:44,y:72,dist:460},
+  {no:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:245,status:'空闲',maxMinutes:30,x:22,y:28,dist:540},
+  {no:'CHG-A05',addr:'Plaza Senayan 3 号门非机动车区',price:245,status:'使用中',maxMinutes:30,x:66,y:80,dist:680}
 ];
 const showChargePage=ref(false),chargeLoading=ref(false),chargeDeviceSheet=ref(false),chargeDevice=ref(null);
 const chargeDevices=ref([]);
