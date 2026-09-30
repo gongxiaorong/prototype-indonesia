@@ -1297,11 +1297,10 @@ body.host-single-m #root-user{display:none}
 </svg>
 <div v-for="(d,i) in chargeDevices" :key="'cgd-'+i" data-cp class="absolute z-[15] -translate-x-1/2 -translate-y-full cursor-pointer active:opacity-80 transition-transform" :style="{left:d.x+'%',top:d.y+'%'}" :data-od-id="'charge-device-'+i" @click="openChargeDevice(d)">
 <div class="flex flex-col items-center">
-<div class="mb-1 px-2 py-0.5 rounded-md text-[11px] font-medium text-[#111] bg-white whitespace-nowrap" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.1)">{{ d.no }} · {{ d.status }}</div>
-<div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background:#2B3F5F;box-shadow:0 2px 10px rgba(43,63,95,.4)">
+<div class="w-10 h-10 rounded-full flex items-center justify-center text-white" :style="d.status==='空闲'?{background:'#17A34A',boxShadow:'0 2px 10px rgba(23,163,74,.4)'}:{background:'#DC2626',boxShadow:'0 2px 10px rgba(220,38,38,.4)'}">
 <span v-html="luci('plug-zap','w-5 h-5')"></span>
 </div>
-<div class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[7px] border-l-transparent border-r-transparent" style="border-top-color:#2B3F5F"></div>
+<div class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[7px] border-l-transparent border-r-transparent" :style="{borderTopColor:d.status==='空闲'?'#17A34A':'#DC2626'}"></div>
 </div>
 </div>
 <div class="absolute z-[14] -translate-x-1/2 -translate-y-1/2 transition-all duration-300" :style="{left:chargeUserPt.x+'%',top:chargeUserPt.y+'%'}">
@@ -1348,17 +1347,14 @@ body.host-single-m #root-user{display:none}
 
 <!-- 充电设备弹窗（BottomSheet：设备地址 + 充电定价 + 导航拉起） -->
 <bottom-sheet :open="chargeDeviceSheet" title="设备详情" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
-<kv-card divider label-width="5rem" class="mx-4 mb-3" data-od-id="charge-device-card">
+<kv-card label-width="5rem" class="mx-4" data-od-id="charge-device-card">
 <kv-row label="设备编号" :value="chargeDevice?chargeDevice.no:'-'" :copyable="!!chargeDevice" @copy="t=>copyText(t,'设备编号')"></kv-row>
 <kv-row label="状态" :value="chargeDevice?chargeDevice.status:'-'" :value-style="chargeDevice&&chargeDevice.status==='空闲'?{color:'#17A34A'}:{color:'#999'}"></kv-row>
-<kv-row label="地址" :value="chargeDevice?chargeDevice.addr:'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="地址" align="top">
+<template #value><div class="flex items-start justify-end gap-2"><span class="min-w-0 whitespace-normal break-words">{{ chargeDevice?chargeDevice.addr:'-' }}</span><span data-cp @click="openChargeNav" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" data-od-id="charge-nav-btn"><span v-html="luci('navigation','w-3.5 h-3.5')" style="color:#FF6A00"></span></span></div></template>
+</kv-row>
 <kv-row label="充电费用" :value="fmtRp(chargeDevice?chargeDevice.price:0,0)+' / 分钟'"></kv-row>
 </kv-card>
-<div class="px-4 pb-1">
-<button data-cp @click="openChargeNav" class="w-full h-12 rounded-xl text-white text-[15px] font-semibold cursor-pointer active:opacity-90 transition-opacity flex items-center justify-center gap-1.5" style="background:var(--accent);border:0" data-od-id="charge-nav-btn">
-<span v-html="luci('navigation','w-4 h-4')"></span><span>导航前往</span>
-</button>
-</div>
 </bottom-sheet>
 
 <!-- 设备轨迹页（复用商户端车辆轨迹页） -->
