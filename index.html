@@ -2063,9 +2063,9 @@ body.host-single-m #root-user{display:none}
 <div class="text-[22px] font-bold text-[#1A1A1A] text-center" data-page-node-id="xTzE6TyyilIcdsBjDmExMD">{{ scanCtx==='battery'?'电池编号':scanCtx==='charge'?'设备编号':'车架号' }}</div>
 <div class="text-[14px] text-[#999] text-center mt-2.5" data-page-node-id="Gi7siyyXHo7ETK1KB3v8uX">{{ scanCtx==='battery'?'请输入电池编号':scanCtx==='charge'?'请输入设备编号':'请输入车架号' }}</div>
 <div class="mt-10 relative" data-page-node-id="PDBLGOXFuke9c6t5351M0M">
-<input v-model="manualVin" type="text" :maxlength="scanCtx==='battery'?64:(scanCtx==='charge'?20:17)" class="w-full bg-transparent outline-none text-center text-[17px] font-medium" style="border:0;padding:12px 0;caret-color:#2B3F5F" data-page-node-id="z29ekPi15k6TP2E9GDTOOW">
+<input v-model="manualVin" type="text" :maxlength="scanCtx==='battery'||scanCtx==='charge'?64:17" class="w-full bg-transparent outline-none text-center text-[17px] font-medium" style="border:0;padding:12px 0;caret-color:#2B3F5F" data-page-node-id="z29ekPi15k6TP2E9GDTOOW">
 <div class="absolute bottom-0 left-0 right-0" style="height:1px;background:#97A0AB" data-page-node-id="hyinWjLqlsh5I0TfeK7Wy6"></div>
-<div class="absolute right-0 text-[12px] text-[#999] tabular-nums pointer-events-none" style="top:50%;transform:translateY(-50%)" data-page-node-id="Z9lOdcf2uQsjnP4MQx1zy9">{{ manualVin.length }}/{{ scanCtx==='battery'?64:(scanCtx==='charge'?20:17) }}</div>
+<div class="absolute right-0 text-[12px] text-[#999] tabular-nums pointer-events-none" style="top:50%;transform:translateY(-50%)" data-page-node-id="Z9lOdcf2uQsjnP4MQx1zy9">{{ manualVin.length }}/{{ scanCtx==='battery'||scanCtx==='charge'?64:17 }}</div>
 </div>
 <button data-cp @click="confirmManualVin" class="h-12 w-full mt-10 rounded-xl text-white text-[15px] font-semibold cursor-pointer active:opacity-90 transition-opacity flex items-center justify-center" :style="manualVin.trim()?{background:'var(--accent)',border:0}:{background:'#E0E0E0',color:'#999',pointerEvents:'none',border:0}" data-od-id="manual-vin-submit" data-page-node-id="qWfPSky6edhKEkBusCmkvK">确定</button>
 </div>
