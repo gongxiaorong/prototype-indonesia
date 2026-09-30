@@ -1313,7 +1313,7 @@ body.host-single-m #root-user{display:none}
 <div v-else class="absolute inset-0 overflow-y-auto hide-scroll px-4 py-4" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-list">
 <div v-if="chargeLoading" class="text-[13px] text-[#999] text-center pt-12">设备加载中…</div>
 <template v-else>
-<kv-card v-for="(d,i) in chargeDevices" :key="'cglst-'+i" label-width="5rem" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'charge-list-item-'+i" data-cp @click="openChargeDevice(d)">
+<kv-card v-for="(d,i) in chargeDevices" :key="'cglst-'+i" label-width="5rem" class="mb-3" :data-od-id="'charge-list-item-'+i">
 <template #title>{{ d.no }}</template>
 <template #extra><span class="text-[12px] font-semibold" :style="d.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}">{{ d.status }}</span></template>
 <kv-row label="地址" align="top">
