@@ -1353,6 +1353,87 @@ body.host-single-m #root-user{display:none}
 </kv-card>
 </bottom-sheet>
 
+<!-- 充电下单页（设备信息 + 充电时长与费用预估 + 支付方式，形态参考车辆下单） -->
+<page :open="showChargeOrder" :z="1910" :swipe-close="navBack" oid="charge-order-page" data-od-id="charge-order-page">
+<nav-bar title="充电下单" border-color="#E5E5E5" @back="navBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto hide-scroll px-4 pt-4 pb-28" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-order-scroll">
+<kv-card label-width="5rem" class="mb-3" data-od-id="charge-order-device-card">
+<template #title>{{ chargeDevice?chargeDevice.no:'-' }}</template>
+<template #extra><span class="text-[12px] font-semibold" style="color:#17A34A">{{ chargeDevice?chargeDevice.status:'' }}</span></template>
+<kv-row label="地址" :value="chargeDevice?chargeDevice.addr:'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="单价" :value="fmtRp(chargeDevice?chargeDevice.price:0,0)+' / 分钟'"></kv-row>
+</kv-card>
+<div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="charge-order-duration">
+<div class="flex items-center justify-between mb-3">
+<span class="text-[14px] font-semibold text-[#111]">充电时长</span>
+<span class="text-[14px] font-semibold" style="color:#FF6A00">预估 {{ fmtRp(chargeOrderAmount,2) }}</span>
+</div>
+<div class="conf-pay-row mb-3" v-long-pan>
+<div class="conf-pay" :class="chargeOrderMinutes===30?'is-selected':''" data-cp @click="chargePickDuration(30)">30 分钟</div>
+<div class="conf-pay" :class="chargeOrderMinutes===60?'is-selected':''" data-cp @click="chargePickDuration(60)">1 小时</div>
+<div class="conf-pay" :class="chargeOrderMinutes===120?'is-selected':''" data-cp @click="chargePickDuration(120)">2 小时</div>
+<div class="conf-pay" :class="chargeOrderMinutes===240?'is-selected':''" data-cp @click="chargePickDuration(240)">4 小时</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-[13px] text-[#666]">充电时长（共 {{ chargeOrderMinutes }} 分钟）</span>
+<div class="conf-stepper">
+<div class="conf-stepper-btn" data-cp @click="chargeSubMinutes">−</div>
+<div class="conf-stepper-num">{{ chargeOrderMinutes }}</div>
+<div class="conf-stepper-btn" data-cp @click="chargeAddMinutes">+</div>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="charge-order-pay">
+<div class="text-[14px] font-semibold text-[#111] mb-3">支付方式</div>
+<div class="conf-pay-grid">
+<div class="conf-pay" :class="chargePayType==='2c2p'?'is-selected':''" data-cp @click="chargePayType='2c2p'">2C2P</div>
+<div class="conf-pay" :class="chargePayType==='offline'?'is-selected':''" data-cp @click="chargePayType='offline'">线下支付</div>
+<div class="conf-pay" :class="chargePayType==='balance'?'is-selected':''" data-cp @click="chargePayType='balance'">
+<span class="text-[11px]">钱包</span>
+<span class="text-[10px] text-[#999]">{{ (walletActive?fmtRp(walletActive.totalBalance,2):'-') }}</span>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 z-20 bg-white px-4 py-3" style="border-top:1px solid #F0F0F0;box-shadow:0 -2px 8px rgba(0,0,0,.04);padding-bottom:max(12px,env(safe-area-inset-bottom))" data-od-id="charge-order-bottom-bar">
+<div class="flex items-center justify-between">
+<div class="flex items-baseline gap-1">
+<span class="text-[14px] text-[#666]">合计</span>
+<span class="text-[20px] font-bold" style="color:#FF6A00">{{ fmtRp(chargeOrderAmount,2) }}</span>
+</div>
+<div class="px-8 py-3 rounded-xl text-white text-[16px] font-semibold cursor-pointer active:opacity-90 transition-opacity" style="background:#2B3F5F" data-cp @click="confirmChargeOrder" data-od-id="charge-order-submit">确认下单</div>
+</div>
+</div>
+</page>
+
+<!-- 充电订单详情页（形态复用现有订单详情：状态 + 设备 + 费用 + 订单信息） -->
+<page :open="showChargeOrderDetail" :z="1920" :swipe-close="navBack" oid="charge-order-detail-page" data-od-id="charge-order-detail-page">
+<nav-bar title="订单详情" border-color="#E5E5E5" @back="navBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto hide-scroll px-4 pt-4 pb-8" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-order-detail-scroll">
+<div class="bg-white rounded-2xl px-4 py-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="charge-order-status">
+<div class="text-[17px] font-bold" style="color:#FF8C1B">{{ chargeOrderInfo?chargeOrderInfo.status:'-' }}</div>
+<div class="text-[13px] text-[#999] mt-1">请到设备处扫码或插枪开始充电</div>
+</div>
+<kv-card label-width="5rem" class="mb-3" data-od-id="charge-order-detail-device">
+<template #title>设备信息</template>
+<kv-row label="设备编号" :value="chargeOrderInfo?chargeOrderInfo.deviceNo:'-'"></kv-row>
+<kv-row label="地址" :value="chargeOrderInfo?chargeOrderInfo.addr:'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+</kv-card>
+<kv-card label-width="5rem" class="mb-3" data-od-id="charge-order-detail-fee">
+<template #title>费用明细</template>
+<kv-row label="单价" :value="chargeOrderInfo?fmtRp(chargeOrderInfo.price,0)+' / 分钟':'-'"></kv-row>
+<kv-row label="充电时长" :value="chargeOrderInfo?chargeOrderInfo.minutes+' 分钟':'-'"></kv-row>
+<kv-row label="合计" :value="chargeOrderInfo?fmtRp(chargeOrderInfo.amount,2):'-'" value-class="font-semibold"></kv-row>
+</kv-card>
+<kv-card label-width="5rem" class="mb-3" data-od-id="charge-order-detail-info">
+<template #title>订单信息</template>
+<kv-row label="订单编号" :value="chargeOrderInfo?chargeOrderInfo.orderId:'-'" :copyable="!!chargeOrderInfo" @copy="t=>copyText(t,'订单编号')"></kv-row>
+<kv-row label="支付方式" :value="chargeOrderInfo?chargeOrderInfo.payType:'-'"></kv-row>
+<kv-row label="下单时间" :value="chargeOrderInfo?chargeOrderInfo.createdAt:'-'"></kv-row>
+</kv-card>
+</div>
+</page>
+
 <!-- 设备轨迹页（复用商户端车辆轨迹页） -->
 <page :open="showTrackPage" :z="1890" :swipe-close="navBack" oid="track-page" data-page-node-id="qG3Ci0nuF1ZqnXcDa4f6Nj">
 <nav-bar title="历史轨迹" border-color="#E5E5E5" data-page-node-id="2HuXbPAGr0MFRW4pO5tnyT" @back="navBack()"></nav-bar>
@@ -6523,7 +6604,7 @@ function openBatteryUnbind(){showBatteryUnbind.value=true}
 function closeBatteryUnbind(){showBatteryUnbind.value=false}
 function confirmBatteryUnbind(){if(batteryUnbindLoading.value)return;batteryUnbindLoading.value=true;setTimeout(()=>{if(SYS_BATTERIES&&SYS_BATTERIES.value&&currentBattery.value&&currentBattery.value.code){var _ub=SYS_BATTERIES.value.find(function(x){return x.battNo===currentBattery.value.code});if(_ub){_ub.status='空闲';_ub.account='';_ub.phone='';_ub.email='';_ub.vin=''}}batteryUnbindLoading.value=false;showBatteryUnbind.value=false;navDrop('batteryDetail');toast('设备已解绑','success');nextTick(function(){if(homeBatteries.value.length===0)homeDevSeg.value='vehicles'})},800)}
 const demoActive=computed(()=>{
-  if(scanning.value||showManualVin.value||showBatteryDetail.value||showFindPage.value||showTrackPage.value||showChargePage.value||showWallet.value||showTopup.value)return false;
+  if(scanning.value||showManualVin.value||showBatteryDetail.value||showFindPage.value||showTrackPage.value||showChargePage.value||showChargeOrder.value||showChargeOrderDetail.value||showWallet.value||showTopup.value)return false;
   const t=tab.value;
   return (t==='home'&&!showLogin.value&&!showRent.value&&!showStore.value&&!showVehicle.value&&!showConfirm.value&&!showOrderDetail.value&&!showMyOrders.value&&!showOrderList.value&&!profileOV.value&&!profileSub.value&&!profileMod.value)
   ||(showRent.value&&!showStore.value&&!showVehicle.value&&!showConfirm.value&&!showOrderDetail.value&&t!=='profile'&&t!=='vehicles')
@@ -6577,6 +6658,20 @@ function chargeFocusUser(){toast('已定位到当前位置','info')}
 function chargeToggleView(){chargeView.value=chargeView.value==='map'?'list':'map'}
 function openChargeNav(){closeChargeDevice();storeNavSheet.value=true}
 function openChargeScan(){scanCtx.value='charge';navOpen('scan')}
+/* ══ 充电下单（编号校验通过后进入：设备信息 + 充电时长 + 费用预估 + 支付方式）══ */
+const showChargeOrder=ref(false),showChargeOrderDetail=ref(false);
+const chargeOrderMinutes=ref(60);
+const chargePayType=ref('2c2p');
+const chargeOrderInfo=ref(null);
+const chargeOrderAmount=computed(function(){return chargeOrderMinutes.value*(chargeDevice.value?chargeDevice.value.price:0)});
+function openChargeOrder(dev){chargeDevice.value=dev;chargeOrderMinutes.value=60;chargePayType.value='2c2p';navOpen('chargeOrder')}
+function closeChargeOrder(){showChargeOrder.value=false}
+function closeChargeOrderDetail(){showChargeOrderDetail.value=false}
+function chargePickDuration(m){chargeOrderMinutes.value=m}
+function chargeAddMinutes(){chargeOrderMinutes.value=Math.min(480,chargeOrderMinutes.value+30)}
+function chargeSubMinutes(){chargeOrderMinutes.value=Math.max(30,chargeOrderMinutes.value-30)}
+function chargePayLabel(){return chargePayType.value==='2c2p'?'2C2P':chargePayType.value==='offline'?'线下支付':'钱包'}
+function confirmChargeOrder(){var d=chargeDevice.value;if(!d)return;chargeOrderInfo.value={orderId:'CG'+String(Date.now()).slice(-10),deviceNo:d.no,addr:d.addr,price:d.price,minutes:chargeOrderMinutes.value,amount:chargeOrderAmount.value,payType:chargePayLabel(),status:'待充电',createdAt:formatNow()};navSwap('chargeOrderDetail');toast('下单成功','success')}
 const trackStart=ref({year:2025,month:8,day:6,hour:17,min:8});
 const trackEnd=ref({year:2025,month:8,day:6,hour:17,min:28});
 const trackDraft=ref({year:2025,month:10,day:24,hour:13,min:52});
@@ -7121,7 +7216,7 @@ const manualVin=ref('');
 const showManualVin=ref(false);
 const scanCtx=ref('vehicle');
 function openManualInput(){manualVin.value='';navOpen('manualVin')}
-function confirmManualVin(){const n=manualVin.value.trim();if(!n)return;if(scanCtx.value==='charge'){navDrop('manualVin');navDrop('scan');toast('设备连接成功','success');return}navDrop('manualVin');navDrop('scan');scanBindMode.value=true;if(scanCtx.value==='battery'){scanBindDevice.value={kind:'battery',id:n,model:'天能锂电72V20Ah',soc:100,source:'manual',discharge:true}}else{scanBindDevice.value={kind:'vehicle',id:100+scanBoundVehicles.value.length,name:'雅迪冠能6 TTFAR',vin:n,dark:false,source:'manual',locked:false}}setTimeout(function(){if(scanCtx.value==='battery'){navOpen('batteryDetail')}else{navOpen('vehicleDetail')}},60)}
+function confirmManualVin(){const n=manualVin.value.trim();if(!n)return;if(scanCtx.value==='charge'){var cd=CHARGE_DEVICES.filter(function(x){return x.no.toLowerCase()===n.toLowerCase()})[0];if(!cd){toast('设备不存在','warn');return}if(cd.status!=='空闲'){toast('该设备使用中，请更换','warn');return}navDrop('manualVin');navDrop('scan');openChargeOrder(cd);return}navDrop('manualVin');navDrop('scan');scanBindMode.value=true;if(scanCtx.value==='battery'){scanBindDevice.value={kind:'battery',id:n,model:'天能锂电72V20Ah',soc:100,source:'manual',discharge:true}}else{scanBindDevice.value={kind:'vehicle',id:100+scanBoundVehicles.value.length,name:'雅迪冠能6 TTFAR',vin:n,dark:false,source:'manual',locked:false}}setTimeout(function(){if(scanCtx.value==='battery'){navOpen('batteryDetail')}else{navOpen('vehicleDetail')}},60)}
 const vdDevice=computed(()=>scanBindMode.value&&scanBindDevice.value&&scanBindDevice.value.kind==='vehicle'?scanBindDevice.value:currentVehicle.value);
 const bdDevice=computed(()=>scanBindMode.value&&scanBindDevice.value&&scanBindDevice.value.kind==='battery'?scanBindDevice.value:currentBattery.value);
 function openBindConfirm(){showBindConfirm.value=true}
@@ -7242,7 +7337,9 @@ subPwdVerify:{open:()=>{profileSub.value='pwdVerify'},close:()=>{if(profileSub.v
 subPwdReset:{open:()=>{profileSub.value='pwdReset'},close:()=>{if(profileSub.value==='pwdReset')profileSub.value=null}},
 subLang:{open:()=>{profileSub.value='lang'},close:()=>{if(profileSub.value==='lang')profileSub.value=null}},
 subSwitchSystem:{open:()=>{profileSub.value='subSwitchSystem'},close:()=>{if(profileSub.value==='subSwitchSystem')profileSub.value=null}},
-chargePage:{open:()=>{showChargePage.value=true},close:()=>closeChargePage()}
+chargePage:{open:()=>{showChargePage.value=true},close:()=>closeChargePage()},
+chargeOrder:{open:()=>{showChargeOrder.value=true},close:()=>closeChargeOrder()},
+chargeOrderDetail:{open:()=>{showChargeOrderDetail.value=true},close:()=>closeChargeOrderDetail()}
 };
 function _navClone(v){return (v&&typeof v==='object')?JSON.parse(JSON.stringify(v)):v}
 function _navR(r){return{get:function(){return r.value},set:function(v){r.value=v}}}
@@ -7250,7 +7347,7 @@ function _navRA(o){return{get:function(){return _navClone(o)},set:function(v){va
 const pageRefList=[
   _navR(tab),_navR(mapCtx),_navR(showLogin),_navR(showRent),_navR(showStore),_navR(showVehicle),_navR(showConfirm),
   _navR(showVehicleDetail),_navR(showBatteryDetail),_navR(showFindPage),_navR(showTrackPage),_navR(showMyOrders),_navR(showOrderList),_navR(showRefundList),_navR(showOrderDetail),
-  _navR(showConfirmDocs),_navR(showWallet),_navR(showWalletLedger),_navR(showTopup),_navR(showRechargeList),_navR(showRechargeOrder),_navR(scanning),_navR(showManualVin),_navR(showChargePage),
+  _navR(showConfirmDocs),_navR(showWallet),_navR(showWalletLedger),_navR(showTopup),_navR(showRechargeList),_navR(showRechargeOrder),_navR(scanning),_navR(showManualVin),_navR(showChargePage),_navR(showChargeOrder),_navR(showChargeOrderDetail),
   _navR(profileOV),_navR(profileSub),_navR(idSelectMode),_navR(walletStorePick),_navR(walletLedgerTab),_navR(walletLedgerTxn),_navR(topupAmount),_navR(topupCustom),_navR(topupShowCustom),
   _navR(rechargeFilter),_navR(myVehicleIdx),_navR(currentBatteryIdx),_navR(selectedVehicle),_navR(selectedStore),_navR(orderInfo),_navR(payTarget),_navR(idDetailRec),_navR(idEditingId),
   _navR(confirmIdInfo),_navR(scanBindDevice),_navR(scanCtx),_navR(orderListCategory),_navR(locRinging),_navRA(rechargeOrder)
@@ -7273,6 +7370,8 @@ const {navOpen,navBack,navDrop,navSwap,navReset,navLog}=createNav({screens:NAV_S
   if(showVehicleDetail.value)return 'vehicleDetail';
   if(showBatteryDetail.value)return 'batteryDetail';
   if(showFindPage.value)return 'findPage';
+  if(showChargeOrderDetail.value)return 'chargeOrderDetail';
+  if(showChargeOrder.value)return 'chargeOrder';
   if(showChargePage.value)return 'chargePage';
   if(showTrackPage.value)return 'trackPage';
   return '';
@@ -7282,7 +7381,7 @@ onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);setInterval((
 function goSwap(){location.href='swap.html'}
 function setLoggedIn(v){if(v&&firstLogin.value){firstLogin.value=false;switchSource.value='first';loggedIn.value=true;navSwap('subSwitchSystem');toast('请选择系统','info');return}loggedIn.value=v}
 function switchBack(){if(switchSource.value==='first'){switchSource.value='settings';doLogout();return}navBack()}
-return{tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentDateIdx,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPeriodIdx,periodOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,periodUnit,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,showChargePage,chargeLoading,chargeDevices,chargeUserPt,chargeNearestDist,chargeView,chargeToggleView,chargeDevice,chargeDeviceSheet,openChargePage,closeChargePage,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};
+return{tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentDateIdx,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPeriodIdx,periodOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,periodUnit,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,showChargePage,chargeLoading,chargeDevices,chargeUserPt,chargeNearestDist,chargeView,chargeToggleView,chargeDevice,chargeDeviceSheet,openChargePage,closeChargePage,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};
 }
 });
 
