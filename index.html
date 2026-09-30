@@ -1320,7 +1320,7 @@ body.host-single-m #root-user{display:none}
 <div class="flex-1 min-w-0">
 <div class="flex items-center gap-2">
 <span class="text-[15px] font-semibold text-[#111]">{{ d.no }}</span>
-<span class="text-[11px] font-semibold px-1.5 py-0.5 rounded shrink-0" :style="d.status==='空闲'?{background:'#E8F7EE',color:'#17A34A'}:{background:'#F0F0F0',color:'#999'}">{{ d.status }}</span>
+<span class="text-[11px] font-semibold px-1.5 py-0.5 rounded shrink-0" :style="d.status==='空闲'?{background:'#E8F7EE',color:'#17A34A'}:{background:'rgba(220,38,38,.1)',color:'#DC2626'}">{{ d.status }}</span>
 </div>
 <div class="text-[12px] text-[#999] truncate mt-1">{{ d.addr }}</div>
 <div class="text-[12px] text-[#666] mt-1">距您 <span class="font-mono text-[#111]">{{ d.dist }}</span> 米 · <span class="font-semibold" style="color:#FF6A00">{{ fmtRp(d.price,0) }}</span> / 分钟</div>
@@ -1349,7 +1349,7 @@ body.host-single-m #root-user{display:none}
 <bottom-sheet :open="chargeDeviceSheet" title="设备详情" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
 <kv-card label-width="5rem" class="mx-4" data-od-id="charge-device-card">
 <kv-row label="设备编号" :value="chargeDevice?chargeDevice.no:'-'" :copyable="!!chargeDevice" @copy="t=>copyText(t,'设备编号')"></kv-row>
-<kv-row label="状态" :value="chargeDevice?chargeDevice.status:'-'" :value-style="chargeDevice&&chargeDevice.status==='空闲'?{color:'#17A34A'}:{color:'#999'}"></kv-row>
+<kv-row label="状态" :value="chargeDevice?chargeDevice.status:'-'" :value-style="chargeDevice&&chargeDevice.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}"></kv-row>
 <kv-row label="地址" align="top">
 <template #value><div class="flex items-start justify-end gap-2"><span class="min-w-0 whitespace-normal break-words">{{ chargeDevice?chargeDevice.addr:'-' }}</span><span data-cp @click="openChargeNav" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" data-od-id="charge-nav-btn"><span v-html="luci('navigation','w-3.5 h-3.5')" style="color:#FF6A00"></span></span></div></template>
 </kv-row>
