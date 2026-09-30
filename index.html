@@ -1314,9 +1314,11 @@ body.host-single-m #root-user{display:none}
 <div v-if="chargeLoading" class="text-[13px] text-[#999] text-center pt-12">设备加载中…</div>
 <template v-else>
 <kv-card v-for="(d,i) in chargeDevices" :key="'cglst-'+i" label-width="5rem" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'charge-list-item-'+i" data-cp @click="openChargeDevice(d)">
-<kv-row label="设备编号" :value="d.no"></kv-row>
-<kv-row label="状态" :value="d.status" :value-style="d.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}"></kv-row>
-<kv-row label="地址" :value="d.addr" align="top" value-class="whitespace-normal break-words"></kv-row>
+<template #title>{{ d.no }}</template>
+<template #extra><span class="text-[12px] font-semibold" :style="d.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}">{{ d.status }}</span></template>
+<kv-row label="地址" align="top">
+<template #value><div class="flex items-start justify-end gap-2"><span class="min-w-0 whitespace-normal break-words">{{ d.addr }}</span><span data-cp @click.stop="openChargeNav" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" :data-od-id="'charge-list-nav-'+i"><span v-html="luci('navigation','w-3.5 h-3.5')" style="color:#FF6A00"></span></span></div></template>
+</kv-row>
 <kv-row label="距离" :value="d.dist+' 米'"></kv-row>
 <kv-row label="充电费用" :value="fmtRp(d.price,0)+' / 分钟'"></kv-row>
 </kv-card>
@@ -1341,8 +1343,8 @@ body.host-single-m #root-user{display:none}
 <!-- 充电设备弹窗（BottomSheet：设备地址 + 充电定价 + 导航拉起） -->
 <bottom-sheet :open="chargeDeviceSheet" title="设备详情" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
 <kv-card label-width="5rem" class="mx-4" data-od-id="charge-device-card">
-<kv-row label="设备编号" :value="chargeDevice?chargeDevice.no:'-'" :copyable="!!chargeDevice" @copy="t=>copyText(t,'设备编号')"></kv-row>
-<kv-row label="状态" :value="chargeDevice?chargeDevice.status:'-'" :value-style="chargeDevice&&chargeDevice.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}"></kv-row>
+<template #title>{{ chargeDevice?chargeDevice.no:'-' }}</template>
+<template #extra><span class="text-[12px] font-semibold" :style="chargeDevice&&chargeDevice.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}">{{ chargeDevice?chargeDevice.status:'' }}</span></template>
 <kv-row label="地址" align="top">
 <template #value><div class="flex items-start justify-end gap-2"><span class="min-w-0 whitespace-normal break-words">{{ chargeDevice?chargeDevice.addr:'-' }}</span><span data-cp @click="openChargeNav" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" data-od-id="charge-nav-btn"><span v-html="luci('navigation','w-3.5 h-3.5')" style="color:#FF6A00"></span></span></div></template>
 </kv-row>
