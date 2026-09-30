@@ -1369,13 +1369,13 @@ body.host-single-m #root-user{display:none}
 <div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="charge-order-duration">
 <div class="flex items-center justify-between mb-3">
 <div class="text-[14px] font-semibold text-[#111]">充电时长</div>
-<div class="text-[12px] text-[#999]">最大充电时长 <span class="font-mono font-semibold text-[#666]">{{ chargeMaxMinutes }}</span> 分钟</div>
+<div class="text-[13px] text-[#666]">最大充电时长 {{ chargeMaxMinutes }} 分钟</div>
 </div>
 <div class="conf-pay-row mb-3" v-long-pan>
 <div v-for="(o,i) in chargeDurationOptions" :key="'cd-'+i" class="conf-pay" :class="chargeEffectiveMinutes===o?'is-selected':''" data-cp @click="chargePickDuration(o)" :data-od-id="'charge-duration-opt-'+i">{{ fmtChargeMinutes(o) }}</div>
 </div>
 <div class="flex items-center justify-between">
-<span class="text-[13px] text-[#666] whitespace-nowrap">充电时长（共 <span class="font-mono font-semibold text-[#111]">{{ chargeEffectiveMinutes }}</span> 分钟）</span>
+<span class="text-[13px] text-[#666] whitespace-nowrap">充电时长（共 {{ chargeEffectiveMinutes }} 分钟）</span>
 <div class="conf-stepper">
 <div class="conf-stepper-btn" data-cp @click="chargeSubMinutes">−</div>
 <input class="conf-stepper-num" type="text" inputmode="numeric" autocomplete="off" :value="chargeOrderMinutes" @input="onChargeMinuteInput" @blur="commitChargeMinutes" @keyup.enter="commitChargeMinutes" style="border:0;background:transparent;outline:none;padding:0;width:56px" data-od-id="charge-duration-input" aria-label="充电时长（分钟）" />
