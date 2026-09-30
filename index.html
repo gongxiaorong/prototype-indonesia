@@ -2060,12 +2060,12 @@ body.host-single-m #root-user{display:none}
 <div class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[#2B3F5F]" data-cp @click="navBack()" data-page-node-id="gkyPsxuYVLcJiOkJjNimtM"><span v-html="luci('chevron-left','w-5 h-5')" data-page-node-id="Mg38Q4M02HBTVwVeVbG0Fy"></span></div>
 </div>
 <div class="flex-1 min-h-0 flex flex-col justify-start px-6 pt-[40px] pb-[calc(64px+env(safe-area-inset-bottom,0px))]" data-page-node-id="0X4SrIEUFUldFTsPXlHgqw">
-<div class="text-[22px] font-bold text-[#1A1A1A] text-center" data-page-node-id="xTzE6TyyilIcdsBjDmExMD">{{ scanCtx==='battery'?'电池编号':'车架号' }}</div>
-<div class="text-[14px] text-[#999] text-center mt-2.5" data-page-node-id="Gi7siyyXHo7ETK1KB3v8uX">{{ scanCtx==='battery'?'请输入电池编号':'请输入车架号' }}</div>
+<div class="text-[22px] font-bold text-[#1A1A1A] text-center" data-page-node-id="xTzE6TyyilIcdsBjDmExMD">{{ scanCtx==='battery'?'电池编号':scanCtx==='charge'?'设备编号':'车架号' }}</div>
+<div class="text-[14px] text-[#999] text-center mt-2.5" data-page-node-id="Gi7siyyXHo7ETK1KB3v8uX">{{ scanCtx==='battery'?'请输入电池编号':scanCtx==='charge'?'请输入设备编号':'请输入车架号' }}</div>
 <div class="mt-10 relative" data-page-node-id="PDBLGOXFuke9c6t5351M0M">
-<input v-model="manualVin" type="text" :maxlength="scanCtx==='battery'?64:17" class="w-full bg-transparent outline-none text-center text-[17px] font-medium" style="border:0;padding:12px 0;caret-color:#2B3F5F" data-page-node-id="z29ekPi15k6TP2E9GDTOOW">
+<input v-model="manualVin" type="text" :maxlength="scanCtx==='battery'?64:(scanCtx==='charge'?20:17)" class="w-full bg-transparent outline-none text-center text-[17px] font-medium" style="border:0;padding:12px 0;caret-color:#2B3F5F" data-page-node-id="z29ekPi15k6TP2E9GDTOOW">
 <div class="absolute bottom-0 left-0 right-0" style="height:1px;background:#97A0AB" data-page-node-id="hyinWjLqlsh5I0TfeK7Wy6"></div>
-<div class="absolute right-0 text-[12px] text-[#999] tabular-nums pointer-events-none" style="top:50%;transform:translateY(-50%)" data-page-node-id="Z9lOdcf2uQsjnP4MQx1zy9">{{ manualVin.length }}/{{ scanCtx==='battery'?64:17 }}</div>
+<div class="absolute right-0 text-[12px] text-[#999] tabular-nums pointer-events-none" style="top:50%;transform:translateY(-50%)" data-page-node-id="Z9lOdcf2uQsjnP4MQx1zy9">{{ manualVin.length }}/{{ scanCtx==='battery'?64:(scanCtx==='charge'?20:17) }}</div>
 </div>
 <button data-cp @click="confirmManualVin" class="h-12 w-full mt-10 rounded-xl text-white text-[15px] font-semibold cursor-pointer active:opacity-90 transition-opacity flex items-center justify-center" :style="manualVin.trim()?{background:'var(--accent)',border:0}:{background:'#E0E0E0',color:'#999',pointerEvents:'none',border:0}" data-od-id="manual-vin-submit" data-page-node-id="qWfPSky6edhKEkBusCmkvK">确定</button>
 </div>
@@ -6593,7 +6593,7 @@ function closeChargeDevice(){chargeDeviceSheet.value=false;chargeDevice.value=nu
 function chargeFocusUser(){toast('已定位到当前位置','info')}
 function chargeToggleView(){chargeView.value=chargeView.value==='map'?'list':'map'}
 function openChargeNav(){closeChargeDevice();storeNavSheet.value=true}
-function openChargeScan(){navOpen('scan')}
+function openChargeScan(){scanCtx.value='charge';navOpen('scan')}
 const trackStart=ref({year:2025,month:8,day:6,hour:17,min:8});
 const trackEnd=ref({year:2025,month:8,day:6,hour:17,min:28});
 const trackDraft=ref({year:2025,month:10,day:24,hour:13,min:52});
@@ -7132,13 +7132,13 @@ const scanBindDevice=ref(null);
 const showBindConfirm=ref(false);
 const bindConfirmLoading=ref(false);
 function checkVersion(){showVersionCheck.value=true;hasNewVersion.value=false;latestVersion.value='V1.30.0';updateDesc.value='';updating.value=0}
-function doScan(){navDrop('scan');setTimeout(function(){toast('设备绑定成功','success')},200)}
+function doScan(){navDrop('scan');setTimeout(function(){toast(scanCtx.value==='charge'?'设备连接成功':'设备绑定成功','success')},200)}
 const scanTorch=ref(false);
 const manualVin=ref('');
 const showManualVin=ref(false);
 const scanCtx=ref('vehicle');
 function openManualInput(){manualVin.value='';navOpen('manualVin')}
-function confirmManualVin(){const n=manualVin.value.trim();if(!n)return;navDrop('manualVin');navDrop('scan');scanBindMode.value=true;if(scanCtx.value==='battery'){scanBindDevice.value={kind:'battery',id:n,model:'天能锂电72V20Ah',soc:100,source:'manual',discharge:true}}else{scanBindDevice.value={kind:'vehicle',id:100+scanBoundVehicles.value.length,name:'雅迪冠能6 TTFAR',vin:n,dark:false,source:'manual',locked:false}}setTimeout(function(){if(scanCtx.value==='battery'){navOpen('batteryDetail')}else{navOpen('vehicleDetail')}},60)}
+function confirmManualVin(){const n=manualVin.value.trim();if(!n)return;if(scanCtx.value==='charge'){navDrop('manualVin');navDrop('scan');toast('设备连接成功','success');return}navDrop('manualVin');navDrop('scan');scanBindMode.value=true;if(scanCtx.value==='battery'){scanBindDevice.value={kind:'battery',id:n,model:'天能锂电72V20Ah',soc:100,source:'manual',discharge:true}}else{scanBindDevice.value={kind:'vehicle',id:100+scanBoundVehicles.value.length,name:'雅迪冠能6 TTFAR',vin:n,dark:false,source:'manual',locked:false}}setTimeout(function(){if(scanCtx.value==='battery'){navOpen('batteryDetail')}else{navOpen('vehicleDetail')}},60)}
 const vdDevice=computed(()=>scanBindMode.value&&scanBindDevice.value&&scanBindDevice.value.kind==='vehicle'?scanBindDevice.value:currentVehicle.value);
 const bdDevice=computed(()=>scanBindMode.value&&scanBindDevice.value&&scanBindDevice.value.kind==='battery'?scanBindDevice.value:currentBattery.value);
 function openBindConfirm(){showBindConfirm.value=true}
