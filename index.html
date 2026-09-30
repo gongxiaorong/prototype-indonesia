@@ -1364,10 +1364,7 @@ body.host-single-m #root-user{display:none}
 <kv-row label="单价" :value="fmtRp(chargeDevice?chargeDevice.price:0,0)+' / 分钟'"></kv-row>
 </kv-card>
 <div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="charge-order-duration">
-<div class="flex items-center justify-between mb-3">
-<span class="text-[14px] font-semibold text-[#111]">充电时长</span>
-<span class="text-[14px] font-semibold" style="color:#FF6A00">预估 {{ fmtRp(chargeOrderAmount,2) }}</span>
-</div>
+<div class="text-[14px] font-semibold text-[#111] mb-3">充电时长</div>
 <div class="conf-pay-row mb-3" v-long-pan>
 <div class="conf-pay" :class="chargeOrderMinutes===30?'is-selected':''" data-cp @click="chargePickDuration(30)">30 分钟</div>
 <div class="conf-pay" :class="chargeOrderMinutes===60?'is-selected':''" data-cp @click="chargePickDuration(60)">1 小时</div>
@@ -1387,7 +1384,6 @@ body.host-single-m #root-user{display:none}
 <div class="text-[14px] font-semibold text-[#111] mb-3">支付方式</div>
 <div class="conf-pay-grid">
 <div class="conf-pay" :class="chargePayType==='2c2p'?'is-selected':''" data-cp @click="chargePayType='2c2p'">2C2P</div>
-<div class="conf-pay" :class="chargePayType==='offline'?'is-selected':''" data-cp @click="chargePayType='offline'">线下支付</div>
 <div class="conf-pay" :class="chargePayType==='balance'?'is-selected':''" data-cp @click="chargePayType='balance'">
 <span class="text-[11px]">钱包</span>
 <span class="text-[10px] text-[#999]">{{ (walletActive?fmtRp(walletActive.totalBalance,2):'-') }}</span>
@@ -6670,7 +6666,7 @@ function closeChargeOrderDetail(){showChargeOrderDetail.value=false}
 function chargePickDuration(m){chargeOrderMinutes.value=m}
 function chargeAddMinutes(){chargeOrderMinutes.value=Math.min(480,chargeOrderMinutes.value+30)}
 function chargeSubMinutes(){chargeOrderMinutes.value=Math.max(30,chargeOrderMinutes.value-30)}
-function chargePayLabel(){return chargePayType.value==='2c2p'?'2C2P':chargePayType.value==='offline'?'线下支付':'钱包'}
+function chargePayLabel(){return chargePayType.value==='2c2p'?'2C2P':'钱包'}
 function confirmChargeOrder(){var d=chargeDevice.value;if(!d)return;chargeOrderInfo.value={orderId:'CG'+String(Date.now()).slice(-10),deviceNo:d.no,addr:d.addr,price:d.price,minutes:chargeOrderMinutes.value,amount:chargeOrderAmount.value,payType:chargePayLabel(),status:'待充电',createdAt:formatNow()};navSwap('chargeOrderDetail');toast('下单成功','success')}
 const trackStart=ref({year:2025,month:8,day:6,hour:17,min:8});
 const trackEnd=ref({year:2025,month:8,day:6,hour:17,min:28});
