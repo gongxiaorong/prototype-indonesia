@@ -1325,7 +1325,7 @@ body.host-single-m #root-user{display:none}
 </template>
 </div>
 <!-- 视图切换 + 定位（地图/列表两视图共用） -->
-<div class="absolute right-3 z-[25] flex flex-col gap-2.5 transition-all duration-300" :style="chargeView==='map'?{top:'50%',transform:'translateY(-50%)'}:{bottom:'96px'}" data-od-id="charge-side-actions">
+<div class="absolute right-3 bottom-[96px] z-[25] flex flex-col gap-2.5" data-od-id="charge-side-actions">
 <div data-cp @click="chargeToggleView" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="charge-view-btn">
 <span v-html="luci(chargeView==='map'?'list':'map','w-5 h-5')"></span>
 </div>
