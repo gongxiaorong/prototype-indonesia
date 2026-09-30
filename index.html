@@ -1257,8 +1257,8 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 <div class="absolute right-3 top-1/2 -translate-y-1/2 z-[25] flex flex-col gap-2.5" data-page-node-id="k828M21cX1RXVnWJmrEjfS">
-<div data-cp @click="locFocusUser" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locFocus==='user'?{borderColor:'#2B3F5F',color:'#2B3F5F'}:{color:'#111'}" data-page-node-id="5fW38UH9dgCYyAOeA6NHUU"><span v-html="luci('crosshair','w-5 h-5')" data-page-node-id="lUIZqNbP9qjUffY7fAFBPn"></span></div>
-<div data-cp @click="locFocusVehicle" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locFocus==='device'?{borderColor:'#2B3F5F',color:'#2B3F5F'}:{color:'#111'}" data-page-node-id="4APrJB1GIJD9BnLAwJM3LE"><span v-html="luci(mapCtx==='battery'?'battery-charging':'bike','w-5 h-5')" data-page-node-id="t15odhjnkk9FKwN8Brk4jD"></span></div>
+<div data-cp @click="locFocusUser" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#111" data-page-node-id="5fW38UH9dgCYyAOeA6NHUU"><span v-html="luci('crosshair','w-5 h-5')" data-page-node-id="lUIZqNbP9qjUffY7fAFBPn"></span></div>
+<div data-cp @click="locFocusVehicle" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#111" data-page-node-id="4APrJB1GIJD9BnLAwJM3LE"><span v-html="luci(mapCtx==='battery'?'battery-charging':'bike','w-5 h-5')" data-page-node-id="t15odhjnkk9FKwN8Brk4jD"></span></div>
 <div v-if="mapCtx!=='battery'" data-cp @click="locRingDevice" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locRinging?{borderColor:'#E67E22',color:'#E67E22',background:'#FFF7ED'}:{color:'#111'}" data-page-node-id="hPZDpYQAAleHB5XDzWmeZf"><span v-html="luci(locRinging?'loader':'bell','w-5 h-5'+(locRinging?' anim-spin':''))" data-page-node-id="e0VnoyWoVTHbBVBdK21GNS"></span></div>
 </div>
 </div>
@@ -3475,10 +3475,10 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 <div class="absolute right-3 top-1/2 -translate-y-1/2 z-[25] flex flex-col gap-2.5" data-od-id="veh-location-side-actions">
-<div data-cp @click="locFocusUser" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locFocus==='user'?{borderColor:'var(--accent)',color:'var(--accent)'}:{color:'#111'}" data-od-id="veh-location-btn-user">
+<div data-cp @click="locFocusUser" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#111" data-od-id="veh-location-btn-user">
 <span v-html="luci('crosshair','w-5 h-5')"></span>
 </div>
-<div data-cp @click="locFocusVehicle" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locFocus==='vehicle'?{borderColor:'var(--accent)',color:'var(--accent)'}:{color:'#111'}" data-od-id="veh-location-btn-vehicle">
+<div data-cp @click="locFocusVehicle" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#111" data-od-id="veh-location-btn-vehicle">
 <span v-html="luci('bike','w-5 h-5')"></span>
 </div>
 <div data-cp @click="locRingVehicle" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="locRinging?{borderColor:'#E67E22',color:'#E67E22',background:'#FFF7ED'}:{color:'#111'}" data-od-id="veh-location-btn-ring">
@@ -3968,10 +3968,10 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 <div class="absolute right-3 top-1/2 -translate-y-1/2 z-[25] flex flex-col gap-2.5" data-od-id="batt-location-side-actions">
-<div data-cp @click="battLocFocusUser" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="battLocFocus==='user'?{borderColor:'var(--accent)',color:'var(--accent)'}:{color:'#111'}" data-od-id="batt-location-btn-user">
+<div data-cp @click="battLocFocusUser" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#111" data-od-id="batt-location-btn-user">
 <span v-html="luci('crosshair','w-5 h-5')"></span>
 </div>
-<div data-cp @click="battLocFocusBattery" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08)" :style="battLocFocus==='battery'?{borderColor:'var(--accent)',color:'var(--accent)'}:{color:'#111'}" data-od-id="batt-location-btn-batt">
+<div data-cp @click="battLocFocusBattery" class="w-11 h-11 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#111" data-od-id="batt-location-btn-batt">
 <span v-html="luci('battery-charging','w-5 h-5')"></span>
 </div>
 </div>
