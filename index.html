@@ -907,9 +907,9 @@ body.host-single-m #root-user{display:none}
 <div class="w-full h-full flex flex-col items-center justify-center gap-1.5" data-page-node-id="W5GlXiwU5fE4qfd9G8PDvG"><span v-html="luci('bike','w-12 h-12 text-white/40')" data-page-node-id="x7U4u0jtqTIRLW6UmiNE0l"></span><span class="text-[13px] text-white/40" data-page-node-id="VO9DUkwbXV01GtjjIIWZ3s">租赁入口</span></div>
 </div>
 
-<!-- 充电服务入口（印尼版新增：进入充电地图找桩 + 扫码充电；与租赁入口等大卡，品牌蓝渐变） -->
-<div data-cp @click="openChargePage()" class="rounded-2xl overflow-hidden mb-4 cursor-pointer active:opacity-90 transition-opacity" style="height:110px;background:linear-gradient(135deg,#2B3F5F 0%,#3D5680 100%)" data-od-id="home-charge-entry">
-<div class="w-full h-full flex flex-col items-center justify-center gap-1.5"><span v-html="luci('plug-zap','w-12 h-12 text-white/40')"></span><span class="text-[13px] text-white/40">充电</span></div>
+<!-- 充电入口（印尼版新增：进入充电地图找桩 + 扫码充电；与租赁入口等大卡，使用运营 banner 图） -->
+<div data-cp @click="openChargePage()" class="rounded-2xl overflow-hidden mb-4 cursor-pointer active:opacity-90 transition-opacity" style="height:110px" data-od-id="home-charge-entry">
+<img src="images/rent/IsiDaya_banner_transparent.png" alt="充电" class="w-full h-full object-cover" data-od-id="home-charge-image">
 </div>
 
 <div class="bg-white rounded-2xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="home-my-vehicles" data-page-node-id="pSece90YQgqAUxP9s2C8jg">
