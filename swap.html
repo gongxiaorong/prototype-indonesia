@@ -1426,7 +1426,7 @@ body.host-single-m #root-user{display:none}
 <template v-if="activeCards.length">
 <kv-card v-for="c in activeCards" :key="c.id" class="mb-3" :data-od-id="'card-item-'+c.id">
 <template #title><span class="min-w-0 truncate">{{ c.name }}</span></template>
-<template #extra><span class="text-[13px] font-medium shrink-0" style="color:#FF8A00">生效中</span></template>
+<template #extra><span class="font-medium shrink-0" style="color:#FF8A00">生效中</span></template>
 <kv-row label="剩余次数" :value="c.times"></kv-row>
 <kv-row label="可借电池" :value="c.batteries"></kv-row>
 <kv-row label="有效期" :value="c.days + '天'"></kv-row>
@@ -1448,7 +1448,7 @@ body.host-single-m #root-user{display:none}
 <template v-if="expiredCards.length">
 <kv-card v-for="c in expiredCards" :key="c.id" class="mb-3" :data-od-id="'card-expired-'+c.id">
 <template #title><span class="min-w-0 truncate">{{ c.name }}</span></template>
-<template #extra><span class="text-[13px] font-medium shrink-0" style="color:#999">已失效</span></template>
+<template #extra><span class="font-medium shrink-0" style="color:#999">已失效</span></template>
 <kv-row label="剩余次数" :value="c.times"></kv-row>
 <kv-row label="可借电池" :value="c.batteries"></kv-row>
 <kv-row label="有效期" :value="c.days + '天'"></kv-row>
@@ -1478,7 +1478,7 @@ body.host-single-m #root-user{display:none}
 <template v-if="planOrdersView.length">
 <kv-card v-for="o in planOrdersView" :key="o.id" class="mb-3 cursor-pointer active:bg-[#FAFAFA]" data-cp @click="openPlanOrder(o)" :data-od-id="'plan-order-'+o.id">
 <template #title><span class="min-w-0 truncate">{{ o.name }}</span></template>
-<template #extra><span class="text-[13px] font-medium shrink-0" :style="'color:'+o.color">{{ o.status }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="'color:'+o.color">{{ o.status }}</span></template>
 <kv-row label="有效期" :value="o.days + '天'"></kv-row>
 <kv-row label="换电次数" :value="o.times"></kv-row>
 <kv-row label="可借电池" :value="o.batteries"></kv-row>
@@ -1494,13 +1494,13 @@ body.host-single-m #root-user{display:none}
 <div class="flex-1 overflow-y-auto hide-scroll px-4 pt-3 pb-6">
 <kv-card class="mb-3" data-od-id="pod-plan">
 <template #title><span class="min-w-0 truncate">{{ planOrderDetail.name }}</span></template>
-<template #extra><span v-if="planOrderDetail.status!=='已取消'&&planOrderDetail.status!=='待支付'" class="text-[13px] font-medium shrink-0" style="color:#17A34A">已生效</span></template>
+<template #extra><span v-if="planOrderDetail.status!=='已取消'&&planOrderDetail.status!=='待支付'" class="font-medium shrink-0" style="color:#17A34A">已生效</span></template>
 <kv-row label="有效期" :value="planOrderDetail.days + '天'"></kv-row>
 <kv-row label="换电次数" :value="planOrderDetail.times"></kv-row>
 <kv-row label="可借电池" :value="planOrderDetail.batteries"></kv-row>
 </kv-card>
 <kv-card title="订单信息" class="mb-3" data-od-id="pod-order">
-<template #extra><span class="text-[14px] font-medium shrink-0" :style="'color:'+planOrderDetail.color">{{ planOrderDetail.status }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="'color:'+planOrderDetail.color">{{ planOrderDetail.status }}</span></template>
 <kv-row label="订单编号" :value="planOrderDetail.orderNo"></kv-row>
 <kv-row label="创建时间" :value="planOrderDetail.created"></kv-row>
 <kv-row v-if="planOrderDetail.cancelTime" label="取消时间" :value="planOrderDetail.cancelTime"></kv-row>
@@ -1789,7 +1789,7 @@ body.host-single-m #root-user{display:none}
 </empty-state>
 <kv-card v-for="b in battList" :key="b.no" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="openBattDetail(b.no)" :data-od-id="'batt-item-'+b.no">
 <template #title><span class="min-w-0 truncate">{{ b.no }}</span></template>
-<template #extra><span class="text-[13px] font-medium shrink-0" :style="{color:dotColor(BATT_DOT.net(b))}">{{ BATT_TEXT.net(b) }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="{color:dotColor(BATT_DOT.net(b))}">{{ BATT_TEXT.net(b) }}</span></template>
 <kv-row label="当前归属" :value="battLocLabel(b)"></kv-row>
 <kv-row label="电量" :value="b.soc+'%'" value-class="tabular-nums" :value-style="{color:socColor(b.soc)}"></kv-row>
 <kv-row label="在柜状态" :value="BATT_TEXT.cab(b)" :value-style="{color:dotColor(BATT_DOT.cab(b))}"></kv-row>
@@ -1821,7 +1821,7 @@ body.host-single-m #root-user{display:none}
 </empty-state>
 <kv-card v-for="c in cabList" :key="c.no" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="openCabDetail(c.no)" :data-od-id="'cab-item-'+c.no">
 <template #title><span class="min-w-0 truncate">{{ c.no }}</span></template>
-<template #extra><span class="text-[13px] font-medium shrink-0" :style="{color:dotColor(CAB_DOT.net(c))}">{{ CAB_TEXT.net(c) }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="{color:dotColor(CAB_DOT.net(c))}">{{ CAB_TEXT.net(c) }}</span></template>
 <kv-row label="当前站点" :value="cabStationLabel(c)"></kv-row>
 <kv-row label="运营状态" :value="CAB_TEXT.biz(c)" :value-style="{color:dotColor(CAB_DOT.biz(c))}"></kv-row>
 <kv-row label="启用状态" :value="CAB_TEXT.enabled(c)" :value-style="{color:dotColor(CAB_DOT.enabled(c))}"></kv-row>
@@ -1958,7 +1958,7 @@ body.host-single-m #root-user{display:none}
 <!-- 机柜信息（对标「换电柜」列表卡：标题取机柜编号 + 复制入口，联网状态放 #extra，其余为标签/值行） -->
 <kv-card class="mb-3" :copyable="!!curCab.no" :copy-text="curCab.no" @copy="copyCabNo()">
 <template #title><span class="min-w-0 truncate">{{ curCab.no }}</span></template>
-<template #extra><span class="text-[13px] font-medium shrink-0" :style="{color:dotColor(CAB_DOT.net(curCab))}">{{ CAB_TEXT.net(curCab) }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="{color:dotColor(CAB_DOT.net(curCab))}">{{ CAB_TEXT.net(curCab) }}</span></template>
 <kv-row label="机柜名称" :value="curCab.name"></kv-row>
 <!-- 当前站点：无站点归属（stationId 空）→ 显示 -，且不可点、不带链接色（与列表卡「当前站点」的 - 口径一致） -->
 <kv-row label="当前站点" :value="curCab.stationId?stationNameOf(curCab.stationId):'-'" :value-style="curCab.stationId?{color:'var(--link)'}:null" :class="curCab.stationId?'cursor-pointer active:opacity-70':''" data-cp @click="curCab.stationId&&openStationDetail(curCab.stationId)" data-od-id="cab-station-entry"></kv-row>
@@ -2313,7 +2313,7 @@ body.host-single-m #root-user{display:none}
 <!-- 电池信息（对标「电池」列表卡：标题取电池编号 + 复制入口，联网状态放 #extra，其余状态为标签/值行） -->
 <kv-card class="mb-3" :copyable="!!curBatt.no" :copy-text="curBatt.no" @copy="t=>copyText(t)">
 <template #title><span class="min-w-0 truncate">{{ curBatt.no }}</span></template>
-<template #extra><span class="text-[13px] font-medium shrink-0" :style="{color:dotColor(BATT_DOT.net(curBatt))}">{{ BATT_TEXT.net(curBatt) }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="{color:dotColor(BATT_DOT.net(curBatt))}">{{ BATT_TEXT.net(curBatt) }}</span></template>
 <kv-row label="当前归属" :value="battLocLabel(curBatt)"></kv-row>
 <kv-row label="在柜状态" :value="BATT_TEXT.cab(curBatt)" :value-style="{color:dotColor(BATT_DOT.cab(curBatt))}"></kv-row>
 <kv-row label="租用状态" :value="BATT_TEXT.rent(curBatt)" :value-style="{color:dotColor(BATT_DOT.rent(curBatt))}"></kv-row>
@@ -2480,7 +2480,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <kv-card title="近 7 日换电趋势" class="mb-3">
-<template #extra><span class="text-[11px]" style="color:#999">峰值 {{ dashTrendMax }} 次</span></template>
+<template #extra><span style="color:#999">峰值 {{ dashTrendMax }} 次</span></template>
 <div class="flex items-end gap-2.5">
 <div v-for="t in dashTrend" :key="t.d" class="flex-1 flex flex-col items-center">
 <span class="text-[10px] mb-1.5" style="color:#666">{{ t.v }}</span>
@@ -2514,7 +2514,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </kv-card>
 <kv-card title="告警统计" class="mb-3">
-<template #extra><span class="text-[11px]" style="color:#999">共 {{ alarmList.length }} 条</span></template>
+<template #extra><span style="color:#999">共 {{ alarmList.length }} 条</span></template>
 <empty-state v-if="!alarmList.length" icon="shield-check" text="暂无告警" root-class="flex flex-col items-center justify-center py-8" circle-class="w-11 h-11 rounded-full flex items-center justify-center mb-3 bg-[#E9F7EF]" icon-class="w-5 h-5 text-[#16A34A]" text-class="text-[13px] font-semibold text-[#333]"></empty-state>
 <div v-for="(a,i) in alarmList" :key="a.type+a.no" data-cp @click="a.no.indexOf('BT')===0?openBattDetail(a.no):openCabDetail(a.no)" class="flex items-start gap-2.5 py-3 cursor-pointer active:opacity-70" :style="i?'border-top:1px solid #F0F0F0':''">
 <span class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" :style="{background:dotColor(a.level)}"></span>
@@ -2764,7 +2764,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </kv-card>
 <kv-card title="换电柜" class="mb-3">
-<template #extra><span data-cp @click="openBindCab(curStation.id)" class="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EBF1FD] shrink-0" title="绑定换电柜" data-od-id="station-bind-entry"><span v-html="luci('link','w-4 h-4 text-[var(--link)]')"></span></span></template>
+<template #extra><span data-cp @click="openBindCab(curStation.id)" class="w-4 h-4 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EBF1FD] shrink-0" title="绑定换电柜" data-od-id="station-bind-entry"><span v-html="luci('link','w-4 h-4 text-[var(--link)]')"></span></span></template>
 <empty-state v-if="!cabsOfStation(curStation.id).length" icon="box" text="暂未绑定换电柜" root-class="flex flex-col items-center justify-center py-8" circle-class="w-11 h-11 rounded-full flex items-center justify-center mb-3 bg-[#F0F0F0]" icon-class="w-5 h-5 text-[#BBB]" text-class="text-[13px] font-semibold text-[#333]"></empty-state>
 <div v-for="(c,ci) in cabsOfStation(curStation.id)" :key="c.no" data-cp @click="openCabDetail(c.no)" class="flex items-center gap-3 py-3 cursor-pointer active:opacity-70" :style="ci?'border-top:1px solid #F0F0F0':''" :data-od-id="'station-cab-'+c.no">
 <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:#EEF1F8"><span v-html="luci('box','w-4 h-4 text-[#2B3F5F]')"></span></div>
@@ -3503,7 +3503,9 @@ function registerSheetKit(app){
     template:'<div :class="rootClass"><div v-if="icon" :class="circleClass"><span v-html="luci(icon,iconClass)"></span></div><div v-if="text" :class="textClass">{{ text }}</div><div v-if="sub" :class="subClass">{{ sub }}</div><slot></slot></div>'
   });
   /* KvCard：信息卡片外壳（键值行式）。props: title / divider(Boolean，默认关闭) / labelWidth('4rem') / copyable / copyText；
-     slots: title(优先于 title prop) / extra(状态·动作，高度须≤16px) / footer(传入才渲染) / default。
+     slots: title(优先于 title prop) / extra(状态·动作，容器固定 13px，插槽内不要再写字号类) / footer(传入才渲染) / default。
+    字号（标题与插槽分开定义、互不影响）：标题 15px semibold #333333（声明在标题元素上）；#extra 13px（声明在 extra 容器上）；
+    标题栏 .kv-head 自身不带字号，只负责布局/间距。
      用法：<kv-card title="门店信息" label-width="5rem"><kv-row label="门店名称" :value="s.name"></kv-row></kv-card>
      divider 默认 false：卡片默认不画行间分隔线，调用点一律不要加 divider（确需某张卡开启时才显式传）；
      单行虚线可用 kv-row 的 :divider="true" 单独开启。 */
@@ -3513,11 +3515,11 @@ function registerSheetKit(app){
     emits:['copy'],
     provide:function(){return{kvLabelWidth:this.labelWidth,kvDivider:this.divider}},
     methods:{kvTitleCopy:function(){this.$emit('copy',this.copyText||this.title)}},
-    template:'<div class="kv-card bg-white rounded-2xl px-4 py-3.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" :class="divider?\'kv-card-div\':\'\'"><div v-if="title||$slots.title||$slots.extra" class="kv-head flex items-center justify-between mb-1.5"><span class="flex items-center gap-1.5 min-w-0 flex-1"><span class="min-w-0 truncate text-[15px] font-semibold" style="color:#333333" :title="title"><slot name="title">{{ title }}</slot></span><span v-if="copyable" class="shrink-0" data-cp @click.stop="kvTitleCopy" v-html="luci(\'copy\',\'w-4 h-4 text-[#999] cursor-pointer active:text-[var(--link)]\')"></span></span><slot name="extra"></slot></div><slot></slot><div v-if="$slots.footer" class="kv-foot"><slot name="footer"></slot></div></div>'
+    template:'<div class="kv-card bg-white rounded-2xl px-4 py-3.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" :class="divider?\'kv-card-div\':\'\'"><div v-if="title||$slots.title||$slots.extra" class="kv-head flex items-center justify-between mb-1.5"><span class="flex items-center gap-1.5 min-w-0 flex-1"><span class="min-w-0 truncate text-[15px] font-semibold" style="color:#333333" :title="title"><slot name="title">{{ title }}</slot></span><span v-if="copyable" class="shrink-0" data-cp @click.stop="kvTitleCopy" v-html="luci(\'copy\',\'w-4 h-4 text-[#999] cursor-pointer active:text-[var(--link)]\')"></span></span><span v-if="$slots.extra" class="flex items-center text-[13px]"><slot name="extra"></slot></span></div><slot></slot><div v-if="$slots.footer" class="kv-foot"><slot name="footer"></slot></div></div>'
   });
   /* KvRow：键值行。props: label(⚠️不能叫 key) / value / copyable / copyText / labelWidth / labelClass / valueClass / valueStyle
      / divider(该行上方是否画线：不写=跟随卡片；:divider="true" 强制画；:divider="false" 强制不画) / align('center'|'top')；
-     slots: key / value；emits: copy(payload = copyText || value)。行高恒 32px → 行内图标 ≤16px。 */
+     slots: key / value；emits: copy(payload = copyText || value)。行高恒 32px（13px 文字）→ 行内图标 ≤16px。 */
   app.component('kv-row',{
     name:'kv-row',
     props:{label:{type:String,default:''},value:{default:''},copyable:{type:Boolean,default:false},copyText:{type:String,default:''},labelWidth:{type:String,default:''},labelClass:{type:String,default:''},valueClass:{type:String,default:''},valueStyle:{default:null},divider:{default:undefined},align:{type:String,default:'center'}},

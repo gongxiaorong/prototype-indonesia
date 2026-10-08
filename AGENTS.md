@@ -104,7 +104,7 @@
 
 ```html
 <kv-card title="车辆信息" divider label-width="5rem" class="mb-3">
-  <template #extra><span class="text-[13px] font-semibold">进行中</span></template>
+  <template #extra><span class="font-semibold">进行中</span></template>
   <kv-row label="车型" :value="name"></kv-row>
   <kv-row label="车架编号" :value="vin" :copyable="!!vin" @copy="t=>copyText(t,'车架编号')"></kv-row>
   <kv-row label="退款原因" :value="r.reason||'—'" align="top" value-class="whitespace-normal break-words"></kv-row>
@@ -114,15 +114,16 @@
 
 - **凡「label 左 / value 右」的信息卡与列表项卡一律用这两个组件**；禁止再手写 `justify-between` 紧凑行或 `w-16/w-20` 定宽行。
 - `kv-card` props：`title / divider(Boolean) / labelWidth('4rem') / copyable / copyText`；emit `copy`；slots `title / extra / footer / default`。
-  - **`#title` 插槽优先于 `title` prop**：标题带 `*`、图标或需自定义字号时用插槽；**默认标题 `15px semibold #111`**，插槽内容不写字号即继承默认（切勿在插槽里重复写 13px 之类的字号类）。
-  - `#extra` 只放状态/动作，**高度须 ≤16px**（`w-4 h-4` 盒 + `w-3.5 h-3.5` svg）；超了会把标题垂直下压、与其它卡不齐。
+  - **字号分开定义**：标题 15px 定义在「标题元素」上、`#extra` 13px 定义在「extra 容器」上，二者互不影响；标题栏 `.kv-head` 自身不带字号，只负责布局/间距。
+  - **`#title` 插槽优先于 `title` prop**：标题带 `*`、图标或需自定义字号时用插槽；**标题文本 15px `semibold` `#333333`**（声明在标题元素上），插槽内容不写字号即继承默认（**切勿在插槽里重复写 `text-[12px]`/`text-[13px]` 之类的字号类**）。
+  - `#extra` 只放状态/动作，**组件已给 extra 容器固定 13px（与标题独立）**，插槽内不要再写字号类；**高度须 ≤16px**（`w-4 h-4` 盒 + `w-3.5 h-3.5` svg）；超了会把标题垂直下压、与其它卡不齐。
   - `#footer` 传入才渲染；需要分隔线时在 footer 内容自加 `border-top`。
   - ⚠️ 标题栏渲染条件须为 `title||$slots.title||$slots.extra`——**漏判 `$slots.title` 会让「只传 `#title`」的卡片标题整块不渲染**。
 - `kv-row` props：`label（⚠️ 不能命名为 `key`——Vue 保留属性）/ value / copyable / copyText / labelWidth / labelClass / valueClass / valueStyle / divider / align`；slots `key / value`；emit `copy`。
   - `divider` 三态：不写=跟随卡片；`:divider="true"` 强制画（**该行上方**）；`:divider="false"` 强制不画；裸写 `divider` 视同 `true`。
   - `align="top"` 用于多行 value；value 默认 `truncate`，要换行须 `value-class="whitespace-normal break-words"`。
 - 分隔线只在**相邻两行之间**（首行上方、末行下方天然不画）。
-- 行高恒 **32px**（`py-2` + 16px 内容）→ 行内图标/元素高度 ≤16px；多行 value 行除外（`align="top"`）。
+- 行高恒 **32px**（`py-2` + 16px 内容，13px 文字行框）→ 行内图标/元素高度 ≤16px；多行 value 行除外（`align="top"`）。
 - 视觉基线：壳 `bg-white rounded-2xl px-4 py-3.5` + `1px solid #E5E5E5` + `0 1px 3px rgba(0,0,0,.04)`；标题 15px `semibold` `#333333`；label 13px `#999`（默认宽 4rem，长标签传 `label-width="5rem"`）；value 13px `#333333` 右对齐（组件默认色）。
 - 间距（组件负责）：标题栏→首块 **14px**、行↔行 **16px**、行/自定义内容→footer **16px**；内容方**不要再自带顶距**。
 - **非 KV 结构**（费用/退款渠道明细树、可展开行等）：外壳仍用 `kv-card`，内容原样放默认插槽（**不经 `kv-row`、不开 `divider`**）。
