@@ -482,7 +482,6 @@
       "noMatchRegion": "ไม่พบภูมิภาคที่ตรงกัน",
       "relocate": "ระบุตำแหน่งใหม่",
       "alertFilterProcessing": "กำลังดำเนินการ...",
-      "myDevices": "อุปกรณ์ของฉัน",
       "buyNow": "ช้อปเลย",
       "rentalIntro": "บทนำการเช่า",
       "safetySlogan": "ความปลอดภัยของคุณคือสิ่งสำคัญสูงสุด",
@@ -496,6 +495,9 @@
       "phoneVerify": "ยืนยันเบอร์โทรศัพท์",
       "confirmNewPwd": "ยืนยันรหัสผ่านใหม่",
       "feedback": "ข้อเสนอแนะ",
+      "myVehiclesCount": "ยานพาหนะของฉัน ({n})",
+      "myBatteriesCount": "แบตเตอรี่ของฉัน ({n})",
+      "myDevices": "อุปกรณ์ของฉัน",
       "emailAddressPlaceholder": "กรุณากรอกที่อยู่อีเมลของคุณ",
       "aboutUs": "เกี่ยวกับเรา",
       "privacyPolicy": "นโยบายความเป็นส่วนตัวของผู้ใช้"

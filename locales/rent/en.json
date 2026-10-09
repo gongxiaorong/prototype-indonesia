@@ -482,7 +482,6 @@
       "noMatchRegion": "No matching region found",
       "relocate": "Relocate",
       "alertFilterProcessing": "Processing...",
-      "myDevices": "My devices",
       "buyNow": "Shop Now",
       "rentalIntro": "Rental Intro",
       "safetySlogan": "Your safety is our top priority",
@@ -496,6 +495,9 @@
       "phoneVerify": "Phone Verification",
       "confirmNewPwd": "Confirm New Password",
       "feedback": "Feedback",
+      "myVehiclesCount": "My Vehicles ({n})",
+      "myBatteriesCount": "My Batteries ({n})",
+      "myDevices": "My devices",
       "emailAddressPlaceholder": "Please enter your email address",
       "aboutUs": "About Us",
       "privacyPolicy": "User Privacy Policy"

@@ -482,7 +482,6 @@
       "noMatchRegion": "未找到匹配地区",
       "relocate": "重新定位",
       "alertFilterProcessing": "处理中...",
-      "myDevices": "我的设备",
       "buyNow": "立即选购",
       "rentalIntro": "租车介绍",
       "safetySlogan": "您的安全是我们最关心的事",
@@ -496,6 +495,9 @@
       "phoneVerify": "手机号验证",
       "confirmNewPwd": "确认新密码",
       "feedback": "意见反馈",
+      "myVehiclesCount": "我的车辆 ({n})",
+      "myBatteriesCount": "我的电池 ({n})",
+      "myDevices": "我的设备",
       "emailAddressPlaceholder": "请输入邮箱地址",
       "aboutUs": "关于我们",
       "privacyPolicy": "《用户隐私政策》"

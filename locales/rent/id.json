@@ -482,7 +482,6 @@
       "noMatchRegion": "Wilayah yang cocok tidak ditemukan",
       "relocate": "Lokasi Ulang",
       "alertFilterProcessing": "Memproses...",
-      "myDevices": "Perangkat saya",
       "buyNow": "Beli Sekarang",
       "rentalIntro": "Perkenalan Sewa",
       "safetySlogan": "Keselamatan Anda adalah prioritas utama kami",
@@ -496,6 +495,9 @@
       "phoneVerify": "Verifikasi Nomor Ponsel",
       "confirmNewPwd": "Konfirmasi Kata Sandi Baru",
       "feedback": "Saran",
+      "myVehiclesCount": "Kendaraan Saya ({n})",
+      "myBatteriesCount": "Baterai Saya ({n})",
+      "myDevices": "Perangkat saya",
       "emailAddressPlaceholder": "Masukkan alamat email",
       "aboutUs": "Tentang Kami",
       "privacyPolicy": "Kebijakan Privasi Pengguna"
