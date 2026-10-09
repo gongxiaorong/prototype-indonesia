@@ -485,7 +485,9 @@
       "buyNow": "立即選購",
       "rentalIntro": "租車介紹",
       "safetySlogan": "您的安全是我們最關心的事",
-      "currentLocation": "當前定位"
+      "currentLocation": "當前定位",
+      "chargeNearbyCount": "附近充電樁 {n} 個",
+      "chargeNearest": "最近 {dist} · {price}/分鐘"
     },
     "profile": {
       "newPwdPlaceholder": "請輸入 6–64 位新密碼",

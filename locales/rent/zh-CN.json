@@ -485,7 +485,9 @@
       "buyNow": "立即选购",
       "rentalIntro": "租车介绍",
       "safetySlogan": "您的安全是我们最关心的事",
-      "currentLocation": "当前定位"
+      "currentLocation": "当前定位",
+      "chargeNearbyCount": "附近充电桩 {n} 个",
+      "chargeNearest": "最近 {dist} · {price}/分钟"
     },
     "profile": {
       "newPwdPlaceholder": "请输入 6–64 位新密码",

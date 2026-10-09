@@ -485,7 +485,9 @@
       "buyNow": "Beli Sekarang",
       "rentalIntro": "Perkenalan Sewa",
       "safetySlogan": "Keselamatan Anda adalah prioritas utama kami",
-      "currentLocation": "Lokasi Saat Ini"
+      "currentLocation": "Lokasi Saat Ini",
+      "chargeNearbyCount": "Charger Terdekat {n}",
+      "chargeNearest": "Terdekat {dist} · mulai {price}/menit"
     },
     "profile": {
       "newPwdPlaceholder": "Masukkan kata sandi baru (6-64 karakter)",

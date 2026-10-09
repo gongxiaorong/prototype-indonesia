@@ -485,7 +485,9 @@
       "buyNow": "ช้อปเลย",
       "rentalIntro": "บทนำการเช่า",
       "safetySlogan": "ความปลอดภัยของคุณคือสิ่งสำคัญสูงสุด",
-      "currentLocation": "ตำแหน่งปัจจุบัน"
+      "currentLocation": "ตำแหน่งปัจจุบัน",
+      "chargeNearbyCount": "ที่ชาร์จใกล้เคียง {n}",
+      "chargeNearest": "ใกล้สุด {dist} · เริ่ม {price}/นาที"
     },
     "profile": {
       "newPwdPlaceholder": "กรุณากรอกรหัสผ่านใหม่ (6-64 ตัวอักษร)",

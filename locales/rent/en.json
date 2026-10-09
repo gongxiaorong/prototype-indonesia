@@ -485,7 +485,9 @@
       "buyNow": "Shop Now",
       "rentalIntro": "Rental Intro",
       "safetySlogan": "Your safety is our top priority",
-      "currentLocation": "Current Location"
+      "currentLocation": "Current Location",
+      "chargeNearbyCount": "Nearby Chargers {n}",
+      "chargeNearest": "Nearest {dist} · from {price}/min"
     },
     "profile": {
       "newPwdPlaceholder": "Please enter a new password (6-64 characters)",
