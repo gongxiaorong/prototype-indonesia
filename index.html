@@ -128,6 +128,8 @@ body{font-family:var(--font-body)}
 .card-action-btn + .card-action-btn{border-left:1px solid #E5E5E5}
 .hid::-webkit-scrollbar{display:none}
 .hid{scrollbar-width:none}
+.conf-scroll-hide::-webkit-scrollbar{display:none}
+.conf-scroll-hide{scrollbar-width:none;-ms-overflow-style:none}
 .scan-frame{width:220px;height:220px;border:2px solid rgba(255,255,255,.6);border-radius:16px;position:relative;overflow:hidden}
 .scan-line{position:absolute;left:4px;right:4px;height:2px;background:var(--accent);animation:scan-move 2s ease-in-out infinite}
 @keyframes scan-move{0%{top:4px}50%{top:212px}100%{top:4px}}
@@ -229,7 +231,7 @@ body{font-family:var(--font-body)}
 #root-user .conf-pay{scroll-snap-align:start}
 #root-user .conf-pay-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 #root-user .conf-pay-grid .conf-pay{width:auto;min-width:0}
-#root-user .conf-scroll-hide::-webkit-scrollbar{display:none}
+
 #root-user .conf-pay{flex:0 0 auto;width:64px;min-width:0;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 0;border:1.5px solid #E5E7EB;border-radius:12px;cursor:pointer;font-size:14px;font-weight:600;color:#333;background:#fff;text-align:center;line-height:1.3}
 #root-user .conf-pay.is-selected{border-color:var(--accent-2);color:var(--accent-2);background:#FFF8F3}
 #root-user .conf-pay:active{opacity:.85}
@@ -296,6 +298,17 @@ body{font-family:var(--font-body)}
 #root-merchant .od-tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:12px;line-height:1;font-weight:500}
 #root-merchant .od-tag.on{background:#E7F7EE;color:#16A34A}
 #root-merchant .od-tag.off{background:#F2F3F5;color:#999}
+/* ── 充电设备 · 选择地址（地图拖拽取点；数值 1:1 对齐换电端 .sm-*） ── */
+#root-merchant .cdsm-world{position:absolute;left:-50%;top:-50%;width:200%;height:200%;will-change:transform}
+#root-merchant .cdsm-road-h,#root-merchant .cdsm-road-v{position:absolute;background:rgba(255,255,255,.6)}
+#root-merchant .cdsm-road-h{height:16px;left:0;right:0}
+#root-merchant .cdsm-road-v{width:16px;top:0;bottom:0}
+#root-merchant .cdsm-roadlbl{position:absolute;font-size:10px;color:#6B7A66;background:rgba(255,255,255,.85);border-radius:3px;padding:1px 5px;white-space:nowrap;font-weight:500}
+#root-merchant .cdsm-poi{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none}
+#root-merchant .cdsm-poi .pdot{width:9px;height:9px;border-radius:50%;background:#15B88C;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+#root-merchant .cdsm-poi .pnm{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:3px;font-size:10px;color:#455A4C;background:rgba(255,255,255,.9);border-radius:4px;padding:1px 5px;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+#root-merchant .cdsm-poi.on .pdot{background:#FF6A00;width:12px;height:12px}
+#root-merchant .cdsm-loc-btn{position:absolute;right:12px;bottom:12px;width:38px;height:38px;border-radius:12px;background:#fff;border:none;box-shadow:0 1px 5px rgba(0,0,0,.15);color:#2B3F5F;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20}
 </style>
 <style id="layer-host">/* ===== HOST: 宿主外壳 ===== */
 body{margin:0;background:#E8EAED;color:#111;-webkit-font-smoothing:antialiased}
@@ -1423,6 +1436,8 @@ body.host-single-m #root-user{display:none}
 <kv-row label="支付渠道" :value="chargeOrderInfo?chargeOrderInfo.payType:'-'"></kv-row>
 <kv-row label="支付状态" :value="chargeOrderInfo?chargeOrderInfo.payStatus:'-'"></kv-row>
 <kv-row v-if="chargeOrderInfo&&chargeOrderInfo.payTime" label="支付时间" :value="chargeOrderInfo.payTime"></kv-row>
+<kv-row v-if="chargeOrderInfo&&chargeOrderInfo.completeTime" label="完成时间" :value="chargeOrderInfo.completeTime"></kv-row>
+<kv-row v-if="chargeOrderInfo&&chargeOrderInfo.status==='已取消'" label="取消时间" :value="chargeOrderInfo.cancelTime||'-'"></kv-row>
 </kv-card>
 <kv-card label-width="5rem" class="mb-3" data-od-id="charge-order-detail-fee">
 <template #title>充电明细</template>
@@ -1438,7 +1453,7 @@ body.host-single-m #root-user{display:none}
 <!-- 底部操作（仅「已创建」：取消订单 / 立即支付，参考充值订单详情） -->
 <div v-if="chargeOrderInfo&&chargeOrderInfo.status==='已创建'&&chargeOrderInfo.payStatus==='待支付'" class="absolute bottom-0 left-0 right-0 px-4 pt-3 pb-5 bg-white" style="border-top:1px solid #F0F0F0;padding-bottom:max(20px,env(safe-area-inset-bottom))" data-od-id="charge-order-detail-actions">
 <div class="flex gap-3">
-<button data-cp @click="requestCancelCharge" class="flex-1 py-3 rounded-xl text-[15px] font-semibold text-center cursor-pointer active:opacity-90 transition-opacity" style="border:1px solid #E5E5E5;color:#666" data-od-id="charge-order-cancel">取消订单</button>
+<button data-cp @click="requestCancelCharge" class="flex-1 py-3 rounded-xl text-[15px] font-semibold text-center text-white cursor-pointer active:opacity-90 transition-opacity" style="border:none;background:#DC2626" data-od-id="charge-order-cancel">取消订单</button>
 <button data-cp @click="payChargeOrder" class="flex-1 py-3 rounded-xl text-[15px] font-semibold text-white active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="charge-order-pay">立即支付</button>
 </div>
 </div>
@@ -1747,17 +1762,17 @@ body.host-single-m #root-user{display:none}
 </div>
 <span class="text-[15px] font-semibold text-[#1A1A1A]" data-page-node-id="1eIy3kIQtOramI2RIDjRbQ">车电套餐</span>
 </div>
-<div class="bg-white rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openRechargeList()" data-od-id="order-cat-recharge" data-page-node-id="hHpLVoUmeK2WAipZLuMDuV">
-<div class="relative w-12 h-12 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#E6FAF0,#C7F0DC)" data-page-node-id="9nuR2fiXUAuO4PqE85M5Dk">
-<span v-html="luci('credit-card','w-6 h-6 text-[#17A34A]')" data-page-node-id="53TJGSs33LD8n3zSqz74Nz"></span>
-</div>
-<span class="text-[15px] font-semibold text-[#1A1A1A]" data-page-node-id="2ZHExXSLLabVVz90Pt3C3c">充值订单</span>
-</div>
 <div class="bg-white rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openChargeOrderList()" data-od-id="order-cat-charge">
 <div class="relative w-12 h-12 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">
 <span v-html="luci('plug-zap','w-6 h-6 text-[#F59E0B]')"></span>
 </div>
 <span class="text-[15px] font-semibold text-[#1A1A1A]">充电订单</span>
+</div>
+<div class="bg-white rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openRechargeList()" data-od-id="order-cat-recharge" data-page-node-id="hHpLVoUmeK2WAipZLuMDuV">
+<div class="relative w-12 h-12 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#E6FAF0,#C7F0DC)" data-page-node-id="9nuR2fiXUAuO4PqE85M5Dk">
+<span v-html="luci('credit-card','w-6 h-6 text-[#17A34A]')" data-page-node-id="53TJGSs33LD8n3zSqz74Nz"></span>
+</div>
+<span class="text-[15px] font-semibold text-[#1A1A1A]" data-page-node-id="2ZHExXSLLabVVz90Pt3C3c">充值订单</span>
 </div>
 </div>
 </div>
@@ -1782,8 +1797,9 @@ body.host-single-m #root-user{display:none}
 <kv-row label="所属门店" :value="o.store"></kv-row>
 <kv-row label="设备编号" :value="o.deviceNo"></kv-row>
 <kv-row label="充电时长" :value="o.minutes+'分钟'"></kv-row>
-<kv-row label="订单金额" :value="fmtRp(o.amount,2)" value-class="font-semibold !text-[#FF6A00]"></kv-row>
+<kv-row label="订单金额" :value="fmtRp(o.amount,2)"></kv-row>
 <kv-row label="创建时间" :value="o.createdAt"></kv-row>
+<kv-row v-if="o.status==='已取消'" label="取消时间" :value="o.cancelTime||'-'"></kv-row>
 </kv-card>
 </div>
 </template>
@@ -2059,7 +2075,7 @@ body.host-single-m #root-user{display:none}
 <div class="p-4 text-[13px] text-[#666] leading-[1.6] whitespace-pre-line" data-page-node-id="l3684LAMl7j7aJbHn8Z0ZX">{{ orderDetailTab==='cancel'?cancelRules:orderDetailTab==='notice'?noticeRules:orderDetailTab==='overdue'?overdueRules:billingRules }}</div>
 </div>
 <div v-if="orderInfo.status==='created'||orderInfo.status==='pickup'" class="flex justify-center py-2" data-page-node-id="dGLB4Bkw27ntmLnx57fVjv">
-<span class="text-[14px] font-medium cursor-pointer select-none text-[var(--link)] active:opacity-70" data-cp @click="showCancelModal=true" data-page-node-id="t4dmOfcfjKgK2jEIUl4dgE">取消订单</span>
+<span class="text-[14px] font-medium cursor-pointer select-none active:opacity-70" style="color:#DC2626" data-cp @click="showCancelModal=true" data-page-node-id="t4dmOfcfjKgK2jEIUl4dgE">取消订单</span>
 </div>
 </div>
 
@@ -2135,7 +2151,7 @@ body.host-single-m #root-user{display:none}
 <div class="text-[14px] font-semibold text-[#111] mb-3" data-page-node-id="Q85BDODhyStYEpXBRKItmT">支付方式</div>
 <div class="conf-pay-grid" data-page-node-id="bndWUb3CE11n9cSU5xTT2P">
 <div class="conf-pay" :class="paymentType==='2c2p'?'is-selected':''" data-cp @click="paymentType='2c2p'" data-page-node-id="E8uMMiEO6pa1FBkHHkOhiB">2C2P</div>
-<div class="conf-pay" :class="paymentType==='offline'?'is-selected':''" data-cp @click="paymentType='offline'" data-page-node-id="wgIaibQx2jWoBRsoqhVusX">线下支付</div>
+<div v-if="payOfflineVisible" class="conf-pay" :class="paymentType==='offline'?'is-selected':''" data-cp @click="paymentType='offline'" data-page-node-id="wgIaibQx2jWoBRsoqhVusX">线下支付</div>
 <div class="conf-pay" :class="paymentType==='balance'?'is-selected':''" data-cp @click="paymentType='balance'" data-page-node-id="2QJUxXdzIUzZ7ZHWMuzw0p"><span class="text-[11px]" data-page-node-id="hQ94HnoiCg6HxerZsdCLOH">钱包</span><span class="text-[10px] text-[#999]" data-page-node-id="WDWFVwhDxeRsfAUQNHcU0j">{{ walletActive?fmtRp(walletActive.totalBalance,2):'-' }}</span></div>
 </div>
 </div>
@@ -2702,9 +2718,8 @@ body.host-single-m #root-user{display:none}
 <kv-card label-width="6rem" class="mb-3">
 <template #title>{{ o.orderNo }}</template>
 <template #extra><span class="font-medium shrink-0" :style="{color:rechargeStatusTag(o.payStatus).color}">{{ rechargeStatusTag(o.payStatus).text }}</span></template>
-<kv-row label="充值金额" :value="fmtRp(o.amount)" value-class="font-semibold !text-[#FF6A00]"></kv-row>
-<kv-row v-if="o.giftAmount" label="赠送金额" :value="fmtRp(o.giftAmount)" value-class="font-semibold !text-[#FF6A00]"></kv-row>
-<kv-row label="支付渠道" :value="rechargeChannelText(o.payChannel)"></kv-row>
+<kv-row label="充值金额" :value="fmtRp(o.amount)"></kv-row>
+<kv-row v-if="o.giftAmount" label="赠送金额" :value="fmtRp(o.giftAmount)"></kv-row>
 <kv-row label="创建时间" :value="o.createTime"></kv-row>
 </kv-card>
 </div>
@@ -2745,7 +2760,7 @@ body.host-single-m #root-user{display:none}
 <!-- 底部操作 -->
 <div v-if="rechargeOrder.payStatus==='UNPAID'" class="absolute bottom-0 left-0 right-0 px-4 pt-3 pb-5 bg-white" style="border-top:1px solid #F0F0F0;padding-bottom:max(20px,env(safe-area-inset-bottom))" data-page-node-id="Cy2YmuypeRXO2gaMyspYwi">
 <div class="flex gap-3" data-page-node-id="pubvQVe5GLQxWVQk1wbN0r">
-<button v-if="rechargeOrder.payStatus==='UNPAID'" data-cp @click="requestCancelRecharge" class="flex-1 py-3 rounded-xl text-[15px] font-semibold text-center cursor-pointer active:opacity-90 transition-opacity" style="border:1px solid #E5E5E5;color:#666" data-page-node-id="UsPCUM3w7s7kPshvA3Z3Nn">取消订单</button>
+<button v-if="rechargeOrder.payStatus==='UNPAID'" data-cp @click="requestCancelRecharge" class="flex-1 py-3 rounded-xl text-[15px] font-semibold text-center text-white cursor-pointer active:opacity-90 transition-opacity" style="border:none;background:#DC2626" data-page-node-id="UsPCUM3w7s7kPshvA3Z3Nn">取消订单</button>
 <button v-if="rechargeOrder.payStatus==='UNPAID'" data-cp @click="payRechargeOrder" class="flex-1 py-3 rounded-xl text-[15px] font-semibold text-white active:opacity-90 transition-opacity" style="background:var(--accent)" data-page-node-id="frv6YDrZ7uM9fGInCH7PK9">立即支付</button>
 </div>
 </div>
@@ -3235,9 +3250,22 @@ body.host-single-m #root-user{display:none}
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci(e.icon,'w-6 h-6 text-[var(--accent)]')"></span></div>
 <span class="text-[14px] font-semibold text-[#1A1A1A]">{{ e.l }}</span>
 </div>
+<div v-if="can('charge_order.list')" data-cp @click="coOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-charge-order-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
+<div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('plug-zap','w-6 h-6 text-[var(--accent)]')"></span></div>
+<span class="text-[14px] font-semibold text-[#1A1A1A]">充电订单</span>
+</div>
 <div v-if="can('recharge_order.list')" data-cp @click="roOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-recharge-order-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('wallet','w-6 h-6 text-[var(--accent)]')"></span></div>
 <span class="text-[14px] font-semibold text-[#1A1A1A]">充值订单</span>
+</div>
+</div>
+</template>
+<template v-if="can('charge_device.list')">
+<div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">设备管理</span></div>
+<div class="grid grid-cols-2 gap-2.5">
+<div data-cp @click="cdOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-charge-device-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
+<div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('battery-charging','w-6 h-6 text-[var(--accent)]')"></span></div>
+<span class="text-[14px] font-semibold text-[#1A1A1A]">充电设备</span>
 </div>
 </div>
 </template>
@@ -4366,7 +4394,7 @@ body.host-single-m #root-user{display:none}
 </div>
 <div v-if="showOrderActionsBar" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
 <div class="flex gap-3">
-<button v-if="showPrimaryAction" data-cp @click="ordersDoPrimary" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" :style="(primaryDanger&&primaryLabel!=='取消订单')?{background:'#DC2626'}:{background:'var(--accent)'}">{{ primaryLabel }}</button>
+<button v-if="showPrimaryAction" data-cp @click="ordersDoPrimary" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" :style="primaryDanger?{background:'#DC2626'}:{background:'var(--accent)'}">{{ primaryLabel }}</button>
 <button v-if="dualMode&&showDangerAction" data-cp @click="ordersDoDanger" :disabled="ordersSaving" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-colors" :style="{background:'#DC2626',color:'#fff'}">{{ dangerLabel }}</button>
 </div></div>
 </page>
@@ -4395,15 +4423,14 @@ body.host-single-m #root-user{display:none}
 
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
 <template v-if="rechargeFiltered.length">
-<div v-for="(o,i) in rechargeFiltered" :key="o.orderNo" data-cp @click="roOpenDetail(o)" class="bg-white rounded-2xl p-4 mb-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-<div class="flex items-center justify-between mb-2"><span class="text-[13px] font-semibold text-[#333] truncate pr-2">{{ o.orderNo }}</span><span class="text-[13px] font-semibold shrink-0" :style="{color:roPayStatusTag(o.payStatus).c}">{{ roPayStatusTag(o.payStatus).l }}</span></div>
-<div class="flex items-center justify-between mb-1.5"><span class="text-[14px] font-medium text-[#1A1A1A] truncate">{{ rechargeCustomerText(o) }}</span></div>
-<div class="flex items-center justify-between"><span class="text-[12px] text-[#999]">{{ o.createTime }}</span><span class="text-[12px] text-[#999]">{{ roPayChannelText(o.payChannel) }}</span></div>
-<div class="pt-2 space-y-1.5">
-<div v-if="o.amount" class="flex items-center justify-between"><span class="text-[12px] text-[#999]">充值金额</span><span class="text-[15px] font-semibold" style="color:#FF6A00">{{ fmtRp(o.amount) }}</span></div>
-<div v-if="o.giftAmount" class="flex items-center justify-between"><span class="text-[12px] text-[#999]">赠送金额</span><span class="text-[14px] font-semibold" style="color:#FF6A00">{{ fmtRp(o.giftAmount) }}</span></div>
-</div>
-</div>
+<kv-card v-for="(o,i) in rechargeFiltered" :key="o.orderNo" label-width="6rem" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="roOpenDetail(o)">
+<template #title><span class="min-w-0 truncate">{{ o.orderNo }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="{color:roPayStatusTag(o.payStatus).c}">{{ roPayStatusTag(o.payStatus).l }}</span></template>
+<kv-row label="用户账号" :value="rechargeCustomerText(o)"></kv-row>
+<kv-row label="充值金额" :value="fmtRp(o.amount)"></kv-row>
+<kv-row v-if="o.giftAmount" label="赠送金额" :value="fmtRp(o.giftAmount)"></kv-row>
+<kv-row label="创建时间" :value="o.createTime"></kv-row>
+</kv-card>
 </template>
 <empty-state icon="file-text" text="暂无订单" v-else></empty-state>
 </div>
@@ -4462,16 +4489,11 @@ body.host-single-m #root-user{display:none}
 <kv-card title="基础信息" class="mb-3" label-width="5rem">
 <template #extra><span class="font-medium shrink-0" :style="{color:roPayStatusTag(curRechargeOrder.payStatus).c}">{{ roPayStatusTag(curRechargeOrder.payStatus).l }}</span></template>
 <kv-row label="订单编号" :value="curRechargeOrder.orderNo" copyable @copy="t=>copyText(t,'订单编号')"></kv-row>
+<kv-row label="用户账号" value-class="font-semibold"><template #value><span :class="(curRechargeOrder.account||curRechargeOrder.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" data-cp @click="(curRechargeOrder.account||curRechargeOrder.customer)&&goUserDetail(curRechargeOrder.account||curRechargeOrder.customer)">{{ rechargeCustomerText(curRechargeOrder) }}</span><span v-if="curRechargeOrder.phone" class="ml-1.5" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></template></kv-row>
 <kv-row label="创建时间" :value="curRechargeOrder.createTime"></kv-row>
 <kv-row label="支付渠道" :value="roPayChannelText(curRechargeOrder.payChannel)"></kv-row>
 <kv-row v-if="['PAID','REFUNDING','PARTIAL_REFUND','FULL_REFUND'].includes(curRechargeOrder.payStatus)" label="支付时间" :value="curRechargeOrder.payTime||'-'"></kv-row>
 <kv-row v-if="curRechargeOrder.payStatus==='CANCELLED'" label="取消时间" :value="curRechargeOrder.cancelTime||'-'"></kv-row>
-</kv-card>
-<kv-card title="用户信息" class="mb-3 cursor-pointer active:bg-[#FAFAFA]" label-width="5rem" data-cp @click="goUserDetail(curRechargeOrder.account||curRechargeOrder.phone||curRechargeOrder.email)">
-<template #extra><span v-html="luci('chevron-right','w-4 h-4 text-[#bbb]')"></span></template>
-<kv-row label="账号" :value="curRechargeOrder.account||'-'" :copyable="!!curRechargeOrder.account" @copy="t=>copyText(t,'账号')"></kv-row>
-<kv-row label="手机号" :value="curRechargeOrder.phone||'-'" :copyable="!!curRechargeOrder.phone" @copy="t=>copyText(t,'手机号')"><template #value><span>{{ curRechargeOrder.phone||'-' }}</span><span v-if="curRechargeOrder.phone" class="ml-1.5" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)] cursor-pointer active:opacity-70')" data-cp @click.stop="callPhone(curRechargeOrder.phone)"></span></template></kv-row>
-<kv-row label="邮箱" :value="curRechargeOrder.email||'-'" :copyable="!!curRechargeOrder.email" @copy="t=>copyText(t,'邮箱')"></kv-row>
 </kv-card>
 <kv-card title="充值明细" class="mb-3" label-width="5rem">
 <kv-row label="充值金额" :value="fmtRp(curRechargeOrder.amount)"></kv-row>
@@ -4484,7 +4506,7 @@ body.host-single-m #root-user{display:none}
 </kv-card>
 <div v-if="curRechargeOrder.payStatus==='UNPAID'||roCanRefund()" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
 <div class="flex gap-3">
-<button v-if="curRechargeOrder.payStatus==='UNPAID'&&can('recharge_order.operate.cancel')" data-cp @click="roRequestCancel" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer" style="background:var(--accent)">取消订单</button>
+<button v-if="curRechargeOrder.payStatus==='UNPAID'&&can('recharge_order.operate.cancel')" data-cp @click="roRequestCancel" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer" style="background:#DC2626">取消订单</button>
 <button v-if="roCanRefund()&&can('recharge_order.refund.create')" data-cp @click="roOpenRefund" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer" style="background:var(--accent)">退款</button>
 </div></div>
 </div></page>
@@ -4529,6 +4551,9 @@ body.host-single-m #root-user{display:none}
 
 <!-- ═══ RECHARGE ORDER REFUND CONFIRM MODAL ═══ -->
 <confirm-dialog :open="roRefundConfirm" title="订单退款" :desc="`确认执行退款？合计退款 ${ fmtRp(roRefundTotal(),2) }`" :loading="roRefundLoading" z="820" @close="roRefundConfirm=false" @confirm="roConfirmRefund"></confirm-dialog>
+
+<!-- ═══ 充电设备 · 列表页（商户端） ═══ -->
+
 
  <!-- ═══ ORDER REFUND RECORDS ═══ -->
  <page :open="ordersOV==='refunds'" :z="510" :swipe-close="()=>goBack()" oid="order-refund-records">
@@ -4668,7 +4693,6 @@ body.host-single-m #root-user{display:none}
 <div v-if="refundMode==='return'" class="flex mx-5 mb-3 shrink-0 rounded-full p-0.5 relative" style="background:#F6F7F9;border:1px solid #E5E5E5"><div class="flex-1 py-2 rounded-full text-[13px] font-medium text-center select-none" style="background:#fff;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.06)">押金</div></div>
 <div class="sheet-body px-5" style="max-height:52vh">
 <template v-if="refundMode!=='return'&&rTab==='rent'">
-<div>
 <form-field v-if="rActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray" :hint="'可退 '+fmtRp(refundRentCapCh['2C2P'],2)">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="rRent2c2p" type="number" min="0" :max="refundRentCapCh['2C2P']" class="flex-1 px-2 py-3.5 text-[16px] font-medium" @input="refundChClamp(rRent2c2p,refundRentCapCh['2C2P'])" @blur="refundChBlur(rRent2c2p,refundRentCapCh['2C2P'])">
@@ -4681,10 +4705,8 @@ body.host-single-m #root-user{display:none}
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="rRentOffline" type="number" min="0" :max="refundRentCapCh['OFFLINE']" class="flex-1 px-2 py-3.5 text-[16px] font-medium" @input="refundChClamp(rRentOffline,refundRentCapCh['OFFLINE'])" @blur="refundChBlur(rRentOffline,refundRentCapCh['OFFLINE'])">
 </form-field>
-</div>
 </template>
 <template v-else>
-<div>
 <form-field v-if="rActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray" :hint="'可退 '+fmtRp(refundDepCapCh['2C2P'],2)">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="rDep2c2p" type="number" min="0" :max="refundDepCapCh['2C2P']" class="flex-1 px-2 py-3.5 text-[16px] font-medium" @input="refundChClamp(rDep2c2p,refundDepCapCh['2C2P'])" @blur="refundChBlur(rDep2c2p,refundDepCapCh['2C2P'])">
@@ -4697,7 +4719,6 @@ body.host-single-m #root-user{display:none}
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="rDepOffline" type="number" min="0" :max="refundDepCapCh['OFFLINE']" class="flex-1 px-2 py-3.5 text-[16px] font-medium" @input="refundChClamp(rDepOffline,refundDepCapCh['OFFLINE'])">
 </form-field>
-</div>
 </template>
 <form-field label="退款原因" box-class="ff-box-gray is-area" :counter="(rReason||'').length" counter-max="255">
 <textarea v-model="rReason" maxlength="255" placeholder="请输入退款原因" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px]" style="font-family:inherit"></textarea>
@@ -4738,7 +4759,6 @@ body.host-single-m #root-user{display:none}
 <!-- 租金 -->
 <template v-if="psTab==='rent'">
 <div v-if="psRentDiff" class="text-[12px] mb-2" :style="psRentDiff.cls">{{ psRentDiff.text }}</div>
-<div>
 <form-field v-if="psActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psRent2c2p" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
@@ -4751,11 +4771,9 @@ body.host-single-m #root-user{display:none}
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psRentOffline" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
-</div>
 </template>
 <template v-else>
 <div v-if="psDepDiff" class="text-[12px] mb-2" :style="psDepDiff.cls">{{ psDepDiff.text }}</div>
-<div>
 <form-field v-if="psActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psDep2c2p" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
@@ -4768,7 +4786,6 @@ body.host-single-m #root-user{display:none}
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psDepOffline" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
-</div>
 </template>
 <form-field label="备注" box-class="ff-box-gray is-area" :counter="(psReason||'').length" counter-max="255">
 <textarea v-model="psReason" maxlength="255" placeholder="请输入备注..." class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[80px]" style="font-family:inherit"></textarea>
@@ -4844,7 +4861,7 @@ body.host-single-m #root-user{display:none}
  </div></bottom-sheet>
 
  <!-- ═══ MODAL ═══ -->
- <confirm-dialog :open="ordersMod && !orderPickActive" :title="ordersModTitle" :desc="ordersModDesc" :loading="ordersModLoading" z="999" @close="ordersMod=null" @confirm="ordersConfirmMod"></confirm-dialog>
+ <confirm-dialog :open="ordersMod && !orderPickActive" :title="ordersModTitle" :desc="ordersModDesc" :loading="ordersModLoading" z="999"  @close="ordersMod=null" @confirm="ordersConfirmMod"></confirm-dialog>
 
 <!-- ═══ 绑定 / 更换 车辆·电池 选择弹窗（仅展示空闲，样式参照新增车型弹窗） ═══ -->
 <bottom-sheet :open="orderPickActive" :title="ordersModTitle" :mask-z="600" max-h="70%" panel-oid="order-pick-modal" @close="closeOrderPick">
@@ -4873,6 +4890,393 @@ body.host-single-m #root-user{display:none}
 </template>
 
 <!-- ═══ PROFILE ═══ -->
+<page :open="cdOV==='list'" :z="500" :swipe-close="()=>goBack()" oid="mc-charge-device-list-page" data-od-id="mc-charge-device-list-page">
+<nav-bar title="充电设备" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="bg-white shrink-0 px-5 pt-3 pb-2">
+<div class="flex gap-2 items-center">
+<div class="flex-1 rounded-full flex items-center py-1.5 gap-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:14px;padding-right:4px">
+<span v-html="luci('search','w-4 h-4 text-[#999] shrink-0')"></span>
+<input v-model="cdQ" type="text" maxlength="64" placeholder="请输入设备编号" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="cdDoSearch"><button data-cp @click="cdListScan" type="button" class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer shrink-0 transition-colors active:bg-[#E8EBF1]" style="border:none;background:transparent" data-od-id="cd-scan-btn"><span v-html="luci('scan','w-5 h-5 text-[var(--link)]')"></span></button>
+</div>
+<div data-cp @click="cdOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="cdHasF?{background:'#FFF3E0',border:'1px solid var(--accent-2)',color:'var(--accent-2)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}" data-od-id="cd-filter-btn"><span v-html="luci('sliders-horizontal','w-4 h-4')"></span></div>
+</div>
+</div>
+<div class="bg-white shrink-0" style="padding:10px 20px 8px"><div class="filter-tabs" id="cdPillRow">
+<div v-for="p in cdPills" :key="p.v" data-cp @click="cdSetPill(p.v)" class="filter-pill" :style="cdPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ cdCnt[p.v]||0 }})</div>
+</div></div>
+<div class="ptr-indicator" id="ptr-cd"><span class="ptr-text">下拉刷新</span></div>
+<div id="sc-cd" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" @vue:mounted="()=>initPullToRefresh('sc-cd','ptr-cd',refreshCd)" data-od-id="charge-device-list">
+<template v-if="chargeDevFiltered.length">
+<div v-for="d in chargeDevFiltered" :key="d.id" data-cp @click="cdOpenDetail(d)" :data-od-id="'cd-item-'+d.id">
+<kv-card label-width="6rem" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]">
+<template #title><span class="min-w-0 truncate">{{ d.deviceNo }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="{color:cdEnableTag(d.status).c}">{{ cdEnableTag(d.status).l }}</span></template>
+<kv-row label="所属门店" :value="storeNameOf(d.shopId)" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="设备地址" :value="d.address" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="单价" :value="cdPriceText(d)"></kv-row>
+<kv-row label="最大充电时长" :value="cdDurText(d)"></kv-row>
+<kv-row label="使用状态"><template #value><span class="font-medium" :style="{color:cdUsageTag(d.usageStatus).c}">{{ cdUsageTag(d.usageStatus).l }}</span></template></kv-row>
+</kv-card>
+</div>
+</template>
+<empty-state v-else icon="plug-zap" text="暂无设备"></empty-state>
+</div>
+<!-- 新增设备 FAB（同车辆列表） -->
+<div class="absolute right-5 z-[80] flex flex-col items-center gap-3" style="bottom:105px">
+<div v-if="can('charge_device.add')" data-cp @click="cdOpenAdd" class="w-14 h-14 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)" data-od-id="cd-add-fab"><span v-html="luci('plus','w-5 h-5')"></span></div>
+</div>
+</page>
+
+<!-- ═══ 充电设备 · 详情页 ═══ -->
+<page :open="cdOV==='detail'" :z="510" :swipe-close="()=>goBack()" oid="mc-charge-device-detail-page" data-od-id="mc-charge-device-detail-page">
+<nav-bar title="设备详情" border-color="#E5E5E5" @back="goBack()"><template #right><span class="w-full h-full flex items-center justify-center cursor-pointer active:opacity-70" style="color:var(--accent)" data-cp @click="cdMoreOpen=true" data-od-id="cd-more-btn"><span v-html="luci('more-horizontal','w-5 h-5')"></span></span></template></nav-bar>
+<div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-8" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="cd-detail-scroll">
+<kv-card :title="curChargeDev?curChargeDev.deviceNo:'-'" label-width="5rem" class="mb-3" :copyable="!!(curChargeDev&&curChargeDev.deviceNo)" @copy="t=>copyText(t,'设备编号')" data-od-id="cd-detail-basic">
+<template #extra><span class="font-medium shrink-0" :style="{color:curChargeDev?cdEnableTag(curChargeDev.status).c:'#999'}">{{ curChargeDev?cdEnableTag(curChargeDev.status).l:'' }}</span></template>
+<kv-row label="所属门店" :value="curChargeDev?storeNameOf(curChargeDev.shopId):'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="设备地址" :value="curChargeDev?curChargeDev.address:'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="单价" :value="cdPriceText(curChargeDev)"></kv-row>
+<kv-row label="最大充电时长" :value="cdDurText(curChargeDev)"></kv-row>
+<kv-row label="使用状态"><template #value><span class="font-medium" :style="{color:curChargeDev?cdUsageTag(curChargeDev.usageStatus).c:'#999'}">{{ curChargeDev?cdUsageTag(curChargeDev.usageStatus).l:'-' }}</span></template></kv-row>
+<kv-row label="创建时间" :value="curChargeDev?curChargeDev.createTime:'-'"></kv-row>
+</kv-card>
+</div>
+</page>
+
+<!-- ═══ 充电设备 · 新增页 ═══ -->
+<page :open="cdOV==='add'" :z="520" :swipe-close="()=>goBack()" oid="mc-charge-device-add-page" data-od-id="mc-charge-device-add-page">
+<nav-bar title="新增设备" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-[112px]" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="cd-add-form">
+<form-field label="设备编号" required :error="cdErr.deviceNo" :counter="(cdAddForm.deviceNo||'').length" counter-max="64">
+<input v-model="cdAddForm.deviceNo" maxlength="64" placeholder="请输入设备编号" class="w-full pl-3.5 pr-14 py-3.5 text-[15px]">
+</form-field>
+<form-field label="设备地址" required bare :error="cdErr.address">
+<div class="ff-box" :class="cdErr.address?'is-error':''">
+<input :value="cdAddForm.address" @input="cdAddForm.address=$event.target.value;cdErr.address=''" type="text" maxlength="60" placeholder="请输入地址或选择地址" class="w-full pl-3.5 pr-20 py-3 text-[15px]" data-od-id="cd-add-addr">
+<div class="absolute right-2.5 flex items-center gap-1">
+<div v-if="cdAddForm.address" data-cp @click="cdClearAddr('add')" class="w-7 h-7 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-od-id="cd-add-addr-clear"><span v-html="luci('x','w-4 h-4')"></span></div>
+<div data-cp @click="cdOpenAddrMap('add')" class="w-8 h-8 flex items-center justify-center cursor-pointer shrink-0" style="color:#2B3F5F" title="地图选择地址" data-od-id="cd-add-addr-map"><span v-html="luci('map-pin','w-[18px] h-[18px]')"></span></div>
+</div>
+</div>
+</form-field>
+</div>
+<div class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
+<button data-cp @click="cdSaveAdd" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="cd-add-submit">保存</button>
+</div>
+</page>
+
+<!-- ═══ 充电设备 · 更多操作 ═══ -->
+<bottom-sheet :open="cdMoreOpen" title="更多操作" :mask-z="900" panel-oid="cd-ops-sheet" @close="cdMoreOpen=false">
+<div class="pt-1">
+<div data-cp @click="cdMoreOpen=false;cdOpenMod('edit')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="cd-op-edit"><span class="text-[15px] font-medium">编辑设备</span></div>
+<div data-cp @click="cdMoreOpen=false;cdOpenMod('price')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="cd-op-price"><span class="text-[15px] font-medium">设备定价</span></div>
+<div data-cp @click="cdMoreOpen=false;cdAskToggle()" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="cd-op-toggle"><span class="text-[15px] font-medium" :style="curChargeDev&&curChargeDev.status==='ENABLE'?{color:'#FF4343'}:{}">{{ curChargeDev&&curChargeDev.status==='ENABLE'?'禁用设备':'启用设备' }}</span></div>
+<div v-if="curChargeDev&&curChargeDev.status==='DISABLE'" data-cp @click="cdMoreOpen=false;cdOpenMod('shop')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="cd-op-shop"><span class="text-[15px] font-medium">更换门店</span></div>
+</div>
+</bottom-sheet>
+
+<!-- ═══ 充电设备 · 编辑设备页 ═══ -->
+<page :open="cdOV==='edit'" :z="520" :swipe-close="()=>goBack()" oid="mc-charge-device-edit-page" data-od-id="mc-charge-device-edit-page">
+<nav-bar title="编辑设备" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-[112px]" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="cd-edit-form">
+<form-field label="设备编号" required :error="cdErr.deviceNo" :counter="(cdModForm.deviceNo||'').length" counter-max="64">
+<input v-model="cdModForm.deviceNo" maxlength="64" placeholder="请输入设备编号" class="w-full pl-3.5 pr-14 py-3.5 text-[15px]">
+</form-field>
+<form-field label="设备地址" required bare :error="cdErr.address">
+<div class="ff-box" :class="cdErr.address?'is-error':''">
+<input :value="cdModForm.address" @input="cdModForm.address=$event.target.value;cdErr.address=''" type="text" maxlength="60" placeholder="请输入地址或选择地址" class="w-full pl-3.5 pr-20 py-3 text-[15px]" data-od-id="cd-mod-addr">
+<div class="absolute right-2.5 flex items-center gap-1">
+<div v-if="cdModForm.address" data-cp @click="cdClearAddr('edit')" class="w-7 h-7 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-od-id="cd-mod-addr-clear"><span v-html="luci('x','w-4 h-4')"></span></div>
+<div data-cp @click="cdOpenAddrMap('edit')" class="w-8 h-8 flex items-center justify-center cursor-pointer shrink-0" style="color:#2B3F5F" title="地图选择地址" data-od-id="cd-mod-addr-map"><span v-html="luci('map-pin','w-[18px] h-[18px]')"></span></div>
+</div>
+</div>
+</form-field>
+</div>
+<div class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
+<button data-cp @click="cdSaveEdit" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="cd-edit-submit">保存</button>
+</div>
+</page>
+
+<!-- ═══ 充电设备 · 设备定价弹窗（保持弹窗） ═══ -->
+<bottom-sheet :open="cdMod==='price'" title="设备定价" :mask-z="800" @close="cdCloseMod"><div class="px-5">
+<form-field label="单价" box-class="ff-box-gray" required :error="cdErr.price">
+<span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
+<input v-model.number="cdModForm.price" type="number" min="0" step="0.01" placeholder="0" class="flex-1 px-2 py-3.5 text-[16px] font-medium min-w-0">
+<span class="pl-2 pr-3.5 text-[14px] shrink-0" style="color:#999">分钟</span>
+</form-field>
+<form-field label="最大充电时长" box-class="ff-box-gray" required :error="cdErr.maxDuration">
+<input v-model.number="cdModForm.maxDuration" type="number" min="1" step="1" placeholder="0" class="flex-1 px-3.5 py-3.5 text-[16px] font-medium min-w-0">
+<span class="pl-2 pr-3.5 text-[14px] shrink-0" style="color:#999">分钟</span>
+</form-field>
+<div class="mt-2">
+<button data-cp @click="cdSavePrice" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="cd-mod-submit">保存</button>
+</div>
+</div></bottom-sheet>
+
+<!-- ═══ 充电设备 · 选择地址页（地图拖拽取点；交互与换电端一致） ═══ -->
+<page :open="cdOV==='addrMap'" :z="530" :swipe-close="()=>goBack()" oid="mc-charge-device-addr-map-page" data-od-id="mc-charge-device-addr-map-page">
+<nav-bar title="选择地址" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div ref="cdMapBox" class="flex-1 min-h-0 relative overflow-hidden select-none" style="background:#EAEFE7;touch-action:none" @pointerdown="cdMapDown" @pointermove="cdMapMove" @pointerup="cdMapUp" @pointercancel="cdMapUp" data-od-id="cd-map-canvas">
+<!-- POI 搜索：浮层置于地图之上，阻止 pointer 事件冒泡以免误触发地图拖拽 -->
+<div class="absolute left-3 right-3 top-3 z-10" @pointerdown.stop @pointermove.stop @pointerup.stop @pointercancel.stop data-od-id="cd-map-search">
+<div class="flex items-center gap-2 px-3 h-10 rounded-xl bg-white" style="box-shadow:0 1px 5px rgba(0,0,0,.15)">
+<span class="shrink-0 flex items-center" style="color:#6B6B6B" v-html="luci('search','w-4 h-4')"></span>
+<input :value="cdMapQ" @input="cdMapQ=$event.target.value" type="text" placeholder="搜索地点" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="cd-map-search-input">
+<span v-if="cdMapQ" data-cp @click="cdMapQ=''" class="shrink-0 flex items-center justify-center cursor-pointer" style="color:#C4C4C4" data-od-id="cd-map-search-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
+</div>
+</div>
+<div class="cdsm-world" :style="cdMapWorldStyle">
+<div class="cdsm-road-h" style="top:12%"></div>
+<div class="cdsm-road-h" style="top:38%"></div>
+<div class="cdsm-road-h" style="top:64%"></div>
+<div class="cdsm-road-h" style="top:88%"></div>
+<div class="cdsm-road-v" style="left:14%"></div>
+<div class="cdsm-road-v" style="left:36%"></div>
+<div class="cdsm-road-v" style="left:58%"></div>
+<div class="cdsm-road-v" style="left:80%"></div>
+<span class="cdsm-roadlbl" style="left:16%;top:6%">黄河中路</span>
+<span class="cdsm-roadlbl" style="left:60%;top:34%">航空港街道</span>
+<span class="cdsm-roadlbl" style="left:16%;top:60%">西航港大道</span>
+<span class="cdsm-roadlbl" style="left:60%;top:86%">双流西站广场</span>
+<div v-for="(p,pi) in CD_ADDR_POINTS" :key="'cdmp'+pi" class="cdsm-poi" :class="cdMapDraft===p.addr?'on':''" :style="{left:p.lx+'%',top:p.ly+'%'}">
+<span class="pdot"></span>
+<span class="pnm">{{ p.name }}</span>
+</div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="w-9 h-9 rounded-full flex items-center justify-center text-white" style="background:#FF6A00;box-shadow:0 2px 10px rgba(0,0,0,.28)"><span v-html="luci('map-pin','w-5 h-5')"></span></div>
+</div>
+<button data-cp @pointerdown.stop @click="cdUseLoc()" class="cdsm-loc-btn" data-od-id="cd-map-loc-fab" title="使用当前定位"><span v-html="luci('crosshair','w-5 h-5')"></span></button>
+</div>
+<div class="shrink-0 bg-white" style="border-top:1px solid #F0F0F0">
+<div class="overflow-y-auto hide-scroll pt-2 pb-2" style="max-height:34vh">
+<div v-for="(p,pi) in cdMapList" :key="p.addr" data-cp @click="cdPickMapPoint(p)" class="flex items-center gap-3 px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'cd-map-point-'+pi">
+<div class="flex-1 min-w-0">
+<div class="text-[14px] font-medium truncate" :style="cdMapDraft===p.addr?{color:'var(--accent)'}:{color:'#111'}">{{ p.name }}</div>
+<div class="text-[12px] mt-0.5 truncate" style="color:#999">{{ p.addr }}</div>
+</div>
+<span class="text-[11px] shrink-0" style="color:#BBB">{{ p.dist }}</span>
+<span v-if="cdMapDraft===p.addr" v-html="luci('check','w-4 h-4 text-[var(--accent)]')"></span>
+</div>
+<empty-state v-if="!cdMapList.length" icon="" text="没有找到相关地点" text-class="text-[13px] font-normal text-[#999]" root-class="flex flex-col items-center justify-center text-center py-[34px]" data-od-id="cd-map-search-empty"></empty-state>
+</div>
+<div class="px-5 pb-[calc(12px+env(safe-area-inset-bottom,0px))] pt-1">
+<button data-cp @click="cdConfirmAddrMap" class="w-full h-12 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="cd-map-confirm">确认</button>
+</div>
+</div>
+</page>
+
+<!-- ═══ 充电设备 · 定位授权 / 定位服务（两步链，层级高于选点页） ═══ -->
+<confirm-dialog :open="cdShowLocAppAuth" z="560" oid="cd-loc-app-auth-modal" title="允许“雅迪租车”使用你的位置信息吗？" desc="您的位置信息将用于定位设备地址" :cancel-text="'不允许'" :confirm-text="'允许'" confirm-bg="var(--accent)" @close="cdDenyLocAppAuth" @confirm="cdAllowLocAppAuth"></confirm-dialog>
+<confirm-dialog :open="cdShowLocService" z="550" oid="cd-loc-service-modal" title="定位服务" desc="请在系统设置中开启定位服务，以自动获取设备地址" :cancel-text="'取消'" :confirm-text="'去开启'" confirm-bg="var(--accent)" @close="cdCancelLocService" @confirm="cdAllowLocService"></confirm-dialog>
+
+<!-- ═══ 充电设备 · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
+<option-sheet :open="cdMod==='shop'" title="更换门店" :options="cdShopOptions" :model-value="cdModForm.shopId" :mask-z="800" oid="cd-shop-mask" panel-oid="cd-shop-picker" @select="cdPickShop" @close="cdCloseMod"></option-sheet>
+
+<!-- ═══ 充电设备 · 禁用/启用二次确认 ═══ -->
+<confirm-dialog :open="!!cdConfirm" :title="cdConfirmTitle" :desc="cdConfirmDesc" :loading="cdConfirmLoading" z="820" oid="cd-toggle-modal" :confirm-bg="cdConfirm==='disable'?'#DC2626':'var(--accent)'" @close="cdConfirm=''" @confirm="cdDoToggle"></confirm-dialog>
+
+<!-- ═══ 充电设备 · 全部筛选 ═══ -->
+<bottom-sheet :open="cdShowFS" title="全部筛选" :mask-z="600" max-h="70%" @close="cdShowFS=false">
+<div class="sheet-body px-5 pb-3" style="min-height:0">
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">启用状态</div><div style="display:flex;flex-wrap:wrap;gap:8px">
+<div data-cp @click="cdFsStatusC=(cdFsStatusC==='ENABLE'?'':'ENABLE')" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="cdFsStatusC==='ENABLE'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">启用</div>
+<div data-cp @click="cdFsStatusC=(cdFsStatusC==='DISABLE'?'':'DISABLE')" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="cdFsStatusC==='DISABLE'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">禁用</div>
+</div></div>
+<div style="margin-bottom:16px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">使用状态</div><div style="display:flex;flex-wrap:wrap;gap:8px">
+<div data-cp @click="cdFsUsageC=(cdFsUsageC==='0'?'':'0')" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="cdFsUsageC==='0'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">空闲</div>
+<div data-cp @click="cdFsUsageC=(cdFsUsageC==='1'?'':'1')" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="cdFsUsageC==='1'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">充电中</div>
+</div></div>
+</div>
+<template #footer><div class="flex gap-3 px-5"><button data-cp @click="cdResetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">重置</button><button data-cp @click="cdApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:var(--accent)">确定</button></div></template>
+</bottom-sheet>
+
+<!-- ═══ 充电订单 · 列表页（商户端） ═══ -->
+<page :open="coOV==='list'" :z="500" :swipe-close="()=>goBack()" oid="mc-charge-order-list-page" data-od-id="mc-charge-order-list-page">
+<nav-bar title="充电订单" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="bg-white shrink-0 px-5 pt-3 pb-2">
+<div class="flex gap-2 items-center">
+<div class="flex-1 rounded-full flex items-center py-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:6px;padding-right:4px">
+<div class="relative shrink-0" data-cp @click.stop>
+<button data-cp @click="coSearchScopeOpen=!coSearchScopeOpen" type="button" class="flex items-center gap-1.5 text-[12px] font-medium text-[#333] bg-transparent border-0 outline-none pl-2 pr-2.5 mr-1.5 py-1 cursor-pointer" style="border-right:1px solid #E5E5E5">
+<span class="truncate max-w-[60px]">{{ coSearchScopeLabel }}</span>
+<svg class="w-4 h-4 text-[#999] transition-transform" :class="coSearchScopeOpen?'rotate-180':''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+</button>
+<div v-if="coSearchScopeOpen" data-cp @click.stop class="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-lg border border-[#EEE] py-1 z-50 min-w-[100px]" data-od-id="co-scope-menu">
+<div v-for="opt in coSearchScopeOpts" :key="opt.v" data-cp @click="coSetSearchScope(opt.v)" class="px-3 py-2 text-[12px] cursor-pointer hover:bg-[#F6F7F9]" :style="opt.v===coSearchScope?{color:'var(--link)',fontWeight:600,background:'#EBF1FD'}:{color:'#333'}">{{ opt.l }}</div>
+</div>
+</div>
+<input v-model="coQ" type="text" maxlength="64" :placeholder="coSearchPH" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" @keyup.enter="coDoSearch" data-od-id="co-search-input">
+</div>
+<div data-cp @click="coOpenFS" class="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shrink-0" :style="coHasF?{background:'#FFF3E0',border:'1px solid var(--accent-2)',color:'var(--accent-2)'}:{background:'#fff',border:'1px solid #E5E5E5',color:'#666'}" data-od-id="co-filter-btn"><span v-html="luci('sliders-horizontal','w-4 h-4')"></span></div>
+</div>
+</div>
+<div class="bg-white shrink-0" style="padding:10px 20px 8px"><div class="filter-tabs" id="coPillRow">
+<div v-for="p in coPills" :key="p.v" data-cp @click="coSetPill(p.v)" class="filter-pill" :style="coPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ coCnt[p.v]||0 }})</div>
+</div></div>
+<div class="ptr-indicator" id="ptr-co"><span class="ptr-text">下拉刷新</span></div>
+<div id="sc-co" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" @vue:mounted="()=>initPullToRefresh('sc-co','ptr-co',refreshCo)" data-od-id="charge-order-list">
+<template v-if="coFiltered.length">
+<div v-for="o in coFiltered" :key="o.id" data-cp @click="coOpenDetail(o)" :data-od-id="'co-item-'+o.id">
+<kv-card label-width="6rem" class="mb-3 cursor-pointer active:bg-[#F6F7F9]">
+<template #title><span class="min-w-0 truncate">{{ o.orderNo }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="{color:coOrderStatusTag(o.orderStatus).c}">{{ coOrderStatusTag(o.orderStatus).l }}</span></template>
+<kv-row label="用户账号" :value="orderCustomerText(o)"></kv-row>
+<kv-row label="所属门店" :value="storeNameOf(o.storeId)" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="设备编号" :value="o.deviceNo"></kv-row>
+<kv-row label="选择充电时长" :value="coDurText(o.selectedDuration)"></kv-row>
+<kv-row label="实际充电时长" :value="coDurText(o.actualDuration)"></kv-row>
+<kv-row label="订单金额" :value="coAmountText(o.orderAmount)"></kv-row>
+<kv-row label="创建时间" :value="o.createTime"></kv-row>
+<kv-row v-if="o.orderStatus==='CANCELLED'" label="取消时间" :value="o.cancelTime||'-'"></kv-row>
+</kv-card>
+</div>
+</template>
+<empty-state v-else icon="file-text" text="暂无订单"></empty-state>
+</div>
+</page>
+
+<!-- ═══ 充电订单 · 全部筛选 ═══ -->
+<bottom-sheet :open="coShowFS" title="全部筛选" :mask-z="600" max-h="70%" @close="coShowFS=false">
+<div class="sheet-body px-5 pb-3" style="min-height:0">
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">订单状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in coOrderStatusOpts" :key="'cost'+s.v" data-cp @click="coFsOrderStC=(coFsOrderStC===s.v?'':s.v)" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="coFsOrderStC===s.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付渠道</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="c in CO_PAY_CHANNELS" :key="'coc'+c.v" data-cp @click="coFsChannelC=(coFsChannelC===c.v?'':c.v)" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="coFsChannelC===c.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ c.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in coPayStatusOpts" :key="'cops'+s.v" data-cp @click="coToggleFsPaySt(s.v)" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="coFsPayStC.indexOf(s.v)!==-1?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
+<div style="margin-bottom:16px" data-od-id="co-fs-start-time">
+<div class="text-[14px] font-semibold" style="margin-bottom:8px">创建时间</div>
+<div style="display:flex;gap:8px;align-items:center">
+<div data-cp @click="openCoDatePicker('start')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA" data-od-id="co-fs-start">
+<span class="text-[14px] font-medium text-[#111] truncate">{{ coFsStartC }}</span>
+<span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
+</div>
+<span class="text-[14px] text-[#999] shrink-0">至</span>
+<div data-cp @click="openCoDatePicker('end')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA" data-od-id="co-fs-end">
+<span class="text-[14px] font-medium text-[#111] truncate">{{ coFsEndC }}</span>
+<span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
+</div>
+</div>
+</div>
+</div>
+<template #footer><div class="flex gap-3 px-5"><button data-cp @click="coResetFS" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold cursor-pointer transition-colors" style="background:#fff;color:#111;border:1px solid #E5E5E5;box-shadow:none">重置</button><button data-cp @click="coApplyFS" class="flex-1 py-3.5 rounded-xl text-white text-[15px] font-semibold cursor-pointer border-none transition-colors" style="background:var(--accent)">确定</button></div></template>
+</bottom-sheet>
+
+<!-- ═══ 充电订单 · 日期区间滚轮 ═══ -->
+<bottom-sheet :open="!!coDatePicker" :title="coDatePicker==='start'?'选择开始日期':'选择结束日期'" type="B" :mask-z="630" panel-oid="co-date-sheet" @close="cancelCoDatePicker" @confirm="confirmCoDatePicker">
+<div class="relative px-2 pb-8">
+<div class="track-wheel-mask"></div>
+<div class="flex items-stretch gap-0.5">
+<div class="track-wheel-col" ref="coDateWheelYear" @scroll="onCoDateWheelScroll('year',$event)">
+<div style="height:72px"></div>
+<div v-for="y in coDateYears" :key="'cdy'+y" class="track-wheel-item" :class="{'is-on':coDateDraft.year===y}">{{ y }}年</div>
+<div style="height:72px"></div>
+</div>
+<div class="track-wheel-col" ref="coDateWheelMonth" @scroll="onCoDateWheelScroll('month',$event)">
+<div style="height:72px"></div>
+<div v-for="m in trackMonths" :key="'cdm'+m" class="track-wheel-item" :class="{'is-on':coDateDraft.month===m}">{{ m }}月</div>
+<div style="height:72px"></div>
+</div>
+<div class="track-wheel-col" ref="coDateWheelDay" @scroll="onCoDateWheelScroll('day',$event)">
+<div style="height:72px"></div>
+<div v-for="d in coDateDays" :key="'cdd'+d" class="track-wheel-item" :class="{'is-on':coDateDraft.day===d}">{{ d }}日</div>
+<div style="height:72px"></div>
+</div>
+</div>
+</div></bottom-sheet>
+
+<!-- ═══ 充电订单 · 详情页 ═══ -->
+<page :open="coOV==='detail' && curChargeOrder" :z="500" :swipe-close="()=>goBack()" oid="mc-charge-order-detail-page" data-od-id="mc-charge-order-detail-page">
+<nav-bar title="订单详情" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4" :class="coActionsVisible?'pb-[112px]':'pb-8'" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="co-detail-scroll">
+<kv-card label-width="5rem" class="mb-3" data-od-id="co-detail-basic">
+<template #title>基础信息</template>
+<template #extra><span class="font-medium shrink-0" :style="{color:coOrderStatusTag(curChargeOrder.orderStatus).c}">{{ coOrderStatusTag(curChargeOrder.orderStatus).l }}</span></template>
+<kv-row label="订单编号" :value="curChargeOrder.orderNo" :copyable="true" @copy="t=>copyText(t,'订单编号')"></kv-row>
+<kv-row label="用户账号" value-class="font-semibold"><template #value><span :class="(curChargeOrder.account||curChargeOrder.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" data-cp @click="(curChargeOrder.account||curChargeOrder.customer)&&goUserDetail(curChargeOrder.account||curChargeOrder.customer)">{{ orderCustomerText(curChargeOrder) }}</span><span v-if="curChargeOrder.phone" class="ml-1.5" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></template></kv-row>
+<kv-row label="所属门店" :value="storeNameOf(curChargeOrder.storeId)" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="设备编号" :value="curChargeOrder.deviceNo"></kv-row>
+<kv-row label="单价" :value="fmtRp(curChargeOrder.price,0)+'/分钟'"></kv-row>
+<kv-row label="创建时间" :value="curChargeOrder.createTime"></kv-row>
+<kv-row label="支付渠道" :value="coPayChannelText(curChargeOrder.payChannel)"></kv-row>
+<kv-row label="支付状态" :value="coPayStatusTag(curChargeOrder.payStatus).l"></kv-row>
+<kv-row v-if="coShowPayTime(curChargeOrder)" label="支付时间" :value="curChargeOrder.payTime"></kv-row>
+<kv-row v-if="curChargeOrder.completeTime" label="完成时间" :value="curChargeOrder.completeTime"></kv-row>
+<kv-row v-if="curChargeOrder.orderStatus==='CANCELLED'" label="取消时间" :value="curChargeOrder.cancelTime||'-'"></kv-row>
+</kv-card>
+<kv-card label-width="5rem" class="mb-3" data-od-id="co-detail-charge">
+<template #title>充电明细</template>
+<kv-row label="订单金额" :value="coAmountText(curChargeOrder.orderAmount)"></kv-row>
+<kv-row label="选择充电时长" :value="coDurText(curChargeOrder.selectedDuration)"></kv-row>
+<kv-row label="实际充电时长" :value="coDurText(curChargeOrder.actualDuration)"></kv-row>
+</kv-card>
+<kv-card v-if="coCanRefundRecords(curChargeOrder)&&can('charge_order.refund.list')" label-width="5rem" class="mb-3 cursor-pointer active:bg-[#FAFAFA]" data-cp @click="coOpenRefundRecords" data-od-id="co-detail-refund">
+<template #title>退款明细</template>
+<template #extra><span v-html="luci('chevron-right','w-4 h-4 text-[#bbb]')"></span></template>
+<kv-row label="退款金额" :value="fmtRp(coRefundedAmount(curChargeOrder),0)"></kv-row>
+</kv-card>
+</div>
+<div v-if="coActionsVisible" class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)" data-od-id="co-detail-actions">
+<div class="flex gap-3">
+<button v-if="curChargeOrder.orderStatus==='CREATED'&&can('charge_order.operate.cancel')" type="button" data-cp @click="coRequestCancel" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:#DC2626" data-od-id="co-cancel-btn">取消订单</button>
+<button v-if="curChargeOrder.orderStatus==='CHARGING'&&can('charge_order.operate.finish')" type="button" data-cp @click="coRequestFinish" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:#DC2626" data-od-id="co-finish-btn">结束订单</button>
+<button v-if="coCanRefund(curChargeOrder)&&can('charge_order.refund.create')" type="button" data-cp @click="coOpenRefund" class="flex-1 py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="co-refund-btn">退款</button>
+</div>
+</div>
+</page>
+
+<!-- ═══ 充电订单 · 退款记录 ═══ -->
+<page :open="coOV==='refunds' && curChargeOrder" :z="510" :swipe-close="()=>goBack()" oid="mc-charge-order-refund-records" data-od-id="mc-charge-order-refund-records">
+<nav-bar title="退款记录" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-5 pt-4 pb-10" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="co-refund-records-list">
+<kv-card v-for="(r,i) in coRefunds" :key="i" class="mb-3" label-width="5rem">
+<template #title><span>{{ r.refundTime }}</span></template>
+<template #extra><span class="font-medium shrink-0" :style="{color:coRefundStatusTag(r.refundStatus).c}">{{ coRefundStatusTag(r.refundStatus).l }}</span></template>
+<kv-row label="退款金额" :value="fmtRp(r.refundAmount,0)"></kv-row>
+<kv-row label="操作账号" :value="r.operator"></kv-row>
+<kv-row label="退款来源" :value="r.refundSource||'-'"></kv-row>
+<kv-row label="退款原因" :value="r.reason" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row label="完成时间" :value="r.finishTime||'-'"></kv-row>
+</kv-card>
+<empty-state v-if="!coRefunds.length" icon="file-text" text="暂无退款记录"></empty-state>
+</div>
+</page>
+
+<!-- ═══ 充电订单 · 取消订单（原因 ≤64 字） ═══ -->
+<bottom-sheet :open="coCancelMod" title="取消订单" :mask-z="800" @close="coCancelMod=false"><div class="px-5">
+<form-field label="取消原因" box-class="ff-box-gray is-area" :error="coCancelErr" :counter="(coCancelForm.reason||'').length" counter-max="64">
+<textarea v-model="coCancelForm.reason" maxlength="64" placeholder="请输入取消原因" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px] placeholder:text-[#999]" style="font-family:inherit"></textarea>
+</form-field>
+<div class="mt-2"><button type="button" data-cp @click="coSubmitCancel" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="co-cancel-submit">确认</button></div>
+</div></bottom-sheet>
+
+<confirm-dialog :open="coCancelConfirm" title="取消订单" desc="确定取消该订单？取消后不可恢复" :loading="coCancelLoading" z="820" @close="coCancelConfirm=false" @confirm="coConfirmCancel"></confirm-dialog>
+
+<!-- ═══ 充电订单 · 结束订单（原因 ≤255 字） ═══ -->
+<bottom-sheet :open="coFinishMod" title="结束订单" :mask-z="800" @close="coFinishMod=false"><div class="px-5">
+<form-field label="结束原因" box-class="ff-box-gray is-area" required :error="coFinishErr" :counter="(coFinishForm.reason||'').length" counter-max="255">
+<textarea v-model="coFinishForm.reason" maxlength="255" placeholder="请输入结束原因（不超过 255 字）" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px] placeholder:text-[#999]" style="font-family:inherit"></textarea>
+</form-field>
+<p class="text-[12px] text-[#999] mt-1 px-1 leading-relaxed">结束后订单进入「已完成」；已支付订单会补记支付时间，未支付订单不产生支付时间。</p>
+<div class="mt-2"><button type="button" data-cp @click="coSubmitFinish" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="co-finish-submit">确认</button></div>
+</div></bottom-sheet>
+
+<confirm-dialog :open="coFinishConfirm" title="结束订单" desc="确定结束该订单？结束后订单不可恢复为充电中" :loading="coFinishLoading" z="820" @close="coFinishConfirm=false" @confirm="coConfirmFinish"></confirm-dialog>
+
+<!-- ═══ 充电订单 · 退款表单 ═══ -->
+<bottom-sheet :open="coRefundMod" title="订单退款" :mask-z="800" max-h="92%" @close="coRefundMod=false">
+<div class="sheet-body px-5" style="max-height:52vh">
+<form-field :label="curChargeOrder?coPayChannelText(curChargeOrder.payChannel):'退款渠道'" box-class="ff-box-gray" :error="coRefundErr.amount" :hint="'可退 '+fmtRp(coRefundable(curChargeOrder),2)">
+<span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
+<input v-model.number="coRefundForm.amount" type="number" min="0" step="0.01" placeholder="0" class="flex-1 px-2 py-3.5 text-[16px] font-medium" data-od-id="co-refund-amount">
+</form-field>
+<form-field label="退款原因" box-class="ff-box-gray is-area" :counter="(coRefundForm.reason||'').length" counter-max="255">
+<textarea v-model="coRefundForm.reason" maxlength="255" placeholder="请输入退款原因" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px]" style="font-family:inherit"></textarea>
+</form-field>
+</div>
+<div class="px-5 shrink-0"><button type="button" data-cp @click="coSubmitRefund" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)" data-od-id="co-refund-submit">确认</button></div>
+</bottom-sheet>
+
+<confirm-dialog :open="coRefundConfirm" title="订单退款" :desc="`确认执行退款？退款金额 ${ fmtRp(coRefundForm.amount||0,0) }`" :loading="coRefundLoading" z="820" @close="coRefundConfirm=false" @confirm="coConfirmRefund"></confirm-dialog>
+
 <template v-if="tab==='profile'">
 <template v-if="!profileOV&&!profileSub">
 <div style="padding-top:60px" class="px-5 shrink-0"></div>
@@ -6376,8 +6780,9 @@ var MERGED=Vue.reactive({orderCount:0,vehicleCount:0,batteryCount:0,walletBalanc
 var LEDGER=Vue.ref([]);
 var PROFILE=Vue.reactive({name:'User001',phone:'+86 13800001111',email:'user001@yadea.id',account:'user001'});
 var CZ_ORDERS=Vue.ref([{orderNo:'CZ202609010001',storeName:'测试门店',createTime:'2026-09-01 10:00:00',payChannel:'2C2P',payStatus:'UNPAID',payTime:'',account:'han.min',phone:'+86 13800001234',email:'han.min@example.com',amount:100,giftAmount:10,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202609010002',storeName:'测试门店',createTime:'2026-09-01 15:20:00',payChannel:'2C2P',payStatus:'PAYING',payTime:'',account:'chen.yi',phone:'',email:'chen.yi@example.com',amount:200,giftAmount:20,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608200003',storeName:'雅迪朝阳店',createTime:'2026-08-20 11:00:00',payChannel:'2C2P',payStatus:'PAID',payTime:'2026-08-20 13:30:00',account:'li.er',phone:'',email:'',amount:300,giftAmount:50,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608150004',storeName:'雅迪朝阳店',createTime:'2026-08-15 09:00:00',payChannel:'2C2P',payStatus:'REFUNDING',payTime:'2026-08-15 11:00:00',account:'',phone:'+86 13800003333',email:'',amount:150,giftAmount:30,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608100005',storeName:'雅迪海淀店',createTime:'2026-08-10 08:00:00',payChannel:'2C2P',payStatus:'PARTIAL_REFUND',payTime:'2026-08-10 09:12:00',account:'li.si',phone:'',email:'li.si@example.com',amount:500,giftAmount:80,refundAmount:200,refundGiftAmount:30},{orderNo:'CZ202609030006',storeName:'雅迪海淀店',createTime:'2026-09-03 10:00:00',payChannel:'2C2P',payStatus:'FULL_REFUND',payTime:'2026-09-03 10:30:00',account:'wang.wu',phone:'',email:'',amount:300,giftAmount:50,refundAmount:300,refundGiftAmount:50},{orderNo:'CZ202608300007',storeName:'雅迪海淀店',createTime:'2026-08-30 09:00:00',payChannel:'2C2P',payStatus:'CANCELLED',payTime:'',cancelTime:'2026-08-30 09:12:45',account:'zhao.liu',phone:'',email:'',amount:200,giftAmount:20,refundAmount:null,refundGiftAmount:null}]);
-/* 订单/充值订单时间归一：保持创建时间位于近 N 天内（相对当前时间动态重写） */
-function SYS_recent(n){try{var N=Date.now(),D=(n||15)*24*3600*1000;var f=function(off){var d=new Date(N-off*D);var p=function(x){return (x<10?'0':'')+x};return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())};var o=(typeof orders!=='undefined'&&orders&&orders.value)?orders.value:[];var cz=(typeof CZ_ORDERS!=='undefined'&&CZ_ORDERS&&CZ_ORDERS.value)?CZ_ORDERS.value:[];o.forEach(function(x,i){var off=((i%14)/14)+0.06;if(x.created)x.created=f(off);if(x.payTime)x.payTime=f(off-0.03);if(x.rentStart)x.rentStart=f(off-0.06);if(x.pickupTime)x.pickupTime=f(off-0.04)});cz.forEach(function(x,i){var off=((i%14)/14)+0.06;if(x.createTime)x.createTime=f(off);if(x.payTime)x.payTime=f(off-0.03);if(x.cancelTime&&x.cancelTime!=='-')x.cancelTime=f(off+0.4)})}catch(e){}}
+/* 订单/充值订单/充电订单时间归一：保持创建时间位于近 N 天内（相对当前时间动态重写）；
+   coOrders 等声明在 setup 内的数据无法被本全局函数按标识符访问，须由调用方通过 ords/czs/cos 传入 */
+function SYS_recent(n,ords,czs,cos){try{var N=Date.now(),D=(n||15)*24*3600*1000;var p=function(x){return (x<10?'0':'')+x};var fp=function(d){return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())};var tp=function(s){var t=Date.parse(String(s).replace(/-/g,'/'));return isNaN(t)?null:t};var f=function(off){return fp(new Date(N-off*D))};var o=ords||((typeof orders!=='undefined'&&orders&&orders.value)?orders.value:[]);var cz=czs||((typeof CZ_ORDERS!=='undefined'&&CZ_ORDERS&&CZ_ORDERS.value)?CZ_ORDERS.value:[]);o.forEach(function(x,i){var off=((i%14)/14)+0.06;if(x.created)x.created=f(off);if(x.payTime)x.payTime=f(off-0.03);if(x.rentStart)x.rentStart=f(off-0.06);if(x.pickupTime)x.pickupTime=f(off-0.04)});cz.forEach(function(x,i){var off=((i%14)/14)+0.06;if(x.createTime)x.createTime=f(off);if(x.payTime)x.payTime=f(off-0.03);if(x.cancelTime&&x.cancelTime!=='-')x.cancelTime=f(off+0.4)});var co=cos||[];co.forEach(function(x,i){var off=((i%14)/14)+0.06,base=tp(x.startTime||x.createTime);if(base==null)return;var delta=(N-off*D)-base;['startTime','endTime','createTime','payTime','completeTime','cancelTime'].forEach(function(k){var t=tp(x[k]);if(t!=null)x[k]=fp(new Date(t+delta))});(x.refundRecords||[]).forEach(function(r){['refundTime','finishTime'].forEach(function(k){var t=tp(r[k]);if(t!=null)r[k]=fp(new Date(t+delta))})})})}catch(e){}}
 
 /* ══ 底部弹窗共享套件（见 AGENTS.md「底部弹窗规范」） ══
    纯新增件：BottomSheet 壳 / OptionSheet 单选列表 / v-sheet-drag 下滑关闭 + .sheet-* 样式 token。
@@ -6532,9 +6937,10 @@ function registerSheetKit(app){
   app.component('form-field',{
     name:'form-field',
     props:{label:{type:String,default:''},required:{default:false},error:{type:String,default:''},hint:{type:String,default:''},counter:{default:null},counterMax:{default:''},disabled:{default:false},readonly:{default:false},bare:{default:false},oid:{type:String,default:''},boxClass:{type:String,default:''}},
-    /* bare 三态：裸属性（''）按 HTML 语义视为 true；:bare="false" 关闭（同 kv-row 的 divider 处理） */
-    computed:{bareOn:function(){var b=this.bare;return b===''?true:!!b}},
-    template:'<div class="ff-row" :data-od-id="oid||undefined"><div v-if="label||$slots.label" class="ff-label"><slot name="label"><span v-if="required" class="ff-star">*</span><span>{{ label }}</span></slot></div><div :class="bareOn?\'ff-bare\':[\'ff-box\',boxClass,disabled?\'is-disabled\':\'\',error?\'is-error\':\'\']"><slot></slot><span v-if="counter!==null&&counter!==undefined" class="ff-counter">{{ counter }}{{ counterMax?(\'/\'+counterMax):\'\' }}</span></div><div v-if="error" class="ff-hint is-err">{{ error }}</div><div v-else-if="hint" class="ff-hint">{{ hint }}</div></div>'
+    /* bare / required 三态：裸属性（''）按 HTML 语义视为 true；显式关闭写 :bare="false" / :required="false"（同 kv-row 的 divider 处理）
+       ⚠️ required 不声明 Boolean 类型（避免 '' 被布尔转换），故必须走 requiredOn 判真，否则裸写 required 不会渲染必填星号 */
+    computed:{bareOn:function(){var b=this.bare;return b===''?true:!!b},requiredOn:function(){var r=this.required;return r===''?true:!!r}},
+    template:'<div class="ff-row" :data-od-id="oid||undefined"><div v-if="label||$slots.label" class="ff-label"><slot name="label"><span v-if="requiredOn" class="ff-star">*</span><span>{{ label }}</span></slot></div><div :class="bareOn?\'ff-bare\':[\'ff-box\',boxClass,disabled?\'is-disabled\':\'\',error?\'is-error\':\'\']"><slot></slot><span v-if="counter!==null&&counter!==undefined" class="ff-counter">{{ counter }}{{ counterMax?(\'/\'+counterMax):\'\' }}</span></div><div v-if="error" class="ff-hint is-err">{{ error }}</div><div v-else-if="hint" class="ff-hint">{{ hint }}</div></div>'
   });
    /* TabBar：底部导航（图标+文字，active 高亮，支持权限 hidden 与自定义 go）。
       用法：<tab-bar :items="[{key:'home',icon:'home',label:'首页',activeWhen:tab==='home',hidden:!can('home.view'),go:function(){setTab('home')}}]" :show="!showLogin" active-color="#2B3F5F" @select="setTab"></tab-bar>;
@@ -6755,14 +7161,14 @@ function commitChargeMinutes(e){
 function chargePayLabel(){return chargePayType.value==='2c2p'?'2C2P':'钱包'}
 /* 下单生成的是「已创建」订单：尚未开始充电，实际时长按 0 存入；选择时长/实付金额取下单值；
    订单状态为「已创建」时按「待支付」处理（尚未完成支付，故不记录支付时间） */
-function confirmChargeOrder(){var d=chargeDevice.value;if(!d)return;if(chargePayType.value==='balance'){var need=chargeOrderAmount.value;if(!walletActive.value||walletActive.value.totalBalance<need){toast('钱包余额不足，请充值','warn');return}}chargeOrderInfo.value={orderId:'CG'+String(Date.now()).slice(-10),store:d.store,deviceNo:d.no,addr:d.addr,price:d.price,selectedMinutes:chargeEffectiveMinutes.value,minutes:0,amount:chargeOrderAmount.value,payType:chargePayLabel(),payStatus:'待支付',payTime:'',status:'已创建',refundType:'',refundAmount:null,createdAt:formatNow()};CHARGE_ORDERS.value.unshift(chargeOrderInfo.value);navSwap('chargeOrderDetail');toast('下单成功','success')}
+function confirmChargeOrder(){var d=chargeDevice.value;if(!d)return;if(chargePayType.value==='balance'){var need=chargeOrderAmount.value;if(!walletActive.value||walletActive.value.totalBalance<need){toast('钱包余额不足，请充值','warn');return}}chargeOrderInfo.value={orderId:'CG'+String(Date.now()).slice(-10),store:d.store,deviceNo:d.no,addr:d.addr,price:d.price,selectedMinutes:chargeEffectiveMinutes.value,minutes:0,amount:chargeOrderAmount.value,payType:chargePayLabel(),payStatus:'待支付',payTime:'',status:'已创建',refundType:'',refundAmount:null,createdAt:formatNow(),completeTime:''};CHARGE_ORDERS.value.unshift(chargeOrderInfo.value);navSwap('chargeOrderDetail');toast('下单成功','success')}
 /* ══ 充电订单列表（我的 → 我的订单 → 充电订单）：数据 + 筛选 + 详情复用 charge-order-detail-page ══ */
 const showChargeOrderList=ref(false);
 const CHARGE_ORDERS=ref([
-  {orderId:'CG202609280001',store:'Kota Tua 门店',deviceNo:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:245,selectedMinutes:30,minutes:20,amount:4900,payType:'2C2P',payStatus:'已支付',payTime:'2026-09-28 14:20:06',status:'已完成',refundType:'部分退款',refundAmount:1000,createdAt:'2026-09-28 14:20:00'},
-  {orderId:'CG202609290002',store:'Central Park 门店',deviceNo:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:245,selectedMinutes:60,minutes:30,amount:7350,payType:'钱包',payStatus:'已支付',payTime:'2026-09-29 09:10:08',status:'充电中',refundType:'',refundAmount:null,createdAt:'2026-09-29 09:10:00'},
-  {orderId:'CG202609300003',store:'Taman Mini 门店',deviceNo:'CHG-A06',addr:'Taman Mini 景区北门停车区',price:245,selectedMinutes:15,minutes:0,amount:3675,payType:'2C2P',payStatus:'待支付',payTime:'',status:'已创建',refundType:'',refundAmount:null,createdAt:'2026-09-30 08:30:00'},
-  {orderId:'CG202609250004',store:'Grand Indonesia 门店',deviceNo:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:245,selectedMinutes:5,minutes:0,amount:1225,payType:'2C2P',payStatus:'未支付',payTime:'',status:'已取消',refundType:'',refundAmount:null,createdAt:'2026-09-25 19:40:00'}
+  {orderId:'CG202609280001',store:'Kota Tua 门店',deviceNo:'CHG-A03',addr:'Kota Tua 老城区游客中心后停车场',price:245,selectedMinutes:30,minutes:20,amount:4900,payType:'2C2P',payStatus:'已支付',payTime:'2026-09-28 14:20:06',status:'已完成',refundType:'部分退款',refundAmount:1000,createdAt:'2026-09-28 14:20:00',completeTime:'2026-09-28 14:25:06'},
+  {orderId:'CG202609290002',store:'Central Park 门店',deviceNo:'CHG-A01',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:245,selectedMinutes:60,minutes:30,amount:7350,payType:'钱包',payStatus:'已支付',payTime:'2026-09-29 09:10:08',status:'充电中',refundType:'',refundAmount:null,createdAt:'2026-09-29 09:10:00',completeTime:''},
+  {orderId:'CG202609300003',store:'Taman Mini 门店',deviceNo:'CHG-A06',addr:'Taman Mini 景区北门停车区',price:245,selectedMinutes:15,minutes:0,amount:3675,payType:'2C2P',payStatus:'待支付',payTime:'',status:'已创建',refundType:'',refundAmount:null,createdAt:'2026-09-30 08:30:00',completeTime:''},
+  {orderId:'CG202609250004',store:'Grand Indonesia 门店',deviceNo:'CHG-A04',addr:'Grand Indonesia 西门外街边停车带',price:245,selectedMinutes:5,minutes:0,amount:1225,payType:'2C2P',payStatus:'未支付',payTime:'',status:'已取消',refundType:'',refundAmount:null,createdAt:'2026-09-25 19:40:00',completeTime:'',cancelTime:'2026-09-25 19:42:30'}
 ]);
 const chargeFilterTabs=['全部','已创建','充电中','已完成','已取消'];
 /* tab 文案 → 筛选值：「全部」映射为 all，其余直接等于订单状态（与充值订单列表同构） */
@@ -6777,8 +7183,8 @@ function openChargeOrderFromList(o){if(o)chargeOrderInfo.value=o;navOpen('charge
 /* ══ 充电订单详情操作（仅「已创建」显示：取消订单 / 立即支付；交互与文案参考充值订单详情 C 端） ══ */
 const showCancelChargeModal=ref(false),cancelChargeLoading=ref(false);
 function requestCancelCharge(){showCancelChargeModal.value=true}
-function confirmCancelCharge(){if(cancelChargeLoading.value)return;cancelChargeLoading.value=true;setTimeout(function(){cancelChargeLoading.value=false;showCancelChargeModal.value=false;var o=chargeOrderInfo.value;if(o){o.status='已取消';if(o.payStatus==='待支付')o.payStatus='未支付'}toast('订单已取消','info')},600)}
-function payChargeOrder(){var o=chargeOrderInfo.value;if(!o)return;o.payStatus='已支付';o.payTime=formatNow();toast('支付成功','success')}
+function confirmCancelCharge(){if(cancelChargeLoading.value)return;cancelChargeLoading.value=true;setTimeout(function(){cancelChargeLoading.value=false;showCancelChargeModal.value=false;var o=chargeOrderInfo.value;if(o){o.status='已取消';o.cancelTime=formatNow();if(o.payStatus==='待支付')o.payStatus='未支付'}toast('订单已取消','info')},600)}
+function payChargeOrder(){var o=chargeOrderInfo.value;if(!o)return;payTarget.value={type:'charge',no:o.orderId,amount:o.amount};paymentType.value='2c2p';payOfflineVisible.value=false;showPayment.value=true}
 const trackStart=ref({year:2025,month:8,day:6,hour:17,min:8});
 const trackEnd=ref({year:2025,month:8,day:6,hour:17,min:28});
 const trackDraft=ref({year:2025,month:10,day:24,hour:13,min:52});
@@ -7362,7 +7768,8 @@ const renewPeriodIdx=ref(3);
 const pickerMode=ref('order');            // 'order' | 'renew' 复用租赁类型/方案选择器
 const paymentType=ref('2c2p');
 const paymentBusy=ref(false);
-const payTarget=ref(null);                // 当前支付目标 {type:'order'|'renew',no?,amount}
+const payOfflineVisible=ref(true);        // 支付弹层是否展示「线下支付」（充电订单支付时隐藏）
+const payTarget=ref(null);                // 当前支付目标 {type:'order'|'renew'|'charge',no?,amount}
 const renewDays=ref(1);
 const renewPeriodBase=[2345,5864,35182,117272];
 const renewDateLabel=computed(()=>dateOptions[renewDateIdx.value]||dateOptions[0]);
@@ -7394,19 +7801,19 @@ const feeStatChannelOf=r=>r.payMethod==='线下支付'?'线下支付':(r.payMeth
 const feeStatChannels=computed(()=>{const rm={},dm={};feeStatRows.value.forEach(r=>{const ch=feeStatChannelOf(r);if(Number(r.rent)>0)rm[ch]=(rm[ch]||0)+Number(r.rent);if(Number(r.deposit)>0)dm[ch]=(dm[ch]||0)+Number(r.deposit)});const toArr=m=>Object.keys(m).map(k=>({channel:k,amount:m[k]}));const ra=toArr(rm),da=toArr(dm),tm={};ra.concat(da).forEach(x=>{tm[x.channel]=(tm[x.channel]||0)+x.amount});return{rent:ra,deposit:da,total:toArr(tm)}});
 function feeRowChannels(r){if(!r)return{rent:[],deposit:[],total:[]};const ch=r.payMethod==='线下支付'?'线下支付':(r.payMethod==='钱包'?'钱包':'2C2P');const out={rent:[],deposit:[],total:[]};if(r.rent>0)out.rent=[{channel:ch,amount:r.rent}];if(r.deposit>0)out.deposit=[{channel:ch,amount:r.deposit}];const map={};out.rent.concat(out.deposit).forEach(x=>{map[x.channel]=(map[x.channel]||0)+x.amount});out.total=Object.keys(map).map(k=>({channel:k,amount:map[k]}));return out;}
 function openRenew(){const cat=orderInfo.value.category;const di=dateOptions.indexOf(cat);renewDateIdx.value=di>=0?di:0;const p=orderInfo.value.plan||'';let pi=3;if(p.indexOf('时租')>=0)pi=0;else if(p.indexOf('日租')>=0)pi=1;else if(p.indexOf('周租')>=0)pi=2;renewPeriodIdx.value=pi;renewDays.value=1;pickerMode.value='renew';showRenewPlan.value=true}
-function confirmRenew(){const plan=renewPeriodLabel.value+(renewDays.value>1?('×'+renewDays.value+renewPeriodUnit.value):'');const fee=renewRentFee.value;const start=confReturnISO.value;let end=start;for(let k=0;k<renewDays.value;k++)end=addPeriod(end,renewPeriodIdx.value);const no='RZ'+Date.now().toString().slice(-9);const r={renewNo:no,parentOrderNo:orderInfo.value.orderId,plan:plan,newRentStart:start,newRentEnd:end,renewRentFee:fee,renewDeposit:0,payStatus:'UNPAID',createTime:formatNow(),renewType:'manual'};orders.value.push({id:r.renewNo,type:'renew',item:r.plan||'',plan:r.plan||'',amount:Number(r.renewRentFee)||0,status:'pickup',paySt:(r.payStatus==='PAID')?'paid':'pending',created:(r.createTime)||formatNow(),parent:r.parentOrderNo||''});orderInfo.value={...orderInfo.value,renewOrders:[...(orderInfo.value.renewOrders||[]),r]};showRenewPlan.value=false;pickerMode.value='order';payTarget.value={type:'renew',no:no,amount:r.renewRentFee};paymentType.value='2c2p';showPayment.value=true}
-function openPayRenew(no){const r=(orderInfo.value.renewOrders||[]).find(x=>x.renewNo===no);if(!r)return;payTarget.value={type:'renew',no:no,amount:r.renewRentFee};paymentType.value='2c2p';showPayment.value=true}
+function confirmRenew(){const plan=renewPeriodLabel.value+(renewDays.value>1?('×'+renewDays.value+renewPeriodUnit.value):'');const fee=renewRentFee.value;const start=confReturnISO.value;let end=start;for(let k=0;k<renewDays.value;k++)end=addPeriod(end,renewPeriodIdx.value);const no='RZ'+Date.now().toString().slice(-9);const r={renewNo:no,parentOrderNo:orderInfo.value.orderId,plan:plan,newRentStart:start,newRentEnd:end,renewRentFee:fee,renewDeposit:0,payStatus:'UNPAID',createTime:formatNow(),renewType:'manual'};orders.value.push({id:r.renewNo,type:'renew',item:r.plan||'',plan:r.plan||'',amount:Number(r.renewRentFee)||0,status:'pickup',paySt:(r.payStatus==='PAID')?'paid':'pending',created:(r.createTime)||formatNow(),parent:r.parentOrderNo||''});orderInfo.value={...orderInfo.value,renewOrders:[...(orderInfo.value.renewOrders||[]),r]};showRenewPlan.value=false;pickerMode.value='order';payTarget.value={type:'renew',no:no,amount:r.renewRentFee};paymentType.value='2c2p';payOfflineVisible.value=true;showPayment.value=true}
+function openPayRenew(no){const r=(orderInfo.value.renewOrders||[]).find(x=>x.renewNo===no);if(!r)return;payTarget.value={type:'renew',no:no,amount:r.renewRentFee};paymentType.value='2c2p';payOfflineVisible.value=true;showPayment.value=true}
 function cancelRenew(no){const o=orderInfo.value;if(!o)return;orderInfo.value={...o,renewOrders:(o.renewOrders||[]).map(r=>r.renewNo===no?{...r,canceled:true}:r)};toast('已取消续租','success')}
 function requestCancelRenew(no){cancelRenewTarget.value=no;showCancelRenewModal.value=true}
 function confirmCancelRenew(){if(cancelRenewLoading.value)return;cancelRenewLoading.value=true;setTimeout(()=>{cancelRenewLoading.value=false;const no=cancelRenewTarget.value;showCancelRenewModal.value=false;cancelRenew(no)},600)}
-function payRenewDirect(no){const r=(orderInfo.value.renewOrders||[]).find(x=>x.renewNo===no);if(!r)return;payTarget.value={type:'renew',no:no,amount:r.renewRentFee};paymentType.value='2c2p';showPayment.value=true}
+function payRenewDirect(no){const r=(orderInfo.value.renewOrders||[]).find(x=>x.renewNo===no);if(!r)return;payTarget.value={type:'renew',no:no,amount:r.renewRentFee};paymentType.value='2c2p';payOfflineVisible.value=true;showPayment.value=true}
 function payOrderDirect(channel){const o=orderInfo.value;const amt=parseRp(o.amount)+parseRp(o.deposit);if(channel==='钱包'){if(!walletActive.value||walletActive.value.totalBalance<amt){toast('钱包余额不足，请充值','warn');return}deductWallet(amt)}paymentBusy.value=true;showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false;paymentBusy.value=false;orderInfo.value={...o,payStatus:'PAID',status:o.status==='created'?'pickup':o.status,statusText:o.status==='created'?'待取用':o.statusText,statusColor:o.status==='created'?'#FF8C1B':o.statusColor,payee:channel,payTime:formatNow()};SYS_payOrder(orderInfo.value?orderInfo.value.orderId:null);toast('支付成功','success')},900)}
 function openPayOrder(){const o=orderInfo.value;payOrderDirect(o.payee)}
 function renewPayCode(pm){return (pm==='offline'||pm==='OFFLINE'||pm==='线下支付')?'OFFLINE':((pm==='balance'||pm==='WALLET'||pm==='钱包')?'WALLET':'2C2P')}
 function setRenewPayChannel(no,pm,markPaid){const o=orderInfo.value;if(!o)return;const list=(o.renewOrders||[]).map(r=>r.renewNo===no?(markPaid?{...r,payStatus:'PAID',payTime:formatNow(),payMethod:pm,payChannel:renewPayCode(pm)}:{...r,payMethod:pm,payChannel:renewPayCode(pm)}):r);orderInfo.value={...o,renewOrders:list}}
 function markRenewPaid(no,payMethod){const pm=payMethod==='offline'?'线下支付':payMethod==='balance'?'钱包':'2C2P';setRenewPayChannel(no,pm,true)}
-function deductWallet(amt){try{if(rechargeEnabled&&rechargeEnabled.value!==undefined&&!rechargeEnabled.value){}SYS_deduct(amt)}catch(e){}const w=walletActive.value;if(!w)return;let need=amt;const useRe=Math.min(w.rechargeBalance,need);w.rechargeBalance-=useRe;need-=useRe;if(need>0){const useBo=Math.min(w.bonusBalance,need);w.bonusBalance-=useBo;need-=useBo}w.totalBalance=w.rechargeBalance+w.bonusBalance;walletLedger.value.unshift({id:'WL'+Date.now(),type:'orderConsume',amount:-amt,balanceAfter:w.totalBalance,relatedOrder:orderInfo.value.orderId,operator:'当前账号',remark:'钱包支付',createdAt:new Date().toISOString()})}
-function confirmPayment(){if(!payTarget.value)return;if(payTarget.value.type==='renew'&&paymentType.value==='offline'){setRenewPayChannel(payTarget.value.no,'线下支付',false);showPayment.value=false;toast('请等待门店确认','info');return}if(paymentType.value==='balance'){const need=payTarget.value.amount;if(!walletActive.value||walletActive.value.totalBalance<need){toast('钱包余额不足，请充值','warn');return}deductWallet(need)}paymentBusy.value=true;showRentLoading.value=true;const t=payTarget.value;setTimeout(()=>{showRentLoading.value=false;paymentBusy.value=false;if(t.type==='renew'){markRenewPaid(t.no,paymentType.value)}else{const o=orderInfo.value;orderInfo.value={...o,payStatus:'PAID',status:o.status==='created'?'pickup':o.status,statusText:o.status==='created'?'待取用':o.statusText,statusColor:o.status==='created'?'#FF8C1B':o.statusColor,payee:paymentType.value==='offline'?'线下支付':paymentType.value==='balance'?'钱包':'2C2P',payTime:formatNow()}}SYS_payOrder(orderInfo.value?orderInfo.value.orderId:null);showPayment.value=false;toast('支付成功','success')},900)}
+function deductWallet(amt){try{if(rechargeEnabled&&rechargeEnabled.value!==undefined&&!rechargeEnabled.value){}SYS_deduct(amt)}catch(e){}const w=walletActive.value;if(!w)return;let need=amt;const useRe=Math.min(w.rechargeBalance,need);w.rechargeBalance-=useRe;need-=useRe;if(need>0){const useBo=Math.min(w.bonusBalance,need);w.bonusBalance-=useBo;need-=useBo}w.totalBalance=w.rechargeBalance+w.bonusBalance;walletLedger.value.unshift({id:'WL'+Date.now(),type:'orderConsume',amount:-amt,balanceAfter:w.totalBalance,relatedOrder:(payTarget.value&&payTarget.value.type==='charge')?payTarget.value.no:((orderInfo.value&&orderInfo.value.orderId)||''),operator:'当前账号',remark:'钱包支付',createdAt:new Date().toISOString()})}
+function confirmPayment(){if(!payTarget.value)return;if(payTarget.value.type==='renew'&&paymentType.value==='offline'){setRenewPayChannel(payTarget.value.no,'线下支付',false);showPayment.value=false;toast('请等待门店确认','info');return}if(paymentType.value==='balance'){const need=payTarget.value.amount;if(!walletActive.value||walletActive.value.totalBalance<need){toast('钱包余额不足，请充值','warn');return}deductWallet(need)}paymentBusy.value=true;showRentLoading.value=true;const t=payTarget.value;setTimeout(()=>{showRentLoading.value=false;paymentBusy.value=false;if(t.type==='renew'){markRenewPaid(t.no,paymentType.value)}else if(t.type==='charge'){const c=chargeOrderInfo.value;if(c){c.payStatus='已支付';c.payTime=formatNow();c.payType=paymentType.value==='balance'?'钱包':'2C2P';if(c.status==='已创建')c.status='充电中'}}else{const o=orderInfo.value;orderInfo.value={...o,payStatus:'PAID',status:o.status==='created'?'pickup':o.status,statusText:o.status==='created'?'待取用':o.statusText,statusColor:o.status==='created'?'#FF8C1B':o.statusColor,payee:paymentType.value==='offline'?'线下支付':paymentType.value==='balance'?'钱包':'2C2P',payTime:formatNow()}}if(t.type!=='charge')SYS_payOrder(orderInfo.value?orderInfo.value.orderId:null);showPayment.value=false;toast('支付成功','success')},900)}
 var rentPtrInit=false;function openRent(){navOpen('rent')}
 /* ================= 统一页面导航栈（快照式，实现见下方 createNav） =================
    NAV_SCREENS 描述各页开关状态；pageRefList 为参与快照/恢复的 ref；nameOf 由当前状态推导页名。
@@ -7490,7 +7897,7 @@ onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);setInterval((
 function goSwap(){location.href='swap.html'}
 function setLoggedIn(v){if(v&&firstLogin.value){firstLogin.value=false;switchSource.value='first';loggedIn.value=true;navSwap('subSwitchSystem');toast('请选择系统','info');return}loggedIn.value=v}
 function switchBack(){if(switchSource.value==='first'){switchSource.value='settings';doLogout();return}navBack()}
-return{tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentDateIdx,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPeriodIdx,periodOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,periodUnit,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,showChargePage,chargeLoading,chargeDevices,chargeUserPt,chargeNearestDist,fmtDist,chargeView,chargeToggleView,chargeDevice,chargeDeviceSheet,openChargePage,closeChargePage,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};
+return{tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentDateIdx,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPeriodIdx,periodOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,periodUnit,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,showChargePage,chargeLoading,chargeDevices,chargeUserPt,chargeNearestDist,fmtDist,chargeView,chargeToggleView,chargeDevice,chargeDeviceSheet,openChargePage,closeChargePage,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};
 }
 });
 
@@ -7994,7 +8401,7 @@ const filteredModels=computed(()=>modelQ.value?vehModels.filter(m=>m.name.toLowe
 function pickModel(m){if(vehOV.value==='edit'){editModel.value=m.name}else{addModel.value=m.name};vehShowModelSheet.value=false}
 const scanning=ref(false),scanTarget=ref('vin'),scanFrom=ref('');function scanVin(){scanFrom.value='';scanTarget.value='vin';scanning.value=true}
 function scanBattNo(){scanFrom.value='';scanTarget.value='battNo';scanning.value=true}
-function doScan(){if(scanFrom.value==='vehList'){vehQ.value='YD'+Math.floor(Math.random()*900000+100000);vehDoSearch()}else if(scanFrom.value==='battList'){battQ.value='BATT-YD'+Math.floor(1000+Math.random()*9000);battDoSearch()}else if(scanTarget.value==='battNo'){var bn='BATT-YD'+Math.floor(1000+Math.random()*9000);if(orderPickActive.value){orderPickQ.value=bn}else if(uBindMod.value){uBindQ.value=bn}else{battAddNo.value=bn}}else{var vn='YD'+Math.floor(Math.random()*900000+100000);if(orderPickActive.value){orderPickQ.value=vn}else if(uBindMod.value){uBindQ.value=vn}else{addVin.value=vn}}scanFrom.value='';scanning.value=false}
+function doScan(){if(scanFrom.value==='vehList'){vehQ.value='YD'+Math.floor(Math.random()*900000+100000);vehDoSearch()}else if(scanFrom.value==='battList'){battQ.value='BATT-YD'+Math.floor(1000+Math.random()*9000);battDoSearch()}else if(scanFrom.value==='cdList'){cdQ.value='CD-'+('000'+Math.floor(1+Math.random()*99)).slice(-4);cdDoSearch()}else if(scanTarget.value==='battNo'){var bn='BATT-YD'+Math.floor(1000+Math.random()*9000);if(orderPickActive.value){orderPickQ.value=bn}else if(uBindMod.value){uBindQ.value=bn}else{battAddNo.value=bn}}else{var vn='YD'+Math.floor(Math.random()*900000+100000);if(orderPickActive.value){orderPickQ.value=vn}else if(uBindMod.value){uBindQ.value=vn}else{addVin.value=vn}}scanFrom.value='';scanning.value=false}
 const scanTorch=ref(false);const showManualInput=ref(false);const manualVin=ref('');
 function orderPickScan(){scanFrom.value='';scanTarget.value=orderPickIsBatt.value?'battNo':'vin';scanning.value=true}
 function uBindScan(){scanFrom.value='';scanTarget.value=uBindIsBatt.value?'battNo':'vin';scanning.value=true} function vehListScan(){scanFrom.value='vehList';scanTarget.value='vin';scanning.value=true} function battListScan(){scanFrom.value='battList';scanTarget.value='battNo';scanning.value=true}
@@ -8041,6 +8448,8 @@ const ALL_PERM_CODES=[
   'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.detail','order_config.edit',
   'alarm.list','alarm.detail',
   'recharge_order.list','recharge_order.detail',
+  'charge_device.list','charge_device.detail','charge_device.add','charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop',
+  'charge_order.list','charge_order.detail','charge_order.refund.create','charge_order.refund.list','charge_order.operate.cancel','charge_order.operate.finish',
   'user.list','user.detail',
   'recharge.list','recharge.add','recharge.edit','recharge.delete'
 ];
@@ -8080,6 +8489,12 @@ const permGroups=[
   {id:'ro',name:'充值订单',codes:['recharge_order.list','recharge_order.detail'],items:[
     {c:'recharge_order.list',n:'订单列表'},{c:'recharge_order.detail',n:'订单详情'}
   ]},
+  {id:'chargeDev',name:'充电设备',codes:['charge_device.list','charge_device.detail','charge_device.add','charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop'],items:[
+    {c:'charge_device.list',n:'设备列表'},{c:'charge_device.detail',n:'设备详情'},{c:'charge_device.add',n:'新增设备'},{c:'charge_device.edit',n:'编辑设备'},{c:'charge_device.price',n:'设备定价'},{c:'charge_device.toggle',n:'启用/禁用'},{c:'charge_device.change_shop',n:'更换门店'}
+  ]},
+  {id:'chargeOrd',name:'充电订单',codes:['charge_order.list','charge_order.detail','charge_order.refund.create','charge_order.refund.list','charge_order.operate.cancel','charge_order.operate.finish'],items:[
+    {c:'charge_order.list',n:'订单列表'},{c:'charge_order.detail',n:'订单详情'},{c:'charge_order.operate.cancel',n:'取消订单'},{c:'charge_order.operate.finish',n:'结束订单'},{c:'charge_order.refund.create',n:'退款'},{c:'charge_order.refund.list',n:'退款记录'}
+  ]},
   {id:'user',name:'用户管理',codes:['user.list','user.detail'],items:[
     {c:'user.list',n:'用户列表'},{c:'user.detail',n:'用户详情'}
   ]},
@@ -8099,10 +8514,19 @@ function pickPermGroup(id,codeFilter){
 const demoPagePermCtx=computed(()=>{
   if(showLogin.value)return{title:'欢迎登录',groups:[]};
   if(curAlert.value)return{title:'告警详情',groups:[pickPermGroup('alarm',['alarm.detail']),pickPermGroup('veh',['vehicle.detail','vehicle.command.find_car'])].filter(Boolean)};
+  /* 充电设备 / 充电订单：由首页入口进入，独立于底部 Tab */
+  if(cdOV.value==='list')return{title:'充电设备',groups:[pickPermGroup('chargeDev',['charge_device.list'])].filter(Boolean)};
+  if(cdOV.value==='detail')return{title:'设备详情',groups:[pickPermGroup('chargeDev',['charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop'])].filter(Boolean)};
+  if(cdOV.value==='add')return{title:'新增设备',groups:[pickPermGroup('chargeDev',['charge_device.add'])].filter(Boolean)};
+  if(cdOV.value==='edit')return{title:'编辑设备',groups:[pickPermGroup('chargeDev',['charge_device.edit'])].filter(Boolean)};
+  if(cdOV.value==='addrMap')return{title:'选择地址',groups:[pickPermGroup('chargeDev',['charge_device.edit'])].filter(Boolean)};
+  if(coOV.value==='list')return{title:'充电订单',groups:[pickPermGroup('chargeOrd',['charge_order.list'])].filter(Boolean)};
+  if(coOV.value==='detail')return{title:'充电订单详情',groups:[pickPermGroup('chargeOrd',['charge_order.operate.cancel','charge_order.operate.finish','charge_order.refund.create','charge_order.refund.list'])].filter(Boolean)};
+  if(coOV.value==='refunds')return{title:'充电订单退款记录',groups:[pickPermGroup('chargeOrd',['charge_order.refund.list'])].filter(Boolean)};
   if(tab.value==='home'){
     if(homeOV.value==='alerts')return{title:'告警中心',groups:[pickPermGroup('alarm',['alarm.list','alarm.detail'])].filter(Boolean)};
     /* 首页总览：进入码 home.view 在「底部 Tab」；本页只露看板/统计/最近告警 + 三种订单合并到一个「首页」分组 */
-    return{title:'首页',groups:[{id:'homeMgmt',name:'首页',codes:['home.stats.business','home.stats.vehicle','order.list','order.battery.list','order.package.list','recharge_order.list','alarm.list'],items:[{c:'home.stats.business',n:'经营数据看板'},{c:'home.stats.vehicle',n:'车辆运营统计'},{c:'order.list',n:'车辆订单列表'},{c:'order.battery.list',n:'电池订单列表'},{c:'order.package.list',n:'套餐订单列表'},{c:'recharge_order.list',n:'充值订单列表'},{c:'alarm.list',n:'告警列表'}]}].filter(Boolean)};
+    return{title:'首页',groups:[{id:'homeMgmt',name:'首页',codes:['home.stats.business','home.stats.vehicle','order.list','order.battery.list','order.package.list','recharge_order.list','charge_order.list','charge_device.list','alarm.list'],items:[{c:'home.stats.business',n:'经营数据看板'},{c:'home.stats.vehicle',n:'车辆运营统计'},{c:'order.list',n:'车辆订单列表'},{c:'order.battery.list',n:'电池订单列表'},{c:'order.package.list',n:'套餐订单列表'},{c:'recharge_order.list',n:'充值订单列表'},{c:'charge_order.list',n:'充电订单列表'},{c:'charge_device.list',n:'充电设备列表'},{c:'alarm.list',n:'告警列表'}]}].filter(Boolean)};
   }
   if(tab.value==='vehicles'){
     if(vehOV.value==='detail')return{title:'车辆详情',groups:[pickPermGroup('veh',[
@@ -8185,6 +8609,8 @@ const demoPagePermCodes=computed(()=>{const s=[];(demoPagePermGroups.value||[]).
 /* 当前页面伪路由：供权限面板复制 code+页面路径 */
 const pageRoute=computed(function(){
   if(showLogin.value)return'/login';
+  if(cdOV.value)return '/charge-devices'+(cdOV.value==='list'?'':'/'+cdOV.value);
+  if(coOV.value)return '/charge-orders'+(coOV.value==='list'?'':'/'+coOV.value);
   if(tab.value==='home')return homeOV.value==='alerts'?'/home/alerts':'/home';
   if(tab.value==='vehicles')return vehOV.value?('/vehicles/'+vehOV.value):(vehView.value==='map'?'/vehicles/map':'/vehicles');
   if(tab.value==='orders'){
@@ -8484,15 +8910,17 @@ const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待取用'},{v:'
 const paySts=computed(()=>[{v:'pending',l:'待支付'},{v:'processing',l:'支付中'},{v:'paid',l:'已支付'},{v:'refunding',l:'退款中'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}]);
 const demoPayStsFixed=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
 const quickPills=computed(()=>[{l:'全部',v:''},{v:'pickup',l:'待取用'},{v:'progress',l:'进行中'},{v:'return',l:'待归还'},{v:'overdue',l:'已超期'}]);
-  const qCnt=computed(()=>{const base=demoListEmpty.value?[]:orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=(o.created||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true});const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
+  /* 计数口径：各状态订单总量，不受筛选条件与搜索词影响（筛选/搜索只改变下方列表） */
+  const qCnt=computed(()=>{const base=demoListEmpty.value?[]:orders.value;const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
 const typePills=computed(()=>[{l:'全部',v:''},{v:'vehicle',l:'车辆租赁'},{v:'battery',l:'电池租赁'},{v:'package',l:'套餐'}]);
 const typeCnt=computed(()=>{const m={};orders.value.forEach(o=>{const ty=o.type||'vehicle';m[ty]=(m[ty]||0)+1});return{'':orders.value.length,vehicle:m['vehicle']||0,battery:m['battery']||0,package:m['package']||0}});
 function fmtYmd(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
+/* 默认创建时间区间：近一个月（与充电订单 coDefaultRange 同口径）；订单/充值订单数据由 SYS_recent(15) 归一在近 15 天内，该区间可完整覆盖 */
 function defaultOrdersDateRange(){
-  var end=new Date();
-  var start=new Date(end.getFullYear(),end.getMonth(),end.getDate());
-  start.setDate(start.getDate()-3650);
-  return {start:fmtYmd(start),end:fmtYmd(end)};
+var end=new Date();
+var start=new Date(end.getFullYear(),end.getMonth(),end.getDate());
+start.setMonth(start.getMonth()-1);
+return {start:fmtYmd(start),end:fmtYmd(end)};
 }
 function parseYmd(s){
   var p=(s||'').split('-');
@@ -8514,7 +8942,13 @@ const ordersDateDays=computed(()=>{
   const last=new Date(y,m,0).getDate();
   return Array.from({length:last},(_,i)=>i+1);
 });
-const ordersHasF=computed(()=>!!ordersFsSt.value||!!ordersFsPay.value||!!ordersFsPaySt.value);
+/* 高亮口径：任一非时间条件生效，或创建时间区间偏离默认（近一个月）时点亮 */
+const ordersHasF=computed(()=>{
+  if(ordersFsSt.value||ordersFsPay.value||ordersFsPaySt.value)return true;
+  var s=ordersFsStart.value,e=ordersFsEnd.value;
+  if(!s||!e)return false;
+  return s!==_ordDateDef.start||e!==_ordDateDef.end;
+});
 const vehSts=['progress','return','overdue','complete','breach'];
 function hasVehicle(s){return vehSts.indexOf(s)!==-1}
 const oFiltered=computed(()=>demoListEmpty.value?[]:orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=(o.created||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
@@ -8530,7 +8964,7 @@ var showPaid=computed(()=>vehSts.concat(['pickup']).indexOf(dSt.value)!==-1||(dS
 var refundable=computed(function(){var pays=[dPaySt.value];var d=do_.value;if(d&&d.renewSubOrders)d.renewSubOrders.forEach(function(r){if(r&&r.subPayStatus&&!r.cancelRenew)pays.push(r.subPayStatus)});return pays.some(function(s){return s==='paid'||s==='partialRefund'||s==='已支付'||s==='部分退款'||s==='退款中'})});
 var showActions=computed(()=>dSt.value!=='cancelled');
 var primaryLabel=computed(()=>{if(dPaySt.value==='pending'&&dPm.value==='offline'&&!do_.value.paymentSplit)return '确认支付';var m={created:'取消订单',pickup:'取消订单',progress:'结束订单','return':'结束订单',overdue:'结束订单',breach:'结束订单'};var lbl=m[dSt.value]||'';if(!lbl&&refundable.value)return '退款';return lbl;});
-var primaryDanger=computed(()=>['created','pickup'].indexOf(dSt.value)!==-1&&!(dPaySt.value==='pending'&&dPm.value==='offline'&&!do_.value.paymentSplit));
+var primaryDanger=computed(()=>['取消订单','结束订单'].indexOf(primaryLabel.value)!==-1);
 var dualMode=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline'&&!do_.value.paymentSplit);
 var dualIsCancel=computed(()=>dPaySt.value==='pending'&&dPm.value==='offline'&&!do_.value.paymentSplit);
 var dangerLabel=computed(()=>'取消订单');
@@ -9609,7 +10043,15 @@ const roStatusTabs=[{v:null,l:'全部'},{v:['UNPAID','PAYING'],l:'待支付'},{v
 function roStatusActive(p){return roStatus.value===p.v}
 const roTabCnt=computed(()=>{const m={};let n=0;rechargeOrders.value.forEach(o=>{const t=roStatusTabs.find(p=>p.v===null||(p.v&&p.v.indexOf(o.payStatus)!==-1));if(t)m[t.l]=(m[t.l]||0)+1;n++});m['全部']=n;return m});
 const roFsPay=ref(''),roFsPaySt=ref([]),roFsStart=ref(_ordDateDef.start),roFsEnd=ref(_ordDateDef.end),roFsMin=ref(''),roFsMax=ref('');
-const roHasF=computed(()=>!!roFsPay.value||roFsPaySt.value.length>0||!!roFsStart.value||!!roFsEnd.value||(roFsMin.value!==''&&roFsMin.value!=null)||(roFsMax.value!==''&&roFsMax.value!=null));
+/* 高亮口径：任一非时间条件生效（支付渠道/支付状态/金额区间），或创建时间区间偏离默认（近一个月）时点亮 */
+const roHasF=computed(()=>{
+  if(roFsPay.value||roFsPaySt.value.length>0)return true;
+  if(roFsMin.value!==''&&roFsMin.value!=null)return true;
+  if(roFsMax.value!==''&&roFsMax.value!=null)return true;
+  var s=roFsStart.value,e=roFsEnd.value;
+  if(!s||!e)return false;
+  return s!==_ordDateDef.start||e!==_ordDateDef.end;
+});
 const rechargeFiltered=computed(()=>rechargeOrders.value.filter(o=>{
   if(demoListEmpty.value)return false;
   if(roStatus.value&&roStatus.value.indexOf(o.payStatus)===-1)return false;
@@ -9647,12 +10089,350 @@ function rechargeCustomerText(o){if(o.phone&&String(o.phone).trim())return o.pho
 const profileMdT=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用账号':'启用账号';if(profileMod.value==='delPos')return '删除职位';if(profileMod.value==='delCs')return '删除客服';if(profileMod.value==='delRecharge')return '删除充值配置';if(profileMod.value==='logout')return '退出登录';return''});
 const profileMdD=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用后该账号将无法登录，确定禁用？':'确定重新启用该账号？启用后可正常登录。';if(profileMod.value==='delPos')return '确定删除该职位？删除后不可恢复。';if(profileMod.value==='delCs')return '确定删除该客服信息？删除后不可恢复。';if(profileMod.value==='delRecharge')return '确定删除该充值配置？删除后不可恢复。';if(profileMod.value==='logout')return '确定要退出当前账号吗？退出后需重新登录。';return''});
 const profileMdDanger=computed(()=>(profileMod.value==='toggle'&&tgtAcc&&tgtAcc.status==='启用')||profileMod.value==='delPos'||profileMod.value==='delCs'||profileMod.value==='logout');
+/* ══════════════════════════════════════════════════════════════════
+   充电设备（商户端）：设备资产维护
+   列表 / 详情 / 新增（页面） / 编辑（页面） / 选择地址（页面） / 定价（弹窗） / 启用禁用 / 更换门店（列表弹窗）
+   门店主数据复用 index 现有 stores.value（与充电订单共用同一份）
+   ══════════════════════════════════════════════════════════════════ */
+const chargeDevices=ref([
+  {id:1,shopId:1,deviceNo:'CD-0001',address:'成都市双流区雅和北路博瑞都市花园西侧 90 米 充电桩区 A',price:500,maxDuration:240,status:'ENABLE',usageStatus:0,createTime:'2026-08-01 09:12:00'},
+  {id:2,shopId:1,deviceNo:'CD-0002',address:'成都市双流区雅和北路博雅路交叉口 停车棚 2 号位',price:500,maxDuration:240,status:'ENABLE',usageStatus:1,createTime:'2026-08-01 09:20:00'},
+  {id:3,shopId:2,deviceNo:'CD-0003',address:'成都市锦江区春熙路西段太升南路地铁口 非机动车区',price:600,maxDuration:180,status:'ENABLE',usageStatus:0,createTime:'2026-08-03 10:05:00'},
+  {id:4,shopId:2,deviceNo:'CD-0004',address:'成都市锦江区春熙路西段商场 B1 停车场 3 号入口旁',price:600,maxDuration:180,status:'DISABLE',usageStatus:0,createTime:'2026-08-03 10:18:00'},
+  {id:5,shopId:3,deviceNo:'CD-0005',address:'成都市武侯区磨子桥科华北路 一层临街充电位',price:450,maxDuration:300,status:'ENABLE',usageStatus:1,createTime:'2026-08-06 14:40:00'},
+  {id:6,shopId:3,deviceNo:'CD-0006',address:'成都市武侯区磨子桥一环路南二段 小区地面停车区',price:450,maxDuration:300,status:'ENABLE',usageStatus:0,createTime:'2026-08-06 14:52:00'},
+  {id:7,shopId:4,deviceNo:'CD-0007',address:'成都市高新区天府大道中段天府软件园 B 区 员工充电区',price:520,maxDuration:240,status:'DISABLE',usageStatus:0,createTime:'2026-08-09 08:30:00'},
+  {id:8,shopId:4,deviceNo:'CD-0008',address:'成都市高新区天府大道中段地铁 1 号线出口 右侧车棚',price:520,maxDuration:240,status:'ENABLE',usageStatus:0,createTime:'2026-08-09 08:44:00'},
+  {id:9,shopId:null,deviceNo:'CD-0009',address:'待补充设备地址',price:0,maxDuration:0,status:'ENABLE',usageStatus:0,createTime:'2026-09-02 16:10:00'},
+  {id:10,shopId:1,deviceNo:'CD-0010',address:'成都市双流区雅和北路 3 号楼架空层 充电桩区 B',price:500,maxDuration:240,status:'DISABLE',usageStatus:0,createTime:'2026-09-05 11:26:00'}
+]);
+const cdOV=ref('');              // '' | 'list' | 'detail' | 'add' | 'edit' | 'addrMap'
+const curChargeDev=ref(null);
+const cdQ=ref('');
+const cdMod=ref('');             // '' | 'price' | 'shop'（编辑设备已改为独立页面，不再走弹窗）
+const cdConfirm=ref('');         // '' | 'disable' | 'enable'
+const cdAddForm=ref({deviceNo:'',address:''});
+const cdModForm=ref({deviceNo:'',address:'',price:0,maxDuration:0,shopId:''});
+const cdErr=ref({});
+const cdSaving=ref(false);
+const cdConfirmLoading=ref(false);
+/* —— 状态标签 / 门店 / 格式化 —— */
+function cdEnableTag(s){return s==='ENABLE'?{l:'启用',c:'#17A34A'}:{l:'禁用',c:'#999'}}
+function cdUsageTag(u){return Number(u)===1?{l:'充电中',c:'#1A82F4'}:{l:'空闲',c:'#17A34A'}}
+function storeNameOf(id){var s=stores.value[(Number(id)||0)-1];return s?s.name:'未分配门店'}
+const storeOptions=computed(()=>stores.value.map((s,i)=>({v:i+1,l:s.name})));
+/* 单价 / 最大充电时长恒有值（缺省 0），列表与详情不再出现「-」占位 */
+function cdPriceText(d){return fmtRp(d&&d.price!=null?Number(d.price)||0:0,0)+'/分钟'}
+function cdDurText(d){return String(d&&d.maxDuration!=null?Number(d.maxDuration)||0:0)+'分钟'}
+/* —— 状态胶囊 + 筛选 —— */
+const cdPills=[{v:'all',l:'全部'},{v:'IDLE',l:'空闲'},{v:'CHARGING',l:'充电中'}];
+const cdFsStatus=ref(''),cdFsUsage=ref('');
+const cdFsStatusC=ref(''),cdFsUsageC=ref('');
+/* 快捷筛选与「全部筛选 → 使用状态」共用同一状态：cdFsUsage ''=全部 / '0'=空闲 / '1'=充电中 */
+const cdPill=computed(()=>cdFsUsage.value===''?'all':(String(cdFsUsage.value)==='0'?'IDLE':'CHARGING'));
+function cdPillActive(p){return cdPill.value===p.v}
+const cdCnt=computed(()=>{var m={all:0,IDLE:0,CHARGING:0};chargeDevices.value.forEach(function(d){m.all++;if(Number(d.usageStatus)===1)m.CHARGING++;else m.IDLE++});return m});
+const cdShowFS=ref(false);
+const cdHasF=computed(()=>!!cdFsStatus.value||cdFsUsage.value!=='');
+const chargeDevFiltered=computed(()=>chargeDevices.value.filter(function(d){
+  if(demoListEmpty.value)return false;
+  if(cdFsStatus.value&&d.status!==cdFsStatus.value)return false;
+  if(cdFsUsage.value!==''&&String(d.usageStatus)!==String(cdFsUsage.value))return false;
+  if(cdQ.value&&(d.deviceNo||'').toLowerCase().indexOf(cdQ.value.toLowerCase())===-1)return false;
+  return true
+}));
+function cdSetPill(v){cdFsUsage.value=v==='all'?'':(v==='IDLE'?'0':'1')}
+function cdOpenFS(){cdFsStatusC.value=cdFsStatus.value;cdFsUsageC.value=cdFsUsage.value;cdShowFS.value=true}
+function cdResetFS(){cdFsStatusC.value='';cdFsUsageC.value=''}
+function cdApplyFS(){cdFsStatus.value=cdFsStatusC.value;cdFsUsage.value=cdFsUsageC.value;cdShowFS.value=false}
+function cdDoSearch(){cdQ.value=String(cdQ.value||'').trim()}
+function cdClearFilters(){cdQ.value='';cdFsStatus.value='';cdFsUsage.value='';cdFsStatusC.value='';cdFsUsageC.value=''}
+/* —— 页面进出 —— */
+function cdOpenList(){if(!can('charge_device.list')){deny();return}navOpen();cdClearFilters();cdOV.value='list';tab.value='home'}
+function cdOpenDetail(d){if(!can('charge_device.detail')){deny();return}navOpen();curChargeDev.value=d;cdOV.value='detail'}
+function cdOpenAdd(){if(!can('charge_device.add')){deny();return}navOpen();cdAddForm.value={deviceNo:'',address:''};cdErr.value={};cdOV.value='add'}
+function cdListScan(){scanFrom.value='cdList';scanTarget.value='charge';scanning.value=true}
+/* —— 设备地址：地图选点取址（表单不做联想搜索，由选点页 POI 搜索承担） —— */
+/* 候选点：name/addr/dist + lx/ly（假地图世界层百分比坐标，用于拖拽吸附与准星居中；定位点也取自本表） */
+const CD_ADDR_POINTS=[{name:'双流航空港商圈',addr:'成都市双流区航空港街道黄河中路 88 号',dist:'120m',lx:50,ly:45},{name:'空港国际城',addr:'成都市双流区空港国际城 3 号门',dist:'480m',lx:32,ly:64},{name:'川大江安校区',addr:'成都市双流区川大路二段 2 号',dist:'1.2km',lx:70,ly:30},{name:'双流万达广场',addr:'成都市双流区西航港大道中四段 199 号',dist:'2.1km',lx:20,ly:24},{name:'双流西站',addr:'成都市双流区西航港街道双流西站广场',dist:'3.4km',lx:78,ly:72}];
+/* 表单地址不再做输入联想：地址只能经「选择地址」页的 POI 搜索取点回填（字段本身为只读选择行） */
+function cdClearAddr(which){if(which==='edit')cdModForm.value.address='';else cdAddForm.value.address='';cdErr.value.address=''}
+/* —— 选择地址页：地图拖拽取点（世界层 2×2 + 松手吸附候选点，算法照搬换电端） —— */
+const cdAddrTarget=ref('add');
+/* POI 搜索：关键字过滤候选地址（name + addr 模糊匹配），清空即恢复全量 */
+const cdMapQ=ref('');
+const cdMapList=computed(function(){
+  var q=String(cdMapQ.value||'').trim().toLowerCase();
+  if(!q)return CD_ADDR_POINTS;
+  return CD_ADDR_POINTS.filter(function(p){return (p.name+' '+p.addr).toLowerCase().indexOf(q)!==-1});
+});
+const cdMapBox=ref(null),cdMapOff=reactive({x:0,y:0}),cdMapDragging=ref(false),cdMapDraft=ref('');
+var cdMapDrag=null,cdMapRo=null,cdMapLastSize=null;
+const cdMapWorldStyle=computed(function(){return {transform:'translate('+cdMapOff.x+'px,'+cdMapOff.y+'px)',transition:cdMapDragging.value?'none':'transform .35s cubic-bezier(.22,.61,.36,1)'}});
+function cdMapSize(){var el=cdMapBox.value;if(!el)return null;var r=el.getBoundingClientRect();return r.width?{w:r.width,h:r.height}:null}
+function cdMapClamp(v,lim){return Math.min(Math.max(v,-lim),lim)}
+function cdMapPointOf(addr){return CD_ADDR_POINTS.filter(function(p){return p.addr===addr})[0]||null}
+function cdMapCenterOn(p){var sz=cdMapSize();if(!sz||!p)return;cdMapOff.x=cdMapClamp(sz.w*(1-p.lx/50),sz.w);cdMapOff.y=cdMapClamp(sz.h*(1-p.ly/50),sz.h)}
+/* 页面过渡/字体加载会造成容器尺寸微调：尺寸变化时按当前选中点重新居中，保证准星始终对准选中点 */
+function cdMapWatchSize(){
+  if(cdMapRo){cdMapRo.disconnect();cdMapRo=null}
+  cdMapLastSize=cdMapSize();
+  if(!window.ResizeObserver||!cdMapBox.value)return;
+  cdMapRo=new ResizeObserver(function(){
+    if(!cdMapBox.value){cdMapRo.disconnect();cdMapRo=null;return}
+    var sz=cdMapSize();
+    if(cdMapDragging.value||!sz)return;
+    if(cdMapLastSize&&sz.w===cdMapLastSize.w&&sz.h===cdMapLastSize.h)return;
+    cdMapLastSize=sz;
+    cdMapCenterOn(cdMapPointOf(cdMapDraft.value)||cdStoreLoc);
+  });
+  cdMapRo.observe(cdMapBox.value);
+}
+function cdMapDown(e){var sz=cdMapSize();if(!sz)return;cdMapDragging.value=true;cdMapDrag={px:e.clientX,py:e.clientY,ox:cdMapOff.x,oy:cdMapOff.y,w:sz.w,h:sz.h};try{e.currentTarget.setPointerCapture(e.pointerId)}catch(ex){}}
+function cdMapMove(e){var d=cdMapDrag;if(!d)return;cdMapOff.x=cdMapClamp(d.ox+(e.clientX-d.px),d.w);cdMapOff.y=cdMapClamp(d.oy+(e.clientY-d.py),d.h)}
+/* 松手吸附：取当前正对中心点的最近候选地址并平滑归位（拖动中不实时跟随，避免高频重算与卡顿） */
+function cdMapUp(){
+  var d=cdMapDrag;cdMapDrag=null;cdMapDragging.value=false;
+  if(!d)return;
+  var cx=(1-cdMapOff.x/d.w)*50,cy=(1-cdMapOff.y/d.h)*50,best=null,bd=1e9;
+  CD_ADDR_POINTS.forEach(function(p){var dd=Math.pow(p.lx-cx,2)+Math.pow(p.ly-cy,2);if(dd<bd){bd=dd;best=p}});
+  if(!best)return;
+  cdMapDraft.value=best.addr;cdMapCenterOn(best);
+}
+function cdMapAddrOf(which){return which==='edit'?cdModForm.value.address:cdAddForm.value.address}
+function cdSetAddr(which,v){if(which==='edit')cdModForm.value.address=v;else cdAddForm.value.address=v;cdErr.value.address=''}
+function cdOpenAddrMap(which){
+  cdAddrTarget.value=which||'add';
+  var cur=String(cdMapAddrOf(cdAddrTarget.value)||'').trim();
+  var hit=cdMapPointOf(cur);
+  cdMapQ.value='';
+  /* 命中候选 → 回显选中并居中该点；未命中（尚未选择 / 地址非候选点）→ 不预选中，地图回到当前定位 */
+  cdMapDraft.value=hit?hit.addr:'';
+  navOpen();cdOV.value='addrMap';
+  nextTick(function(){cdMapCenterOn(hit||cdStoreLoc);cdMapWatchSize()});
+}
+function cdPickMapPoint(p){if(!p)return;cdMapDraft.value=p.addr;cdMapCenterOn(p)}
+function cdConfirmAddrMap(){
+  var v=cdMapDraft.value||'';
+  if(!v){toast('请在地图上选择地址','warn');return}
+  cdSetAddr(cdAddrTarget.value,v);
+  navBack();
+}
+/* —— 当前定位：授权（App 级）→ 定位服务（系统级）两步链，均就绪才取值 —— */
+const cdLocAppAuth=ref(false),cdLocService=ref(false),cdShowLocAppAuth=ref(false),cdShowLocService=ref(false),cdLocWant=ref(false);
+const cdStoreLoc=CD_ADDR_POINTS[2];
+function cdAllowLocAppAuth(){cdLocAppAuth.value=true;cdShowLocAppAuth.value=false;if(!cdLocService.value){cdShowLocService.value=true;return}cdLocSettle()}
+function cdDenyLocAppAuth(){cdShowLocAppAuth.value=false;cdLocWant.value=false}
+function cdCancelLocService(){cdShowLocService.value=false;cdLocWant.value=false}
+function cdAllowLocService(){if(!cdLocAppAuth.value){cdShowLocService.value=false;cdShowLocAppAuth.value=true;return}cdLocService.value=true;cdShowLocService.value=false;cdLocSettle()}
+function cdLocSettle(){if(!cdLocWant.value)return;cdLocWant.value=false;cdMapDraft.value=cdStoreLoc.addr;cdMapCenterOn(cdStoreLoc)}
+function cdUseLoc(){
+  if(!cdLocAppAuth.value){cdLocWant.value=true;cdShowLocAppAuth.value=true;return}
+  if(!cdLocService.value){cdLocWant.value=true;cdShowLocService.value=true;return}
+  cdMapDraft.value=cdStoreLoc.addr;cdMapCenterOn(cdStoreLoc);
+}
+function cdCloseList(){navBack()}
+function cdGoBack(){navBack()}
+/* —— 表单开关：编辑设备走页面栈（cdOV），定价 / 更换门店仍为弹窗（cdMod） —— */
+function cdOpenMod(kind){var d=curChargeDev.value;if(!d)return;
+  if(kind==='edit'){if(!can('charge_device.edit')){deny();return}cdModForm.value={deviceNo:d.deviceNo,address:d.address};cdErr.value={};navOpen();cdOV.value='edit'}
+  else if(kind==='price'){if(!can('charge_device.price')){deny();return}cdModForm.value={price:Number(d.price)||0,maxDuration:Number(d.maxDuration)||0};cdErr.value={};cdMod.value='price'}
+  else if(kind==='shop'){if(!can('charge_device.change_shop')){deny();return}if(d.status!=='DISABLE'){toast('请先禁用设备后再更换门店','warn');return}cdModForm.value={shopId:d.shopId||''};cdErr.value={};cdMod.value='shop'}}
+function cdCloseMod(){cdMod.value='';cdErr.value={}}
+/* —— 操作：新增 / 编辑 / 定价 / 启用禁用 / 更换门店 —— */
+function cdSaveAdd(){if(cdSaving.value)return;var f=cdAddForm.value,e={};
+  if(!String(f.deviceNo||'').trim())e.deviceNo='请输入设备编号';
+  if(String(f.deviceNo||'').trim()&&chargeDevices.value.some(function(d){return d.deviceNo===String(f.deviceNo).trim()}))e.deviceNo='设备编号已存在';
+  if(!String(f.address||'').trim())e.address='请输入或选择设备地址';
+  cdErr.value=e;if(Object.keys(e).length)return;
+  cdSaving.value=true;brandLoading.value=true;
+  setTimeout(function(){brandLoading.value=false;cdSaving.value=false;
+    var ids=chargeDevices.value.map(function(d){return d.id}),nid=(ids.length?Math.max.apply(null,ids):0)+1;
+    chargeDevices.value.unshift({id:nid,shopId:null,deviceNo:String(f.deviceNo).trim(),address:String(f.address||'').trim()||'待补充设备地址',price:0,maxDuration:0,status:'ENABLE',usageStatus:0,createTime:now()});
+    navDrop();cdOV.value='list';toast('设备已新增','success')},400)}
+function cdSaveEdit(){if(cdSaving.value)return;var d=curChargeDev.value;if(!d)return;var f=cdModForm.value,e={};
+  if(!String(f.deviceNo||'').trim())e.deviceNo='请输入设备编号';
+  if(String(f.deviceNo||'').trim()&&chargeDevices.value.some(function(x){return x!==d&&x.deviceNo===String(f.deviceNo).trim()}))e.deviceNo='设备编号已存在';
+  if(!String(f.address||'').trim())e.address='请输入或选择设备地址';
+  cdErr.value=e;if(Object.keys(e).length)return;
+  cdSaving.value=true;setTimeout(function(){d.deviceNo=String(f.deviceNo).trim();d.address=String(f.address||'').trim();cdSaving.value=false;navDrop();cdOV.value='detail';toast('设备信息已保存','success')},400)}
+function cdSavePrice(){if(cdSaving.value)return;var d=curChargeDev.value;if(!d)return;var f=cdModForm.value,e={};
+  if(f.price==null||f.price===''||Number(f.price)<=0)e.price='请输入单价';
+  if(f.maxDuration==null||f.maxDuration===''||Number(f.maxDuration)<=0)e.maxDuration='请输入最大充电时长';
+  else if(Number(f.maxDuration)%1!==0)e.maxDuration='最大充电时长须为整数';
+  cdErr.value=e;if(Object.keys(e).length)return;
+  cdSaving.value=true;setTimeout(function(){d.price=Number(f.price);d.maxDuration=Number(f.maxDuration);cdSaving.value=false;cdCloseMod();toast('定价已保存','success')},400)}
+const cdShopOptions=computed(()=>storeOptions.value.map(function(s){return {value:s.v,label:s.l}}));
+/* 更换门店：OptionSheet 选中即提交（空值忽略、选中门店未变则仅关闭） */
+function cdPickShop(v){if(cdSaving.value)return;var d=curChargeDev.value;if(!d)return;if(v===''||v==null)return;
+  if(Number(v)===Number(d.shopId)){cdCloseMod();return}
+  cdSaving.value=true;setTimeout(function(){d.shopId=Number(v);cdSaving.value=false;cdCloseMod();toast('所属门店已更换','success')},400)}
+function cdAskToggle(){var d=curChargeDev.value;if(!d)return;if(!can('charge_device.toggle')){deny();return}cdConfirm.value=d.status==='ENABLE'?'disable':'enable'}
+function cdDoToggle(){if(cdConfirmLoading.value)return;cdConfirmLoading.value=true;setTimeout(function(){cdConfirmLoading.value=false;var d=curChargeDev.value;if(d)d.status=(d.status==='ENABLE'?'DISABLE':'ENABLE');var was=cdConfirm.value;cdConfirm.value='';toast(was==='disable'?'设备已禁用':'设备已启用','success')},500)}
+const cdConfirmTitle=computed(()=>cdConfirm.value==='disable'?'禁用设备':(cdConfirm.value==='enable'?'启用设备':''));
+const cdConfirmDesc=computed(()=>cdConfirm.value==='disable'?'确定要禁用该设备吗？':(cdConfirm.value==='enable'?'确定要启用该设备吗？':''));
+const cdMoreOpen=ref(false);
+function refreshCd(){setTimeout(function(){},800)}
+
+/* ══════════════════════════════════════════════════════════════════
+   充电订单（商户端）：订单查看与处理
+   列表 / 详情（基础信息（含用户账号）·充电明细·退款明细）/ 取消 / 结束 / 退款 / 退款记录
+   订单状态：CREATED → CHARGING → FINISHED，可中途 CANCELLED
+   支付状态：UNPAID → PAYING → PAID → REFUNDING → PARTIAL_REFUND | FULL_REFUND，另有 CANCELLED
+   ══════════════════════════════════════════════════════════════════ */
+const coOrders=ref([
+  {id:1,orderNo:'CO202609010001',storeId:1,account:'user001',phone:'+86 13800001001',email:'user001@yadea.id',deviceNo:'CD-0001',price:500,selectedDuration:60,actualDuration:55,orderAmount:27500,orderStatus:'FINISHED',payChannel:'2C2P',payStatus:'PAID',payTime:'2026-09-01 10:12:00',startTime:'2026-09-01 10:11:00',endTime:'2026-09-01 11:11:00',createTime:'2026-09-01 10:11:00',completeTime:'2026-09-01 11:12:30',finishReason:'充电完成自动结束',refundRecords:[]},
+  {id:2,orderNo:'CO202609030002',storeId:2,account:'user002',phone:'+86 13800001002',email:'user002@yadea.id',deviceNo:'CD-0003',price:600,selectedDuration:30,actualDuration:20,orderAmount:12000,orderStatus:'CHARGING',payChannel:'WALLET',payStatus:'PAID',payTime:'2026-09-03 14:30:10',startTime:'2026-09-03 14:30:00',endTime:'2026-09-03 15:00:00',createTime:'2026-09-03 14:30:00',refundRecords:[]},
+  {id:3,orderNo:'CO202609060003',storeId:2,account:'user004',phone:'',email:'user004@yadea.id',deviceNo:'CD-0004',price:600,selectedDuration:60,actualDuration:0,orderAmount:36000,orderStatus:'CREATED',payChannel:'2C2P',payStatus:'UNPAID',payTime:'',startTime:'2026-09-06 16:20:00',endTime:'2026-09-06 17:20:00',createTime:'2026-09-06 16:20:00',refundRecords:[]},
+  {id:4,orderNo:'CO202609070004',storeId:1,account:'user005',phone:'+86 13800001005',email:'user005@yadea.id',deviceNo:'CD-0002',price:500,selectedDuration:90,actualDuration:40,orderAmount:20000,orderStatus:'FINISHED',payChannel:'2C2P',payStatus:'PARTIAL_REFUND',payTime:'2026-09-07 08:30:15',startTime:'2026-09-07 08:30:00',endTime:'2026-09-07 10:00:00',createTime:'2026-09-07 08:30:00',completeTime:'2026-09-07 09:15:00',finishReason:'用户提前拔枪结束',refundRecords:[
+    {refundNo:'TK20260907002',refundTime:'2026-09-07 10:04:12',refundAmount:5000,operator:'store_admin',refundSource:'商户端',reason:'首次退款失败：收款渠道异常，已重新发起',payChannel:'2C2P',refundStatus:'FAILED',finishTime:'2026-09-07 10:04:18'},
+    {refundNo:'TK20260907001',refundTime:'2026-09-07 10:05:00',refundAmount:5000,operator:'store_admin',refundSource:'商户端',reason:'用户提前结束充电，退还差额',payChannel:'2C2P',refundStatus:'SUCCESS',finishTime:'2026-09-07 10:05:02'}
+  ]},
+  {id:5,orderNo:'CO202609080005',storeId:3,account:'user006',phone:'+86 13800001006',email:'user006@yadea.id',deviceNo:'CD-0005',price:450,selectedDuration:180,actualDuration:0,orderAmount:81000,orderStatus:'FINISHED',payChannel:'2C2P',payStatus:'FULL_REFUND',payTime:'2026-09-08 11:15:10',startTime:'2026-09-08 11:15:00',endTime:'2026-09-08 14:15:00',createTime:'2026-09-08 11:15:00',completeTime:'2026-09-08 11:38:00',finishReason:'设备故障，管理员结束订单',refundRecords:[
+    {refundNo:'TK20260908001',refundTime:'2026-09-08 11:40:00',refundAmount:81000,operator:'op_admin',refundSource:'运营平台',reason:'设备故障，全额退款',payChannel:'2C2P',refundStatus:'SUCCESS',finishTime:'2026-09-08 11:40:03'}
+  ]},
+  {id:6,orderNo:'CO202609090006',storeId:2,account:'user007',phone:'+86 13800001007',email:'',deviceNo:'CD-0004',price:600,selectedDuration:45,actualDuration:0,orderAmount:27000,orderStatus:'CANCELLED',payChannel:'WALLET',payStatus:'UNPAID',payTime:'',startTime:'2026-09-09 13:00:00',endTime:'2026-09-09 13:45:00',createTime:'2026-09-09 13:00:00',cancelTime:'2026-09-09 13:02:30',cancelReason:'用户临时取消充电',refundRecords:[]},
+  {id:7,orderNo:'CO202609100007',storeId:1,account:'user008',phone:'+86 13800001008',email:'user008@yadea.id',deviceNo:'CD-0001',price:500,selectedDuration:30,actualDuration:0,orderAmount:15000,orderStatus:'CANCELLED',payChannel:'2C2P',payStatus:'UNPAID',payTime:'',startTime:'2026-09-10 18:00:00',endTime:'2026-09-10 18:30:00',createTime:'2026-09-10 18:00:00',cancelTime:'2026-09-10 18:01:10',cancelReason:'设备异常，取消订单（原支付已回落待支付）',refundRecords:[]},
+  {id:8,orderNo:'CO202609120008',storeId:4,account:'user009',phone:'+86 13800001009',email:'user009@yadea.id',deviceNo:'CD-0008',price:520,selectedDuration:120,actualDuration:60,orderAmount:31200,orderStatus:'FINISHED',payChannel:'2C2P',payStatus:'REFUNDING',payTime:'2026-09-12 09:05:20',startTime:'2026-09-12 09:05:00',endTime:'2026-09-12 11:05:00',createTime:'2026-09-12 09:05:00',completeTime:'2026-09-12 10:06:00',finishReason:'用户提前结束',refundRecords:[
+    {refundNo:'TK20260912001',refundTime:'2026-09-12 10:20:00',refundAmount:8000,operator:'store_admin',refundSource:'商户端',reason:'用户投诉充电异常，退还部分金额',payChannel:'2C2P',refundStatus:'REFUNDING',finishTime:''}
+  ]},
+  {id:9,orderNo:'CO202609140009',storeId:3,account:'user010',phone:'+86 13800001010',email:'user010@yadea.id',deviceNo:'CD-0006',price:450,selectedDuration:150,actualDuration:120,orderAmount:54000,orderStatus:'FINISHED',payChannel:'WALLET',payStatus:'PARTIAL_REFUND',payTime:'2026-09-14 15:40:30',startTime:'2026-09-14 15:40:00',endTime:'2026-09-14 18:10:00',createTime:'2026-09-14 15:40:00',completeTime:'2026-09-14 17:42:00',finishReason:'充电完成自动结束',refundRecords:[
+    {refundNo:'TK20260914001',refundTime:'2026-09-14 18:00:00',refundAmount:9000,operator:'op_admin',refundSource:'运营平台',reason:'首次退款：充电中断补偿',payChannel:'WALLET',refundStatus:'SUCCESS',finishTime:'2026-09-14 18:00:02'},
+    {refundNo:'TK20260915002',refundTime:'2026-09-15 09:30:00',refundAmount:6000,operator:'store_admin',refundSource:'商户端',reason:'二次退款：客服补偿',payChannel:'WALLET',refundStatus:'SUCCESS',finishTime:'2026-09-15 09:30:02'}
+  ]},
+  {id:10,orderNo:'CO202609160010',storeId:1,account:'user011',phone:'+86 13800001011',email:'',deviceNo:'CD-0010',price:500,selectedDuration:60,actualDuration:25,orderAmount:12500,orderStatus:'CHARGING',payChannel:'OFFLINE',payStatus:'UNPAID',payTime:'',startTime:'2026-09-16 20:10:00',endTime:'2026-09-16 21:10:00',createTime:'2026-09-16 20:10:00',refundRecords:[]},
+  {id:11,orderNo:'CO202609180011',storeId:4,account:'user012',phone:'+86 13800001012',email:'user012@yadea.id',deviceNo:'CD-0007',price:520,selectedDuration:240,actualDuration:0,orderAmount:124800,orderStatus:'CREATED',payChannel:'2C2P',payStatus:'UNPAID',payTime:'',startTime:'2026-09-18 07:30:00',endTime:'2026-09-18 11:30:00',createTime:'2026-09-18 07:30:00',refundRecords:[]},
+  {id:12,orderNo:'CO202609200012',storeId:2,account:'user013',phone:'+86 13800001013',email:'user013@yadea.id',deviceNo:'CD-0003',price:600,selectedDuration:90,actualDuration:85,orderAmount:51000,orderStatus:'FINISHED',payChannel:'2C2P',payStatus:'PAID',payTime:'2026-09-20 12:01:05',startTime:'2026-09-20 12:00:00',endTime:'2026-09-20 13:30:00',createTime:'2026-09-20 12:00:00',completeTime:'2026-09-20 13:26:00',finishReason:'充电完成自动结束',refundRecords:[]}
+]);
+const coOV=ref('');              // '' | 'list' | 'detail' | 'refunds'
+const curChargeOrder=ref(null);
+const coQ=ref('');
+const coSearchScope=ref('no');
+const coSearchScopeOpen=ref(false);
+const coSearchScopeOpts=[{v:'no',l:'订单编号'},{v:'account',l:'账号'},{v:'phone',l:'手机号'},{v:'email',l:'邮箱'}];
+const coSearchScopeLabel=computed(()=>{var o=coSearchScopeOpts.filter(function(x){return x.v===coSearchScope.value})[0];return o?o.l:'订单编号'});
+const coSearchPH=computed(()=>'请输入'+coSearchScopeLabel.value);
+const coPill=ref('all');
+/* —— 状态标签 / 渠道 / 可退额度 —— */
+function coOrderStatusTag(s){var m={CREATED:{l:'已创建',c:'#FF8C1B'},CHARGING:{l:'充电中',c:'#1A82F4'},FINISHED:{l:'已完成',c:'#17A34A'},CANCELLED:{l:'已取消',c:'#999'}};return m[s]||{l:s||'-',c:'#999'}}
+function coPayStatusTag(s){var m={UNPAID:{l:'待支付',c:'#FF8C1B'},PAYING:{l:'支付中',c:'#1A82F4'},PAID:{l:'已支付',c:'#17A34A'},REFUNDING:{l:'退款中',c:'#8B5CF6'},PARTIAL_REFUND:{l:'部分退款',c:'#E6A23C'},FULL_REFUND:{l:'全部退款',c:'#FF4343'},CANCELLED:{l:'已取消',c:'#999'}};return m[s]||{l:s||'-',c:'#999'}}
+function coRefundStatusTag(s){var m={REFUNDING:{l:'退款中',c:'#F59E0B'},SUCCESS:{l:'退款成功',c:'#17A34A'},FAILED:{l:'退款失败',c:'#DC2626'}};return m[s]||{l:s||'-',c:'#999'}}
+const CO_PAY_CHANNELS=[{v:'2C2P',l:'2C2P'},{v:'WALLET',l:'钱包'},{v:'OFFLINE',l:'线下支付'}];
+function coPayChannelText(c){var m={'2C2P':'2C2P',WALLET:'钱包',OFFLINE:'线下支付'};return m[c]||(c||'-')}
+function coRefundedAmount(o){return ((o&&o.refundRecords)||[]).filter(function(r){return r.refundStatus==='SUCCESS'}).reduce(function(n,r){return n+(Number(r.refundAmount)||0)},0)}
+function coRefundable(o){return Math.max(0,(Number(o&&o.orderAmount)||0)-coRefundedAmount(o))}
+function coCanRefund(o){return !!o&&o.orderStatus==='FINISHED'&&(o.payStatus==='PAID'||o.payStatus==='PARTIAL_REFUND')&&coRefundable(o)>0}
+function coCanRefundRecords(o){return !!o&&['REFUNDING','PARTIAL_REFUND','FULL_REFUND'].indexOf(o.payStatus)!==-1}
+function coShowPayTime(o){return !!o&&['PAID','REFUNDING','PARTIAL_REFUND','FULL_REFUND'].indexOf(o.payStatus)!==-1&&!!o.payTime}
+function coDurText(v){return (v==null||v==='')?'-':v+'分钟'}
+function coAmountText(v){return (v==null||v==='')?'-':fmtRp(v,0)}
+/* —— 状态胶囊 + 筛选 —— */
+/* 默认时间区间：近一个月（进入列表即生效，清除筛选后仍回到该区间） */
+function coDefaultRange(){var e=new Date();var s=new Date(e.getFullYear(),e.getMonth(),e.getDate());s.setMonth(s.getMonth()-1);return{start:fmtYmd(s),end:fmtYmd(e)}}
+/* 快捷筛选 = 订单状态，收敛为「全部 / 已创建 / 充电中」；已完成、已取消移入「全部筛选」弹窗（共用 coFsOrderSt） */
+const coPills=[{v:'',l:'全部'},{v:'CREATED',l:'已创建'},{v:'CHARGING',l:'充电中'}];
+const coOrderStatusOpts=[{v:'CREATED',l:'已创建'},{v:'CHARGING',l:'充电中'},{v:'FINISHED',l:'已完成'},{v:'CANCELLED',l:'已取消'}];
+function coPillActive(p){if(!coFsOrderSt.value)return p.v==='';return p.v===coFsOrderSt.value}
+/* 计数口径：各状态订单总量，不受筛选条件与搜索词影响（筛选/搜索只改变下方列表） */
+const coCnt=computed(()=>{var m={'':0,CREATED:0,CHARGING:0,FINISHED:0,CANCELLED:0};var base=coOrders.value.filter(function(o){return !demoListEmpty.value});m['']=base.length;base.forEach(function(o){if(m[o.orderStatus]!=null)m[o.orderStatus]++});return m});
+const coFsOrderSt=ref(''),coFsChannel=ref(''),coFsPaySt=ref([]);
+const coFsOrderStC=ref('');
+const _coDateDef=coDefaultRange();
+const coFsStart=ref(_coDateDef.start),coFsEnd=ref(_coDateDef.end);
+const coFsChannelC=ref(''),coFsPayStC=ref([]);
+const coFsStartC=ref(_coDateDef.start),coFsEndC=ref(_coDateDef.end);
+const coShowFS=ref(false);
+/* 高亮口径：任一非时间条件生效（含订单状态，含从弹窗选的已完成/已取消），或时间区间偏离默认（近一个月）时点亮 */
+const coHasF=computed(()=>{
+  if(coFsOrderSt.value||coFsChannel.value||coFsPaySt.value.length>0)return true;
+  if(!coFsStart.value||!coFsEnd.value)return false;
+  return coFsStart.value!==_coDateDef.start||coFsEnd.value!==_coDateDef.end;
+});
+const coPayStatusOpts=[{v:'UNPAID',l:'待支付'},{v:'PAYING',l:'支付中'},{v:'PAID',l:'已支付'},{v:'REFUNDING',l:'退款中'},{v:'PARTIAL_REFUND',l:'部分退款'},{v:'FULL_REFUND',l:'全部退款'},{v:'CANCELLED',l:'已取消'}];
+/* 排序口径：按订单状态流程自上而下排列（已创建 → 充电中 → 已完成 → 已取消），同状态保持数据原顺序 */
+const coOrderStatusOrder={CREATED:1,CHARGING:2,FINISHED:3,CANCELLED:4};
+const coFiltered=computed(()=>coOrders.value.filter(function(o){
+  if(demoListEmpty.value)return false;
+  if(coFsOrderSt.value&&o.orderStatus!==coFsOrderSt.value)return false;
+  if(coFsChannel.value&&o.payChannel!==coFsChannel.value)return false;
+  if(coFsPaySt.value.length&&coFsPaySt.value.indexOf(o.payStatus)===-1)return false;
+  if(coFsStart.value&&coFsEnd.value){var m=(o.startTime||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<coFsStart.value||m[1]>coFsEnd.value))return false}
+  if(coQ.value){var map={no:o.orderNo,account:o.account||'',phone:o.phone||'',email:o.email||''};var f=map[coSearchScope.value]||o.orderNo;if(String(f).toLowerCase().indexOf(coQ.value.toLowerCase())===-1)return false}
+  return true
+}).sort(function(a,b){return (coOrderStatusOrder[a.orderStatus]||99)-(coOrderStatusOrder[b.orderStatus]||99)}));
+function coSetPill(v){coPill.value=v;coFsOrderSt.value=v;coFsOrderStC.value=v}
+function coSetSearchScope(v){coSearchScope.value=v;coSearchScopeOpen.value=false}
+document.addEventListener('click',function(){coSearchScopeOpen.value=false})
+function coDoSearch(){coQ.value=String(coQ.value||'').trim()}
+function coOpenFS(){coFsOrderStC.value=coFsOrderSt.value;coFsChannelC.value=coFsChannel.value;coFsPayStC.value=coFsPaySt.value.slice();coFsStartC.value=coFsStart.value;coFsEndC.value=coFsEnd.value;coShowFS.value=true}
+function coToggleFsPaySt(v){var i=coFsPayStC.value.indexOf(v);if(i===-1)coFsPayStC.value.push(v);else coFsPayStC.value.splice(i,1)}
+function coResetFS(){coFsOrderStC.value='';coFsChannelC.value='';coFsPayStC.value=[];var def=coDefaultRange();coFsStartC.value=def.start;coFsEndC.value=def.end}
+function coApplyFS(){coFsOrderSt.value=coFsOrderStC.value;coPill.value=coFsOrderStC.value;coFsChannel.value=coFsChannelC.value;coFsPaySt.value=coFsPayStC.value.slice();coFsStart.value=coFsStartC.value;coFsEnd.value=coFsEndC.value;coShowFS.value=false}
+function coClearFilters(){coQ.value='';coPill.value='';coFsOrderSt.value='';coFsOrderStC.value='';coFsChannel.value='';coFsPaySt.value=[];var def=coDefaultRange();coFsStart.value=def.start;coFsEnd.value=def.end;coSearchScope.value='no'}
+/* —— 日期区间滚轮 —— */
+const coDatePicker=ref(null);
+const coDateDraft=ref({year:2025,month:1,day:1});
+const coDateWheelYear=ref(null),coDateWheelMonth=ref(null),coDateWheelDay=ref(null);
+const coDateYears=Array.from({length:8},function(_,i){return 2020+i});
+const coDateDays=computed(()=>{var y=coDateDraft.value.year,m=coDateDraft.value.month,last=new Date(y,m,0).getDate();return Array.from({length:last},function(_,i){return i+1})});
+var coDateWheelTimers={};
+function openCoDatePicker(which){var src=which==='start'?coFsStartC.value:coFsEndC.value;var p=parseYmd(src)||parseYmd(coDefaultRange()[which==='start'?'start':'end']);coDateDraft.value={year:p.year,month:p.month,day:p.day};coDatePicker.value=which;nextTick(function(){scrollCoDateWheelsToDraft()})}
+function cancelCoDatePicker(){coDatePicker.value=null}
+function confirmCoDatePicker(){var ymd=ymdFromParts(coDateDraft.value);if(coDatePicker.value==='start'){coFsStartC.value=ymd;if(coFsStartC.value>coFsEndC.value)coFsEndC.value=ymd}else{coFsEndC.value=ymd;if(coFsEndC.value<coFsStartC.value)coFsStartC.value=ymd}coDatePicker.value=null}
+function scrollCoDateWheelsToDraft(){var d=coDateDraft.value;var map=[[coDateWheelYear,coDateYears.indexOf(d.year)],[coDateWheelMonth,trackMonths.indexOf(d.month)],[coDateWheelDay,coDateDays.value.indexOf(d.day)]];map.forEach(function(pair){var el=pair[0],idx=pair[1];if(el.value&&idx>=0)el.value.scrollTop=idx*36})}
+function onCoDateWheelScroll(kind,e){clearTimeout(coDateWheelTimers[kind]);coDateWheelTimers[kind]=setTimeout(function(){var el=e.target,idx=Math.round(el.scrollTop/36);el.scrollTop=idx*36;var d=Object.assign({},coDateDraft.value);if(kind==='year'){d.year=coDateYears[Math.min(Math.max(idx,0),coDateYears.length-1)];var maxD=new Date(d.year,d.month,0).getDate();if(d.day>maxD)d.day=maxD}if(kind==='month'){d.month=trackMonths[Math.min(Math.max(idx,0),11)];var maxD2=new Date(d.year,d.month,0).getDate();if(d.day>maxD2)d.day=maxD2}if(kind==='day'){var days=coDateDays.value;d.day=days[Math.min(Math.max(idx,0),days.length-1)]}coDateDraft.value=d},80)}
+/* —— 页面进出 —— */
+function coOpenList(){if(!can('charge_order.list')){deny();return}navOpen();coClearFilters();coOV.value='list';tab.value='orders'}
+function coOpenDetail(o){if(!can('charge_order.detail')){deny();return}navOpen();curChargeOrder.value=o;coOV.value='detail'}
+function coCloseList(){navBack()}
+function coGoBack(){navBack()}
+function coOpenRefundRecords(){if(!can('charge_order.refund.list')){deny();return}navOpen();coOV.value='refunds'}
+const coRefunds=computed(()=>((curChargeOrder.value&&curChargeOrder.value.refundRecords)||[]));
+/* —— 取消订单（原因 ≤64 字 → 二次确认） —— */
+const coCancelMod=ref(false),coCancelConfirm=ref(false),coCancelLoading=ref(false),coCancelForm=ref({reason:''}),coCancelErr=ref('');
+function coRequestCancel(){if(!can('charge_order.operate.cancel')){deny();return}var o=curChargeOrder.value;if(!o||o.orderStatus!=='CREATED')return;coCancelForm.value={reason:''};coCancelErr.value='';coCancelMod.value=true}
+function coSubmitCancel(){var r=String(coCancelForm.value.reason||'').trim();if(r.length>64){coCancelErr.value='取消原因不超过 64 字';return}coCancelErr.value='';coCancelConfirm.value=true}
+function coConfirmCancel(){if(coCancelLoading.value)return;coCancelLoading.value=true;setTimeout(function(){coCancelLoading.value=false;coCancelConfirm.value=false;coCancelMod.value=false;var o=curChargeOrder.value;if(o){o.orderStatus='CANCELLED';o.cancelTime=now();o.cancelReason=String(coCancelForm.value.reason||'').trim();if(o.payStatus==='PAID'){o.payStatus='UNPAID';o.payTime=''}}toast('订单已取消','success')},600)}
+/* —— 结束订单（原因 ≤255 字 → 二次确认） —— */
+const coFinishMod=ref(false),coFinishConfirm=ref(false),coFinishLoading=ref(false),coFinishForm=ref({reason:''}),coFinishErr=ref('');
+function coRequestFinish(){if(!can('charge_order.operate.finish')){deny();return}var o=curChargeOrder.value;if(!o||o.orderStatus!=='CHARGING')return;coFinishForm.value={reason:''};coFinishErr.value='';coFinishMod.value=true}
+function coSubmitFinish(){var r=String(coFinishForm.value.reason||'').trim();if(!r){coFinishErr.value='请输入结束原因';return}if(r.length>255){coFinishErr.value='结束原因不超过 255 字';return}coFinishErr.value='';coFinishConfirm.value=true}
+function coConfirmFinish(){if(coFinishLoading.value)return;coFinishLoading.value=true;setTimeout(function(){coFinishLoading.value=false;coFinishConfirm.value=false;coFinishMod.value=false;var o=curChargeOrder.value;if(o){o.orderStatus='FINISHED';o.completeTime=now();o.finishReason=String(coFinishForm.value.reason||'').trim();if(o.payStatus==='PAID'&&!o.payTime)o.payTime=now()}toast('订单已结束','success')},600)}
+/* —— 退款（金额 ≤ 可退额度 → 二次确认 → 记录退款中 → 1.5s 办结） —— */
+const coRefundMod=ref(false),coRefundConfirm=ref(false),coRefundLoading=ref(false),coRefundForm=ref({amount:null,reason:''}),coRefundErr=ref({});
+function coOpenRefund(){if(!can('charge_order.refund.create')){deny();return}var o=curChargeOrder.value;if(!o||!coCanRefund(o))return;coRefundForm.value={amount:null,reason:''};coRefundErr.value={};coRefundMod.value=true}
+function coSubmitRefund(){var o=curChargeOrder.value;if(!o)return;var a=Number(coRefundForm.value.amount),e={};
+  if(!(a>0))e.amount='请输入退款金额';else if(a>coRefundable(o))e.amount='退款金额超出可退额度';
+  coRefundErr.value=e;if(Object.keys(e).length)return;
+  coRefundConfirm.value=true}
+function coConfirmRefund(){if(coRefundLoading.value)return;coRefundLoading.value=true;var o=curChargeOrder.value;if(!o){coRefundLoading.value=false;return}
+  var amount=Number(coRefundForm.value.amount)||0,reason=String(coRefundForm.value.reason||'').trim();
+  setTimeout(function(){coRefundLoading.value=false;coRefundConfirm.value=false;coRefundMod.value=false;
+    var d=new Date(),seq=String(d.getTime()).slice(-6);
+    o.refundRecords=o.refundRecords||[];
+    o.refundRecords.unshift({refundNo:'TK'+String(d.getFullYear())+p2(d.getMonth()+1)+p2(d.getDate())+seq,refundTime:now(),refundAmount:amount,operator:'op_admin',refundSource:'运营平台',reason:reason,payChannel:o.payChannel,refundStatus:'REFUNDING',finishTime:''});
+    o.payStatus='REFUNDING';
+    toast('退款申请已提交','success');
+    setTimeout(function(){
+      var rec=o.refundRecords[0];if(!rec)return;
+      rec.refundStatus='SUCCESS';rec.finishTime=now();
+      o.payStatus=coRefundable(o)<=0?'FULL_REFUND':'PARTIAL_REFUND';
+      toast(rec&&o.payStatus==='FULL_REFUND'?'退款已办结：全部退款':'退款已办结：部分退款','success');
+    },1500);
+  },600)}
+function refreshCo(){setTimeout(function(){},800)}
+/* 详情页底部操作栏可见性（按订单状态 + 权限互斥；退款记录入口在退款明细卡片上） */
+const coActionsVisible=computed(function(){var o=curChargeOrder.value;if(!o)return false;
+  return (o.orderStatus==='CREATED'&&can('charge_order.operate.cancel'))||
+         (o.orderStatus==='CHARGING'&&can('charge_order.operate.finish'))||
+         (coCanRefund(o)&&can('charge_order.refund.create'))});
+
 /* 统一页面导航栈（快照式，与 C 端用户端同一实现，见 createNav）
    本端 NAV_SCREENS 为空，页面开关全部由 pageRefList 快照恢复驱动。 */
 const NAV_SCREENS={};
 function _navClone(v){return (v&&typeof v==='object')?JSON.parse(JSON.stringify(v)):v}
 function _navR(r){return{get:function(){return r.value},set:function(v){r.value=v}}}
-const pageRefList=[tab,homeOV,vehOV,vehView,ordersOV,ordersType,ordersEntry,profileOV,profileSub,roOV,uWalletView,curAlert,do_,dv,dSt,dPaySt,dPm,dCanceledPaid,autoRenew,curBatt,du,curRechargeOrder,armed,lost,motorLocked].map(function(r){return _navR(r)});
+const pageRefList=[tab,homeOV,vehOV,vehView,ordersOV,ordersType,ordersEntry,profileOV,profileSub,roOV,uWalletView,curAlert,do_,dv,dSt,dPaySt,dPm,dCanceledPaid,autoRenew,curBatt,du,curRechargeOrder,armed,lost,motorLocked,cdOV,curChargeDev,coOV,curChargeOrder].map(function(r){return _navR(r)});
 
 const {navOpen,navBack,navDrop,navSwap,navReset,navLog}=createNav({screens:NAV_SCREENS,pageRefList:pageRefList,nameOf:function(){
   if(profileSub.value)return profileSub.value;
@@ -9661,6 +10441,8 @@ const {navOpen,navBack,navDrop,navSwap,navReset,navLog}=createNav({screens:NAV_S
   if(vehOV.value)return 'veh:'+vehOV.value;
   if(ordersOV.value)return 'orders:'+ordersOV.value;
   if(roOV.value)return 'ro:'+roOV.value;
+  if(cdOV.value)return 'cd:'+cdOV.value;
+  if(coOV.value)return 'co:'+coOV.value;
   return '';
 }});
 
@@ -9791,15 +10573,18 @@ function initI18nData(){
     {phone:'021-68881234',code:'+86',sh:9,sm:0,eh:21,em:0,remark:'上海区域专线'},
     {phone:'020-38881234',code:'+86',sh:10,sm:0,eh:19,em:0,remark:'广州区域专线'}
   ];
+  /* 订单数据在本函数内才填充（onMounted 调用），故归一必须放在此处，而非 setup 顶层 */
+  SYS_recent(15,orders.value,CZ_ORDERS.value,coOrders.value);
+  publishMerged();
 }
 watch(protoForceUpdate,(newVal)=>{if(newVal!=='none'&&!showVersionCheck.value){setTimeout(()=>checkVersion(),100)}});
 (function(){if(!uWallet.value||(!uWallet.value.total&&!uWallet.value.rechargeBalance&&!uWallet.value.bonusBalance))uWallet.value=(typeof walletFor==="function")?walletFor("user001"):uWallet.value})();
 function publishMerged(){try{MERGED.orderCount=(( (orders.value||orders)||[]).length)||0;MERGED.vehicleCount=(vehicles?(((vehicles.value||vehicles)||[]).length)||0:0);MERGED.batteryCount=(batteries?(((batteries.value||batteries)||[]).length)||0:0);MERGED.walletBalance=(uWallet&&uWallet.total)?uWallet.total:0;var _o=(((orders.value||orders)||[])[0])||null;MERGED.lastOrderId=_o?(_o.orderId||_o.id||"-"):"-";MERGED.updatedAt=Date.now();MERGED.myVehicles=(function(){var _fr=(((vehicles&&vehicles.value)||[]).filter(function(v){return v.vin && v.status!=='空闲'}).map(function(v){return {vin:v.vin,model:v.model,status:v.status||(v.online?"在线":"离线"),online:v.online,batteryMain:v.batteryMain,batterySub:v.batterySub}}));if(uVehicles&&uVehicles.value)uVehicles.value.forEach(function(x){if(x&&x._manual&&_fr.findIndex(function(f){return f.vin===x.vin})<0)_fr.push(x)});return _fr})();MERGED.myBatteries=(function(){var _fb=(((batteries&&batteries.value)||[]).filter(function(b){return b.battNo && b.status!=='空闲'}).map(function(b){return {code:b.battNo,id:b.battNo,model:b.model,soc:b.level,status:b.status,lost:b.lost,discharge:b.discharge||(b.online?"在线":"离线")}}));if(uBatteries&&uBatteries.value)uBatteries.value.forEach(function(x){if(x&&x._manual&&_fb.findIndex(function(f){return f.code===x.code})<0)_fb.push(x)});return _fb})();MERGED.myWallet=(function(){var _w=(uWallet&&uWallet.value)?uWallet.value:null;return (_w)?{totalBalance:_w.total,rechargeBalance:_w.rechargeBalance,bonusBalance:_w.bonusBalance,rechargeFrozen:_w.rechargeFrozen,bonusFrozen:_w.bonusFrozen,totalFrozen:(_w.rechargeFrozen||0)+(_w.bonusFrozen||0)}:null})();MERGED.myOrders=(function(){var _cols={created:"#2B3F5F",pickup:"#FF8C1B",progress:"#22D098","return":"#FF6A00",overdue:"#DC2626",breach:"#FF4343",complete:"#333333",cancelled:"#666666"};var _txt={created:"已创建",pickup:"待取用",progress:"进行中","return":"待归还",overdue:"已超期",breach:"已违约",complete:"已完成",cancelled:"已取消"};var _shop=(stores&&stores.value&&stores.value[0])?(stores.value[0].name||"测试门店"):"测试门店";return (((orders.value||orders)||[]).filter(function(o){return true})||[]).map(function(o){return {id:o.id||o.orderId||"",status:o.status,statusText:_txt[o.status]||"已创建",statusColor:_cols[o.status]||"#2B3F5F",model:o.item||o.type||"",img:"#FF6A00",desc:"",store:_shop,plan:o.plan||"",created:o.created||"",payTime:o.payTime||"",pickupTime:o.rentStart||o.created||"",returnTime:"",amount:o.amount||0,frame:o.vin||"",vModel:o.item||o.type||""}})})();MERGED.stores=(stores&&stores.value)?stores.value.map(function(s){return s.name}):[];}catch(e){}}
 (function(){if(!(uVehicles&&uVehicles.value&&uVehicles.value.length)){uVehicles.value=vehicles.value.filter(function(v){return v.vin && v.status!=='空闲'}).map(function(v){return{vin:v.vin,model:v.model,status:v.status,online:v.online,batteryMain:v.batteryMain,batterySub:v.batterySub}})}if(!(uBatteries&&uBatteries.value&&uBatteries.value.length)){uBatteries.value=batteries.value.filter(function(b){return b.battNo && b.status!=='空闲'}).map(function(b){return{code:b.battNo,id:b.battNo,model:b.model,soc:b.level,status:b.status,lost:b.lost,discharge:b.discharge}})}})();
 watch(function(){return[(((orders.value||orders)||[]).length)||0,(vehicles?(((vehicles.value||vehicles)||[]).length)||0:0),(batteries?(((batteries.value||batteries)||[]).length)||0:0),(uWallet&&uWallet.total)||0,(vehicles?JSON.stringify((vehicles.value||[]).map(function(v){return v.status+':'+(v.locked?'1':'0')+':'+(v.engineOn?'1':'0')})):''),(batteries?JSON.stringify((batteries.value||[]).map(function(b){return b.status})):'')]},publishMerged,{immediate:true});
-SYS_recent(15);publishMerged();
+publishMerged();
 onMounted(()=>{brandLoading.value=true;initI18nData();setTimeout(()=>{brandLoading.value=false;paint();if(protoForceUpdate.value!=='none'&&!showVersionCheck.value)checkVersion()},800)});
-watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,orderPickSel,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited,pkgPicker,uBindMod,uBindSel],paint);
+watch([tab,homeOV,vehOV,ordersOV,profileOV,profileSub,vehMod,ordersMod,orderPickSel,profileMod,showRefund,vehShowModelSheet,vehShowFS,ordersShowFS,showDocSheet,docDeleteMod,previewImage,alertMod,trackTimePicker,hmPicker,showVersionCheck,appExited,pkgPicker,uBindMod,uBindSel,cdOV,coOV,cdMoreOpen,cdShowFS,coShowFS],paint);
 watch(dSt,(v)=>{if(v==='created')dPaySt.value='pending';if(v==='pickup'||v==='progress'||v==='return'||v==='complete')dPaySt.value='paid'});
 onUpdated(paint);
 
@@ -9850,7 +10635,9 @@ csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,
 profileMdT,profileMdD,profileMdDanger,profileMdOk,
 fE,vErr,vClr,tip,tipShow,tipToggle,tipHide,stage,
-roOV,curRechargeOrder,roRefundMod,roRefundConfirm,roRefundForm,roRefunds,rechargeOrders,roPayStatusTag,roPayChannelText,roOpenList,roOpenDetail,roCloseList,roGoBack,roCanRefund,roCanRefundRecords,roOpenRefunds,roRefundTotal,roOpenRefund,roSubmitRefund,roConfirmRefund,roCancelMod,roCancelLoading,ignoreLoading,vehModLoading,battModLoading,psDoLoading,ordersModLoading,profileModLoading,uUnbindLoading,roRefundLoading,delDocLoading,roRequestCancel,roConfirmCancel,roQ,roSearchScope,roSearchScopeOpen,roSearchScopeOpts,roSearchScopeLabel,roSearchPH,roStatus,roStatusTabs,roStatusActive,roTabCnt,roHasF,rechargeFiltered,roShowFS,roFsPayC,roFsPayStC,roFsPayStOpts,roFsStartC,roFsEndC,roFsMinC,roFsMaxC,roOpenFS,roToggleFsPaySt,roResetFS,roApplyFS,roDoSearch,setRoSearchScope,roClearFilters,rechargeCustomerText,roDatePicker,roDateDraft,roDateWheelYear,roDateWheelMonth,roDateWheelDay,roDateYears,roDateDays,openRoDatePicker,cancelRoDatePicker,confirmRoDatePicker,onRoDateWheelScroll
+roOV,curRechargeOrder,roRefundMod,roRefundConfirm,roRefundForm,roRefunds,rechargeOrders,roPayStatusTag,roPayChannelText,roOpenList,roOpenDetail,roCloseList,roGoBack,roCanRefund,roCanRefundRecords,roOpenRefunds,roRefundTotal,roOpenRefund,roSubmitRefund,roConfirmRefund,roCancelMod,roCancelLoading,ignoreLoading,vehModLoading,battModLoading,psDoLoading,ordersModLoading,profileModLoading,uUnbindLoading,roRefundLoading,delDocLoading,roRequestCancel,roConfirmCancel,roQ,roSearchScope,roSearchScopeOpen,roSearchScopeOpts,roSearchScopeLabel,roSearchPH,roStatus,roStatusTabs,roStatusActive,roTabCnt,roHasF,rechargeFiltered,roShowFS,roFsPayC,roFsPayStC,roFsPayStOpts,roFsStartC,roFsEndC,roFsMinC,roFsMaxC,roOpenFS,roToggleFsPaySt,roResetFS,roApplyFS,roDoSearch,setRoSearchScope,roClearFilters,rechargeCustomerText,roDatePicker,roDateDraft,roDateWheelYear,roDateWheelMonth,roDateWheelDay,roDateYears,roDateDays,openRoDatePicker,cancelRoDatePicker,confirmRoDatePicker,onRoDateWheelScroll,
+chargeDevices,cdOV,curChargeDev,cdQ,cdPill,cdMod,cdConfirm,cdAddForm,cdModForm,cdErr,cdSaving,cdConfirmLoading,cdMoreOpen,cdPills,cdCnt,cdPillActive,cdSetPill,cdOpenFS,cdResetFS,cdApplyFS,cdDoSearch,cdClearFilters,cdFsStatus,cdFsStatusC,cdFsUsage,cdFsUsageC,cdShowFS,cdHasF,chargeDevFiltered,cdEnableTag,cdUsageTag,cdPriceText,cdDurText,storeNameOf,storeOptions,cdOpenList,cdOpenDetail,cdOpenAdd,cdListScan,CD_ADDR_POINTS,cdClearAddr,cdAddrTarget,cdMapQ,cdMapList,cdMapBox,cdMapOff,cdMapDragging,cdMapDraft,cdMapWorldStyle,cdMapDown,cdMapMove,cdMapUp,cdOpenAddrMap,cdPickMapPoint,cdConfirmAddrMap,cdLocAppAuth,cdLocService,cdShowLocAppAuth,cdShowLocService,cdUseLoc,cdAllowLocAppAuth,cdDenyLocAppAuth,cdCancelLocService,cdAllowLocService,cdCloseList,cdGoBack,cdOpenMod,cdCloseMod,cdSaveAdd,cdSaveEdit,cdSavePrice,cdShopOptions,cdPickShop,cdAskToggle,cdDoToggle,cdConfirmTitle,cdConfirmDesc,refreshCd,
+coOrders,coOV,curChargeOrder,coQ,coSearchScope,coSearchScopeOpen,coSearchScopeOpts,coSearchScopeLabel,coSearchPH,coPill,coPills,coOrderStatusOpts,coCnt,coPillActive,coSetPill,coSetSearchScope,coDoSearch,coOpenFS,coToggleFsPaySt,coResetFS,coApplyFS,coClearFilters,coFiltered,coFsOrderSt,coFsOrderStC,coFsChannel,coFsChannelC,coFsPaySt,coFsPayStC,coFsStart,coFsEnd,coFsStartC,coFsEndC,coShowFS,coHasF,coPayStatusOpts,CO_PAY_CHANNELS,coOrderStatusTag,coPayStatusTag,coRefundStatusTag,coPayChannelText,coRefundedAmount,coRefundable,coCanRefund,coCanRefundRecords,coShowPayTime,coDurText,coAmountText,coOpenList,coOpenDetail,coCloseList,coGoBack,coOpenRefundRecords,coRefunds,coCancelMod,coCancelConfirm,coCancelLoading,coCancelForm,coCancelErr,coRequestCancel,coSubmitCancel,coConfirmCancel,coFinishMod,coFinishConfirm,coFinishLoading,coFinishForm,coFinishErr,coRequestFinish,coSubmitFinish,coConfirmFinish,coRefundMod,coRefundConfirm,coRefundLoading,coRefundForm,coRefundErr,coOpenRefund,coSubmitRefund,coConfirmRefund,refreshCo,coActionsVisible,coDatePicker,coDateDraft,coDateYears,coDateDays,coDateWheelYear,coDateWheelMonth,coDateWheelDay,openCoDatePicker,cancelCoDatePicker,confirmCoDatePicker,onCoDateWheelScroll
 };
 }
 });
