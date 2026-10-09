@@ -930,10 +930,10 @@ body.host-single-m #root-user{display:none}
 <div class="absolute z-[14] -translate-x-1/2 -translate-y-1/2 transition-all duration-300" :style="{left:chargeUserPt.x+'%',top:chargeUserPt.y+'%'}">
 <div class="w-3.5 h-3.5 rounded-full bg-white" style="border:2.5px solid #2B3F5F;box-shadow:0 0 0 5px rgba(43,63,95,.18),0 1px 4px rgba(0,0,0,.12)"></div>
 </div>
-<!-- 门店（与充电桩同图展示：图标对齐换电端 pin——34×34 圆角 12px 实心底 + 白色图标，不带任何文字；点选即定位到该门店） -->
+<!-- 门店（与充电桩同图展示：图标对齐换电端「门店」pin——34×34 圆角 12px 实心底 #1A82F4 + 白色 store 图标，不带任何文字；点选即定位到该门店） -->
 <div v-for="(s,i) in mapStores" :key="'hms-'+i" data-cp class="absolute z-[17] -translate-x-1/2 -translate-y-1/2 cursor-pointer active:opacity-80 transition-transform" :style="{left:s.x+'%',top:s.y+'%'}" :data-od-id="'home-map-store-'+i" @click.stop="selectMapStore(s)">
-<div class="w-[34px] h-[34px] rounded-xl flex items-center justify-center text-white" style="background:var(--accent);box-shadow:0 2px 6px rgba(0,0,0,.18)">
-<span v-html="luci('store','w-5 h-5')"></span>
+<div class="w-[34px] h-[34px] rounded-xl flex items-center justify-center text-white" style="background:#1A82F4;box-shadow:0 2px 6px rgba(0,0,0,.18)">
+<span v-html="luci('store','w-4 h-4')"></span>
 </div>
 </div>
 </div>
