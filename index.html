@@ -915,9 +915,6 @@ body.host-single-m #root-user{display:none}
 <!-- 开屏地图（印尼版：充电为高频场景，首页首屏即地图展示附近充电桩，底部浮层为充电入口。高度 = 原 banner(180) + 间距(12) + 租车入口(110) + 间距(16) + 充电入口(110)） -->
 <div class="rounded-2xl overflow-hidden mb-4 relative track-map" style="height:428px" data-od-id="home-map" data-page-node-id="HmMap1">
 <div class="absolute inset-0" data-od-id="home-map-canvas" data-page-node-id="HmMapBody">
-<svg class="absolute inset-0 w-full h-full z-[8] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-<line v-for="(d,i) in chargeDevices" :key="'hml-'+i" :x1="chargeUserPt.x" :y1="chargeUserPt.y" :x2="d.x" :y2="d.y" stroke="#2B3F5F" stroke-width="1" stroke-linecap="round" stroke-dasharray="2.2 1.6" vector-effect="non-scaling-stroke" opacity="0.3"/>
-</svg>
 <div v-for="(d,i) in chargeDevices" :key="'hmd-'+i" data-cp class="absolute z-[15] -translate-x-1/2 -translate-y-full cursor-pointer active:opacity-80 transition-transform" :style="{left:d.x+'%',top:d.y+'%'}" :data-od-id="'home-charge-device-'+i" @click="openChargeDevice(d)">
 <div class="flex flex-col items-center">
 <div class="px-2 py-0.5 rounded-full text-[10px] font-semibold text-white mb-1 whitespace-nowrap" :style="d.status==='空闲'?{background:'#17A34A',boxShadow:'0 1px 4px rgba(23,163,74,.35)'}:{background:'#DC2626',boxShadow:'0 1px 4px rgba(220,38,38,.35)'}">{{ fmtRp(d.price,0) }}/分</div>
@@ -1306,9 +1303,6 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <template v-else>
-<svg class="absolute inset-0 w-full h-full z-[8] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-<line v-for="(d,i) in chargeDevices" :key="'cgl-'+i" :x1="chargeUserPt.x" :y1="chargeUserPt.y" :x2="d.x" :y2="d.y" stroke="#2B3F5F" stroke-width="1" stroke-linecap="round" stroke-dasharray="2.2 1.6" vector-effect="non-scaling-stroke" opacity="0.3"/>
-</svg>
 <div v-for="(d,i) in chargeDevices" :key="'cgd-'+i" data-cp class="absolute z-[15] -translate-x-1/2 -translate-y-full cursor-pointer active:opacity-80 transition-transform" :style="{left:d.x+'%',top:d.y+'%'}" :data-od-id="'charge-device-'+i" @click="openChargeDevice(d)">
 <div class="flex flex-col items-center">
 <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" :style="d.status==='空闲'?{background:'#17A34A',boxShadow:'0 2px 10px rgba(23,163,74,.4)'}:{background:'#DC2626',boxShadow:'0 2px 10px rgba(220,38,38,.4)'}">
