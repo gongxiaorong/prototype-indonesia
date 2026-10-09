@@ -663,6 +663,7 @@
       "address": "Alamat Perangkat",
       "addrPlaceholder": "Masukkan atau pilih alamat",
       "addrRequired": "Masukkan atau pilih alamat perangkat",
+      "addrMapSearch": "Cari lokasi",
       "selectAddr": "Pilih Alamat",
       "addrMapHint": "Silakan pilih alamat di peta",
       "locAppAuthTitle": "Izinkan \"Yadea Rental\" menggunakan lokasi Anda?",

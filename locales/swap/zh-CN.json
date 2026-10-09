@@ -687,6 +687,7 @@
     "store": {
       "addSuccess": "门店已新增",
       "addr": "门店地址",
+      "addrMapSearch": "搜索地点",
       "addrPlaceholder": "请输入地址或选择地址",
       "addrRequired": "请输入或选择门店地址",
       "contact": "联系人",

@@ -687,6 +687,7 @@
     "store": {
       "addSuccess": "Toko ditambahkan",
       "addr": "Alamat Toko",
+      "addrMapSearch": "Cari lokasi",
       "addrPlaceholder": "Masukkan atau pilih alamat",
       "addrRequired": "Masukkan atau pilih alamat toko",
       "contact": "Kontak",

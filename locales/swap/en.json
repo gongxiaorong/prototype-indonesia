@@ -687,6 +687,7 @@
     "store": {
       "addSuccess": "Store added",
       "addr": "Store Address",
+      "addrMapSearch": "Search location",
       "addrPlaceholder": "Enter or select an address",
       "addrRequired": "Please enter or select a store address",
       "contact": "Contact",

@@ -663,6 +663,7 @@
       "address": "ที่อยู่อุปกรณ์",
       "addrPlaceholder": "กรอกหรือเลือกที่อยู่",
       "addrRequired": "กรุณากรอกหรือเลือกที่อยู่อุปกรณ์",
+      "addrMapSearch": "ค้นหาสถานที่",
       "selectAddr": "เลือกที่อยู่",
       "addrMapHint": "กรุณาเลือกที่อยู่บนแผนที่",
       "locAppAuthTitle": "อนุญาตให้ \"Yadea Rental\" ใช้ตำแหน่งของคุณหรือไม่?",

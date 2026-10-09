@@ -663,6 +663,7 @@
       "address": "设备地址",
       "addrPlaceholder": "请输入地址或选择地址",
       "addrRequired": "请输入或选择设备地址",
+      "addrMapSearch": "搜索地点",
       "selectAddr": "选择地址",
       "addrMapHint": "请在地图上选择地址",
       "locAppAuthTitle": "允许“雅迪租车”使用你的位置信息吗？",

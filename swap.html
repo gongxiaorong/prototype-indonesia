@@ -2617,22 +2617,12 @@ body.host-single-m #root-user{display:none}
 </div>
 </form-field>
 <form-field label="门店地址" required bare :error="storeErr.addr">
-<!-- 本行用 bare + 显式 .ff-box：.ff-box 是 flex 行容器，联想下拉若与输入框同处一个 .ff-box 内会被挤到右侧 -->
+<!-- 本行用 bare + 显式 .ff-box；表单地址不做输入联想，地址由「选择地址」页的 POI 搜索取点回填 -->
 <div class="ff-box" :class="storeErr.addr?'is-error':''">
-<input :value="storeForm.addr" @input="onAddrInput('store',$event)" @focus="storeAddrSugOpen=true" @blur="closeAddrSug('store')" type="text" placeholder="请输入地址或选择地址" class="w-full pl-3.5 pr-20 py-3 text-[15px]" data-od-id="store-form-addr">
+<input :value="storeForm.addr" @input="onAddrInput('store',$event)" type="text" maxlength="60" placeholder="请输入地址或选择地址" class="w-full pl-3.5 pr-20 py-3 text-[15px]" data-od-id="store-form-addr">
 <div class="absolute right-2.5 flex items-center gap-1">
 <div v-if="storeForm.addr" data-cp @click="clearAddr('store')" class="w-7 h-7 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-od-id="store-form-addr-clear"><span v-html="luci('x','w-4 h-4')"></span></div>
 <div data-cp @click="openStoreMap('store')" class="w-8 h-8 flex items-center justify-center cursor-pointer shrink-0" style="color:#2B3F5F" data-od-id="store-form-addr-map" title="地图选择地址"><span v-html="luci('map-pin','w-[18px] h-[18px]')"></span></div>
-</div>
-</div>
-<!-- 输入即联想：候选地址内联下拉（表单内容区是滚动容器，浮层会被裁剪，故内联撑高） -->
-<div v-if="storeAddrSugOpen&&storeAddrSugList.length" class="mt-1.5 bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="store-form-addr-sug">
-<div v-for="(p,pi) in storeAddrSugList" :key="'sa'+pi" data-cp @mousedown.prevent @click="pickAddrSug('store',p)" class="flex items-start gap-3 px-3.5 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="pi?{borderTop:'1px solid #F2F3F5'}:null" :data-od-id="'store-form-addr-sug-'+pi">
-<span class="flex-1 min-w-0">
-<span class="block text-[14px] truncate" style="color:#111">{{ p.name }}</span>
-<span class="block text-[12px] mt-0.5 truncate" style="color:#999">{{ p.addr }}</span>
-</span>
-<span class="shrink-0 text-[11px] pt-0.5" style="color:#BBB">{{ p.dist }}</span>
 </div>
 </div>
 </form-field>
@@ -2677,6 +2667,14 @@ body.host-single-m #root-user{display:none}
 <page :open="mPage==='storeMap'" :z="700" oid="mstore-map-page">
 <nav-bar title="选择地址" border-color="#E5E5E5" @back="closePage()"></nav-bar>
 <div ref="storeMapBox" class="flex-1 min-h-0 relative overflow-hidden select-none" style="background:#EAEFE7;touch-action:none" @pointerdown="storeMapDown" @pointermove="storeMapMove" @pointerup="storeMapUp" @pointercancel="storeMapUp">
+<!-- POI 搜索：浮层置于地图之上，阻止 pointer 事件冒泡以免误触发地图拖拽 -->
+<div class="absolute left-3 right-3 top-3 z-10" @pointerdown.stop @pointermove.stop @pointerup.stop @pointercancel.stop data-od-id="store-map-search">
+<div class="flex items-center gap-2 px-3 h-10 rounded-xl bg-white" style="box-shadow:0 1px 5px rgba(0,0,0,.15)">
+<span class="shrink-0 flex items-center" style="color:#6B6B6B" v-html="luci('search','w-4 h-4')"></span>
+<input :value="storeMapQ" @input="storeMapQ=$event.target.value" type="text" placeholder="搜索地点" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="store-map-search-input">
+<span v-if="storeMapQ" data-cp @click="storeMapQ=''" class="shrink-0 flex items-center justify-center cursor-pointer" style="color:#C4C4C4" data-od-id="store-map-search-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
+</div>
+</div>
 <div class="sm-world" :style="storeMapWorldStyle">
 <div class="sm-road-h" style="top:12%"></div>
 <div class="sm-road-h" style="top:38%"></div>
@@ -2703,7 +2701,7 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="shrink-0 bg-white" style="border-top:1px solid #F0F0F0">
 <div class="overflow-y-auto hide-scroll pt-2 pb-2" style="max-height:34vh">
-<div v-for="(p,pi) in storeMapPoints" :key="p.addr" data-cp @click="pickStoreMapPoint(p)" class="flex items-center gap-3 px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'store-map-point-'+pi">
+<div v-for="(p,pi) in storeMapList" :key="p.addr" data-cp @click="pickStoreMapPoint(p)" class="flex items-center gap-3 px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'store-map-point-'+pi">
 <div class="flex-1 min-w-0">
 <div class="text-[14px] font-medium truncate" :style="storeMapDraft===p.addr?{color:'var(--accent)'}:{color:'#111'}">{{ p.name }}</div>
 <div class="text-[12px] mt-0.5 truncate" style="color:#999">{{ p.addr }}</div>
@@ -2711,6 +2709,7 @@ body.host-single-m #root-user{display:none}
 <span class="text-[11px] shrink-0" style="color:#BBB">{{ p.dist }}</span>
 <span v-if="storeMapDraft===p.addr" v-html="luci('check','w-4 h-4 text-[var(--accent)]')"></span>
 </div>
+<empty-state v-if="!storeMapList.length" icon="" text="没有找到相关地点" text-class="text-[13px] font-normal text-[#999]" root-class="flex flex-col items-center justify-center text-center py-[34px]" data-od-id="store-map-search-empty"></empty-state>
 </div>
 <div class="px-4 pt-2" style="padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))">
 <button data-cp @click="confirmStoreMap()" class="w-full h-[48px] flex items-center justify-center rounded-xl text-[16px] font-semibold border-none cursor-pointer active:opacity-90" style="background:#2B3F5F;color:#fff" data-od-id="store-map-confirm">确认</button>
@@ -2984,21 +2983,12 @@ body.host-single-m #root-user{display:none}
 </div>
 </form-field>
 <form-field label="站点地址" required bare :error="stationErr.addr">
-<!-- 同门店地址：bare + 显式 .ff-box，避免联想下拉被 flex 行容器挤到输入框右侧（联想下拉内联撑高） -->
+<!-- 同门店地址：bare + 显式 .ff-box；表单地址不做输入联想，地址由「选择地址」页的 POI 搜索取点回填 -->
 <div class="ff-box" :class="stationErr.addr?'is-error':''">
-<input :value="stationForm.addr" @input="onAddrInput('station',$event)" @focus="stationAddrSugOpen=true" @blur="closeAddrSug('station')" type="text" placeholder="请输入地址或选择地址" class="w-full pl-3.5 pr-20 py-3 text-[15px]" data-od-id="station-form-addr">
+<input :value="stationForm.addr" @input="onAddrInput('station',$event)" type="text" maxlength="60" placeholder="请输入地址或选择地址" class="w-full pl-3.5 pr-20 py-3 text-[15px]" data-od-id="station-form-addr">
 <div class="absolute right-2.5 flex items-center gap-1">
 <div v-if="stationForm.addr" data-cp @click="clearAddr('station')" class="w-7 h-7 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-od-id="station-form-addr-clear"><span v-html="luci('x','w-4 h-4')"></span></div>
 <div data-cp @click="openStoreMap('station')" class="w-8 h-8 flex items-center justify-center cursor-pointer shrink-0" style="color:#2B3F5F" data-od-id="station-form-addr-map" title="地图选择地址"><span v-html="luci('map-pin','w-[18px] h-[18px]')"></span></div>
-</div>
-</div>
-<div v-if="stationAddrSugOpen&&stationAddrSugList.length" class="mt-1.5 bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="station-form-addr-sug">
-<div v-for="(p,pi) in stationAddrSugList" :key="'sta'+pi" data-cp @mousedown.prevent @click="pickAddrSug('station',p)" class="flex items-start gap-3 px-3.5 py-3 cursor-pointer active:bg-[#F6F7F9]" :style="pi?{borderTop:'1px solid #F2F3F5'}:null" :data-od-id="'station-form-addr-sug-'+pi">
-<span class="flex-1 min-w-0">
-<span class="block text-[14px] truncate" style="color:#111">{{ p.name }}</span>
-<span class="block text-[12px] mt-0.5 truncate" style="color:#999">{{ p.addr }}</span>
-</span>
-<span class="shrink-0 text-[11px] pt-0.5" style="color:#BBB">{{ p.dist }}</span>
 </div>
 </div>
 </form-field>
@@ -5459,7 +5449,7 @@ var _ma=Vue.createApp({
       storeClearErr();
       cabImgKind.value='store';cabImgScope.value='add';
       storeStationQ.value='';storeStationSheet.value=false;storeHmPick.value=null;storeMapDraft.value='';
-      storeAddrSugOpen.value=false;storeMapDragging.value=false;storeMapDrag=null;storeMapOff.x=0;storeMapOff.y=0;
+      storeMapDragging.value=false;storeMapDrag=null;storeMapOff.x=0;storeMapOff.y=0;
       openPage('storeForm');
     }
     function closeStoreForm(){storeStationSheet.value=false;storeHmPick.value=null;if(mPage.value==='storeForm')closePage()}
@@ -5528,29 +5518,20 @@ var _ma=Vue.createApp({
     function openStoreStationPick(){storeStationQ.value='';storeStationSheet.value=true}
     function closeStoreStationPick(){storeStationSheet.value=false}
     function pickStoreStation(o){if(!o||o.disabled)return;storeForm.stationId=(storeForm.stationId===o.value?'':o.value);storeStationSheet.value=false}
-    /* ── 门店地址：可编辑输入 + 输入即联想 + 地图选点（拖拽吸附）+ 当前定位（定位授权 → 定位服务 两层校验链） ── */
+    /* ── 门店地址：可编辑输入 + 地图选点（拖拽吸附 + POI 搜索）+ 当前定位（定位授权 → 定位服务 两层校验链） ── */
     var storeMapPoints=M_STORE_ADDR_POINTS;
     var storeMapDraft=Vue.ref('');
-    var storeAddrSugOpen=Vue.ref(false),stationAddrSugOpen=Vue.ref(false);
+    /* 表单地址不做输入联想：地址由「选择地址」页的 POI 搜索取点回填 */
+    var storeMapQ=Vue.ref('');
+    var storeMapList=Vue.computed(function(){
+      var q=String(storeMapQ.value||'').trim().toLowerCase();
+      if(!q)return storeMapPoints;
+      return storeMapPoints.filter(function(p){return (p.name+' '+p.addr).toLowerCase().indexOf(q)>-1});
+    });
     function addrForm(t){return t==='station'?stationForm:storeForm}
     function addrErr(t){return t==='station'?stationErr:storeErr}
-    function addrSugOpen(t){return t==='station'?stationAddrSugOpen:storeAddrSugOpen}
-    /* 输入即联想：按名称/地址包含关键词过滤候选点；已精确命中候选地址时不再提示 */
-    function addrSugMake(t){
-      var form=addrForm(t);
-      return Vue.computed(function(){
-        var cur=String(form.addr||'').trim();
-        if(!cur)return [];
-        if(storeMapPoints.some(function(p){return p.addr===cur}))return [];
-        var q=cur.toLowerCase();
-        return storeMapPoints.filter(function(p){return (p.name+' '+p.addr).toLowerCase().indexOf(q)>-1});
-      });
-    }
-    var storeAddrSugList=addrSugMake('store'),stationAddrSugList=addrSugMake('station');
-    function onAddrInput(t,e){var f=addrForm(t);f.addr=e.target.value;addrErr(t).addr='';addrSugOpen(t).value=true}
-    function closeAddrSug(t){addrSugOpen(t).value=false}
-    function pickAddrSug(t,p){if(!p)return;var f=addrForm(t);f.addr=p.addr;addrErr(t).addr='';addrSugOpen(t).value=false;toastPush('已选择「'+p.name+'」')}
-    function clearAddr(t){var f=addrForm(t);f.addr='';addrErr(t).addr='';addrSugOpen(t).value=true}
+    function onAddrInput(t,e){var f=addrForm(t);f.addr=e.target.value;addrErr(t).addr=''}
+    function clearAddr(t){var f=addrForm(t);f.addr='';addrErr(t).addr=''}
     /* 定位链状态（商户端独立一套：定位授权 = App 级，定位服务 = 系统级；两者均就绪才可取值） */
     var mLocAppAuth=Vue.ref(false),mLocAuth=Vue.ref(false);
     var mShowLocAppAuth=Vue.ref(false),mShowLocAuth=Vue.ref(false);
@@ -5612,7 +5593,7 @@ var _ma=Vue.createApp({
       storeMapTarget.value=target||'store';
       var cur=String(addrForm(storeMapTarget.value).addr||'').trim();
       var hit=storeMapPoints.filter(function(p){return p.addr===cur})[0];
-      addrSugOpen(storeMapTarget.value).value=false;
+      storeMapQ.value='';
       /* 命中候选 → 回显选中并居中该点；未命中（已清空 / 手输地址）→ 不预选中，地图回到用户当前定位 */
       storeMapDraft.value=hit?hit.addr:'';
       openPage('storeMap');
@@ -5623,7 +5604,7 @@ var _ma=Vue.createApp({
       var v=storeMapDraft.value||'';
       if(!v){toastPush('请在地图上选择地址');return}
       var t=storeMapTarget.value,f=addrForm(t);
-      f.addr=v;addrErr(t).addr='';addrSugOpen(t).value=false;
+      f.addr=v;addrErr(t).addr='';
       if(mPage.value==='storeMap')closePage();
     }
     /* 保存校验：一次性校验全部字段（不遇错即断），{表单 oid} 用于把首个错误行滚入视野 */
@@ -5679,7 +5660,6 @@ var _ma=Vue.createApp({
       stationFormImgs.value=s?(s.photos||[]).slice():[];
       stationErrClear();
       cabImgKind.value='station';cabImgScope.value='add';
-      stationAddrSugOpen.value=false;
       openPage('stationForm');
     }
     function closeStationForm(){cabImgKind.value='cab';if(mPage.value==='stationForm')closePage()}
@@ -5764,8 +5744,8 @@ var _ma=Vue.createApp({
       storePhotoView,openStoreDetailImg,stationPhotoView,openStationDetailImg,M_STORE_SERVICES,
       storeStationSheet,storeStationQ,storeStationList,openStoreStationPick,closeStoreStationPick,
       storeHmPick,storeHmDraft,storeHmMins,storeHmSecs,storeHmWheelHour,storeHmWheelMin,storeHmWheelSec,trackHours,p2,hhmmss,openStoreHmPick,setStoreHmHour,setStoreHmMin,setStoreHmSec,cancelStoreHmPick,confirmStoreHmPick,onStoreHmScroll,
-      storeMapPoints,storeMapDraft,openStoreMap,pickStoreMapPoint,confirmStoreMap,
-      storeAddrSugOpen,stationAddrSugOpen,storeAddrSugList,stationAddrSugList,onAddrInput,closeAddrSug,pickAddrSug,clearAddr,
+      storeMapPoints,storeMapDraft,storeMapQ,storeMapList,openStoreMap,pickStoreMapPoint,confirmStoreMap,
+      onAddrInput,clearAddr,
       storeMapBox,storeMapWorldStyle,storeMapDragging,storeMapDown,storeMapMove,storeMapUp,storeMapCenterOn,
       mLocAppAuth,mLocAuth,mLocReady,mShowLocAppAuth,mShowLocAuth,mAllowLocAppAuth,mDenyLocAppAuth,mAllowLocAuth,mCancelLocService,mUseStoreLoc,mStoreLoc,
       cabOnlineRate,inCabCount,rentedCount,todaySwapCount,todayRevenue,alarmList,cabStats,
