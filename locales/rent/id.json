@@ -418,9 +418,15 @@
       "rentDurationTotal": "Durasi Sewa (total {n} {unit})",
       "confirmDeleteDoc": "Konfirmasi hapus materi ini?",
       "tabBilling": "Aturan Penagihan",
+      "tabRenew": "Aturan Perpanjangan",
       "contactStore": "Hubungi Toko",
       "returnReminder": "Sisa 7 hari masa sewa, silakan kembalikan ke toko tepat waktu",
       "billHourly": "Dibebankan per Jam",
+      "renewRules": {
+        "1": "Perpanjangan otomatis aktif secara default; sistem akan otomatis memulai pemotongan biaya perpanjangan pada waktu yang telah ditentukan: waktu yang ditentukan = {n} hari sebelum waktu sewa berakhir, lalu dimajukan 1 jam.",
+        "2": "Sistem akan mencoba pemotongan paling banyak {n} kali. Jika pemotongan berhasil, perpanjangan berlaku dan pesanan diperpanjang otomatis; jika semua percobaan pemotongan gagal, perpanjangan otomatis pesanan akan dihentikan.",
+        "3": "Jika perpanjangan otomatis gagal, Anda dapat membuka detail pesanan untuk mengajukan perpanjangan secara manual."
+      },
       "billingRules": {
         "1": "Waktu penagihan dimulai saat pengguna mengambil kendaraan/baterai dan berakhir saat kendaraan/baterai selesai dikembalikan.",
         "2": "Sewa periode dihitung berdasarkan paket sewa yang dipilih untuk pesanan.",

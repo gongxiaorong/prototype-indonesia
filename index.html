@@ -221,7 +221,11 @@ body{font-family:var(--font-body)}
 #root-user .vehicle-card:active{opacity:.85}
 #root-user .store-thumb{width:50px;height:50px;border-radius:14px;background:#F6F7F9;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
 #root-user .vehicle-list-thumb{width:85px;height:85px;border-radius:16px}
-#root-user .conf-tab{padding:8px 0;font-size:14px;font-weight:600;color:#999;cursor:pointer;flex:1;text-align:center;position:relative}
+/* 规则卡片 tab 条：可横向滑动——内容不足时等分撑满，超出时滑动且不收缩、不换行；配 v-long-pan 支持原型内鼠标拖拽滑动 */
+#root-user .conf-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;cursor:grab;touch-action:pan-x;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+#root-user .conf-tabs:active{cursor:grabbing}
+#root-user .conf-tabs::-webkit-scrollbar{display:none}
+#root-user .conf-tab{padding:8px 12px;font-size:14px;font-weight:600;color:#999;cursor:pointer;flex:1 0 auto;white-space:nowrap;text-align:center;position:relative}
 #root-user .conf-tab.is-active{color:var(--link)}
 #root-user .conf-tab.is-active::after{content:'';position:absolute;bottom:0;left:25%;right:25%;height:2px;background:var(--accent-2);border-radius:1px}
 #root-user .conf-pay-row{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;overflow-y:hidden;width:100%;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;-webkit-user-select:none;-moz-user-select:none;user-select:none;-ms-overflow-style:none;scroll-snap-type:x proximity;cursor:grab;touch-action:pan-x}
@@ -739,7 +743,7 @@ body.host-single-m #root-user{display:none}
 <div v-for="(v,i) in vehicleList" :key="i" class="vehicle-card cursor-pointer" data-cp @click="rentNow(v)" data-page-node-id="p0HPywtCd7eHCN4EphT3G7">
 <div class="flex items-stretch gap-3" data-page-node-id="VvTWi6DkShYRnFa08PzaDI">
 <div class="store-thumb vehicle-list-thumb shrink-0" :style="{background:(v.img||'#2B3F5F')+'10'}" data-page-node-id="2oFmz3XEfF8rQMJ87c5ESZ">
-<span v-html="luci(rentDateIdx===1?'battery':'bike','w-10 h-10')" :style="{color:(v.img||'#2B3F5F')}" data-page-node-id="3KASh7AJmoxs8IbnrOzGhB"></span>
+<span v-html="luci(v.type==='battery'?'battery':'bike','w-10 h-10')" :style="{color:(v.img||'#2B3F5F')}" data-page-node-id="3KASh7AJmoxs8IbnrOzGhB"></span>
 </div>
 <div class="flex-1 min-w-0 flex flex-col justify-between" data-page-node-id="P8UmjG9q8QkWR4jicgbBZI">
 <div data-page-node-id="tWb1HS4sUNjUHYL7JwtHHF">
@@ -749,7 +753,7 @@ body.host-single-m #root-user{display:none}
 <div class="flex items-end justify-between" data-page-node-id="qkbUKD2SwqhnFxSqGhGdBQ">
 <div data-page-node-id="zElsMTyDwzUGmQQRjIjDdy">
 <span class="text-[17px] font-bold text-[#FF6A00]" data-page-node-id="20ihPItH135LxKd1hiTUy4">{{ v.price }}</span>
-<span class="text-[11px] text-[#999] ml-1" data-page-node-id="4881Xl5H88aLkwFK04gzCW">/{{ periodUnit }}</span>
+<span class="text-[11px] text-[#999] ml-1" data-page-node-id="4881Xl5H88aLkwFK04gzCW">/{{ v.unit }}</span>
 </div>
 <div class="px-3 py-1.5 rounded-md text-white text-[12px] font-semibold leading-tight text-center cursor-pointer active:opacity-90 transition-opacity" style="background:#2B3F5F" @click data-page-node-id="2oYOEhR9UTvGEnmosDPPQJ">立即租</div>
 </div>
@@ -882,13 +886,14 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="bg-white rounded-2xl mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-page-node-id="oP41eLxDQ7oAHL3VsH8fjh">
-<div class="flex border-b" style="border-color:#F0F0F0" data-page-node-id="kPKgn46p32FDI9WYgfGagI">
+<div class="conf-tabs border-b" style="border-color:#F0F0F0" v-long-pan="{hold:0,mouseOnly:true}" data-page-node-id="kPKgn46p32FDI9WYgfGagI">
 <div class="conf-tab" :class="confTab==='notice'?'is-active':''" data-cp @click="confTab='notice'" data-page-node-id="nwTl3vIHSrsNn3EuYdEP45">租赁须知</div>
 <div class="conf-tab" :class="confTab==='billing'?'is-active':''" data-cp @click="confTab='billing'" data-page-node-id="rN4bV8zNCwekWYvnyAZYtT">计费规则</div>
+<div class="conf-tab" :class="confTab==='renew'?'is-active':''" data-cp @click="confTab='renew'">续租规则</div>
 <div class="conf-tab" :class="confTab==='cancel'?'is-active':''" data-cp @click="confTab='cancel'" data-page-node-id="4ZLB2gbE2RHG0yojVMCtaL">取消规则</div>
 <div class="conf-tab" :class="confTab==='overdue'?'is-active':''" data-cp @click="confTab='overdue'" data-page-node-id="d5oDVFMCt6L7S2VJ93Wa7E">逾期规则</div>
 </div>
-<div class="p-4 text-[13px] text-[#666] leading-[1.6] whitespace-pre-line" data-page-node-id="SG67B2cqUkxwenICHqvIbS">{{ confTab==='cancel'?cancelRules:confTab==='notice'?noticeRules:confTab==='overdue'?overdueRules:billingRules }}</div>
+<div class="p-4 text-[13px] text-[#666] leading-[1.6] whitespace-pre-line" data-page-node-id="SG67B2cqUkxwenICHqvIbS">{{ rulesOf(confTab) }}</div>
 </div>
 </div>
 <div class="absolute bottom-0 left-0 right-0 z-20 bg-white px-4 py-3" style="border-top:1px solid #F0F0F0;box-shadow:0 -2px 8px rgba(0,0,0,.04);padding-bottom:max(12px,env(safe-area-inset-bottom))" data-page-node-id="l1dbrOQz9eBS3AxB2pDK3r">
@@ -2066,13 +2071,14 @@ body.host-single-m #root-user{display:none}
 </div>
 
 <div class="bg-white rounded-2xl mb-6" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="od-rules" data-page-node-id="5EWhq9gYzoIE8F0i948mPp">
-<div class="flex border-b" style="border-color:#F0F0F0" data-page-node-id="Lvnkx6Sa58CGX4C5kWJQTo">
+<div class="conf-tabs border-b" style="border-color:#F0F0F0" v-long-pan="{hold:0,mouseOnly:true}" data-page-node-id="Lvnkx6Sa58CGX4C5kWJQTo">
 <div class="conf-tab" :class="orderDetailTab==='notice'?'is-active':''" data-cp @click="orderDetailTab='notice'" data-page-node-id="7vuIcLadUDUMJvVepkHddm">租赁须知</div>
 <div class="conf-tab" :class="orderDetailTab==='billing'?'is-active':''" data-cp @click="orderDetailTab='billing'" data-page-node-id="O2Wow98FAVGYAU7bivWSfL">计费规则</div>
+<div class="conf-tab" :class="orderDetailTab==='renew'?'is-active':''" data-cp @click="orderDetailTab='renew'">续租规则</div>
 <div class="conf-tab" :class="orderDetailTab==='cancel'?'is-active':''" data-cp @click="orderDetailTab='cancel'" data-page-node-id="vyJAG4tHGvqj0mnQRIKQ4F">取消规则</div>
 <div class="conf-tab" :class="orderDetailTab==='overdue'?'is-active':''" data-cp @click="orderDetailTab='overdue'" data-page-node-id="3RGFrocmy4DTenIbRajzNk">逾期规则</div>
 </div>
-<div class="p-4 text-[13px] text-[#666] leading-[1.6] whitespace-pre-line" data-page-node-id="l3684LAMl7j7aJbHn8Z0ZX">{{ orderDetailTab==='cancel'?cancelRules:orderDetailTab==='notice'?noticeRules:orderDetailTab==='overdue'?overdueRules:billingRules }}</div>
+<div class="p-4 text-[13px] text-[#666] leading-[1.6] whitespace-pre-line" data-page-node-id="l3684LAMl7j7aJbHn8Z0ZX">{{ rulesOf(orderDetailTab) }}</div>
 </div>
 <div v-if="orderInfo.status==='created'||orderInfo.status==='pickup'" class="flex justify-center py-2" data-page-node-id="dGLB4Bkw27ntmLnx57fVjv">
 <span class="text-[14px] font-medium cursor-pointer select-none active:opacity-70" style="color:#DC2626" data-cp @click="showCancelModal=true" data-page-node-id="t4dmOfcfjKgK2jEIUl4dgE">取消订单</span>
@@ -2559,9 +2565,9 @@ body.host-single-m #root-user{display:none}
 <div class="absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[135px] h-[5px] bg-black/30 rounded-full z-[2001]" data-page-node-id="c6SZMPOBu6tTqh4JnTAMYt"></div>
 
 <!-- 租赁类型（OptionSheet：统一单选列表；in-DOM 模板必须 kebab-case + 显式闭合） -->
-<option-sheet :open="showDatePicker" :title="datePickerTitle" :options="dateOptions" :model-value="pickerMode==='renew'?renewDateIdx:rentDateIdx" :mask-z="2030" oid="rent-date-mask" panel-oid="rent-date-picker" @select="selectDate" @close="closeDatePicker"></option-sheet>
-<!-- 租赁方案（OptionSheet：统一单选列表） -->
-<option-sheet :open="showPeriodPicker" :title="periodPickerTitle" :options="periodOptions" :model-value="pickerMode==='renew'?renewPeriodIdx:rentPeriodIdx" :mask-z="2030" oid="rent-period-mask" panel-oid="rent-period-picker" @select="selectPeriod" @close="closePeriodPicker"></option-sheet>
+<option-sheet :open="showDatePicker" :title="datePickerTitle" :options="pickerMode==='renew'?dateOptions:rentTypeOptions" :model-value="pickerMode==='renew'?renewDateIdx:rentTypeIdx" :mask-z="2030" oid="rent-date-mask" panel-oid="rent-date-picker" @select="selectDate" @close="closeDatePicker"></option-sheet>
+<!-- 租赁方案（OptionSheet：统一单选列表；用户端含「全部」） -->
+<option-sheet :open="showPeriodPicker" :title="periodPickerTitle" :options="pickerMode==='renew'?periodOptions:rentPlanOptions" :model-value="pickerMode==='renew'?renewPeriodIdx:rentPlanIdx" :mask-z="2030" oid="rent-period-mask" panel-oid="rent-period-picker" @select="selectPeriod" @close="closePeriodPicker"></option-sheet>
 <!-- 联系门店（BottomSheet：号码列表） -->
 <bottom-sheet :open="storePhoneSheet" title="联系门店" :mask-z="2590" oid="store-phone-mask" panel-oid="store-phone-sheet" @close="closeStorePhone">
 <div class="px-4 pb-1 flex flex-col gap-[10px]">
@@ -2790,7 +2796,7 @@ body.host-single-m #root-user{display:none}
 <div class="demo-ops-chip" :class="!firstLogin?'is-on':''" data-cp @click="firstLogin=false">否</div>
 </div>
 </div>
-<template v-if="tab==='home'&&!showLogin&&!showRent&&!showStore&&!showVehicle&&!showConfirm&&!showOrderDetail&&!showMyOrders&&!showOrderList&&!profileOV&&!profileSub&&!profileMod&&!showVehicleDetail&&!showBatteryDetail&&!scanning&&!showManualVin&&!showFindPage&&!showTrackPage&&!showWallet&&!showTopup" data-page-node-id="l4VeP1IIzXZ3MtCcBNgjSf">
+<template v-if="tab==='home'&&!showLogin&&!showRent&&!showStore&&!showVehicle&&!showConfirm&&!showOrderDetail&&!showMyOrders&&!showOrderList&&!profileOV&&!profileSub&&!profileMod&&!showVehicleDetail&&!showBatteryDetail&&!scanning&&!showManualVin&&!showFindPage&&!showTrackPage&&!showWallet&&!showTopup&&!showChargePage&&!showChargeOrder&&!showChargeOrderList&&!showChargeOrderDetail" data-page-node-id="l4VeP1IIzXZ3MtCcBNgjSf">
 
 <div class="demo-ops-section" data-page-node-id="pAzs9SGG784BH5GDfKWRMR">
 <div class="demo-ops-label" data-page-node-id="heNEUzoFaMVzQ4PQFpmEhR">车辆数据</div>
@@ -7367,26 +7373,32 @@ const homeBanners=[
   {title:'5年质保 · 品质保障出行无忧',icon:'shield-check',iconColor:'text-[#17A34A]',textColor:'text-[#17A34A]',bg:'linear-gradient(135deg,#F0FDF4 0%,#DCFCE7 100%)'}
 ];
 const showDatePicker=ref(false);
-const rentDateIdx=ref(0);
+/* 用户端租赁类型筛选：0=全部（默认） */
+const rentTypeIdx=ref(0);
 const dateOptions=['车辆租赁','电池租赁','车电套餐'];
-const rentDateLabel=computed(()=>dateOptions[rentDateIdx.value]||dateOptions[0]);
+const rentTypeOptions=['全部','车辆租赁','电池租赁','车电套餐'];
+const rentDateLabel=computed(()=>rentTypeOptions[rentTypeIdx.value]||rentTypeOptions[0]);
 const datePickerTitle=computed(()=>pickerMode.value==='renew'?'续租类型':'租赁类型');
 /* 选中判定唯一出口：模板里不重复书写三元表达式 */
-function rentDateSel(i){return (pickerMode.value==='renew'?renewDateIdx.value:rentDateIdx.value)===i}
+function rentDateSel(i){return (pickerMode.value==='renew'?renewDateIdx.value:rentTypeIdx.value)===i}
 /* 统一关闭出口：遮罩 / 右上角 X / 选中 都走同一函数，保证 pickerMode 复位一致 */
 function closeDatePicker(){showDatePicker.value=false;pickerMode.value='order'}
-function selectDate(i){if(pickerMode.value==='renew'){renewDateIdx.value=i}else{rentDateIdx.value=i}closeDatePicker();if(showVehicle.value){showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}}
+function selectDate(i){if(pickerMode.value==='renew'){renewDateIdx.value=i}else{rentTypeIdx.value=i}closeDatePicker();if(showVehicle.value){showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}}
 const showPeriodPicker=ref(false);
+/* 用户端租赁方案筛选：0=全部（默认） */
+const rentPlanIdx=ref(0);
+/* 订单确认页方案：0=时租 1=日租 2=周租 3=月租（与筛选联动，不含「全部」） */
 const rentPeriodIdx=ref(3);
 const periodOptions=['时租','日租','周租','月租'];
-const rentPeriodLabel=computed(()=>periodOptions[rentPeriodIdx.value]||periodOptions[3]);
+const rentPlanOptions=['全部','时租','日租','周租','月租'];
+const rentPeriodLabel=computed(()=>rentPlanOptions[rentPlanIdx.value]||rentPlanOptions[0]);
 const periodPickerTitle=computed(()=>pickerMode.value==='renew'?'续租方案':'租赁方案');
 /* 选中判定唯一出口：模板里不重复书写三元表达式 */
-function rentPeriodSel(i){return (pickerMode.value==='renew'?renewPeriodIdx.value:rentPeriodIdx.value)===i}
+function rentPeriodSel(i){return (pickerMode.value==='renew'?renewPeriodIdx.value:rentPlanIdx.value)===i}
 function closePeriodPicker(){showPeriodPicker.value=false;pickerMode.value='order'}
-function selectPeriod(i){if(pickerMode.value==='renew'){renewPeriodIdx.value=i}else{rentPeriodIdx.value=i}closePeriodPicker();if(showVehicle.value){showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}}
+/* 筛选联动订单方案：选中具体方案即同步订单确认页；选「全部」保留原方案 */
+function selectPeriod(i){if(pickerMode.value==='renew'){renewPeriodIdx.value=i}else{rentPlanIdx.value=i;if(i>0)rentPeriodIdx.value=i-1}closePeriodPicker();if(showVehicle.value){showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}}
 const periodUnitMap={'时租':'小时','日租':'天','周租':'周','月租':'月'};
-const periodUnit=computed(()=>periodUnitMap[periodOptions[rentPeriodIdx.value]]||periodOptions[rentPeriodIdx.value]);
 
 const showStore=ref(false);
 const storeSearch=ref('');
@@ -7399,8 +7411,9 @@ var storePtrInit=false;function openStore(){navOpen('store')}function searchStor
 function selectStore(i){const s=storeFiltered.value[i];if(walletStorePick.value){ensureWalletOpened(s.name);walletAccount.value.activeStoreId=s.name;navDrop('store');toast('已选择门店','success')}else{selectedStore.value=s;navOpen('vehicle');showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}}
 const showVehicle=ref(false);
 
-const vehicleData=computed(()=>{if(demoListEmpty.value)return {};var R=RENT_META,P=RENT_PERIOD;var vm=[],bm=[],s1={},s2={};(SYS_VEHICLES&&SYS_VEHICLES.value||[]).forEach(function(v){if(v&&v.model&&!s1['v'+v.model]){s1['v'+v.model]=1;vm.push(v.model)}});(SYS_BATTERIES&&SYS_BATTERIES.value||[]).forEach(function(b){if(b&&b.model&&!s2['b'+b.model]){s2['b'+b.model]=1;bm.push(b.model)}});function card(m,pi){var M=R[m];return {name:m,desc:(M&&M.desc)||'',price:fmtRp((M&&M.prices&&M.prices[pi])||0),period:(P[pi]||''),img:(M&&M.img)||'#2B3F5F'}}var out={0:{},1:{},2:{}};[0,1,2,3].forEach(function(pi){out[0][pi]=vm.map(function(m){return card(m,pi)});out[1][pi]=bm.map(function(m){return card(m,pi)});var a=R[vm[0]],bb=R[bm[0]];out[2][pi]=(a&&bb)?[{name:vm[0]+' + '+bm[0],desc:(a.desc||'')+' / '+(bb.desc||''),price:fmtRp(((a.prices&&a.prices[pi])||0)+((bb.prices&&bb.prices[pi])||0)),period:(P[pi]||''),img:'#2B3F5F'}]:[]});return out});
-const vehicleList=computed(()=>{if(demoListEmpty.value)return[];const t=vehicleData.value[rentDateIdx.value];if(!t)return[];return t[rentPeriodIdx.value]||[]});
+const vehicleData=computed(()=>{if(demoListEmpty.value)return {};var R=RENT_META,P=RENT_PERIOD;var vm=[],bm=[],s1={},s2={};(SYS_VEHICLES&&SYS_VEHICLES.value||[]).forEach(function(v){if(v&&v.model&&!s1['v'+v.model]){s1['v'+v.model]=1;vm.push(v.model)}});(SYS_BATTERIES&&SYS_BATTERIES.value||[]).forEach(function(b){if(b&&b.model&&!s2['b'+b.model]){s2['b'+b.model]=1;bm.push(b.model)}});function card(m,pi,type){var M=R[m];return {name:m,desc:(M&&M.desc)||'',price:fmtRp((M&&M.prices&&M.prices[pi])||0),period:(P[pi]||''),unit:periodUnitMap[P[pi]]||P[pi],pi:pi,type:type,img:(M&&M.img)||'#2B3F5F'}}var out={0:{},1:{},2:{}};[0,1,2,3].forEach(function(pi){out[0][pi]=vm.map(function(m){return card(m,pi,'vehicle')});out[1][pi]=bm.map(function(m){return card(m,pi,'battery')});var a=R[vm[0]],bb=R[bm[0]];out[2][pi]=(a&&bb)?[{name:vm[0]+' + '+bm[0],desc:(a.desc||'')+' / '+(bb.desc||''),price:fmtRp(((a.prices&&a.prices[pi])||0)+((bb.prices&&bb.prices[pi])||0)),period:(P[pi]||''),unit:periodUnitMap[P[pi]]||P[pi],pi:pi,type:'package',img:'#2B3F5F'}]:[]});return out});
+/* 列表：类型/方案均可选「全部」（下标 0），全部时汇总对应维度下的所有数据 */
+const vehicleList=computed(()=>{if(demoListEmpty.value)return[];var ti=rentTypeIdx.value===0?[0,1,2]:[rentTypeIdx.value-1];var pi=rentPlanIdx.value===0?[0,1,2,3]:[rentPlanIdx.value-1];var out=[];ti.forEach(function(t){pi.forEach(function(p){((vehicleData.value[t]||{})[p]||[]).forEach(function(c){out.push(c)})})});return out});
 const showConfirm=ref(false);
 const selectedVehicle=ref(null);
 const confRentDays=ref(2);
@@ -7410,6 +7423,10 @@ const cancelRules='1.订单尚未支付，用户可自行操作取消订单\n2.�
 const noticeRules='1.领取前请检查车辆/电池状态，确认物品状况及性能完好\n2.仅限下单本人领取，不支持代领\n3.车辆/电池损坏需按实际维修费用赔偿\n4.请遵守当地交通法规，安全骑行\n5.库存以门店实际现货为准，建议提前联系门店确认咨询';
 const billingRules='1.计费起始时间以用户领取车辆/电池时间为准，计费终止时间以车辆/电池完成归还时间为准\n2.周期租金根据订单选定租赁方案进行核算\n3.租赁时长不足1个周期的，按1个周期计费';
 const overdueRules='1.请在订单约定归还时间内完成车辆/电池归还\n2.若发生逾期归还，商家可选择从押金抵扣逾期产生的相关费用\n3.押金抵扣不足的，商家有权向用户追偿差额\n4.逾期超过约定天数未归还，商家有权对车辆进行远程锁定';
+const renewRules='1.自动续租默认开启，系统将在预设时间点自动发起续租扣款：预设时间 = 租期到期时间往前 N 天，再提前 1 小时\n2.系统最多尝试扣款 N 次。扣款成功则续租生效，订单自动延续；若全部扣款尝试均失败，订单自动续租将终止。\n3.自动续租失败后，您可前往订单详情页手动发起续租。';
+/* 规则卡片 tab → 文案：订单确认页与订单详情页共用（未知 tab 兜底计费规则） */
+const ruleTexts={notice:noticeRules,billing:billingRules,renew:renewRules,cancel:cancelRules,overdue:overdueRules};
+function rulesOf(tab){return ruleTexts[tab]||ruleTexts.billing}
 function confAddDays(){confRentDays.value++}
 function confSubDays(){if(confRentDays.value>1)confRentDays.value--}
 const confPeriodBase={0:2345,1:5864,2:35182,3:117272};
@@ -7433,7 +7450,7 @@ const confPeriodDetail=computed(()=>{
 const idx=rentPeriodIdx.value;const base=confPeriodBase[idx];const units=['小时','天','周','月'];const labels=['时租','日租','周租','月租'];const daysWords=['按小时计费','按天计费','7天','30天'];
 return{amt:base,unit:units[idx],label:labels[idx],daysWord:daysWords[idx]};});
 const orderPlanDisplay=computed(()=>{const d=confPeriodDetail.value;return d.label+'×'+confRentDays.value+d.unit});
-function rentNow(v){selectedVehicle.value=v;navOpen('confirm')}
+function rentNow(v){selectedVehicle.value=v;if(v&&typeof v.pi==='number')rentPeriodIdx.value=v.pi;navOpen('confirm')}
 function confirmOrder(){if(uploadIdEnabled.value&&!confirmIdInfo.value){toast('请先选择实名信息','warn');return}navOpen('orderDetail');showRentLoading.value=true;const amt=fmtRp(confTotal.value);const _oi={storeName:confStore.value.name,category:'车辆租赁',orderId:'YZ'+new Date().toISOString().slice(0,10).replace(/-/g,'')+(Math.floor(Math.random()*9000)+1000),createTime:new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-'),payee:confPayType.value==='offline'?'线下支付':confPayType.value==='balance'?'钱包':'2C2P',status:'created',statusText:'已创建',statusColor:'#FF8C1B',model:selectedVehicle.value?selectedVehicle.value.name:'乐迪SAA',desc:selectedVehicle.value?selectedVehicle.value.desc:'',plan:orderPlanDisplay.value,amount:amt,deposit:'Rp 200.45',payStatus:'UNPAID',renewOrders:[]};setTimeout(()=>{payChannel.value='2C2P';cancelBeforePay.value='paid';orderInfo.value=_oi;startOrderTimer();showRentLoading.value=false},600);if(!orders.value.some(function(o){return (o.id||o.orderId)===_oi.orderId}))SYS_createOrder({orderId:_oi.orderId,category:_oi.category,model:_oi.model,plan:_oi.plan,amount:Number(confTotal.value)||0,frame:selectedVehicle.value?(selectedVehicle.value.vin||''):'',payee:_oi.payee,createTime:_oi.createTime})}
 const showOrderDetail=ref(false);
 const showCancelModal=ref(false);
@@ -7897,23 +7914,33 @@ onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);setInterval((
 function goSwap(){location.href='swap.html'}
 function setLoggedIn(v){if(v&&firstLogin.value){firstLogin.value=false;switchSource.value='first';loggedIn.value=true;navSwap('subSwitchSystem');toast('请选择系统','info');return}loggedIn.value=v}
 function switchBack(){if(switchSource.value==='first'){switchSource.value='settings';doLogout();return}navBack()}
-return{tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentDateIdx,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPeriodIdx,periodOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,periodUnit,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,showChargePage,chargeLoading,chargeDevices,chargeUserPt,chargeNearestDist,fmtDist,chargeView,chargeToggleView,chargeDevice,chargeDeviceSheet,openChargePage,closeChargePage,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};
+return{tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,showChargePage,chargeLoading,chargeDevices,chargeUserPt,chargeNearestDist,fmtDist,chargeView,chargeToggleView,chargeDevice,chargeDeviceSheet,openChargePage,closeChargePage,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};
 }
 });
 
 app.directive('swipe-close',{mounted(el,b){var sx=0,sy=0;el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(sx<40&&dx>60&&Math.abs(dy)<Math.abs(dx)*0.5)b.value()},{passive:true})}});
-app.directive('long-pan',{mounted(el){var panning=false,sx=0,sy=0,sl=0,move=0,moved=false,pressT=null;
-var start=function(x,y){panning=true;sx=x;sy=y;sl=el.scrollLeft;moved=false;el.style.cursor='grabbing';el.style.scrollSnapType='none'};
-var go=function(x,y){if(!panning)return;var dx=x-sx;move=dx;if(Math.abs(dx)>3){moved=true;el.scrollLeft=sl-dx;el.querySelectorAll('.conf-pay').forEach(function(c){c.style.pointerEvents='none'})}},
-end=function(){if(!panning)return;panning=false;el.style.cursor='grab';el.style.scrollSnapType='x proximity';el.querySelectorAll('.conf-pay').forEach(function(c){c.style.pointerEvents=''});if(!moved)return;var target=el.querySelector('.is-selected');if(target)target.scrollIntoView({behavior:'smooth',inline:'start',block:'nearest'})};
-el.addEventListener('mousedown',function(e){var t=this;pressT=setTimeout(function(){start(e.clientX,e.clientY);t._panning=true},220)});
-el.addEventListener('mousemove',function(e){go(e.clientX,e.clientY)});
-el.addEventListener('mouseup',function(e){clearTimeout(pressT);end();this._panning=false});
-el.addEventListener('mouseleave',function(e){clearTimeout(pressT);end()});
-el.addEventListener('touchstart',function(e){var t=this;var tp=e.touches[0];pressT=setTimeout(function(){start(tp.clientX,tp.clientY);t._panning=true},220)},{passive:true});
+app.directive('long-pan',{mounted(el,b){
+/* 拖拽滑动。选项：hold=长按阈值(ms，0=鼠标按下即可拖动) / mouseOnly=true 时触摸交给原生滑动，仅鼠标走拖拽。
+   拖拽期间改挂 window 的 mousemove/mouseup，指针移出元素（如扁条）也能继续拖。 */
+var opt=(b&&b.value&&typeof b.value==='object')?b.value:{};
+var hold=(opt.hold==null)?220:Number(opt.hold),mouseOnly=!!opt.mouseOnly;
+var panning=false,sx=0,sy=0,sl=0,moved=false,pressT=null,dragEndAt=0;
+var kids=function(){return el.querySelectorAll('.conf-pay,.conf-tab')};
+var onWinMove=function(e){go(e.clientX,e.clientY)},onWinUp=function(){end()};
+var start=function(x,y){panning=true;sx=x;sy=y;sl=el.scrollLeft;moved=false;el.style.cursor='grabbing';el.style.scrollSnapType='none';window.addEventListener('mousemove',onWinMove);window.addEventListener('mouseup',onWinUp);window.addEventListener('blur',onWinUp)};
+var go=function(x,y){if(!panning)return;var dx=x-sx;if(Math.abs(dx)>3){moved=true;el.scrollLeft=sl-dx;kids().forEach(function(c){c.style.pointerEvents='none'})}};
+var end=function(){if(!panning)return;panning=false;window.removeEventListener('mousemove',onWinMove);window.removeEventListener('mouseup',onWinUp);window.removeEventListener('blur',onWinUp);el.style.cursor='grab';el.style.scrollSnapType='x proximity';kids().forEach(function(c){c.style.pointerEvents=''});if(!moved)return;dragEndAt=Date.now();var target=el.querySelector('.is-selected');if(target)target.scrollIntoView({behavior:'smooth',inline:'start',block:'nearest'})};
+el.addEventListener('mousedown',function(e){clearTimeout(pressT);pressT=setTimeout(function(){start(e.clientX,e.clientY)},hold)});
+el.addEventListener('mouseleave',function(){clearTimeout(pressT)});
+el.addEventListener('mouseup',function(){clearTimeout(pressT)});
+if(!mouseOnly){
+el.addEventListener('touchstart',function(e){clearTimeout(pressT);var tp=e.touches[0];pressT=setTimeout(function(){start(tp.clientX,tp.clientY)},hold)},{passive:true});
 el.addEventListener('touchmove',function(e){var tp=e.touches[0];go(tp.clientX,tp.clientY)},{passive:true});
-el.addEventListener('touchend',function(e){clearTimeout(pressT);end();this._panning=false},{passive:true});
-el.addEventListener('click',function(e){if(this._panning&&moved){e.preventDefault();e.stopPropagation()}},true)}});
+el.addEventListener('touchend',function(){clearTimeout(pressT);end()},{passive:true});
+el.addEventListener('touchcancel',function(){clearTimeout(pressT);end()},{passive:true});
+}
+/* 拖拽结束后的紧随 click 一律吞掉（时间窗判定：mouseup 已先一步复位状态，用标志位会漏判） */
+el.addEventListener('click',function(e){if(Date.now()-dragEndAt<350){e.preventDefault();e.stopPropagation()}},true)}});
 registerSheetKit(app);
 app.mount(root);
 
