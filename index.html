@@ -930,13 +930,10 @@ body.host-single-m #root-user{display:none}
 <div class="absolute z-[14] -translate-x-1/2 -translate-y-1/2 transition-all duration-300" :style="{left:chargeUserPt.x+'%',top:chargeUserPt.y+'%'}">
 <div class="w-3.5 h-3.5 rounded-full bg-white" style="border:2.5px solid #2B3F5F;box-shadow:0 0 0 5px rgba(43,63,95,.18),0 1px 4px rgba(0,0,0,.12)"></div>
 </div>
-<!-- 门店（与充电桩同图展示：图标 + 门店简称，点选即定位到该门店） -->
+<!-- 门店（与充电桩同图展示：图标对齐换电端 pin——34×34 圆角 12px 实心底 + 白色图标，不带任何文字；点选即定位到该门店） -->
 <div v-for="(s,i) in mapStores" :key="'hms-'+i" data-cp class="absolute z-[17] -translate-x-1/2 -translate-y-1/2 cursor-pointer active:opacity-80 transition-transform" :style="{left:s.x+'%',top:s.y+'%'}" :data-od-id="'home-map-store-'+i" @click.stop="selectMapStore(s)">
-<div class="flex flex-col items-center">
-<div class="w-7 h-7 rounded-lg bg-white flex items-center justify-center" style="border:1.5px solid #2B3F5F;box-shadow:0 2px 8px rgba(0,0,0,.16)">
-<span v-html="luci('store','w-4 h-4 text-[#2B3F5F]')"></span>
-</div>
-<div class="mt-0.5 max-w-[92px] truncate px-1.5 py-[1px] rounded text-[10px] font-medium text-[#111]" style="background:rgba(255,255,255,.94);border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.08)">{{ s.short }}</div>
+<div class="w-[34px] h-[34px] rounded-xl flex items-center justify-center text-white" style="background:var(--accent);box-shadow:0 2px 6px rgba(0,0,0,.18)">
+<span v-html="luci('store','w-5 h-5')"></span>
 </div>
 </div>
 </div>
@@ -7486,14 +7483,13 @@ const storeQuery=ref('');
 const demoListEmpty=ref(false);function demoSetListEmpty(v){demoListEmpty.value=!!v}
 const storeList=computed(()=>(stores&&stores.value||[]).map(function(s){return {name:s.name,addr:s.addr||'',phone:s.phone||'',dist:''}}));
 const storeFiltered=computed(()=>{if(demoListEmpty.value)return[];const q=storeQuery.value.trim().toLowerCase();if(!q)return storeList.value;return storeList.value.filter(s=>s.name.toLowerCase().includes(q)||s.addr.toLowerCase().includes(q))});
-/* 首页地图门店标记：取门店列表前 4 家，坐标由原型固定分配（暂无真实经纬度映射） */
+/* 首页地图门店标记：取门店列表前 4 家，坐标由原型固定分配（暂无真实经纬度映射）；标记只呈现图标，不带文案 */
 const MAP_STORE_PTS=[{x:12,y:16},{x:70,y:28},{x:26,y:56},{x:82,y:62}];
 const mapStores=computed(function(){
   const list=(storeList&&storeList.value)||[];
   return list.slice(0,4).map(function(s,i){
     const p=MAP_STORE_PTS[i]||{x:50,y:50};
-    const m=/[（(]([^）)]+)[）)]/.exec(s.name||'');
-    return {name:s.name,short:(m&&m[1])||s.name,x:p.x,y:p.y,dist:[210,430,560,880][i]||300};
+    return {name:s.name,x:p.x,y:p.y};
   });
 });
 function selectMapStore(s){toast('已定位到 '+s.name,'info')}
