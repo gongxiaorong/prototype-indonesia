@@ -1247,9 +1247,6 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <template v-else data-page-node-id="SBW02gbGFj508Xv7OVvhrH">
-<svg class="absolute inset-0 w-full h-full z-[8] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" data-page-node-id="x0hg3q1EYEASNsooGb6jPW">
-<line :x1="locUserPt.x" :y1="locUserPt.y" :x2="locVehPt.x" :y2="locVehPt.y" stroke="#2B3F5F" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2.2 1.6" vector-effect="non-scaling-stroke" opacity="0.95" data-page-node-id="HWuRkviM8snWnVwK9BrAa8"/>
-</svg>
 <div v-for="(p,i) in trackPois" :key="'lpoi-'+i" class="track-poi" :style="{left:p.x+'%',top:p.y+'%',transform:'translate(-50%,-50%)'}" data-page-node-id="TAbdPzcgoELCykPcBKW0gA">
 <div class="track-poi-dot" data-page-node-id="PJeGgPZb1nE8pWU68oAmDQ"></div>
 <div class="track-poi-label" data-page-node-id="lhXB38NNlnwfEGSakG5BED">{{ p.label }}</div>
@@ -3640,10 +3637,6 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <template v-else>
-<svg class="absolute inset-0 w-full h-full z-[8] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-<!-- 用户 ↔ 车辆直线 -->
-<line :x1="locUserPt.x" :y1="locUserPt.y" :x2="locVehPt.x" :y2="locVehPt.y" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2.2 1.6" vector-effect="non-scaling-stroke" opacity="0.95"/>
-</svg>
 <div v-for="(p,i) in trackPois" :key="'lpoi-'+i" class="track-poi" :style="{left:p.x+'%',top:p.y+'%',transform:'translate(-50%,-50%)'}">
 <div class="track-poi-dot"></div>
 <div class="track-poi-label">{{ p.label }}</div>
@@ -4134,9 +4127,6 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <template v-else>
-<svg class="absolute inset-0 w-full h-full z-[8] pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-<line :x1="battLocUserPt.x" :y1="battLocUserPt.y" :x2="battLocBattPt.x" :y2="battLocBattPt.y" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2.2 1.6" vector-effect="non-scaling-stroke" opacity="0.95"/>
-</svg>
 <div v-for="(p,i) in battTrackPois" :key="'blpoi-'+i" class="track-poi" :style="{left:p.x+'%',top:p.y+'%',transform:'translate(-50%,-50%)'}">
 <div class="track-poi-dot"></div>
 <div class="track-poi-label">{{ p.label }}</div>
