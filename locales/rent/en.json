@@ -487,13 +487,14 @@
       "safetySlogan": "Your safety is our top priority",
       "currentLocation": "Current Location"
     },
-    "poiSearch": {
-      "placeholder": "Search chargers, stores",
-      "results": "Search Results",
-      "nearby": "Nearby",
+    "search": {
+      "title": "Search Destination",
+      "placeholder": "Search chargers or stores",
+      "history": "Search History",
+      "nearby": "Nearby Chargers",
+      "relocate": "Relocate",
       "allChargers": "All Chargers",
-      "noResult": "No matching place found",
-      "noResultHint": "Try another keyword"
+      "noPoi": "No matching places found"
     },
     "profile": {
       "newPwdPlaceholder": "Please enter a new password (6-64 characters)",

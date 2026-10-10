@@ -487,13 +487,14 @@
       "safetySlogan": "Keselamatan Anda adalah prioritas utama kami",
       "currentLocation": "Lokasi Saat Ini"
     },
-    "poiSearch": {
-      "placeholder": "Cari charger, toko",
-      "results": "Hasil Pencarian",
-      "nearby": "Terdekat",
+    "search": {
+      "title": "Cari Tujuan",
+      "placeholder": "Cari charger atau toko",
+      "history": "Riwayat Pencarian",
+      "nearby": "Charger Terdekat",
+      "relocate": "Lokasi Ulang",
       "allChargers": "Semua Charger",
-      "noResult": "Tempat terkait tidak ditemukan",
-      "noResultHint": "Coba kata kunci lain"
+      "noPoi": "Tempat terkait tidak ditemukan"
     },
     "profile": {
       "newPwdPlaceholder": "Masukkan kata sandi baru (6-64 karakter)",

@@ -487,13 +487,14 @@
       "safetySlogan": "您的安全是我們最關心的事",
       "currentLocation": "當前定位"
     },
-    "poiSearch": {
-      "placeholder": "查找充電樁、門店",
-      "results": "搜尋結果",
-      "nearby": "附近",
+    "search": {
+      "title": "搜尋目的地",
+      "placeholder": "搜尋充電樁或門店",
+      "history": "搜尋歷史",
+      "nearby": "附近充電樁",
+      "relocate": "重新定位",
       "allChargers": "全部充電樁",
-      "noResult": "未找到相關地點",
-      "noResultHint": "換個關鍵詞試試"
+      "noPoi": "沒有找到相關地點"
     },
     "profile": {
       "newPwdPlaceholder": "請輸入 6–64 位新密碼",

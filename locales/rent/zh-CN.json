@@ -487,13 +487,14 @@
       "safetySlogan": "您的安全是我们最关心的事",
       "currentLocation": "当前定位"
     },
-    "poiSearch": {
-      "placeholder": "查找充电桩、门店",
-      "results": "搜索结果",
-      "nearby": "附近",
+    "search": {
+      "title": "搜索目的地",
+      "placeholder": "搜索充电桩或门店",
+      "history": "搜索历史",
+      "nearby": "附近充电桩",
+      "relocate": "重新定位",
       "allChargers": "全部充电桩",
-      "noResult": "未找到相关地点",
-      "noResultHint": "换个关键词试试"
+      "noPoi": "没有找到相关地点"
     },
     "profile": {
       "newPwdPlaceholder": "请输入 6–64 位新密码",
