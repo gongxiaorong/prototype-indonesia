@@ -485,9 +485,15 @@
       "buyNow": "Shop Now",
       "rentalIntro": "Rental Intro",
       "safetySlogan": "Your safety is our top priority",
-      "currentLocation": "Current Location",
-      "chargeNearbyCount": "Nearby Chargers {n}",
-      "chargeNearest": "Nearest {dist} · from {price}/min"
+      "currentLocation": "Current Location"
+    },
+    "poiSearch": {
+      "placeholder": "Search chargers, stores",
+      "results": "Search Results",
+      "nearby": "Nearby",
+      "allChargers": "All Chargers",
+      "noResult": "No matching place found",
+      "noResultHint": "Try another keyword"
     },
     "profile": {
       "newPwdPlaceholder": "Please enter a new password (6-64 characters)",

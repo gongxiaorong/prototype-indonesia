@@ -485,9 +485,15 @@
       "buyNow": "立即選購",
       "rentalIntro": "租車介紹",
       "safetySlogan": "您的安全是我們最關心的事",
-      "currentLocation": "當前定位",
-      "chargeNearbyCount": "附近充電樁 {n} 個",
-      "chargeNearest": "最近 {dist} · {price}/分鐘"
+      "currentLocation": "當前定位"
+    },
+    "poiSearch": {
+      "placeholder": "查找充電樁、門店",
+      "results": "搜尋結果",
+      "nearby": "附近",
+      "allChargers": "全部充電樁",
+      "noResult": "未找到相關地點",
+      "noResultHint": "換個關鍵詞試試"
     },
     "profile": {
       "newPwdPlaceholder": "請輸入 6–64 位新密碼",
