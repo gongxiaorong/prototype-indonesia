@@ -509,6 +509,9 @@
       "demoOn": "Aktif",
       "demoOff": "Nonaktif"
     },
+    "locate": {
+      "relocated": "Berlokasi ulang ke “{name}”"
+    },
     "profile": {
       "newPwdPlaceholder": "Masukkan kata sandi baru (6-64 karakter)",
       "confirmNewPwdPlaceholder": "Masukkan kembali kata sandi baru",

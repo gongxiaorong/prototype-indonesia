@@ -509,6 +509,9 @@
       "demoOn": "เปิดแล้ว",
       "demoOff": "ยังไม่เปิด"
     },
+    "locate": {
+      "relocated": "ระบุตำแหน่งใหม่ไปยัง “{name}”"
+    },
     "profile": {
       "newPwdPlaceholder": "กรุณากรอกรหัสผ่านใหม่ (6-64 ตัวอักษร)",
       "confirmNewPwdPlaceholder": "กรุณากรอกรหัสผ่านใหม่อีกครั้ง",

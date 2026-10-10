@@ -509,6 +509,9 @@
       "demoOn": "已开启",
       "demoOff": "未开启"
     },
+    "locate": {
+      "relocated": "已重新定位到「{name}」"
+    },
     "profile": {
       "newPwdPlaceholder": "请输入 6–64 位新密码",
       "confirmNewPwdPlaceholder": "请再次输入新密码",
