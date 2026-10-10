@@ -494,6 +494,20 @@
       "relocate": "Lokasi Ulang",
       "noPoi": "Tempat terkait tidak ditemukan"
     },
+    "location": {
+      "appAuthTitle": "Izinkan \"Yadea Rental\" menggunakan lokasi Anda?",
+      "appAuthDesc": "Lokasi Anda akan digunakan untuk menemukan charger dan toko terdekat",
+      "serviceTitle": "Layanan Lokasi",
+      "serviceDesc": "Aktifkan Layanan Lokasi di pengaturan sistem untuk menemukan charger dan toko terdekat",
+      "deny": "Jangan Izinkan",
+      "allow": "Izinkan",
+      "goSetting": "Buka Pengaturan",
+      "demoAuth": "Izin Lokasi",
+      "demoAuthorized": "Diberikan",
+      "demoUnauthorized": "Belum diberikan",
+      "demoOn": "Aktif",
+      "demoOff": "Nonaktif"
+    },
     "profile": {
       "newPwdPlaceholder": "Masukkan kata sandi baru (6-64 karakter)",
       "confirmNewPwdPlaceholder": "Masukkan kembali kata sandi baru",

@@ -494,6 +494,20 @@
       "relocate": "重新定位",
       "noPoi": "没有找到相关地点"
     },
+    "location": {
+      "appAuthTitle": "允许“雅迪租车”使用你的位置信息吗？",
+      "appAuthDesc": "您的位置信息将用于查找附近的充电桩与门店",
+      "serviceTitle": "定位服务",
+      "serviceDesc": "请在系统设置中开启定位服务，以获取附近的充电桩与门店",
+      "deny": "不允许",
+      "allow": "允许",
+      "goSetting": "去开启",
+      "demoAuth": "定位授权",
+      "demoAuthorized": "已授权",
+      "demoUnauthorized": "未授权",
+      "demoOn": "已开启",
+      "demoOff": "未开启"
+    },
     "profile": {
       "newPwdPlaceholder": "请输入 6–64 位新密码",
       "confirmNewPwdPlaceholder": "请再次输入新密码",

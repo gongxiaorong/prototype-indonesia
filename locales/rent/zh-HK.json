@@ -494,6 +494,20 @@
       "relocate": "重新定位",
       "noPoi": "沒有找到相關地點"
     },
+    "location": {
+      "appAuthTitle": "允許「雅迪租車」使用你的位置資訊嗎？",
+      "appAuthDesc": "您的位置資訊將用於查找附近的充電樁與門店",
+      "serviceTitle": "定位服務",
+      "serviceDesc": "請在系統設定中開啟定位服務，以獲取附近的充電樁與門店",
+      "deny": "不允許",
+      "allow": "允許",
+      "goSetting": "去開啟",
+      "demoAuth": "定位授權",
+      "demoAuthorized": "已授權",
+      "demoUnauthorized": "未授權",
+      "demoOn": "已開啟",
+      "demoOff": "未開啟"
+    },
     "profile": {
       "newPwdPlaceholder": "請輸入 6–64 位新密碼",
       "confirmNewPwdPlaceholder": "請再次輸入新密碼",

@@ -494,6 +494,20 @@
       "relocate": "Relocate",
       "noPoi": "No matching places found"
     },
+    "location": {
+      "appAuthTitle": "Allow \"Yadea Rental\" to use your location?",
+      "appAuthDesc": "Your location will be used to find nearby chargers and stores",
+      "serviceTitle": "Location Services",
+      "serviceDesc": "Please enable Location Services in system settings to find nearby chargers and stores",
+      "deny": "Don't Allow",
+      "allow": "Allow",
+      "goSetting": "Open Settings",
+      "demoAuth": "Location Permission",
+      "demoAuthorized": "Granted",
+      "demoUnauthorized": "Not granted",
+      "demoOn": "On",
+      "demoOff": "Off"
+    },
     "profile": {
       "newPwdPlaceholder": "Please enter a new password (6-64 characters)",
       "confirmNewPwdPlaceholder": "Please enter the new password again",
