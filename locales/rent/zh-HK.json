@@ -489,11 +489,10 @@
     },
     "search": {
       "title": "搜尋目的地",
-      "placeholder": "搜尋充電樁或門店",
+      "placeholder": "查找充電樁、門店",
       "history": "搜尋歷史",
-      "nearby": "附近充電樁",
+      "nearby": "附近",
       "relocate": "重新定位",
-      "allChargers": "全部充電樁",
       "noPoi": "沒有找到相關地點"
     },
     "profile": {

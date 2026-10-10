@@ -489,11 +489,10 @@
     },
     "search": {
       "title": "Search Destination",
-      "placeholder": "Search chargers or stores",
+      "placeholder": "Search chargers, stores",
       "history": "Search History",
-      "nearby": "Nearby Chargers",
+      "nearby": "Nearby",
       "relocate": "Relocate",
-      "allChargers": "All Chargers",
       "noPoi": "No matching places found"
     },
     "profile": {

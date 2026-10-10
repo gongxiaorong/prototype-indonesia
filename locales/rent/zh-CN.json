@@ -489,11 +489,10 @@
     },
     "search": {
       "title": "搜索目的地",
-      "placeholder": "搜索充电桩或门店",
+      "placeholder": "查找充电桩、门店",
       "history": "搜索历史",
-      "nearby": "附近充电桩",
+      "nearby": "附近",
       "relocate": "重新定位",
-      "allChargers": "全部充电桩",
       "noPoi": "没有找到相关地点"
     },
     "profile": {
