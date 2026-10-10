@@ -933,17 +933,18 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 </div>
+<!-- POI 搜索（参考高德布局：地图顶部悬浮圆角搜索条，点击进入 POI 搜索页） -->
+<div data-cp @click.stop="openPoiSearch()" class="absolute left-3 right-3 top-3 z-[30] h-10 bg-white rounded-full flex items-center gap-2.5 px-3.5 cursor-pointer active:opacity-95 transition-opacity" style="box-shadow:0 4px 16px rgba(0,0,0,.16)" data-od-id="home-poi-search">
+<span class="shrink-0 flex items-center" style="color:#8A9999" v-html="luci('search','w-[18px] h-[18px]')"></span>
+<span class="flex-1 min-w-0 text-[13px] truncate" style="color:#8A9999">查找充电桩、门店</span>
+</div>
 <!-- 定位到当前位置 -->
 <div data-cp @click.stop="chargeFocusUser" class="absolute right-3 bottom-[68px] z-[25] w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="home-map-locate">
 <span v-html="luci('crosshair','w-5 h-5')"></span>
 </div>
-<!-- POI 搜索（参考高德布局：地图底部悬浮圆角搜索条，右侧保留扫码入口；点击进入 POI 搜索页） -->
-<div data-cp @click.stop="openPoiSearch()" class="absolute left-3 right-3 bottom-3 z-[30] h-11 bg-white rounded-full flex items-center gap-2.5 pl-3.5 pr-1.5 cursor-pointer active:opacity-95 transition-opacity" style="box-shadow:0 6px 20px rgba(0,0,0,.16)" data-od-id="home-poi-search">
-<span class="shrink-0 flex items-center" style="color:#8A9999" v-html="luci('search','w-[18px] h-[18px]')"></span>
-<span class="flex-1 min-w-0 text-[13px] truncate" style="color:#8A9999">查找充电桩、门店</span>
-<button data-cp @click.stop="openChargeScan()" class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 cursor-pointer active:opacity-90 transition-opacity" style="background:#F6F7F9;color:#2B3F5F;border:0" data-od-id="home-poi-scan" aria-label="扫码充电">
-<span v-html="luci('scan','w-4 h-4')"></span>
-</button>
+<!-- 扫码充电（底部主操作：充电为高频场景） -->
+<div data-cp @click.stop="openChargeScan()" class="absolute left-3 right-3 bottom-3 z-[30] h-11 rounded-full flex items-center justify-center gap-1.5 text-white text-[14px] font-semibold cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent);box-shadow:0 6px 20px rgba(43,63,95,.35)" data-od-id="home-charge-scan">
+<span v-html="luci('scan','w-[18px] h-[18px]')"></span><span>扫码充电</span>
 </div>
 </div>
 
