@@ -7300,9 +7300,10 @@ function openPoiSearch(){navOpen('poiSearch');poiQuery.value=''}
 /* 出口一律走 navBack()（弹栈并还原首页快照）；closePoiSearch 仅供 nav 屏映射与异常兜底使用 */
 function closePoiSearch(){if(showPoiSearch.value)showPoiSearch.value=false}
 /* 结果点击：充电桩 → 原地弹设备详情（留在搜索页；弹窗 mask-z 2590 高于本页 1920）；POI 目的地 → 回首页；门店 → 该门店的「选择方案」页（与门店页点门店同一出口）。
-   POI / 门店分支顺序固定为「先 navBack() 弹掉搜索页并还原首页快照，再设置门店并入栈」——selectedStore 在快照内，反序会被还原覆盖。选过的词写入搜索历史。 */
+   POI / 门店分支顺序固定为「先 navBack() 弹掉搜索页并还原首页快照，再设置门店并入栈」——selectedStore 在快照内，反序会被还原覆盖。
+   仅「搜索态」（有关键词）的结果点击写入搜索历史；无关键词的「附近」列表点击不写。 */
 function poiOpen(p){
-  poiHistoryAdd(p.name);
+  if(poiQuery.value.trim())poiHistoryAdd(p.name);
   if(p.kind==='charger'){openChargeDevice(p.ref);return}
   navBack();
   if(p.kind==='poi')return;
