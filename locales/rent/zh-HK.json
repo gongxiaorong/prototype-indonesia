@@ -490,7 +490,7 @@
     "search": {
       "placeholder": "查找充電樁、門店",
       "history": "搜尋歷史",
-      "nearby": "附近",
+      "nearby": "附近充電樁、門店",
       "relocate": "重新定位",
       "noLocation": "未獲取您的位置資訊",
       "noPoi": "沒有找到相關地點"

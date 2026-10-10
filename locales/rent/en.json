@@ -490,7 +490,7 @@
     "search": {
       "placeholder": "Search chargers, stores",
       "history": "Search History",
-      "nearby": "Nearby",
+      "nearby": "Nearby Chargers & Stores",
       "relocate": "Relocate",
       "noLocation": "Location unavailable",
       "noPoi": "No matching places found"

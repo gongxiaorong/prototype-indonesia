@@ -488,9 +488,9 @@
       "currentLocation": "当前定位"
     },
     "search": {
-      "placeholder": "查找充电桩、门店",
+      "placeholder": "搜索充电桩、门店",
       "history": "搜索历史",
-      "nearby": "附近",
+      "nearby": "附近充电桩、门店",
       "relocate": "重新定位",
       "noLocation": "未获取到您的位置信息",
       "noPoi": "没有找到相关地点"
