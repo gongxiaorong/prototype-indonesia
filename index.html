@@ -942,8 +942,8 @@ body.host-single-m #root-user{display:none}
 <div data-cp @click.stop="chargeFocusUser" class="absolute right-3 bottom-[68px] z-[25] w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="home-map-locate">
 <span v-html="luci('crosshair','w-5 h-5')"></span>
 </div>
-<!-- 扫码充电（底部主操作：充电为高频场景） -->
-<div data-cp @click.stop="openChargeScan()" class="absolute left-3 right-3 bottom-3 z-[30] h-11 rounded-full flex items-center justify-center gap-1.5 text-white text-[14px] font-semibold cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent);box-shadow:0 6px 20px rgba(43,63,95,.35)" data-od-id="home-charge-scan">
+<!-- 扫码充电（底部主操作：充电为高频场景；宽度按内容自适应，居中） -->
+<div data-cp @click.stop="openChargeScan()" class="absolute left-1/2 bottom-3 -translate-x-1/2 z-[30] h-11 px-5 rounded-full flex items-center justify-center gap-1.5 text-white text-[14px] font-semibold whitespace-nowrap cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent);box-shadow:0 6px 20px rgba(43,63,95,.35)" data-od-id="home-charge-scan">
 <span v-html="luci('scan','w-[18px] h-[18px]')"></span><span>扫码充电</span>
 </div>
 </div>
