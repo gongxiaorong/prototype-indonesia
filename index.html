@@ -7198,8 +7198,11 @@ const chargeUserPt=ref({x:28,y:62});
 /* 「附近充电桩」列表页（首页定位 Fab 下方的列表入口打开，行样式对标 POI 搜索页「附近」列表） */
 const showChargeList=ref(false);
 function openChargeList(){navOpen('chargeList');closeChargeDevice()}
-/* 列表页行点击：充电桩 → 设备详情弹窗；门店 → 该门店的「选择方案」页（与 POI 搜索页「附近」列表同出口，但不写搜索历史） */
-function openChargeListItem(p){navBack();if(p.kind==='charger')openChargeDevice(p.ref);else openStorePlan(p.ref)}
+/* 列表页行点击：充电桩 → 原地弹设备详情（留在列表页；弹窗 mask-z 2590 高于本页 1900）；门店 → 回首页并进该门店的「选择方案」页（与 POI 列表同出口，但不写搜索历史） */
+function openChargeListItem(p){
+  if(p.kind==='charger'){openChargeDevice(p.ref);return}
+  navBack();openStorePlan(p.ref);
+}
 function closeChargeList(){closeChargeDevice();showChargeList.value=false}
 /* 距离格式化（充电设备列表 / 详情 / POI 结果）：≥1000 用 km（1.2km），不足 1km 用 m（180m） */
 function fmtDist(m){return m>=1000?(m/1000).toFixed(1)+'km':m+'m'}
@@ -7294,13 +7297,14 @@ function poiRelocate(){
 function openPoiSearch(){navOpen('poiSearch');poiQuery.value=''}
 /* 出口一律走 navBack()（弹栈并还原首页快照）；closePoiSearch 仅供 nav 屏映射与异常兜底使用 */
 function closePoiSearch(){if(showPoiSearch.value)showPoiSearch.value=false}
-/* 结果点击：POI 目的地 → 仅回首页（按需求不再提示「已定位到 xxx」）；充电桩 → 设备详情弹窗；门店 → 该门店的「选择方案」页（与门店页点门店同一出口）；选过的词写入搜索历史。
-   顺序固定为「先 navBack() 弹掉搜索页并还原首页快照，再设置门店并入栈」——selectedStore 在快照内，反序会被还原覆盖。 */
+/* 结果点击：充电桩 → 原地弹设备详情（留在搜索页；弹窗 mask-z 2590 高于本页 1920）；POI 目的地 → 回首页；门店 → 该门店的「选择方案」页（与门店页点门店同一出口）。
+   POI / 门店分支顺序固定为「先 navBack() 弹掉搜索页并还原首页快照，再设置门店并入栈」——selectedStore 在快照内，反序会被还原覆盖。选过的词写入搜索历史。 */
 function poiOpen(p){
-  poiHistoryAdd(p.name);navBack();
+  poiHistoryAdd(p.name);
+  if(p.kind==='charger'){openChargeDevice(p.ref);return}
+  navBack();
   if(p.kind==='poi')return;
-  const s=p.ref;
-  if(p.kind==='charger')openChargeDevice(s);else openStorePlan(s)
+  openStorePlan(p.ref);
 }
 /* 回车：直接取首条结果（对标换电端 doSearch，无结果时提示） */
 function poiSearchEnter(){
