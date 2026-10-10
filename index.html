@@ -1289,12 +1289,13 @@ body.host-single-m #root-user{display:none}
 </page>
 
 
-<!-- 充电桩和门店列表页（首页定位 Fab 下方的列表入口打开；数据与行样式完全对标 POI 搜索页「附近」列表——充电桩（桩号 + 状态值 / 门店·地址 + 距离）与门店（名称 / 地址 + 距离）混排、按距离升序） -->
+<!-- 充电桩和门店列表页（首页定位 Fab 下方的列表入口打开；数据与行内容对标 POI 搜索页「附近」列表——充电桩（桩号 + 状态值 / 门店·地址 + 距离）与门店（名称 / 地址 + 距离）混排、按距离升序；
+     差异：本页为纯列表页，每条拆为独立白卡（容器 flex flex-col gap-3，卡片白底 rounded-[14px]，去掉行分隔线），搜索页那边仍是单卡 + 行分隔线，两处不同步改动） -->
 <page :open="showChargeList" :z="1900" :swipe-close="navBack" oid="charge-list-page" data-od-id="charge-list-page">
 <nav-bar title="充电桩和门店" border-color="#E5E5E5" @back="navBack()"></nav-bar>
 <div class="flex-1 min-h-0 overflow-y-auto hide-scroll px-3.5 pt-4 pb-7" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-list-scroll">
-<div v-if="poiResult.length" class="bg-white rounded-[14px] overflow-hidden" data-od-id="charge-list-card">
-<div v-for="(p,i) in poiResult" :key="p.key" data-cp @click="openChargeListItem(p)" class="p-3.5 cursor-pointer active:bg-[#F7F8FA]" :style="i?{borderTop:'1px solid #F2F3F5'}:{}" :data-od-id="'charge-list-item-'+i">
+<div v-if="poiResult.length" class="flex flex-col gap-3" data-od-id="charge-list-card">
+<div v-for="(p,i) in poiResult" :key="p.key" data-cp @click="openChargeListItem(p)" class="bg-white rounded-[14px] p-3.5 cursor-pointer active:bg-[#F7F8FA]" :data-od-id="'charge-list-item-'+i">
 <div class="flex items-center gap-2 min-w-0">
 <span class="flex-1 min-w-0 text-[15px] font-bold truncate" style="color:#111">{{ p.name }}</span>
 <span v-if="p.kind==='charger'" class="shrink-0 text-[12px] font-semibold" :style="{color:p.status==='空闲'?'#17A34A':'#DC2626'}" :data-od-id="'charge-list-status-'+i">{{ p.status }}</span>
