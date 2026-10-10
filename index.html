@@ -923,7 +923,7 @@ body.host-single-m #root-user{display:none}
 <div class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[7px] border-l-transparent border-r-transparent" :style="{borderTopColor:d.status==='空闲'?'#17A34A':'#DC2626'}"></div>
 </div>
 </div>
-<div class="absolute z-[14] -translate-x-1/2 -translate-y-1/2 transition-all duration-300" :style="{left:chargeUserPt.x+'%',top:chargeUserPt.y+'%'}">
+<div class="absolute z-[14] -translate-x-1/2 -translate-y-1/2 transition-all duration-300" :style="{left:chargeUserPt.x+'%',top:chargeUserPt.y+'%'}" data-od-id="home-charge-user-pt">
 <div class="w-3.5 h-3.5 rounded-full bg-white" style="border:2.5px solid #2B3F5F;box-shadow:0 0 0 5px rgba(43,63,95,.18),0 1px 4px rgba(0,0,0,.12)"></div>
 </div>
 <!-- 门店（与充电桩同图展示：图标对齐换电端「门店」pin——34×34 圆角 12px 实心底 #1A82F4 + 白色 store 图标，不带任何文字；点选进入该门店的「选择方案」页） -->
@@ -7195,7 +7195,8 @@ const CHARGE_DEVICES=[
 ];
 const chargeDeviceSheet=ref(false),chargeDevice=ref(null);
 const chargeDevices=ref([]);
-const chargeUserPt=ref({x:28,y:62});
+/* 首页地图「当前位置」点：跟随当前定位候选点坐标（默认首个候选＝原 (28,62)，视觉与现状一致） */
+const chargeUserPt=computed(function(){const p=POI_LOC_CANDIDATES[poiLocIdx.value];return {x:p.x,y:p.y}});
 /* 「附近充电桩」列表页（首页定位 Fab 下方的列表入口打开，行样式对标 POI 搜索页「附近」列表） */
 const showChargeList=ref(false);
 function openChargeList(){navOpen('chargeList');closeChargeDevice()}
@@ -7245,10 +7246,11 @@ const POI_STORE_DIST=[210,430,560,880,1020,1180];
 const poiResult=computed(function(){
   const out=[];
   (chargeDevices.value||[]).forEach(function(d){
-    out.push({key:'c-'+d.no,kind:'charger',name:d.no,sub:(d.store?d.store+' · ':'')+d.addr,dist:d.dist,status:d.status,ref:d});
+    out.push({key:'c-'+d.no,kind:'charger',name:d.no,sub:(d.store?d.store+' · ':'')+d.addr,dist:poiDistAt(d.x,d.y,d.dist),status:d.status,ref:d});
   });
   (storeList.value||[]).forEach(function(s,i){
-    out.push({key:'s-'+s.name,kind:'store',name:s.name,sub:s.addr||'',dist:POI_STORE_DIST[i]||1200,ref:s});
+    const pt=MAP_STORE_PTS[i]||{x:50,y:50};
+    out.push({key:'s-'+s.name,kind:'store',name:s.name,sub:s.addr||'',dist:poiDistAt(pt.x,pt.y,POI_STORE_DIST[i]||1200),ref:s});
   });
   const q=poiQuery.value.trim().toLowerCase();
   const list=q?out.filter(function(p){return (p.name+' '+p.sub).toLowerCase().indexOf(q)>=0}):out;
@@ -7284,10 +7286,23 @@ const poiHistory=ref(POI_HISTORY_DEFAULT.slice());
 /* 清空搜索历史（按需求不再出提示） */
 function clearPoiHistory(){poiHistory.value=[]}
 function poiHistoryAdd(n){const v=(n||'').trim();if(!v)return;poiHistory.value=[v].concat(poiHistory.value.filter(function(x){return x!==v})).slice(0,8)}
-/* 当前定位（对标换电端 .sp-loc）：展示地名，重新定位在候选地名间轮换并提示 */
-const POI_LOC_CANDIDATES=['博瑞都市花园','春熙路步行街','磨子桥科华北路','天府软件园'];
+/* 当前定位（对标换电端 .sp-loc）：候选地点带地图坐标——重新定位时地址、附近列表的距离与排序、首页地图上的「当前位置」点一起跟随变动。
+   POI_LOC_REF 取首个候选作基准点，保证默认状态下附近列表的距离数值与现状完全一致；POI_M_PER_UNIT 为每个百分比坐标单位折算的米数（原型演示比例） */
+const POI_LOC_CANDIDATES=[
+  {name:'博瑞都市花园',x:28,y:62},
+  {name:'春熙路步行街',x:70,y:30},
+  {name:'磨子桥科华北路',x:40,y:74},
+  {name:'天府软件园',x:80,y:56}
+];
 const poiLocIdx=ref(0);
-const poiLoc=computed(function(){return POI_LOC_CANDIDATES[poiLocIdx.value]});
+const poiLoc=computed(function(){return POI_LOC_CANDIDATES[poiLocIdx.value].name});
+const POI_LOC_REF=POI_LOC_CANDIDATES[0];
+/* 以当前定位点重算距离：base 为基准点下的距离，按「到当前定位点 / 到基准点」的平面距离比例等比缩放（基准点下比例恒为 1，故默认数值与现状一致） */
+function poiDistAt(x,y,base){
+  const p=POI_LOC_CANDIDATES[poiLocIdx.value];
+  const dRef=Math.max(1,Math.hypot(x-POI_LOC_REF.x,y-POI_LOC_REF.y));
+  return Math.max(20,Math.round(base*Math.hypot(x-p.x,y-p.y)/dRef));
+}
 /* 定位链就绪后真正执行的重新定位（候选地名轮换，按需求不再出提示） */
 function poiRelocateNow(){poiLocIdx.value=(poiLocIdx.value+1)%POI_LOC_CANDIDATES.length}
 /* 搜索页入口：定位链未就绪先走两层弹窗（uLocWant='poi' 记住续跑动作） */
