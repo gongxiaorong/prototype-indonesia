@@ -1394,14 +1394,12 @@ body.host-single-m #root-user{display:none}
 <span data-cp @click="poiRelocate()" class="shrink-0 text-[13px] font-semibold cursor-pointer" style="color:#333" data-od-id="poi-search-relocate">重新定位</span>
 </div>
 </template>
-<!-- 结果列表（对标换电端 .sp-item / .sp-poi：白卡 + 分隔线，不带前置图标；充电桩三行、门店两行） -->
+<!-- 结果列表（对标换电端 .sp-item / .sp-poi：白卡 + 分隔线，不带前置图标；充电桩 = 桩号 + 右上角状态值、门店·地址 + 距离，门店 = 名称、地址 + 距离） -->
 <div v-if="poiResult.length" class="bg-white rounded-[14px] overflow-hidden" data-od-id="poi-search-list">
 <div v-for="(p,i) in poiResult" :key="p.key" data-cp @click="poiOpen(p)" class="p-3.5 cursor-pointer active:bg-[#F7F8FA]" :style="i?{borderTop:'1px solid #F2F3F5'}:{}" :data-od-id="'poi-item-'+i">
 <div class="flex items-center gap-2 min-w-0">
 <span class="flex-1 min-w-0 text-[15px] font-bold truncate" style="color:#111">{{ p.name }}</span>
-</div>
-<div v-if="p.kind==='charger'" class="flex items-center gap-2 mt-2.5">
-<span class="text-[12px]" style="color:#666">状态 <b :style="{color:p.status==='空闲'?'#17A34A':'#DC2626'}">{{ p.status }}</b></span>
+<span v-if="p.kind==='charger'" class="shrink-0 text-[12px] font-semibold" :style="{color:p.status==='空闲'?'#17A34A':'#DC2626'}" :data-od-id="'poi-item-status-'+i">{{ p.status }}</span>
 </div>
 <div class="flex items-center gap-2.5 mt-2.5">
 <span class="flex-1 min-w-0 text-[12px] truncate" style="color:#999">{{ p.sub }}</span>
