@@ -7251,8 +7251,9 @@ function poiRelocate(){poiLocIdx.value=(poiLocIdx.value+1)%POI_LOC_CANDIDATES.le
 function openPoiSearch(){navOpen('poiSearch');poiQuery.value=''}
 /* 出口一律走 navBack()（弹栈并还原首页快照）；closePoiSearch 仅供 nav 屏映射与异常兜底使用 */
 function closePoiSearch(){if(showPoiSearch.value)showPoiSearch.value=false}
-/* 结果点击：充电桩 → 设备详情弹窗；门店 → 定位提示（与地图门店标记同一出口）；选过的词写入搜索历史 */
-function poiOpen(p){poiHistoryAdd(p.name);navBack();if(p.kind==='charger')openChargeDevice(p.ref);else selectMapStore({name:p.name})}
+/* 结果点击：充电桩 → 设备详情弹窗；门店 → 该门店的「选择方案」页（与门店页点门店同一出口）；选过的词写入搜索历史。
+   顺序固定为「先 navBack() 弹掉搜索页并还原首页快照，再设置门店并入栈」——selectedStore 在快照内，反序会被还原覆盖。 */
+function poiOpen(p){poiHistoryAdd(p.name);const s=p.ref;navBack();if(p.kind==='charger')openChargeDevice(s);else openStorePlan(s)}
 /* 回车：直接取首条结果（对标换电端 doSearch） */
 function poiSearchEnter(){if(poiResult.value.length)poiOpen(poiResult.value[0])}
 function openPoiAllChargers(){navBack();openChargePage()}
@@ -7563,7 +7564,9 @@ const mapStores=computed(function(){
 function selectMapStore(s){toast('已定位到 '+s.name,'info')}
 const selectedStore=ref(null);
 var storePtrInit=false;function openStore(){navOpen('store')}function searchStore(){const q=storeSearch.value.trim();if(q===storeQuery.value.trim())return;storeQuery.value=storeSearch.value;if(showRentLoading.value)return;showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}
-function selectStore(i){const s=storeFiltered.value[i];if(walletStorePick.value){ensureWalletOpened(s.name);walletAccount.value.activeStoreId=s.name;navDrop('store');toast('已选择门店','success')}else{selectedStore.value=s;navOpen('vehicle');showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}}
+/* 门店 → 「选择方案」页（唯一出口）：门店页点门店 与 搜索页点门店 共用，保证两处进入的门店信息与 loading 体感一致 */
+function openStorePlan(s){if(!s)return;selectedStore.value=s;navOpen('vehicle');showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}
+function selectStore(i){const s=storeFiltered.value[i];if(walletStorePick.value){ensureWalletOpened(s.name);walletAccount.value.activeStoreId=s.name;navDrop('store');toast('已选择门店','success')}else{openStorePlan(s)}}
 const showVehicle=ref(false);
 
 const vehicleData=computed(()=>{if(demoListEmpty.value)return {};var R=RENT_META,P=RENT_PERIOD;var vm=[],bm=[],s1={},s2={};(SYS_VEHICLES&&SYS_VEHICLES.value||[]).forEach(function(v){if(v&&v.model&&!s1['v'+v.model]){s1['v'+v.model]=1;vm.push(v.model)}});(SYS_BATTERIES&&SYS_BATTERIES.value||[]).forEach(function(b){if(b&&b.model&&!s2['b'+b.model]){s2['b'+b.model]=1;bm.push(b.model)}});function card(m,pi,type){var M=R[m];return {name:m,desc:(M&&M.desc)||'',price:fmtRp((M&&M.prices&&M.prices[pi])||0),period:(P[pi]||''),unit:periodUnitMap[P[pi]]||P[pi],pi:pi,type:type,img:(M&&M.img)||'#2B3F5F'}}var out={0:{},1:{},2:{}};[0,1,2,3].forEach(function(pi){out[0][pi]=vm.map(function(m){return card(m,pi,'vehicle')});out[1][pi]=bm.map(function(m){return card(m,pi,'battery')});var a=R[vm[0]],bb=R[bm[0]];out[2][pi]=(a&&bb)?[{name:vm[0]+' + '+bm[0],desc:(a.desc||'')+' / '+(bb.desc||''),price:fmtRp(((a.prices&&a.prices[pi])||0)+((bb.prices&&bb.prices[pi])||0)),period:(P[pi]||''),unit:periodUnitMap[P[pi]]||P[pi],pi:pi,type:'package',img:'#2B3F5F'}]:[]});return out});
