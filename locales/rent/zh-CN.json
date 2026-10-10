@@ -509,9 +509,6 @@
       "demoOn": "已开启",
       "demoOff": "未开启"
     },
-    "locate": {
-      "relocated": "已重新定位到「{name}」"
-    },
     "profile": {
       "newPwdPlaceholder": "请输入 6–64 位新密码",
       "confirmNewPwdPlaceholder": "请再次输入新密码",
@@ -660,6 +657,7 @@
       "deviceNotFound": "设备不存在",
       "deviceInUseRetry": "该设备使用中，请更换",
       "deviceConnected": "设备连接成功",
+      "listTitle": "充电桩和门店",
       "statusIdle": "空闲",
       "statusInUse": "使用中",
       "statusCharging": "充电中",

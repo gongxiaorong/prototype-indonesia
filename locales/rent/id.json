@@ -509,9 +509,6 @@
       "demoOn": "Aktif",
       "demoOff": "Nonaktif"
     },
-    "locate": {
-      "relocated": "Berlokasi ulang ke “{name}”"
-    },
     "profile": {
       "newPwdPlaceholder": "Masukkan kata sandi baru (6-64 karakter)",
       "confirmNewPwdPlaceholder": "Masukkan kembali kata sandi baru",
@@ -660,6 +657,7 @@
       "deviceNotFound": "Perangkat tidak ditemukan",
       "deviceInUseRetry": "Perangkat sedang digunakan, silakan pilih yang lain",
       "deviceConnected": "Perangkat berhasil terhubung",
+      "listTitle": "Charger & Toko",
       "statusIdle": "Menganggur",
       "statusInUse": "Sedang Digunakan",
       "statusCharging": "Sedang Mengisi Daya",

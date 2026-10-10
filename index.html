@@ -914,7 +914,7 @@ body.host-single-m #root-user{display:none}
 
 <!-- 开屏地图（印尼版：充电为高频场景，首页首屏即地图展示附近充电桩，底部浮层为充电入口。高度 = 原 banner(180) + 间距(12) + 租车入口(110) + 间距(16) + 充电入口(110)） -->
 <div class="rounded-2xl overflow-hidden mb-4 relative track-map" style="height:428px" data-od-id="home-map" data-page-node-id="HmMap1">
-<div v-show="homeChargeView==='map'" class="absolute inset-0" data-od-id="home-map-canvas" data-page-node-id="HmMapBody">
+<div class="absolute inset-0" data-od-id="home-map-canvas" data-page-node-id="HmMapBody">
 <div v-for="(d,i) in chargeDevices" :key="'hmd-'+i" data-cp class="absolute z-[15] -translate-x-1/2 -translate-y-full cursor-pointer active:opacity-80 transition-transform" :style="{left:d.x+'%',top:d.y+'%'}" :data-od-id="'home-charge-device-'+i" @click="openChargeDevice(d)">
 <div class="flex flex-col items-center">
 <div class="w-9 h-9 rounded-full flex items-center justify-center text-white" :style="d.status==='空闲'?{background:'#17A34A',boxShadow:'0 2px 10px rgba(23,163,74,.4)'}:{background:'#DC2626',boxShadow:'0 2px 10px rgba(220,38,38,.4)'}">
@@ -933,31 +933,18 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 </div>
-<!-- 列表视图（原独立「充电」页已移除，设备列表并入首页地图容器；顶部留搜索条、底部留扫码按钮与视图切换钮） -->
-<div v-show="homeChargeView==='list'" class="absolute inset-0 overflow-y-auto hide-scroll px-3 pt-14 pb-[120px]" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="home-charge-list">
-<kv-card v-for="(d,i) in chargeDevices" :key="'hmcl-'+i" label-width="6rem" class="mb-3" :data-od-id="'home-charge-list-item-'+i">
-<template #title>{{ d.no }}</template>
-<template #extra><span class="font-medium shrink-0" :style="d.status==='空闲'?{color:'#17A34A'}:{color:'#DC2626'}">{{ d.status }}</span></template>
-<kv-row label="地址" align="top">
-<template #value><div class="flex items-start justify-end gap-2"><span class="min-w-0 whitespace-normal break-words">{{ d.addr }}</span><span data-cp @click.stop="openChargeNav" class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" :data-od-id="'home-charge-list-nav-'+i"><span v-html="luci('navigation','w-3.5 h-3.5')" style="color:#FF6A00"></span></span></div></template>
-</kv-row>
-<kv-row label="距离" :value="fmtDist(d.dist)"></kv-row>
-<kv-row label="单价" :value="fmtRp(d.price,0)+'/分钟'"></kv-row>
-<kv-row label="最大充电时长" :value="d.maxMinutes+'分钟'"></kv-row>
-</kv-card>
-</div>
 <!-- POI 搜索（参考高德布局：地图顶部悬浮圆角搜索条，点击进入 POI 搜索页） -->
 <div data-cp @click.stop="openPoiSearch()" class="absolute left-3 right-3 top-3 z-[30] h-10 bg-white rounded-full flex items-center gap-2.5 px-3.5 cursor-pointer active:opacity-95 transition-opacity" style="box-shadow:0 4px 16px rgba(0,0,0,.16)" data-od-id="home-poi-search">
 <span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-[18px] h-[18px]')"></span>
 <span class="flex-1 min-w-0 text-[13px] truncate" style="color:#8A9999">查找充电桩、门店</span>
 </div>
-<!-- 定位到当前位置 + 地图/列表视图切换（切换入口在定位 Fab 下方，两按钮同组；列表视图下定位钮隐藏） -->
+<!-- 定位到当前位置 + 充电设备列表入口（列表入口在定位 Fab 下方，点击打开「附近充电桩」列表页） -->
 <div class="absolute right-3 bottom-[68px] z-[25] flex flex-col gap-2.5" data-od-id="home-charge-side-actions">
-<div v-show="homeChargeView==='map'" data-cp @click.stop="chargeFocusUser" class="w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="home-map-locate">
+<div data-cp @click.stop="chargeFocusUser" class="w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="home-map-locate">
 <span v-html="luci('crosshair','w-5 h-5')"></span>
 </div>
-<div data-cp @click.stop="toggleHomeChargeView" class="w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="home-charge-view-btn">
-<span v-html="luci(homeChargeView==='map'?'list':'map','w-5 h-5')"></span>
+<div data-cp @click.stop="openChargeList()" class="w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="home-charge-list-btn">
+<span v-html="luci('list','w-5 h-5')"></span>
 </div>
 </div>
 <!-- 扫码充电（底部主操作：充电为高频场景；宽度按内容自适应，居中） -->
@@ -1302,6 +1289,26 @@ body.host-single-m #root-user{display:none}
 </page>
 
 
+<!-- 充电桩和门店列表页（首页定位 Fab 下方的列表入口打开；数据与行样式完全对标 POI 搜索页「附近」列表——充电桩（桩号 + 状态值 / 门店·地址 + 距离）与门店（名称 / 地址 + 距离）混排、按距离升序） -->
+<page :open="showChargeList" :z="1900" :swipe-close="navBack" oid="charge-list-page" data-od-id="charge-list-page">
+<nav-bar title="充电桩和门店" border-color="#E5E5E5" @back="navBack()"></nav-bar>
+<div class="flex-1 min-h-0 overflow-y-auto hide-scroll px-3.5 pt-4 pb-7" style="background:#F6F7F9;touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="charge-list-scroll">
+<div v-if="poiResult.length" class="bg-white rounded-[14px] overflow-hidden" data-od-id="charge-list-card">
+<div v-for="(p,i) in poiResult" :key="p.key" data-cp @click="openChargeListItem(p)" class="p-3.5 cursor-pointer active:bg-[#F7F8FA]" :style="i?{borderTop:'1px solid #F2F3F5'}:{}" :data-od-id="'charge-list-item-'+i">
+<div class="flex items-center gap-2 min-w-0">
+<span class="flex-1 min-w-0 text-[15px] font-bold truncate" style="color:#111">{{ p.name }}</span>
+<span v-if="p.kind==='charger'" class="shrink-0 text-[12px] font-semibold" :style="{color:p.status==='空闲'?'#17A34A':'#DC2626'}" :data-od-id="'charge-list-status-'+i">{{ p.status }}</span>
+</div>
+<div class="flex items-center gap-2.5 mt-2.5">
+<span class="flex-1 min-w-0 text-[12px] truncate" style="color:#999">{{ p.sub }}</span>
+<span class="shrink-0 text-[12px]" style="color:#999">{{ p.dist?fmtDist(p.dist):'' }}</span>
+</div>
+</div>
+</div>
+<empty-state v-else icon="plug-zap" text="暂无充电桩和门店"></empty-state>
+</div>
+</page>
+
 <!-- 充电设备弹窗（BottomSheet：设备地址 + 充电定价 + 导航拉起） -->
 <bottom-sheet :open="chargeDeviceSheet" title="设备详情" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
 <kv-card label-width="6rem" class="mx-4" data-od-id="charge-device-card">
@@ -1371,7 +1378,7 @@ body.host-single-m #root-user{display:none}
 </template>
 </div>
 </div>
-<empty-state v-if="!poiDisplay.length" icon="search-x" text="没有找到相关地点" data-od-id="poi-search-empty"></empty-state>
+<empty-state v-if="!poiDisplay.length&&(poiQuery.trim()||uLocReady)" icon="search-x" text="没有找到相关地点" data-od-id="poi-search-empty"></empty-state>
 </div>
 </page>
 
@@ -7188,8 +7195,12 @@ const CHARGE_DEVICES=[
 const chargeDeviceSheet=ref(false),chargeDevice=ref(null);
 const chargeDevices=ref([]);
 const chargeUserPt=ref({x:28,y:62});
-/* 首页地图容器视图（原独立「充电」页已移除，地图/列表切换能力并入首页）：map=地图标记，list=充电设备列表 */
-const homeChargeView=ref('map');
+/* 「附近充电桩」列表页（首页定位 Fab 下方的列表入口打开，行样式对标 POI 搜索页「附近」列表） */
+const showChargeList=ref(false);
+function openChargeList(){navOpen('chargeList');closeChargeDevice()}
+/* 列表页行点击：充电桩 → 设备详情弹窗；门店 → 该门店的「选择方案」页（与 POI 搜索页「附近」列表同出口，但不写搜索历史） */
+function openChargeListItem(p){navBack();if(p.kind==='charger')openChargeDevice(p.ref);else openStorePlan(p.ref)}
+function closeChargeList(){closeChargeDevice();showChargeList.value=false}
 /* 距离格式化（充电设备列表 / 详情 / POI 结果）：≥1000 用 km（1.2km），不足 1km 用 m（180m） */
 function fmtDist(m){return m>=1000?(m/1000).toFixed(1)+'km':m+'m'}
 function buildChargeDevices(){chargeDevices.value=CHARGE_DEVICES.map(function(d){return Object.assign({},d)})}
@@ -7220,8 +7231,6 @@ function chargeFocusUser(){
   if(!uLocAppAuth.value){uLocWant.value='home';uShowLocAppAuth.value=true;return}
   if(!uLocService.value){uLocWant.value='home';uShowLocService.value=true;return}
 }
-/* 首页「地图 ↔ 设备列表」视图切换（入口在定位 Fab 下方） */
-function toggleHomeChargeView(){homeChargeView.value=homeChargeView.value==='map'?'list':'map'}
 function openChargeNav(){closeChargeDevice();storeNavSheet.value=true}
 function openChargeScan(){scanCtx.value='charge';navOpen('scan')}
 /* ══ POI 搜索（首页地图顶部搜索条 → 「搜索目的地」页，对标换电端同名页面） ══
@@ -7263,8 +7272,8 @@ const poiPoiList=computed(function(){
     .sort(function(a,b){return (a.dist||0)-(b.dist||0)})
     .map(function(p){return {key:'p-'+p.id,kind:'poi',name:p.name,sub:p.addr,dist:p.dist,ref:p}});
 });
-/* 当前展示列表：有关键词 → POI 地点；无关键词 → 附近充电桩 / 门店 */
-const poiDisplay=computed(function(){return poiQuery.value.trim()?poiPoiList.value:poiResult.value});
+/* 当前展示列表：有关键词 → POI 地点；无关键词 → 附近充电桩 / 门店（定位未就绪时不展示任何数据） */
+const poiDisplay=computed(function(){return poiQuery.value.trim()?poiPoiList.value:(uLocReady.value?poiResult.value:[])});
 /* 搜索历史（对标换电端 .sp-chips）：默认给 3 条门店关键词，点标签即回填关键词 */
 const POI_HISTORY_DEFAULT=['双流区雅和北路','锦江区春熙路','武侯区磨子桥'];
 const poiHistory=ref(POI_HISTORY_DEFAULT.slice());
@@ -7274,8 +7283,8 @@ function poiHistoryAdd(n){const v=(n||'').trim();if(!v)return;poiHistory.value=[
 const POI_LOC_CANDIDATES=['博瑞都市花园','春熙路步行街','磨子桥科华北路','天府软件园'];
 const poiLocIdx=ref(0);
 const poiLoc=computed(function(){return POI_LOC_CANDIDATES[poiLocIdx.value]});
-/* 定位链就绪后真正执行的重新定位（候选地名轮换 + 提示） */
-function poiRelocateNow(){poiLocIdx.value=(poiLocIdx.value+1)%POI_LOC_CANDIDATES.length;toast('已重新定位到「'+poiLoc.value+'」','success')}
+/* 定位链就绪后真正执行的重新定位（候选地名轮换，按需求不再出提示） */
+function poiRelocateNow(){poiLocIdx.value=(poiLocIdx.value+1)%POI_LOC_CANDIDATES.length}
 /* 搜索页入口：定位链未就绪先走两层弹窗（uLocWant='poi' 记住续跑动作） */
 function poiRelocate(){
   if(!uLocAppAuth.value){uLocWant.value='poi';uShowLocAppAuth.value=true;return}
@@ -8072,7 +8081,8 @@ subSwitchSystem:{open:()=>{profileSub.value='subSwitchSystem'},close:()=>{if(pro
 chargeOrder:{open:()=>{showChargeOrder.value=true},close:()=>closeChargeOrder()},
 chargeOrderDetail:{open:()=>{showChargeOrderDetail.value=true},close:()=>closeChargeOrderDetail()},
 chargeOrderList:{open:()=>{showChargeOrderList.value=true},close:()=>{showChargeOrderList.value=false}},
-poiSearch:{open:()=>{showPoiSearch.value=true},close:()=>closePoiSearch()}
+poiSearch:{open:()=>{showPoiSearch.value=true},close:()=>closePoiSearch()},
+chargeList:{open:()=>{showChargeList.value=true},close:()=>closeChargeList()}
 };
 function _navClone(v){return (v&&typeof v==='object')?JSON.parse(JSON.stringify(v)):v}
 function _navR(r){return{get:function(){return r.value},set:function(v){r.value=v}}}
@@ -8080,7 +8090,7 @@ function _navRA(o){return{get:function(){return _navClone(o)},set:function(v){va
 const pageRefList=[
   _navR(tab),_navR(mapCtx),_navR(showLogin),_navR(showRent),_navR(showStore),_navR(showVehicle),_navR(showConfirm),
   _navR(showVehicleDetail),_navR(showBatteryDetail),_navR(showFindPage),_navR(showTrackPage),_navR(showMyOrders),_navR(showOrderList),_navR(showRefundList),_navR(showOrderDetail),
-  _navR(showConfirmDocs),_navR(showWallet),_navR(showWalletLedger),_navR(showTopup),_navR(showRechargeList),_navR(showRechargeOrder),_navR(scanning),_navR(showManualVin),_navR(showChargeOrder),_navR(showChargeOrderDetail),_navR(showChargeOrderList),_navR(showPoiSearch),
+  _navR(showConfirmDocs),_navR(showWallet),_navR(showWalletLedger),_navR(showTopup),_navR(showRechargeList),_navR(showRechargeOrder),_navR(scanning),_navR(showManualVin),_navR(showChargeOrder),_navR(showChargeOrderDetail),_navR(showChargeOrderList),_navR(showPoiSearch),_navR(showChargeList),
   _navR(profileOV),_navR(profileSub),_navR(idSelectMode),_navR(walletStorePick),_navR(walletLedgerTab),_navR(walletLedgerTxn),_navR(topupAmount),_navR(topupCustom),_navR(topupShowCustom),
   _navR(rechargeFilter),_navR(myVehicleIdx),_navR(currentBatteryIdx),_navR(selectedVehicle),_navR(selectedStore),_navR(orderInfo),_navR(payTarget),_navR(idDetailRec),_navR(idEditingId),
   _navR(confirmIdInfo),_navR(scanBindDevice),_navR(scanCtx),_navR(orderListCategory),_navR(locRinging),_navR(showMyDevices),_navR(homeDevSeg),_navRA(rechargeOrder)
@@ -8108,6 +8118,7 @@ const {navOpen,navBack,navDrop,navSwap,navReset,navLog}=createNav({screens:NAV_S
   if(showChargeOrder.value)return 'chargeOrder';
   if(showChargeOrderList.value)return 'chargeOrderList';
   if(showPoiSearch.value)return 'poiSearch';
+if(showChargeList.value)return 'chargeList';
   if(showTrackPage.value)return 'trackPage';
   return '';
 }});
@@ -8116,7 +8127,7 @@ onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);buildChargeDe
 function goSwap(){location.href='swap.html'}
 function setLoggedIn(v){if(v&&firstLogin.value){firstLogin.value=false;switchSource.value='first';loggedIn.value=true;navSwap('subSwitchSystem');toast('请选择系统','info');return}loggedIn.value=v}
 function switchBack(){if(switchSource.value==='first'){switchSource.value='settings';doLogout();return}navBack()}
-return{goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,homeChargeView,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,toggleHomeChargeView,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};
+return{goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};
 }
 });
 

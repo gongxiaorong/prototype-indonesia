@@ -509,9 +509,6 @@
       "demoOn": "เปิดแล้ว",
       "demoOff": "ยังไม่เปิด"
     },
-    "locate": {
-      "relocated": "ระบุตำแหน่งใหม่ไปยัง “{name}”"
-    },
     "profile": {
       "newPwdPlaceholder": "กรุณากรอกรหัสผ่านใหม่ (6-64 ตัวอักษร)",
       "confirmNewPwdPlaceholder": "กรุณากรอกรหัสผ่านใหม่อีกครั้ง",
@@ -660,6 +657,7 @@
       "deviceNotFound": "ไม่พบอุปกรณ์",
       "deviceInUseRetry": "อุปกรณ์นี้กำลังใช้งาน กรุณาเลือกใหม่",
       "deviceConnected": "เชื่อมต่ออุปกรณ์สำเร็จ",
+      "listTitle": "ที่ชาร์จและร้านค้า",
       "statusIdle": "ว่าง",
       "statusInUse": "กำลังใช้งาน",
       "statusCharging": "กำลังชาร์จ",
