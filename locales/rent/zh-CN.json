@@ -492,6 +492,7 @@
       "history": "搜索历史",
       "nearby": "附近",
       "relocate": "重新定位",
+      "noLocation": "未获取到您的位置信息",
       "noPoi": "没有找到相关地点"
     },
     "location": {

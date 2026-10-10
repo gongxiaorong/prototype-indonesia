@@ -492,6 +492,7 @@
       "history": "Riwayat Pencarian",
       "nearby": "Terdekat",
       "relocate": "Lokasi Ulang",
+      "noLocation": "Lokasi tidak tersedia",
       "noPoi": "Tempat terkait tidak ditemukan"
     },
     "location": {

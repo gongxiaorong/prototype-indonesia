@@ -492,6 +492,7 @@
       "history": "Search History",
       "nearby": "Nearby",
       "relocate": "Relocate",
+      "noLocation": "Location unavailable",
       "noPoi": "No matching places found"
     },
     "location": {
