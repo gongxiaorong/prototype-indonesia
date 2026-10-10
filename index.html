@@ -7281,7 +7281,8 @@ const poiDisplay=computed(function(){return poiQuery.value.trim()?poiPoiList.val
 /* 搜索历史（对标换电端 .sp-chips）：默认给 3 条门店关键词，点标签即回填关键词 */
 const POI_HISTORY_DEFAULT=['双流区雅和北路','锦江区春熙路','武侯区磨子桥'];
 const poiHistory=ref(POI_HISTORY_DEFAULT.slice());
-function clearPoiHistory(){poiHistory.value=[];toast('已清空搜索历史','info')}
+/* 清空搜索历史（按需求不再出提示） */
+function clearPoiHistory(){poiHistory.value=[]}
 function poiHistoryAdd(n){const v=(n||'').trim();if(!v)return;poiHistory.value=[v].concat(poiHistory.value.filter(function(x){return x!==v})).slice(0,8)}
 /* 当前定位（对标换电端 .sp-loc）：展示地名，重新定位在候选地名间轮换并提示 */
 const POI_LOC_CANDIDATES=['博瑞都市花园','春熙路步行街','磨子桥科华北路','天府软件园'];
