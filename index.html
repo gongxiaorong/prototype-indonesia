@@ -917,7 +917,6 @@ body.host-single-m #root-user{display:none}
 <div class="absolute inset-0" data-od-id="home-map-canvas" data-page-node-id="HmMapBody">
 <div v-for="(d,i) in chargeDevices" :key="'hmd-'+i" data-cp class="absolute z-[15] -translate-x-1/2 -translate-y-full cursor-pointer active:opacity-80 transition-transform" :style="{left:d.x+'%',top:d.y+'%'}" :data-od-id="'home-charge-device-'+i" @click="openChargeDevice(d)">
 <div class="flex flex-col items-center">
-<div class="px-2 py-0.5 rounded-full text-[10px] font-semibold text-white mb-1 whitespace-nowrap" :style="d.status==='空闲'?{background:'#17A34A',boxShadow:'0 1px 4px rgba(23,163,74,.35)'}:{background:'#DC2626',boxShadow:'0 1px 4px rgba(220,38,38,.35)'}">{{ fmtRp(d.price,0) }}/分</div>
 <div class="w-9 h-9 rounded-full flex items-center justify-center text-white" :style="d.status==='空闲'?{background:'#17A34A',boxShadow:'0 2px 10px rgba(23,163,74,.4)'}:{background:'#DC2626',boxShadow:'0 2px 10px rgba(220,38,38,.4)'}">
 <span v-html="luci('plug-zap','w-[18px] h-[18px]')"></span>
 </div>
