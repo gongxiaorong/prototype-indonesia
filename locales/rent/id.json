@@ -657,7 +657,6 @@
       "deviceNotFound": "Perangkat tidak ditemukan",
       "deviceInUseRetry": "Perangkat sedang digunakan, silakan pilih yang lain",
       "deviceConnected": "Perangkat berhasil terhubung",
-      "located": "Berpindah ke lokasi saat ini",
       "statusIdle": "Menganggur",
       "statusInUse": "Sedang Digunakan",
       "statusCharging": "Sedang Mengisi Daya",

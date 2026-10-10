@@ -657,7 +657,6 @@
       "deviceNotFound": "設備不存在",
       "deviceInUseRetry": "該設備使用中，請更換",
       "deviceConnected": "設備連接成功",
-      "located": "已定位到當前位置",
       "statusIdle": "閒置",
       "statusInUse": "使用中",
       "statusCharging": "充電中",

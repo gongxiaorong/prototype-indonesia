@@ -657,7 +657,6 @@
       "deviceNotFound": "Device not found",
       "deviceInUseRetry": "This device is in use, please choose another",
       "deviceConnected": "Device connected successfully",
-      "located": "Moved to your current location",
       "statusIdle": "Idle",
       "statusInUse": "In Use",
       "statusCharging": "Charging",

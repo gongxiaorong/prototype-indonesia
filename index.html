@@ -7241,10 +7241,10 @@ const uLocAppAuth=ref(true),uLocService=ref(true),uShowLocAppAuth=ref(false),uSh
 const uLocReady=computed(function(){return uLocAppAuth.value&&uLocService.value});
 /* 「去开启」（未就绪时代替「重新定位」）：按缺的那层拉起对应弹窗 */
 function uGoEnableLoc(){if(!uLocAppAuth.value)uShowLocAppAuth.value=true;else uShowLocService.value=true}
+/* 弹窗通过后的统一续跑：搜索页入口继续轮换地名；首页入口只静默重取定位（按需求不出提示） */
 function uLocSettle(){
   const want=uLocWant.value;uLocWant.value='';
   if(want==='poi')poiRelocateNow();
-  else if(want==='home')toast('已定位到当前位置','info');
 }
 /* 授权弹窗「允许」→ 已授权；若定位服务未开启则继续拉起服务弹窗（校验链顺序不变） */
 function uAllowLocAppAuth(){uLocAppAuth.value=true;uShowLocAppAuth.value=false;if(!uLocService.value){uShowLocService.value=true;return}uLocSettle()}
@@ -7254,10 +7254,10 @@ function uAllowLocService(){if(!uLocAppAuth.value){uShowLocService.value=false;u
 /* 原型操作开关入口：切换授权/服务状态（关闭时清掉待执行的定位动作与未关闭的弹窗） */
 function setULocAppAuth(on){uLocAppAuth.value=!!on;uShowLocAppAuth.value=false;if(!on)uLocWant.value=''}
 function setULocService(on){uLocService.value=!!on;uShowLocService.value=false;if(!on)uLocWant.value=''}
+/* 首页地图定位按钮与充电页定位按钮共用的「刷新定位」：就绪时静默重取当前位置（按需求不出提示），未就绪按缺的层拉起弹窗 */
 function chargeFocusUser(){
   if(!uLocAppAuth.value){uLocWant.value='home';uShowLocAppAuth.value=true;return}
   if(!uLocService.value){uLocWant.value='home';uShowLocService.value=true;return}
-  toast('已定位到当前位置','info');
 }
 function chargeToggleView(){chargeView.value=chargeView.value==='map'?'list':'map'}
 function openChargeNav(){closeChargeDevice();storeNavSheet.value=true}

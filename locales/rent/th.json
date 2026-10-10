@@ -657,7 +657,6 @@
       "deviceNotFound": "ไม่พบอุปกรณ์",
       "deviceInUseRetry": "อุปกรณ์นี้กำลังใช้งาน กรุณาเลือกใหม่",
       "deviceConnected": "เชื่อมต่ออุปกรณ์สำเร็จ",
-      "located": "ย้ายไปยังตำแหน่งปัจจุบันแล้ว",
       "statusIdle": "ว่าง",
       "statusInUse": "กำลังใช้งาน",
       "statusCharging": "กำลังชาร์จ",
