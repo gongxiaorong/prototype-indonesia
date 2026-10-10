@@ -7301,11 +7301,13 @@ const POI_POIS=[
   {id:'poi9',name:'荟创空间·博雅科创园',addr:'成都市-双流区-博雅城市广场1栋',dist:47},
   {id:'poi10',name:'博雅城市广场地下停车场-B1通往F1',addr:'成都市-双流区-博雅城市广场地下停车场',dist:58}
 ];
-/* 输入即联想：按名称 / 地址包含关键词过滤 POI；空关键词返回空数组（表示未进入搜索态） */
+/* 输入即联想：按名称 / 地址包含关键词过滤 POI，结果按距离升序；空关键词返回空数组（表示未进入搜索态）。
+   filter 已返回新数组，sort 不会改动 POI_POIS 原顺序 */
 const poiPoiList=computed(function(){
   const q=poiQuery.value.trim().toLowerCase();
   if(!q)return [];
   return POI_POIS.filter(function(p){return (p.name+p.addr).toLowerCase().indexOf(q)>=0})
+    .sort(function(a,b){return (a.dist||0)-(b.dist||0)})
     .map(function(p){return {key:'p-'+p.id,kind:'poi',name:p.name,sub:p.addr,dist:p.dist,ref:p}});
 });
 /* 当前展示列表：有关键词 → POI 地点；无关键词 → 附近充电桩 / 门店 */
