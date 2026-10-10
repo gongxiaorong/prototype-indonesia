@@ -1362,13 +1362,10 @@ body.host-single-m #root-user{display:none}
 </kv-card>
 </bottom-sheet>
 
-<!-- POI 搜索页（对标换电端「搜索目的地」：返回 + 居中标题 + 独立搜索条；无关键词=搜索历史 + 附近，有关键词=结果列表） -->
+<!-- POI 搜索页（对标换电端「搜索目的地」：无独立标题行，返回键与搜索条同处导航栏；无关键词=搜索历史 + 附近，有关键词=结果列表） -->
 <page :open="showPoiSearch" :z="1920" trans="fd" oid="poi-search-page" :swipe-close="navBack">
-<div class="shrink-0 flex items-center pt-[52px] px-3.5 pb-1.5" style="background:#F7F8FA">
+<div class="shrink-0 flex items-center gap-2.5 pt-[52px] px-3.5 pb-3" style="background:#F7F8FA">
 <div data-cp @click="navBack()" class="w-8 h-8 shrink-0 flex items-center justify-center cursor-pointer" style="color:#111" data-od-id="poi-search-back"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<span class="flex-1 text-center text-[17px] font-semibold mr-8" data-od-id="poi-search-title">搜索目的地</span>
-</div>
-<div class="shrink-0 flex items-center gap-2.5 pt-1 px-3.5 pb-3" style="background:#F7F8FA">
 <div class="flex-1 min-w-0 flex items-center gap-2 h-[38px] bg-white rounded-[19px] px-3.5" style="border:1px solid #EDEDED" data-od-id="poi-search-bar">
 <span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-4 h-4')"></span>
 <input v-model="poiQuery" type="text" enterkeyhint="search" placeholder="查找充电桩、门店" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="poi-search-input" @keyup.enter="poiSearchEnter()">

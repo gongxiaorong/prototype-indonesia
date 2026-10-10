@@ -488,7 +488,6 @@
       "currentLocation": "Current Location"
     },
     "search": {
-      "title": "Search Destination",
       "placeholder": "Search chargers, stores",
       "history": "Search History",
       "nearby": "Nearby",
