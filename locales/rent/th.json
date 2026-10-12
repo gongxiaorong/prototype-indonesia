@@ -793,6 +793,7 @@
       "confirmDeletePosition": "ลบตำแหน่ง",
       "platformPerms": "สิทธิ์แพลตฟอร์ม",
       "packageImage": "รูปภาพแพ็กเกจ",
+      "packageImageRequired": "กรุณาอัปโหลดรูปภาพแพ็กเกจ",
       "passwordCopied": "คัดลอกรหัสผ่านแล้ว",
       "csDeleted": "ลบแล้ว",
       "confirmReplace": "ยืนยันการเปลี่ยน",
