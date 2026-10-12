@@ -657,6 +657,7 @@
       "confirmDeletePosition": "删除职位",
       "platformPerms": "平台端权限",
       "packageImage": "套餐主图",
+      "packageImageRequired": "请上传套餐主图",
       "passwordCopied": "密码已复制",
       "csDeleted": "已删除",
       "confirmReplace": "确认更换",
