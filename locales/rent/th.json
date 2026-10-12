@@ -183,7 +183,6 @@
       "dialing": "กำลังโทร…",
       "accountDeactivated": "ปิดใช้งานบัญชีแล้ว",
       "accountStatusUpdated": "อัปเดตสถานะบัญชีแล้ว",
-      "autoRenewedWallet": "ต่ออายุอัตโนมัติ (หักกระเป๋าเงิน Rp {amount})",
       "confirmPaySuccess": "ยืนยันการชำระเงินสำเร็จ",
       "noHomePermission": "บัญชีนี้ไม่มีสิทธิ์หน้าแรก กรุณาติดต่อผู้ดูแล",
       "nothingToCopy": "ไม่มีอะไรให้คัดลอก",
