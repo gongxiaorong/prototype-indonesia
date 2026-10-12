@@ -4845,8 +4845,8 @@ body.host-single-m #root-user{display:none}
 <!-- ═══ 改价 SHEET ═══ -->
 <bottom-sheet :open="showPaySplit" title="改价" :mask-z="900" max-h="95%" @close="showPaySplit=false">
 <div class="flex mx-5 mb-3 shrink-0 rounded-full p-0.5 relative" style="background:#F6F7F9;border:1px solid #E5E5E5">
-<div data-cp @click="psTab='rent'" class="relative flex-1 py-2 rounded-full text-[13px] font-medium text-center cursor-pointer transition-all" :style="psTab==='rent'?{background:'#fff',color:'#111',boxShadow:'0 1px 3px rgba(0,0,0,.06)'}:{color:'#999'}">租金<span v-if="psRentPart>0 && !psRentValid" class="absolute top-1.5 right-3.5 w-1.5 h-1.5 rounded-full" style="background:#DC2626"></span></div>
-<div data-cp @click="psTab='deposit'" class="relative flex-1 py-2 rounded-full text-[13px] font-medium text-center cursor-pointer transition-all" :style="psTab==='deposit'?{background:'#fff',color:'#111',boxShadow:'0 1px 3px rgba(0,0,0,.06)'}:{color:'#999'}">押金<span v-if="psDepPart>0 && !psDepValid" class="absolute top-1.5 right-3.5 w-1.5 h-1.5 rounded-full" style="background:#DC2626"></span></div>
+<div data-cp @click="psTab='rent'" class="relative flex-1 py-2 rounded-full text-[13px] font-medium text-center cursor-pointer transition-all" :style="psTab==='rent'?{background:'#fff',color:'#111',boxShadow:'0 1px 3px rgba(0,0,0,.06)'}:{color:'#999'}">租金</div>
+<div data-cp @click="psTab='deposit'" class="relative flex-1 py-2 rounded-full text-[13px] font-medium text-center cursor-pointer transition-all" :style="psTab==='deposit'?{background:'#fff',color:'#111',boxShadow:'0 1px 3px rgba(0,0,0,.06)'}:{color:'#999'}">押金</div>
 </div>
 <div class="sheet-body px-5" style="max-height:58vh">
 <!-- 租金 -->
