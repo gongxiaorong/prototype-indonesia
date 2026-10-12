@@ -770,6 +770,8 @@
       "cancelConfirm": "確定取消該續租？取消後不可恢復",
       "order": "續租單",
       "failClose": "連續扣款失敗 {n} 次後關閉訂單自動續租",
+      "advanceRange": "請輸入0-30的整數",
+      "failRange": "請輸入0-10的整數",
       "allowManual": "允許手動續租",
       "breachDays": "訂單逾期 {n} 天，自動變更為「已違約」狀態",
       "needOrderStatus": "請至少選擇一種允許續租的訂單狀態",
@@ -922,6 +924,8 @@
       "unbindUser": "解綁用戶",
       "unbindVehicleDesc": "確認將該車輛與當前用戶解綁？解綁後該車輛將變為空閒，可重新綁定車輛",
       "unbindBatteryDesc": "確認將該電池與當前用戶解綁？解綁後該電池將變為空閒，可重新綁定電池",
+      "selectBindVehicle": "請選擇綁定車輛",
+      "selectBindBattery": "請選擇綁定電池",
       "vehicleUnbound": "車輛已解綁",
       "batteryUnbound": "電池已解綁"
     },
@@ -1203,6 +1207,7 @@
     },
     "battery": {
       "dischargeAllow": "允許後設備可正常放電",
+      "control": "電池控制",
       "list": "電池列表",
       "noLocationListOnly": "{n}塊無定位，僅列表可見",
       "lostUnlockHint": "解除報失後電池將被解鎖，恢復放電",
@@ -1248,6 +1253,7 @@
     "price": {
       "confirmDesc": "原租金 {rent}、原按金 {deposit}；改價後租金 {newRent}、按金 {newDeposit}，並按填寫渠道拆分入帳。",
       "record": "改價記錄",
+      "amountRequired": "請輸入改價金額",
       "title": "改價",
       "channelHint": "各渠道金額合計即為調整後的租金/按金，確認後按渠道拆分入帳。",
       "diffDecrease": "原租金 {old}，各渠道合計 {sum}，當前減少 {diff}",
@@ -1272,7 +1278,8 @@
       "list": "帳號列表"
     },
     "order_config": {
-      "edit": "編輯設定"
+      "edit": "編輯設定",
+      "statusFlow": "訂單狀態流轉"
     },
     "status": {
       "completed": "已完成",
