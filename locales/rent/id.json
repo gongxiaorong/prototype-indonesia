@@ -978,7 +978,7 @@
       "datePickerEnd": "Pilih tanggal selesai",
       "refundOperator": "Akun Operasi",
       "refundModalReasonPlaceholder": "Masukkan alasan pengembalian dana...",
-      "confirmPayDesc": "Yakin pengguna telah menyelesaikan pembayaran offline?",
+      "confirmPayDesc": "Konfirmasi penyelesaian pembayaran ini?",
       "imagePreviewClose": "Ketuk di mana saja untuk menutup",
       "confirmRefundDesc": "Akhiri pesanan ini? Total pengembalian Rp{total}",
       "docDeleteDesc": "Yakin hapus dokumen ini? Tidak dapat dibatalkan setelah dihapus.",
