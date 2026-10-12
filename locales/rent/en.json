@@ -183,7 +183,6 @@
       "dialing": "Dialing…",
       "accountDeactivated": "Account deactivated",
       "accountStatusUpdated": "Account status updated",
-      "autoRenewedWallet": "Auto-renewed (wallet deduction Rp {amount})",
       "confirmPaySuccess": "Payment confirmed",
       "noHomePermission": "This account has no home permissions, please contact the admin",
       "nothingToCopy": "Nothing to copy",

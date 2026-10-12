@@ -183,7 +183,6 @@
       "dialing": "撥號中…",
       "accountDeactivated": "帳號已註銷",
       "accountStatusUpdated": "帳號狀態已更新",
-      "autoRenewedWallet": "已自動續租（錢包扣款 Rp {amount}）",
       "confirmPaySuccess": "確認付款成功",
       "noHomePermission": "當前帳號沒有首頁任何功能權限，請聯繫管理員開通",
       "nothingToCopy": "無內容可複製",
