@@ -894,8 +894,6 @@
       "unbindUser": "解绑用户",
       "unbindVehicleDesc": "确认将该车辆与当前用户解绑？解绑后该车辆将变为空闲，可重新绑定车辆",
       "unbindBatteryDesc": "确认将该电池与当前用户解绑？解绑后该电池将变为空闲，可重新绑定电池",
-      "selectBindVehicle": "请选择绑定车辆",
-      "selectBindBattery": "请选择绑定电池",
       "vehicleUnbound": "车辆已解绑",
       "batteryUnbound": "电池已解绑"
     },
@@ -1012,6 +1010,7 @@
       "ignoreHandled": "已现场处理",
       "orderId": "关联订单",
       "detail": "告警详情",
+      "list": "告警列表",
       "actionResolve": "标记已处理",
       "levelHigh": "高",
       "ignoreMistake": "误报",
@@ -1059,6 +1058,7 @@
       "rechargeConfigDeleteConfirm": "确定删除该充值配置？删除后不可恢复",
       "rechargeConfigEdit": "编辑充值配置",
       "rechargeConfig": "充值配置",
+      "rechargeConfigList": "充值配置列表",
       "rechargeConfigAddSuccess": "充值配置已新增成功",
       "giftExceedRefund": "赠送金额超出可退金额",
       "rechargeConfigDelete": "删除充值配置",
@@ -1132,6 +1132,10 @@
       "payment2c2p": "2C2P",
       "payStatus": "支付状态",
       "listPackage": "套餐订单列表",
+      "listRecharge": "充值订单列表",
+      "rechargeDetail": "充值订单详情",
+      "rechargeRefunds": "充值退款记录",
+      "typePackage": "套餐",
       "reportUnlost": "解除报失",
       "refundSource": "来源",
       "optional": "可选",
@@ -1145,6 +1149,7 @@
       "permViewOrderList": "查看订单列表",
       "group": {
         "veh": "车辆管理",
+        "ord": "车辆订单",
         "ordPkg": "套餐订单",
         "ordBatt": "电池订单"
       },
@@ -1173,6 +1178,7 @@
       "preRange": "请输入 1–365 之间的整数",
       "clickUpload": "点击上传",
       "moreOps": "更多操作",
+      "defaultStore": "默认门店",
       "renewalAutoDeduct": "续租费用从钱包自动扣除"
     },
     "battery": {
@@ -1206,6 +1212,7 @@
       "later": "稍后提醒",
       "latestVersionLabel": "最新版本",
       "suggestUpdate": "建议更新",
+      "updateDesc": "- 优化车辆定位精度\n- 新增版本检测功能\n- 修复已知问题",
       "forceUpdate": "强制更新",
       "updateAvailable": "版本更新"
     },
@@ -1258,6 +1265,9 @@
       "offline": "离线",
       "unlocked": "未锁",
       "pending": "待处理",
+      "processing": "处理中…",
+      "refunded": "已退款",
+      "normal": "正常",
       "ignored": "已忽略",
       "closed": "已关闭",
       "onShelf": "上架",

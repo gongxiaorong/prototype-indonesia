@@ -894,8 +894,6 @@
       "unbindUser": "解綁用戶",
       "unbindVehicleDesc": "確認將該車輛與當前用戶解綁？解綁後該車輛將變為空閒，可重新綁定車輛",
       "unbindBatteryDesc": "確認將該電池與當前用戶解綁？解綁後該電池將變為空閒，可重新綁定電池",
-      "selectBindVehicle": "請選擇綁定車輛",
-      "selectBindBattery": "請選擇綁定電池",
       "vehicleUnbound": "車輛已解綁",
       "batteryUnbound": "電池已解綁"
     },
@@ -1012,6 +1010,7 @@
       "ignoreHandled": "已現場處理",
       "orderId": "關聯訂單",
       "detail": "告警詳情",
+      "list": "告警列表",
       "actionResolve": "標記已處理",
       "levelHigh": "高",
       "ignoreMistake": "誤報",
@@ -1059,6 +1058,7 @@
       "rechargeConfigDeleteConfirm": "確定刪除此增值配置？刪除後不可恢復",
       "rechargeConfigEdit": "編輯增值配置",
       "rechargeConfig": "增值配置",
+      "rechargeConfigList": "增值配置列表",
       "rechargeConfigAddSuccess": "增值配置已新增成功",
       "giftExceedRefund": "贈送金額超出可退金額",
       "rechargeConfigDelete": "刪除增值配置",
@@ -1132,6 +1132,10 @@
       "payment2c2p": "2C2P",
       "payStatus": "付款狀態",
       "listPackage": "套餐訂單列表",
+      "listRecharge": "增值訂單列表",
+      "rechargeDetail": "增值訂單詳情",
+      "rechargeRefunds": "增值退款記錄",
+      "typePackage": "套餐",
       "reportUnlost": "解除報失",
       "refundSource": "來源",
       "optional": "可選",
@@ -1145,6 +1149,7 @@
       "permViewOrderList": "查看訂單列表",
       "group": {
         "veh": "車輛管理",
+        "ord": "車輛訂單",
         "ordPkg": "套餐訂單",
         "ordBatt": "電池訂單"
       },
@@ -1173,6 +1178,7 @@
       "preRange": "請輸入 1–365 之間的整數",
       "clickUpload": "點擊上傳",
       "moreOps": "更多操作",
+      "defaultStore": "預設門店",
       "renewalAutoDeduct": "續租費用從錢包自動扣除"
     },
     "battery": {
@@ -1206,6 +1212,7 @@
       "later": "稍後提醒",
       "latestVersionLabel": "最新版本",
       "suggestUpdate": "建議更新",
+      "updateDesc": "- 優化車輛定位精度\n- 新增版本檢測功能\n- 修復已知問題",
       "forceUpdate": "強制更新",
       "updateAvailable": "版本更新"
     },
@@ -1258,6 +1265,9 @@
       "offline": "離線",
       "unlocked": "已開鎖",
       "pending": "待處理",
+      "processing": "處理中…",
+      "refunded": "已退款",
+      "normal": "正常",
       "ignored": "已忽略",
       "closed": "已關閉",
       "onShelf": "上架",
