@@ -325,7 +325,8 @@
       "planMonth": "Monthly",
       "model": "Model",
       "other": "Other",
-      "settings": "Settings"
+      "settings": "Settings",
+      "tip": "Tip"
     },
     "action": {
       "cancel": "Cancel",
@@ -925,6 +926,8 @@
       "unbindUser": "Unbind user",
       "unbindVehicleDesc": "Unbind this vehicle from the current user? The vehicle will become idle and can be bound again.",
       "unbindBatteryDesc": "Unbind this battery from the current user? The battery will become idle and can be bound again.",
+      "selectBindVehicle": "Please select a vehicle to bind",
+      "selectBindBattery": "Please select a battery to bind",
       "vehicleUnbound": "Vehicle unbound",
       "batteryUnbound": "Battery unbound"
     },

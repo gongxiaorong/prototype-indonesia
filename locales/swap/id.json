@@ -1334,7 +1334,8 @@
       "planMonth": "Bulanan",
       "model": "Model",
       "other": "Lainnya",
-      "settings": "Pengaturan"
+      "settings": "Pengaturan",
+      "tip": "Petunjuk"
     },
     "action": {
       "cancel": "Batal",

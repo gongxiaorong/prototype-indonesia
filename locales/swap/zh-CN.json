@@ -1334,7 +1334,8 @@
       "planMonth": "月租",
       "model": "型号",
       "other": "其他",
-      "settings": "设置"
+      "settings": "设置",
+      "tip": "提示"
     },
     "action": {
       "cancel": "取消",

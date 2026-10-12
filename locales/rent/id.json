@@ -325,7 +325,8 @@
       "planMonth": "Bulanan",
       "model": "Model",
       "other": "Lainnya",
-      "settings": "Pengaturan"
+      "settings": "Pengaturan",
+      "tip": "Petunjuk"
     },
     "action": {
       "cancel": "Batal",
@@ -925,6 +926,8 @@
       "unbindUser": "Lepas ikatan pengguna",
       "unbindVehicleDesc": "Lepas ikatan kendaraan ini dari pengguna saat ini? Kendaraan akan menjadi idle dan dapat diikat kembali.",
       "unbindBatteryDesc": "Lepas ikatan baterai ini dari pengguna saat ini? Baterai akan menjadi idle dan dapat diikat kembali.",
+      "selectBindVehicle": "Pilih kendaraan yang akan diikat",
+      "selectBindBattery": "Pilih baterai yang akan diikat",
       "vehicleUnbound": "Kendaraan telah dilepas ikatannya",
       "batteryUnbound": "Baterai telah dilepas ikatannya"
     },
