@@ -183,7 +183,6 @@
       "dialing": "Memanggil…",
       "accountDeactivated": "Akun dinonaktifkan",
       "accountStatusUpdated": "Status akun diperbarui",
-      "autoRenewedWallet": "Diperpanjang otomatis (potong dompet Rp {amount})",
       "confirmPaySuccess": "Pembayaran dikonfirmasi",
       "noHomePermission": "Akun ini tidak memiliki izin beranda, hubungi admin",
       "nothingToCopy": "Tidak ada yang dapat disalin",
