@@ -658,6 +658,7 @@
       "confirmDeletePosition": "刪除職位",
       "platformPerms": "平台端權限",
       "packageImage": "套餐主圖",
+      "packageImageRequired": "請上傳套餐主圖",
       "passwordCopied": "密碼已複製",
       "csDeleted": "已刪除",
       "confirmReplace": "確認更換",

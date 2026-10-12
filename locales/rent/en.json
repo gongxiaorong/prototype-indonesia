@@ -658,6 +658,7 @@
       "confirmDeletePosition": "Delete Position",
       "platformPerms": "Platform Permissions",
       "packageImage": "Package Image",
+      "packageImageRequired": "Please upload a package image",
       "passwordCopied": "Password copied",
       "csDeleted": "Deleted",
       "confirmReplace": "Confirm Change",

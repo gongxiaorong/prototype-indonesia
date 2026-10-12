@@ -658,6 +658,7 @@
       "confirmDeletePosition": "Hapus Posisi",
       "platformPerms": "Izin Platform",
       "packageImage": "Gambar Paket",
+      "packageImageRequired": "Silakan unggah gambar paket",
       "passwordCopied": "Kata sandi telah disalin",
       "csDeleted": "Telah dihapus",
       "confirmReplace": "Konfirmasi Ganti",
