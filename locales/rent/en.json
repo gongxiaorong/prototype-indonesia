@@ -782,8 +782,6 @@
       "unbindUser": "Unbind user",
       "unbindVehicleDesc": "Unbind this vehicle from the current user? The vehicle will become idle and can be bound again.",
       "unbindBatteryDesc": "Unbind this battery from the current user? The battery will become idle and can be bound again.",
-      "selectBindVehicle": "Please select a vehicle to bind",
-      "selectBindBattery": "Please select a battery to bind",
       "vehicleUnbound": "Vehicle unbound",
       "batteryUnbound": "Battery unbound"
     },
@@ -900,6 +898,7 @@
       "ignoreHandled": "Handled On-site",
       "orderId": "Related Order",
       "detail": "Alert Details",
+      "list": "Alert List",
       "actionResolve": "Mark Resolved",
       "levelHigh": "High",
       "ignoreMistake": "False Alarm",
@@ -947,6 +946,7 @@
       "rechargeConfigDeleteConfirm": "Delete this top-up config? This cannot be undone",
       "rechargeConfigEdit": "Edit Top-up Config",
       "rechargeConfig": "Top-up Config",
+      "rechargeConfigList": "Top-up Config List",
       "rechargeConfigAddSuccess": "Top-up config added",
       "giftExceedRefund": "Bonus amount exceeds refundable amount",
       "rechargeConfigDelete": "Delete Top-up Config",
@@ -1020,6 +1020,10 @@
       "payment2c2p": "2C2P",
       "payStatus": "Payment Status",
       "listPackage": "Package Order List",
+      "listRecharge": "Top-up Order List",
+      "rechargeDetail": "Top-up Order Details",
+      "rechargeRefunds": "Top-up Refund Records",
+      "typePackage": "Package",
       "reportUnlost": "Clear Lost",
       "refundSource": "Source",
       "optional": "Optional",
@@ -1033,6 +1037,7 @@
       "permViewOrderList": "View Order List",
       "group": {
         "veh": "Vehicle management",
+        "ord": "Vehicle orders",
         "ordPkg": "Package orders",
         "ordBatt": "Battery orders"
       },
@@ -1061,6 +1066,7 @@
       "preRange": "Please enter an integer between 1 and 365",
       "clickUpload": "Tap to upload",
       "moreOps": "More Actions",
+      "defaultStore": "Default Store",
       "renewalAutoDeduct": "Renewal fee auto-deducted from wallet"
     },
     "battery": {
@@ -1094,6 +1100,7 @@
       "later": "Remind Me Later",
       "latestVersionLabel": "Latest Version",
       "suggestUpdate": "Suggest Update",
+      "updateDesc": "- Improved vehicle positioning accuracy\n- Added version detection\n- Fixed known issues",
       "forceUpdate": "Force Update",
       "updateAvailable": "Version Update"
     },
@@ -1146,6 +1153,9 @@
       "offline": "Offline",
       "unlocked": "Unlocked",
       "pending": "Pending",
+      "processing": "Processing…",
+      "refunded": "Refunded",
+      "normal": "Normal",
       "ignored": "Ignored",
       "closed": "Closed",
       "onShelf": "Listed",

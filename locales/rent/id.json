@@ -782,8 +782,6 @@
       "unbindUser": "Lepas ikatan pengguna",
       "unbindVehicleDesc": "Lepas ikatan kendaraan ini dari pengguna saat ini? Kendaraan akan menjadi idle dan dapat diikat kembali.",
       "unbindBatteryDesc": "Lepas ikatan baterai ini dari pengguna saat ini? Baterai akan menjadi idle dan dapat diikat kembali.",
-      "selectBindVehicle": "Pilih kendaraan yang akan diikat",
-      "selectBindBattery": "Pilih baterai yang akan diikat",
       "vehicleUnbound": "Kendaraan telah dilepas ikatannya",
       "batteryUnbound": "Baterai telah dilepas ikatannya"
     },
@@ -900,6 +898,7 @@
       "ignoreHandled": "Ditangani di Lokasi",
       "orderId": "Pesanan Terkait",
       "detail": "Detail Peringatan",
+      "list": "Daftar Peringatan",
       "actionResolve": "Tandai Selesai",
       "levelHigh": "Tinggi",
       "ignoreMistake": "Alarm Palsu",
@@ -947,6 +946,7 @@
       "rechargeConfigDeleteConfirm": "Hapus konfigurasi top up ini? Tindakan ini tidak dapat dibatalkan",
       "rechargeConfigEdit": "Ubah Konfigurasi Top Up",
       "rechargeConfig": "Konfigurasi Top Up",
+      "rechargeConfigList": "Daftar Konfigurasi Top Up",
       "rechargeConfigAddSuccess": "Konfigurasi top up berhasil ditambahkan",
       "giftExceedRefund": "Jumlah bonus melebihi jumlah yang dapat dikembalikan",
       "rechargeConfigDelete": "Hapus Konfigurasi Top Up",
@@ -1020,6 +1020,10 @@
       "payment2c2p": "2C2P",
       "payStatus": "Status Pembayaran",
       "listPackage": "Daftar Pesanan Paket",
+      "listRecharge": "Daftar Pesanan Top Up",
+      "rechargeDetail": "Detail Pesanan Top Up",
+      "rechargeRefunds": "Riwayat Pengembalian Dana Top Up",
+      "typePackage": "Paket",
       "reportUnlost": "Batalkan Laporan Hilang",
       "refundSource": "Sumber",
       "optional": "Opsional",
@@ -1033,6 +1037,7 @@
       "permViewOrderList": "Lihat Daftar Pesanan",
       "group": {
         "veh": "Manajemen kendaraan",
+        "ord": "Pesanan kendaraan",
         "ordPkg": "Pesanan paket",
         "ordBatt": "Pesanan baterai"
       },
@@ -1061,6 +1066,7 @@
       "preRange": "Masukkan bilangan bulat antara 1 dan 365",
       "clickUpload": "Ketuk untuk unggah",
       "moreOps": "Aksi Lainnya",
+      "defaultStore": "Toko Default",
       "renewalAutoDeduct": "Biaya perpanjangan dipotong otomatis dari dompet"
     },
     "battery": {
@@ -1094,6 +1100,7 @@
       "later": "Ingatkan Nanti",
       "latestVersionLabel": "Versi Terbaru",
       "suggestUpdate": "Saran Pembaruan",
+      "updateDesc": "- Meningkatkan akurasi posisi kendaraan\n- Menambahkan deteksi versi\n- Memperbaiki masalah yang diketahui",
       "forceUpdate": "Pembaruan Paksa",
       "updateAvailable": "Pembaruan Versi"
     },
@@ -1146,6 +1153,9 @@
       "offline": "Offline",
       "unlocked": "Kunci Terbuka",
       "pending": "Menunggu",
+      "processing": "Diproses…",
+      "refunded": "Dana Dikembalikan",
+      "normal": "Normal",
       "ignored": "Diabaikan",
       "closed": "Ditutup",
       "onShelf": "Dipublikasikan",
