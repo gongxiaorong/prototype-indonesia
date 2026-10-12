@@ -1333,7 +1333,8 @@
       "planMonth": "Monthly",
       "model": "Model",
       "other": "Other",
-      "settings": "Settings"
+      "settings": "Settings",
+      "tip": "Tip"
     },
     "action": {
       "cancel": "Cancel",
