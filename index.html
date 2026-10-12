@@ -4524,15 +4524,15 @@ body.host-single-m #root-user{display:none}
 <template v-if="psTab==='rent'">
 <div v-if="psRentDiff" class="text-[12px] mb-2" :style="psRentDiff.cls">{{ psRentDiff.text }}</div>
 <div>
-<form-field v-if="psActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray">
+<form-field v-if="psActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray" :error="psRentErr">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psRent2c2p" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
-<form-field v-if="psActiveChannel==='WALLET'" label="钱包" box-class="ff-box-gray">
+<form-field v-if="psActiveChannel==='WALLET'" label="钱包" box-class="ff-box-gray" :error="psRentErr">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psRentWallet" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
-<form-field v-if="psActiveChannel==='OFFLINE'" label="线下支付" box-class="ff-box-gray">
+<form-field v-if="psActiveChannel==='OFFLINE'" label="线下支付" box-class="ff-box-gray" :error="psRentErr">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psRentOffline" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
@@ -4541,15 +4541,15 @@ body.host-single-m #root-user{display:none}
 <template v-else>
 <div v-if="psDepDiff" class="text-[12px] mb-2" :style="psDepDiff.cls">{{ psDepDiff.text }}</div>
 <div>
-<form-field v-if="psActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray">
+<form-field v-if="psActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray" :error="psDepErr">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psDep2c2p" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
-<form-field v-if="psActiveChannel==='WALLET'" label="钱包" box-class="ff-box-gray">
+<form-field v-if="psActiveChannel==='WALLET'" label="钱包" box-class="ff-box-gray" :error="psDepErr">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psDepWallet" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
-<form-field v-if="psActiveChannel==='OFFLINE'" label="线下支付" box-class="ff-box-gray">
+<form-field v-if="psActiveChannel==='OFFLINE'" label="线下支付" box-class="ff-box-gray" :error="psDepErr">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psDepOffline" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
@@ -5464,16 +5464,18 @@ body.host-single-m #root-user{display:none}
       <div class="form-row">
        <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
         <span>到期前</span>
-        <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceDays" type="number" min="0" max="30" :disabled="!cfg.renewAuto" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
+        <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceDays" type="number" min="0" max="30" :disabled="!cfg.renewAuto" @input="cfgErr.renewAdvanceDays=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
         <span>天自动续租</span>
        </div>
+       <div v-if="cfgErr.renewAdvanceDays" class="form-hint text-[#DC2626]">{{ cfgErr.renewAdvanceDays }}</div>
       </div>
       <div class="form-row">
        <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
         <span>连续扣款失败</span>
-        <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewFailThreshold" type="number" min="1" max="10" :disabled="!cfg.renewAuto" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
+        <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewFailThreshold" type="number" min="0" max="10" :disabled="!cfg.renewAuto" @input="cfgErr.renewFailThreshold=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
         <span>次后关闭订单自动续租</span>
        </div>
+       <div v-if="cfgErr.renewFailThreshold" class="form-hint text-[#DC2626]">{{ cfgErr.renewFailThreshold }}</div>
       </div>
      </div>
     </template>
@@ -8379,6 +8381,7 @@ function openPaySplit(row){
   showPaySplit.value=true;
 }
 function submitPaySplit(){
+  if(!psValid.value)return;
   var o=do_.value,t=psTarget.value;
   var rentSplit=buildSplit(psRent2c2p.value,psRentWallet.value,psRentOffline.value);
   var depositSplit=buildSplit(psDep2c2p.value,psDepWallet.value,psDepOffline.value);
@@ -8422,10 +8425,15 @@ var psRentPart=computed(function(){ return psRentBase() });
 var psDepPart=computed(function(){ return psDepBase() });
 var psRentSum=computed(function(){ return psRound(psRent2c2p.value+psRentWallet.value+psRentOffline.value) });
 var psDepSum=computed(function(){ return psRound(psDep2c2p.value+psDepWallet.value+psDepOffline.value) });
-// 改价：各渠道合计即新金额，允许整部分清零（不做最小合理性校验，故 Valid 恒 true）
-var psRentValid=computed(function(){ return true });
-var psDepValid=computed(function(){ return true });
-var psValid=computed(function(){ return true });
+// 改价：各渠道合计即新金额，金额允许为 0（整部分清零合法），但不能为空
+function psBlank(v){ return v===''||v==null||(typeof v==='number'&&isNaN(v)) }
+var psRentInput=computed(function(){ return psActiveChannel.value==='WALLET'?psRentWallet:psActiveChannel.value==='OFFLINE'?psRentOffline:psRent2c2p });
+var psDepInput=computed(function(){ return psActiveChannel.value==='WALLET'?psDepWallet:psActiveChannel.value==='OFFLINE'?psDepOffline:psDep2c2p });
+var psRentValid=computed(function(){ return !psBlank(psRentInput.value.value) });
+var psDepValid=computed(function(){ return !psBlank(psDepInput.value.value) });
+var psRentErr=computed(function(){ return psRentValid.value?'':'请输入改价金额' });
+var psDepErr=computed(function(){ return psDepValid.value?'':'请输入改价金额' });
+var psValid=computed(function(){ return psRentValid.value&&psDepValid.value });
 // 实时增减提示（info=增加 / warning=减少 / 等于原值不提示）
 var psRentDiff=computed(function(){
   if(psRentPart.value<=0||psRentSum.value<=0) return null;
@@ -9144,7 +9152,7 @@ function closeUBind(){uBindMod.value=null;uBindSel.value=null;uBindQ.value=''}
 function confirmUBind(){
   if(!can('user.bind')){deny();return}
   var sel=uBindSel.value;
-  if(!sel){toast('请先选择'+(uBindIsBatt.value?'电池':'车辆'),'warn');return}
+  if(!sel){toast(uBindIsBatt.value?'请选择绑定电池':'请选择绑定车辆','warn');return}
   if(uBindIsBatt.value){
     uBatteries.value=[...uBatteries.value,{code:sel.no,model:sel.title,soc:parseFloat(sel.meta)||0,status:'占用中',_manual:true}];var _mb2=batteries.value.find(function(b){return b.battNo===sel.no});if(_mb2){_mb2.status='占用中'}
   }else{
@@ -9222,11 +9230,11 @@ function onHmWheelScroll(kind,e){
 }
 let delCsI=-1;function delCs(i){if(!can('cs_info.delete')){deny();return}delCsI=i;profileMod.value='delCs'}
 
-var cfgSaving=ref(false);const cfgErr=ref({pre:'',breach:''});
+var cfgSaving=ref(false);const cfgErr=ref({pre:'',breach:'',renewAdvanceDays:'',renewFailThreshold:''});
 const renewTypeOpts=[{v:'VEHICLE',l:'车辆租赁'},{v:'BATTERY',l:'电池租赁'},{v:'PACKAGE',l:'车电套餐'}];
 const renewStatusOpts=[{v:'IN_USE',l:'进行中'},{v:'TO_RETURN',l:'待归还'},{v:'OVERDUE',l:'已超期'},{v:'BREACH',l:'已违约'}];
 function toggleCfgArr(k,v){var a=cfg.value[k];var i=a.indexOf(v);if(i>=0)a.splice(i,1);else a.push(v);}
-function saveCfg(){if(!can('order_config.edit')){deny();return}if(cfgSaving.value)return;var e={};if(!Number.isInteger(cfg.value.pre)||cfg.value.pre<1||cfg.value.pre>365)e.pre='请输入 1–365 之间的整数';if(!Number.isInteger(cfg.value.breach)||cfg.value.breach<1||cfg.value.breach>365)e.breach='请输入 1–365 之间的整数';cfgErr.value=e;if(e.pre||e.breach)return;if(cfg.value.renewAuto&&!cfg.value.renewTypes.length){toast('请至少选择一种自动续租订单类型','warn');return}if(cfg.value.renewEnabled&&!cfg.value.renewStatuses.length){toast('请至少选择一种允许续租的订单状态','warn');return}cfgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('配置已保存','success');cfgSaving.value=false},400)}
+function saveCfg(){if(!can('order_config.edit')){deny();return}if(cfgSaving.value)return;var e={};if(!Number.isInteger(cfg.value.pre)||cfg.value.pre<1||cfg.value.pre>365)e.pre='请输入 1–365 之间的整数';if(!Number.isInteger(cfg.value.breach)||cfg.value.breach<1||cfg.value.breach>365)e.breach='请输入 1–365 之间的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceDays)||cfg.value.renewAdvanceDays<0||cfg.value.renewAdvanceDays>30))e.renewAdvanceDays='请输入0-30的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewFailThreshold)||cfg.value.renewFailThreshold<0||cfg.value.renewFailThreshold>10))e.renewFailThreshold='请输入0-10的整数';cfgErr.value=e;if(e.pre||e.breach||e.renewAdvanceDays||e.renewFailThreshold)return;if(cfg.value.renewAuto&&!cfg.value.renewTypes.length){toast('请至少选择一种自动续租订单类型','warn');return}if(cfg.value.renewEnabled&&!cfg.value.renewStatuses.length){toast('请至少选择一种允许续租的订单状态','warn');return}cfgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('配置已保存','success');cfgSaving.value=false},400)}
 /* ══ 充值配置 ══ */
 
 
@@ -9501,7 +9509,7 @@ refundMode,rTab,rReason,rRent2c2p,rRentWallet,rRentOffline,rDep2c2p,rDepWallet,r
 sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDetail,goBatteryDetail,ordersDoSearch,ordersDoPrimary,ordersDoDanger,ordersConfirmMod,orderPerm,
  openRefund,refundChClamp,refundChBlur,submitRefund,refundSaving,
   autoRenew,toggleAutoRenew,dHasRealName,demoSetRealName,demoRenewScenes,demoRenewSceneK,demoRenewSceneKey,demoSetRenewScene,openRefundRecords,curRefunds,refundStLabel,refundStg,refundSourceLabel,rentItems,depositItems,refundRecordsOpenable,refRecOpen,
-  depositOf,chLabel,rentPlanText,rentEndOf,psAllocText,buildSplit,showPaySplit,psTab,showMoreActions,psConfirmMod,psDoSubmit,psRent2c2p,psRentWallet,psRentOffline,psDep2c2p,psDepWallet,psDepOffline,psReason,applySplit,openPaySplit,submitPaySplit,psRentPart,psDepPart,psRentSum,psDepSum,psRentValid,psDepValid,psValid,psRentDiff,psDepDiff,canPriceOperate,psActiveChannel,splitPartView,splitPartText,
+  depositOf,chLabel,rentPlanText,rentEndOf,psAllocText,buildSplit,showPaySplit,psTab,showMoreActions,psConfirmMod,psDoSubmit,psRent2c2p,psRentWallet,psRentOffline,psDep2c2p,psDepWallet,psDepOffline,psReason,applySplit,openPaySplit,submitPaySplit,psRentPart,psDepPart,psRentSum,psDepSum,psRentValid,psDepValid,psValid,psRentErr,psDepErr,psRentDiff,psDepDiff,canPriceOperate,psActiveChannel,splitPartView,splitPartText,
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,navOpen,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
