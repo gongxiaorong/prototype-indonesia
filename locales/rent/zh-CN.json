@@ -325,7 +325,8 @@
       "planMonth": "月租",
       "model": "型号",
       "other": "其他",
-      "settings": "设置"
+      "settings": "设置",
+      "tip": "提示"
     },
     "action": {
       "cancel": "取消",
@@ -894,6 +895,8 @@
       "unbindUser": "解绑用户",
       "unbindVehicleDesc": "确认将该车辆与当前用户解绑？解绑后该车辆将变为空闲，可重新绑定车辆",
       "unbindBatteryDesc": "确认将该电池与当前用户解绑？解绑后该电池将变为空闲，可重新绑定电池",
+      "selectBindVehicle": "请选择绑定车辆",
+      "selectBindBattery": "请选择绑定电池",
       "vehicleUnbound": "车辆已解绑",
       "batteryUnbound": "电池已解绑"
     },
