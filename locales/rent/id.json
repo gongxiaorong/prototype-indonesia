@@ -746,6 +746,8 @@
       "cancelConfirm": "Batalkan perpanjangan ini? Tindakan ini tidak dapat dibatalkan",
       "order": "Pesanan Perpanjangan",
       "failClose": "Nonaktifkan perpanjangan otomatis setelah {n} kali penagihan gagal berturut-turut",
+      "advanceRange": "Masukkan bilangan bulat antara 0 dan 30",
+      "failRange": "Masukkan bilangan bulat antara 0 dan 10",
       "allowManual": "Izinkan Perpanjangan Manual",
       "breachDays": "{n} hari pesanan terlambat, status berubah menjadi 「Pelanggaran」",
       "needOrderStatus": "Pilih minimal satu status pesanan yang boleh diperpanjang",
@@ -891,6 +893,8 @@
       "unbindUser": "Lepas ikatan pengguna",
       "unbindVehicleDesc": "Lepas ikatan kendaraan ini dari pengguna saat ini? Kendaraan akan menjadi idle dan dapat diikat kembali.",
       "unbindBatteryDesc": "Lepas ikatan baterai ini dari pengguna saat ini? Baterai akan menjadi idle dan dapat diikat kembali.",
+      "selectBindVehicle": "Pilih kendaraan yang akan diikat",
+      "selectBindBattery": "Pilih baterai yang akan diikat",
       "vehicleUnbound": "Kendaraan telah dilepas ikatannya",
       "batteryUnbound": "Baterai telah dilepas ikatannya"
     },
@@ -1172,6 +1176,7 @@
     },
     "battery": {
       "dischargeAllow": "Setelah diizinkan, perangkat dapat melepas muatan secara normal",
+      "control": "Kontrol Baterai",
       "list": "Daftar Baterai",
       "noLocationListOnly": "{n} baterai tanpa lokasi, hanya terlihat di daftar",
       "lostUnlockHint": "Baterai akan dibuka kuncinya setelah laporan kehilangan dibatalkan",
@@ -1217,6 +1222,7 @@
     "price": {
       "confirmDesc": "Sewa awal {rent}, deposit awal {deposit}; setelah perubahan sewa {newRent}, deposit {newDeposit}, dibagi sesuai kanal yang diisi.",
       "record": "Riwayat Ubah Harga",
+      "amountRequired": "Masukkan jumlah harga yang diubah",
       "title": "Ubah Harga",
       "channelHint": "Total seluruh kanal merupakan sewa/deposit setelah penyesuaian, dan akan dibagi per kanal setelah konfirmasi.",
       "diffDecrease": "Sewa awal {old}, total kanal {sum}, saat ini berkurang {diff}",
@@ -1241,7 +1247,8 @@
       "list": "Daftar akun"
     },
     "order_config": {
-      "edit": "Ubah konfigurasi"
+      "edit": "Ubah konfigurasi",
+      "statusFlow": "Alur Status Pesanan"
     },
     "status": {
       "completed": "Selesai",

@@ -746,6 +746,8 @@
       "cancelConfirm": "Cancel this renewal? This cannot be undone",
       "order": "Renewal Order",
       "failClose": "Disable auto renewal after {n} consecutive failed charges",
+      "advanceRange": "Please enter an integer between 0 and 30",
+      "failRange": "Please enter an integer between 0 and 10",
       "allowManual": "Allow Manual Renewal",
       "breachDays": "{n} days after order overdue, status changes to 「Breached」",
       "needOrderStatus": "Select at least one order status allowed to renew",
@@ -891,6 +893,8 @@
       "unbindUser": "Unbind user",
       "unbindVehicleDesc": "Unbind this vehicle from the current user? The vehicle will become idle and can be bound again.",
       "unbindBatteryDesc": "Unbind this battery from the current user? The battery will become idle and can be bound again.",
+      "selectBindVehicle": "Please select a vehicle to bind",
+      "selectBindBattery": "Please select a battery to bind",
       "vehicleUnbound": "Vehicle unbound",
       "batteryUnbound": "Battery unbound"
     },
@@ -1172,6 +1176,7 @@
     },
     "battery": {
       "dischargeAllow": "After enabling, the device can discharge normally",
+      "control": "Battery Control",
       "list": "Battery List",
       "noLocationListOnly": "{n} batteries without location, visible in list only",
       "lostUnlockHint": "The battery will be unlocked once the lost report is cleared",
@@ -1217,6 +1222,7 @@
     "price": {
       "confirmDesc": "Original rent {rent}, original deposit {deposit}; after adjustment rent {newRent}, deposit {newDeposit}, split by the entered channels.",
       "record": "Price Adjustment Records",
+      "amountRequired": "Please enter the adjusted amount",
       "title": "Adjust Price",
       "channelHint": "The total across all channels is the adjusted rent/deposit, and will be split by channel after confirmation.",
       "diffDecrease": "Original rent {old}, channel total {sum}, current decrease {diff}",
@@ -1241,7 +1247,8 @@
       "list": "Account list"
     },
     "order_config": {
-      "edit": "Edit configuration"
+      "edit": "Edit configuration",
+      "statusFlow": "Order Status Flow"
     },
     "status": {
       "completed": "Completed",

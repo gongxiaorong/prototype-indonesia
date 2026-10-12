@@ -746,6 +746,8 @@
       "cancelConfirm": "确定取消该续租？取消后不可恢复",
       "order": "续租单",
       "failClose": "连续扣款失败 {n} 次后关闭订单自动续租",
+      "advanceRange": "请输入0-30的整数",
+      "failRange": "请输入0-10的整数",
       "allowManual": "允许手动续租",
       "breachDays": "订单超期 {n} 天，自动变更为「已违约」状态",
       "needOrderStatus": "请至少选择一种允许续租的订单状态",
@@ -891,6 +893,8 @@
       "unbindUser": "解绑用户",
       "unbindVehicleDesc": "确认将该车辆与当前用户解绑？解绑后该车辆将变为空闲，可重新绑定车辆",
       "unbindBatteryDesc": "确认将该电池与当前用户解绑？解绑后该电池将变为空闲，可重新绑定电池",
+      "selectBindVehicle": "请选择绑定车辆",
+      "selectBindBattery": "请选择绑定电池",
       "vehicleUnbound": "车辆已解绑",
       "batteryUnbound": "电池已解绑"
     },
@@ -1172,6 +1176,7 @@
     },
     "battery": {
       "dischargeAllow": "允许后设备可正常放电",
+      "control": "电池控制",
       "list": "电池列表",
       "noLocationListOnly": "{n}块无定位，仅列表可见",
       "lostUnlockHint": "解除报失后电池将被解锁，恢复放电",
@@ -1217,6 +1222,7 @@
     "price": {
       "confirmDesc": "原租金 {rent}、原押金 {deposit}；改价后租金 {newRent}、押金 {newDeposit}，并按填写渠道拆分入账。",
       "record": "改价记录",
+      "amountRequired": "请输入改价金额",
       "title": "改价",
       "channelHint": "各渠道金额合计即为调整后的租金/押金，确认后按渠道拆分入账。",
       "diffDecrease": "原租金 {old}，各渠道合计 {sum}，当前减少 {diff}",
@@ -1241,7 +1247,8 @@
       "list": "账号列表"
     },
     "order_config": {
-      "edit": "编辑配置"
+      "edit": "编辑配置",
+      "statusFlow": "订单状态流转"
     },
     "status": {
       "completed": "已完成",
