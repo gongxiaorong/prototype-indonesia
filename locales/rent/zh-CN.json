@@ -183,7 +183,6 @@
       "dialing": "拨号中…",
       "accountDeactivated": "账号已注销",
       "accountStatusUpdated": "账号状态已更新",
-      "autoRenewedWallet": "已自动续租（钱包扣款 Rp {amount}）",
       "confirmPaySuccess": "确认支付成功",
       "noHomePermission": "当前账号没有首页任何功能权限，请联系管理员开通",
       "nothingToCopy": "无内容可复制",
