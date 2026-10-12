@@ -4453,7 +4453,6 @@ body.host-single-m #root-user{display:none}
 <div v-if="refundMode==='return'" class="flex mx-5 mb-3 shrink-0 rounded-full p-0.5 relative" style="background:#F6F7F9;border:1px solid #E5E5E5"><div class="flex-1 py-2 rounded-full text-[13px] font-medium text-center select-none" style="background:#fff;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.06)">押金</div></div>
 <div class="sheet-body px-5" style="max-height:52vh">
 <template v-if="refundMode!=='return'&&rTab==='rent'">
-<div>
 <form-field v-if="rActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray" :hint="'可退 '+fmtRp(refundRentCapCh['2C2P'],2)">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="rRent2c2p" type="number" min="0" :max="refundRentCapCh['2C2P']" class="flex-1 px-2 py-3.5 text-[16px] font-medium" @input="refundChClamp(rRent2c2p,refundRentCapCh['2C2P'])" @blur="refundChBlur(rRent2c2p,refundRentCapCh['2C2P'])">
@@ -4466,10 +4465,8 @@ body.host-single-m #root-user{display:none}
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="rRentOffline" type="number" min="0" :max="refundRentCapCh['OFFLINE']" class="flex-1 px-2 py-3.5 text-[16px] font-medium" @input="refundChClamp(rRentOffline,refundRentCapCh['OFFLINE'])" @blur="refundChBlur(rRentOffline,refundRentCapCh['OFFLINE'])">
 </form-field>
-</div>
 </template>
 <template v-else>
-<div>
 <form-field v-if="rActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray" :hint="'可退 '+fmtRp(refundDepCapCh['2C2P'],2)">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="rDep2c2p" type="number" min="0" :max="refundDepCapCh['2C2P']" class="flex-1 px-2 py-3.5 text-[16px] font-medium" @input="refundChClamp(rDep2c2p,refundDepCapCh['2C2P'])" @blur="refundChBlur(rDep2c2p,refundDepCapCh['2C2P'])">
@@ -4482,7 +4479,6 @@ body.host-single-m #root-user{display:none}
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="rDepOffline" type="number" min="0" :max="refundDepCapCh['OFFLINE']" class="flex-1 px-2 py-3.5 text-[16px] font-medium" @input="refundChClamp(rDepOffline,refundDepCapCh['OFFLINE'])">
 </form-field>
-</div>
 </template>
 <form-field label="退款原因" box-class="ff-box-gray is-area" :counter="(rReason||'').length" counter-max="255">
 <textarea v-model="rReason" maxlength="255" placeholder="请输入退款原因" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px]" style="font-family:inherit"></textarea>
@@ -4523,7 +4519,6 @@ body.host-single-m #root-user{display:none}
 <!-- 租金 -->
 <template v-if="psTab==='rent'">
 <div v-if="psRentDiff" class="text-[12px] mb-2" :style="psRentDiff.cls">{{ psRentDiff.text }}</div>
-<div>
 <form-field v-if="psActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray" :error="psRentErr">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psRent2c2p" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
@@ -4536,11 +4531,9 @@ body.host-single-m #root-user{display:none}
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psRentOffline" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
-</div>
 </template>
 <template v-else>
 <div v-if="psDepDiff" class="text-[12px] mb-2" :style="psDepDiff.cls">{{ psDepDiff.text }}</div>
-<div>
 <form-field v-if="psActiveChannel==='2C2P'" label="2C2P" box-class="ff-box-gray" :error="psDepErr">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psDep2c2p" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
@@ -4553,7 +4546,6 @@ body.host-single-m #root-user{display:none}
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="psDepOffline" type="number" min="0" step="1" class="flex-1 px-2 py-3.5 text-[16px] font-medium">
 </form-field>
-</div>
 </template>
 <form-field label="备注" box-class="ff-box-gray is-area" :counter="(psReason||'').length" counter-max="255">
 <textarea v-model="psReason" maxlength="255" placeholder="请输入备注..." class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[80px]" style="font-family:inherit"></textarea>
