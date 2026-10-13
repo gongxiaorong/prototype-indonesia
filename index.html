@@ -1890,24 +1890,15 @@ body.host-single-m #root-user{display:none}
 <div class="text-[15px] font-semibold text-[#333] mb-1.5" data-page-node-id="QjnQO0yEed2q2dte4kX4JG">暂无订单</div>
 </div>
 <template v-for="o in currentOrderList" :key="o.id" data-page-node-id="gcac8d3fMicxTKoqpdKGeh">
-<div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openOrderDetailFromList(o)" data-page-node-id="0uZRAFYAVxEYBY7YIjTtN5">
-<div class="flex items-center justify-between mb-2" data-page-node-id="kBu7BAmfTmMAHI3sL7KBrl">
-<span class="text-[13px] font-semibold text-[#333] truncate pr-2" data-page-node-id="TCeMERbNqv8UaHnFL8jpMW">{{ o.store }}</span>
-<span class="text-[14px] font-semibold" :style="'color:'+(o.statusColor||'#999')" data-page-node-id="y3hIQULE3NAhuAUvlKOm2Y">{{ o.statusText }}</span>
-</div>
-<div class="flex gap-3 mb-2" data-page-node-id="bE8hfDH4kUwiIAfQydnczm">
-<div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0" style="background:#F6F7F9" data-page-node-id="aBH1leFor82YkaFN3UgdA3"><span v-html="luci('bike','w-8 h-8 text-[#666]')" data-page-node-id="C5IGqBFeADDKaetwrvlHWv"></span></div>
-<div class="flex-1 min-w-0" data-page-node-id="gy61u8foTtwW5DfhRnQP1Y">
-<div class="text-[14px] font-medium text-[#1A1A1A] truncate" data-page-node-id="hZZs1mSDIH4yg3vjvA3KZM">{{ o.model }}</div>
-<div class="text-[12px] text-[#999] mt-0.5 flex gap-1" data-page-node-id="J0PRvgiN4eirjbojTVt4Yv"><span class="text-[#bbb]" data-page-node-id="f169wA4sAkvJJgVoru24Rx">订单编号:</span><span class="truncate" data-page-node-id="qjAsFy746FLFvztW5qGVjs">{{ o.id }}</span></div>
-                    <div class="text-[12px] text-[#999] mt-0.5 flex gap-1" data-page-node-id="uLo4t51OUTST1PZ4iCyhLw"><span class="text-[#bbb]" data-page-node-id="mRZtbxQ9GZug46oAi4wUbh">创建时间:</span><span class="truncate" data-page-node-id="q6zeOlnHNIHsjv42q5bSCk">{{ o.created }}</span></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-2" style="border-top:1px solid #F0F0F0" data-page-node-id="kwFpXrIPZlwwnBjlvbFGuY">
-<span class="text-[12px] text-[#999]" data-page-node-id="gUZWxwzd71epFDEHHkavym">{{ o.plan }}</span>
-<span class="text-[15px] font-semibold shrink-0" style="color:#FF6A00" data-page-node-id="9wFurF9tc3yaGNjC5Bu1HA">{{ o.amount }}</span>
-</div>
-</div>
+<kv-card :title="o.id" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" label-width="5rem" data-cp @click="openOrderDetailFromList(o)" data-page-node-id="0uZRAFYAVxEYBY7YIjTtN5">
+<template #extra><span class="text-[13px]" :style="'color:'+(o.statusColor||'#999')" data-page-node-id="y3hIQULE3NAhuAUvlKOm2Y">{{ o.statusText }}</span></template>
+<kv-row label="所属门店" :value="o.store||'-'" data-page-node-id="TCeMERbNqv8UaHnFL8jpMW"></kv-row>
+<kv-row :label="o.type==='battery'?'电池型号':(o.type==='package'?'套餐名称':'车型')" :value="o.model||'-'" data-page-node-id="hZZs1mSDIH4yg3vjvA3KZM"></kv-row>
+<kv-row label="租赁时间" align="top" label-class="leading-[1.5]" value-class="leading-[1.5] whitespace-normal break-words"><template #value><span v-html="((o.rentStart||'-')+' ~ '+(o.rentEnd||'-')).replace(' ~ ','<br>')"></span></template></kv-row>
+<kv-row label="已付金额" :value="o.amount||'-'" data-page-node-id="9wFurF9tc3yaGNjC5Bu1HA"></kv-row>
+<kv-row label="待付金额" :value="o.unpaid||'-'"></kv-row>
+<kv-row label="创建时间" :value="o.created||'-'" data-page-node-id="q6zeOlnHNIHsjv42q5bSCk"></kv-row>
+</kv-card>
 </template>
 </div>
 </page>
@@ -2789,16 +2780,15 @@ body.host-single-m #root-user{display:none}
 <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" style="background:#F0F0F0" data-page-node-id="4YxbwVbgcgeKGCbcAxunle"><span v-html="luci('credit-card','w-8 h-8 text-[#BBB]')" data-page-node-id="QRGdC837q89B6Ku5poAEcF"></span></div>
 <div class="text-[15px] font-semibold text-[#333] mb-1.5" data-page-node-id="cJ6cu2YPJpY8rRSdmmL3er">暂无订单</div>
 </div>
-<template v-for="(o,i) in currentRechargeList" :key="o.orderNo">
-<div data-cp @click="openRechargeOrderFromList(o)" :data-od-id="'recharge-order-item-'+i">
-<kv-card label-width="6rem" class="mb-3">
-<template #title>{{ o.orderNo }}</template>
-<template #extra><span class="font-medium shrink-0" :style="{color:rechargeStatusTag(o.payStatus).color}">{{ rechargeStatusTag(o.payStatus).text }}</span></template>
-<kv-row label="充值金额" :value="fmtRp(o.amount)"></kv-row>
-<kv-row v-if="o.giftAmount" label="赠送金额" :value="fmtRp(o.giftAmount)"></kv-row>
-<kv-row label="创建时间" :value="o.createTime"></kv-row>
+<template v-for="o in currentRechargeList" :key="o.orderNo" data-page-node-id="Mbl0DMDdGLyRHhhJEWscEx">
+<kv-card :title="o.orderNo" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" label-width="5rem" data-cp @click="openRechargeOrderFromList(o)" data-page-node-id="cxVUFNN1TlaHfKO5SWO2le">
+<template #extra><span class="text-[13px]" :style="{color:rechargeStatusTag(o.payStatus).color}" data-page-node-id="GujuqiijIR10E4Cu3g5Bbj">{{ rechargeStatusTag(o.payStatus).text }}</span></template>
+<kv-row label="所属门店" :value="o.storeName||'-'"></kv-row>
+<kv-row label="充值金额" :value="fmtRp(o.amount)" data-page-node-id="HxMZCNsMHLEw39jVyk6XkD"></kv-row>
+<kv-row v-if="o.giftAmount" label="赠送金额" :value="fmtRp(o.giftAmount)" data-page-node-id="tNsN2Eyhivev9kDvntzJRh"></kv-row>
+<kv-row label="支付渠道" :value="rechargeChannelText(o.payChannel)" data-page-node-id="1fk9GDjb0YU34UqrhWHDDE"></kv-row>
+<kv-row label="创建时间" :value="o.createTime" data-page-node-id="3U0fcQXHWRLMApVh3j2QZK"></kv-row>
 </kv-card>
-</div>
 </template>
 </div>
 </page>
@@ -2813,6 +2803,7 @@ body.host-single-m #root-user{display:none}
 <kv-card title="基础信息" class="mb-3" label-width="5rem" data-od-id="ro-basic" data-page-node-id="PeVEKKgHtSjAHQS0r5rfGU">
 <template #extra><span class="font-medium shrink-0" :style="{color:rechargeStatusTag(rechargeOrder.payStatus).color}" data-page-node-id="oMBmfHBiMBFVDJbZNs3yrB">{{ rechargeStatusTag(rechargeOrder.payStatus).text }}</span></template>
 <kv-row label="订单编号" :value="rechargeOrder.orderNo || '-'"></kv-row>
+<kv-row label="所属门店" :value="rechargeOrder.storeName || '-'"></kv-row>
 <kv-row label="创建时间" :value="rechargeOrder.createTime || '-'"></kv-row>
 <kv-row label="支付渠道" :value="rechargeChannelText(rechargeOrder.payChannel)"></kv-row>
 <kv-row v-if="['PAID','REFUNDING','PARTIAL_REFUND','FULL_REFUND'].includes(rechargeOrder.payStatus)" label="支付时间" :value="rechargeOrder.payTime"></kv-row>
@@ -4083,18 +4074,16 @@ body.host-single-m #root-user{display:none}
 <div class="ptr-indicator" id="ptr-ord"><span class="ptr-text">下拉刷新</span></div>
 <div id="sc-ord" @vue:mounted="()=>initPullToRefresh('sc-ord','ptr-ord',refreshOrd)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
 <template v-if="oFiltered.length">
-<div v-for="(o,i) in oFiltered" :key="o.id" data-cp @click="ordersOpenDetail(o)" class="bg-white rounded-2xl p-4 mb-3 cursor-pointer active:bg-[#F6F7F9]" :style="{border:'1px solid #E5E5E5',boxShadow:'0 1px 3px rgba(0,0,0,.04)',transitionDelay:i*50+'ms'}">
-<div class="flex items-center justify-between mb-2"><span class="text-[13px] font-semibold text-[#333] truncate pr-2">{{ o.id }}</span><span class="text-[14px] font-semibold" :style="stg(o.status)">{{ sl(o.status) }}</span></div>
-<div class="flex gap-3 mb-2">
-<div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0" style="background:#F6F7F9"><span v-html="luci('bike','w-8 h-8 text-[#666]')"></span></div>
-<div class="flex-1 min-w-0">
-<div class="text-[14px] font-medium text-[#1A1A1A] truncate">{{ orderCustomerText(o) }}</div>
-<div class="text-[12px] text-[#999] mt-0.5 truncate">{{ o.item }}</div>
-<div class="text-[12px] text-[#999] mt-0.5 flex gap-1"><span class="text-[#bbb]">创建时间</span><span class="truncate">{{ o.created }}</span></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-2" style="border-top:1px solid #F0F0F0"><span class="text-[12px] text-[#999]">{{ o.plan }}</span><span class="text-[15px] font-semibold shrink-0" style="color:#FF6A00">{{ fmtRp(o.amount) }}</span></div>
-</div>
+<kv-card v-for="(o,i) in oFiltered" :key="o.id" :title="o.id" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" label-width="5rem" data-cp @click="ordersOpenDetail(o)">
+<template #extra><span class="text-[13px] font-semibold" :style="stg(o.status)">{{ sl(o.status) }}</span></template>
+<kv-row label="所属门店" :value="orderStoreNameOf(o)"></kv-row>
+<kv-row label="用户账号" :value="orderCustomerText(o)||'-'"></kv-row>
+<kv-row :label="o.type==='battery'?'电池型号':(o.type==='package'?'套餐名称':'车型')" :value="o.item||'-'"></kv-row>
+<kv-row label="租赁时间" align="top" label-class="leading-[1.5]" value-class="leading-[1.5] whitespace-normal break-words"><template #value><span v-html="((o.rentStart||'-')+' ~ '+rentEndOf(o)).replace(' ~ ','<br>')"></span></template></kv-row>
+<kv-row label="已付金额" :value="orderPaidAmountOf(o)"></kv-row>
+<kv-row label="待付金额" :value="orderUnpaidAmountOf(o)"></kv-row>
+<kv-row label="创建时间" :value="o.created||'-'"></kv-row>
+</kv-card>
 </template>
 <empty-state icon="file-text" text="暂无订单" v-else></empty-state>
 </div>
@@ -4397,6 +4386,7 @@ body.host-single-m #root-user{display:none}
 <kv-card title="基础信息" class="mb-3">
 <template #extra><span class="font-medium shrink-0" :style="stg(dSt)">{{ sl(dSt) }}</span></template>
 <kv-row label="订单编号" :value="do_.id" copyable @copy="()=>copyId()"></kv-row>
+<kv-row label="所属门店" :value="orderStoreNameOf(do_)"></kv-row>
 <kv-row label="用户账号" value-class="font-semibold"><template #value><span :class="(do_.account||do_.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" data-cp @click="(do_.account||do_.customer)&&goUserDetail(do_.account||do_.customer)">{{ orderCustomerText(do_) }}</span><span v-if="do_.phone" class="ml-1.5" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></template></kv-row>
 <kv-row label="租赁时间" align="top" label-class="leading-[1.5]" value-class="leading-[1.5]"><template #value><span v-html="((do_.rentStart||'-')+' ~ '+rentEndOf(do_)).replace(' ~ ','<br>')"></span></template></kv-row>
 <kv-row label="创建时间" :value="do_.created"></kv-row>
@@ -4537,12 +4527,13 @@ body.host-single-m #root-user{display:none}
 
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
 <template v-if="rechargeFiltered.length">
-<kv-card v-for="(o,i) in rechargeFiltered" :key="o.orderNo" label-width="6rem" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="roOpenDetail(o)">
-<template #title><span class="min-w-0 truncate">{{ o.orderNo }}</span></template>
-<template #extra><span class="font-medium shrink-0" :style="{color:roPayStatusTag(o.payStatus).c}">{{ roPayStatusTag(o.payStatus).l }}</span></template>
-<kv-row label="用户账号" :value="rechargeCustomerText(o)"></kv-row>
+<kv-card v-for="(o,i) in rechargeFiltered" :key="o.orderNo" :title="o.orderNo" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" label-width="5rem" data-cp @click="roOpenDetail(o)">
+<template #extra><span class="text-[13px] font-semibold" :style="{color:roPayStatusTag(o.payStatus).c}">{{ roPayStatusTag(o.payStatus).l }}</span></template>
+<kv-row label="所属门店" :value="o.storeName||'-'"></kv-row>
+<kv-row label="用户账号" :value="rechargeCustomerText(o)||'-'"></kv-row>
 <kv-row label="充值金额" :value="fmtRp(o.amount)"></kv-row>
 <kv-row v-if="o.giftAmount" label="赠送金额" :value="fmtRp(o.giftAmount)"></kv-row>
+<kv-row label="支付渠道" :value="roPayChannelText(o.payChannel)"></kv-row>
 <kv-row label="创建时间" :value="o.createTime"></kv-row>
 </kv-card>
 </template>
@@ -4555,18 +4546,23 @@ body.host-single-m #root-user{display:none}
 <div class="sheet-body px-5 pb-3" style="min-height:0">
 
 <div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in roFsPayStOpts" :key="'rfp-'+p.v" data-cp @click="roToggleFsPaySt(p.v)" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="roFsPayStC.indexOf(p.v)!==-1?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
-<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付渠道</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div data-cp @click="roFsPayC=roFsPayC==='2C2P'?'':'2C2P'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="roFsPayC==='2C2P'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付渠道</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div data-cp @click="roFsPayC=roFsPayC==='2C2P'?'':'2C2P'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="roFsPayC==='2C2P'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div data-cp @click="roFsPayC=roFsPayC==='OFFLINE'?'':'OFFLINE'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="roFsPayC==='OFFLINE'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线下支付</div><div data-cp @click="roFsPayC=roFsPayC==='WALLET'?'':'WALLET'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="roFsPayC==='WALLET'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">钱包</div></div></div>
 <div style="margin-bottom:16px" data-od-id="recharge-fs-create-time">
- <div class="text-[14px] font-semibold" style="margin-bottom:8px">创建时间</div>
+ <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+  <div class="text-[14px] font-semibold">创建时间</div>
+  <div data-cp @click="roFsStartC='';roFsEndC=''" class="text-[13px] cursor-pointer active:opacity-70" style="color:var(--link)">清空</div>
+ </div>
  <div style="display:flex;gap:8px;align-items:center">
   <div data-cp @click="openRoDatePicker('start')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA">
-   <span class="text-[14px] font-medium text-[#111] truncate">{{ roFsStartC }}</span>
-   <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
+   <span class="text-[14px] font-medium truncate" :class="roFsStartC?'text-[#111]':'text-[#BBB]'">{{ roFsStartC||'开始日期' }}</span>
+   <span v-if="roFsStartC" data-cp @click.stop="roFsStartC=''" title="取消" class="shrink-0 w-4 h-4 rounded-full flex items-center justify-center active:bg-[#ECECEC]" v-html="luci('x','w-3.5 h-3.5 text-[#999]')"></span>
+   <span v-else v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
   </div>
   <span class="text-[14px] text-[#999] shrink-0">至</span>
    <div data-cp @click="openRoDatePicker('end')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA">
-    <span class="text-[14px] font-medium text-[#111] truncate">{{ roFsEndC }}</span>
-    <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
+    <span class="text-[14px] font-medium truncate" :class="roFsEndC?'text-[#111]':'text-[#BBB]'">{{ roFsEndC||'结束日期' }}</span>
+    <span v-if="roFsEndC" data-cp @click.stop="roFsEndC=''" title="取消" class="shrink-0 w-4 h-4 rounded-full flex items-center justify-center active:bg-[#ECECEC]" v-html="luci('x','w-3.5 h-3.5 text-[#999]')"></span>
+    <span v-else v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
    </div>
   </div>
  </div>
@@ -4603,7 +4599,8 @@ body.host-single-m #root-user{display:none}
 <kv-card title="基础信息" class="mb-3" label-width="5rem">
 <template #extra><span class="font-medium shrink-0" :style="{color:roPayStatusTag(curRechargeOrder.payStatus).c}">{{ roPayStatusTag(curRechargeOrder.payStatus).l }}</span></template>
 <kv-row label="订单编号" :value="curRechargeOrder.orderNo" copyable @copy="t=>copyText(t,'订单编号')"></kv-row>
-<kv-row label="用户账号" value-class="font-semibold"><template #value><span :class="(curRechargeOrder.account||curRechargeOrder.customer)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" data-cp @click="(curRechargeOrder.account||curRechargeOrder.customer)&&goUserDetail(curRechargeOrder.account||curRechargeOrder.customer)">{{ rechargeCustomerText(curRechargeOrder) }}</span><span v-if="curRechargeOrder.phone" class="ml-1.5" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></template></kv-row>
+<kv-row label="所属门店" :value="curRechargeOrder.storeName||'-'"></kv-row>
+<kv-row label="用户账号" value-class="font-semibold"><template #value><span :class="(curRechargeOrder.account||curRechargeOrder.phone||curRechargeOrder.email)?'text-[var(--link)] cursor-pointer active:opacity-70':'text-[#333]'" data-cp @click="(curRechargeOrder.account||curRechargeOrder.phone||curRechargeOrder.email)&&goUserDetail(curRechargeOrder.account||curRechargeOrder.phone||curRechargeOrder.email)">{{ rechargeCustomerText(curRechargeOrder)||'-' }}</span><span v-if="curRechargeOrder.phone" class="ml-1.5" v-html="luci('phone','w-3.5 h-3.5 text-[var(--accent)]')"></span></template></kv-row>
 <kv-row label="创建时间" :value="curRechargeOrder.createTime"></kv-row>
 <kv-row label="支付渠道" :value="roPayChannelText(curRechargeOrder.payChannel)"></kv-row>
 <kv-row v-if="['PAID','REFUNDING','PARTIAL_REFUND','FULL_REFUND'].includes(curRechargeOrder.payStatus)" label="支付时间" :value="curRechargeOrder.payTime||'-'"></kv-row>
@@ -4935,16 +4932,21 @@ body.host-single-m #root-user{display:none}
 <div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付渠道</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div data-cp @click="ordersFsPayC=ordersFsPayC==='2c2p'?'':'2c2p'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='2c2p'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div data-cp @click="ordersFsPayC=ordersFsPayC==='offline'?'':'offline'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='offline'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线下支付</div></div></div>
 <div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in paySts" :key="'fp-'+p.v" data-cp @click="ordersFsPayStC=ordersFsPayStC===p.v?'':p.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayStC===p.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
  <div style="margin-bottom:16px" data-od-id="orders-fs-create-time">
-  <div class="text-[14px] font-semibold" style="margin-bottom:8px">创建时间</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+   <div class="text-[14px] font-semibold">租赁时间</div>
+   <div data-cp @click="ordersFsStartC='';ordersFsEndC=''" class="text-[13px] cursor-pointer active:opacity-70" style="color:var(--link)">清空</div>
+  </div>
   <div style="display:flex;gap:8px;align-items:center">
    <div data-cp @click="openOrdersDatePicker('start')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA">
-    <span class="text-[14px] font-medium text-[#111] truncate">{{ ordersFsStartC }}</span>
-    <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
+    <span class="text-[14px] font-medium truncate" :class="ordersFsStartC?'text-[#111]':'text-[#BBB]'">{{ ordersFsStartC||'开始日期' }}</span>
+    <span v-if="ordersFsStartC" data-cp @click.stop="ordersFsStartC=''" title="取消" class="shrink-0 w-4 h-4 rounded-full flex items-center justify-center active:bg-[#ECECEC]" v-html="luci('x','w-3.5 h-3.5 text-[#999]')"></span>
+    <span v-else v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
    </div>
    <span class="text-[14px] text-[#999] shrink-0">至</span>
     <div data-cp @click="openOrdersDatePicker('end')" class="flex-1 min-w-0 flex items-center justify-between py-2.5 px-3 rounded-lg cursor-pointer" style="border:1px solid #E5E5E5;background:#FAFAFA">
-     <span class="text-[14px] font-medium text-[#111] truncate">{{ ordersFsEndC }}</span>
-     <span v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
+     <span class="text-[14px] font-medium truncate" :class="ordersFsEndC?'text-[#111]':'text-[#BBB]'">{{ ordersFsEndC||'结束日期' }}</span>
+     <span v-if="ordersFsEndC" data-cp @click.stop="ordersFsEndC=''" title="取消" class="shrink-0 w-4 h-4 rounded-full flex items-center justify-center active:bg-[#ECECEC]" v-html="luci('x','w-3.5 h-3.5 text-[#999]')"></span>
+     <span v-else v-html="luci('chevron-down','w-3.5 h-3.5 text-[#999]')"></span>
     </div>
    </div>
   </div>
@@ -6862,6 +6864,20 @@ const batteries=Vue.ref([
 {battNo:'BATT-YD1004',account:'user009',phone:'',email:'battery009@qq.com',model:'超威黑金 72V32Ah',status:'空闲',online:true,level:63,lost:true,discharge:false,vin:'',time:'2026-08-20 10:25:00',lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
 {battNo:'BATT-YD1005',account:'user010',phone:'+86 13700009999',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:12,lost:false,discharge:true,vin:'LSVAU2Z0A33333001',time:'2026-08-20 08:12:00',lat:39.9842,lng:116.4849,location:'北京市朝阳区望京街道'}
 ]);
+/* ══ 状态文案与颜色：双端统一管理（订单状态 / 支付状态，改这里两端同时生效） ══ */
+var ORDER_ST_TEXT={created:'已创建',pickup:'待取用',progress:'进行中','return':'待归还',overdue:'已超期',breach:'已违约',complete:'已完成',cancelled:'已取消'};
+var ORDER_ST_COLOR={created:'#FF8C1B',pickup:'#FF8C1B',progress:'#22D098','return':'#1A82F4',overdue:'#FF4343',breach:'#FF4343',complete:'#333333',cancelled:'#666666'};
+var PAY_ST_MAP={UNPAID:{text:'待支付',color:'#FF8C1B',bg:'#FFF3E9'},PAYING:{text:'支付中',color:'#1A82F4',bg:'#EAF2FF'},PAID:{text:'已支付',color:'#17A34A',bg:'#E9F7EF'},REFUNDING:{text:'退款中',color:'#8B5CF6',bg:'#F3EEFF'},PARTIAL_REFUND:{text:'部分退款',color:'#E6A23C',bg:'#FBF3DC'},FULL_REFUND:{text:'全部退款',color:'#FF4343',bg:'#FDECEC'},CANCELLED:{text:'已取消',color:'#999',bg:'#F2F2F2'}};
+/* 订单金额口径（整单生命周期：主订单 + 续租单）
+   应付 = 主订单(租金 + 押金) + Σ 未取消续租单租金；
+   已付 = 主订单（pending/processing 记 0，其余记全额）+ Σ 已支付续租单租金；
+   待付 = 应付 − 已付 */
+function orderMainTotal(o){return (Number(o&&o.amount)||0)+((o&&o.deposit!=null)?Number(o.deposit):500)}
+function orderPayTotal(o){if(!o)return 0;var t=orderMainTotal(o);(o.renewSubOrders||[]).forEach(function(r){if(r&&!r.cancelRenew)t+=(Number(r.renewRentFee)||0)});return t}
+function orderPaidAmount(o){if(!o)return 0;var st=o.paySt;var main=(st==='pending'||st==='processing')?0:orderMainTotal(o);var sub=0;(o.renewSubOrders||[]).forEach(function(r){if(r&&!r.cancelRenew&&r.subPayStatus==='已支付')sub+=(Number(r.renewRentFee)||0)});return main+sub}
+function orderUnpaidAmount(o){return orderPayTotal(o)-orderPaidAmount(o)}
+/* 支付渠道文案：2C2P / 线下支付 / 钱包（双端统一，兼容大小写与中文原值） */
+function payChannelLabel(c){var v=String(c||'').trim().toLowerCase();if(!v||v==='-')return '-';if(v==='wallet'||c==='钱包')return '钱包';if(v==='offline'||c==='线下支付')return '线下支付';if(v==='2c2p')return '2C2P';return String(c)}
 const orders=Vue.ref([]);
 const stores=Vue.ref([]);
 const uWallet=Vue.ref({total:0,rechargeBalance:0,rechargeFrozen:0,bonusBalance:0,bonusFrozen:0});
@@ -6903,7 +6919,7 @@ var MERGED=Vue.reactive({orderCount:0,vehicleCount:0,batteryCount:0,walletBalanc
 /* 共享扩展：钱包流水 / 用户资料 / 充值订单（双端同源，充值订单以商户端种子为权威） */
 var LEDGER=Vue.ref([]);
 var PROFILE=Vue.reactive({name:'User001',phone:'+86 13800001111',email:'user001@yadea.id',account:'user001'});
-var CZ_ORDERS=Vue.ref([{orderNo:'CZ202609010001',storeName:'测试门店',createTime:'2026-09-01 10:00:00',payChannel:'2C2P',payStatus:'UNPAID',payTime:'',account:'han.min',phone:'+86 13800001234',email:'han.min@example.com',amount:100,giftAmount:10,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202609010002',storeName:'测试门店',createTime:'2026-09-01 15:20:00',payChannel:'2C2P',payStatus:'PAYING',payTime:'',account:'chen.yi',phone:'',email:'chen.yi@example.com',amount:200,giftAmount:20,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608200003',storeName:'雅迪朝阳店',createTime:'2026-08-20 11:00:00',payChannel:'2C2P',payStatus:'PAID',payTime:'2026-08-20 13:30:00',account:'li.er',phone:'',email:'',amount:300,giftAmount:50,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608150004',storeName:'雅迪朝阳店',createTime:'2026-08-15 09:00:00',payChannel:'2C2P',payStatus:'REFUNDING',payTime:'2026-08-15 11:00:00',account:'',phone:'+86 13800003333',email:'',amount:150,giftAmount:30,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608100005',storeName:'雅迪海淀店',createTime:'2026-08-10 08:00:00',payChannel:'2C2P',payStatus:'PARTIAL_REFUND',payTime:'2026-08-10 09:12:00',account:'li.si',phone:'',email:'li.si@example.com',amount:500,giftAmount:80,refundAmount:200,refundGiftAmount:30},{orderNo:'CZ202609030006',storeName:'雅迪海淀店',createTime:'2026-09-03 10:00:00',payChannel:'2C2P',payStatus:'FULL_REFUND',payTime:'2026-09-03 10:30:00',account:'wang.wu',phone:'',email:'',amount:300,giftAmount:50,refundAmount:300,refundGiftAmount:50},{orderNo:'CZ202608300007',storeName:'雅迪海淀店',createTime:'2026-08-30 09:00:00',payChannel:'2C2P',payStatus:'CANCELLED',payTime:'',cancelTime:'2026-08-30 09:12:45',account:'zhao.liu',phone:'',email:'',amount:200,giftAmount:20,refundAmount:null,refundGiftAmount:null}]);
+var CZ_ORDERS=Vue.ref([{orderNo:'CZ202609010001',storeName:'测试门店',createTime:'2026-09-01 10:00:00',payChannel:'2C2P',payStatus:'UNPAID',payTime:'',account:'han.min',phone:'+86 13800001234',email:'han.min@example.com',amount:100,giftAmount:10,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202609010002',storeName:'测试门店',createTime:'2026-09-01 15:20:00',payChannel:'2C2P',payStatus:'PAYING',payTime:'',account:'chen.yi',phone:'',email:'chen.yi@example.com',amount:200,giftAmount:20,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608200003',storeName:'雅迪朝阳店',createTime:'2026-08-20 11:00:00',payChannel:'2C2P',payStatus:'PAID',payTime:'2026-08-20 13:30:00',account:'li.er',phone:'',email:'',amount:300,giftAmount:50,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608150004',storeName:'雅迪朝阳店',createTime:'2026-08-15 09:00:00',payChannel:'OFFLINE',payStatus:'REFUNDING',payTime:'2026-08-15 11:00:00',account:'',phone:'+86 13800003333',email:'',amount:150,giftAmount:30,refundAmount:null,refundGiftAmount:null},{orderNo:'CZ202608100005',storeName:'雅迪海淀店',createTime:'2026-08-10 08:00:00',payChannel:'2C2P',payStatus:'PARTIAL_REFUND',payTime:'2026-08-10 09:12:00',account:'li.si',phone:'',email:'li.si@example.com',amount:500,giftAmount:80,refundAmount:200,refundGiftAmount:30},{orderNo:'CZ202609030006',storeName:'雅迪海淀店',createTime:'2026-09-03 10:00:00',payChannel:'2C2P',payStatus:'FULL_REFUND',payTime:'2026-09-03 10:30:00',account:'wang.wu',phone:'',email:'',amount:300,giftAmount:50,refundAmount:300,refundGiftAmount:50},{orderNo:'CZ202608300007',storeName:'雅迪海淀店',createTime:'2026-08-30 09:00:00',payChannel:'2C2P',payStatus:'CANCELLED',payTime:'',cancelTime:'2026-08-30 09:12:45',account:'zhao.liu',phone:'',email:'',amount:200,giftAmount:20,refundAmount:null,refundGiftAmount:null}]);
 /* 订单/充值订单/充电订单时间归一：保持创建时间位于近 N 天内（相对当前时间动态重写）；
    coOrders 等声明在 setup 内的数据无法被本全局函数按标识符访问，须由调用方通过 ords/czs/cos 传入 */
 function SYS_recent(n,ords,czs,cos){try{var N=Date.now(),D=(n||15)*24*3600*1000;var p=function(x){return (x<10?'0':'')+x};var fp=function(d){return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())};var tp=function(s){var t=Date.parse(String(s).replace(/-/g,'/'));return isNaN(t)?null:t};var f=function(off){return fp(new Date(N-off*D))};var o=ords||((typeof orders!=='undefined'&&orders&&orders.value)?orders.value:[]);var cz=czs||((typeof CZ_ORDERS!=='undefined'&&CZ_ORDERS&&CZ_ORDERS.value)?CZ_ORDERS.value:[]);o.forEach(function(x,i){var off=((i%14)/14)+0.06;if(x.created)x.created=f(off);if(x.payTime)x.payTime=f(off-0.03);if(x.rentStart)x.rentStart=f(off-0.06);if(x.pickupTime)x.pickupTime=f(off-0.04)});cz.forEach(function(x,i){var off=((i%14)/14)+0.06;if(x.createTime)x.createTime=f(off);if(x.payTime)x.payTime=f(off-0.03);if(x.cancelTime&&x.cancelTime!=='-')x.cancelTime=f(off+0.4)});var co=cos||[];co.forEach(function(x,i){var off=((i%14)/14)+0.06,base=tp(x.startTime||x.createTime);if(base==null)return;var delta=(N-off*D)-base;['startTime','endTime','createTime','payTime','completeTime','cancelTime'].forEach(function(k){var t=tp(x[k]);if(t!=null)x[k]=fp(new Date(t+delta))});(x.refundRecords||[]).forEach(function(r){['refundTime','finishTime'].forEach(function(k){var t=tp(r[k]);if(t!=null)r[k]=fp(new Date(t+delta))})})})}catch(e){}}
@@ -7866,7 +7882,9 @@ const payChannel=ref('2C2P');
 function setPayChannel(ch){payChannel.value=ch;orderInfo.value={...orderInfo.value,payee:ch==='offline'?'线下支付':'2C2P'}}
 const cancelBeforePay=ref('paid');
 function setCancelBeforePay(v){cancelBeforePay.value=v}
-const currentOrderList=computed(()=>{if(demoListEmpty.value)return[];const CAT={vehicle:'车辆租赁',battery:'电池租赁',package:'车电套餐'};const TXT={created:'已创建',pickup:'待取用',progress:'进行中','return':'待归还',overdue:'已超期',breach:'已违约',complete:'已完成',cancelled:'已取消'};const COL={created:'#2B3F5F',pickup:'#FF8C1B',progress:'#22D098','return':'#FF6A00',overdue:'#DC2626',breach:'#FF4343',complete:'#333333',cancelled:'#666666'};const cat=orderListCategory.value||'';const rows=((orders.value||[])).map(o=>{var _t=CAT[o.type]||'车辆租赁';return _t!==cat?null:{id:o.id||o.orderId||'',status:o.status,statusText:TXT[o.status]||'已创建',statusColor:COL[o.status]||'#2B3F5F',model:o.item||o.type||'',vModel:o.item||o.type||'',img:'#FF6A00',desc:'',store:o.store||(stores&&stores.value&&stores.value[0]?(stores.value[0].name):'测试门店'),plan:o.plan||'',created:o.created||'',payTime:o.payTime||'',pickupTime:o.pickupTime||o.rentStart||o.created||'',returnTime:'',amount:fmtRp(o.amount),frame:o.vin||''}}).filter(Boolean);const sorted=[...rows].sort((a,b)=>(orderStatusOrder[a.status]||99)-(orderStatusOrder[b.status]||99));return orderFilter.value==='all'?sorted:sorted.filter(o=>o.status===orderFilter.value)});
+/* 列表用租期结束时间：按租赁方案（如「月租×1月」）+ 租期开始推算（与商户端 rentEndOf 同逻辑） */
+function calcRentEnd(plan,start){var m=/×(\d+)\s*([月天周])/.exec(plan||'');if(!m)return '-';var n=Number(m[1])||1,unit=m[2];var d=new Date(String(start||'').replace(/-/g,'/'));if(isNaN(d.getTime()))return '-';if(unit==='月')d.setMonth(d.getMonth()+n);else if(unit==='天')d.setDate(d.getDate()+n);else if(unit==='周')d.setDate(d.getDate()+n*7);var p=function(x){return String(x).padStart(2,'0')};return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
+const currentOrderList=computed(()=>{if(demoListEmpty.value)return[];const CAT={vehicle:'车辆租赁',battery:'电池租赁',package:'车电套餐'};const TXT=ORDER_ST_TEXT,COL=ORDER_ST_COLOR;const cat=orderListCategory.value||'';const rows=((orders.value||[])).map(o=>{var _t=CAT[o.type]||'车辆租赁';return _t!==cat?null:{id:o.id||o.orderId||'',type:o.type||'vehicle',status:o.status,statusText:TXT[o.status]||'已创建',statusColor:COL[o.status]||'#FF8C1B',model:o.item||o.type||'',vModel:o.item||o.type||'',img:'#FF6A00',desc:'',store:o.store||(stores&&stores.value&&stores.value[0]?(stores.value[0].name):'测试门店'),plan:o.plan||'',created:o.created||'',payTime:o.payTime||'',pickupTime:o.pickupTime||o.rentStart||o.created||'',returnTime:'',rentStart:o.rentStart||o.pickupTime||o.created||'',rentEnd:calcRentEnd(o.plan,o.rentStart||o.pickupTime||o.created),amount:fmtRp(orderPaidAmount(o)),unpaid:fmtRp(orderUnpaidAmount(o)),frame:o.vin||''}}).filter(Boolean);const sorted=[...rows].sort((a,b)=>(orderStatusOrder[a.status]||99)-(orderStatusOrder[b.status]||99));return orderFilter.value==='all'?sorted:sorted.filter(o=>o.status===orderFilter.value)});
 function openMyOrders(){navOpen('myOrders')}
 var ordersPtrInit=false;function openOrderCategory(cat){orderListCategory.value=cat;orderFilter.value='all';navOpen('orderList');showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600);nextTick(()=>{if(!ordersPtrInit){initPullToRefresh('sc-orders','ptr-orders',refreshOrders);ordersPtrInit=true}})}
 function setOrderFilter(v){orderFilter.value=v;showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}
@@ -7964,21 +7982,14 @@ const rechargeOrder=reactive({
   amount:300000,
   giftAmount:50000,
   refundAmount:0,
-  refundGiftAmount:0
+  refundGiftAmount:0,
+  storeName:'测试门店'
 });
-const rechargePayStatusMap={
-  UNPAID:{text:'待支付',color:'#FF6A00',bg:'#FFF3E9'},
-  PAYING:{text:'支付中',color:'#1677FF',bg:'#EAF2FF'},
-  PAID:{text:'已支付',color:'#17A34A',bg:'#E9F7EF'},
-  REFUNDING:{text:'退款中',color:'#8B5CF6',bg:'#F3EEFF'},
-  PARTIAL_REFUND:{text:'部分退款',color:'#D4A017',bg:'#FBF3DC'},
-  FULL_REFUND:{text:'全部退款',color:'#DC2626',bg:'#FDECEC'},
-  CANCELLED:{text:'已取消',color:'#999',bg:'#F2F2F2'}
-};
+const rechargePayStatusMap=PAY_ST_MAP;
 function rechargeStatusTag(s){return rechargePayStatusMap[s]||{text:s||'-',color:'#999',bg:'#F2F2F2'}}
-function rechargeChannelText(c){return c==='2C2P'?'2C2P':'-'}
+function rechargeChannelText(c){return payChannelLabel(c)}
 function dialRechargePhone(){if(!rechargeOrder.phone){toast('无手机号','warn');return}toast('拨号中…','info')}
-function openRechargeOrderFromList(item){if(item){Object.assign(rechargeOrder,{orderNo:item.orderNo||'',createTime:item.createTime||'',payChannel:item.payChannel||'2C2P',payStatus:item.payStatus||'PAID',payTime:item.payTime||'-',cancelTime:item.cancelTime||'',account:item.account||'',phone:item.phone||'',email:item.email||'',amount:Number(item.amount)||0,giftAmount:Number(item.giftAmount)||0,refundAmount:Number(item.refundAmount)||0,refundGiftAmount:Number(item.refundGiftAmount)||0})}showRechargeList.value=true;navOpen('rechargeOrder')}
+function openRechargeOrderFromList(item){if(item){Object.assign(rechargeOrder,{orderNo:item.orderNo||'',createTime:item.createTime||'',payChannel:item.payChannel||'2C2P',payStatus:item.payStatus||'PAID',payTime:item.payTime||'-',cancelTime:item.cancelTime||'',storeName:item.storeName||'',account:item.account||'',phone:item.phone||'',email:item.email||'',amount:Number(item.amount)||0,giftAmount:Number(item.giftAmount)||0,refundAmount:Number(item.refundAmount)||0,refundGiftAmount:Number(item.refundGiftAmount)||0})}showRechargeList.value=true;navOpen('rechargeOrder')}
 function setRechargeRefundState(mode){if(mode==='PARTIAL'){rechargeOrder.payStatus='PARTIAL_REFUND';rechargeOrder.refundAmount=Math.round(rechargeOrder.amount*0.5);rechargeOrder.refundGiftAmount=Math.round(rechargeOrder.giftAmount*0.5)}else if(mode==='FULL'){rechargeOrder.payStatus='FULL_REFUND';rechargeOrder.refundAmount=rechargeOrder.amount;rechargeOrder.refundGiftAmount=rechargeOrder.giftAmount}}
 function payRechargeOrder(){rechargeOrder.payStatus='PAID';rechargeOrder.payTime=fmtDateTime(new Date());toast('支付成功','success')}
 function requestCancelRecharge(){showCancelRechargeModal.value=true}
@@ -9197,6 +9208,11 @@ const searchScopeOpts=computed(()=>{const all=[{v:'id',l:'订单编号'},{v:'acc
 const searchScopeLabel=computed(()=>(searchScopeOpts.value.find(o=>o.v===searchScope.value)||{}).l||'订单编号');
 function setSearchScope(v){searchScope.value=v;searchScopeOpen.value=false}
 function orderCustomerText(o){if(o.phone&&String(o.phone).trim())return o.phone;if(o.email&&String(o.email).trim())return o.email;return (o.account&&o.account.trim())?o.account:(o.customer||'')}
+/* 订单所属门店：订单自带 store 优先，缺失时回退门店列表首项（与用户端订单列表口径一致） */
+function orderStoreNameOf(o){return (o&&o.store)||((stores&&stores.value&&stores.value[0])?stores.value[0].name:'-')}
+/* 模板可用的金额口径（全局 orderPaidAmount/orderUnpaidAmount 需经此包装导出给模板） */
+function orderPaidAmountOf(o){return fmtRp(orderPaidAmount(o))}
+function orderUnpaidAmountOf(o){return fmtRp(orderUnpaidAmount(o))}
 document.addEventListener('click',function(){searchScopeOpen.value=false})
 const searchPH=computed(()=>'请输入'+(({id:'订单编号',account:'账号',phone:'手机号',email:'邮箱',vin:'车架号'})[searchScope.value]||'订单编号'));
 
@@ -9217,6 +9233,13 @@ var start=new Date(end.getFullYear(),end.getMonth(),end.getDate());
 start.setMonth(start.getMonth()-1);
 return {start:fmtYmd(start),end:fmtYmd(end)};
 }
+/* 充值订单筛选：默认「最近一个月」（日期可清空 = 不限） */
+function defaultRechargeDateRange(){
+  var end=new Date();
+  var start=new Date(end.getFullYear(),end.getMonth(),end.getDate());
+  start.setMonth(start.getMonth()-1);
+  return {start:fmtYmd(start),end:fmtYmd(end)};
+}
 function parseYmd(s){
   var p=(s||'').split('-');
   if(p.length!==3)return null;
@@ -9226,6 +9249,7 @@ function parseYmd(s){
 }
 function ymdFromParts(t){return t.year+'-'+p2(t.month)+'-'+p2(t.day)}
 var _ordDateDef=defaultOrdersDateRange();
+var _roDateDef=defaultRechargeDateRange();
 const ordersFsSt=ref(''),ordersFsPay=ref(''),ordersFsPaySt=ref(''),ordersFsStart=ref(_ordDateDef.start),ordersFsEnd=ref(_ordDateDef.end);
 const ordersFsStC=ref(''),ordersFsPayC=ref(''),ordersFsPayStC=ref(''),ordersFsStartC=ref(_ordDateDef.start),ordersFsEndC=ref(_ordDateDef.end);
 const ordersDatePicker=ref(null);
@@ -9246,15 +9270,14 @@ const ordersHasF=computed(()=>{
 });
 const vehSts=['progress','return','overdue','complete','breach'];
 function hasVehicle(s){return vehSts.indexOf(s)!==-1}
-const oFiltered=computed(()=>demoListEmpty.value?[]:orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var m=(o.created||'').match(/(\d{4}-\d{2}-\d{2})/);if(m&&(m[1]<ordersFsStart.value||m[1]>ordersFsEnd.value))return false}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
-function sl(s){var m={created:'已创建',pickup:'待取用',progress:'进行中','return':'待归还',overdue:'已超期',complete:'已完成',cancelled:'已取消',breach:'已违约'};return m[s]||s}
-function stg(s){var m={created:'#FF8C1B',pickup:'#FF8C1B',progress:'#22D098','return':'#1A82F4',overdue:'#FF4343',complete:'#333333',cancelled:'#666666',breach:'#FF4343'};return {color:m[s]||'#333333'}}
+const oFiltered=computed(()=>demoListEmpty.value?[]:orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsSt.value&&o.status!==ordersFsSt.value)return false;if(ordersFsPay.value&&o.payment!==ordersFsPay.value)return false;if(ordersFsPaySt.value&&o.paySt!==ordersFsPaySt.value)return false;if(ordersFsStart.value&&ordersFsEnd.value){var _rs=(o.rentStart||'').match(/(\d{4}-\d{2}-\d{2})/);if(_rs){var _re=(rentEndOf(o)||'').match(/(\d{4}-\d{2}-\d{2})/);var _rEnd=_re?_re[1]:_rs[1];if(_rEnd<ordersFsStart.value||_rs[1]>ordersFsEnd.value)return false}}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
+function sl(s){return ORDER_ST_TEXT[s]||s}
+function stg(s){return {color:ORDER_ST_COLOR[s]||'#333333'}}
 var do_=ref({id:'',model:'',vin:'',customer:'',phone:'',plan:'',amount:0,status:'',payment:''});
 var dSt=ref(''),dPm=ref('online'),dCanceledPaid=ref('paid'),dPaySt=ref('paid');
 function demoSetPm(v){dPm.value=v;var o=do_.value;if(!o||!o.id)return;o.payment=(v==='offline'?'offline':'online');if(v!=='offline'){var rent=Number(o.amount)||0,dep=depositOf(o);o.paymentSplit={rentSplit:[{method:'2C2P',amount:rent}],depositSplit:[{method:'2C2P',amount:dep}]}}else{o.paymentSplit=null}}
 var filteredDemoPaySts=computed(()=>{if(dSt.value==='created')return[{v:'pending',l:'待支付'}];if(dSt.value==='complete')return[{v:'paid',l:'已支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];return demoPayStsFixed});
 var payStatus=computed(()=>{var m={pending:'待支付',processing:'支付中',paid:'已支付',refunding:'退款中',partialRefund:'部分退款',fullRefund:'全部退款'};return m[dPaySt.value]||'已支付'});
-var payStatusColor=computed(()=>{var m={pending:'#F59E0B',processing:'#F59E0B',paid:'#17A34A',refunding:'#F59E0B',partialRefund:'#E67E22',fullRefund:'#999'};return m[dPaySt.value]||'#17A34A'});
 var showPaid=computed(()=>vehSts.concat(['pickup']).indexOf(dSt.value)!==-1||(dSt.value==='cancelled'&&dCanceledPaid.value==='paid'));
 var refundable=computed(function(){var pays=[dPaySt.value];var d=do_.value;if(d&&d.renewSubOrders)d.renewSubOrders.forEach(function(r){if(r&&r.subPayStatus&&!r.cancelRenew)pays.push(r.subPayStatus)});return pays.some(function(s){return s==='paid'||s==='partialRefund'||s==='已支付'||s==='部分退款'||s==='退款中'})});
 var showActions=computed(()=>dSt.value!=='cancelled');
@@ -9278,7 +9301,7 @@ var ordersSaving=ref(false);
 function ordersDoPrimary(){if(ordersSaving.value)return;if(!showPrimaryAction.value){deny();return}var isOff=dPaySt.value==='pending'&&dPm.value==='offline'&&!do_.value.paymentSplit;if(isOff){ordersMod.value='confirmPay';return}if(['created','pickup'].indexOf(dSt.value)!==-1){ordersMod.value='cancel'}else if(vehSts.filter(s=>s!=='complete').indexOf(dSt.value)!==-1){openRefund('return')}else if(dSt.value==='complete'){openRefund('refund')}}
 function ordersDoDanger(){if(ordersSaving.value)return;if(!showDangerAction.value){deny();return}ordersMod.value='cancel'}
 var ordersModTitle=computed(()=>{var m={cancel:'取消订单',confirmPay:'确认支付',refundConfirm:refundMode.value==='return'?'结束订单':'订单退款',feeCancelRenew:'取消续租',feePayRenew:'确认支付',assignVehicle:'绑定车辆',assignBattery:'绑定电池',changeVehicle:'更换车辆',changeBattery:'更换电池'};return m[ordersMod.value]||''});
-var ordersModDesc=computed(()=>{var m={cancel:'确定取消该订单？取消后不可恢复',confirmPay:'确认用户已完成线下支付？',refundConfirm:refundMode.value==='return'?(refundTotal.value>0?'确认结束订单？合计退款 Rp' + (refundTotal.value.toFixed(2)):'确认结束订单？'):'确认执行退款？合计退款 Rp' + (refundTotal.value.toFixed(2)),feeCancelRenew:'确定取消该续租？取消后不可恢复',feePayRenew:'确认用户已完成线下支付？',assignVehicle:'请为订单绑定指定车辆',assignBattery:'请为订单绑定指定电池',changeVehicle:'请为订单更换指定车辆',changeBattery:'请为订单更换指定电池'};return m[ordersMod.value]||''});
+var ordersModDesc=computed(()=>{var m={cancel:'确定取消该订单？取消后不可恢复',confirmPay:'确认完成本笔支付？',refundConfirm:refundMode.value==='return'?(refundTotal.value>0?'确认结束订单？合计退款 Rp' + (refundTotal.value.toFixed(2)):'确认结束订单？'):'确认执行退款？合计退款 Rp' + (refundTotal.value.toFixed(2)),feeCancelRenew:'确定取消该续租？取消后不可恢复',feePayRenew:'确认完成本笔支付？',assignVehicle:'请为订单绑定指定车辆',assignBattery:'请为订单绑定指定电池',changeVehicle:'请为订单更换指定车辆',changeBattery:'请为订单更换指定电池'};return m[ordersMod.value]||''});
 var ordersModDanger=computed(()=>ordersMod.value==='cancel');
  const ordersModLoading=ref(false); function ordersConfirmMod(){if(ordersModLoading.value)return;ordersModLoading.value=true;setTimeout(()=>{ordersModLoading.value=false;var m=ordersMod.value;ordersMod.value=null;if(m==='cancel'){dSt.value='cancelled';if(do_.value){do_.value.status='cancelled';if(dPaySt.value==='pending'){dCanceledPaid.value='unpaid';do_.value.paySt='unpaid'}}toast('订单已取消','success');}if(m==='confirmPay'){dPaySt.value='paid';if(do_.value){do_.value.paySt='paid';if(do_.value.status==='created'){do_.value.status='pickup';dSt.value='pickup'}}toast('支付确认成功','success');}if(m==='refundConfirm'){var hasRef=refundTotal.value>0;if(hasRef)pushRefundRecord();showRefund.value=false;if(refundMode.value==='return'){dSt.value='complete';if(do_.value)do_.value.status='complete';if(hasRef){var orig=orderPayable(do_.value);if(refundTotal.value>=orig)dPaySt.value='fullRefund';else dPaySt.value='partialRefund';if(do_.value)do_.value.paySt=dPaySt.value}toast('订单已结束，押金退款中','success')}else{var orig2=orderPayable(do_.value);if(refundTotal.value>=orig2)dPaySt.value='fullRefund';else dPaySt.value='partialRefund';if(do_.value)do_.value.paySt=dPaySt.value;toast('退款已完成','success')}}if(m==='feeCancelRenew'){var _s=feeModSub.value;if(_s){_s.cancelRenew=true;_s.subPayStatus='已取消'}feeModSub.value=null;feeTick.value++;toast('续租已取消','success');}if(m==='feePayRenew'){var _s2=feeModSub.value;if(_s2){_s2.subPayStatus='已支付';_s2.payTime=now();if(!_s2.payChannel)_s2.payChannel='OFFLINE'}feeModSub.value=null;feeTick.value++;toast('确认支付成功','success');}if(m==='assignVehicle')toast('车辆已绑定','success');if(m==='assignBattery')toast('电池已绑定','success');if(m==='changeVehicle')toast('车辆已更换','success');if(m==='changeBattery')toast('电池已更换','success')},600)}
 var orderPickActive=computed(()=>['assignVehicle','assignBattery','changeVehicle','changeBattery'].indexOf(ordersMod.value)!==-1);
@@ -9726,10 +9749,8 @@ function ordersResetFS(){
   ordersFsEndC.value=def.end;
 }
 function ordersApplyFS(){
-  var def=defaultOrdersDateRange();
-  var s=ordersFsStartC.value||def.start;
-  var e=ordersFsEndC.value||def.end;
-  if(s>e){var t=s;s=e;e=t}
+  var s=ordersFsStartC.value,e=ordersFsEndC.value;
+  if(s&&e&&s>e){var t=s;s=e;e=t}
   ordersFsStartC.value=s;
   ordersFsEndC.value=e;
   ordersFsSt.value=ordersFsStC.value;
@@ -10315,9 +10336,9 @@ const roRefundConfirm=ref(false); // 退款确认弹窗
 const roRefundForm=ref({amount:null,giftAmount:null,reason:''});
 const roRefunds=ref([]);       // 退款记录
 const rechargeOrders=CZ_ORDERS;
-function roPayStatusTag(s){var m={UNPAID:{l:'待支付',c:'#FF8C1B'},PAYING:{l:'支付中',c:'#1A82F4'},PAID:{l:'已支付',c:'#17A34A'},REFUNDING:{l:'退款中',c:'#8B5CF6'},PARTIAL_REFUND:{l:'部分退款',c:'#E6A23C'},FULL_REFUND:{l:'全部退款',c:'#FF4343'},CANCELLED:{l:'已取消',c:'#999'}};return m[s]||{l:s,c:'#999'}}
-function roPayChannelText(c){return c?c:'-'}
-function roOpenList(){if(!can('recharge_order.list')){deny();return}navOpen();roQ.value='';roStatus.value=null;roFsPay.value='';roFsPaySt.value=[];roFsStart.value=_ordDateDef.start;roFsEnd.value=_ordDateDef.end;roFsMin.value='';roFsMax.value='';roSearchScope.value='no';roOV.value='list';tab.value='orders'}
+function roPayStatusTag(s){var e=PAY_ST_MAP[s];return e?{l:e.text,c:e.color}:{l:s||'-',c:'#999'}}
+function roPayChannelText(c){return payChannelLabel(c)}
+function roOpenList(){if(!can('recharge_order.list')){deny();return}navOpen();roQ.value='';roStatus.value=null;roFsPay.value='';roFsPaySt.value=[];roFsStart.value=_roDateDef.start;roFsEnd.value=_roDateDef.end;roFsMin.value='';roFsMax.value='';roSearchScope.value='no';roOV.value='list';tab.value='orders'}
 function roOpenDetail(o){if(!can('recharge_order.detail')){deny();return}navOpen();curRechargeOrder.value=o;roOV.value='detail'}
 function roCloseList(){navBack()}
 function roGoBack(){navBack()}
@@ -10343,7 +10364,7 @@ const roStatus=ref(null);
 const roStatusTabs=[{v:null,l:'全部'},{v:['UNPAID','PAYING'],l:'待支付'},{v:['CANCELLED'],l:'已取消'},{v:['PAID'],l:'已支付'},{v:['REFUNDING'],l:'退款中'},{v:['PARTIAL_REFUND','FULL_REFUND'],l:'已退款'}];
 function roStatusActive(p){return roStatus.value===p.v}
 const roTabCnt=computed(()=>{const m={};let n=0;rechargeOrders.value.forEach(o=>{const t=roStatusTabs.find(p=>p.v===null||(p.v&&p.v.indexOf(o.payStatus)!==-1));if(t)m[t.l]=(m[t.l]||0)+1;n++});m['全部']=n;return m});
-const roFsPay=ref(''),roFsPaySt=ref([]),roFsStart=ref(_ordDateDef.start),roFsEnd=ref(_ordDateDef.end),roFsMin=ref(''),roFsMax=ref('');
+const roFsPay=ref(''),roFsPaySt=ref([]),roFsStart=ref(_roDateDef.start),roFsEnd=ref(_roDateDef.end),roFsMin=ref(''),roFsMax=ref('');
 /* 高亮口径：任一非时间条件生效（支付渠道/支付状态/金额区间），或创建时间区间偏离默认（近一个月）时点亮 */
 const roHasF=computed(()=>{
   if(roFsPay.value||roFsPaySt.value.length>0)return true;
@@ -10351,7 +10372,7 @@ const roHasF=computed(()=>{
   if(roFsMax.value!==''&&roFsMax.value!=null)return true;
   var s=roFsStart.value,e=roFsEnd.value;
   if(!s||!e)return false;
-  return s!==_ordDateDef.start||e!==_ordDateDef.end;
+  return s!==_roDateDef.start||e!==_roDateDef.end;
 });
 const rechargeFiltered=computed(()=>rechargeOrders.value.filter(o=>{
   if(demoListEmpty.value)return false;
@@ -10371,16 +10392,16 @@ const roDateWheelYear=ref(null),roDateWheelMonth=ref(null),roDateWheelDay=ref(nu
 const roDateYears=Array.from({length:8},(_,i)=>2020+i);
 const roDateDays=computed(()=>{const y=roDateDraft.value.year,m=roDateDraft.value.month;const last=new Date(y,m,0).getDate();return Array.from({length:last},(_,i)=>i+1)});
 var roDateWheelTimers={};
-function openRoDatePicker(which){var src=which==='start'?roFsStartC.value:roFsEndC.value;var p=parseYmd(src)||parseYmd(defaultOrdersDateRange()[which==='start'?'start':'end']);roDateDraft.value={year:p.year,month:p.month,day:p.day};roDatePicker.value=which;nextTick(function(){scrollRoDateWheelsToDraft()})}
+function openRoDatePicker(which){var src=which==='start'?roFsStartC.value:roFsEndC.value;var p=parseYmd(src)||parseYmd(defaultRechargeDateRange()[which==='start'?'start':'end']);roDateDraft.value={year:p.year,month:p.month,day:p.day};roDatePicker.value=which;nextTick(function(){scrollRoDateWheelsToDraft()})}
 function cancelRoDatePicker(){roDatePicker.value=null}
 function confirmRoDatePicker(){var ymd=ymdFromParts(roDateDraft.value);if(roDatePicker.value==='start'){roFsStartC.value=ymd;if(roFsStartC.value>roFsEndC.value)roFsEndC.value=ymd}else{roFsEndC.value=ymd;if(roFsEndC.value<roFsStartC.value)roFsStartC.value=ymd}roDatePicker.value=null}
 function scrollRoDateWheelsToDraft(){var d=roDateDraft.value;var map=[[roDateWheelYear,roDateYears.indexOf(d.year)],[roDateWheelMonth,trackMonths.indexOf(d.month)],[roDateWheelDay,roDateDays.value.indexOf(d.day)]];map.forEach(function(pair){var el=pair[0],idx=pair[1];if(el.value&&idx>=0)el.value.scrollTop=idx*36})}
 function onRoDateWheelScroll(kind,e){clearTimeout(roDateWheelTimers[kind]);roDateWheelTimers[kind]=setTimeout(function(){var el=e.target;var idx=Math.round(el.scrollTop/36);el.scrollTop=idx*36;var d=Object.assign({},roDateDraft.value);if(kind==='year'){d.year=roDateYears[Math.min(Math.max(idx,0),roDateYears.length-1)];var maxD=new Date(d.year,d.month,0).getDate();if(d.day>maxD)d.day=maxD}if(kind==='month'){d.month=trackMonths[Math.min(Math.max(idx,0),11)];var maxD2=new Date(d.year,d.month,0).getDate();if(d.day>maxD2)d.day=maxD2}if(kind==='day'){var days=roDateDays.value;d.day=days[Math.min(Math.max(idx,0),days.length-1)]}roDateDraft.value=d},80)}
-const roFsPayC=ref(''),roFsPayStC=ref([]),roFsStartC=ref(_ordDateDef.start),roFsEndC=ref(_ordDateDef.end),roFsMinC=ref(''),roFsMaxC=ref('');
+const roFsPayC=ref(''),roFsPayStC=ref([]),roFsStartC=ref(_roDateDef.start),roFsEndC=ref(_roDateDef.end),roFsMinC=ref(''),roFsMaxC=ref('');
 const roFsPayStOpts=[{v:'UNPAID',l:'待支付'},{v:'PAYING',l:'支付中'},{v:'PAID',l:'已支付'},{v:'REFUNDING',l:'退款中'},{v:'PARTIAL_REFUND',l:'部分退款'},{v:'FULL_REFUND',l:'全部退款'},{v:'CANCELLED',l:'已取消'}];
 function roOpenFS(){roFsPayC.value=roFsPay.value;roFsPayStC.value=roFsPaySt.value.slice();roFsStartC.value=roFsStart.value;roFsEndC.value=roFsEnd.value;roFsMinC.value=roFsMin.value;roFsMaxC.value=roFsMax.value;roShowFS.value=true}
 function roToggleFsPaySt(v){var i=roFsPayStC.value.indexOf(v);if(i===-1)roFsPayStC.value.push(v);else roFsPayStC.value.splice(i,1)}
-function roResetFS(){roFsPayC.value='';roFsPayStC.value=[];var def=defaultOrdersDateRange();roFsStartC.value=def.start;roFsEndC.value=def.end;roFsMinC.value='';roFsMaxC.value=''}
+function roResetFS(){roFsPayC.value='';roFsPayStC.value=[];roFsStartC.value=_roDateDef.start;roFsEndC.value=_roDateDef.end;roFsMinC.value='';roFsMaxC.value=''}
 function roApplyFS(){roFsPay.value=roFsPayC.value;roFsPaySt.value=roFsPayStC.value.slice();roFsStart.value=roFsStartC.value;roFsEnd.value=roFsEndC.value;roFsMin.value=roFsMinC.value;roFsMax.value=roFsMaxC.value;roShowFS.value=false}
 function roDoSearch(){}
 function setRoSearchScope(v){roSearchScope.value=v;roSearchScopeOpen.value=false}
@@ -10916,7 +10937,7 @@ batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSear
 ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
 ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelYear,ordersDateWheelMonth,ordersDateWheelDay,
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,
-do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,payStatusColor,showPaid,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,opRecords,feeRows,feeSummary,payChannelsText,feeChannelBreakdown,feeRentOpen,feeDepOpen,feeTotalOpen,feeRowOpen,feeRowBreakdown,feeRowChannel,feeRowOnlyOffline,feeAskAction,feeMoreRow,openRowMore,feeActiveIdx,feeActiveRow,feeActiveRealIdx,feeRowTabLabel,feeStatRows,feeStatAgg,feeStatChannels,
+do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,showPaid,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,opRecords,feeRows,feeSummary,payChannelsText,feeChannelBreakdown,feeRentOpen,feeDepOpen,feeTotalOpen,feeRowOpen,feeRowBreakdown,feeRowChannel,feeRowOnlyOffline,feeAskAction,feeMoreRow,openRowMore,feeActiveIdx,feeActiveRow,feeActiveRealIdx,feeRowTabLabel,feeStatRows,feeStatAgg,feeStatChannels,
 primaryLabel,primaryDanger,dualMode,dualIsCancel,dangerLabel,
 ordersModTitle,ordersModDesc,ordersModDanger,orderPickActive,orderPickIsBatt,orderPickQ,orderPickSel,orderPickList,orderPickEmpty,openOrderPick,closeOrderPick,confirmOrderPick,orderPickScan,users,userPickActive,userPickQ,userPickSel,userPickList,userPickEmpty,openUserPick,closeUserPick,confirmUserPick,
 refundMode,rTab,rReason,rRent2c2p,rRentWallet,rRentOffline,rDep2c2p,rDepWallet,rDepOffline,refundTotal,refundValid,refundRentCapCh,refundDepCapCh,orderRefundAgg,refundChannelBreakdown,refundRentOpen,refundDepOpen,refundTotalOpen,rActiveChannel,
@@ -10927,7 +10948,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDeta
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,navOpen,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
-  curStore,menuGroups,openMenu,stores,doSwitch,
+  curStore,menuGroups,openMenu,stores,doSwitch,orderStoreNameOf,orderPaidAmountOf,orderUnpaidAmountOf,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
