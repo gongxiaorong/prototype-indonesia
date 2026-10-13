@@ -1089,7 +1089,7 @@
       "datePickerEnd": "选择结束日期",
       "refundOperator": "操作账号",
       "refundModalReasonPlaceholder": "请输入退款原因",
-      "confirmPayDesc": "确认用户已完成线下支付？",
+      "confirmPayDesc": "确认完成本笔支付？",
       "imagePreviewClose": "轻触任意位置关闭",
       "confirmRefundDesc": "确认结束订单？合计退款 Rp{total}",
       "docDeleteDesc": "确定删除该资料？删除后不可恢复。",

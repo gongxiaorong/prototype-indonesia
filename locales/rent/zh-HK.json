@@ -1089,7 +1089,7 @@
       "datePickerEnd": "選擇結束日期",
       "refundOperator": "操作帳號",
       "refundModalReasonPlaceholder": "請輸入退款原因...",
-      "confirmPayDesc": "確認用戶已完成線下付款？",
+      "confirmPayDesc": "確認完成本筆付款？",
       "imagePreviewClose": "輕觸任意位置關閉",
       "confirmRefundDesc": "確認結束訂單？合計退款 Rp{total}",
       "docDeleteDesc": "確定刪除該資料？刪除後不可恢復。",

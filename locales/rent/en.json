@@ -1089,7 +1089,7 @@
       "datePickerEnd": "Select end date",
       "refundOperator": "Operator",
       "refundModalReasonPlaceholder": "Please enter refund reason...",
-      "confirmPayDesc": "Are you sure the user has completed the offline payment?",
+      "confirmPayDesc": "Confirm completing this payment?",
       "imagePreviewClose": "Tap anywhere to close",
       "confirmRefundDesc": "End this order? Total refund Rp{total}",
       "docDeleteDesc": "Are you sure you want to delete this document? This action cannot be undone.",
