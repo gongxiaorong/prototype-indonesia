@@ -217,7 +217,7 @@
 
 | 目录 | 段 | 归属 |
 | --- | --- | --- |
-| 共享 | `common.*` | 两项目共用术语（货币/操作/状态/单位/语种），**须在 `rent/` 与 `swap/` 两目录内保持一致**（校验脚本负责） |
+| 共享 | `common.*` | 两项目共用术语（货币/操作/状态/单位/语种）。**不要求两目录键集/键名互相复制**；一致性按**中文值**锚定——同一句中文两端译法须一致（见下节，校验脚本负责） |
 | `rent/` | `user.* / merchant.* / demo.*` | `index.html` |
 | `swap/` | `user.* / merchant.* / demo.*`（业务页），外框架键为顶层 key | `swap.html` |
 
@@ -225,20 +225,22 @@
 
 **只要一句中文（zh-CN 值逐字相同）在两端都出现，`en / id / th / zh-HK` 的译法就必须一致**——同一概念两端各写一个译法即术语漂移，属需修复项，不允许「各自都说得通」而并存。范围不限 `common.*`，覆盖全部 key。
 
+**判定锚点是中文值，不是 key 路径**：同句中文即使两端 key 名完全不同（`user.location.goSetting` ↔ `action.goEnable`）也必须译法一致；反之两端 key 同名但中文不同（`common.orderStatus.breach`=违约锁单 / 已违约）**不算漂移**——`common.*` 不要求两目录互为副本，各端可自行增删键。
+
 - 裁决顺序：① `common.*` 已登记的共享术语 → ② 下方术语基线 → ③ `rent/`（权威产物）侧译法；三项都无基准时先在本节登记译法，再按登记值统一。
 - **同一目录内同样不得出现「一句中文两个译法」**（如 swap 内 `user.profile.title`=Profile 与 `common.profile.personalInfo`=Personal Information、「暂无电池」=No battery / No Batteries 混用）。
 - 允许不同（须是有意为之，且不视为违规）：`demo.*` 演示假数据；空间受限的短标签缩写（Tab 名、单位：`block` 对 `battery(ies)`）；品牌与专名（YADEA、2C2P）。
 - **货币术语基线（2026-09-29 定）**：所有货币相关 key 的 `en/id/th` 一律用简称 `CNY` / `HKD` / `IDR`（不用全称 `Chinese Yuan` / `Hong Kong Dollar` / `Indonesian Rupiah`）；`zh-CN` / `zh-HK` 保持中文（人民币/港币/印尼盾 · 人民幣/港幣/印尼盾）。两端 `common.label.currency*` 与 swap `frame.currency.*` 均适用，属核心术语基线，不再作为「允许不同」的例外。
 - **国际专名保留基线（2026-09-29 定）**：凡涉及国际通用专名/代号（`VIN`、`KYC`、`SN`、`Controller SN` 等）的 key，其 `en` / `id` / `th` 一律保留原文（`VIN`、`KYC`，不音译/意译）；**中文除外**——`zh-CN` / `zh-HK` 仍用中文表达（如「车架号」/「車架號」、「实名信息」/「實名資訊」）。
-- 检查口径：`node scripts/i18n_check.mjs` 按 **zh-CN 值分组**输出复核项 `TERM`（共有同中文条数、译法不一致条数 + 前 12 条样例，不计退出码）；逐条明细与裁决栏见 `i18n-cross-drift.md`。
-- 现状基线（2026-09-29 收敛完成，`demo.*` 已排除）：两目录共有同中文文案 **425 条**，**译法不一致 0 条**。治理四步闭环：① **内部译法统一**（同目录「一句中文一个译法」）；② **内部重复 key 清理**（同中文多键合并到 `common.*`，两目录各新建 44 个 common 键、删除全部重复特征键）；③ **跨目录对齐**（rent ↔ swap 52 条全数收敛）；④ **key 命名规范化**（通用文案归 `common.action`/`label`/`dateTime`/`toast`/`status` 等通用子命名空间，19 条，见 `i18n-key-naming.md`）。`common.*` 在两目录逐字一致。
+- 检查口径：`node scripts/i18n_check.mjs` 按 **zh-CN 值分组**（**不看 key 路径**）比较两目录译文集合，差异计入硬错误 `TERM`（共有同中文条数、译法不一致条数 + 前 12 条样例，**计入退出码**）；`demo.*` 与脚本内 `TERM_ALLOW`（品牌专名 YADEA / 2C2P）排除。逐条明细与裁决栏见 `i18n-cross-drift.md`。
+- 现状基线（2026-10-14 复核，`demo.*` 已排除）：两目录共有同中文文案 **443 条**，**译法不一致 0 条**（`TERM` 硬校验全绿）。治理四步闭环：① **内部译法统一**（同目录「一句中文一个译法」）；② **内部重复 key 清理**（同中文多键合并到 `common.*`，两目录各新建 44 个 common 键、删除全部重复特征键）；③ **跨目录对齐**（2026-09-29 收 52 条，2026-10-14 复检再收 12 条）；④ **key 命名规范化**（通用文案归 `common.action`/`label`/`dateTime`/`toast`/`status` 等通用子命名空间，19 条，见 `i18n-key-naming.md`）。
 
 ### 变更流程
 
 ```
-检测（node scripts/i18n_check.mjs，按 rent/ swap/ 两目录分组输出 MISSING/CHANGED/ORPHAN/占位符·数字不一致，另含 common 段跨目录一致性检查）
+检测（node scripts/i18n_check.mjs，按 rent/ swap/ 两目录分组输出 MISSING/ORPHAN/PLACEHOLDER/SUFFIX，另含按中文值锚定的 TERM 跨目录译法一致性硬校验）
 → 新增/变更 key 先写源语言值占位 → 显式翻译（禁止机翻直接入库、禁止中文常驻译文）
-→ 重跑校验：各目录 key 集合一致、占位符与数字集合一致、无数字后缀、common 两目录一致、**TERM 跨目录同中文文案译法一致**（见上节）
+→ 重跑校验：各目录 key 集合一致、占位符一致、无数字后缀、**TERM 跨目录同中文文案译法一致**（见上节；不要求 common 键集镜像）
 → 格式归一化后提交（幂等：已译项不覆盖）
 ```
 

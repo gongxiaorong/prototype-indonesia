@@ -1,4 +1,4 @@
-# rent ↔ swap 跨目录同义中文译法清单（阶段 2 · 跨目录对齐）
+# rent ↔ swap 跨目录同义中文译法清单（阶段 2 · 跨目录对齐 ＋ 阶段 3 · 中文值锚定复检）
 
 生成日期：2026-09-29（内部译法统一 + 重复 key 清理后重生成）　｜　来源：`locales/rent/zh-CN.json` × `locales/swap/zh-CN.json` 按**中文值分组**比对（`demo.*` 已排除）
 
@@ -8,7 +8,7 @@
 - 每条末尾留 `裁决：` 行，填 `rent` / `swap` / 自定义译法；落地时把两端对应 key 统一为该译法
 - 裁决顺序（AGENTS.md §5）：① `common.*` 已登记 → ② 术语基线 → ③ `rent/`（权威产物）侧
 - 已定规则：**货币**统一简称（`CNY`/`HKD`/`IDR`）；**国际专名**（`VIN`/`KYC`/`SN`…）外语保留原文、中文除外
-- 注意：`common.*` 键在两目录共享同值，改动会同时影响两端
+- **口径（2026-10-14 起）**：**按中文值锚定，不看 key 路径**——同句中文两端 key 各异也要译法一致；key 同名但中文不同不算漂移，`common.*` **不要求两目录互为副本**（各端可自行增删键）。本规则已由 `scripts/i18n_check.mjs` 的 `TERM` 硬校验强制（计入退出码）
 
 ### 1. {label}已复制
 - 键：rent `user.common.copiedFormat` ｜ swap `merchant.common.copiedLabel`
@@ -342,4 +342,31 @@
 - **en**：rent `Store Info` ｜ swap `Store Information`
 - **id**：rent `Info Toko` ｜ swap `Informasi Toko`
 - 裁决：swap
+
+---
+
+## 阶段 3 · 复检（2026-10-14）
+
+**规则变更**：检查口径从「`common.*` 按 key 逐键镜像（rent 每个 common 键 swap 必须同名同值）」改为「**按 zh-CN 值锚定**：同一句中文在两端译法必须一致」，并升为硬错误 `TERM`（计入退出码）。理由：两端业务不同，词表不该互相复制——`common.orders.*` / `common.orderStatus.*` 这类租车词被镜像进换电目录只产生死键；真正要守的是「同句中文译法一致」。旧规则下被判失败的 8 条 `common.orderStatus.*` / `common.label.*`（键同名但中文不同）在新口径下**不算漂移**，无需改动。
+
+复检共有同中文 **443** 条，译法不一致 **12** 条，**已全部收敛（当前 0）**：
+
+| # | 中文 | rent key | swap key | 差异语言 | 裁决 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 手机号 | `merchant.chargingOrder.phone` ｜ `common.phone` | `common.phone` | en / th（rent 内部一分二） | rent 内部统一 `Phone Number` / `หมายเลขโทรศัพท์` |
+| 2 | 完成时间 | `merchant.chargingOrder.completeTime` ｜ `common.orders.finishTime` | `common.orders.finishTime` | en | rent 内部统一 `Finish Time` |
+| 3 | 暂无订单 | `merchant.chargingOrder.empty` ｜ `common.orders.noOrders` | `common.orders.noOrders` | en（大小写） | rent 内部统一 `No Orders` |
+| 4 | 创建时间 | `merchant.chargingDevice.createTime`、`merchant.chargingOrder.createTime` ｜ `common.createTime` | `common.createTime` | en | rent 内部统一 `Created Time` |
+| 5 | 未获取到您的位置信息 | `user.search.noLocation` | `user.search.noLocation` | en / id / th / zh-HK | rent（`Location unavailable`…） |
+| 6 | 去开启 | `user.location.goSetting`、`merchant.chargingDevice.locGoSetting` | `action.goEnable` | en / id / th | rent（`Open Settings` / `Buka Pengaturan` / `เปิดการตั้งค่า`） |
+| 7 | 充电中 | `merchant.chargingDevice.charging` ｜ `user.charge.statusCharging` | `merchant.battery.charging` | id | rent（`Sedang Mengisi Daya`） |
+| 8 | 所属门店 | `merchant.chargingDevice.shop` ｜ `user.charge.store` | `merchant.station.store` | id / th | rent（`Toko` / `ร้านค้า`） |
+| 9 | 退款金额 | `merchant.chargingOrder.refundAmount` ｜ `user.charge.refundAmount` | `user.order.refundAmount` | th | rent（`จำนวนเงินคืน`） |
+| 10 | 启用状态 | `merchant.chargingDevice.enableStatus` | `merchant.cabinet.enabledStatus` | en / id / th | rent |
+| 11 | 告警列表 | `merchant.alert.list` | `merchant.cabinet.alarmList` | en / id | rent（`Alert List` / `Daftar Peringatan`；换电其余「告警」用词本已是 Alerts，此条属孤例） |
+| 12 | 电池控制 | `merchant.battery.control` | `merchant.battery.control` | zh-HK | rent（`電池控制`） |
+
+- 附带修正（同 #12 同族，换电侧 zh-HK 非繁体正字「控製」→「控制」共 5 处）：`merchant.battery.control`、`merchant.cabinet.control`、`merchant.door.remoteControl`、`demoOps.deviceControl`、`demoOps.flowControl`。
+- 落地方式：一次性脚本按上表改写 5 语文件（共 26 处值，zh-CN 未动），脚本已删除；`node scripts/i18n_check.mjs` → 0 硬错误。
+- 未受影响：旧规则下被误判的 8 条（`common.orderStatus.*` 6 条 + `common.label.businessHours`/`nearestStoreDistance`/`validUntil` 的 zh-CN 空格差异）不再参与比对，两目录各自保留自己的键值。
 

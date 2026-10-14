@@ -4,7 +4,7 @@
 
 口径：**通用 UI 文案**（确定 / 至 / 其他 / 取消 / 完成…）应置于 `common` 的**通用子命名空间**（`common.action.*`、`common.label.*`、`common.dateTime.*`、`common.toast.*`、`common.status.*` 等）；**专有文案**才留在 `common.orders.*` / `common.profile.*` / `user.*` / `merchant.*` 等语境位。
 
-判定方法：扫描两端 zh-CN，凡「文案 ∈ 通用词表」却挂在「非通用位」的 key 即候选。跨目录同一中文须合并到**同一个** `common.*` 键（`common.*` 在两目录逐字一致）。
+判定方法：扫描两端 zh-CN，凡「文案 ∈ 通用词表」却挂在「非通用位」的 key 即候选。跨目录同一中文须合并到**同一个** `common.*` 键（口径 2026-10-14 起改为**按中文值锚定**：两目录只要求同句中文译法一致，键集/键名**不要求互为副本**，见 `i18n-cross-drift.md` 阶段 3）。
 
 ## 候选清单（19 条）
 
