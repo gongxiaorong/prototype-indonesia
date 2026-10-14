@@ -4,3 +4,5 @@ locales1/
 locales2/
 # AI 工具临时产物
 .trae/
+.tmp-*
+.tmp-shots/

@@ -198,7 +198,7 @@ def main():
 
         # ── 第 3 章 手动续租 ─────────────────────────────
         js("p.showFeeDetail = false;"
-           "p.orderInfo = Object.assign({}, p.orderInfo, {status:'progress', statusText:'使用中', statusColor:'#2B3F5F',"
+           "p.orderInfo = Object.assign({}, p.orderInfo, {status:'progress', statusText:'租赁中', statusColor:'#2B3F5F',"
            "frame:'LSVAU2Z0B12345000', pickupTime:'2026-10-12 17:30:00', plan:'时租×2小时'}); return 'ok';")
         page.wait_for_timeout(800)
         page.evaluate("window.__T.scroll('bottom')")
