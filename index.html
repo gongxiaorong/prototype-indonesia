@@ -6213,8 +6213,16 @@ body.host-single-m #root-user{display:none}
      <div class="od-indent-2">
       <div class="form-row">
        <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
-        <span>到期前</span>
-        <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceDays" type="number" min="0" max="30" :disabled="!cfg.renewAuto" @input="cfgErr.renewAdvanceDays=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
+        <span>时租订单到期前</span>
+        <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceMinutes" type="number" min="0" max="60" :disabled="!cfg.renewAuto" @input="cfgErr.renewAdvanceMinutes=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-renew-minutes-input"></div>
+        <span>分钟自动续租</span>
+       </div>
+       <div v-if="cfgErr.renewAdvanceMinutes" class="form-hint text-[#DC2626]">{{ cfgErr.renewAdvanceMinutes }}</div>
+      </div>
+      <div class="form-row">
+       <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
+        <span>其它订单到期前</span>
+        <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceDays" type="number" min="0" max="30" :disabled="!cfg.renewAuto" @input="cfgErr.renewAdvanceDays=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-renew-days-input"></div>
         <span>天自动续租</span>
        </div>
        <div v-if="cfgErr.renewAdvanceDays" class="form-hint text-[#DC2626]">{{ cfgErr.renewAdvanceDays }}</div>
@@ -6895,7 +6903,7 @@ var MERGED_REFRESH={fn:null};
 /* 顶层委派件：商户端 setup 内定义真实 publishMerged 并注册句柄；此处让顶层 SYS_* 与用户端调用可用 */
 function publishMerged(){if(MERGED_REFRESH&&MERGED_REFRESH.fn)MERGED_REFRESH.fn();}
 const csList=Vue.ref([]);
-const cfg=Vue.ref({pre:1,breach:3,renewEnabled:true,renewTypes:['VEHICLE','BATTERY','PACKAGE'],renewManual:true,renewStatuses:['IN_USE','TO_RETURN','OVERDUE','BREACH'],renewAuto:true,renewAdvanceDays:1,renewRemindDays:1,renewFailThreshold:3,requireRealName:true,autoLockVehicle:true,autoLockBattery:true});
+const cfg=Vue.ref({pre:1,breach:3,renewEnabled:true,renewTypes:['VEHICLE','BATTERY','PACKAGE'],renewManual:true,renewStatuses:['IN_USE','TO_RETURN','OVERDUE','BREACH'],renewAuto:true,renewAdvanceMinutes:15,renewAdvanceDays:1,renewRemindDays:1,renewFailThreshold:3,requireRealName:true,autoLockVehicle:true,autoLockBattery:true});
 const rechargeList=Vue.ref([{id:1,amount:100,giftAmount:10,status:1,remark:'新用户首充优惠'},{id:2,amount:200,giftAmount:30,status:1,remark:'常规定制套餐'},{id:3,amount:500,giftAmount:80,status:1,remark:''}]);
 const rechargeEnabled=Vue.ref(true);
 const rechargeCustom=Vue.ref(true);
@@ -10331,11 +10339,11 @@ function onHmWheelScroll(kind,e){
 }
 let delCsI=-1;function delCs(i){if(!can('cs_info.delete')){deny();return}delCsI=i;profileMod.value='delCs'}
 
-var cfgSaving=ref(false);const cfgErr=ref({pre:'',breach:'',renewAdvanceDays:'',renewFailThreshold:''});
+var cfgSaving=ref(false);const cfgErr=ref({pre:'',breach:'',renewAdvanceMinutes:'',renewAdvanceDays:'',renewFailThreshold:''});
 const renewTypeOpts=[{v:'VEHICLE',l:'车辆租赁'},{v:'BATTERY',l:'电池租赁'},{v:'PACKAGE',l:'车电套餐'}];
 const renewStatusOpts=[{v:'IN_USE',l:'租赁中'},{v:'TO_RETURN',l:'即将到期'},{v:'OVERDUE',l:'逾期未还'},{v:'BREACH',l:'违约锁单'}];
 function toggleCfgArr(k,v){var a=cfg.value[k];var i=a.indexOf(v);if(i>=0)a.splice(i,1);else a.push(v);}
-function saveCfg(){if(!can('order_config.edit')){deny();return}if(cfgSaving.value)return;var e={};if(!Number.isInteger(cfg.value.pre)||cfg.value.pre<1||cfg.value.pre>365)e.pre='请输入 1–365 之间的整数';if(!Number.isInteger(cfg.value.breach)||cfg.value.breach<1||cfg.value.breach>365)e.breach='请输入 1–365 之间的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceDays)||cfg.value.renewAdvanceDays<0||cfg.value.renewAdvanceDays>30))e.renewAdvanceDays='请输入0-30的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewFailThreshold)||cfg.value.renewFailThreshold<0||cfg.value.renewFailThreshold>10))e.renewFailThreshold='请输入0-10的整数';cfgErr.value=e;if(e.pre||e.breach||e.renewAdvanceDays||e.renewFailThreshold)return;if(cfg.value.renewAuto&&!cfg.value.renewTypes.length){toast('请至少选择一种自动续租订单类型','warn');return}if(cfg.value.renewEnabled&&!cfg.value.renewStatuses.length){toast('请至少选择一种允许续租的订单状态','warn');return}cfgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('配置已保存','success');cfgSaving.value=false},400)}
+function saveCfg(){if(!can('order_config.edit')){deny();return}if(cfgSaving.value)return;var e={};if(!Number.isInteger(cfg.value.pre)||cfg.value.pre<1||cfg.value.pre>365)e.pre='请输入 1–365 之间的整数';if(!Number.isInteger(cfg.value.breach)||cfg.value.breach<1||cfg.value.breach>365)e.breach='请输入 1–365 之间的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceMinutes)||cfg.value.renewAdvanceMinutes<0||cfg.value.renewAdvanceMinutes>60))e.renewAdvanceMinutes='请输入0-60的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceDays)||cfg.value.renewAdvanceDays<0||cfg.value.renewAdvanceDays>30))e.renewAdvanceDays='请输入0-30的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewFailThreshold)||cfg.value.renewFailThreshold<0||cfg.value.renewFailThreshold>10))e.renewFailThreshold='请输入0-10的整数';cfgErr.value=e;if(e.pre||e.breach||e.renewAdvanceMinutes||e.renewAdvanceDays||e.renewFailThreshold)return;if(cfg.value.renewAuto&&!cfg.value.renewTypes.length){toast('请至少选择一种自动续租订单类型','warn');return}if(cfg.value.renewEnabled&&!cfg.value.renewStatuses.length){toast('请至少选择一种允许续租的订单状态','warn');return}cfgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('配置已保存','success');cfgSaving.value=false},400)}
 /* ══ 充值配置 ══ */
 
 

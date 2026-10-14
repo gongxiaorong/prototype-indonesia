@@ -771,13 +771,15 @@
       "order": "续租单",
       "failClose": "连续扣款失败{n}次后关闭订单自动续租",
       "advanceRange": "请输入0-30的整数",
+      "advanceRangeMinutes": "请输入0-60的整数",
       "failRange": "请输入0-10的整数",
       "allowManual": "允许手动续租",
       "breachDays": "逾期未还{n}天，自动变更为「违约锁单」状态",
       "needOrderStatus": "请至少选择一种允许续租的订单状态",
       "needOrderType": "请至少选择一种自动续租订单类型",
       "cancelSuccess": "续租已取消",
-      "beforeDueAuto": "到期前{n}天自动续租",
+      "beforeDueAutoDays": "其它订单到期前{n}天自动续租",
+      "beforeDueAutoMinutes": "时租订单到期前{n}分钟自动续租",
       "realNameTip": "开启后，用户在下单时必须选择实名信息，否则无法提交订单"
     },
     "profile": {

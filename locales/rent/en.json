@@ -771,13 +771,15 @@
       "order": "Renewal Order",
       "failClose": "Disable auto renewal after {n} consecutive failed charges",
       "advanceRange": "Please enter an integer between 0 and 30",
+      "advanceRangeMinutes": "Please enter an integer between 0 and 60",
       "failRange": "Please enter an integer between 0 and 10",
       "allowManual": "Allow Manual Renewal",
       "breachDays": "{n} days after order overdue, status changes to 「Breach Locked」",
       "needOrderStatus": "Select at least one order status allowed to renew",
       "needOrderType": "Select at least one order type for auto renewal",
       "cancelSuccess": "Renewal cancelled",
-      "beforeDueAuto": "Auto renew {n} days before due date",
+      "beforeDueAutoDays": "Auto renew {n} days before due date for other orders",
+      "beforeDueAutoMinutes": "Auto renew {n} minutes before due date for hourly orders",
       "realNameTip": "When enabled, users must select verified identity info at checkout, or the order cannot be submitted"
     },
     "profile": {

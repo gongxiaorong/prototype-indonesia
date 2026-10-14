@@ -771,13 +771,15 @@
       "order": "Pesanan Perpanjangan",
       "failClose": "Nonaktifkan perpanjangan otomatis setelah {n} kali penagihan gagal berturut-turut",
       "advanceRange": "Masukkan bilangan bulat antara 0 dan 30",
+      "advanceRangeMinutes": "Masukkan bilangan bulat antara 0 dan 60",
       "failRange": "Masukkan bilangan bulat antara 0 dan 10",
       "allowManual": "Izinkan Perpanjangan Manual",
       "breachDays": "{n} hari pesanan terlambat, status berubah menjadi 「Terkunci」",
       "needOrderStatus": "Pilih minimal satu status pesanan yang boleh diperpanjang",
       "needOrderType": "Pilih minimal satu tipe pesanan untuk perpanjangan otomatis",
       "cancelSuccess": "Perpanjangan dibatalkan",
-      "beforeDueAuto": "Perpanjang otomatis {n} hari sebelum jatuh tempo",
+      "beforeDueAutoDays": "Perpanjang otomatis {n} hari sebelum jatuh tempo untuk pesanan lainnya",
+      "beforeDueAutoMinutes": "Perpanjang otomatis {n} menit sebelum jatuh tempo untuk pesanan sewa per jam",
       "realNameTip": "Saat diaktifkan, pengguna harus memilih informasi identitas terverifikasi saat checkout, atau pesanan tidak dapat dikirim"
     },
     "profile": {

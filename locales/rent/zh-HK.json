@@ -771,13 +771,15 @@
       "order": "續租單",
       "failClose": "連續扣款失敗{n}次後關閉訂單自動續租",
       "advanceRange": "請輸入0-30的整數",
+      "advanceRangeMinutes": "請輸入0-60的整數",
       "failRange": "請輸入0-10的整數",
       "allowManual": "允許手動續租",
       "breachDays": "逾期未還{n}天，自動變更為「違約鎖單」狀態",
       "needOrderStatus": "請至少選擇一種允許續租的訂單狀態",
       "needOrderType": "請至少選擇一種自動續租訂單類型",
       "cancelSuccess": "續租已取消",
-      "beforeDueAuto": "到期前{n}天自動續租",
+      "beforeDueAutoDays": "其他訂單到期前{n}天自動續租",
+      "beforeDueAutoMinutes": "時租訂單到期前{n}分鐘自動續租",
       "realNameTip": "開啟後，用戶在下單時必須選擇實名資訊，否則無法提交訂單"
     },
     "profile": {
