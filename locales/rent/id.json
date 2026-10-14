@@ -435,7 +435,7 @@
       },
       "returnTimeLabel": "Waktu Pengembalian",
       "overdueRules": {
-        "1": "Harap kembalikan kendaraan/baterai dalam waktu pengembalian yang disepakati dalam pesanan.",
+        "1": "Harap kembalikan kendaraan/baterai dalam waktu yang disepakati dalam pesanan.",
         "2": "Jika terjadi pengembalian terlambat, merchant dapat memotong biaya terkait keterlambatan dari deposit.",
         "3": "Jika deposit tidak cukup untuk potongan, merchant berhak menagih selisihnya kepada pengguna.",
         "4": "Jika kendaraan tidak dikembalikan melewati jumlah hari yang disepakati, merchant berhak mengunci kendaraan secara jarak jauh dan membatasi pelepasan baterai."
