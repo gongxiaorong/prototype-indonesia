@@ -3681,12 +3681,9 @@ body.host-single-m #root-user{display:none}
 <bottom-sheet :open="vehMoreOpen" title="更多操作" :mask-z="900" panel-oid="veh-ops-sheet" @close="vehMoreOpen=false">
 <div class="pt-1">
 <div v-if="can('vehicle.edit')" data-cp @click="vehMoreOpen=false;openVehEdit()" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="veh-op-edit"><span class="text-[15px] font-medium">编辑</span></div>
-<div v-if="can('vehicle.change_shop')" data-cp @click="vehMoreOpen=false;vehShopPick=true" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="veh-op-shop"><span class="text-[15px] font-medium">更换门店</span></div>
+<div v-if="can('vehicle.change_shop')" data-cp @click="vehMoreOpen=false;openShopPick('veh')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="veh-op-shop"><span class="text-[15px] font-medium">更换门店</span></div>
 </div>
 </bottom-sheet>
-
-<!-- ═══ VEHICLE · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
-<option-sheet :open="vehShopPick" title="更换门店" :options="vehShopOptions" :model-value="dv.shopId" :mask-z="800" oid="veh-shop-mask" panel-oid="veh-shop-picker" @select="vehPickShop" @close="vehShopPick=false"></option-sheet>
 
 <!-- ═══ VEHICLE LOCATION DETAIL ═══ -->
 <page :open="vehOV==='location'" :z="510" :swipe-close="()=>goBack()" oid="veh-location-page">
@@ -4158,12 +4155,10 @@ body.host-single-m #root-user{display:none}
 <bottom-sheet :open="battMoreOpen" title="更多操作" :mask-z="900" panel-oid="batt-ops-sheet" @close="battMoreOpen=false">
 <div class="pt-1">
 <div v-if="can('battery.edit')" data-cp @click="battMoreOpen=false;openBattEdit()" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="batt-op-edit"><span class="text-[15px] font-medium">编辑</span></div>
-<div v-if="can('battery.change_shop')" data-cp @click="battMoreOpen=false;battShopPick=true" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="batt-op-shop"><span class="text-[15px] font-medium">更换门店</span></div>
+<div v-if="can('battery.change_shop')" data-cp @click="battMoreOpen=false;openShopPick('batt')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="batt-op-shop"><span class="text-[15px] font-medium">更换门店</span></div>
 </div>
 </bottom-sheet>
 
-<!-- ═══ BATTERY · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
-<option-sheet :open="battShopPick" title="更换门店" :options="battShopOptions" :model-value="curBatt?curBatt.shopId:''" :mask-z="800" oid="batt-shop-mask" panel-oid="batt-shop-picker" @select="battPickShop" @close="battShopPick=false"></option-sheet>
 
 <confirm-dialog :open="battMod" :title="battModTitle" :desc="battModDesc" :loading="battModLoading" z="800" @close="battMod=null" @confirm="battConfirmMod"></confirm-dialog>
 
@@ -5212,7 +5207,21 @@ body.host-single-m #root-user{display:none}
 <confirm-dialog :open="cdShowLocService" z="550" oid="cd-loc-service-modal" title="定位服务" desc="请在系统设置中开启定位服务，以自动获取设备地址" :cancel-text="'取消'" :confirm-text="'去开启'" confirm-bg="var(--accent)" @close="cdCancelLocService" @confirm="cdAllowLocService"></confirm-dialog>
 
 <!-- ═══ 充电设备 · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
-<option-sheet :open="cdMod==='shop'" title="更换门店" :options="cdShopOptions" :model-value="cdModForm.shopId" :mask-z="800" oid="cd-shop-mask" panel-oid="cd-shop-picker" @select="cdPickShop" @close="cdCloseMod"></option-sheet>
+<!-- ═══ 商户端 · 更换门店弹窗（对标「选择车型」：搜索 + 列表行；行内回显同门店列表＝门店名 + 地址；
+     车辆 / 电池 / 充电设备三处共用，由 shopPickTarget 分派回写） ═══ -->
+<bottom-sheet :open="shopPickTarget!==''" title="更换门店" :mask-z="800" max-h="65%" panel-oid="shop-pick-sheet" @close="closeShopPick">
+<div class="sheet-search">
+<span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
+<input v-model="shopPickQ" type="text" placeholder="搜索门店" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" data-od-id="shop-pick-search">
+</div>
+<div class="flex-1 overflow-y-auto" data-od-id="shop-pick-list">
+<div v-for="s in shopPickList" :key="s.id" data-cp @click="pickShop(s.id)" class="flex items-center px-5 py-4 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED" :data-od-id="'shop-pick-' + s.id">
+<div class="w-12 h-12 rounded-lg bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('building-2','w-7 h-7 text-[var(--accent)]')"></span></div>
+<div class="flex-1 min-w-0"><div class="text-[15px] font-medium truncate">{{ s.name }}</div><div class="text-[12px] text-[#999] truncate mt-0.5">{{ s.addr }}</div></div>
+<span v-if="shopPickCurId===s.id" v-html="luci('check','w-5 h-5 text-[var(--accent)] shrink-0')"></span>
+</div>
+</div>
+</bottom-sheet>
 
 <!-- ═══ 充电设备 · 禁用/启用二次确认 ═══ -->
 <confirm-dialog :open="!!cdConfirm" :title="cdConfirmTitle" :desc="cdConfirmDesc" :loading="cdConfirmLoading" z="820" oid="cd-toggle-modal" :confirm-bg="cdConfirm==='disable'?'#DC2626':'var(--accent)'" @close="cdConfirm=''" @confirm="cdDoToggle"></confirm-dialog>
@@ -8561,11 +8570,8 @@ const editSelectedProtocol=computed(()=>(editSelectedModel.value?.protocolType)|
 function openVehEdit(){navOpen();if(!can('vehicle.edit')){deny();return}editCtrl.value=dv.value.ctrl;editModel.value=dv.value.model;editPlate.value=dv.value.plate;vehOV.value='edit'}
 function saveVehEdit(){dv.value.ctrl=editCtrl.value;dv.value.model=editModel.value;dv.value.plate=editPlate.value;dv.value.protocol=editSelectedProtocol.value;dv.value.startMode=dv.value.startMode||'onekey';const idx=vehicles.value.findIndex(v=>v.vin===dv.value.vin);if(idx>=0){vehicles.value[idx].ctrl=editCtrl.value;vehicles.value[idx].model=editModel.value;vehicles.value[idx].plate=editPlate.value;vehicles.value[idx].protocol=editSelectedProtocol.value;vehicles.value[idx].startMode=vehicles.value[idx].startMode||'onekey'}navDrop();vehOV.value='detail';toast('车辆信息已保存','success')}
 function vehOpenDetail(v){navOpen();if(!can('vehicle.detail')){deny();return}dv.value={...v};armed.value=false;lost.value=v.lost||false;motorLocked.value=!!v.motorLocked;vehOV.value='detail'}
-/* ══ 车辆 · 更多操作（编辑 / 更换门店） ══ */
-const vehMoreOpen=ref(false),vehShopPick=ref(false);
-const vehShopOptions=computed(()=>storeOptions.value.map(s=>({value:s.v,label:s.l})));
-/* 更换门店：OptionSheet 选中即提交（空值忽略、选中门店未变则仅关闭）；详情对象是副本，同步回列表源数据 */
-function vehPickShop(v){if(v===''||v==null)return;if(Number(v)===Number(dv.value.shopId)){vehShopPick.value=false;return}dv.value.shopId=Number(v);const i=vehicles.value.findIndex(x=>x.vin===dv.value.vin);if(i>=0)vehicles.value[i].shopId=Number(v);vehShopPick.value=false;toast('所属门店已更换','success')}
+/* ══ 车辆 · 更多操作（编辑 / 更换门店；更换门店走共用弹窗 openShopPick('veh')） ══ */
+const vehMoreOpen=ref(false);
 function vehOpenAdd(){navOpen();if(!can('vehicle.add')){deny();return}vehOV.value='add'}
 function vehToggleViewSafe(){vehToggleView()}
 /* ══ VEHICLE LOCATION DETAIL ══ */
@@ -9064,10 +9070,8 @@ function battOpenReportLost(){if(!can('battery.discharge')){deny();return}battMo
 const battModLoading=ref(false); function battConfirmMod(){if(battModLoading.value)return;battModLoading.value=true;setTimeout(()=>{battModLoading.value=false;const b=curBatt.value;if(!b)return;if(battMod.value==='unbind'){if(unbindBlocked(b&&b.status)){battMod.value=null;return}if(b&&b.battNo){var _mb=batteries.value.find(function(x){return x.battNo===b.battNo});if(_mb){_mb.status='空闲';_mb.account='';_mb.phone='';_mb.email='';_mb.vin=''}b.account='';b.phone='';b.email='';b.vin='';b.status='空闲'}toast('解绑成功','success')}else if(battMod.value==='lost'){b.lost=!b.lost;if(b.lost)b.discharge=false;toast(b.lost?'报失成功':'解除报失成功','success')}else{b.discharge=!b.discharge;toast(b.discharge?'已允许放电':'已禁止放电','success')}battMod.value=null},600)}
 const battEditModel=ref('');
 function openBattEdit(){navOpen();if(!can('battery.edit')){deny();return}battEditModel.value=curBatt.value?curBatt.value.model:'';ordersOV.value='battEdit'}
-/* ══ 电池 · 更多操作（编辑 / 更换门店） ══ */
-const battMoreOpen=ref(false),battShopPick=ref(false);
-const battShopOptions=computed(()=>storeOptions.value.map(s=>({value:s.v,label:s.l})));
-function battPickShop(v){if(v===''||v==null)return;const b=curBatt.value;if(!b)return;if(Number(v)===Number(b.shopId)){battShopPick.value=false;return}b.shopId=Number(v);const i=batteries.value.findIndex(x=>x.battNo===b.battNo);if(i>=0)batteries.value[i].shopId=Number(v);battShopPick.value=false;toast('所属门店已更换','success')}
+/* ══ 电池 · 更多操作（编辑 / 更换门店；更换门店走共用弹窗 openShopPick('batt')） ══ */
+const battMoreOpen=ref(false);
 function saveBattEdit(){const b=curBatt.value;if(!b)return;b.model=battEditModel.value;const idx=batteries.value.findIndex(x=>x.battNo===b.battNo);if(idx>=0)batteries.value[idx].model=battEditModel.value;navDrop();ordersOV.value='battDetail';toast('电池信息已保存','success')}
 /* ══ BATTERY LOCATION DETAIL ══ */
 const battLocLoading=ref(false),battLocFocus=ref('battery');
@@ -10495,7 +10499,7 @@ const chargeDevices=ref([
 const cdOV=ref('');              // '' | 'list' | 'detail' | 'add' | 'edit' | 'addrMap'
 const curChargeDev=ref(null);
 const cdQ=ref('');
-const cdMod=ref('');             // '' | 'price' | 'shop'（编辑设备已改为独立页面，不再走弹窗）
+const cdMod=ref('');             // '' | 'price'（编辑设备为独立页面、更换门店走共用弹窗 openShopPick('cd')，均不再走 cdMod）
 const cdConfirm=ref('');         // '' | 'disable' | 'enable'
 const cdAddForm=ref({deviceNo:'',address:''});
 const cdModForm=ref({deviceNo:'',address:'',price:0,maxDuration:0,shopId:''});
@@ -10506,7 +10510,6 @@ const cdConfirmLoading=ref(false);
 function cdEnableTag(s){return s==='ENABLE'?{l:'启用',c:'#17A34A'}:{l:'禁用',c:'#999'}}
 function cdUsageTag(u){return Number(u)===1?{l:'充电中',c:'#1A82F4'}:{l:'空闲',c:'#17A34A'}}
 function storeNameOf(id){var s=stores.value[(Number(id)||0)-1];return s?s.name:'未分配门店'}
-const storeOptions=computed(()=>stores.value.map((s,i)=>({v:i+1,l:s.name})));
 /* 单价 / 最大充电时长恒有值（缺省 0），列表与详情不再出现「-」占位 */
 function cdPriceText(d){return fmtRp(d&&d.price!=null?Number(d.price)||0:0,0)+'/分钟'}
 function cdDurText(d){return String(d&&d.maxDuration!=null?Number(d.maxDuration)||0:0)+'分钟'}
@@ -10623,7 +10626,7 @@ function cdGoBack(){navBack()}
 function cdOpenMod(kind){var d=curChargeDev.value;if(!d)return;
   if(kind==='edit'){if(!can('charge_device.edit')){deny();return}cdModForm.value={deviceNo:d.deviceNo,address:d.address};cdErr.value={};navOpen();cdOV.value='edit'}
   else if(kind==='price'){if(!can('charge_device.price')){deny();return}cdModForm.value={price:Number(d.price)||0,maxDuration:Number(d.maxDuration)||0};cdErr.value={};cdMod.value='price'}
-  else if(kind==='shop'){if(!can('charge_device.change_shop')){deny();return}if(d.status!=='DISABLE'){toast('请先禁用设备后再更换门店','warn');return}cdModForm.value={shopId:d.shopId||''};cdErr.value={};cdMod.value='shop'}}
+  else if(kind==='shop'){if(!can('charge_device.change_shop')){deny();return}if(d.status!=='DISABLE'){toast('请先禁用设备后再更换门店','warn');return}openShopPick('cd')}}
 function cdCloseMod(){cdMod.value='';cdErr.value={}}
 /* —— 操作：新增 / 编辑 / 定价 / 启用禁用 / 更换门店 —— */
 function cdSaveAdd(){if(cdSaving.value)return;var f=cdAddForm.value,e={};
@@ -10648,11 +10651,21 @@ function cdSavePrice(){if(cdSaving.value)return;var d=curChargeDev.value;if(!d)r
   else if(Number(f.maxDuration)%1!==0)e.maxDuration='最大充电时长须为整数';
   cdErr.value=e;if(Object.keys(e).length)return;
   cdSaving.value=true;setTimeout(function(){d.price=Number(f.price);d.maxDuration=Number(f.maxDuration);cdSaving.value=false;cdCloseMod();toast('定价已保存','success')},400)}
-const cdShopOptions=computed(()=>storeOptions.value.map(function(s){return {value:s.v,label:s.l}}));
-/* 更换门店：OptionSheet 选中即提交（空值忽略、选中门店未变则仅关闭） */
-function cdPickShop(v){if(cdSaving.value)return;var d=curChargeDev.value;if(!d)return;if(v===''||v==null)return;
-  if(Number(v)===Number(d.shopId)){cdCloseMod();return}
-  cdSaving.value=true;setTimeout(function(){d.shopId=Number(v);cdSaving.value=false;cdCloseMod();toast('所属门店已更换','success')},400)}
+/* ══ 商户端 · 更换门店弹窗（对标「选择车型」：搜索 + 列表行；行内回显数据同门店列表＝门店名 + 地址）
+   三处共用：车辆详情 / 电池详情 / 充电设备详情，按 shopPickTarget 分派回写 ══ */
+const shopPickTarget=ref('');            // '' | 'veh' | 'batt' | 'cd'
+const shopPickQ=ref('');
+const shopPickList=computed(()=>{const q=shopPickQ.value.trim().toLowerCase();return stores.value.map((s,i)=>({id:i+1,name:s.name,addr:s.addr||''})).filter(s=>!q||s.name.toLowerCase().includes(q)||s.addr.toLowerCase().includes(q))});
+const shopPickCurId=computed(()=>shopPickTarget.value==='veh'?Number(dv.value.shopId)||0:shopPickTarget.value==='batt'?Number(curBatt.value&&curBatt.value.shopId)||0:shopPickTarget.value==='cd'?Number(curChargeDev.value&&curChargeDev.value.shopId)||0:0);
+function openShopPick(target){shopPickQ.value='';shopPickTarget.value=target}
+function closeShopPick(){shopPickTarget.value=''}
+/* 选中即提交：门店未变仅关闭；车辆详情是副本，需同步回列表源数据 */
+function pickShop(id){const sid=Number(id)||0;if(!sid)return;const t=shopPickTarget.value;
+  if(t==='veh'){const v=dv.value;if(sid===Number(v.shopId)){closeShopPick();return}v.shopId=sid;const i=vehicles.value.findIndex(x=>x.vin===v.vin);if(i>=0)vehicles.value[i].shopId=sid}
+  else if(t==='batt'){const b=curBatt.value;if(!b)return;if(sid===Number(b.shopId)){closeShopPick();return}b.shopId=sid;const i=batteries.value.findIndex(x=>x.battNo===b.battNo);if(i>=0)batteries.value[i].shopId=sid}
+  else if(t==='cd'){const d=curChargeDev.value;if(!d)return;if(sid===Number(d.shopId)){closeShopPick();return}d.shopId=sid}
+  else return;
+  closeShopPick();toast('所属门店已更换','success')}
 function cdAskToggle(){var d=curChargeDev.value;if(!d)return;if(!can('charge_device.toggle')){deny();return}cdConfirm.value=d.status==='ENABLE'?'disable':'enable'}
 function cdDoToggle(){if(cdConfirmLoading.value)return;cdConfirmLoading.value=true;setTimeout(function(){cdConfirmLoading.value=false;var d=curChargeDev.value;if(d)d.status=(d.status==='ENABLE'?'DISABLE':'ENABLE');var was=cdConfirm.value;cdConfirm.value='';toast(was==='disable'?'设备已禁用':'设备已启用','success')},500)}
 const cdConfirmTitle=computed(()=>cdConfirm.value==='disable'?'禁用设备':(cdConfirm.value==='enable'?'启用设备':''));
@@ -10986,7 +10999,7 @@ dv,armed,lost,motorLocked,findLoading,addModel,addVin,addCtrl,modelQ,selectedMod
 vehModTitle,vehModDesc,vehModDanger,
 vehOpenDetail,vehOpenAdd,vehToggleViewSafe,vehDoSearch,startPress,endPress,doFind,vehOpenArm,vehOpenLost,vehOpenMotorLock,vehConfirmMod,pickModel,scanVin,doScan,scanning,scanTorch,showManualInput,manualVin,openManualInput,confirmManualVin,submitAdd,
 vehOpenFS,vehToggleFSModel,vehToggleFSOnline,vehToggleFSLost,vehResetFS,vehApplyFS,vehClearFilters,vehSetPill,sc,bi,bc,
-editCtrl,editModel,editPlate,editSelectedModel,editSelectedProtocol,openVehEdit,saveVehEdit,vehMoreOpen,vehShopPick,vehShopOptions,vehPickShop,
+editCtrl,editModel,editPlate,editSelectedModel,editSelectedProtocol,openVehEdit,saveVehEdit,vehMoreOpen,
 openVehLocation,locLoading,locRinging,locFocus,locVehPt,locUserPt,locAddressFull,locAddressShort,locDistM,locWalkMin,locFocusUser,locFocusVehicle,locRingVehicle,locOpenNav,
 openVehTrack,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,
 
@@ -10997,7 +11010,7 @@ ordersOV,ordersMod,ordersShowFS,showRefund,ordersRefreshing,ordersQ,searchScope,
 orders,allStatus,demoAllStatus,paySts,demoPayStsFixed,filteredDemoPaySts,quickPills,qCnt,oFiltered,orderCustomerText,
 ordersType,typePills,typeCnt,ordersSetType,ordersTypeActive,
 ordersEntry,ordersPlaceholder,ordersLName,ordersListTitle,orderEntries,homeOpenOrders,closeOrderList,
-batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSearch,battOpenDetail,battMod,battDischarge,battModTitle,battModDesc,battOpenDischarge,battOpenReportLost,battConfirmMod,openBattLocation,loadBattLocData,battLocLoading,battLocFocus,battLocAddressFull,battLocAddressShort,battLocDistM,battLocWalkMin,battLocBattPt,battLocUserPt,battLocFocusUser,battLocFocusBattery,battLocOpenNav,openBattTrack,battTrackStart,battTrackEnd,battTrackDraft,battTrackTimePicker,battTrackLoading,battTrackPoints,battTrackWheelDay,battTrackWheelMonth,battTrackWheelYear,battTrackWheelHour,battTrackWheelMin,battTrackDays,battTrackMonths,battTrackYears,battTrackHours,battTrackMins,battTrackStartLabel,battTrackEndLabel,battTrackPois,battTrackPolyline,battTrackStartPt,battTrackEndPt,openBattTrackTimePicker,cancelBattTrackTimePicker,confirmBattTrackTimePicker,onBattTrackWheelScroll,battShowFS,battFsModelC,battFsOnlineC,battFsLostC,battHasF,battFsModels,battOpenFS,battToggleFSModel,battToggleFSOnline,battToggleFSLost,battResetFS,battApplyFS,battClearFilters,battSetPill,battView,battToggleView,battMapBatteries,battNoLocationCount,battMapSelected,battMapSelectedBatt,battMapSelect,battMapPinStyle,battCluster,battEditModel,openBattEdit,saveBattEdit,battMoreOpen,battShopPick,battShopOptions,battPickShop,battAddModel,battAddNo,battModelQ,battModels,battShowModelSheet,battFilteredModels,canBattSubmit,pickBattModel,openBattAdd,closeBattAdd,submitBattAdd,scanBattNo,scanTarget,scanFrom,vehListScan,battListScan,
+batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSearch,battOpenDetail,battMod,battDischarge,battModTitle,battModDesc,battOpenDischarge,battOpenReportLost,battConfirmMod,openBattLocation,loadBattLocData,battLocLoading,battLocFocus,battLocAddressFull,battLocAddressShort,battLocDistM,battLocWalkMin,battLocBattPt,battLocUserPt,battLocFocusUser,battLocFocusBattery,battLocOpenNav,openBattTrack,battTrackStart,battTrackEnd,battTrackDraft,battTrackTimePicker,battTrackLoading,battTrackPoints,battTrackWheelDay,battTrackWheelMonth,battTrackWheelYear,battTrackWheelHour,battTrackWheelMin,battTrackDays,battTrackMonths,battTrackYears,battTrackHours,battTrackMins,battTrackStartLabel,battTrackEndLabel,battTrackPois,battTrackPolyline,battTrackStartPt,battTrackEndPt,openBattTrackTimePicker,cancelBattTrackTimePicker,confirmBattTrackTimePicker,onBattTrackWheelScroll,battShowFS,battFsModelC,battFsOnlineC,battFsLostC,battHasF,battFsModels,battOpenFS,battToggleFSModel,battToggleFSOnline,battToggleFSLost,battResetFS,battApplyFS,battClearFilters,battSetPill,battView,battToggleView,battMapBatteries,battNoLocationCount,battMapSelected,battMapSelectedBatt,battMapSelect,battMapPinStyle,battCluster,battEditModel,openBattEdit,saveBattEdit,battMoreOpen,battAddModel,battAddNo,battModelQ,battModels,battShowModelSheet,battFilteredModels,canBattSubmit,pickBattModel,openBattAdd,closeBattAdd,submitBattAdd,scanBattNo,scanTarget,scanFrom,vehListScan,battListScan,
 ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
 ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelYear,ordersDateWheelMonth,ordersDateWheelDay,
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,
@@ -11012,7 +11025,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDeta
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,navOpen,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
-  curStore,menuGroups,openMenu,stores,doSwitch,orderStoreNameOf,orderPaidAmountOf,orderUnpaidAmountOf,
+  curStore,menuGroups,openMenu,stores,doSwitch,orderStoreNameOf,orderPaidAmountOf,orderUnpaidAmountOf,shopPickTarget,shopPickQ,shopPickList,shopPickCurId,openShopPick,closeShopPick,pickShop,
 appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
@@ -11022,7 +11035,7 @@ hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,c
 profileMdT,profileMdD,profileMdDanger,profileMdOk,
 fE,vErr,vClr,tip,tipShow,tipToggle,tipHide,stage,
 roOV,curRechargeOrder,roRefundMod,roRefundConfirm,roRefundForm,roRefunds,rechargeOrders,roPayStatusTag,roPayChannelText,roOpenList,roOpenDetail,roCloseList,roGoBack,roCanRefund,roCanRefundRecords,roOpenRefunds,roRefundTotal,roOpenRefund,roSubmitRefund,roConfirmRefund,roCancelMod,roCancelLoading,ignoreLoading,vehModLoading,battModLoading,psDoLoading,ordersModLoading,profileModLoading,uUnbindLoading,roRefundLoading,delDocLoading,roRequestCancel,roConfirmCancel,roQ,roSearchScope,roSearchScopeOpen,roSearchScopeOpts,roSearchScopeLabel,roSearchPH,roStatus,roStatusTabs,roStatusActive,roTabCnt,roHasF,rechargeFiltered,roShowFS,roFsPayC,roFsPayStC,roFsPayStOpts,roFsStartC,roFsEndC,roFsMinC,roFsMaxC,roOpenFS,roToggleFsPaySt,roResetFS,roApplyFS,roDoSearch,setRoSearchScope,roClearFilters,rechargeCustomerText,roDatePicker,roDateDraft,roDateWheelYear,roDateWheelMonth,roDateWheelDay,roDateYears,roDateDays,openRoDatePicker,cancelRoDatePicker,confirmRoDatePicker,onRoDateWheelScroll,
-chargeDevices,cdOV,curChargeDev,cdQ,cdPill,cdMod,cdConfirm,cdAddForm,cdModForm,cdErr,cdSaving,cdConfirmLoading,cdMoreOpen,cdPills,cdCnt,cdPillActive,cdSetPill,cdOpenFS,cdResetFS,cdApplyFS,cdDoSearch,cdClearFilters,cdFsStatus,cdFsStatusC,cdFsUsage,cdFsUsageC,cdShowFS,cdHasF,chargeDevFiltered,cdEnableTag,cdUsageTag,cdPriceText,cdDurText,storeNameOf,storeOptions,cdOpenList,cdOpenDetail,cdOpenAdd,cdListScan,CD_ADDR_POINTS,cdClearAddr,cdAddrTarget,cdMapQ,cdMapList,cdMapBox,cdMapOff,cdMapDragging,cdMapDraft,cdMapWorldStyle,cdMapDown,cdMapMove,cdMapUp,cdOpenAddrMap,cdPickMapPoint,cdConfirmAddrMap,cdLocAppAuth,cdLocService,cdShowLocAppAuth,cdShowLocService,cdUseLoc,cdAllowLocAppAuth,cdDenyLocAppAuth,cdCancelLocService,cdAllowLocService,cdCloseList,cdGoBack,cdOpenMod,cdCloseMod,cdSaveAdd,cdSaveEdit,cdSavePrice,cdShopOptions,cdPickShop,cdAskToggle,cdDoToggle,cdConfirmTitle,cdConfirmDesc,refreshCd,
+chargeDevices,cdOV,curChargeDev,cdQ,cdPill,cdMod,cdConfirm,cdAddForm,cdModForm,cdErr,cdSaving,cdConfirmLoading,cdMoreOpen,cdPills,cdCnt,cdPillActive,cdSetPill,cdOpenFS,cdResetFS,cdApplyFS,cdDoSearch,cdClearFilters,cdFsStatus,cdFsStatusC,cdFsUsage,cdFsUsageC,cdShowFS,cdHasF,chargeDevFiltered,cdEnableTag,cdUsageTag,cdPriceText,cdDurText,storeNameOf,cdOpenList,cdOpenDetail,cdOpenAdd,cdListScan,CD_ADDR_POINTS,cdClearAddr,cdAddrTarget,cdMapQ,cdMapList,cdMapBox,cdMapOff,cdMapDragging,cdMapDraft,cdMapWorldStyle,cdMapDown,cdMapMove,cdMapUp,cdOpenAddrMap,cdPickMapPoint,cdConfirmAddrMap,cdLocAppAuth,cdLocService,cdShowLocAppAuth,cdShowLocService,cdUseLoc,cdAllowLocAppAuth,cdDenyLocAppAuth,cdCancelLocService,cdAllowLocService,cdCloseList,cdGoBack,cdOpenMod,cdCloseMod,cdSaveAdd,cdSaveEdit,cdSavePrice,cdAskToggle,cdDoToggle,cdConfirmTitle,cdConfirmDesc,refreshCd,
 coOrders,coOV,curChargeOrder,coQ,coSearchScope,coSearchScopeOpen,coSearchScopeOpts,coSearchScopeLabel,coSearchPH,coPill,coPills,coOrderStatusOpts,coCnt,coPillActive,coSetPill,coSetSearchScope,coDoSearch,coOpenFS,coToggleFsPaySt,coResetFS,coApplyFS,coClearFilters,coFiltered,coFsOrderSt,coFsOrderStC,coFsChannel,coFsChannelC,coFsPaySt,coFsPayStC,coFsStart,coFsEnd,coFsStartC,coFsEndC,coShowFS,coHasF,coPayStatusOpts,CO_PAY_CHANNELS,coOrderStatusTag,coPayStatusTag,coRefundStatusTag,coPayChannelText,coRefundedAmount,coRefundable,coCanRefund,coCanRefundRecords,coShowPayTime,coDurText,coAmountText,coOpenList,coOpenDetail,coCloseList,coGoBack,coOpenRefundRecords,coRefunds,coCancelMod,coCancelConfirm,coCancelLoading,coCancelForm,coCancelErr,coRequestCancel,coSubmitCancel,coConfirmCancel,coFinishMod,coFinishConfirm,coFinishLoading,coFinishForm,coFinishErr,coRequestFinish,coSubmitFinish,coConfirmFinish,coRefundMod,coRefundConfirm,coRefundLoading,coRefundForm,coRefundErr,coOpenRefund,coSubmitRefund,coConfirmRefund,refreshCo,coActionsVisible,coDatePicker,coDateDraft,coDateYears,coDateDays,coDateWheelYear,coDateWheelMonth,coDateWheelDay,openCoDatePicker,cancelCoDatePicker,confirmCoDatePicker,onCoDateWheelScroll
 };
 }

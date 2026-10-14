@@ -905,6 +905,7 @@
       "positionSaved": "Position saved",
       "csTimeError": "Start time cannot be later than or equal to end time",
       "storeList": "Store List",
+      "searchStore": "Search Store",
       "unboundUser": "Unbound User",
       "userDetail": "User Details",
       "searchPackageName": "Search package name",

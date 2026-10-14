@@ -905,6 +905,7 @@
       "positionSaved": "职位已保存",
       "csTimeError": "开始时间不能晚于或等于结束时间",
       "storeList": "门店列表",
+      "searchStore": "搜索门店",
       "unboundUser": "未绑定用户",
       "userDetail": "用户详情",
       "searchPackageName": "搜索套餐名称",
