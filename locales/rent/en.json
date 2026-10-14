@@ -429,7 +429,7 @@
         "3": "If auto renewal fails, you can go to the order details page to renew manually; eligible order types and statuses follow the store configuration, and any unpaid renewal order must be paid first."
       },
       "billingRules": {
-        "1": "Billing starts when the user binds the vehicle/battery.",
+        "1": "The rental start time is when the user binds the vehicle/battery.",
         "2": "Rent is calculated based on the rental plan selected for the order (hourly, daily, weekly, monthly).",
         "3": "If the rental duration is less than 1 billing period, it is charged as 1 full period."
       },

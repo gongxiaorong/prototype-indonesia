@@ -429,7 +429,7 @@
         "3": "Jika perpanjangan otomatis gagal, Anda dapat membuka detail pesanan untuk mengajukan perpanjangan secara manual; jenis dan status pesanan yang dapat diperpanjang mengikuti konfigurasi toko, dan pesanan perpanjangan yang belum dibayar harus dilunasi terlebih dahulu."
       },
       "billingRules": {
-        "1": "Waktu penagihan dimulai saat pengguna menghubungkan kendaraan/baterai.",
+        "1": "Waktu mulai sewa adalah saat pengguna menghubungkan kendaraan/baterai.",
         "2": "Sewa dihitung berdasarkan paket sewa yang dipilih untuk pesanan (per jam, per hari, mingguan, bulanan).",
         "3": "Jika durasi sewa kurang dari 1 periode, dihitung sebagai 1 periode penuh."
       },
