@@ -1879,7 +1879,7 @@ body.host-single-m #root-user{display:none}
 </page>
 
 <page :open="showOrderList" :z="1886" oid="order-list-page" data-page-node-id="CJvWFQFyIdyBMigZy8DsNm">
-<nav-bar title="订单列表" border-color="" data-page-node-id="QcI6K4qtsHzJhgQBGEaf3j" @back="navBack()"></nav-bar>
+<nav-bar :title="orderListCategory||'订单列表'" border-color="" data-page-node-id="QcI6K4qtsHzJhgQBGEaf3j" @back="navBack()"></nav-bar>
 <div class="bg-white px-4 pt-3 pb-2 flex gap-2 overflow-x-auto conf-scroll-hide select-none" style="touch-action:pan-x;scrollbar-width:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent" v-long-pan data-page-node-id="JoSNye7jTAXEJqiufjk4dO">
 <div v-for="f in orderFilterTabs" :key="f" class="shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition" :class="orderFilter===orderFilterMap[f]?'text-white bg-[#2B3F5F]':'text-[#666] bg-[#F6F7F9]'" data-cp @click="setOrderFilter(orderFilterMap[f])" data-page-node-id="b1Kz0bN9V71KL9Jen2vEdj">{{ f }}</div>
 </div>
@@ -9007,8 +9007,9 @@ const showOrderActionsBar=computed(()=>showActions.value&&(showPrimaryAction.val
 const ordersQ=ref(''),searchScope=ref('id'),ordersPill=ref(''),ordersType=ref(''),searchScopeOpen=ref(false);
 const ordersEntry=ref('');
 const ordersPlaceholder=computed(()=>!ordersEntry.value);
-const ordersLName=computed(()=>{const m={vehicle:'车辆',battery:'电池',package:'套餐'};return ordersEntry.value?m[ordersEntry.value]||'车辆':'电池'});
-const ordersListTitle=computed(()=>ordersLName.value+'订单列表');
+/* 列表标题即订单类型名称（车辆租赁 / 电池租赁 / 车电套餐），不再拼「订单列表」后缀 */
+const ordersLName=computed(()=>{const m={vehicle:'车辆租赁',battery:'电池租赁',package:'车电套餐'};return ordersEntry.value?m[ordersEntry.value]||'车辆租赁':'电池租赁'});
+const ordersListTitle=computed(()=>ordersLName.value);
 const orderEntries=computed(()=>[{v:'vehicle',l:'车辆租赁',icon:'bike',code:'order.list'},{v:'battery',l:'电池租赁',icon:'battery-charging',code:'order.battery.list'},{v:'package',l:'车电套餐',icon:'package',code:'order.package.list'}].filter(e=>can(e.code)));
 function homeOpenOrders(t){navOpen();const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value=_ordDateDef.start;ordersFsEnd.value=_ordDateDef.end;searchScope.value='id';tab.value='orders';triggerListLoading('ol-'+t)}
 function closeOrderList(){navBack()}
