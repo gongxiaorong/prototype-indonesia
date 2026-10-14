@@ -430,8 +430,8 @@
       },
       "billingRules": {
         "1": "Waktu penagihan dimulai saat pengguna menghubungkan kendaraan/baterai.",
-        "2": "Sewa periode dihitung berdasarkan paket sewa yang dipilih untuk pesanan.",
-        "3": "Jika durasi sewa kurang dari satu periode, dihitung sebagai satu periode."
+        "2": "Sewa dihitung berdasarkan paket sewa yang dipilih untuk pesanan (per jam, per hari, mingguan, bulanan).",
+        "3": "Jika durasi sewa kurang dari 1 periode, dihitung sebagai 1 periode penuh."
       },
       "returnTimeLabel": "Waktu Pengembalian",
       "overdueRules": {
