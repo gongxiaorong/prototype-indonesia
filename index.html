@@ -1895,8 +1895,8 @@ body.host-single-m #root-user{display:none}
 <kv-row label="所属门店" :value="o.store||'-'" data-page-node-id="TCeMERbNqv8UaHnFL8jpMW"></kv-row>
 <kv-row :label="o.type==='battery'?'电池型号':(o.type==='package'?'套餐名称':'车型')" :value="o.model||'-'" data-page-node-id="hZZs1mSDIH4yg3vjvA3KZM"></kv-row>
 <kv-row label="租赁时间" align="top" label-class="leading-[1.5]" value-class="leading-[1.5] whitespace-normal break-words"><template #value><span v-html="((o.rentStart||'-')+' ~ '+(o.rentEnd||'-')).replace(' ~ ','<br>')"></span></template></kv-row>
-<kv-row label="已付金额" :value="o.amount||'-'" data-page-node-id="9wFurF9tc3yaGNjC5Bu1HA"></kv-row>
-<kv-row label="待付金额" :value="o.unpaid||'-'"></kv-row>
+<kv-row label="已支付" :value="o.amount||'-'" data-page-node-id="9wFurF9tc3yaGNjC5Bu1HA"></kv-row>
+<kv-row label="待支付" :value="o.unpaid||'-'"></kv-row>
 <kv-row label="创建时间" :value="o.created||'-'" data-page-node-id="q6zeOlnHNIHsjv42q5bSCk"></kv-row>
 </kv-card>
 </template>
@@ -4080,8 +4080,8 @@ body.host-single-m #root-user{display:none}
 <kv-row label="用户账号" :value="orderCustomerText(o)||'-'"></kv-row>
 <kv-row :label="o.type==='battery'?'电池型号':(o.type==='package'?'套餐名称':'车型')" :value="o.item||'-'"></kv-row>
 <kv-row label="租赁时间" align="top" label-class="leading-[1.5]" value-class="leading-[1.5] whitespace-normal break-words"><template #value><span v-html="((o.rentStart||'-')+' ~ '+rentEndOf(o)).replace(' ~ ','<br>')"></span></template></kv-row>
-<kv-row label="已付金额" :value="orderPaidAmountOf(o)"></kv-row>
-<kv-row label="待付金额" :value="orderUnpaidAmountOf(o)"></kv-row>
+<kv-row label="已支付" :value="orderPaidAmountOf(o)"></kv-row>
+<kv-row label="待支付" :value="orderUnpaidAmountOf(o)"></kv-row>
 <kv-row label="创建时间" :value="o.created||'-'"></kv-row>
 </kv-card>
 </template>
