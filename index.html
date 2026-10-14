@@ -6980,6 +6980,11 @@ var CZ_ORDERS=Vue.ref([{orderNo:'CZ202609010001',storeName:'测试门店',create
    coOrders 等声明在 setup 内的数据无法被本全局函数按标识符访问，须由调用方通过 ords/czs/cos 传入 */
 function SYS_recent(n,ords,czs,cos){try{var N=Date.now(),D=(n||15)*24*3600*1000;var p=function(x){return (x<10?'0':'')+x};var fp=function(d){return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())};var tp=function(s){var t=Date.parse(String(s).replace(/-/g,'/'));return isNaN(t)?null:t};var f=function(off){return fp(new Date(N-off*D))};var o=ords||((typeof orders!=='undefined'&&orders&&orders.value)?orders.value:[]);var cz=czs||((typeof CZ_ORDERS!=='undefined'&&CZ_ORDERS&&CZ_ORDERS.value)?CZ_ORDERS.value:[]);o.forEach(function(x,i){var off=((i%14)/14)+0.06;if(x.created)x.created=f(off);if(x.payTime)x.payTime=f(off-0.03);if(x.rentStart)x.rentStart=f(off-0.06);if(x.pickupTime)x.pickupTime=f(off-0.04)});cz.forEach(function(x,i){var off=((i%14)/14)+0.06;if(x.createTime)x.createTime=f(off);if(x.payTime)x.payTime=f(off-0.03);if(x.cancelTime&&x.cancelTime!=='-')x.cancelTime=f(off+0.4)});var co=cos||[];co.forEach(function(x,i){var off=((i%14)/14)+0.06,base=tp(x.startTime||x.createTime);if(base==null)return;var delta=(N-off*D)-base;['startTime','endTime','createTime','payTime','completeTime','cancelTime'].forEach(function(k){var t=tp(x[k]);if(t!=null)x[k]=fp(new Date(t+delta))});(x.refundRecords||[]).forEach(function(r){['refundTime','finishTime'].forEach(function(k){var t=tp(r[k]);if(t!=null)r[k]=fp(new Date(t+delta))})})})}catch(e){}}
 
+/* 归一扩展：续租子单与订单退款的时间同步（主 SYS_recent 只覆盖父单字段）。
+   续租子单 payTime 决定续租收入归属周期，退款按 finishTime 归属周期；若留旧值会落在默认周期之外。
+   偏移量取比父单更小（f(off) 中 off 越小越接近当前），保证退款时刻晚于父单支付时刻。 */
+function SYS_recent_ext(n,ords,refs){try{var N=Date.now(),D=(n||15)*24*3600*1000;var p=function(x){return (x<10?'0':'')+x};var fp=function(d){return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())};var f=function(off){return fp(new Date(N-Math.max(0.002,off)*D))};var o=ords||((typeof orders!=='undefined'&&orders&&orders.value)?orders.value:[]);var rf=refs||{};o.forEach(function(x,i){var off=((i%14)/14)+0.06;(x.renewSubOrders||[]).forEach(function(r,j){var ro=off-0.05-j*0.003;if(r.newRentStart)r.newRentStart=f(ro);if(r.newRentEnd)r.newRentEnd=f(ro-0.006);if(r.payTime&&r.payTime!=='-')r.payTime=f(ro-0.002)});var list=rf[x.id];if(list&&list.length)list.forEach(function(r,j){var ro=off-0.02-j*0.002;if(r.refundTime)r.refundTime=f(ro);if(r.finishTime)r.finishTime=f(ro-0.001)})})}catch(e){}}
+
 /* ══ 底部弹窗共享套件（见 AGENTS.md「底部弹窗规范」） ══
    纯新增件：BottomSheet 壳 / OptionSheet 单选列表 / v-sheet-drag 下滑关闭 + .sheet-* 样式 token。
    双端 mount 前各调用一次 registerSheetKit(app)，实现一套组件双端可用。 */
@@ -10937,6 +10942,21 @@ function initI18nData(){
   /* 门店手机号（联系门店用） */
   const _storePhones=['138 8001 2345','139 8002 6789','137 8003 4567','136 8004 7890'];
   stores.value.forEach(function(s,i){if(!s.phone)s.phone=_storePhones[i]||_storePhones[_storePhones.length-1]});
+  /* 门店维度归属（统计口径）：订单按 id 确定性散列到 4 家门店，同时补父单支付时间。
+     payTime 只补「已支付且非取消」的单（付款认收口径）；未支付/取消单不补，避免虚增营收。 */
+  const _paidSt=['paid','partialRefund','fullRefund'];
+  orders.value.forEach(function(o){
+    var h=0,id=String(o.id||'');for(var k=0;k<id.length;k++)h=(h*31+id.charCodeAt(k))>>>0;
+    o.shopId=(h%stores.value.length)+1;
+    o.store=storeNameOf(o.shopId);
+    if(o.status!=='cancelled'&&_paidSt.indexOf(o.paySt)>=0&&!o.payTime)o.payTime=o.created;
+  });
+  /* 充值订单门店归属：历史门店名对齐门店主数据（测试门店→第1店／朝阳→第2店／海淀→第3店），并补 shopId */
+  const _czShopMap={'测试门店':1,'雅迪朝阳店':2,'雅迪海淀店':3};
+  CZ_ORDERS.value.forEach(function(x,i){
+    var sid=_czShopMap[x.storeName]||((i%stores.value.length)+1);
+    x.shopId=sid;x.storeName=storeNameOf(sid);
+  });
   profileModels.value=[
     {name:'雅迪冠能Q7',count:15,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:1200000,deposit:500000,sort:1,time:'2025-01-20 09:00:00'},
     {name:'雅迪小钢炮',count:8,plans:{hour:true,day:true,week:true,month:true},priceHour:20000,priceDay:120000,priceWeek:700000,priceMonth:2800000,deposit:400000,sort:2,time:'2025-01-19 16:30:00'},
@@ -10971,6 +10991,7 @@ function initI18nData(){
   ];
   /* 订单数据在本函数内才填充（onMounted 调用），故归一必须放在此处，而非 setup 顶层 */
   SYS_recent(15,orders.value,CZ_ORDERS.value,coOrders.value);
+  SYS_recent_ext(15,orders.value,orderRefunds.value);
   publishMerged();
 }
 watch(protoForceUpdate,(newVal)=>{if(newVal!=='none'&&!showVersionCheck.value){setTimeout(()=>checkVersion(),100)}});
