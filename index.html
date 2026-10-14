@@ -3372,7 +3372,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 </template>
-<template v-if="can('charge_device.list')">
+<!-- 设备管理（充电桩）：模块不参与权限控制，入口常显 -->
 <div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">设备管理</span></div>
 <div class="grid grid-cols-2 gap-2.5">
 <div data-cp @click="cdOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-charge-device-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
@@ -3380,7 +3380,6 @@ body.host-single-m #root-user{display:none}
 <span class="text-[14px] font-semibold text-[#1A1A1A]">充电桩</span>
 </div>
 </div>
-</template>
 <template v-if="can('alarm.list')">
 <div class="flex justify-between items-center mb-3 mt-5">
 <span class="text-[15px] font-semibold">最近告警</span>
@@ -5059,7 +5058,7 @@ body.host-single-m #root-user{display:none}
 </div>
 <!-- 新增设备 FAB（同车辆列表） -->
 <div class="absolute right-5 z-[80] flex flex-col items-center gap-3" style="bottom:105px">
-<div v-if="can('charge_device.add')" data-cp @click="cdOpenAdd" class="w-14 h-14 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)" data-od-id="cd-add-fab"><span v-html="luci('plus','w-5 h-5')"></span></div>
+<div data-cp @click="cdOpenAdd" class="w-14 h-14 bg-[var(--accent)] text-white rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="box-shadow:0 4px 12px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12)" data-od-id="cd-add-fab"><span v-html="luci('plus','w-5 h-5')"></span></div>
 </div>
 </page>
 
@@ -10534,9 +10533,10 @@ function cdApplyFS(){cdFsStatus.value=cdFsStatusC.value;cdFsUsage.value=cdFsUsag
 function cdDoSearch(){cdQ.value=String(cdQ.value||'').trim()}
 function cdClearFilters(){cdQ.value='';cdFsStatus.value='';cdFsUsage.value='';cdFsStatusC.value='';cdFsUsageC.value=''}
 /* —— 页面进出 —— */
-function cdOpenList(){if(!can('charge_device.list')){deny();return}navOpen();cdClearFilters();cdOV.value='list';tab.value='home'}
-function cdOpenDetail(d){if(!can('charge_device.detail')){deny();return}navOpen();curChargeDev.value=d;cdOV.value='detail'}
-function cdOpenAdd(){if(!can('charge_device.add')){deny();return}navOpen();cdAddForm.value={deviceNo:'',address:''};cdErr.value={};cdOV.value='add'}
+/* 充电桩模块不参与权限控制（无权限节点），入口与操作不做 can() 判断 */
+function cdOpenList(){navOpen();cdClearFilters();cdOV.value='list';tab.value='home'}
+function cdOpenDetail(d){navOpen();curChargeDev.value=d;cdOV.value='detail'}
+function cdOpenAdd(){navOpen();cdAddForm.value={deviceNo:'',address:''};cdErr.value={};cdOV.value='add'}
 function cdListScan(){scanFrom.value='cdList';scanTarget.value='charge';scanning.value=true}
 /* —— 设备地址：地图选点取址（表单不做联想搜索，由选点页 POI 搜索承担） —— */
 /* 候选点：name/addr/dist + lx/ly（假地图世界层百分比坐标，用于拖拽吸附与准星居中；定位点也取自本表） */
@@ -10621,9 +10621,9 @@ function cdCloseList(){navBack()}
 function cdGoBack(){navBack()}
 /* —— 表单开关：编辑设备走页面栈（cdOV），定价 / 更换门店仍为弹窗（cdMod） —— */
 function cdOpenMod(kind){var d=curChargeDev.value;if(!d)return;
-  if(kind==='edit'){if(!can('charge_device.edit')){deny();return}cdModForm.value={deviceNo:d.deviceNo,address:d.address};cdErr.value={};navOpen();cdOV.value='edit'}
-  else if(kind==='price'){if(!can('charge_device.price')){deny();return}cdModForm.value={price:Number(d.price)||0,maxDuration:Number(d.maxDuration)||0};cdErr.value={};cdMod.value='price'}
-  else if(kind==='shop'){if(!can('charge_device.change_shop')){deny();return}if(d.status!=='DISABLE'){toast('请先禁用设备后再更换门店','warn');return}openShopPick('cd')}}
+  if(kind==='edit'){cdModForm.value={deviceNo:d.deviceNo,address:d.address};cdErr.value={};navOpen();cdOV.value='edit'}
+  else if(kind==='price'){cdModForm.value={price:Number(d.price)||0,maxDuration:Number(d.maxDuration)||0};cdErr.value={};cdMod.value='price'}
+  else if(kind==='shop'){if(d.status!=='DISABLE'){toast('请先禁用设备后再更换门店','warn');return}openShopPick('cd')}}
 function cdCloseMod(){cdMod.value='';cdErr.value={}}
 /* —— 操作：新增 / 编辑 / 定价 / 启用禁用 / 更换门店 —— */
 function cdSaveAdd(){if(cdSaving.value)return;var f=cdAddForm.value,e={};
@@ -10663,7 +10663,7 @@ function pickShop(id){const sid=Number(id)||0;if(!sid)return;const t=shopPickTar
   else if(t==='cd'){const d=curChargeDev.value;if(!d)return;if(sid===Number(d.shopId)){closeShopPick();return}d.shopId=sid}
   else return;
   closeShopPick();toast('所属门店已更换','success')}
-function cdAskToggle(){var d=curChargeDev.value;if(!d)return;if(!can('charge_device.toggle')){deny();return}cdConfirm.value=d.status==='ENABLE'?'disable':'enable'}
+function cdAskToggle(){var d=curChargeDev.value;if(!d)return;cdConfirm.value=d.status==='ENABLE'?'disable':'enable'}
 function cdDoToggle(){if(cdConfirmLoading.value)return;cdConfirmLoading.value=true;setTimeout(function(){cdConfirmLoading.value=false;var d=curChargeDev.value;if(d)d.status=(d.status==='ENABLE'?'DISABLE':'ENABLE');var was=cdConfirm.value;cdConfirm.value='';toast(was==='disable'?'设备已禁用':'设备已启用','success')},500)}
 const cdConfirmTitle=computed(()=>cdConfirm.value==='disable'?'禁用设备':(cdConfirm.value==='enable'?'启用设备':''));
 const cdConfirmDesc=computed(()=>cdConfirm.value==='disable'?'确定要禁用该设备吗？':(cdConfirm.value==='enable'?'确定要启用该设备吗？':''));
