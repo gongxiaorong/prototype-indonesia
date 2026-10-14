@@ -718,7 +718,7 @@
       "createTime": "建立時間",
       "add": "新增設備",
       "edit": "編輯設備",
-      "pricing": "設備定價",
+      "pricing": "定價",
       "changeShop": "更換門店",
       "changeShopFirst": "請先停用設備後再更換門店",
       "confirmDisableDesc": "確定要停用該設備嗎？",

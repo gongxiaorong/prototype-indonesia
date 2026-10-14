@@ -5104,8 +5104,8 @@ body.host-single-m #root-user{display:none}
 <!-- ═══ 充电桩 · 更多操作 ═══ -->
 <bottom-sheet :open="cdMoreOpen" title="更多操作" :mask-z="900" panel-oid="cd-ops-sheet" @close="cdMoreOpen=false">
 <div class="pt-1">
-<div data-cp @click="cdMoreOpen=false;cdOpenMod('edit')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="cd-op-edit"><span class="text-[15px] font-medium">编辑设备</span></div>
-<div data-cp @click="cdMoreOpen=false;cdOpenMod('price')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="cd-op-price"><span class="text-[15px] font-medium">设备定价</span></div>
+<div data-cp @click="cdMoreOpen=false;cdOpenMod('edit')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="cd-op-edit"><span class="text-[15px] font-medium">编辑</span></div>
+<div data-cp @click="cdMoreOpen=false;cdOpenMod('price')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="cd-op-price"><span class="text-[15px] font-medium">定价</span></div>
 <div data-cp @click="cdMoreOpen=false;cdAskToggle()" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="cd-op-toggle"><span class="text-[15px] font-medium" :style="curChargeDev&&curChargeDev.status==='ENABLE'?{color:'#FF4343'}:{}">{{ curChargeDev&&curChargeDev.status==='ENABLE'?'禁用设备':'启用设备' }}</span></div>
 <div v-if="curChargeDev&&curChargeDev.status==='DISABLE'" data-cp @click="cdMoreOpen=false;cdOpenMod('shop')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="cd-op-shop"><span class="text-[15px] font-medium">更换门店</span></div>
 </div>
@@ -5134,7 +5134,7 @@ body.host-single-m #root-user{display:none}
 </page>
 
 <!-- ═══ 充电桩 · 设备定价弹窗（保持弹窗） ═══ -->
-<bottom-sheet :open="cdMod==='price'" title="设备定价" :mask-z="800" @close="cdCloseMod"><div class="px-5">
+<bottom-sheet :open="cdMod==='price'" title="定价" :mask-z="800" @close="cdCloseMod"><div class="px-5">
 <form-field label="单价" box-class="ff-box-gray" required :error="cdErr.price">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
 <input v-model.number="cdModForm.price" type="number" min="0" step="0.01" placeholder="0" class="flex-1 px-2 py-3.5 text-[16px] font-medium min-w-0">

@@ -718,7 +718,7 @@
       "createTime": "创建时间",
       "add": "新增设备",
       "edit": "编辑设备",
-      "pricing": "设备定价",
+      "pricing": "定价",
       "changeShop": "更换门店",
       "changeShopFirst": "请先禁用设备后再更换门店",
       "confirmDisableDesc": "确定要禁用该设备吗？",
