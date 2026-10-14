@@ -424,9 +424,9 @@
       "returnReminder": "Sisa 7 hari masa sewa, silakan kembalikan ke toko tepat waktu",
       "billHourly": "Dibebankan per Jam",
       "renewRules": {
-        "1": "Perpanjangan otomatis aktif secara default; sistem akan otomatis memulai pemotongan biaya perpanjangan pada waktu yang telah ditentukan: waktu yang ditentukan = {n} hari sebelum waktu sewa berakhir, lalu dimajukan 1 jam.",
+        "1": "Perpanjangan otomatis aktif secara default dan biaya perpanjangan dipotong dari saldo dompet; sistem akan memulai pemotongan otomatis sebelum jatuh tempo: {n} menit sebelum jatuh tempo untuk pesanan sewa per jam, dan {n} hari sebelum jatuh tempo untuk pesanan lainnya.",
         "2": "Sistem akan mencoba pemotongan paling banyak {n} kali. Jika pemotongan berhasil, perpanjangan berlaku dan pesanan diperpanjang otomatis; jika semua percobaan pemotongan gagal, perpanjangan otomatis pesanan akan dihentikan.",
-        "3": "Jika perpanjangan otomatis gagal, Anda dapat membuka detail pesanan untuk mengajukan perpanjangan secara manual."
+        "3": "Jika perpanjangan otomatis gagal, Anda dapat membuka detail pesanan untuk mengajukan perpanjangan secara manual; jenis dan status pesanan yang dapat diperpanjang mengikuti konfigurasi toko, dan pesanan perpanjangan yang belum dibayar harus dilunasi terlebih dahulu."
       },
       "billingRules": {
         "1": "Waktu penagihan dimulai saat pengguna mengambil kendaraan/baterai dan berakhir saat kendaraan/baterai selesai dikembalikan.",

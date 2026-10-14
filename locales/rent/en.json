@@ -424,9 +424,9 @@
       "returnReminder": "7 days left in the rental period, please return to the store on time",
       "billHourly": "Billed Hourly",
       "renewRules": {
-        "1": "Auto Renewal is enabled by default; the system initiates the renewal charge automatically at a preset time: preset time = {n} days before the rental expiry time, then 1 hour earlier.",
+        "1": "Auto renewal is enabled by default and the renewal fee is deducted from the wallet balance; the system initiates the charge automatically before the due date: {n} minutes before the due date for hourly orders, and {n} days before the due date for other orders.",
         "2": "The system attempts the charge at most {n} times. If the charge succeeds, the renewal takes effect and the order is extended automatically; if all charge attempts fail, auto renewal for the order will be terminated.",
-        "3": "If auto renewal fails, you can go to the order details page to renew manually."
+        "3": "If auto renewal fails, you can go to the order details page to renew manually; eligible order types and statuses follow the store configuration, and any unpaid renewal order must be paid first."
       },
       "billingRules": {
         "1": "Billing starts when the user picks up the vehicle/battery and ends when the vehicle/battery is fully returned.",
