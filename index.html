@@ -8819,7 +8819,7 @@ const ALL_PERM_CODES=[
   'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.detail','order_config.edit',
   'alarm.list','alarm.detail',
   'recharge_order.list','recharge_order.detail',
-  'charge_device.list','charge_device.detail','charge_device.add','charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop',
+  'charge_device.list','charge_device.detail',
   'charge_order.list','charge_order.detail','charge_order.refund.create','charge_order.refund.list','charge_order.operate.cancel','charge_order.operate.finish',
   'user.list','user.detail',
   'recharge.list','recharge.add','recharge.edit','recharge.delete'
@@ -8860,8 +8860,9 @@ const permGroups=[
   {id:'ro',name:'充值订单',codes:['recharge_order.list','recharge_order.detail'],items:[
     {c:'recharge_order.list',n:'订单列表'},{c:'recharge_order.detail',n:'订单详情'}
   ]},
-  {id:'chargeDev',name:'充电桩',codes:['charge_device.list','charge_device.detail','charge_device.add','charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop'],items:[
-    {c:'charge_device.list',n:'设备列表'},{c:'charge_device.detail',n:'设备详情'},{c:'charge_device.add',n:'新增设备'},{c:'charge_device.edit',n:'编辑设备'},{c:'charge_device.price',n:'设备定价'},{c:'charge_device.toggle',n:'启用/禁用'},{c:'charge_device.change_shop',n:'更换门店'}
+  /* 充电桩：仅列表 / 详情两个权限节点（新增 / 编辑 / 定价 / 启用禁用 / 更换门店不再作为独立权限节点） */
+  {id:'chargeDev',name:'充电桩',codes:['charge_device.list','charge_device.detail'],items:[
+    {c:'charge_device.list',n:'设备列表'},{c:'charge_device.detail',n:'设备详情'}
   ]},
   {id:'chargeOrd',name:'充电订单',codes:['charge_order.list','charge_order.detail','charge_order.refund.create','charge_order.refund.list','charge_order.operate.cancel','charge_order.operate.finish'],items:[
     {c:'charge_order.list',n:'订单列表'},{c:'charge_order.detail',n:'订单详情'},{c:'charge_order.operate.cancel',n:'取消订单'},{c:'charge_order.operate.finish',n:'结束订单'},{c:'charge_order.refund.create',n:'退款'},{c:'charge_order.refund.list',n:'退款记录'}
@@ -8887,10 +8888,10 @@ const demoPagePermCtx=computed(()=>{
   if(curAlert.value)return{title:'告警详情',groups:[pickPermGroup('alarm',['alarm.detail']),pickPermGroup('veh',['vehicle.detail','vehicle.command.find_car'])].filter(Boolean)};
   /* 充电桩 / 充电订单：由首页入口进入，独立于底部 Tab */
   if(cdOV.value==='list')return{title:'充电桩',groups:[pickPermGroup('chargeDev',['charge_device.list'])].filter(Boolean)};
-  if(cdOV.value==='detail')return{title:'充电桩详情',groups:[pickPermGroup('chargeDev',['charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop'])].filter(Boolean)};
-  if(cdOV.value==='add')return{title:'新增设备',groups:[pickPermGroup('chargeDev',['charge_device.add'])].filter(Boolean)};
-  if(cdOV.value==='edit')return{title:'编辑设备',groups:[pickPermGroup('chargeDev',['charge_device.edit'])].filter(Boolean)};
-  if(cdOV.value==='addrMap')return{title:'选择地址',groups:[pickPermGroup('chargeDev',['charge_device.edit'])].filter(Boolean)};
+  if(cdOV.value==='detail')return{title:'充电桩详情',groups:[pickPermGroup('chargeDev',['charge_device.detail'])].filter(Boolean)};
+  if(cdOV.value==='add')return{title:'新增设备',groups:[pickPermGroup('chargeDev',['charge_device.list','charge_device.detail'])].filter(Boolean)};
+  if(cdOV.value==='edit')return{title:'编辑设备',groups:[pickPermGroup('chargeDev',['charge_device.list','charge_device.detail'])].filter(Boolean)};
+  if(cdOV.value==='addrMap')return{title:'选择地址',groups:[pickPermGroup('chargeDev',['charge_device.list','charge_device.detail'])].filter(Boolean)};
   if(coOV.value==='list')return{title:'充电订单',groups:[pickPermGroup('chargeOrd',['charge_order.list'])].filter(Boolean)};
   if(coOV.value==='detail')return{title:'充电订单详情',groups:[pickPermGroup('chargeOrd',['charge_order.operate.cancel','charge_order.operate.finish','charge_order.refund.create','charge_order.refund.list'])].filter(Boolean)};
   if(coOV.value==='refunds')return{title:'充电订单退款记录',groups:[pickPermGroup('chargeOrd',['charge_order.refund.list'])].filter(Boolean)};
