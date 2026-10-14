@@ -3614,7 +3614,7 @@ body.host-single-m #root-user{display:none}
 
 <!-- ═══ VEHICLE DETAIL ═══ -->
 <page :open="vehOV==='detail'" :z="560" :swipe-close="()=>goBack()">
-<nav-bar title="车辆详情" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('vehicle.edit')" class="w-8 h-8 flex items-center justify-center shrink-0 text-[14px] font-medium text-[var(--link)] cursor-pointer active:opacity-70" data-cp @click="openVehEdit">编辑</span></template></nav-bar>
+<nav-bar title="车辆详情" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('vehicle.edit')||can('vehicle.change_shop')" class="w-full h-full flex items-center justify-center cursor-pointer active:opacity-70" style="color:var(--accent)" data-cp @click="vehMoreOpen=true" data-od-id="veh-more-btn" title="更多"><span v-html="luci('more-horizontal','w-5 h-5')"></span></span></template></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll" style="touch-action:pan-y">
 <div class="mb-3 rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="veh-detail-map-track-block">
 <div class="w-full h-[170px] relative cursor-pointer active:opacity-95" style="background:#E8EEF5;background-image:linear-gradient(rgba(43,63,95,.06)1px,transparent 1px),linear-gradient(90deg,rgba(43,63,95,.06)1px,transparent 1px);background-size:28px 28px" data-od-id="veh-detail-open-location" data-cp @click="openVehLocation">
@@ -3662,6 +3662,7 @@ body.host-single-m #root-user{display:none}
 </div>
 <kv-card :title="dv.vin" label-width="5rem" class="mb-3" :copyable="!!dv.vin" @copy="t=>copyText(t,'车架号')">
   <template #extra><span class="font-medium shrink-0" :style="{color:dv.online?'#17A34A':'#D97706'}">{{ dv.online?'在线':'离线' }}</span></template>
+  <kv-row label="所属门店" :value="storeNameOf(dv.shopId)" align="top" value-class="whitespace-normal break-words"></kv-row>
   <kv-row label="中控编号" :value="dv.ctrl"></kv-row>
   <kv-row label="车型" :value="dv.model"></kv-row>
   <kv-row label="电量" :value="'主'+dv.batteryMain+'% / 副'+dv.batterySub+'%'" :value-style="{color:bc(dv.batteryMain)}"></kv-row>
@@ -3675,6 +3676,17 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 </page>
+
+<!-- ═══ VEHICLE · 更多操作（编辑 / 更换门店） ═══ -->
+<bottom-sheet :open="vehMoreOpen" title="更多操作" :mask-z="900" panel-oid="veh-ops-sheet" @close="vehMoreOpen=false">
+<div class="pt-1">
+<div v-if="can('vehicle.edit')" data-cp @click="vehMoreOpen=false;openVehEdit()" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="veh-op-edit"><span class="text-[15px] font-medium">编辑</span></div>
+<div v-if="can('vehicle.change_shop')" data-cp @click="vehMoreOpen=false;vehShopPick=true" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="veh-op-shop"><span class="text-[15px] font-medium">更换门店</span></div>
+</div>
+</bottom-sheet>
+
+<!-- ═══ VEHICLE · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
+<option-sheet :open="vehShopPick" title="更换门店" :options="vehShopOptions" :model-value="dv.shopId" :mask-z="800" oid="veh-shop-mask" panel-oid="veh-shop-picker" @select="vehPickShop" @close="vehShopPick=false"></option-sheet>
 
 <!-- ═══ VEHICLE LOCATION DETAIL ═══ -->
 <page :open="vehOV==='location'" :z="510" :swipe-close="()=>goBack()" oid="veh-location-page">
@@ -4091,7 +4103,7 @@ body.host-single-m #root-user{display:none}
 
 <!-- ═══ BATTERY DETAIL 二级页 ═══ -->
 <page :open="ordersOV==='battDetail'" :z="500" :swipe-close="()=>goBack()" oid="battery-detail-page">
-<nav-bar title="电池详情" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('battery.edit')" class="w-8 h-8 flex items-center justify-center shrink-0 text-[14px] font-medium text-[var(--link)] cursor-pointer active:opacity-70" data-cp @click="openBattEdit">编辑</span></template></nav-bar>
+<nav-bar title="电池详情" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('battery.edit')||can('battery.change_shop')" class="w-full h-full flex items-center justify-center cursor-pointer active:opacity-70" style="color:var(--accent)" data-cp @click="battMoreOpen=true" data-od-id="batt-more-btn" title="更多"><span v-html="luci('more-horizontal','w-5 h-5')"></span></span></template></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <template v-if="curBatt">
 <div class="mb-3 rounded-xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="batt-detail-map-block">
@@ -4119,6 +4131,7 @@ body.host-single-m #root-user{display:none}
 </div>
 <kv-card :title="curBatt.battNo" label-width="5rem" class="mb-3" :copyable="!!curBatt.battNo" @copy="t=>copyText(t,'电池编号')" data-od-id="batt-detail-info-card">
 <template #extra><span class="font-medium shrink-0" :style="{color:curBatt.online?'#17A34A':'#D97706'}">{{ curBatt.online?'在线':'离线' }}</span></template>
+<kv-row label="所属门店" :value="storeNameOf(curBatt.shopId)" align="top" value-class="whitespace-normal break-words"></kv-row>
 <kv-row label="电池型号" :value="curBatt.model"></kv-row>
 <kv-row label="电量" :value="curBatt.level+'%'" :value-style="{color:bc(curBatt.level)}"></kv-row>
 <kv-row label="运营状态" :value="curBatt.status" :value-style="{color:sc(curBatt.status)}"></kv-row>
@@ -4140,6 +4153,18 @@ body.host-single-m #root-user{display:none}
 </template>
 </div>
 </page>
+
+<!-- ═══ BATTERY · 更多操作（编辑 / 更换门店） ═══ -->
+<bottom-sheet :open="battMoreOpen" title="更多操作" :mask-z="900" panel-oid="batt-ops-sheet" @close="battMoreOpen=false">
+<div class="pt-1">
+<div v-if="can('battery.edit')" data-cp @click="battMoreOpen=false;openBattEdit()" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="batt-op-edit"><span class="text-[15px] font-medium">编辑</span></div>
+<div v-if="can('battery.change_shop')" data-cp @click="battMoreOpen=false;battShopPick=true" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #EDEDED" data-od-id="batt-op-shop"><span class="text-[15px] font-medium">更换门店</span></div>
+</div>
+</bottom-sheet>
+
+<!-- ═══ BATTERY · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
+<option-sheet :open="battShopPick" title="更换门店" :options="battShopOptions" :model-value="curBatt?curBatt.shopId:''" :mask-z="800" oid="batt-shop-mask" panel-oid="batt-shop-picker" @select="battPickShop" @close="battShopPick=false"></option-sheet>
+
 <confirm-dialog :open="battMod" :title="battModTitle" :desc="battModDesc" :loading="battModLoading" z="800" @close="battMod=null" @confirm="battConfirmMod"></confirm-dialog>
 
 <!-- ═══ BATTERY EDIT ═══ -->
@@ -5045,7 +5070,7 @@ body.host-single-m #root-user{display:none}
 
 <!-- ═══ 充电设备 · 详情页 ═══ -->
 <page :open="cdOV==='detail'" :z="510" :swipe-close="()=>goBack()" oid="mc-charge-device-detail-page" data-od-id="mc-charge-device-detail-page">
-<nav-bar title="设备详情" border-color="#E5E5E5" @back="goBack()"><template #right><span class="w-full h-full flex items-center justify-center cursor-pointer active:opacity-70" style="color:var(--accent)" data-cp @click="cdMoreOpen=true" data-od-id="cd-more-btn"><span v-html="luci('more-horizontal','w-5 h-5')"></span></span></template></nav-bar>
+<nav-bar title="充电设备详情" border-color="#E5E5E5" @back="goBack()"><template #right><span class="w-full h-full flex items-center justify-center cursor-pointer active:opacity-70" style="color:var(--accent)" data-cp @click="cdMoreOpen=true" data-od-id="cd-more-btn" title="更多"><span v-html="luci('more-horizontal','w-5 h-5')"></span></span></template></nav-bar>
 <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-8" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="cd-detail-scroll">
 <kv-card :title="curChargeDev?curChargeDev.deviceNo:'-'" label-width="5rem" class="mb-3" :copyable="!!(curChargeDev&&curChargeDev.deviceNo)" @copy="t=>copyText(t,'设备编号')" data-od-id="cd-detail-basic">
 <template #extra><span class="font-medium shrink-0" :style="{color:curChargeDev?cdEnableTag(curChargeDev.status).c:'#999'}">{{ curChargeDev?cdEnableTag(curChargeDev.status).l:'' }}</span></template>
@@ -6861,18 +6886,18 @@ function fmtRp(n,dec){var v=Number(n);if(v==null||isNaN(v))v=0;var c=MONEY.cur,a
 
 /* ══ 共享权威数据（商户端为准；双端局用同一引用，消费型投影仍在 MERGED） ══ */
 const vehicles=Vue.ref([
-  {vin:'LSVAU2Z0A88888000',ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',account:'user001',phone:'+86 13800001111',email:'',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30:00',lost:false,lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
-  {vin:'LSVAU2Z0B12345000',ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',account:'user002',phone:'',email:'359878734@qq.com',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15:00',lost:false,lat:null,lng:null,location:''},
-  {vin:'LSVAU2Z0C66666000',ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',account:'user003',phone:'',email:'',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00:00',lost:true,lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
-  {vin:'LSVAU2Z0D77777000',ctrl:'860123456789045',model:'雅迪 E-Bike Pro',plate:'京D·77777',account:'',phone:'',email:'',status:'空闲',online:true,batteryMain:78,batterySub:70,time:'2024-10-24 15:02:00',lost:false,lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
+  {vin:'LSVAU2Z0A88888000',shopId:1,ctrl:'860123456789012',model:'雅迪 E-Bike Pro',plate:'京A·88888',account:'user001',phone:'+86 13800001111',email:'',status:'空闲',online:true,batteryMain:92,batterySub:85,time:'2024-10-24 14:30:00',lost:false,lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
+  {vin:'LSVAU2Z0B12345000',shopId:1,ctrl:'860123456789028',model:'雅迪 City Cruiser',plate:'京B·12345',account:'user002',phone:'',email:'359878734@qq.com',status:'占用中',online:true,batteryMain:67,batterySub:28,time:'2024-10-24 13:15:00',lost:false,lat:null,lng:null,location:''},
+  {vin:'LSVAU2Z0C66666000',shopId:2,ctrl:'860123456789034',model:'雅迪 Mountain X',plate:'京C·66666',account:'user003',phone:'',email:'',status:'租用中',online:false,batteryMain:18,batterySub:15,time:'2024-10-24 12:00:00',lost:true,lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
+  {vin:'LSVAU2Z0D77777000',shopId:3,ctrl:'860123456789045',model:'雅迪 E-Bike Pro',plate:'京D·77777',account:'',phone:'',email:'',status:'空闲',online:true,batteryMain:78,batterySub:70,time:'2024-10-24 15:02:00',lost:false,lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
 ]);
 const batteries=Vue.ref([
-{battNo:'BATT-YD1000',account:'user005',phone:'+86 13700005555',email:'',model:'天能锂电 72V20Ah',status:'空闲',online:true,level:92,lost:false,discharge:true,vin:'LSVAU2Z0A88888000',time:'2026-08-20 14:30:00',lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
-{battNo:'BATT-YD1001',account:'user006',phone:'',email:'battery006@qq.com',model:'超威黑金 72V32Ah',status:'占用中',online:true,level:74,lost:false,discharge:true,vin:'LSVAU2Z0B12345000',time:'2026-08-20 13:15:00',lat:null,lng:null,location:''},
-{battNo:'BATT-YD1002',account:'',phone:'',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:85,lost:false,discharge:true,vin:'',time:'2026-08-20 11:02:00',lat:null,lng:null,location:''},
-{battNo:'BATT-YD1003',account:'user008',phone:'+86 13700008888',email:'',model:'天能锂电 72V20Ah',status:'占用中',online:false,level:32,lost:false,discharge:false,vin:'LSVAU2Z0E99999000',time:'2026-08-19 09:40:00',lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
-{battNo:'BATT-YD1004',account:'user009',phone:'',email:'battery009@qq.com',model:'超威黑金 72V32Ah',status:'空闲',online:true,level:63,lost:true,discharge:false,vin:'',time:'2026-08-20 10:25:00',lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
-{battNo:'BATT-YD1005',account:'user010',phone:'+86 13700009999',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:12,lost:false,discharge:true,vin:'LSVAU2Z0A33333001',time:'2026-08-20 08:12:00',lat:39.9842,lng:116.4849,location:'北京市朝阳区望京街道'}
+{battNo:'BATT-YD1000',shopId:1,account:'user005',phone:'+86 13700005555',email:'',model:'天能锂电 72V20Ah',status:'空闲',online:true,level:92,lost:false,discharge:true,vin:'LSVAU2Z0A88888000',time:'2026-08-20 14:30:00',lat:39.9219,lng:116.4435,location:'北京市朝阳区三里屯'},
+{battNo:'BATT-YD1001',shopId:1,account:'user006',phone:'',email:'battery006@qq.com',model:'超威黑金 72V32Ah',status:'占用中',online:true,level:74,lost:false,discharge:true,vin:'LSVAU2Z0B12345000',time:'2026-08-20 13:15:00',lat:null,lng:null,location:''},
+{battNo:'BATT-YD1002',shopId:2,account:'',phone:'',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:85,lost:false,discharge:true,vin:'',time:'2026-08-20 11:02:00',lat:null,lng:null,location:''},
+{battNo:'BATT-YD1003',shopId:2,account:'user008',phone:'+86 13700008888',email:'',model:'天能锂电 72V20Ah',status:'占用中',online:false,level:32,lost:false,discharge:false,vin:'LSVAU2Z0E99999000',time:'2026-08-19 09:40:00',lat:39.9042,lng:116.4074,location:'北京市西城区西单'},
+{battNo:'BATT-YD1004',shopId:3,account:'user009',phone:'',email:'battery009@qq.com',model:'超威黑金 72V32Ah',status:'空闲',online:true,level:63,lost:true,discharge:false,vin:'',time:'2026-08-20 10:25:00',lat:39.9365,lng:116.4521,location:'北京市朝阳区工体北路'},
+{battNo:'BATT-YD1005',shopId:3,account:'user010',phone:'+86 13700009999',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:12,lost:false,discharge:true,vin:'LSVAU2Z0A33333001',time:'2026-08-20 08:12:00',lat:39.9842,lng:116.4849,location:'北京市朝阳区望京街道'}
 ]);
 /* ══ 状态文案与颜色：双端统一管理（订单状态 / 支付状态，改这里两端同时生效） ══ */
 var ORDER_ST_TEXT={created:'已创建',pickup:'待绑定',progress:'租赁中','return':'即将到期',overdue:'逾期未还',breach:'违约锁单',complete:'已完成',cancelled:'已取消'};
@@ -8536,6 +8561,11 @@ const editSelectedProtocol=computed(()=>(editSelectedModel.value?.protocolType)|
 function openVehEdit(){navOpen();if(!can('vehicle.edit')){deny();return}editCtrl.value=dv.value.ctrl;editModel.value=dv.value.model;editPlate.value=dv.value.plate;vehOV.value='edit'}
 function saveVehEdit(){dv.value.ctrl=editCtrl.value;dv.value.model=editModel.value;dv.value.plate=editPlate.value;dv.value.protocol=editSelectedProtocol.value;dv.value.startMode=dv.value.startMode||'onekey';const idx=vehicles.value.findIndex(v=>v.vin===dv.value.vin);if(idx>=0){vehicles.value[idx].ctrl=editCtrl.value;vehicles.value[idx].model=editModel.value;vehicles.value[idx].plate=editPlate.value;vehicles.value[idx].protocol=editSelectedProtocol.value;vehicles.value[idx].startMode=vehicles.value[idx].startMode||'onekey'}navDrop();vehOV.value='detail';toast('车辆信息已保存','success')}
 function vehOpenDetail(v){navOpen();if(!can('vehicle.detail')){deny();return}dv.value={...v};armed.value=false;lost.value=v.lost||false;motorLocked.value=!!v.motorLocked;vehOV.value='detail'}
+/* ══ 车辆 · 更多操作（编辑 / 更换门店） ══ */
+const vehMoreOpen=ref(false),vehShopPick=ref(false);
+const vehShopOptions=computed(()=>storeOptions.value.map(s=>({value:s.v,label:s.l})));
+/* 更换门店：OptionSheet 选中即提交（空值忽略、选中门店未变则仅关闭）；详情对象是副本，同步回列表源数据 */
+function vehPickShop(v){if(v===''||v==null)return;if(Number(v)===Number(dv.value.shopId)){vehShopPick.value=false;return}dv.value.shopId=Number(v);const i=vehicles.value.findIndex(x=>x.vin===dv.value.vin);if(i>=0)vehicles.value[i].shopId=Number(v);vehShopPick.value=false;toast('所属门店已更换','success')}
 function vehOpenAdd(){navOpen();if(!can('vehicle.add')){deny();return}vehOV.value='add'}
 function vehToggleViewSafe(){vehToggleView()}
 /* ══ VEHICLE LOCATION DETAIL ══ */
@@ -8805,12 +8835,12 @@ const permGroups=[
   {id:'alarm',name:'告警中心',codes:['alarm.list','alarm.detail'],items:[
     {c:'alarm.list',n:'告警列表'},{c:'alarm.detail',n:'告警详情'}
   ]},
-  {id:'veh',name:'车辆管理',codes:['vehicle.list','vehicle.detail','vehicle.add','vehicle.edit','vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.motor_lock'],items:[
-    {c:'vehicle.list',n:'车辆列表'},{c:'vehicle.detail',n:'车辆详情'},{c:'vehicle.add',n:'新增车辆'},{c:'vehicle.edit',n:'编辑车辆'},
+  {id:'veh',name:'车辆管理',codes:['vehicle.list','vehicle.detail','vehicle.add','vehicle.edit','vehicle.change_shop','vehicle.command.lock','vehicle.command.find_car','vehicle.command.arm','vehicle.command.motor_lock'],items:[
+    {c:'vehicle.list',n:'车辆列表'},{c:'vehicle.detail',n:'车辆详情'},{c:'vehicle.add',n:'新增车辆'},{c:'vehicle.edit',n:'编辑车辆'},{c:'vehicle.change_shop',n:'更换门店'},
     {c:'vehicle.command.lock',n:'开关锁'},{c:'vehicle.command.find_car',n:'寻车鸣笛'},{c:'vehicle.command.arm',n:'设防'},{c:'vehicle.command.motor_lock',n:'锁电机'}
   ]},
-  {id:'batt',name:'电池管理',codes:['battery.list','battery.detail','battery.add','battery.edit','battery.discharge'],items:[
-    {c:'battery.list',n:'电池列表'},{c:'battery.detail',n:'电池详情'},{c:'battery.add',n:'新增电池'},{c:'battery.edit',n:'编辑电池'},{c:'battery.discharge',n:'电池放电'}
+  {id:'batt',name:'电池管理',codes:['battery.list','battery.detail','battery.add','battery.edit','battery.discharge','battery.change_shop'],items:[
+    {c:'battery.list',n:'电池列表'},{c:'battery.detail',n:'电池详情'},{c:'battery.add',n:'新增电池'},{c:'battery.edit',n:'编辑电池'},{c:'battery.discharge',n:'电池放电'},{c:'battery.change_shop',n:'更换门店'}
   ]},
   {id:'ord',name:'车辆订单',codes:['order.list','order.detail'],items:[
     {c:'order.list',n:'订单列表'},{c:'order.detail',n:'订单详情'}
@@ -9034,6 +9064,10 @@ function battOpenReportLost(){if(!can('battery.discharge')){deny();return}battMo
 const battModLoading=ref(false); function battConfirmMod(){if(battModLoading.value)return;battModLoading.value=true;setTimeout(()=>{battModLoading.value=false;const b=curBatt.value;if(!b)return;if(battMod.value==='unbind'){if(unbindBlocked(b&&b.status)){battMod.value=null;return}if(b&&b.battNo){var _mb=batteries.value.find(function(x){return x.battNo===b.battNo});if(_mb){_mb.status='空闲';_mb.account='';_mb.phone='';_mb.email='';_mb.vin=''}b.account='';b.phone='';b.email='';b.vin='';b.status='空闲'}toast('解绑成功','success')}else if(battMod.value==='lost'){b.lost=!b.lost;if(b.lost)b.discharge=false;toast(b.lost?'报失成功':'解除报失成功','success')}else{b.discharge=!b.discharge;toast(b.discharge?'已允许放电':'已禁止放电','success')}battMod.value=null},600)}
 const battEditModel=ref('');
 function openBattEdit(){navOpen();if(!can('battery.edit')){deny();return}battEditModel.value=curBatt.value?curBatt.value.model:'';ordersOV.value='battEdit'}
+/* ══ 电池 · 更多操作（编辑 / 更换门店） ══ */
+const battMoreOpen=ref(false),battShopPick=ref(false);
+const battShopOptions=computed(()=>storeOptions.value.map(s=>({value:s.v,label:s.l})));
+function battPickShop(v){if(v===''||v==null)return;const b=curBatt.value;if(!b)return;if(Number(v)===Number(b.shopId)){battShopPick.value=false;return}b.shopId=Number(v);const i=batteries.value.findIndex(x=>x.battNo===b.battNo);if(i>=0)batteries.value[i].shopId=Number(v);battShopPick.value=false;toast('所属门店已更换','success')}
 function saveBattEdit(){const b=curBatt.value;if(!b)return;b.model=battEditModel.value;const idx=batteries.value.findIndex(x=>x.battNo===b.battNo);if(idx>=0)batteries.value[idx].model=battEditModel.value;navDrop();ordersOV.value='battDetail';toast('电池信息已保存','success')}
 /* ══ BATTERY LOCATION DETAIL ══ */
 const battLocLoading=ref(false),battLocFocus=ref('battery');
@@ -10952,7 +10986,7 @@ dv,armed,lost,motorLocked,findLoading,addModel,addVin,addCtrl,modelQ,selectedMod
 vehModTitle,vehModDesc,vehModDanger,
 vehOpenDetail,vehOpenAdd,vehToggleViewSafe,vehDoSearch,startPress,endPress,doFind,vehOpenArm,vehOpenLost,vehOpenMotorLock,vehConfirmMod,pickModel,scanVin,doScan,scanning,scanTorch,showManualInput,manualVin,openManualInput,confirmManualVin,submitAdd,
 vehOpenFS,vehToggleFSModel,vehToggleFSOnline,vehToggleFSLost,vehResetFS,vehApplyFS,vehClearFilters,vehSetPill,sc,bi,bc,
-editCtrl,editModel,editPlate,editSelectedModel,editSelectedProtocol,openVehEdit,saveVehEdit,
+editCtrl,editModel,editPlate,editSelectedModel,editSelectedProtocol,openVehEdit,saveVehEdit,vehMoreOpen,vehShopPick,vehShopOptions,vehPickShop,
 openVehLocation,locLoading,locRinging,locFocus,locVehPt,locUserPt,locAddressFull,locAddressShort,locDistM,locWalkMin,locFocusUser,locFocusVehicle,locRingVehicle,locOpenNav,
 openVehTrack,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,
 
@@ -10963,7 +10997,7 @@ ordersOV,ordersMod,ordersShowFS,showRefund,ordersRefreshing,ordersQ,searchScope,
 orders,allStatus,demoAllStatus,paySts,demoPayStsFixed,filteredDemoPaySts,quickPills,qCnt,oFiltered,orderCustomerText,
 ordersType,typePills,typeCnt,ordersSetType,ordersTypeActive,
 ordersEntry,ordersPlaceholder,ordersLName,ordersListTitle,orderEntries,homeOpenOrders,closeOrderList,
-batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSearch,battOpenDetail,battMod,battDischarge,battModTitle,battModDesc,battOpenDischarge,battOpenReportLost,battConfirmMod,openBattLocation,loadBattLocData,battLocLoading,battLocFocus,battLocAddressFull,battLocAddressShort,battLocDistM,battLocWalkMin,battLocBattPt,battLocUserPt,battLocFocusUser,battLocFocusBattery,battLocOpenNav,openBattTrack,battTrackStart,battTrackEnd,battTrackDraft,battTrackTimePicker,battTrackLoading,battTrackPoints,battTrackWheelDay,battTrackWheelMonth,battTrackWheelYear,battTrackWheelHour,battTrackWheelMin,battTrackDays,battTrackMonths,battTrackYears,battTrackHours,battTrackMins,battTrackStartLabel,battTrackEndLabel,battTrackPois,battTrackPolyline,battTrackStartPt,battTrackEndPt,openBattTrackTimePicker,cancelBattTrackTimePicker,confirmBattTrackTimePicker,onBattTrackWheelScroll,battShowFS,battFsModelC,battFsOnlineC,battFsLostC,battHasF,battFsModels,battOpenFS,battToggleFSModel,battToggleFSOnline,battToggleFSLost,battResetFS,battApplyFS,battClearFilters,battSetPill,battView,battToggleView,battMapBatteries,battNoLocationCount,battMapSelected,battMapSelectedBatt,battMapSelect,battMapPinStyle,battCluster,battEditModel,openBattEdit,saveBattEdit,battAddModel,battAddNo,battModelQ,battModels,battShowModelSheet,battFilteredModels,canBattSubmit,pickBattModel,openBattAdd,closeBattAdd,submitBattAdd,scanBattNo,scanTarget,scanFrom,vehListScan,battListScan,
+batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSearch,battOpenDetail,battMod,battDischarge,battModTitle,battModDesc,battOpenDischarge,battOpenReportLost,battConfirmMod,openBattLocation,loadBattLocData,battLocLoading,battLocFocus,battLocAddressFull,battLocAddressShort,battLocDistM,battLocWalkMin,battLocBattPt,battLocUserPt,battLocFocusUser,battLocFocusBattery,battLocOpenNav,openBattTrack,battTrackStart,battTrackEnd,battTrackDraft,battTrackTimePicker,battTrackLoading,battTrackPoints,battTrackWheelDay,battTrackWheelMonth,battTrackWheelYear,battTrackWheelHour,battTrackWheelMin,battTrackDays,battTrackMonths,battTrackYears,battTrackHours,battTrackMins,battTrackStartLabel,battTrackEndLabel,battTrackPois,battTrackPolyline,battTrackStartPt,battTrackEndPt,openBattTrackTimePicker,cancelBattTrackTimePicker,confirmBattTrackTimePicker,onBattTrackWheelScroll,battShowFS,battFsModelC,battFsOnlineC,battFsLostC,battHasF,battFsModels,battOpenFS,battToggleFSModel,battToggleFSOnline,battToggleFSLost,battResetFS,battApplyFS,battClearFilters,battSetPill,battView,battToggleView,battMapBatteries,battNoLocationCount,battMapSelected,battMapSelectedBatt,battMapSelect,battMapPinStyle,battCluster,battEditModel,openBattEdit,saveBattEdit,battMoreOpen,battShopPick,battShopOptions,battPickShop,battAddModel,battAddNo,battModelQ,battModels,battShowModelSheet,battFilteredModels,canBattSubmit,pickBattModel,openBattAdd,closeBattAdd,submitBattAdd,scanBattNo,scanTarget,scanFrom,vehListScan,battListScan,
 ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
 ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelYear,ordersDateWheelMonth,ordersDateWheelDay,
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,

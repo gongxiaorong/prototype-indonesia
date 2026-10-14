@@ -337,6 +337,7 @@
       "viewDetail": "详情",
       "add": "新增",
       "edit": "编辑",
+      "more": "更多",
       "takePhoto": "拍照",
       "change": "更改",
       "back": "返回",
@@ -689,6 +690,7 @@
   "merchant": {
     "chargingDevice": {
       "title": "充电设备",
+      "detailTitle": "充电设备详情",
       "deviceNo": "设备编号",
       "address": "设备地址",
       "addrPlaceholder": "请输入地址或选择地址",

@@ -337,6 +337,7 @@
       "viewDetail": "Detail",
       "add": "Tambah",
       "edit": "Sunting",
+      "more": "Lainnya",
       "takePhoto": "Ambil Foto",
       "change": "Ubah",
       "back": "Kembali",
@@ -689,6 +690,7 @@
   "merchant": {
     "chargingDevice": {
       "title": "Perangkat Pengisian Daya",
+      "detailTitle": "Detail Perangkat Pengisian Daya",
       "deviceNo": "Nomor Perangkat",
       "address": "Alamat Perangkat",
       "addrPlaceholder": "Masukkan atau pilih alamat",

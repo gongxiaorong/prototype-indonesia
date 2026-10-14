@@ -337,6 +337,7 @@
       "viewDetail": "Details",
       "add": "Add",
       "edit": "Edit",
+      "more": "More",
       "takePhoto": "Take Photo",
       "change": "Change",
       "back": "Back",
@@ -689,6 +690,7 @@
   "merchant": {
     "chargingDevice": {
       "title": "Charging Device",
+      "detailTitle": "Charging Device Details",
       "deviceNo": "Device Number",
       "address": "Device Address",
       "addrPlaceholder": "Enter or select an address",

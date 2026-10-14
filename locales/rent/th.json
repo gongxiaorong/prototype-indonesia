@@ -337,6 +337,7 @@
       "viewDetail": "รายละเอียด",
       "add": "เพิ่ม",
       "edit": "แก้ไข",
+      "more": "เพิ่มเติม",
       "takePhoto": "ถ่ายรูป",
       "change": "เปลี่ยน",
       "back": "ย้อนกลับ",
@@ -689,6 +690,7 @@
   "merchant": {
     "chargingDevice": {
       "title": "อุปกรณ์ชาร์จ",
+      "detailTitle": "รายละเอียดอุปกรณ์ชาร์จ",
       "deviceNo": "หมายเลขอุปกรณ์",
       "address": "ที่อยู่อุปกรณ์",
       "addrPlaceholder": "กรอกหรือเลือกที่อยู่",
