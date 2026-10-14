@@ -689,8 +689,8 @@
   },
   "merchant": {
     "chargingDevice": {
-      "title": "Perangkat Pengisian Daya",
-      "detailTitle": "Detail Perangkat Pengisian Daya",
+      "title": "Charger",
+      "detailTitle": "Detail Charger",
       "deviceNo": "Nomor Perangkat",
       "address": "Alamat Perangkat",
       "addrPlaceholder": "Masukkan atau pilih alamat",

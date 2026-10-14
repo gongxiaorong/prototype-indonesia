@@ -689,8 +689,8 @@
   },
   "merchant": {
     "chargingDevice": {
-      "title": "充电设备",
-      "detailTitle": "充电设备详情",
+      "title": "充电桩",
+      "detailTitle": "充电桩详情",
       "deviceNo": "设备编号",
       "address": "设备地址",
       "addrPlaceholder": "请输入地址或选择地址",

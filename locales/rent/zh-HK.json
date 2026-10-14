@@ -689,8 +689,8 @@
   },
   "merchant": {
     "chargingDevice": {
-      "title": "充電設備",
-      "detailTitle": "充電設備詳情",
+      "title": "充電樁",
+      "detailTitle": "充電樁詳情",
       "deviceNo": "設備編號",
       "address": "設備地址",
       "addrPlaceholder": "請輸入地址或選擇地址",

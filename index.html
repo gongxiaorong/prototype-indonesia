@@ -302,7 +302,7 @@ body{font-family:var(--font-body)}
 #root-merchant .od-tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:12px;line-height:1;font-weight:500}
 #root-merchant .od-tag.on{background:#E7F7EE;color:#16A34A}
 #root-merchant .od-tag.off{background:#F2F3F5;color:#999}
-/* ── 充电设备 · 选择地址（地图拖拽取点；数值 1:1 对齐换电端 .sm-*） ── */
+/* ── 充电桩 · 选择地址（地图拖拽取点；数值 1:1 对齐换电端 .sm-*） ── */
 #root-merchant .cdsm-world{position:absolute;left:-50%;top:-50%;width:200%;height:200%;will-change:transform}
 #root-merchant .cdsm-road-h,#root-merchant .cdsm-road-v{position:absolute;background:rgba(255,255,255,.6)}
 #root-merchant .cdsm-road-h{height:16px;left:0;right:0}
@@ -936,7 +936,7 @@ body.host-single-m #root-user{display:none}
 <span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-[18px] h-[18px]')"></span>
 <span class="flex-1 min-w-0 text-[13px] truncate" style="color:#8A9999">搜索充电桩、门店</span>
 </div>
-<!-- 定位到当前位置 + 充电设备列表入口（列表入口在定位 Fab 下方，点击打开「附近充电桩」列表页） -->
+<!-- 定位到当前位置 + 充电桩列表入口（列表入口在定位 Fab 下方，点击打开「附近充电桩」列表页） -->
 <div class="absolute right-3 bottom-[68px] z-[25] flex flex-col gap-2.5" data-od-id="home-charge-side-actions">
 <div data-cp @click.stop="chargeFocusUser" class="w-10 h-10 rounded-full bg-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform" style="border:1px solid #E5E5E5;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#2B3F5F" data-od-id="home-map-locate">
 <span v-html="luci('crosshair','w-5 h-5')"></span>
@@ -1308,7 +1308,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
-<!-- 充电设备弹窗（BottomSheet：设备地址 + 充电定价 + 导航拉起） -->
+<!-- 充电桩弹窗（BottomSheet：设备地址 + 充电定价 + 导航拉起） -->
 <bottom-sheet :open="chargeDeviceSheet" title="设备详情" :mask-z="2590" oid="charge-device-mask" panel-oid="charge-device-sheet" @close="closeChargeDevice">
 <kv-card label-width="6rem" class="mx-4" data-od-id="charge-device-card">
 <template #title>{{ chargeDevice?chargeDevice.no:'-' }}</template>
@@ -3377,7 +3377,7 @@ body.host-single-m #root-user{display:none}
 <div class="grid grid-cols-2 gap-2.5">
 <div data-cp @click="cdOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-charge-device-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('battery-charging','w-6 h-6 text-[var(--accent)]')"></span></div>
-<span class="text-[14px] font-semibold text-[#1A1A1A]">充电设备</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A]">充电桩</span>
 </div>
 </div>
 </template>
@@ -4683,7 +4683,7 @@ body.host-single-m #root-user{display:none}
 <!-- ═══ RECHARGE ORDER REFUND CONFIRM MODAL ═══ -->
 <confirm-dialog :open="roRefundConfirm" title="订单退款" :desc="`确认执行退款？合计退款 ${ fmtRp(roRefundTotal(),2) }`" :loading="roRefundLoading" z="820" @close="roRefundConfirm=false" @confirm="roConfirmRefund"></confirm-dialog>
 
-<!-- ═══ 充电设备 · 列表页（商户端） ═══ -->
+<!-- ═══ 充电桩 · 列表页（商户端） ═══ -->
 
 
  <!-- ═══ ORDER REFUND RECORDS ═══ -->
@@ -5027,7 +5027,7 @@ body.host-single-m #root-user{display:none}
 
 <!-- ═══ PROFILE ═══ -->
 <page :open="cdOV==='list'" :z="500" :swipe-close="()=>goBack()" oid="mc-charge-device-list-page" data-od-id="mc-charge-device-list-page">
-<nav-bar title="充电设备" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<nav-bar title="充电桩" border-color="#E5E5E5" @back="goBack()"></nav-bar>
 <div class="bg-white shrink-0 px-5 pt-3 pb-2">
 <div class="flex gap-2 items-center">
 <div class="flex-1 rounded-full flex items-center py-1.5 gap-1.5" style="background:#F6F7F9;border:1px solid #E5E5E5;padding-left:14px;padding-right:4px">
@@ -5063,9 +5063,9 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
-<!-- ═══ 充电设备 · 详情页 ═══ -->
+<!-- ═══ 充电桩 · 详情页 ═══ -->
 <page :open="cdOV==='detail'" :z="510" :swipe-close="()=>goBack()" oid="mc-charge-device-detail-page" data-od-id="mc-charge-device-detail-page">
-<nav-bar title="充电设备详情" border-color="#E5E5E5" @back="goBack()"><template #right><span class="w-full h-full flex items-center justify-center cursor-pointer active:opacity-70" style="color:var(--accent)" data-cp @click="cdMoreOpen=true" data-od-id="cd-more-btn" title="更多"><span v-html="luci('more-horizontal','w-5 h-5')"></span></span></template></nav-bar>
+<nav-bar title="充电桩详情" border-color="#E5E5E5" @back="goBack()"><template #right><span class="w-full h-full flex items-center justify-center cursor-pointer active:opacity-70" style="color:var(--accent)" data-cp @click="cdMoreOpen=true" data-od-id="cd-more-btn" title="更多"><span v-html="luci('more-horizontal','w-5 h-5')"></span></span></template></nav-bar>
 <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-8" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="cd-detail-scroll">
 <kv-card :title="curChargeDev?curChargeDev.deviceNo:'-'" label-width="5rem" class="mb-3" :copyable="!!(curChargeDev&&curChargeDev.deviceNo)" @copy="t=>copyText(t,'设备编号')" data-od-id="cd-detail-basic">
 <template #extra><span class="font-medium shrink-0" :style="{color:curChargeDev?cdEnableTag(curChargeDev.status).c:'#999'}">{{ curChargeDev?cdEnableTag(curChargeDev.status).l:'' }}</span></template>
@@ -5079,7 +5079,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
-<!-- ═══ 充电设备 · 新增页 ═══ -->
+<!-- ═══ 充电桩 · 新增页 ═══ -->
 <page :open="cdOV==='add'" :z="520" :swipe-close="()=>goBack()" oid="mc-charge-device-add-page" data-od-id="mc-charge-device-add-page">
 <nav-bar title="新增设备" border-color="#E5E5E5" @back="goBack()"></nav-bar>
 <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-[112px]" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="cd-add-form">
@@ -5101,7 +5101,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
-<!-- ═══ 充电设备 · 更多操作 ═══ -->
+<!-- ═══ 充电桩 · 更多操作 ═══ -->
 <bottom-sheet :open="cdMoreOpen" title="更多操作" :mask-z="900" panel-oid="cd-ops-sheet" @close="cdMoreOpen=false">
 <div class="pt-1">
 <div data-cp @click="cdMoreOpen=false;cdOpenMod('edit')" class="flex items-center justify-center px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="cd-op-edit"><span class="text-[15px] font-medium">编辑设备</span></div>
@@ -5111,7 +5111,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </bottom-sheet>
 
-<!-- ═══ 充电设备 · 编辑设备页 ═══ -->
+<!-- ═══ 充电桩 · 编辑设备页 ═══ -->
 <page :open="cdOV==='edit'" :z="520" :swipe-close="()=>goBack()" oid="mc-charge-device-edit-page" data-od-id="mc-charge-device-edit-page">
 <nav-bar title="编辑设备" border-color="#E5E5E5" @back="goBack()"></nav-bar>
 <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-[112px]" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-od-id="cd-edit-form">
@@ -5133,7 +5133,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
-<!-- ═══ 充电设备 · 设备定价弹窗（保持弹窗） ═══ -->
+<!-- ═══ 充电桩 · 设备定价弹窗（保持弹窗） ═══ -->
 <bottom-sheet :open="cdMod==='price'" title="设备定价" :mask-z="800" @close="cdCloseMod"><div class="px-5">
 <form-field label="单价" box-class="ff-box-gray" required :error="cdErr.price">
 <span class="pl-3.5 text-[16px] font-semibold shrink-0">Rp</span>
@@ -5149,7 +5149,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div></bottom-sheet>
 
-<!-- ═══ 充电设备 · 选择地址页（地图拖拽取点；交互与换电端一致） ═══ -->
+<!-- ═══ 充电桩 · 选择地址页（地图拖拽取点；交互与换电端一致） ═══ -->
 <page :open="cdOV==='addrMap'" :z="530" :swipe-close="()=>goBack()" oid="mc-charge-device-addr-map-page" data-od-id="mc-charge-device-addr-map-page">
 <nav-bar title="选择地址" border-color="#E5E5E5" @back="goBack()"></nav-bar>
 <div ref="cdMapBox" class="flex-1 min-h-0 relative overflow-hidden select-none" style="background:#EAEFE7;touch-action:none" @pointerdown="cdMapDown" @pointermove="cdMapMove" @pointerup="cdMapUp" @pointercancel="cdMapUp" data-od-id="cd-map-canvas">
@@ -5202,13 +5202,13 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
-<!-- ═══ 充电设备 · 定位授权 / 定位服务（两步链，层级高于选点页） ═══ -->
+<!-- ═══ 充电桩 · 定位授权 / 定位服务（两步链，层级高于选点页） ═══ -->
 <confirm-dialog :open="cdShowLocAppAuth" z="560" oid="cd-loc-app-auth-modal" title="允许“雅迪租车”使用你的位置信息吗？" desc="您的位置信息将用于定位设备地址" :cancel-text="'不允许'" :confirm-text="'允许'" confirm-bg="var(--accent)" @close="cdDenyLocAppAuth" @confirm="cdAllowLocAppAuth"></confirm-dialog>
 <confirm-dialog :open="cdShowLocService" z="550" oid="cd-loc-service-modal" title="定位服务" desc="请在系统设置中开启定位服务，以自动获取设备地址" :cancel-text="'取消'" :confirm-text="'去开启'" confirm-bg="var(--accent)" @close="cdCancelLocService" @confirm="cdAllowLocService"></confirm-dialog>
 
-<!-- ═══ 充电设备 · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
+<!-- ═══ 充电桩 · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
 <!-- ═══ 商户端 · 更换门店弹窗（对标「选择车型」：搜索 + 列表行；行内回显同门店列表＝门店名 + 地址；
-     车辆 / 电池 / 充电设备三处共用，由 shopPickTarget 分派回写） ═══ -->
+     车辆 / 电池 / 充电桩三处共用，由 shopPickTarget 分派回写） ═══ -->
 <bottom-sheet :open="shopPickTarget!==''" title="更换门店" :mask-z="800" max-h="65%" panel-oid="shop-pick-sheet" @close="closeShopPick">
 <div class="sheet-search">
 <span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
@@ -5223,10 +5223,10 @@ body.host-single-m #root-user{display:none}
 </div>
 </bottom-sheet>
 
-<!-- ═══ 充电设备 · 禁用/启用二次确认 ═══ -->
+<!-- ═══ 充电桩 · 禁用/启用二次确认 ═══ -->
 <confirm-dialog :open="!!cdConfirm" :title="cdConfirmTitle" :desc="cdConfirmDesc" :loading="cdConfirmLoading" z="820" oid="cd-toggle-modal" :confirm-bg="cdConfirm==='disable'?'#DC2626':'var(--accent)'" @close="cdConfirm=''" @confirm="cdDoToggle"></confirm-dialog>
 
-<!-- ═══ 充电设备 · 全部筛选 ═══ -->
+<!-- ═══ 充电桩 · 全部筛选 ═══ -->
 <bottom-sheet :open="cdShowFS" title="全部筛选" :mask-z="600" max-h="70%" @close="cdShowFS=false">
 <div class="sheet-body px-5 pb-3" style="min-height:0">
 <div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">启用状态</div><div style="display:flex;flex-wrap:wrap;gap:8px">
@@ -7286,7 +7286,7 @@ function locFocusVehicle(){locFocus.value='device'}
 function locRingDevice(){if(locRinging.value)return;locRinging.value=true;setTimeout(()=>{locRinging.value=false},1800)}
 function locOpenNav(){}
 /* ══ 充电服务（印尼版：地图找桩 → 点设备弹窗看地址/定价 → 拉起外部导航；底部扫码充电） ══
-   两轮车充电设备为演示数据（每台设备仅 1 个充电口，状态取 空闲/使用）；配色沿用品牌蓝 --accent，定价随全局货币切换（fmtRp）。 */
+   两轮车充电桩为演示数据（每台设备仅 1 个充电口，状态取 空闲/使用）；配色沿用品牌蓝 --accent，定价随全局货币切换（fmtRp）。 */
 const CHARGE_DEVICES=[
   {no:'CHG-A01',store:'Central Park 门店',addr:'Central Park 商场 B1 停车场 3 号入口旁',price:245,status:'空闲',maxMinutes:30,x:58,y:34,dist:180},
   {no:'CHG-A02',store:'Sudirman 门店',addr:'Sudirman 大厦东侧非机动车停放区',price:245,status:'使用中',maxMinutes:30,x:76,y:50,dist:320},
@@ -7310,7 +7310,7 @@ function openChargeListItem(p){
   openStorePlan(p.ref);closeChargeList();
 }
 function closeChargeList(){closeChargeDevice();showChargeList.value=false}
-/* 距离格式化（充电设备列表 / 详情 / POI 结果）：≥1000 用 km（1.2km），不足 1km 用 m（180m） */
+/* 距离格式化（充电桩列表 / 详情 / POI 结果）：≥1000 用 km（1.2km），不足 1km 用 m（180m） */
 function fmtDist(m){return m>=1000?(m/1000).toFixed(1)+'km':m+'m'}
 function buildChargeDevices(){chargeDevices.value=CHARGE_DEVICES.map(function(d){return Object.assign({},d)})}
 function openChargeDevice(d){chargeDevice.value=d;chargeDeviceSheet.value=true}
@@ -8860,7 +8860,7 @@ const permGroups=[
   {id:'ro',name:'充值订单',codes:['recharge_order.list','recharge_order.detail'],items:[
     {c:'recharge_order.list',n:'订单列表'},{c:'recharge_order.detail',n:'订单详情'}
   ]},
-  {id:'chargeDev',name:'充电设备',codes:['charge_device.list','charge_device.detail','charge_device.add','charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop'],items:[
+  {id:'chargeDev',name:'充电桩',codes:['charge_device.list','charge_device.detail','charge_device.add','charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop'],items:[
     {c:'charge_device.list',n:'设备列表'},{c:'charge_device.detail',n:'设备详情'},{c:'charge_device.add',n:'新增设备'},{c:'charge_device.edit',n:'编辑设备'},{c:'charge_device.price',n:'设备定价'},{c:'charge_device.toggle',n:'启用/禁用'},{c:'charge_device.change_shop',n:'更换门店'}
   ]},
   {id:'chargeOrd',name:'充电订单',codes:['charge_order.list','charge_order.detail','charge_order.refund.create','charge_order.refund.list','charge_order.operate.cancel','charge_order.operate.finish'],items:[
@@ -8885,9 +8885,9 @@ function pickPermGroup(id,codeFilter){
 const demoPagePermCtx=computed(()=>{
   if(showLogin.value)return{title:'欢迎登录',groups:[]};
   if(curAlert.value)return{title:'告警详情',groups:[pickPermGroup('alarm',['alarm.detail']),pickPermGroup('veh',['vehicle.detail','vehicle.command.find_car'])].filter(Boolean)};
-  /* 充电设备 / 充电订单：由首页入口进入，独立于底部 Tab */
-  if(cdOV.value==='list')return{title:'充电设备',groups:[pickPermGroup('chargeDev',['charge_device.list'])].filter(Boolean)};
-  if(cdOV.value==='detail')return{title:'设备详情',groups:[pickPermGroup('chargeDev',['charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop'])].filter(Boolean)};
+  /* 充电桩 / 充电订单：由首页入口进入，独立于底部 Tab */
+  if(cdOV.value==='list')return{title:'充电桩',groups:[pickPermGroup('chargeDev',['charge_device.list'])].filter(Boolean)};
+  if(cdOV.value==='detail')return{title:'充电桩详情',groups:[pickPermGroup('chargeDev',['charge_device.edit','charge_device.price','charge_device.toggle','charge_device.change_shop'])].filter(Boolean)};
   if(cdOV.value==='add')return{title:'新增设备',groups:[pickPermGroup('chargeDev',['charge_device.add'])].filter(Boolean)};
   if(cdOV.value==='edit')return{title:'编辑设备',groups:[pickPermGroup('chargeDev',['charge_device.edit'])].filter(Boolean)};
   if(cdOV.value==='addrMap')return{title:'选择地址',groups:[pickPermGroup('chargeDev',['charge_device.edit'])].filter(Boolean)};
@@ -8897,7 +8897,7 @@ const demoPagePermCtx=computed(()=>{
   if(tab.value==='home'){
     if(homeOV.value==='alerts')return{title:'告警中心',groups:[pickPermGroup('alarm',['alarm.list','alarm.detail'])].filter(Boolean)};
     /* 首页总览：进入码 home.view 在「底部 Tab」；本页只露看板/统计/最近告警 + 三种订单合并到一个「首页」分组 */
-    return{title:'首页',groups:[{id:'homeMgmt',name:'首页',codes:['home.stats.business','home.stats.vehicle','order.list','order.battery.list','order.package.list','recharge_order.list','charge_order.list','charge_device.list','alarm.list'],items:[{c:'home.stats.business',n:'经营数据看板'},{c:'home.stats.vehicle',n:'车辆运营统计'},{c:'order.list',n:'车辆订单列表'},{c:'order.battery.list',n:'电池订单列表'},{c:'order.package.list',n:'套餐订单列表'},{c:'recharge_order.list',n:'充值订单列表'},{c:'charge_order.list',n:'充电订单列表'},{c:'charge_device.list',n:'充电设备列表'},{c:'alarm.list',n:'告警列表'}]}].filter(Boolean)};
+    return{title:'首页',groups:[{id:'homeMgmt',name:'首页',codes:['home.stats.business','home.stats.vehicle','order.list','order.battery.list','order.package.list','recharge_order.list','charge_order.list','charge_device.list','alarm.list'],items:[{c:'home.stats.business',n:'经营数据看板'},{c:'home.stats.vehicle',n:'车辆运营统计'},{c:'order.list',n:'车辆订单列表'},{c:'order.battery.list',n:'电池订单列表'},{c:'order.package.list',n:'套餐订单列表'},{c:'recharge_order.list',n:'充值订单列表'},{c:'charge_order.list',n:'充电订单列表'},{c:'charge_device.list',n:'充电桩列表'},{c:'alarm.list',n:'告警列表'}]}].filter(Boolean)};
   }
   if(tab.value==='vehicles'){
     if(vehOV.value==='detail')return{title:'车辆详情',groups:[pickPermGroup('veh',[
@@ -10480,7 +10480,7 @@ const profileMdT=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgt
 const profileMdD=computed(()=>{if(profileMod.value==='toggle')return(tgtAcc&&tgtAcc.status==='启用')?'禁用后该账号将无法登录，确定禁用？':'确定重新启用该账号？启用后可正常登录。';if(profileMod.value==='delPos')return '确定删除该职位？删除后不可恢复。';if(profileMod.value==='delCs')return '确定删除该客服信息？删除后不可恢复。';if(profileMod.value==='delRecharge')return '确定删除该充值配置？删除后不可恢复。';if(profileMod.value==='logout')return '确定要退出当前账号吗？退出后需重新登录。';return''});
 const profileMdDanger=computed(()=>(profileMod.value==='toggle'&&tgtAcc&&tgtAcc.status==='启用')||profileMod.value==='delPos'||profileMod.value==='delCs'||profileMod.value==='logout');
 /* ══════════════════════════════════════════════════════════════════
-   充电设备（商户端）：设备资产维护
+   充电桩（商户端）：设备资产维护
    列表 / 详情 / 新增（页面） / 编辑（页面） / 选择地址（页面） / 定价（弹窗） / 启用禁用 / 更换门店（列表弹窗）
    门店主数据复用 index 现有 stores.value（与充电订单共用同一份）
    ══════════════════════════════════════════════════════════════════ */
@@ -10652,7 +10652,7 @@ function cdSavePrice(){if(cdSaving.value)return;var d=curChargeDev.value;if(!d)r
   cdErr.value=e;if(Object.keys(e).length)return;
   cdSaving.value=true;setTimeout(function(){d.price=Number(f.price);d.maxDuration=Number(f.maxDuration);cdSaving.value=false;cdCloseMod();toast('定价已保存','success')},400)}
 /* ══ 商户端 · 更换门店弹窗（对标「选择车型」：搜索 + 列表行；行内回显数据同门店列表＝门店名 + 地址）
-   三处共用：车辆详情 / 电池详情 / 充电设备详情，按 shopPickTarget 分派回写 ══ */
+   三处共用：车辆详情 / 电池详情 / 充电桩详情，按 shopPickTarget 分派回写 ══ */
 const shopPickTarget=ref('');            // '' | 'veh' | 'batt' | 'cd'
 const shopPickQ=ref('');
 const shopPickList=computed(()=>{const q=shopPickQ.value.trim().toLowerCase();return stores.value.map((s,i)=>({id:i+1,name:s.name,addr:s.addr||''})).filter(s=>!q||s.name.toLowerCase().includes(q)||s.addr.toLowerCase().includes(q))});

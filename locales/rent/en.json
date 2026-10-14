@@ -689,8 +689,8 @@
   },
   "merchant": {
     "chargingDevice": {
-      "title": "Charging Device",
-      "detailTitle": "Charging Device Details",
+      "title": "Charger",
+      "detailTitle": "Charger Details",
       "deviceNo": "Device Number",
       "address": "Device Address",
       "addrPlaceholder": "Enter or select an address",
