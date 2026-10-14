@@ -3326,11 +3326,9 @@ body.host-single-m #root-user{display:none}
 <!-- ═══ HOME ═══ -->
 <template v-if="tab==='home'">
 <div class="pt-14 px-5 pb-3.5 bg-white shrink-0">
-<div class="filter-tabs mb-3" data-od-id="home-store-filter">
-<div v-for="t in homeStoreTabs" :key="t.v" class="filter-pill" :style="homeStore===t.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#F6F7F9',color:'#666',border:'1px solid transparent'}" data-cp @click="homeStore=t.v">{{ t.l }}</div>
-</div>
 <div class="flex justify-between items-center">
-<h1 class="text-[22px] font-bold tracking-[-.3px] truncate min-w-0">{{ store.name }}</h1>
+<h1 class="text-[22px] font-bold tracking-[-.3px]">{{ store.name }}</h1>
+
 </div>
 </div>
 <div class="ptr-indicator" id="ptr-home"><span class="ptr-text">下拉刷新</span></div>
