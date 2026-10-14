@@ -3327,15 +3327,14 @@ body.host-single-m #root-user{display:none}
 <template v-if="tab==='home'">
 <div class="pt-14 px-5 pb-3.5 bg-white shrink-0">
 <div class="flex justify-between items-center">
-<h1 class="text-[22px] font-bold tracking-[-.3px]">{{ store.name }}</h1>
-
+<h1 class="text-[22px] font-bold tracking-[-.3px] truncate min-w-0">{{ store.name }}</h1>
 </div>
 </div>
 <div class="ptr-indicator" id="ptr-home"><span class="ptr-text">下拉刷新</span></div>
 <div id="sc-home" @vue:mounted="()=>initPullToRefresh('sc-home','ptr-home',refreshHome)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-4 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
 
 <template v-if="can('home.stats.business')">
-<div class="flex justify-between items-center mb-3"><span class="text-[15px] font-semibold">经营数据</span></div>
+<div class="flex justify-between items-center mb-3"><span class="text-[15px] font-semibold">经营数据</span><span data-cp @click="homeOpen('stats')" class="inline-flex items-center gap-0.5 text-[13px] font-medium cursor-pointer select-none active:opacity-70" style="color:var(--link)" data-od-id="home-stats-entry">查看统计<span v-html="luci('chevron-right','w-3.5 h-3.5')"></span></span></div>
 <transition-group name="item" tag="div" class="grid grid-cols-2 gap-2.5">
 <div class="bg-white border border-[#E5E5E5] rounded-xl p-4" v-for="(s,i) in bizStats" :key="s.label" :style="{transitionDelay:i*60+'ms',boxShadow:'0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)'}">
 <div class="text-xs text-[#6B6B6B] font-medium mb-2">{{ s.label }}</div>
@@ -3417,6 +3416,47 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 </div>
+<!-- ═══ HOME · 统计（本月口径；复用 home.stats.business 权限码） ═══ -->
+<page :open="homeOV==='stats'" :z="500" :swipe-close="homeClose">
+<nav-bar title="统计" border-color="#E5E5E5" @back="homeClose"></nav-bar>
+<div class="flex-1 overflow-y-auto min-h-0 px-5 pt-4 pb-24 hide-scroll" style="touch-action:pan-y">
+<div class="text-[13px] font-semibold text-[#999] px-1 mb-1.5">{{ store.name }} · 本月</div>
+<kv-card title="本月概览" class="mb-3" label-width="8rem" divider>
+<kv-row label="收款（含押金）" :value="statsMonth.allText"></kv-row>
+<kv-row label="押金（已收）" :value="statsMonth.depText"></kv-row>
+<kv-row label="营收（不含押金）" :value="statsMonth.revText"></kv-row>
+<kv-row label="其中续租收入" :value="statsMonth.renewText"></kv-row>
+<kv-row label="退款额" :value="statsMonth.refundText"></kv-row>
+<kv-row label="净营收" :value="statsMonth.netText"></kv-row>
+</kv-card>
+<kv-card title="营收趋势（按日）" class="mb-3">
+<div class="flex items-end gap-[3px] h-24">
+<div v-for="t in statsTrend.items" :key="t.d" class="flex-1 flex flex-col justify-end h-full">
+<div class="w-full rounded-t-[3px]" :style="{height:t.pct+'%',background:'var(--accent)',opacity:t.on?1:0.18}"></div>
+</div>
+</div>
+<div class="flex justify-between text-[11px] text-[#999] mt-1.5"><span>1 日</span><span>峰值 {{ statsTrend.maxText }}</span><span>{{ statsTrend.days }} 日</span></div>
+</kv-card>
+<kv-card v-if="!homeStoreId" title="按门店" class="mb-3">
+<div v-for="s in statsByStore" :key="s.name" class="flex items-center justify-between gap-3 py-1.5">
+<span class="min-w-0 flex-1 truncate text-[14px]" style="color:#333">{{ s.name }}</span>
+<span class="shrink-0 text-[14px] font-medium" style="font-variant-numeric:tabular-nums">{{ s.amountText }}</span>
+</div>
+</kv-card>
+<kv-card title="按车型" class="mb-3">
+<div v-for="m in statsByModel" :key="m.name" class="flex items-center justify-between gap-3 py-1.5">
+<span class="min-w-0 flex-1 truncate text-[14px]" style="color:#333">{{ m.name }}</span>
+<span class="shrink-0 text-[14px] font-medium" style="font-variant-numeric:tabular-nums">{{ m.amountText }}</span>
+</div>
+</kv-card>
+<kv-card title="按渠道" class="mb-3">
+<div v-for="c in statsByChannel" :key="c.name" class="flex items-center justify-between gap-3 py-1.5">
+<span class="min-w-0 flex-1 truncate text-[14px]" style="color:#333">{{ c.name }}</span>
+<span class="shrink-0 text-[14px] font-medium" style="font-variant-numeric:tabular-nums">{{ c.amountText }}</span>
+</div>
+</kv-card>
+</div>
+</page>
 <page :open="homeOV==='alerts'" :z="500" :swipe-close="homeClose">
 <nav-bar title="告警中心" border-color="#E5E5E5" @back="homeClose"></nav-bar>
 <div class="bg-white shrink-0 px-4 pt-3 pb-2" style="border-bottom:1px solid #E5E5E5">
@@ -5223,6 +5263,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 </bottom-sheet>
+
 
 <!-- ═══ 充电桩 · 禁用/启用二次确认 ═══ -->
 <confirm-dialog :open="!!cdConfirm" :title="cdConfirmTitle" :desc="cdConfirmDesc" :loading="cdConfirmLoading" z="820" oid="cd-toggle-modal" :confirm-bg="cdConfirm==='disable'?'#DC2626':'var(--accent)'" @close="cdConfirm=''" @confirm="cdDoToggle"></confirm-dialog>
@@ -8346,9 +8387,95 @@ function vehStatusLabel(status){return _VEH_STATUS_MAP[status]||status}
 function ignoreReasonLabel(reason){return _IGNORE_REASON_MAP[reason]||reason}
 /* ══ HOME ══ */
 const homeOV=ref(null);const homeRefreshing=ref(false);
-const store=computed(()=>({name:'测试门店'}));
-const bizStats=computed(()=>[{label:'今日收款',value:fmtRp(3240),trend:null},{label:'本月收款',value:fmtRp(28500),trend:null},{label:'租赁中',value:'18',trend:null},{label:'即将到期',value:'8',trend:null}]);
- const vehStats=computed(()=>[{label:'在线车辆',value:'42',online:true},{label:'离线车辆',value:'8',danger:true,online:false}]);
+/* ══ 首页门店维度（统计口径见 merchant-stats-plan.md §3.6）：0=全部门店，1..4=门店主数据下标+1 ══ */
+const homeStoreId=ref(0);
+/* 门店维度 Tab（形态沿用 045e055 回滚前的首页 filter-tabs 行）：
+   胶囊标签取门店名括号内的门店段，避免 5 个 17 字全名把首屏挤满；去掉 /\(([^)]+)\)/ 即可改回全名 */
+const homeStoreTabs=computed(()=>[{v:0,l:'全部门店'}].concat(stores.value.map(function(s,i){
+  var m=/\(([^)]+)\)/.exec(s.name||'');
+  return {v:i+1,l:(m&&m[1])||s.name};
+})));
+/* 维度只做筛选，不重建数据源：全部门店不筛选 */
+const homeOrders=computed(()=>homeStoreId.value?orders.value.filter(function(o){return Number(o.shopId)===homeStoreId.value}):orders.value);
+const homeVehicles=computed(()=>homeStoreId.value?vehicles.value.filter(function(v){return Number(v.shopId)===homeStoreId.value}):vehicles.value);
+const _homeAt=function(s){var t=Date.parse(String(s||'').replace(/-/g,'/'));return isNaN(t)?null:t};
+/* 经营数据：单次 O(n) 遍历。认收口径＝payTime 非空 且 支付状态非待支付/支付中 且 订单状态非已取消；
+   金额一律复用 orderPaidAmount（主订单待支付记 0 + 已付续租费），不在展示层二次加总 */
+const homeBiz=computed(()=>{
+  var now=new Date();
+  var dayStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+  var monStart=new Date(now.getFullYear(),now.getMonth(),1).getTime();
+  var today=0,month=0,lease=0,due=0;
+  homeOrders.value.forEach(function(o){
+    if(o.status==='progress')lease++;
+    if(o.status==='return')due++;
+    if(o.status==='cancelled')return;
+    if(!o.paySt||o.paySt==='pending'||o.paySt==='processing')return;
+    var t=_homeAt(o.payTime);if(t==null)return;
+    var amt=orderPaidAmount(o);
+    if(t>=monStart)month+=amt;
+    if(t>=dayStart)today+=amt;
+  });
+  return {today:today,month:month,lease:lease,due:due};
+});
+const store=computed(()=>({name:(homeStoreId.value&&stores.value[homeStoreId.value-1])?stores.value[homeStoreId.value-1].name:'全部门店'}));
+const bizStats=computed(()=>{var b=homeBiz.value;return [{label:'今日收款',value:fmtRp(b.today),trend:null},{label:'本月收款',value:fmtRp(b.month),trend:null},{label:'租赁中',value:String(b.lease),trend:null},{label:'即将到期',value:String(b.due),trend:null}]});
+const vehStats=computed(()=>{var on=homeVehicles.value.filter(function(v){return v.online}).length,total=homeVehicles.value.length;return [{label:'在线车辆',value:String(on),online:true},{label:'离线车辆',value:String(total-on),danger:true,online:false}]});
+/* ══ 统计页聚合（口径见 merchant-stats-plan.md §3）：本月认收单摊平成一次遍历，
+   金额一律取 orderPaidAmount（已付）与 renewal/押金拆分，展示层不再二次加总 ══ */
+const statsRows=computed(()=>{
+  var monStart=new Date(new Date().getFullYear(),new Date().getMonth(),1).getTime();
+  var out=[];
+  homeOrders.value.forEach(function(o){
+    if(o.status==='cancelled')return;
+    if(!o.paySt||o.paySt==='pending'||o.paySt==='processing')return;
+    var t=_homeAt(o.payTime);if(t==null||t<monStart)return;
+    var rent=Number(o.amount)||0,renew=0;
+    (o.renewSubOrders||[]).forEach(function(r){if(r&&!r.cancelRenew&&r.subPayStatus==='已支付')renew+=(Number(r.renewRentFee)||0)});
+    var paid=orderPaidAmount(o),dep=paid-rent-renew;if(dep<0)dep=0;
+    var ch='-',sp=o.paymentSplit||{},rs=(sp.rentSplit||[]).filter(function(c){return c&&Number(c.amount)>0});
+    if(rs.length)ch=payChannelLabel(rs[0].method);else if(o.payment)ch=payChannelLabel(o.payment);
+    out.push({shopId:Number(o.shopId)||0,item:o.item||'-',ch:ch,day:new Date(t).getDate(),rent:rent,renew:renew,deposit:dep});
+  });
+  return out;
+});
+/* 本月概览：营收＝租金+已付续租费（不含押金，与首页「收款」口径区分开）；退款额取 SUCCESS 且按 refundTime 归属 */
+const statsMonth=computed(()=>{
+  var rev=0,dep=0,renew=0;
+  statsRows.value.forEach(function(x){rev+=x.rent+x.renew;dep+=x.deposit;renew+=x.renew});
+  var monStart=new Date(new Date().getFullYear(),new Date().getMonth(),1).getTime();
+  var refund=0;
+  try{var rf=(typeof orderRefunds!=='undefined'&&orderRefunds&&orderRefunds.value)?orderRefunds.value:{};
+    var _sid=homeStoreId.value,_shopOf={};
+    orders.value.forEach(function(o){_shopOf[o.id]=Number(o.shopId)||0});
+    Object.keys(rf).forEach(function(k){
+      if(_sid&&_shopOf[k]!==_sid)return; /* 退款按所属订单的门店归属过滤，与营收同维度 */
+      (rf[k]||[]).forEach(function(x){
+        if(x.refundStatus!=='SUCCESS')return;
+        var t=_homeAt(x.refundTime);if(t==null||t<monStart)return;
+        refund+=(Number(x.rentAmount)||0)+(Number(x.depositAmount)||0)})})}catch(e){}
+  return {allText:fmtRp(rev+dep),revText:fmtRp(rev),depText:fmtRp(dep),renewText:fmtRp(renew),refundText:fmtRp(refund),netText:fmtRp(rev-refund),refund:refund};
+});
+const statsTrend=computed(()=>{
+  var today=new Date().getDate(),arr=[],i;
+  for(i=1;i<=today;i++)arr.push(0);
+  statsRows.value.forEach(function(x){if(x.day>=1&&x.day<=today)arr[x.day-1]+=x.rent+x.renew});
+  var max=1;arr.forEach(function(v){if(v>max)max=v});
+  return {items:arr.map(function(v,d){return {d:d+1,pct:v?Math.max(4,Math.round(v/max*100)):4,on:v>0}}),maxText:fmtRp(max),days:today};
+});
+function _statsGroup(keyFn){
+  return computed(()=>{
+    var m={};
+    statsRows.value.forEach(function(x){var k=keyFn(x);m[k]=(m[k]||0)+x.rent+x.renew});
+    return Object.keys(m).map(function(k){return {name:k,amount:m[k],amountText:fmtRp(m[k])}}).sort(function(a,b){return b.amount-a.amount});
+  });
+}
+const statsByStore=computed(()=>{
+  var m={};statsRows.value.forEach(function(x){m[x.shopId]=(m[x.shopId]||0)+x.rent+x.renew});
+  return stores.value.map(function(s,i){return {name:s.name,amount:m[i+1]||0,amountText:fmtRp(m[i+1]||0)}});
+});
+const statsByModel=_statsGroup(function(x){return x.item});
+const statsByChannel=_statsGroup(function(x){return x.ch});
  function goHomeVehStat(s){navOpen();if(!can('home.stats.vehicle')){deny();return}if(!can('vehicle.list')){deny();return}homeOV.value=null;curAlert.value=null;alertMod.value=null;vehOV.value=null;vehQ.value='';vehPill.value='';vehFsModel.value='';vehFsLost.value=null;vehFsOnline.value=s.online===true?true:s.online===false?false:null;tab.value='vehicles'}
  const ALERTS_SEED=[
   {id:1,vin:'LSVAU2Z0A00888000',type:'车辆离线',lv:'p0',status:'pending',time:'2024-10-24 10:45:18',firstTime:'2024-10-24 08:12:05',duration:'2小时33分',count:3,location:'北京市朝阳区望京街道附近',orderId:'YD202501180004',icon:'wifi-off',ignoreReason:'',closeSource:'',closedTime:'',timeline:[
@@ -8521,7 +8648,7 @@ function closeAlertById(id,source){
   return a;
 }
 var alertPtrInit=false;
-function homeOpen(id){if(id==='alerts'&&!can('alarm.list')){deny();return}navOpen();if(id==='alerts'){alertStatus.value='pending';alertType.value=''}homeOV.value=id;if(id==='alerts'){triggerListLoading('alerts');if(!alertPtrInit){nextTick(()=>{if(document.getElementById('sc-alert')){initPullToRefresh('sc-alert','ptr-alert',refreshAlert);alertPtrInit=true}})}}}
+function homeOpen(id){if(id==='alerts'&&!can('alarm.list')){deny();return}if(id==='stats'&&!can('home.stats.business')){deny();return}navOpen();if(id==='alerts'){alertStatus.value='pending';alertType.value=''}homeOV.value=id;if(id==='alerts'){triggerListLoading('alerts');if(!alertPtrInit){nextTick(()=>{if(document.getElementById('sc-alert')){initPullToRefresh('sc-alert','ptr-alert',refreshAlert);alertPtrInit=true}})}}}
 function homeClose(){alertMod.value=null;navBack()}
 /* 详情叠层：只设 curAlert，不改 homeOV，返回动画与其它二级页一致（仅本层 sl 滑出） */
 function openAlertDetail(a){if(!can('alarm.detail')){deny();return}navOpen();curAlert.value=a;alertMod.value=null;alertTimelineExpanded.value=false}
@@ -11035,7 +11162,7 @@ function goSwap(){location.href='swap.html'}
 
 return{luci,alertTypeLabel,vehStatusLabel,ignoreReasonLabel,initPullToRefresh,refreshHome,refreshVeh,refreshOrd,refreshBatt,refreshAlert,tab,setTab,toasts,toast,can,deny,perms,permGroups,togglePerm,setPermGroup,setAllPerms,goSwap,firstLogin,switchSource,switchBack,curSystemName,
  TAB_PERM_CODES,tabPermItems,demoPagePermGroups,demoPagePermTitle,demoPagePermCodes,demoIsTopTab,pageRoute,copyPermCode,
- homeOV,homeRefreshing,store,bizStats,vehStats,goHomeVehStat,recent,allAlerts,pendingAlertCount,alertStatus,alertType,alertStatusTabs,alertTypeTabs,alertStatusCnt,filteredAlerts,alertEmptyTitle,alertEmptySub,demoHasAlerts,demoSetHasAlerts,demoListEmpty,demoSetListEmpty,curAlert,alertMod,ignoreReasonPick,ignoreReasons,lvBg,stBg,stLabel,closeSourceLabel,lvLabel,timelineLabel,timelineDotClass,curAlertTimeline,curAlertTimelineHasMore,alertTimelineExpanded,homeOpen,homeClose,openAlertDetail,closeAlertDetail,startProcessAlert,resolveAlert,confirmIgnoreAlert,reopenAlert,demoOpsActive,demoSetAlertCloseSource,goAlertVehicle,doFindFromAlert,
+ homeOV,homeRefreshing,homeStoreId,homeStoreTabs,homeBiz,statsMonth,statsTrend,statsByStore,statsByModel,statsByChannel,store,bizStats,vehStats,goHomeVehStat,recent,allAlerts,pendingAlertCount,alertStatus,alertType,alertStatusTabs,alertTypeTabs,alertStatusCnt,filteredAlerts,alertEmptyTitle,alertEmptySub,demoHasAlerts,demoSetHasAlerts,demoListEmpty,demoSetListEmpty,curAlert,alertMod,ignoreReasonPick,ignoreReasons,lvBg,stBg,stLabel,closeSourceLabel,lvLabel,timelineLabel,timelineDotClass,curAlertTimeline,curAlertTimelineHasMore,alertTimelineExpanded,homeOpen,homeClose,openAlertDetail,closeAlertDetail,startProcessAlert,resolveAlert,confirmIgnoreAlert,reopenAlert,demoOpsActive,demoSetAlertCloseSource,goAlertVehicle,doFindFromAlert,
 vehOV,vehMod,vehShowModelSheet,vehShowFS,vehRefreshing,locked,pressProgress,lockJustDone,
 vehicles,vehModels,vehQ,vehPill,vehFsModel,vehFsOnline,vehFsLost,vehFsModelC,vehFsOnlineC,vehFsLostC,vehHasF,pills,pillCnt,filtered,
 vehView,mapVehicles,vehNoLocationCount,mapSelectedVin,mapSelectedVeh,vehToggleView,vehMapSelect,vehMapPinStyle,vehCluster,
