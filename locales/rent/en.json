@@ -429,7 +429,7 @@
         "3": "If auto renewal fails, you can go to the order details page to renew manually; eligible order types and statuses follow the store configuration, and any unpaid renewal order must be paid first."
       },
       "billingRules": {
-        "1": "Billing starts when the user picks up the vehicle/battery and ends when the vehicle/battery is fully returned.",
+        "1": "Billing starts when the user binds the vehicle/battery.",
         "2": "Periodic rent is calculated based on the rental plan selected for the order.",
         "3": "If the rental duration is less than one billing period, it is charged as one period."
       },
@@ -438,7 +438,7 @@
         "1": "Please return the vehicle/battery within the return time agreed in the order.",
         "2": "In case of overdue return, the merchant may deduct the related overdue charges from the deposit.",
         "3": "If the deposit is insufficient to cover the deduction, the merchant has the right to claim the difference from the user.",
-        "4": "If the vehicle is not returned beyond the agreed number of days, the merchant has the right to remotely lock the vehicle."
+        "4": "If the vehicle is not returned beyond the agreed number of days, the merchant has the right to remotely lock the vehicle and restrict battery discharge."
       },
       "cancelRules": {
         "1": "If the order has not been paid, the user may cancel it on their own.",

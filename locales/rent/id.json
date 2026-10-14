@@ -429,7 +429,7 @@
         "3": "Jika perpanjangan otomatis gagal, Anda dapat membuka detail pesanan untuk mengajukan perpanjangan secara manual; jenis dan status pesanan yang dapat diperpanjang mengikuti konfigurasi toko, dan pesanan perpanjangan yang belum dibayar harus dilunasi terlebih dahulu."
       },
       "billingRules": {
-        "1": "Waktu penagihan dimulai saat pengguna mengambil kendaraan/baterai dan berakhir saat kendaraan/baterai selesai dikembalikan.",
+        "1": "Waktu penagihan dimulai saat pengguna menghubungkan kendaraan/baterai.",
         "2": "Sewa periode dihitung berdasarkan paket sewa yang dipilih untuk pesanan.",
         "3": "Jika durasi sewa kurang dari satu periode, dihitung sebagai satu periode."
       },
@@ -438,7 +438,7 @@
         "1": "Harap kembalikan kendaraan/baterai dalam waktu pengembalian yang disepakati dalam pesanan.",
         "2": "Jika terjadi pengembalian terlambat, merchant dapat memotong biaya terkait keterlambatan dari deposit.",
         "3": "Jika deposit tidak cukup untuk potongan, merchant berhak menagih selisihnya kepada pengguna.",
-        "4": "Jika kendaraan tidak dikembalikan melewati jumlah hari yang disepakati, merchant berhak mengunci kendaraan secara jarak jauh."
+        "4": "Jika kendaraan tidak dikembalikan melewati jumlah hari yang disepakati, merchant berhak mengunci kendaraan secara jarak jauh dan membatasi pelepasan baterai."
       },
       "cancelRules": {
         "1": "Jika pesanan belum dibayar, pengguna dapat membatalkannya secara mandiri.",
