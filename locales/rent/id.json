@@ -486,7 +486,15 @@
       "buyNow": "Beli Sekarang",
       "rentalIntro": "Perkenalan Sewa",
       "safetySlogan": "Keselamatan Anda adalah prioritas utama kami",
-      "currentLocation": "Lokasi Saat Ini"
+      "currentLocation": "Lokasi Saat Ini",
+      "pushNotify": {
+        "renewReminderTitle": "Pesanan Akan Diperpanjang Otomatis",
+        "renewSuccessTitle": "Perpanjangan Otomatis Pesanan Berhasil",
+        "renewFailedTitle": "Perpanjangan Otomatis Pesanan Gagal",
+        "renewReminderBody": "Pesanan Anda akan diperpanjang otomatis pada 2026-09-10 12:00:00 dan dipotong Rp150.000. Jika tidak perlu perpanjangan, silakan buka detail pesanan untuk menonaktifkan perpanjangan otomatis.",
+        "renewSuccessBody": "Pesanan Anda berhasil diperpanjang otomatis, dipotong Rp150.000, masa berlaku pesanan diperpanjang hingga 2026-09-11 12:00:00.",
+        "renewFailedBody": "Perpanjangan otomatis pesanan Anda gagal (percobaan 2/3), alasan: saldo tidak cukup. Mohon segera isi ulang, agar kegagalan perpanjangan yang berulang tidak menonaktifkan perpanjangan otomatis."
+      }
     },
     "search": {
       "placeholder": "Cari charger, toko",

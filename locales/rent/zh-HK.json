@@ -486,7 +486,15 @@
       "buyNow": "立即選購",
       "rentalIntro": "租車介紹",
       "safetySlogan": "您的安全是我們最關心的事",
-      "currentLocation": "當前定位"
+      "currentLocation": "當前定位",
+      "pushNotify": {
+        "renewReminderTitle": "訂單即將自動續租",
+        "renewSuccessTitle": "訂單自動續租成功",
+        "renewFailedTitle": "訂單自動續租失敗",
+        "renewReminderBody": "您的訂單將於2026-09-10 12:00:00自動續租，並扣款Rp150.000。如不需要續租，請前往訂單詳情關閉自動續租。",
+        "renewSuccessBody": "您的訂單已自動續租成功，扣款Rp150.000，訂單有效期已延長至2026-09-11 12:00:00。",
+        "renewFailedBody": "您的訂單自動續租失敗（第2/3次），原因：餘額不足。請盡快增值，以免續租失敗次數過多導致自動續租功能關閉。"
+      }
     },
     "search": {
       "placeholder": "查找充電樁、門店",

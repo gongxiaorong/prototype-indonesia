@@ -486,7 +486,15 @@
       "buyNow": "立即选购",
       "rentalIntro": "租车介绍",
       "safetySlogan": "您的安全是我们最关心的事",
-      "currentLocation": "当前定位"
+      "currentLocation": "当前定位",
+      "pushNotify": {
+        "renewReminderTitle": "订单即将自动续租",
+        "renewSuccessTitle": "订单自动续租成功",
+        "renewFailedTitle": "订单自动续租失败",
+        "renewReminderBody": "您的订单将于2026-09-10 12:00:00自动续租，并扣款Rp150.000。如不需要续租，请前往订单详情关闭自动续租。",
+        "renewSuccessBody": "您的订单已自动续租成功，扣款Rp150.000，订单有效期已延长至2026-09-11 12:00:00。",
+        "renewFailedBody": "您的订单自动续租失败（第2/3次），原因：余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。"
+      }
     },
     "search": {
       "placeholder": "搜索充电桩、门店",

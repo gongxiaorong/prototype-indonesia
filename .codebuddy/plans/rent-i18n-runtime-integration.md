@@ -1,6 +1,10 @@
 # 租车系统真实接入 i18n · 方案与执行计划（v2）
 
 > 标识：`rent-i18n-runtime-integration`
+> 修订：v6（2026-10-15）——首页 3 条消息推送**标题与正文整体重写**（用户最新口述定稿）：标题改为 `订单即将自动续租 / 订单自动续租成功 / 订单自动续租失败`；正文统一「您的订单…」句式并回到句末落点，时刻升到秒（演示值 `12:00:00`）、② 补「订单有效期已延长至{新到期}」、③ 补「原因：余额不足」；金额按用户字面 `Rp150.000`（与 App `fmtRp` 的 `Rp 150.000` 差异登记为接入期待确认项）。五语同步 `rent/{zh-CN,zh-HK,en,id,th}.json` 同 6 个 key，`index.html` 的 `renewNotifyTemplates` 三条 title + body 与面板三条 chip 同步，`renewNotifySample` 新增 `newDueDate`。（改文演进与定稿见 `i18n-key-naming.md` 第四、五轮）
+> 修订：v5（2026-10-15）——首页 3 条消息推送**正文**按用户口述定稿：三条全部改为不含订单号的纯文字整句（①`订单将于2026-09-10 12:00自动续租并扣款Rp 150.000，订单页可关闭自动续租。`②`自动续租扣款Rp 150.000成功，订单续租成功。`③`自动续租扣款第2/3次失败，请尽快充值，多次失败将关闭自动续租。`），正文键名随之与语义对齐（`deductReminderBody → renewSuccessBody`、`paymentFailedBody → renewFailedBody`）；`index.html` 的 `renewNotifyTemplates` 三条 body 与 `renewNotifySample`（去掉已无引用的 `orderId / N`）同步。
+> 修订：v4（2026-10-15）——首页 3 条消息推送标题按用户口述改名（续租提醒→订单续租提醒、扣款提醒→订单续租成功、扣款失败→订单续租失败），标题随之由复用 `common.label.*` 改为新建 `user.home.pushNotify.*Title`。
+> 修订：v3（2026-10-15）——首页 3 条消息推送（续租提醒 / 扣款提醒 / 扣款失败）的标题与正文**全部用纯文字**整理（示例数值写死进词条、不用占位符），标题与正文均落 `user.home.pushNotify.*`。
 > 修订：v2（2026-10-14）——按用户要求**移除「file 直接打开的可见降级提示」**：原型后续用于部署演示，本地开发一律起 http 服务访问。词条加载异常只做控制台报错，不新增任何降级 UI。
 
 ## 一、产品概述
@@ -13,6 +17,7 @@
 - **双端同步**：同一语言状态驱动用户端与商户端，任一端切换另一端同步；切换即时生效（无需刷新），不重挂载、不丢当前页面与返回栈。
 - **词条唯一来源**：界面文案全部由词条驱动（页面可见文本、按钮与标签、输入框占位、提示与弹窗、空状态、状态名、单位与规则长文本、toast）。
 - **动态文案本地化**：带变量的句子（租赁时长、金额、剩余时间、版本号等）按占位符取值，不在代码里拼接中文。
+- **首页 3 条消息推送按纯文字整句（v3 新增、v4 改名标题、v5 定稿正文、v6 整体重写）**：三条推送的**标题与正文全部用纯文字**——日期 `2026-09-10 12:00:00` / `2026-09-11 12:00:00`、金额 `Rp150.000`、次数 `2/3` 直接写进句子，五语逐字一致，**不使用占位符、不做 JS 模板拼接**（v5 起正文不再含订单号）；标题为 `订单即将自动续租 / 订单自动续租成功 / 订单自动续租失败`，与正文一并落 `user.home.pushNotify.*`（词条已落盘，代码接线在 i18n-js-layer）。
 - **缺词降级**：词条缺失时回落简体中文，不抛错、不中断渲染。
 - **访问方式（v2 修订）**：词条通过 **http 同源** `fetch` 装载；**部署演示与本地开发都走 http**（本地用 `python -m http.server`），因此**不做 file:// 的降级提示 UI**。装载异常时仅在控制台输出明确错误（含排查提示），页面继续按可用内容渲染。
 - **范围边界**：演示假数据（示例订单、示例电池等）保持原样不翻译；换电端与两份 SOP 手册本次不改。
@@ -111,7 +116,7 @@ function scanMessageSafety(flat) /* { pluralPipe:[], linkedAt:[], bareBrace:[] }
 3. **i18n-codemod**：新增 `scripts/i18n_keyize.mjs`（反查索引、3 条歧义白名单、dry-run 报告、分批幂等重写、消息安全预检）。
 4. **i18n-user-dom**：用户端模板键化（登录实名、首页、选择门店与方案、订单确认与规则卡、支付、订单列表与详情、钱包、我的与设置）。
 5. **i18n-merchant-dom**：商户端模板键化（首页与经营数据、四类订单、车辆/电池管理、套餐与充值配置、订单配置、账号职位权限、告警客服、个人中心）。
-6. **i18n-js-layer**：JS 层键化与补键（toast、状态映射、确认弹窗、computed 标签、rulesOf 长规则、动态插值），五语词条同步。
+6. **i18n-js-layer**：JS 层键化与补键（toast、状态映射、确认弹窗、computed 标签、rulesOf 长规则、动态插值），五语词条同步。首页 3 条消息推送按纯文字整句取值：标题 `user.home.pushNotify.renewReminderTitle / renewSuccessTitle / renewFailedTitle`、正文 `user.home.pushNotify.renewReminderBody / renewSuccessBody / renewFailedBody`（均已落盘，键名与语义对齐见 v5），`renewNotifyTemplates` 的模板函数与 `renewNotifySample` 的示例值拼接随之移除（v5 起 `renewNotifySample` 仅保留 `dueDate / amount / failCount / threshold`；v6 起新增 `newDueDate`，`dueDate` 提到秒级）；原型操作面板三条 chip 文案与推送标题逐字相同（v6：`订单即将自动续租 / 订单自动续租成功 / 订单自动续租失败`），键化时与标题共用同一批 `*Title` 键；三条标题与正文已按 v6 重写定稿。
 7. **i18n-guard**：修订 `AGENTS.md` §1/§5/§6 并扩展 `i18n_check.mjs`（键化覆盖、残留中文、消息安全），跑通全量校验。
 8. **i18n-verify**：Playwright 五语逐页冒烟与截图 + code-review 对照规范复核，给出验收结论。
 
@@ -131,3 +136,7 @@ function scanMessageSafety(flat) /* { pluralPipe:[], linkedAt:[], bareBrace:[] }
 | --- | --- | --- |
 | v1 | 2026-10-14 | 首版：目标原型可切语言、范围 index.html 双端、路线 B 全量 t(key) 键化、5 语言默认中文 |
 | v2 | 2026-10-14 | 移除「file 直接打开的可见降级提示」：词条一律 http 同源装载，失败仅控制台报错；新增部署约束（`locales/rent` 与 `index.html` 同源发布）与 http 验证口径 |
+| v3 | 2026-10-15 | 首页 3 条消息推送（续租提醒 / 扣款提醒 / 扣款失败）标题与正文改为**纯文字整句**：示例数值写死进五语词条、不用占位符，标题复用 `common.label.*`、正文落 `user.home.pushNotify.*`（词条已落盘并登记 `i18n-key-naming.md`） |
+| v4 | 2026-10-15 | 首页 3 条消息推送标题按用户口述改名（续租提醒→订单续租提醒、扣款提醒→订单续租成功、扣款失败→订单续租失败），原型操作面板三条 chip 文案同轮一并改为同名：标题由复用 `common.label.*` 改为新建 `user.home.pushNotify.*Title`（五语 + `index.html` 的 `renewNotifyTemplates` 与 chip 同步），chip 与标题共用同一批 `*Title` 键，原 `common.label.*` 在 rent 侧本次无引用（保留待键化复核） |
+| v5 | 2026-10-15 | 首页 3 条消息推送**正文**定稿为不含订单号的纯文字整句（示例数值写死进词条、不用占位符），正文键名与语义对齐（`deductReminderBody → renewSuccessBody`、`paymentFailedBody → renewFailedBody`）；`index.html` 的 `renewNotifyTemplates` 三条 body 与 `renewNotifySample`（去掉已无引用的 `orderId / N`）同步 |
+| v6 | 2026-10-15 | 首页 3 条消息推送**标题与正文整体重写**（定稿：标题 `订单即将自动续租 / 订单自动续租成功 / 订单自动续租失败`；正文「您的订单…」句式、秒级时刻 `12:00:00`、② 新到期时间、③ 失败原因 `原因：余额不足`；金额按用户字面 `Rp150.000`，与 `fmtRp` 的空格差异登记为接入期待确认项）；五语 `rent/{zh-CN,zh-HK,en,id,th}.json` 同步 6 个 key，`index.html` 的 `renewNotifyTemplates` 三条 title + body 与面板三条 chip 同步、`renewNotifySample` 新增 `newDueDate`；改文演进与定稿登记 `i18n-key-naming.md` 第四、五轮 |

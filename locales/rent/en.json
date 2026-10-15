@@ -486,7 +486,15 @@
       "buyNow": "Shop Now",
       "rentalIntro": "Rental Intro",
       "safetySlogan": "Your safety is our top priority",
-      "currentLocation": "Current Location"
+      "currentLocation": "Current Location",
+      "pushNotify": {
+        "renewReminderTitle": "Order Auto Renewal Upcoming",
+        "renewSuccessTitle": "Order Auto Renewed Successfully",
+        "renewFailedTitle": "Order Auto Renewal Failed",
+        "renewReminderBody": "Your order will auto renew on 2026-09-10 12:00:00 and be charged Rp150.000. If renewal is not needed, please go to the order details to turn off auto renewal.",
+        "renewSuccessBody": "Your order has been auto renewed successfully and Rp150.000 was charged. The order is now valid until 2026-09-11 12:00:00.",
+        "renewFailedBody": "Your order auto renewal failed (attempt 2/3). Reason: insufficient balance. Please top up as soon as possible, otherwise too many failed renewals will turn off auto renewal."
+      }
     },
     "search": {
       "placeholder": "Search chargers, stores",

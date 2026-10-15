@@ -2898,9 +2898,9 @@ body.host-single-m #root-user{display:none}
 <div class="demo-ops-section" data-page-node-id="WCWY05AwKKfUAOfREVvaCs">
 <div class="demo-ops-label" data-page-node-id="1Ggo7H08e9yyA1hVZjeGdz">消息推送</div>
 <div class="demo-ops-chips" data-page-node-id="bf20Vd0H94LBVuOZkwGSuT">
-<div class="demo-ops-chip" data-cp @click="showPushNotify('preview')" data-page-node-id="xSyXn3JMZFsoudG9ODgPuC">续租提醒</div>
-<div class="demo-ops-chip" data-cp @click="showPushNotify('reminder')" data-page-node-id="eeEjfJd6BuLfZEn5wZUTXL">扣款提醒</div>
-<div class="demo-ops-chip" data-cp @click="showPushNotify('failed')" data-page-node-id="9HlUEIFizocCEaz0AMaQ6Q">扣款失败</div>
+<div class="demo-ops-chip" data-cp @click="showPushNotify('preview')" data-page-node-id="xSyXn3JMZFsoudG9ODgPuC">订单即将自动续租</div>
+<div class="demo-ops-chip" data-cp @click="showPushNotify('reminder')" data-page-node-id="eeEjfJd6BuLfZEn5wZUTXL">订单自动续租成功</div>
+<div class="demo-ops-chip" data-cp @click="showPushNotify('failed')" data-page-node-id="9HlUEIFizocCEaz0AMaQ6Q">订单自动续租失败</div>
 </div>
 </div>
 </template>
@@ -7199,11 +7199,11 @@ const toasts=ref([]);
 const _tt={n:0};
 function toast(msg,type='info'){toastPush(toasts.value,_tt,msg,type)}
 const renewNotifyTemplates={
-preview:{title:'续租提醒',body:d=>`订单${d.orderId}将于${d.dueDate}自动续租并扣款${d.amount}，可在订单页关闭。`},
-reminder:{title:'扣款提醒',body:d=>`订单${d.orderId}${d.N}天后自动续租扣款${d.amount}，请保持钱包余额充足。`},
-failed:{title:'扣款失败',body:d=>`订单${d.orderId}续租扣款失败${d.failCount}/${d.threshold}次，请尽快充值，否则将停止自动续租。`}
+preview:{title:'订单即将自动续租',body:d=>`您的订单将于${d.dueDate}自动续租，并扣款${d.amount}。如不需要续租，请前往订单详情关闭自动续租。`},
+reminder:{title:'订单自动续租成功',body:d=>`您的订单已自动续租成功，扣款${d.amount}，订单有效期已延长至${d.newDueDate}。`},
+failed:{title:'订单自动续租失败',body:d=>`您的订单自动续租失败（第${d.failCount}/${d.threshold}次），原因：余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。`}
 };
-function renewNotifySample(){return{orderId:'YZ20260901001',dueDate:'2026-09-10',amount:'Rp 150.000',N:1,failCount:2,threshold:3}}
+function renewNotifySample(){return{dueDate:'2026-09-10 12:00:00',newDueDate:'2026-09-11 12:00:00',amount:'Rp150.000',failCount:2,threshold:3}}
 const pushNotify=ref({show:false,title:'',body:'',time:''});
 let pushTimer=null;
 function showPushNotify(type){const t=renewNotifyTemplates[type];if(!t)return;const data=renewNotifySample();pushNotify.value={show:true,title:t.title,body:t.body(data),time:fmtISO(new Date())};if(pushTimer)clearTimeout(pushTimer);pushTimer=setTimeout(()=>{pushNotify.value.show=false},4500)}
