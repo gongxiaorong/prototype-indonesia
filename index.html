@@ -6613,40 +6613,19 @@ body.host-single-m #root-user{display:none}
 
   <!-- 用户钱包 -->
   <template v-if="can('user.wallet')">
-  <div class="text-[13px] font-semibold text-[#999] mb-2">用户钱包</div>
-  <div class="bg-white rounded-xl p-4 mb-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)">
-    <div class="grid grid-cols-2 gap-2.5 mb-4 items-end">
-      <div>
-        <div class="text-[12px] text-[#999] mb-1">总余额</div>
-        <div class="text-[22px] font-bold tabular-nums tracking-tight" style="color:var(--accent)">Rp {{ uWallet.total + uWallet.rechargeFrozen + uWallet.bonusFrozen }}</div>
-      </div>
-      <div class="flex items-end justify-between">
-        <div>
-          <div class="text-[12px] text-[#999] mb-1">可用余额</div>
-          <div class="text-[16px] font-semibold tabular-nums" style="color:#555">Rp {{ uWallet.total }}</div>
-        </div>
-        <div data-cp @click="openUWalletOps" class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] shrink-0 mb-0.5" title="更多钱包操作" data-od-id="wallet-more-btn"><svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-[#666]"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></div>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 gap-2.5">
-      <div data-cp @click="openUFlow('recharge')" class="rounded-xl p-3 cursor-pointer active:opacity-70" style="background:#F6F7F9;border:1px solid #EDEDED">
-        <div class="flex items-center justify-between mb-1"><span class="text-[12px] text-[#999]">充值余额</span><span v-html="luci('chevron-right','w-3.5 h-3.5 text-[#C5C9CF]')"></span></div>
-        <div class="text-[15px] font-semibold tabular-nums">Rp {{ uWallet.rechargeBalance }}</div>
-      </div>
-      <div data-cp @click="openUFlow('bonus')" class="rounded-xl p-3 cursor-pointer active:opacity-70" style="background:#F6F7F9;border:1px solid #EDEDED">
-        <div class="flex items-center justify-between mb-1"><span class="text-[12px] text-[#999]">赠送余额</span><span v-html="luci('chevron-right','w-3.5 h-3.5 text-[#C5C9CF]')"></span></div>
-        <div class="text-[15px] font-semibold tabular-nums">Rp {{ uWallet.bonusBalance }}</div>
-      </div>
-      <div class="rounded-xl p-3" style="background:#F6F7F9;border:1px solid #EDEDED">
-        <div class="text-[12px] text-[#999] mb-1">充值冻结</div>
-        <div class="text-[15px] font-semibold tabular-nums text-[#D97706]">Rp {{ uWallet.rechargeFrozen }}</div>
-      </div>
-      <div class="rounded-xl p-3" style="background:#F6F7F9;border:1px solid #EDEDED">
-        <div class="text-[12px] text-[#999] mb-1">赠送冻结</div>
-        <div class="text-[15px] font-semibold tabular-nums text-[#D97706]">Rp {{ uWallet.bonusFrozen }}</div>
-      </div>
-    </div>
-  </div>
+  <kv-card title="用户钱包" class="mb-5" label-width="5rem">
+    <template #extra><span data-cp @click="openUWalletOps" class="w-4 h-4 flex items-center justify-center cursor-pointer active:opacity-70" title="更多钱包操作" data-od-id="wallet-more-btn"><span v-html="luci('more-horizontal','w-4 h-4 text-[#666]')"></span></span></template>
+    <kv-row label="总余额" :value="'Rp '+(uWallet.total+uWallet.rechargeFrozen+uWallet.bonusFrozen)" value-style="color:var(--accent)"></kv-row>
+    <kv-row label="可用余额" :value="'Rp '+uWallet.total" value-style="color:#555"></kv-row>
+    <kv-row label="充值余额">
+      <template #value><span data-cp @click="openUFlow('recharge')" class="inline-flex items-center gap-0.5 cursor-pointer active:opacity-70">Rp {{ uWallet.rechargeBalance }}<span v-html="luci('chevron-right','w-3.5 h-3.5 text-[#C5C9CF]')"></span></span></template>
+    </kv-row>
+    <kv-row label="赠送余额">
+      <template #value><span data-cp @click="openUFlow('bonus')" class="inline-flex items-center gap-0.5 cursor-pointer active:opacity-70">Rp {{ uWallet.bonusBalance }}<span v-html="luci('chevron-right','w-3.5 h-3.5 text-[#C5C9CF]')"></span></span></template>
+    </kv-row>
+    <kv-row label="充值冻结" :value="'Rp '+uWallet.rechargeFrozen" value-style="color:#D97706"></kv-row>
+    <kv-row label="赠送冻结" :value="'Rp '+uWallet.bonusFrozen" value-style="color:#D97706"></kv-row>
+  </kv-card>
   </template>
 
   <!-- 车辆列表 -->
