@@ -9,6 +9,7 @@
 - `index.html` 是唯一权威源，直接手改。
 - `locales/rent/*.json`（租车）、`locales/swap/*.json`（换电）是唯一文案源；新增/变更文案一律同步进对应目录，**但 HTML 中不写 `t()` 调用**（文案源与源码分离，见 §5）。
 - 版本控制：改完必须自检（见 §6）；`swap.html` 的独立改动与 `index.html` 分开说明。
+- **持久化唯一特例**：全项目只允许一处 `localStorage` —— 键 `yadea:notify-prefs`（用户端消息通知偏好：总开关 / 分类渠道；**系统通知权限态为内存态、不入持久化**——仅由三级页「手机系统通知」开关驱动（原型操作面板入口已下线））。读写**只走** `loadNotifyPrefs()` / `saveNotifyPrefs()` 单一出口，解析异常静默回落默认值。其余任何状态一律内存态，**禁止新增 localStorage**（换电端 `swap.html` 同口径，当前 0 处）。
 
 ## 2. in-DOM 模板铁律
 
@@ -21,7 +22,7 @@
 5. 组件 `template` 是单引号 JS 字符串：内部引号一律写 `\'`，裸写 `''` 会截断整个脚本。
 6. 传纯文本用静态属性 `title="中文"`；传表达式才用 `:title="expr"`——`:title="中文"` 会被当变量求值成 undefined。
 7. `z` 等 Number prop 支持静态属性自动转换；动态值用 `:z` 绑定表达式。
-8. 图标：`registerSheetKit(app)` 已把 `luci` 挂到 `app.config.globalProperties`，组件模板内可直接 `luci('x','w-5 h-5')`。
+8. 图标：`registerSheetKit(app)` 已把 `luci` 挂到 `app.config.globalProperties`，组件模板内可直接 `luci('x','w-5 h-5')`。**lucide 0.344.0 缺失的图标走自建表** `LUCI_CUSTOM`（`lucide.icons` 是冻结表、注入无效）：条目格式与 lucide 图标节点一致（`['svg',默认属性,[子节点]]`），`luci` 先查本表再查 lucide，用法不变（当前仅 `brush-cleaning`＝扫把，给消息中心「清空未读」用）。
 9. **UnoCSS 是按需运行时**：新 utility 类异步生成，插入 DOM 后立即读 computed style 会误判"类没生效"；等 ~1s 再读或查 `document.styleSheets`。静态 CSS token 不受影响。
 
 ## 3. 共享组件清单
@@ -35,7 +36,8 @@
 ```
 
 - 内部左右恒 32px 对称（返回钮/占位 ↔ 右侧槽），标题 `flex-1 text-center` 恒居中；**禁止手写 `mr-8` 补偿式头部**（带右侧动作时标题必偏）。
-- 右侧槽内容须 32px 内（单图标或 2 字文本按钮）；`border-color=''` 关分割线；`bg` 自定义背景；`:back="false"` 左侧仍占位保居中。保留手写头部：搜索栏、`arrow-left` 变体、深色扫码头部、无标题仅返回页。
+- **双图标头部传 `right-wide`**：右侧槽内容超 32px（如消息中心「清空未读 + 设置」两枚 32px 图标钮）时加 `right-wide`——整行由 flex 切 `grid(1fr auto 1fr)`，左右各占等宽弹性列、左右槽分别 `justify-self start/end`，**标题仍在屏幕正中**（不必也不得再加 `mr-*` 补偿）；标题列改 `truncate`，故该模式只用于标题较短的页面。不传时逐像素等同原 flex 布局，老页面不受影响。
+- 右侧槽内容须 32px 内（单图标或 2 字文本按钮，`right-wide` 时改为自适应宽）；`border-color=''` 关分割线；`bg` 自定义背景；`:back="false"` 左侧仍占位保居中。保留手写头部：搜索栏、`arrow-left` 变体、深色扫码头部、无标题仅返回页。
 
 ### page — 全屏子页容器
 

@@ -50,7 +50,7 @@
       "breach": "违约锁单",
       "cancelled": "已取消",
       "created": "已创建",
-      "overdue": "逾期未还",
+      "overdue": "已到期",
       "pickup": "待绑定",
       "progress": "租赁中",
       "return": "即将到期"
@@ -280,7 +280,7 @@
       "amountDue": "应付金额",
       "vehicleOps": "车辆操作",
       "vehicleStartStop": "车辆启停",
-      "messagePush": "消息推送",
+      "messageNotify": "消息通知",
       "renewReminder": "续租提醒",
       "deductReminder": "扣款提醒",
       "hasAlert": "有告警",
@@ -318,7 +318,6 @@
       "balanceFlow": "余额流水",
       "beforeDue": "到期前",
       "paymentFailed": "扣款失败",
-      "continuousPaymentFailed": "连续扣款失败",
       "deleteIrreversible": "删除后不可恢复",
       "periodWeek": "周租",
       "planMonth": "月租",
@@ -473,7 +472,8 @@
     },
     "toast": {
       "deviceBound": "设备绑定成功",
-      "deviceUnbound": "设备已解绑"
+      "deviceUnbound": "设备已解绑",
+      "msgAllRead": "已将消息置为已读"
     },
     "home": {
       "explore": "探索发现",
@@ -488,12 +488,34 @@
       "safetySlogan": "您的安全是我们最关心的事",
       "currentLocation": "当前定位",
       "pushNotify": {
-        "renewReminderTitle": "订单即将自动续租",
+        "renewReminderTitle": "订单自动续租",
         "renewSuccessTitle": "订单自动续租成功",
         "renewFailedTitle": "订单自动续租失败",
         "renewReminderBody": "您的订单将于2026-09-10 12:00:00自动续租，并扣款Rp150.000。如不需要续租，请前往订单详情关闭自动续租。",
         "renewSuccessBody": "您的订单已自动续租成功，扣款Rp150.000，订单有效期已延长至2026-09-11 12:00:00。",
-        "renewFailedBody": "您的订单自动续租失败（第2/3次），原因：余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。"
+        "renewFailedBody": "您的订单自动续租失败（第2/3次），余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。",
+        "orderCreatedTitle": "订单已创建",
+        "orderCreatedBody": "您的订单YZ202512180001已创建，请在30分钟内完成支付，超时未支付订单将自动取消。",
+        "orderPaidTitle": "订单支付成功",
+        "orderPaidBody": "您的订单YZ202512180001已支付成功。请尽快扫描车辆/电池二维码完成绑定，绑定成功后订单即开始计费。",
+        "deviceBoundTitle": "订单已开始",
+        "deviceBoundBody": "您的订单YZ202512180001已绑定车辆/电池，租期2026-09-01 10:30:00至2026-10-01 10:30:00。",
+        "orderExpiringTitle": "订单即将到期",
+        "orderExpiringBody": "您的订单YZ202512180001将于2026-10-01 10:30:00到期，请按时前往门店归还，或前往订单详情办理续租。",
+        "orderOverdueTitle": "订单已到期",
+        "orderOverdueBody": "您的订单YZ202512180001已到期，请及时前往门店归还，以免产生额外费用；如仍需使用，可前往订单详情办理续租。",
+        "orderBreachTitle": "车辆/电池已远程锁定",
+        "orderBreachBody": "您的订单YZ202512180001已逾期7天，车辆与电池已被远程锁定。请立即联系门店处理。",
+        "orderCompletedTitle": "订单已完成",
+        "orderCompletedBody": "您的订单YZ202512180001已完成，感谢您的使用，期待再次为您服务。",
+        "orderCancelledTitle": "订单已取消",
+        "orderCancelledBody": "您的订单YZ202512180001已取消。已支付金额将原路退回。",
+        "orderAdjustedTitle": "订单金额已调整",
+        "orderAdjustedBody": "您的订单YZ202512180001金额已由Rp150.000调整为Rp200.000，如有疑问请联系门店。",
+        "orderRefundingTitle": "退款处理中",
+        "orderRefundingBody": "您的订单YZ202512180001退款中，退款金额Rp150.000，预计1–7个工作日原路退回。",
+        "orderRefundedTitle": "退款成功",
+        "orderRefundedBody": "您的订单YZ202512180001退款Rp150.000已退回原支付渠道，请注意查收。"
       }
     },
     "search": {
@@ -693,6 +715,21 @@
       "refundDetail": "退款明细",
       "refundAmount": "退款金额",
       "orderList": "充电订单"
+    },
+    "message": {
+      "title": "消息中心",
+      "empty": "暂无消息",
+      "emptySub": "新的订单或续租消息会显示在这里",
+      "categoryOrderStatus": "订单状态",
+      "categoryOrderStatusDesc": "订单状态、续租扣款等通知",
+      "categoryFeeRefund": "费用与退款",
+      "categoryFeeRefundDesc": "订单改价、退款等通知",
+      "settingsMaster": "接收消息通知",
+      "settingsCategoryHead": "消息类型",
+      "settingsGroupOuter": "应用外",
+      "settingsGroupInner": "应用内",
+      "settingsOsRow": "手机系统通知",
+      "settingsPageRow": "消息中心页"
     }
   },
   "merchant": {
@@ -779,12 +816,12 @@
       "autoLockBattery": "自动锁电池",
       "cancelConfirm": "确定取消该续租？取消后不可恢复",
       "order": "续租单",
-      "failClose": "连续扣款失败{n}次后关闭订单自动续租",
+      "failThreshold": "连续扣款失败次数上限",
       "advanceRange": "请输入0-30的整数",
       "advanceRangeMinutes": "请输入0-60的整数",
       "failRange": "请输入0-10的整数",
       "allowManual": "允许手动续租",
-      "breachDays": "逾期未还{n}天，自动变更为「违约锁单」状态",
+      "breachDays": "已到期{n}天，自动变更为「违约锁单」状态",
       "needOrderStatus": "请至少选择一种允许续租的订单状态",
       "needOrderType": "请至少选择一种自动续租订单类型",
       "cancelSuccess": "续租已取消",
@@ -1316,6 +1353,10 @@
       "offShelf": "下架",
       "current": "当前",
       "available": "可用"
+    },
+    "message": {
+      "channel": "推送渠道",
+      "channelPhone": "手机通知"
     }
   },
   "demo": {

@@ -50,7 +50,7 @@
       "breach": "Terkunci",
       "cancelled": "Dibatalkan",
       "created": "Dibuat",
-      "overdue": "Terlambat",
+      "overdue": "Berakhir",
       "pickup": "Belum Diikat",
       "progress": "Disewa",
       "return": "Segera Berakhir"
@@ -280,7 +280,7 @@
       "amountDue": "Jumlah yang Harus Dibayar",
       "vehicleOps": "Operasi Kendaraan",
       "vehicleStartStop": "Nyalakan/Matikan Kendaraan",
-      "messagePush": "Notifikasi Push",
+      "messageNotify": "Notifikasi",
       "renewReminder": "Pengingat Perpanjangan",
       "deductReminder": "Pengingat Pemotongan",
       "hasAlert": "Ada Peringatan",
@@ -318,7 +318,6 @@
       "balanceFlow": "Mutasi Saldo",
       "beforeDue": "Sebelum Jatuh Tempo",
       "paymentFailed": "Pembayaran Gagal",
-      "continuousPaymentFailed": "Pembayaran Gagal Berturut-turut",
       "deleteIrreversible": "Tidak dapat dipulihkan setelah dihapus",
       "periodWeek": "Mingguan",
       "planMonth": "Bulanan",
@@ -473,7 +472,8 @@
     },
     "toast": {
       "deviceBound": "Perangkat berhasil diikat",
-      "deviceUnbound": "Perangkat dilepas"
+      "deviceUnbound": "Perangkat dilepas",
+      "msgAllRead": "Pesan ditandai sudah dibaca"
     },
     "home": {
       "explore": "Jelajahi",
@@ -488,12 +488,34 @@
       "safetySlogan": "Keselamatan Anda adalah prioritas utama kami",
       "currentLocation": "Lokasi Saat Ini",
       "pushNotify": {
-        "renewReminderTitle": "Pesanan Akan Diperpanjang Otomatis",
+        "renewReminderTitle": "Perpanjangan Otomatis Pesanan",
         "renewSuccessTitle": "Perpanjangan Otomatis Pesanan Berhasil",
         "renewFailedTitle": "Perpanjangan Otomatis Pesanan Gagal",
         "renewReminderBody": "Pesanan Anda akan diperpanjang otomatis pada 2026-09-10 12:00:00 dan dipotong Rp150.000. Jika tidak perlu perpanjangan, silakan buka detail pesanan untuk menonaktifkan perpanjangan otomatis.",
         "renewSuccessBody": "Pesanan Anda berhasil diperpanjang otomatis, dipotong Rp150.000, masa berlaku pesanan diperpanjang hingga 2026-09-11 12:00:00.",
-        "renewFailedBody": "Perpanjangan otomatis pesanan Anda gagal (percobaan 2/3), alasan: saldo tidak cukup. Mohon segera isi ulang, agar kegagalan perpanjangan yang berulang tidak menonaktifkan perpanjangan otomatis."
+        "renewFailedBody": "Perpanjangan otomatis pesanan Anda gagal (percobaan 2/3), saldo tidak cukup. Mohon segera isi ulang, agar kegagalan perpanjangan yang berulang tidak menonaktifkan perpanjangan otomatis.",
+        "orderCreatedTitle": "Pesanan Dibuat",
+        "orderCreatedBody": "Pesanan Anda YZ202512180001 telah dibuat. Harap selesaikan pembayaran dalam 30 menit, jika tidak pesanan akan dibatalkan otomatis.",
+        "orderPaidTitle": "Pembayaran Berhasil",
+        "orderPaidBody": "Pesanan Anda YZ202512180001 berhasil dibayar. Harap segera pindai kode QR kendaraan/baterai untuk menyelesaikan pengikatan; penagihan dimulai setelah terikat.",
+        "deviceBoundTitle": "Pesanan Dimulai",
+        "deviceBoundBody": "Pesanan Anda YZ202512180001 telah terikat dengan kendaraan/baterai. Masa sewa 2026-09-01 10:30:00 hingga 2026-10-01 10:30:00.",
+        "orderExpiringTitle": "Pesanan Segera Berakhir",
+        "orderExpiringBody": "Pesanan Anda YZ202512180001 akan berakhir pada 2026-10-01 10:30:00. Harap kembalikan di toko tepat waktu, atau perpanjang melalui detail pesanan.",
+        "orderOverdueTitle": "Pesanan Telah Berakhir",
+        "orderOverdueBody": "Pesanan Anda YZ202512180001 telah berakhir. Harap segera kembalikan di toko agar tidak dikenakan biaya tambahan; jika masih memerlukan, Anda dapat memperpanjang melalui detail pesanan.",
+        "orderBreachTitle": "Kendaraan/Baterai Dikunci Jarak Jauh",
+        "orderBreachBody": "Pesanan Anda YZ202512180001 telah terlambat 7 hari dan kendaraan serta baterai telah dikunci jarak jauh. Harap segera hubungi toko.",
+        "orderCompletedTitle": "Pesanan Selesai",
+        "orderCompletedBody": "Pesanan Anda YZ202512180001 telah selesai. Terima kasih atas kepercayaan Anda, kami menantikan layanan berikutnya.",
+        "orderCancelledTitle": "Pesanan telah dibatalkan",
+        "orderCancelledBody": "Pesanan Anda YZ202512180001 telah dibatalkan. Jumlah yang telah dibayar akan dikembalikan ke metode pembayaran asal.",
+        "orderAdjustedTitle": "Jumlah Pesanan Disesuaikan",
+        "orderAdjustedBody": "Jumlah pesanan Anda YZ202512180001 telah disesuaikan dari Rp150.000 menjadi Rp200.000. Hubungi toko jika ada pertanyaan.",
+        "orderRefundingTitle": "Pengembalian Dana Diproses",
+        "orderRefundingBody": "Pesanan Anda YZ202512180001 sedang dalam proses pengembalian dana. Jumlah pengembalian Rp150.000, diperkirakan kembali ke metode pembayaran asal dalam 1–7 hari kerja.",
+        "orderRefundedTitle": "Pengembalian Dana Berhasil",
+        "orderRefundedBody": "Pengembalian dana Rp150.000 untuk pesanan YZ202512180001 telah dikirim ke metode pembayaran asal. Harap periksa."
       }
     },
     "search": {
@@ -693,6 +715,21 @@
       "refundDetail": "Detail Pengembalian Dana",
       "refundAmount": "Jumlah Pengembalian Dana",
       "orderList": "Pesanan Pengisian Daya"
+    },
+    "message": {
+      "title": "Pusat Pesan",
+      "empty": "Belum ada pesan",
+      "emptySub": "Pesan pesanan atau perpanjangan baru akan muncul di sini",
+      "categoryOrderStatus": "Status Pesanan",
+      "categoryOrderStatusDesc": "Status pesanan, penagihan perpanjangan, dll.",
+      "categoryFeeRefund": "Biaya & Pengembalian Dana",
+      "categoryFeeRefundDesc": "Penyesuaian harga, pengembalian dana, dll.",
+      "settingsMaster": "Terima Notifikasi",
+      "settingsCategoryHead": "Jenis Pesan",
+      "settingsGroupOuter": "Di Luar Aplikasi",
+      "settingsGroupInner": "Di Dalam Aplikasi",
+      "settingsOsRow": "Notifikasi Sistem Ponsel",
+      "settingsPageRow": "Halaman Pusat Pesan"
     }
   },
   "merchant": {
@@ -779,12 +816,12 @@
       "autoLockBattery": "Kunci Baterai Otomatis",
       "cancelConfirm": "Batalkan perpanjangan ini? Tindakan ini tidak dapat dibatalkan",
       "order": "Pesanan Perpanjangan",
-      "failClose": "Nonaktifkan perpanjangan otomatis setelah {n} kali penagihan gagal berturut-turut",
+      "failThreshold": "Batas Maksimal Penagihan Gagal Berturut-turut",
       "advanceRange": "Masukkan bilangan bulat antara 0 dan 30",
       "advanceRangeMinutes": "Masukkan bilangan bulat antara 0 dan 60",
       "failRange": "Masukkan bilangan bulat antara 0 dan 10",
       "allowManual": "Izinkan Perpanjangan Manual",
-      "breachDays": "{n} hari pesanan terlambat, status berubah menjadi 「Terkunci」",
+      "breachDays": "{n} hari setelah pesanan berakhir, status berubah menjadi 「Terkunci」",
       "needOrderStatus": "Pilih minimal satu status pesanan yang boleh diperpanjang",
       "needOrderType": "Pilih minimal satu tipe pesanan untuk perpanjangan otomatis",
       "cancelSuccess": "Perpanjangan dibatalkan",
@@ -1316,6 +1353,10 @@
       "offShelf": "Ditarik",
       "current": "Saat Ini",
       "available": "Tersedia"
+    },
+    "message": {
+      "channel": "Saluran Push",
+      "channelPhone": "Notifikasi Ponsel"
     }
   },
   "demo": {

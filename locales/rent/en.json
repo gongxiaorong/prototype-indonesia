@@ -50,7 +50,7 @@
       "breach": "Breach Locked",
       "cancelled": "Cancelled",
       "created": "Created",
-      "overdue": "Overdue",
+      "overdue": "Expired",
       "pickup": "Pending Binding",
       "progress": "Renting",
       "return": "Due Soon"
@@ -280,7 +280,7 @@
       "amountDue": "Amount Due",
       "vehicleOps": "Vehicle Operations",
       "vehicleStartStop": "Vehicle Start/Stop",
-      "messagePush": "Push Notifications",
+      "messageNotify": "Notifications",
       "renewReminder": "Renewal Reminder",
       "deductReminder": "Deduction Reminder",
       "hasAlert": "Has Alerts",
@@ -318,7 +318,6 @@
       "balanceFlow": "Balance Statement",
       "beforeDue": "Before Due",
       "paymentFailed": "Payment Failed",
-      "continuousPaymentFailed": "Continuous Payment Failed",
       "deleteIrreversible": "Cannot be recovered after deletion",
       "periodWeek": "Weekly",
       "planMonth": "Monthly",
@@ -473,7 +472,8 @@
     },
     "toast": {
       "deviceBound": "Device bound successfully",
-      "deviceUnbound": "Device unbound"
+      "deviceUnbound": "Device unbound",
+      "msgAllRead": "Messages marked as read"
     },
     "home": {
       "explore": "Explore",
@@ -488,12 +488,34 @@
       "safetySlogan": "Your safety is our top priority",
       "currentLocation": "Current Location",
       "pushNotify": {
-        "renewReminderTitle": "Order Auto Renewal Upcoming",
+        "renewReminderTitle": "Order Auto Renewal",
         "renewSuccessTitle": "Order Auto Renewed Successfully",
         "renewFailedTitle": "Order Auto Renewal Failed",
         "renewReminderBody": "Your order will auto renew on 2026-09-10 12:00:00 and be charged Rp150.000. If renewal is not needed, please go to the order details to turn off auto renewal.",
         "renewSuccessBody": "Your order has been auto renewed successfully and Rp150.000 was charged. The order is now valid until 2026-09-11 12:00:00.",
-        "renewFailedBody": "Your order auto renewal failed (attempt 2/3). Reason: insufficient balance. Please top up as soon as possible, otherwise too many failed renewals will turn off auto renewal."
+        "renewFailedBody": "Your order auto renewal failed (attempt 2/3). Insufficient balance. Please top up as soon as possible, otherwise too many failed renewals will turn off auto renewal.",
+        "orderCreatedTitle": "Order Created",
+        "orderCreatedBody": "Your order YZ202512180001 has been created. Please complete payment within 30 minutes, otherwise the order will be cancelled automatically.",
+        "orderPaidTitle": "Payment Successful",
+        "orderPaidBody": "Your order YZ202512180001 has been paid successfully. Please scan the vehicle/battery QR code to complete binding as soon as possible; billing starts once bound.",
+        "deviceBoundTitle": "Order Started",
+        "deviceBoundBody": "Your order YZ202512180001 has been bound with the vehicle/battery. Rental period: 2026-09-01 10:30:00 to 2026-10-01 10:30:00.",
+        "orderExpiringTitle": "Order Due Soon",
+        "orderExpiringBody": "Your order YZ202512180001 will expire on 2026-10-01 10:30:00. Please return it at the store on time, or renew it from the order details.",
+        "orderOverdueTitle": "Order Has Expired",
+        "orderOverdueBody": "Your order YZ202512180001 has expired. Please return it at the store as soon as possible to avoid extra charges; if you still need it, you can renew it from the order details.",
+        "orderBreachTitle": "Vehicle/Battery Remotely Locked",
+        "orderBreachBody": "Your order YZ202512180001 is 7 days overdue and the vehicle and battery have been remotely locked. Please contact the store immediately.",
+        "orderCompletedTitle": "Order Completed",
+        "orderCompletedBody": "Your order YZ202512180001 has been completed. Thank you for your business and we look forward to serving you again.",
+        "orderCancelledTitle": "Order cancelled",
+        "orderCancelledBody": "Your order YZ202512180001 has been cancelled. The paid amount will be refunded to the original payment method.",
+        "orderAdjustedTitle": "Order Amount Adjusted",
+        "orderAdjustedBody": "The amount of your order YZ202512180001 has been adjusted from Rp150.000 to Rp200.000. Please contact the store if you have any questions.",
+        "orderRefundingTitle": "Refund in Progress",
+        "orderRefundingBody": "Your order YZ202512180001 is being refunded. Refund amount: Rp150.000, expected to be returned to the original payment method within 1–7 business days.",
+        "orderRefundedTitle": "Refund Successful",
+        "orderRefundedBody": "Rp150.000 for order YZ202512180001 has been refunded to the original payment method. Please check your account."
       }
     },
     "search": {
@@ -693,6 +715,21 @@
       "refundDetail": "Refund Details",
       "refundAmount": "Refund Amount",
       "orderList": "Charging Orders"
+    },
+    "message": {
+      "title": "Message Center",
+      "empty": "No messages yet",
+      "emptySub": "New order or renewal messages will appear here",
+      "categoryOrderStatus": "Order Status",
+      "categoryOrderStatusDesc": "Order status, renewal charges, etc.",
+      "categoryFeeRefund": "Fees & Refunds",
+      "categoryFeeRefundDesc": "Price adjustments, refunds, etc.",
+      "settingsMaster": "Receive Notifications",
+      "settingsCategoryHead": "Message Types",
+      "settingsGroupOuter": "Outside App",
+      "settingsGroupInner": "Inside App",
+      "settingsOsRow": "Phone System Notifications",
+      "settingsPageRow": "Message Center Page"
     }
   },
   "merchant": {
@@ -779,12 +816,12 @@
       "autoLockBattery": "Auto Lock Battery",
       "cancelConfirm": "Cancel this renewal? This cannot be undone",
       "order": "Renewal Order",
-      "failClose": "Disable auto renewal after {n} consecutive failed charges",
+      "failThreshold": "Max Consecutive Failed Charges",
       "advanceRange": "Please enter an integer between 0 and 30",
       "advanceRangeMinutes": "Please enter an integer between 0 and 60",
       "failRange": "Please enter an integer between 0 and 10",
       "allowManual": "Allow Manual Renewal",
-      "breachDays": "{n} days after order overdue, status changes to 「Breach Locked」",
+      "breachDays": "{n} days after expiry, status changes to 「Breach Locked」",
       "needOrderStatus": "Select at least one order status allowed to renew",
       "needOrderType": "Select at least one order type for auto renewal",
       "cancelSuccess": "Renewal cancelled",
@@ -1316,6 +1353,10 @@
       "offShelf": "Unlisted",
       "current": "Current",
       "available": "Available"
+    },
+    "message": {
+      "channel": "Push Channel",
+      "channelPhone": "Phone Notification"
     }
   },
   "demo": {

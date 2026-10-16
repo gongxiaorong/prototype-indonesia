@@ -194,16 +194,6 @@ body{font-family:var(--font-body)}
 </style>
 <style id="layer-user">#root-user .filter-tabs{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain;user-select:none;width:100%;flex-wrap:nowrap;white-space:nowrap}
 #root-user .filter-pill{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;white-space:nowrap;cursor:pointer;flex-shrink:0;transition:background .15s,color .15s,border-color .15s}
-#root-user .push-wrap{position:absolute;top:10px;left:12px;right:12px;z-index:2600;pointer-events:none}
-#root-user .push-banner{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:16px;padding:12px 14px;box-shadow:0 10px 28px rgba(0,0,0,.18);pointer-events:auto;cursor:pointer;border:1px solid rgba(0,0,0,.05)}
-#root-user .push-icon{width:34px;height:34px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-#root-user .push-title{font-size:13px;font-weight:700;color:#111}
-#root-user .push-time{font-size:11px;color:#999}
-#root-user .push-body{font-size:13px;color:#444;margin-top:3px;line-height:1.45}
-#root-user .push-enter-active{transition:all .35s cubic-bezier(.32,.72,0,1)}
-#root-user .push-leave-active{transition:all .25s ease-in}
-#root-user .push-enter-from{opacity:0;transform:translateY(-120%)}
-#root-user .push-leave-to{opacity:0;transform:translateY(-120%)}
 #root-user .ptr-indicator .ptr-spinner{display:inline-block;width:16px;height:16px;border:2px solid #E5E5E5;border-top-color:var(--accent);border-radius:50%;vertical-align:middle;margin-right:6px;animation:ptr-spin .6s linear infinite}
 #root-user .demo-ops-chip.is-on-warn{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
 #root-user .login-code-btn.is-on{background:#EBF1FD;color:#333}
@@ -295,9 +285,23 @@ body{font-family:var(--font-body)}
 #root-merchant .od-tip.down::after{top:-11px;border-bottom-color:#111}
 #root-merchant .tip-enter-active,.tip-leave-active{transition:opacity .15s}
 #root-merchant .tip-enter-from,.tip-leave-to{opacity:0}
-#root-merchant .od-sec{font-size:15px;font-weight:600;color:#111;margin:16px 0 12px;padding-top:16px;border-top:1px solid #EFEFEF}
-#root-merchant .od-sec:first-child{padding-top:0;border-top:none;margin-top:0}
-#root-merchant .od-indent{margin-top:14px;padding-left:14px;border-left:2px solid #EDEDED}
+/* 配置类页板块卡：白卡 + 卡头（.od-sec）+ 卡内控件灰底 */
+#root-merchant .od-card{background:#fff;border:1px solid #E5E5E5;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);padding:0 16px 8px;margin-top:16px}
+#root-merchant .od-card:first-child{margin-top:0}
+#root-merchant .od-sec{font-size:15px;font-weight:600;color:#333;margin:0 0 14px;padding:14px 0 12px;border-bottom:1px solid #F0F1F3}
+/* 卡头为卡内唯一内容时（无后续控件）：分隔线无对象可分隔，去掉并收掉多余下距；
+   下距补 6px，使文字上下留白均为 15px（顶=边框1+padding14；底=边框1+卡底8+padding6） */
+#root-merchant .od-card>.od-sec:last-child{border-bottom:none;margin-bottom:0;padding-bottom:6px}
+/* 二级板块标签：与用户端分组标题同款（13px / #999） */
+#root-merchant .od-sec-sub{font-size:13px;font-weight:500;color:#999;margin:20px 0 8px;padding:0 2px}
+/* 卡内控件改灰底（白卡上白框不可辨，与弹窗 .ff-box-gray 同口径） */
+#root-merchant .od-card .ff-box{background:#F6F7F9;border-color:#E5E5E5}
+#root-merchant .od-card .ff-box.is-disabled{background:#E0E3E7;border-color:#D5D9DE}
+#root-merchant .od-card .od-chip{background:#F6F7F9;border-color:#E5E5E5}
+#root-merchant .od-card .od-chip.on{background:#EBF1FD;border-color:var(--link);color:var(--link)}
+/* 「消息类型」大类独立卡（与用户端消息中心页 / 手机系统通知页同形）：卡间距＝分组标题与卡间距＝8px */
+#root-merchant .od-card.od-cat-card{margin-top:8px}
+#root-merchant .od-indent{margin-top:14px;padding-left:14px}
 #root-merchant .od-indent-2{margin-top:14px;padding-left:16px}
 #root-merchant .od-tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:12px;line-height:1;font-weight:500}
 #root-merchant .od-tag.on{background:#E7F7EE;color:#16A34A}
@@ -357,19 +361,6 @@ body.host-single-m #root-user{display:none}
 <loading-overlay :open="showRentLoading" brand oid="rent-loading-overlay" data-page-node-id="hN9kNX3ycmeJGcKNs9Fdib"></loading-overlay>
 
 <div class="toast-wrap" data-page-node-id="6EW56wX0Qr2QDI8hJMtwDU"><transition-group name="toast" data-page-node-id="ZWp01quQrPXh3YHwJ2jK2G"><div v-for="t in toasts" :key="t.id" class="toast-item" :class="'toast-'+t.type" data-page-node-id="SjXlwV73juWb0ZpdrNwpcB">{{ t.msg }}</div></transition-group></div>
-
-<transition name="push" data-page-node-id="E5ufCviD8XPz0AoBAh2N9N"><div class="push-wrap" v-if="pushNotify.show" data-od-id="push-banner" data-page-node-id="4kZ0IiV85PAVKqcl3A4Ho3">
-<div class="push-banner" data-cp @click="pushNotify.show=false" data-page-node-id="J3jEDNYPeX0xOAWcwVOTBK">
-<div class="push-icon" data-page-node-id="TgAAzT4v3un3HzjFbkTyon"><span v-html="luci('bell','w-5 h-5 text-white')" data-page-node-id="HP1AWoGzL2sNOoFJlEHcLy"></span></div>
-<div class="flex-1 min-w-0" data-page-node-id="YCLuGGiFIhMXn1yNc7Qtrm">
-<div class="flex items-center justify-between" data-page-node-id="9HBYxIQXnypJLYr3PBKNPB">
-<span class="push-title" data-page-node-id="B0uvW8ipNgNWeH3yIKzmWJ">{{ pushNotify.title }}</span>
-<span class="push-time" data-page-node-id="q63Ausfn4GNz869xH5rzNA">{{ pushNotify.time }}</span>
-</div>
-<div class="push-body" data-page-node-id="cCfVYQaYXFlFF18knU4INe">{{ pushNotify.body }}</div>
-</div>
-</div>
-</div></transition>
 
 <div v-if="showDialPicker" class="absolute inset-0 z-[1950] bg-[#F6F7F9] flex flex-col rounded-[44px] overflow-hidden" data-od-id="dialcode-page" data-page-node-id="VlbrflvUhZSKwQBGQqhRsJ">
 <div class="pt-14 px-4 pb-3 flex items-center gap-3 bg-white shrink-0" style="border-bottom:1px solid #E5E5E5" data-page-node-id="Hx7euuFHLio5oseR4EHYNi">
@@ -1607,6 +1598,13 @@ body.host-single-m #root-user{display:none}
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="Dcl7hiCo64dBVmygFrfzLB"></span>
 </div>
 
+<div data-cp @click="navOpen('ovMessage')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-message" data-page-node-id="PrMsgRow">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#EBF1FD" data-page-node-id="PrMsgIcon"><span v-html="luci('bell','w-[18px] h-[18px] text-[#2B3F5F]')" data-page-node-id="PrMsgIconSvg"></span></div>
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="PrMsgLabel">消息中心</span>
+<span v-if="notifyUnread>0" class="min-w-[18px] h-[18px] px-1.5 rounded-full flex items-center justify-center text-[11px] font-semibold text-white shrink-0 tabular-nums" style="background:#DC2626" data-od-id="profile-message-badge" data-page-node-id="PrMsgBadge">{{ notifyUnread>99?'99+':notifyUnread }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="PrMsgChev"></span>
+</div>
+
 <div data-cp @click="openWallet" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-wallet" data-page-node-id="0RgyfkVdCuLoS8c6JRaPd7">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#F0FDF4" data-page-node-id="NXmQ8MucT7IamLtutSguEL"><span v-html="luci('wallet','w-[18px] h-[18px] text-[#17A34A]')" data-page-node-id="VvRhZzzgfRTACMjn4nImTW"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="xRMKnEoEX0AK5Gg4n8qI4Y">我的钱包</span>
@@ -2363,6 +2361,7 @@ body.host-single-m #root-user{display:none}
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="6XASv3lpOTUQABsMFJIHWT">切换语言</span>
 <div class="flex items-center gap-1" data-page-node-id="WiTXyVm3HwuybSx4n5xJ3Y"><span class="text-[13px] text-[#666] mr-1" data-page-node-id="5Sgk1eYBj6xPdzlnHXRUMZ">{{ appLangLabel }}</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="MD4mjwo5HUAnPGCm06WfBK"></span></div>
 </div>
+
 <!-- 印尼版：隐藏系统设置页「切换系统」行（原：进入切换系统页）。保留 subSwitchSystem 二级页与相关逻辑代码，不删。
 <div data-cp @click="switchSource='settings';navOpen('subSwitchSystem')" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED" data-od-id="settings-sys-row">
 <span class="flex-1 text-[15px] font-medium">切换系统</span>
@@ -2378,6 +2377,95 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="absolute bottom-7 left-5 right-5" data-od-id="settings-logout-btn" data-page-node-id="NSNwr9TyBGJL8oCNkRyB5y">
 <button data-cp @click="profileMod='logout'" class="w-full py-4 rounded-xl text-[16px] font-semibold cursor-pointer active:opacity-90 transition-colors" style="background:#fff;border:1px solid #E5E5E5;color:#DC2626" data-page-node-id="288K5YO0tjXMpZXjiIQkuV">退出登录</button>
+</div>
+</page>
+
+<!-- 消息通知（用户端）：对标参考图——「应用外 / 应用内」两组行式入口（两行均只剩「标题 + chevron」，
+     「手机系统通知」不再回显开启状态——状态由三级页该行的开关本身表达） -->
+<page :open="profileOV==='notify'" :z="560" :swipe-close="navBack" oid="notify-settings-page" data-page-node-id="MsgSetPage">
+<nav-bar title="消息通知" border-color="#E5E5E5" @back="navBack()" data-page-node-id="MsgSetNav"></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" data-page-node-id="MsgSetScroll">
+<div class="text-[13px] font-medium text-[#999] mb-2 px-1" data-page-node-id="MsgSetOuterHead">应用外</div>
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5" data-page-node-id="MsgSetOuterCard">
+<div data-cp @click="enterOsNotify" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="notify-os-row" data-page-node-id="MsgSetOsRow">
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="MsgSetOsRowLabel">手机系统通知</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="MsgSetOsRowChev"></span>
+</div>
+</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1" data-page-node-id="MsgSetInnerHead">应用内</div>
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5" data-page-node-id="MsgSetInnerCard">
+<div data-cp @click="navOpen('ovNotifyPage')" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="notify-page-row" data-page-node-id="MsgSetPageRow">
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="MsgSetPageRowLabel">消息中心页</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="MsgSetPageRowChev"></span>
+</div>
+</div>
+</div>
+</page>
+
+<!-- 消息中心页（用户端二级页）：总开关 + 消息类型（与「手机系统通知」页同形的单行开关） -->
+<page :open="profileOV==='notifyPage'" :z="562" :swipe-close="navBack" oid="notify-page-settings" data-page-node-id="MsgPageSetPage">
+<nav-bar title="消息中心页" border-color="#E5E5E5" @back="navBack()" data-page-node-id="MsgPageSetNav"></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" data-page-node-id="MsgPageSetScroll">
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5" data-page-node-id="MsgSetMasterCard">
+<div class="flex items-center px-4 py-3.5">
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="MsgSetMasterLabel">接收消息通知</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0" :class="notifyPrefs.master?'bg-[#2B3F5F]':'bg-[#E5E5E5]'" data-cp @click="toggleNotifyMaster" data-od-id="notify-master-switch" data-page-node-id="MsgSetMasterSw"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="notifyPrefs.master?'translate-x-5':''" data-page-node-id="MsgSetMasterKnob"></span></div>
+</div>
+</div>
+
+<div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1" data-page-node-id="MsgSetTypeHead">消息类型</div>
+<div v-for="c in notifyCatOpts" :key="c.k" class="bg-white rounded-xl overflow-hidden mb-2" style="border:1px solid #E5E5E5" data-page-node-id="MsgSetRowRenewCard">
+<div class="flex items-center px-4 py-3.5" data-page-node-id="MsgSetRowRenew">
+<div class="flex-1 min-w-0" data-page-node-id="MsgSetRowRenewLeft">
+<div class="text-[15px] font-medium" data-page-node-id="MsgSetRowRenewLabel">{{ c.l }}</div>
+<div class="text-[12px] mt-1 leading-relaxed" style="color:#999" data-page-node-id="MsgSetRowRenewDesc">{{ c.d }}</div>
+</div>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0" :class="swCls(notifyPrefs.cats[c.k].os,osSwEnabled)" :data-cp="osSwEnabled?'':null" @click="toggleNotifyOs(c.k)" :data-od-id="'notify-os-switch-'+c.k" data-page-node-id="MsgSetOsSw"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="notifyPrefs.cats[c.k].os?'translate-x-5':''" data-page-node-id="MsgSetOsKnob"></span></div>
+</div>
+</div>
+
+</div>
+</page>
+
+<!-- 手机系统通知（用户端三级页，对标参考图）：权限开关行 + 各消息类型的系统通知接收偏好；
+     由「消息通知」页的「手机系统通知」行进入（权限开关已页内化，未开启时也可进入开启） -->
+<page :open="profileOV==='notifyOs'" :z="564" :swipe-close="navBack" oid="os-notify-page" data-page-node-id="MsgOsPage">
+<nav-bar title="手机系统通知" border-color="#E5E5E5" @back="navBack()" data-page-node-id="MsgOsNav"></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" data-page-node-id="MsgOsScroll">
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5" data-page-node-id="MsgOsStatusCard">
+<div class="flex items-center px-4 py-3.5" data-od-id="os-notify-status-row" data-page-node-id="MsgOsStatusRow">
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="MsgOsStatusLabel">手机系统通知</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0" :class="notifyPrefs.osDenied?'bg-[#E5E5E5]':'bg-[#2B3F5F]'" data-cp @click="toggleOsNotifyPerm" data-od-id="os-notify-switch" data-page-node-id="MsgOsStatusSw"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="notifyPrefs.osDenied?'':'translate-x-5'" data-page-node-id="MsgOsStatusKnob"></span></div>
+</div>
+</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1" data-page-node-id="MsgOsTypeHead">消息类型</div>
+<div v-for="c in notifyCatOpts" :key="c.k" class="bg-white rounded-xl overflow-hidden mb-2" style="border:1px solid #E5E5E5" data-page-node-id="MsgOsCatCard">
+<div class="flex items-center px-4 py-3.5" data-page-node-id="MsgOsCatRenew">
+<div class="flex-1 min-w-0" data-page-node-id="MsgOsCatRenewLeft">
+<div class="text-[15px] font-medium" data-page-node-id="MsgOsCatRenewLabel">{{ c.l }}</div>
+<div class="text-[12px] mt-1 leading-relaxed" style="color:#999" data-page-node-id="MsgOsCatRenewDesc">{{ c.d }}</div>
+</div>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0" :class="swCls(notifyPrefs.cats[c.k].os,osSwEnabled)" :data-cp="osSwEnabled?'':null" @click="toggleNotifyOs(c.k)" :data-od-id="'os-cat-switch-'+c.k" data-page-node-id="MsgOsCatRenewSw"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="notifyPrefs.cats[c.k].os?'translate-x-5':''" data-page-node-id="MsgOsCatRenewKnob"></span></div>
+</div>
+</div>
+</div>
+</page>
+
+<!-- 消息中心（用户端） -->
+<page :open="profileOV==='message'" :z="500" :swipe-close="navBack" oid="message-center-page" data-page-node-id="MsgCenterPage">
+<nav-bar title="消息中心" border-color="#E5E5E5" right-wide @back="navBack()" data-page-node-id="MsgCenterNav">
+<template #right>
+<span class="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EDEDED] shrink-0" :class="notifyUnread?'':'opacity-40 pointer-events-none'" style="color:#333" data-cp @click="markAllNotifyRead" data-od-id="msg-clear-unread" data-page-node-id="MsgCenterClearUnread"><span v-html="luci('brush-cleaning','w-5 h-5')" data-page-node-id="MsgCenterClearUnreadIcon"></span></span>
+<span class="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EDEDED] shrink-0" style="color:#333" data-cp @click="navOpen('ovNotify')" data-od-id="msg-settings" data-page-node-id="MsgCenterSettings"><span v-html="luci('settings','w-5 h-5')" data-page-node-id="MsgCenterSettingsIcon"></span></span>
+</template>
+</nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" data-page-node-id="MsgCenterScroll">
+<kv-card v-for="m in notifyMsgs" :key="m.id" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="onNotifyClick(m)" :data-od-id="'msg-item-'+m.id" data-page-node-id="MsgCenterItem">
+<template #title><span class="flex items-center gap-1.5 min-w-0" data-page-node-id="MsgCenterTitleRow"><span class="min-w-0 truncate" data-page-node-id="MsgCenterTitle">{{ m.title }}</span><span v-if="!m.read" class="w-1.5 h-1.5 rounded-full shrink-0" style="background:#DC2626" data-page-node-id="MsgCenterDot"></span></span></template>
+<template #extra><span data-page-node-id="MsgCenterTime">{{ m.time }}</span></template>
+<div class="text-[13px] leading-relaxed" style="color:#666" data-page-node-id="MsgCenterText">{{ m.body }}</div>
+</kv-card>
+<empty-state v-if="!notifyList.length" icon="bell" text="暂无消息" sub="新的订单或续租消息会显示在这里" data-page-node-id="MsgCenterEmpty"></empty-state>
 </div>
 </page>
 
@@ -2894,16 +2982,6 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 
-<template v-if="!showMyDevices">
-<div class="demo-ops-section" data-page-node-id="WCWY05AwKKfUAOfREVvaCs">
-<div class="demo-ops-label" data-page-node-id="1Ggo7H08e9yyA1hVZjeGdz">消息推送</div>
-<div class="demo-ops-chips" data-page-node-id="bf20Vd0H94LBVuOZkwGSuT">
-<div class="demo-ops-chip" data-cp @click="showPushNotify('preview')" data-page-node-id="xSyXn3JMZFsoudG9ODgPuC">订单即将自动续租</div>
-<div class="demo-ops-chip" data-cp @click="showPushNotify('reminder')" data-page-node-id="eeEjfJd6BuLfZEn5wZUTXL">订单自动续租成功</div>
-<div class="demo-ops-chip" data-cp @click="showPushNotify('failed')" data-page-node-id="9HlUEIFizocCEaz0AMaQ6Q">订单自动续租失败</div>
-</div>
-</div>
-</template>
 </template>
 
 <template v-if="showStore&&!showVehicle&&!showConfirm&& tab!=='profile'&& tab!=='vehicles'" data-page-node-id="N40FuQbT5vuybicDGsdqns">
@@ -6108,11 +6186,8 @@ body.host-single-m #root-user{display:none}
 <nav-bar title="客服信息" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('cs_info.add')" class="text-sm font-medium cursor-pointer shrink-0" :style="{color:'var(--link)'}" data-cp @click="openCsEdit(-1)">新增</span></template></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
  <div class="form-plain mb-3">
-  <div class="form-row">
-   <div class="flex items-center justify-between">
-    <span class="text-sm font-semibold">客服电话</span>
-    <div class="od-switch" :class="csReceptionEnabled?'on':''" data-cp @click="csReceptionEnabled=!csReceptionEnabled"><i></i></div>
-   </div>
+  <div class="od-card">
+   <div class="od-sec flex items-center justify-between"><span>客服电话</span><div class="od-switch" :class="csReceptionEnabled?'on':''" data-cp @click="csReceptionEnabled=!csReceptionEnabled"><i></i></div></div>
   </div>
  </div>
 <transition-group v-if="csList.length&&!demoListEmpty" name="item">
@@ -6175,6 +6250,7 @@ body.host-single-m #root-user{display:none}
  <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
  <div class="form-plain" data-od-id="order-config-form">
   <!-- 一、订单状态流转 -->
+  <div class="od-card">
   <div class="od-sec">订单状态流转</div>
   <div class="form-row">
    <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
@@ -6186,7 +6262,7 @@ body.host-single-m #root-user{display:none}
   </div>
   <div class="form-row">
    <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
-    <span>逾期未还</span>
+    <span>已到期</span>
     <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.breach" type="number" min="1" @input="cfgErr.breach=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums text-[#DC2626]" data-od-id="cfg-breach-input"></div>
     <span>天，自动变更为「违约锁单」状态</span>
    </div>
@@ -6202,8 +6278,10 @@ body.host-single-m #root-user{display:none}
     <span class="text-sm font-medium text-[#333]">自动锁电池</span>
    </div>
   </div>
+  </div>
 
   <!-- 二、订单续租 -->
+  <div class="od-card">
   <div class="od-sec">订单续租</div>
   <div class="form-row">
    <div class="flex items-center justify-between">
@@ -6264,9 +6342,9 @@ body.host-single-m #root-user{display:none}
       </div>
       <div class="form-row">
        <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
-        <span>连续扣款失败</span>
+        <span>连续扣款失败次数上限</span>
         <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewFailThreshold" type="number" min="0" max="10" :disabled="!cfg.renewAuto" @input="cfgErr.renewFailThreshold=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums"></div>
-        <span>次后关闭订单自动续租</span>
+        <span>次</span>
        </div>
        <div v-if="cfgErr.renewFailThreshold" class="form-hint text-[#DC2626]">{{ cfgErr.renewFailThreshold }}</div>
       </div>
@@ -6274,8 +6352,10 @@ body.host-single-m #root-user{display:none}
     </template>
    </div>
   </template>
+  </div>
 
   <!-- 三、实名信息 -->
+  <div class="od-card">
   <div class="od-sec">实名信息</div>
   <div class="form-row">
    <div class="flex items-center justify-between">
@@ -6286,24 +6366,58 @@ body.host-single-m #root-user{display:none}
     <div class="od-switch" :class="cfg.requireRealName?'on':''" data-cp @click="cfg.requireRealName=!cfg.requireRealName"><i></i></div>
    </div>
   </div>
+  </div>
  </div>
  </div>
+</page>
+
+<!-- 消息通知配置（商户端）：总开关即卡头行本身——标题「消息通知」（＝common.label.messageNotify，
+     与顶栏标题 /「我的」菜单项同句）+ 右侧开关；开启后才显示各「消息类型」的开关与推送渠道（手机通知 / 消息中心）。
+     分组标题与用户端同句（「消息类型」，键 settingsCategoryHead）；事件名与用户端消息标题同句（user.home.pushNotify.*Title）。
+     两个大类各占一张独立卡（od-cat-card，卡间距 8px，与用户端消息中心页 / 手机系统通知页同形）；大类关闭时
+     其下小类整块隐藏，卡头成为卡内唯一内容，靠 .od-card>.od-sec:last-child 收掉分隔线与多余下距，故小类块用 v-if。
+     事件的触发规则（到期前提前多久、连续失败几次）不在本页配置——统一由「订单配置」页管理
+     （cfg.renewAdvanceMinutes / renewAdvanceDays / renewFailThreshold），本页不再重复设置，故无 timing 状态与校验 -->
+<page :open="profileOV==='msg'" :z="500" :swipe-close="()=>goBack()">
+<nav-bar title="消息通知" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('message_config.edit')" class="text-sm font-medium cursor-pointer shrink-0" :style="msgSaving?{color:'#999',pointerEvents:'none'}:{color:'var(--link)'}" data-cp @click="saveMsgCfg">保存</span></template></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="form-plain" data-od-id="msg-config-form">
+<div class="od-card">
+<div class="od-sec flex items-center justify-between"><span>消息通知</span><div class="od-switch" :class="msgCfg.enabled?'on':''" data-cp @click="msgCfg.enabled=!msgCfg.enabled" data-od-id="msg-enable-switch"><i></i></div></div>
+</div>
+<template v-if="msgCfg.enabled">
+<div class="od-sec-sub">消息类型</div>
+<!-- 大类各占一张独立卡（od-cat-card，与用户端消息中心页 / 手机系统通知页同形）：卡头即大类开关行；
+     大类关闭时卡内无后续控件，卡头自动命中 .od-card>.od-sec:last-child 收掉分隔线与多余下距，故小类块用 v-if -->
+<div class="od-card od-cat-card" v-for="cat in msgCatOpts" :key="cat.k">
+<div class="od-sec flex items-center justify-between"><span>{{ cat.l }}</span><div class="od-switch" :class="msgCfg.cats[cat.k]?'on':''" data-cp @click="msgCfg.cats[cat.k]=!msgCfg.cats[cat.k]"><i></i></div></div>
+<div class="od-indent" v-if="msgCfg.cats[cat.k]">
+<div v-for="ev in msgEventOpts" :key="ev.k" v-show="ev.cat===cat.k">
+<div class="form-row"><div class="flex items-center justify-between"><span class="text-sm font-semibold pr-3 leading-snug">{{ ev.l }}</span><div class="od-switch" :class="msgCfg.events[ev.k]?'on':''" data-cp @click="msgCfg.cats[cat.k]&&(msgCfg.events[ev.k]=!msgCfg.events[ev.k])"><i></i></div></div></div>
+<template v-if="msgCfg.events[ev.k]">
+<div class="od-indent">
+<div class="form-row"><div class="form-label mb-2">推送渠道</div><div class="flex flex-wrap gap-2"><div v-for="c in msgChannelOpts" :key="c.v" class="od-chip" :class="msgCfg.channel[ev.k].indexOf(c.v)>=0?'on':''" data-cp @click="toggleMsgChannel(ev.k,c.v)">{{ c.l }}</div></div></div>
+</div>
+</template>
+</div>
+</div>
+</div>
+</template>
+</div>
+</div>
 </page>
 
 <page :open="profileOV==='recharge'" :z="500" :swipe-close="()=>goBack()">
 <nav-bar title="充值配置" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('recharge.add')" class="text-sm font-medium cursor-pointer shrink-0" :style="{color:'var(--link)'}" data-cp @click="openRechargeEdit(-1)">新增</span></template></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
  <div class="form-plain mb-3">
-  <div class="form-row">
-   <div class="flex items-center justify-between">
-    <span class="text-sm font-semibold">充值功能</span>
-    <div class="od-switch" :class="rechargeEnabled?'on':''" data-cp @click="rechargeEnabled=!rechargeEnabled"><i></i></div>
-   </div>
-  </div>
-  <div class="form-row">
-   <div class="flex items-center justify-between">
-    <span class="text-sm font-semibold">允许自定义金额</span>
-    <div class="od-switch" :class="[rechargeCustom?'on':'',!rechargeEnabled?'disabled':'']" data-cp @click="rechargeEnabled&&(rechargeCustom=!rechargeCustom)"><i></i></div>
+  <div class="od-card">
+   <div class="od-sec flex items-center justify-between"><span>充值功能</span><div class="od-switch" :class="rechargeEnabled?'on':''" data-cp @click="rechargeEnabled=!rechargeEnabled"><i></i></div></div>
+   <div class="form-row">
+    <div class="flex items-center justify-between">
+     <span class="text-sm font-semibold">允许自定义金额</span>
+     <div class="od-switch" :class="[rechargeCustom?'on':'',!rechargeEnabled?'disabled':'']" data-cp @click="rechargeEnabled&&(rechargeCustom=!rechargeCustom)"><i></i></div>
+    </div>
    </div>
   </div>
  </div>
@@ -6791,7 +6905,11 @@ body.host-single-m #root-user{display:none}
 </main>
 <script>
 /* ══════ SHARED CORE ══════ */
-function luci(n,c){if(!window.lucide||!n||!lucide.icons)return'';try{var p=(s)=>s.replace(/(\w)(\w*)(-|\s*)/g,(_,a,b)=>a.toUpperCase()+b.toLowerCase());var d=lucide.icons[p(n)];if(!d||d[0]!=='svg')return'';var a=d[1],cls='lucide lucide-'+n+(c?' '+c:''),sv='<svg';for(var k in a)if(a.hasOwnProperty(k))sv+=' '+k+'="'+String(a[k]).replace(/"/g,'&quot;')+'"';sv+=' class="'+cls+'">';function b(ch){var h='';for(var i=0;i<ch.length;i++){var t=ch[i][0],at=ch[i][1];h+='<'+t;for(var k in at)if(at.hasOwnProperty(k))h+=' '+k+'="'+String(at[k]).replace(/"/g,'&quot;')+'"';if(ch[i][2]&&ch[i][2].length)h+='>'+b(ch[i][2])+'</'+t+'>';else h+='/>'}return h}sv+=b(d[2])+'</svg>';return sv}catch(ex){return''}}
+/* 自建图标表：lucide 0.344.0 无扫帚类图标（brush-cleaning 为后续版本新增），且 lucide.icons 为冻结表不可注入，
+   故 luci 内先查本表。条目格式与 lucide 图标节点一致（['svg',默认属性,[子节点]]），用法不变
+   （luci('brush-cleaning','w-5 h-5')；stroke 走 currentColor、圆头圆角与 lucide 同）。当前仅给消息中心「清空未读」用。 */
+var LUCI_CUSTOM={'brush-cleaning':['svg',{xmlns:'http://www.w3.org/2000/svg',width:24,height:24,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'},[['path',{d:'M11.5 11 18.5 4'}],['path',{d:'M10.1 9.8 12.9 12.4 7.9 20.2 2.9 15.2Z'}],['path',{d:'M11.5 11.1 5.4 17.7'}]]]};
+function luci(n,c){if(!n)return'';try{var p=(s)=>s.replace(/(\w)(\w*)(-|\s*)/g,(_,a,b)=>a.toUpperCase()+b.toLowerCase());var d=LUCI_CUSTOM[n]||(window.lucide&&lucide.icons?lucide.icons[p(n)]:null);if(!d||d[0]!=='svg')return'';var a=d[1],cls='lucide lucide-'+n+(c?' '+c:''),sv='<svg';for(var k in a)if(a.hasOwnProperty(k))sv+=' '+k+'="'+String(a[k]).replace(/"/g,'&quot;')+'"';sv+=' class="'+cls+'">';function b(ch){var h='';for(var i=0;i<ch.length;i++){var t=ch[i][0],at=ch[i][1];h+='<'+t;for(var k in at)if(at.hasOwnProperty(k))h+=' '+k+'="'+String(at[k]).replace(/"/g,'&quot;')+'"';if(ch[i][2]&&ch[i][2].length)h+='>'+b(ch[i][2])+'</'+t+'>';else h+='/>'}return h}sv+=b(d[2])+'</svg>';return sv}catch(ex){return''}}
 
 /* toast 共享：list=toasts.value 数组，cnt 计数对象(_tt)，按 2s 自动移除 */
 function toastPush(list,cnt,msg,type){var id=++cnt.n;list.push({id:id,msg:msg,type:type});setTimeout(function(){for(var i=0;i<list.length;i++){if(list[i].id===id){list.splice(i,1);return}}},2000)}
@@ -6908,7 +7026,7 @@ const batteries=Vue.ref([
 {battNo:'BATT-YD1005',shopId:3,account:'user010',phone:'+86 13700009999',email:'',model:'天能锂电 48V20Ah',status:'空闲',online:true,level:12,lost:false,discharge:true,vin:'LSVAU2Z0A33333001',time:'2026-08-20 08:12:00',lat:39.9842,lng:116.4849,location:'北京市朝阳区望京街道'}
 ]);
 /* ══ 状态文案与颜色：双端统一管理（订单状态 / 支付状态，改这里两端同时生效） ══ */
-var ORDER_ST_TEXT={created:'已创建',pickup:'待绑定',progress:'租赁中','return':'即将到期',overdue:'逾期未还',breach:'违约锁单',complete:'已完成',cancelled:'已取消'};
+var ORDER_ST_TEXT={created:'已创建',pickup:'待绑定',progress:'租赁中','return':'即将到期',overdue:'已到期',breach:'违约锁单',complete:'已完成',cancelled:'已取消'};
 var ORDER_ST_COLOR={created:'#FF8C1B',pickup:'#FF8C1B',progress:'#22D098','return':'#1A82F4',overdue:'#FF4343',breach:'#FF4343',complete:'#333333',cancelled:'#666666'};
 /* ══ 租期结束时间：按租赁方案（如「月租×1月」）+ 租期开始推算，双端共用（方案无法解析/时间非法返回 ''） ══ */
 var planEndOf=function(plan,start){var m=/×(\d+)\s*([月天周])/.exec(plan||'');if(!m)return '';var n=Number(m[1])||1,unit=m[2];var d=new Date(String(start||'').replace(/-/g,'/'));if(isNaN(d.getTime()))return '';if(unit==='月')d.setMonth(d.getMonth()+n);else if(unit==='天')d.setDate(d.getDate()+n);else if(unit==='周')d.setDate(d.getDate()+n*7);var p=function(x){return String(x).padStart(2,'0')};return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())};
@@ -7023,14 +7141,17 @@ function registerSheetKit(app){
       不再受左右按钮宽度影响（禁止 mr-* 补偿式头部）。
       用法：<nav-bar title="车辆详情" @back="navBack()"></nav-bar>；右侧动作 <template #right>（内容需在 32px 内：单图标或 2 字文本按钮）；
       border-color 传 '' 关闭底部分割线；bg 传 '#F6F7F9' 等自定义背景；:back="false" 时左侧仍占位 32px 保持标题居中。
+      right-wide：右侧槽改为按内容自适应宽，用于「双图标」头部（如消息中心）；此模式整行改用 grid(1fr auto 1fr)，
+      标题仍在屏幕正中（左右各占等宽弹性列、左右槽分别 justify-self start/end），故不必也不能再加 mr-* 补偿。
+      默认关闭，其余页面渲染与原来逐像素一致。
       禁止自闭合 <nav-bar />（in-DOM 模板会被吞后续兄弟节点）。 */
-   app.component('nav-bar',{
-     name:'nav-bar',
-     props:{title:{type:String,default:''},back:{type:Boolean,default:true},borderColor:{type:String,default:'#F0F0F0'},bg:{type:String,default:'#FFFFFF'},oid:{type:String,default:''}},
-     emits:['back'],
-     computed:{barStyle(){return {background:this.bg,borderBottom:this.borderColor?('1px solid '+this.borderColor):'none'}}},
-     template:'<div class="pt-14 px-4 pb-3 flex items-center justify-between shrink-0" :style="barStyle" :data-od-id="oid||undefined"><div v-if="back" data-cp class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)]" @click="$emit(\'back\')"><span v-html="luci(\'chevron-left\',\'w-5 h-5\')"></span></div><div v-else class="w-8 h-8"></div><div class="flex-1 text-center text-[17px] font-semibold min-w-0 px-1">{{ title }}</div><div class="w-8 h-8 flex items-center justify-center shrink-0"><slot name="right"></slot></div></div>'
-   });
+      app.component('nav-bar',{
+      name:'nav-bar',
+      props:{title:{type:String,default:''},back:{type:Boolean,default:true},borderColor:{type:String,default:'#F0F0F0'},bg:{type:String,default:'#FFFFFF'},oid:{type:String,default:''},rightWide:{type:Boolean,default:false}},
+      emits:['back'],
+      computed:{barStyle(){return {background:this.bg,borderBottom:this.borderColor?('1px solid '+this.borderColor):'none'}}},
+      template:'<div class="pt-14 px-4 pb-3 shrink-0" :class="rightWide?\'grid grid-cols-[1fr_auto_1fr] items-center\':\'flex items-center justify-between\'" :style="barStyle" :data-od-id="oid||undefined"><div v-if="back" data-cp class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer text-[var(--accent)]" :class="rightWide?\'justify-self-start\':\'\'" @click="$emit(\'back\')"><span v-html="luci(\'chevron-left\',\'w-5 h-5\')"></span></div><div v-else class="w-8 h-8" :class="rightWide?\'justify-self-start\':\'\'"></div><div class="text-center text-[17px] font-semibold min-w-0 px-1" :class="rightWide?\'truncate\':\'flex-1\'">{{ title }}</div><div class="h-8 flex items-center justify-center shrink-0 gap-0.5" :class="rightWide?\'min-w-8 justify-self-end\':\'w-8\'"><slot name="right"></slot></div></div>'
+      });
    /* ConfirmDialog：居中确认弹窗（遮罩 rgba(0,0,0,.45) + 300px 白卡 + 标题/描述/取消确认双按钮 + loading 遮罩）。
       用法：<confirm-dialog :open="showX" title="解绑车辆" desc="解绑后..." :loading="xLoading" z="2000" oid="xx" @close="closeX()" @confirm="confirmX()"></confirm-dialog>;
       标题/描述传表达式用 :title/:desc（{{ }} 内的 JS）；额外中间内容（如输入框）放默认 slot；loading 时自动遮罩+spinner 并禁点双按钮；
@@ -7198,15 +7319,90 @@ const tab=ref('home');
 const toasts=ref([]);
 const _tt={n:0};
 function toast(msg,type='info'){toastPush(toasts.value,_tt,msg,type)}
-const renewNotifyTemplates={
-preview:{title:'订单即将自动续租',body:d=>`您的订单将于${d.dueDate}自动续租，并扣款${d.amount}。如不需要续租，请前往订单详情关闭自动续租。`},
-reminder:{title:'订单自动续租成功',body:d=>`您的订单已自动续租成功，扣款${d.amount}，订单有效期已延长至${d.newDueDate}。`},
-failed:{title:'订单自动续租失败',body:d=>`您的订单自动续租失败（第${d.failCount}/${d.threshold}次），原因：余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。`}
+/* 消息通知模板（用户端消息中心 + 商户端事件名同批 user.home.pushNotify.* 键）：
+   title 恒为静态短句（＝商户端事件名，逐字同句；动态值不进标题），body 恒为 d=>字符串（时间/金额/天数等动态值在此）。
+   事件清单与触发时机见 notify-events-timing.md；大类两分：订单状态 / 费用与退款 */
+const notifyTemplates={
+/* ── 订单状态 ── */
+orderCreated:{title:'订单已创建',body:d=>`您的订单${d.orderNo}已创建，请在30分钟内完成支付，超时未支付订单将自动取消。`},
+orderPaid:{title:'订单支付成功',body:d=>`您的订单${d.orderNo}已支付成功。请尽快扫描车辆/电池二维码完成绑定，绑定成功后订单即开始计费。`},
+deviceBound:{title:'订单已开始',body:d=>`您的订单${d.orderNo}已绑定车辆/电池，租期${d.rentStart}至${d.rentEnd}。`},
+orderExpiring:{title:'订单即将到期',body:d=>`您的订单${d.orderNo}将于${d.rentEnd}到期，请按时前往门店归还，或前往订单详情办理续租。`},
+renewReminder:{title:'订单自动续租',body:d=>`您的订单将于${d.dueDate}自动续租，并扣款${d.amount}。如不需要续租，请前往订单详情关闭自动续租。`},
+renewSuccess:{title:'订单自动续租成功',body:d=>`您的订单已自动续租成功，扣款${d.amount}，订单有效期已延长至${d.newDueDate}。`},
+renewFailed:{title:'订单自动续租失败',body:d=>`您的订单自动续租失败（第${d.failCount}/${d.threshold}次），余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。`},
+orderOverdue:{title:'订单已到期',body:d=>`您的订单${d.orderNo}已到期，请及时前往门店归还，以免产生额外费用；如仍需使用，可前往订单详情办理续租。`},
+orderBreach:{title:'车辆/电池已远程锁定',body:d=>`您的订单${d.orderNo}已逾期${d.days}天，${d.device}已被远程锁定。请立即联系门店处理。`},
+orderCompleted:{title:'订单已完成',body:d=>`您的订单${d.orderNo}已完成，感谢您的使用，期待再次为您服务。`},
+orderCancelled:{title:'订单已取消',body:d=>`您的订单${d.orderNo}已取消。${d.refundNote}`},
+/* ── 费用与退款 ── */
+orderAdjusted:{title:'订单金额已调整',body:d=>`您的订单${d.orderNo}金额已由${d.oldAmount}调整为${d.newAmount}，如有疑问请联系门店。`},
+orderRefunding:{title:'退款处理中',body:d=>`您的订单${d.orderNo}退款中，退款金额${d.amount}，预计1–7个工作日原路退回。`},
+orderRefunded:{title:'退款成功',body:d=>`您的订单${d.orderNo}退款${d.amount}已退回${d.refundChannel}，请注意查收。`}
 };
-function renewNotifySample(){return{dueDate:'2026-09-10 12:00:00',newDueDate:'2026-09-11 12:00:00',amount:'Rp150.000',failCount:2,threshold:3}}
-const pushNotify=ref({show:false,title:'',body:'',time:''});
-let pushTimer=null;
-function showPushNotify(type){const t=renewNotifyTemplates[type];if(!t)return;const data=renewNotifySample();pushNotify.value={show:true,title:t.title,body:t.body(data),time:fmtISO(new Date())};if(pushTimer)clearTimeout(pushTimer);pushTimer=setTimeout(()=>{pushNotify.value.show=false},4500)}
+/* 消息样例数据：单例（演示用），覆盖各事件的动态值 */
+function notifySample(){return{
+orderNo:'YZ202512180001',days:7,
+dueDate:'2026-09-10 12:00:00',newDueDate:'2026-09-11 12:00:00',failCount:2,threshold:3,
+device:'车辆与电池',rentStart:'2026-09-01 10:30:00',rentEnd:'2026-10-01 10:30:00',
+oldAmount:'Rp150.000',newAmount:'Rp200.000',amount:'Rp150.000',
+refundNote:'已支付金额将原路退回。',refundChannel:'原支付渠道'
+}}
+/* ══ 消息通知偏好（用户端）：全项目唯一持久化键，见 AGENTS.md §1 特例 ══ */
+const NOTIFY_PREFS_KEY='yadea:notify-prefs';
+/* 用户端「消息类型」分类：与商户端配置页大类同句（msgCatOpts 同 k），两类 */
+const notifyCatOpts=[
+{k:'orderStatus',l:'订单状态',d:'订单状态、续租扣款等通知'},
+{k:'feeRefund',l:'费用与退款',d:'订单改价、退款等通知'}
+];
+const notifyPrefs=ref({master:true,cats:{orderStatus:{os:true},feeRefund:{os:true}},osDenied:true});
+/* 兼容旧结构 {orderRenew:{os}}：原「订单与续租」大类已拆为三类，旧值并入 orderStatus */
+function loadNotifyPrefs(){try{const s=localStorage.getItem(NOTIFY_PREFS_KEY);if(!s)return;const o=JSON.parse(s);if(o&&typeof o==='object'){if(typeof o.master==='boolean')notifyPrefs.value.master=o.master;if(o.orderRenew&&typeof o.orderRenew==='object'){notifyPrefs.value.cats.orderStatus.os=o.orderRenew.os!==false}if(o.cats&&typeof o.cats==='object'){Object.keys(notifyPrefs.value.cats).forEach(function(k){const c=o.cats[k];if(c&&typeof c==='object'&&typeof c.os==='boolean')notifyPrefs.value.cats[k].os=c.os})}}}catch(e){}}
+function saveNotifyPrefs(){try{const cats={};Object.keys(notifyPrefs.value.cats).forEach(function(k){cats[k]={os:notifyPrefs.value.cats[k].os}});localStorage.setItem(NOTIFY_PREFS_KEY,JSON.stringify({master:notifyPrefs.value.master,cats:cats}))}catch(e){}}
+loadNotifyPrefs();
+/* 投递：站内（消息中心）必达；系统通知受总开关与各分类开关控制（无免打扰时段） */
+/* 开关一律静默：切换只改状态并落盘，不弹任何提示（状态由开关本身回显） */
+function toggleNotifyMaster(){notifyPrefs.value.master=!notifyPrefs.value.master;saveNotifyPrefs()}
+function toggleNotifyOs(k){const p=notifyPrefs.value;if(!p.master)return;if(p.osDenied)return;const c=p.cats[k]||p.cats.orderStatus;c.os=!c.os;saveNotifyPrefs()}
+/* 系统通知权限（内存态，不入持久化）：仅由三级页「手机系统通知」开关驱动（原型操作面板入口已下线） */
+function toggleOsNotifyPerm(){notifyPrefs.value.osDenied=!notifyPrefs.value.osDenied}
+/* 子开关可用性：父开关关闭 → 子开关禁用（置灰不可点，卡片本身不置灰）。
+   父开关有两处：二级页「接收消息通知」总开关、系统通知权限未开启 */
+const osSwEnabled=computed(()=>notifyPrefs.value.master&&!notifyPrefs.value.osDenied);
+function swCls(on,enabled){return enabled?(on?'bg-[#2B3F5F] cursor-pointer':'bg-[#E5E5E5] cursor-pointer'):'bg-[#E5E5E5] opacity-50 cursor-not-allowed'}
+/* 一级页「手机系统通知」行：始终可进入三级页（权限开关已页内化，未开启时也需能进入开启） */
+function enterOsNotify(){navOpen('ovNotifyOs')}
+/* 「消息中心页」与「手机系统通知」页的分类开关为同一设置（notifyPrefs.cats[k].os，随 saveNotifyPrefs 落盘） */
+/* ══ 消息中心列表：平铺卡片，无「今天/昨天」分组；时间倒序（最新在上），覆盖全部事件 ══
+   orderId＝该消息「对应订单」的订单号，点击后直达该订单的「费用明细」页 */
+const notifyList=ref([
+{id:'msg01',eventId:'orderRefunded',daysAgo:6,hhmm:'16:30',read:false,orderId:'YZ202511100005'},
+{id:'msg02',eventId:'orderRefunding',daysAgo:6,hhmm:'15:00',read:true,orderId:'YZ202511100005'},
+{id:'msg03',eventId:'orderAdjusted',daysAgo:6,hhmm:'14:05',read:true,orderId:'YZ202512100002'},
+{id:'msg04',eventId:'orderCancelled',daysAgo:6,hhmm:'11:40',read:true,orderId:'YZ202511100005'},
+{id:'msg05',eventId:'orderCompleted',daysAgo:5,hhmm:'15:20',read:true,orderId:'YZ202511150004'},
+{id:'msg06',eventId:'orderBreach',daysAgo:4,hhmm:'10:00',read:false,orderId:'YZ202511200008'},
+{id:'msg07',eventId:'orderOverdue',daysAgo:3,hhmm:'10:00',read:false,orderId:'YZ202511280003'},
+{id:'msg08',eventId:'renewFailed',daysAgo:2,hhmm:'09:30',read:false,orderId:'YZ202512180001'},
+{id:'msg09',eventId:'renewSuccess',daysAgo:1,hhmm:'12:00',read:true,orderId:'YZ202512180001'},
+{id:'msg10',eventId:'renewReminder',daysAgo:1,hhmm:'12:00',read:false,orderId:'YZ202512180001'},
+{id:'msg11',eventId:'orderExpiring',daysAgo:1,hhmm:'09:00',read:false,orderId:'YZ202512080003'},
+{id:'msg12',eventId:'deviceBound',daysAgo:0,hhmm:'11:02',read:true,orderId:'YZ202512100002'},
+{id:'msg13',eventId:'orderPaid',daysAgo:0,hhmm:'10:35',read:true,orderId:'YZ202512180001'},
+{id:'msg14',eventId:'orderCreated',daysAgo:0,hhmm:'10:30',read:false,orderId:'YZ202512190001'}
+]);
+const notifyUnread=computed(()=>notifyList.value.filter(m=>!m.read).length);
+/* 卡片：标题＝消息类型、内容＝消息内容、extra＝通知时间（当天只显示时分，其它显示年月日）
+   列表顺序＝通知时间倒序（最新在上）：先比天数（daysAgo 小者靠前），同一天再比时分（hhmm 大者靠前）；
+   排序在此计算属性内执行，不依赖 notifyList 的种子书写顺序（同刻消息保持种子中先者在前，sort 稳定） */
+const notifyMsgs=computed(()=>{const d=notifySample();const now=new Date();const mins=s=>{const p=String(s||'00:00').split(':');return (Number(p[0])||0)*60+(Number(p[1])||0)};return notifyList.value.slice().sort((a,b)=>(a.daysAgo-b.daysAgo)||(mins(b.hhmm)-mins(a.hhmm))).map(m=>{const t=notifyTemplates[m.eventId]||{title:'',body:()=>''};let time=m.hhmm;if(m.daysAgo){const dt=new Date(now.getFullYear(),now.getMonth(),now.getDate()-m.daysAgo);time=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0')}return{id:m.id,title:typeof t.title==='function'?t.title(d):t.title,body:t.body(d),time,read:m.read}})});
+/* 消息 → 对应订单：在「用户端演示订单册」orderDataByCategory 里按订单号取（连分类一起回） */
+function findOrderById(id){if(!id)return null;const book=orderDataByCategory||{};for(const k in book){const hit=(book[k]||[]).find(o=>o.id===id);if(hit)return{order:hit,cat:k}}return null}
+/* 点击消息：先标已读 → 装载该消息对应订单并直达对应页——退款类（orderRefunding / orderRefunded）直达「订单详情-退款记录」，
+   其余直达「订单详情-费用明细」（不走进度条，避免读到上一条订单）；
+   兜底：消息缺 orderId 或订单号查不到时回落「我的订单」 */
+function onNotifyClick(m){const it=notifyList.value.find(x=>x.id===m.id);if(it)it.read=true;const hit=it?findOrderById(it.orderId):null;if(!hit){openMyOrders();return}orderInfo.value=orderInfoOf(hit.order,hit.cat);if(it&&(it.eventId==='orderRefunding'||it.eventId==='orderRefunded')){openRefundList()}else{showFeeDetail.value=true}}
+function markAllNotifyRead(){notifyList.value.forEach(m=>{m.read=true});toast('已将消息置为已读','success')}
 var myCarPtrInit=false;function setTab(t){if(!loggedIn.value&&(t==='vehicles'||t==='profile')){openLogin(t);return}tab.value=t;if(t==='vehicles'&&!myCarPtrInit){nextTick(()=>{if(document.getElementById('sc-mycar')){initPullToRefresh('sc-mycar','ptr-mycar',refreshMyCar);myCarPtrInit=true}})}}
 
 
@@ -7905,7 +8101,7 @@ const orderDataByCategory={
 {id:'YZ202512180002',status:'pickup',statusText:'待绑定',statusColor:'#FF8C1B',model:'乐迪SAA',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',store:'雅迪电动车(双流区雅和北路店)',plan:'月租×2月',created:'2025-12-18 09:23:00',payTime:'2025-12-18 09:28:00',amount:'Rp 234,544'},
 {id:'YZ202512100002',status:'progress',statusText:'租赁中',statusColor:'#22D098',model:'雅迪冠能3 S9 MAX',vModel:'雅迪冠能3 S9 MAX',frame:'LSN9CA9A8L8193001',img:'#FF6A00',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',store:'雅迪电动车(锦江区春熙路店)',plan:'时租×3小时',created:'2025-12-10 14:05:00',payTime:'2025-12-10 14:12:00',pickupTime:'2025-12-10 14:18:00',amount:'Rp 7,035'},
 {id:'YZ202512080003',status:'return',statusText:'即将到期',statusColor:'#1A82F4',model:'乐迪SAA',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193002',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',store:'雅迪电动车(双流区雅和北路店)',plan:'日租×2天',created:'2025-12-08 10:00:00',payTime:'2025-12-08 10:06:00',pickupTime:'2025-12-08 10:15:00',amount:'Rp 11,728'},
-{id:'YZ202511280003',status:'overdue',statusText:'逾期未还',statusColor:'#FF4343',model:'乐迪SAA',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193004',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',store:'雅迪电动车(武侯区磨子桥店)',plan:'日租×5天',created:'2025-11-28 10:30:00',payTime:'2025-11-28 10:36:00',pickupTime:'2025-11-28 10:42:00',amount:'Rp 29,320'},
+{id:'YZ202511280003',status:'overdue',statusText:'已到期',statusColor:'#FF4343',model:'乐迪SAA',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193004',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',store:'雅迪电动车(武侯区磨子桥店)',plan:'日租×5天',created:'2025-11-28 10:30:00',payTime:'2025-11-28 10:36:00',pickupTime:'2025-11-28 10:42:00',amount:'Rp 29,320'},
 {id:'YZ202511200008',status:'breach',statusText:'违约锁单',statusColor:'#FF4343',model:'雅迪冠能3 S9 MAX',vModel:'雅迪冠能3 S9 MAX',frame:'LSN9CA9A8L8193005',img:'#FF6A00',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',store:'雅迪电动车(高新区天府大道店)',plan:'周租×2周',created:'2025-11-20 16:42:00',payTime:'2025-11-20 16:48:00',pickupTime:'2025-11-20 16:55:00',amount:'Rp 70,364'},
 {id:'YZ202511150004',status:'complete',statusText:'已完成',statusColor:'#333333',model:'乐迪SAA',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193008',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',store:'雅迪电动车(武侯区磨子桥店)',plan:'月租×1月',created:'2025-11-15 08:15:00',payTime:'2025-11-15 08:20:00',pickupTime:'2025-11-15 08:28:00',finishTime:'2025-12-15 08:28:00',amount:'Rp 117,272'},
 {id:'YZ202511100005',status:'cancelled',statusText:'已取消',statusColor:'#666666',model:'雅迪冠能3 S9 MAX',vModel:'雅迪冠能3 S9 MAX',frame:'LSN9CA9A8L8193010',img:'#FF6A00',desc:'72V20Ah石墨烯电池·续航100km·蓝牙解锁·GPS定位·智能语音助手·APP远程控制',store:'雅迪电动车(锦江区春熙路店)',plan:'时租×4小时',created:'2025-11-10 11:45:00',payTime:'2025-11-10 11:50:00',pickupTime:'2025-11-10 11:55:00',cancelTime:'2025-11-10 12:10:00',amount:'Rp 9,380'}
@@ -7915,7 +8111,7 @@ const orderDataByCategory={
 {id:'DC202512090051',status:'pickup',statusText:'待绑定',statusColor:'#FF8C1B',model:'超威黑金72V32Ah',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(武侯区磨子桥店)',plan:'时租×5小时',created:'2025-12-09 15:30:00',payTime:'2025-12-09 15:35:00',amount:'Rp 17,325'},
 {id:'DC202512120005',status:'progress',statusText:'租赁中',statusColor:'#22D098',model:'天能锂电72V20Ah',bModel:'天能锂电72V20Ah',battNo:'TNX-72V-B2024106',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(锦江区春熙路店)',plan:'日租×7天',created:'2025-12-12 11:08:00',payTime:'2025-12-12 11:15:00',pickupTime:'2025-12-12 11:21:00',amount:'Rp 41,048'},
 {id:'DC202512050053',status:'return',statusText:'即将到期',statusColor:'#1A82F4',model:'超威黑金72V32Ah',bModel:'超威黑金72V32Ah',battNo:'CW-72V-B2024107',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(武侯区磨子桥店)',plan:'月租×1月',created:'2025-12-05 09:00:00',payTime:'2025-12-05 09:05:00',pickupTime:'2025-12-05 09:12:00',amount:'Rp 117,280'},
-{id:'DC202511280055',status:'overdue',statusText:'逾期未还',statusColor:'#FF4343',model:'超威黑金72V32Ah',bModel:'超威黑金72V32Ah',battNo:'CW-72V-B2024109',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(武侯区磨子桥店)',plan:'日租×5天',created:'2025-11-28 10:30:00',payTime:'2025-11-28 10:36:00',pickupTime:'2025-11-28 10:42:00',amount:'Rp 29,320'},
+{id:'DC202511280055',status:'overdue',statusText:'已到期',statusColor:'#FF4343',model:'超威黑金72V32Ah',bModel:'超威黑金72V32Ah',battNo:'CW-72V-B2024109',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(武侯区磨子桥店)',plan:'日租×5天',created:'2025-11-28 10:30:00',payTime:'2025-11-28 10:36:00',pickupTime:'2025-11-28 10:42:00',amount:'Rp 29,320'},
 {id:'DC202511200056',status:'breach',statusText:'违约锁单',statusColor:'#FF4343',model:'天能锂电72V20Ah',bModel:'天能锂电72V20Ah',battNo:'TNX-72V-B2024110',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(高新区天府大道店)',plan:'周租×2周',created:'2025-11-20 16:42:00',payTime:'2025-11-20 16:48:00',pickupTime:'2025-11-20 16:55:00',amount:'Rp 70,364'},
 {id:'DC202511200006',status:'complete',statusText:'已完成',statusColor:'#333333',model:'天能锂电72V20Ah',bModel:'天能锂电72V20Ah',battNo:'TNX-72V-B2024113',img:'#17A34A',desc:'石墨烯锂电池·续航100km·可单独租赁',store:'雅迪电动车(高新区天府大道店)',plan:'周租×3周',created:'2025-11-20 09:50:00',payTime:'2025-11-20 09:55:00',pickupTime:'2025-11-20 10:02:00',finishTime:'2025-12-11 10:02:00',amount:'Rp 105,546'},
 {id:'DC202511140054',status:'cancelled',statusText:'已取消',statusColor:'#666666',model:'超威黑金72V32Ah',bModel:'超威黑金72V32Ah',battNo:'CW-72V-B2024115',img:'#2B3F5F',desc:'大容量锂电池·续航130km·快充2小时·循环寿命1000次·智能BMS管理',store:'雅迪电动车(双流区雅和北路店)',plan:'日租×2天',created:'2025-11-14 16:15:00',payTime:'2025-11-14 16:20:00',pickupTime:'2025-11-14 16:28:00',cancelTime:'2025-11-14 18:00:00',amount:'Rp 11,728'}
@@ -7925,15 +8121,15 @@ const orderDataByCategory={
 {id:'TC202512060007',status:'pickup',statusText:'待绑定',statusColor:'#FF8C1B',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',bModel:'天能72V20Ah',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(双流区雅和北路店)',plan:'月租×1月',created:'2025-12-05 13:20:00',payTime:'2025-12-05 13:25:00',amount:'Rp 452,800'},
 {id:'TC202511260009',status:'progress',statusText:'租赁中',statusColor:'#22D098',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193001',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024106',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(双流区雅和北路店)',plan:'时租×6小时',created:'2025-11-26 10:15:00',payTime:'2025-11-26 10:22:00',pickupTime:'2025-11-26 10:28:00',amount:'Rp 42,072'},
 {id:'TC202511300011',status:'return',statusText:'即将到期',statusColor:'#1A82F4',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193003',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024108',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(锦江区春熙路店)',plan:'日租×2天',created:'2025-11-30 09:00:00',payTime:'2025-11-30 09:05:00',pickupTime:'2025-11-30 09:12:00',amount:'Rp 84,928'},
-{id:'TC202511280013',status:'overdue',statusText:'逾期未还',statusColor:'#FF4343',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193006',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024111',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(武侯区磨子桥店)',plan:'日租×5天',created:'2025-11-28 10:30:00',payTime:'2025-11-28 10:36:00',pickupTime:'2025-11-28 10:42:00',amount:'Rp 212,320'},
+{id:'TC202511280013',status:'overdue',statusText:'已到期',statusColor:'#FF4343',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193006',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024111',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(武侯区磨子桥店)',plan:'日租×5天',created:'2025-11-28 10:30:00',payTime:'2025-11-28 10:36:00',pickupTime:'2025-11-28 10:42:00',amount:'Rp 212,320'},
 {id:'TC202511200014',status:'breach',statusText:'违约锁单',statusColor:'#FF4343',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193007',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024112',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(高新区天府大道店)',plan:'时租×4小时',created:'2025-11-20 16:42:00',payTime:'2025-11-20 16:48:00',pickupTime:'2025-11-20 16:55:00',amount:'Rp 28,048'},
 {id:'TC202512030008',status:'complete',statusText:'已完成',statusColor:'#333333',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193009',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024114',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(锦江区春熙路店)',plan:'日租×3天',created:'2025-12-03 08:45:00',payTime:'2025-12-03 08:50:00',pickupTime:'2025-12-03 08:58:00',finishTime:'2025-12-06 08:58:00',amount:'Rp 127,392'},
 {id:'TC202511100015',status:'cancelled',statusText:'已取消',statusColor:'#666666',model:'乐迪SAA+天能72V20Ah',vModel:'乐迪SAA',frame:'LSN9CA9A8L8193011',bModel:'天能72V20Ah',battNo:'TNX-72V-B2024116',desc:'整车+电池套餐·续航100km·智能防盗',store:'雅迪电动车(锦江区春熙路店)',plan:'日租×1天',created:'2025-11-10 11:45:00',payTime:'2025-11-10 11:50:00',pickupTime:'2025-11-10 11:55:00',cancelTime:'2025-11-10 13:20:00',amount:'Rp 42,464'}
 ]
 };
-const orderFilterTabs=['全部','待绑定','租赁中','逾期未还','违约锁单','已完成'];
+const orderFilterTabs=['全部','待绑定','租赁中','已到期','违约锁单','已完成'];
 const orderStatusOrder={created:1,pickup:2,progress:3,'return':4,overdue:5,breach:6,complete:7,cancelled:8};
-const orderFilterMap={'全部':'all','待绑定':'pickup','租赁中':'progress','逾期未还':'overdue','违约锁单':'breach','已完成':'complete'};
+const orderFilterMap={'全部':'all','待绑定':'pickup','租赁中':'progress','已到期':'overdue','违约锁单':'breach','已完成':'complete'};
 const orderFilter=ref('all');
 
 const payChannel=ref('2C2P');
@@ -7948,7 +8144,9 @@ var ordersPtrInit=false;function openOrderCategory(cat){orderListCategory.value=
 function setOrderFilter(v){orderFilter.value=v;showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}
 const orderInfo=ref({category:'车辆租赁',storeName:'雅迪电动车(双流区雅和北路店)',orderId:'YZ202512180001',createTime:'2025-12-18 10:30:00',payTime:'2025-12-18 10:35:00',payee:'2C2P',status:'pickup',statusText:'待绑定',statusColor:'#FF8C1B',model:'乐迪SAA',vModel:'乐迪SAA',frame:'',bModel:'',battNo:'',pickupTime:'',finishTime:'',cancelTime:'',img:'#2B3F5F',desc:'72V32Ah锂电池·续航120km·智能防盗',plan:'月租×2月',amount:'Rp 117,272',deposit:'Rp 200.45',payStatus:'PAID',renewOrders:[{renewNo:'RZ202602180001',parentOrderNo:'YZ202512180001',plan:'周租×1周',newRentStart:'2026-02-18 10:35:00',newRentEnd:'2026-02-25 10:35:00',renewRentFee:25000,renewDeposit:0,payStatus:'PAID',payMethod:'2C2P',payTime:'2026-02-18 10:36:00',createTime:'2026-02-18 10:35:00',renewType:'manual'},{renewNo:'RZ202602250002',parentOrderNo:'YZ202512180001',plan:'周租×1周',newRentStart:'2026-02-25 10:35:00',newRentEnd:'2026-03-04 10:35:00',renewRentFee:25000,renewDeposit:0,payStatus:'PAID',payMethod:'钱包',payTime:'2026-02-25 10:35:00',createTime:'2026-02-25 10:35:00',renewType:'auto'},{renewNo:'RZ202603040003',parentOrderNo:'YZ202512180001',plan:'周租×1周',newRentStart:'2026-03-04 10:35:00',newRentEnd:'2026-03-11 10:35:00',renewRentFee:25000,renewDeposit:0,payStatus:'UNPAID',createTime:'2026-03-04 10:35:00',renewType:'manual'}]});
 function openOrderDetailFromList(o){openOrderDetailCore(o);navOpen('orderDetail')}
-function openOrderDetailCore(o){showRentLoading.value=true;payChannel.value='2C2P';cancelBeforePay.value='paid';const _oi={category:orderListCategory.value||'车辆租赁',storeName:o.store||'',orderId:o.id||'',createTime:o.created||'',payTime:o.payTime||'',payee:'2C2P',status:o.status||'pickup',statusText:o.statusText||'已创建',statusColor:o.statusColor||'#FF6A00',model:o.model||'乐迪SAA',vModel:o.vModel||'',frame:o.frame||'',bModel:o.bModel||'',battNo:o.battNo||'',pickupTime:o.pickupTime||'',rentStart:o.rentStart||'',rentEnd:o.rentEnd||'',finishTime:o.finishTime||'',cancelTime:o.cancelTime||'',desc:o.desc||(selectedVehicle.value?selectedVehicle.value.desc:''),plan:o.plan||'',amount:o.amount||'',deposit:o.deposit||'Rp 200.45',payStatus:o.payStatus||'PAID',renewOrders:o.renewOrders||[]};setTimeout(()=>{if(o.status==='pickup'||o.status==='created'){startOrderTimer()}else{stopOrderTimer()}orderInfo.value=_oi;showRentLoading.value=false},600)}
+/* 订单对象 → 订单详情数据（列表进入 / 消息中心直达共用）；cat 缺省取当前列表分类 */
+function orderInfoOf(o,cat){return {category:cat||orderListCategory.value||'车辆租赁',storeName:o.store||'',orderId:o.id||'',createTime:o.created||'',payTime:o.payTime||'',payee:'2C2P',status:o.status||'pickup',statusText:o.statusText||'已创建',statusColor:o.statusColor||'#FF6A00',model:o.model||'乐迪SAA',vModel:o.vModel||'',frame:o.frame||'',bModel:o.bModel||'',battNo:o.battNo||'',pickupTime:o.pickupTime||'',rentStart:o.rentStart||'',rentEnd:o.rentEnd||'',finishTime:o.finishTime||'',cancelTime:o.cancelTime||'',desc:o.desc||(selectedVehicle.value?selectedVehicle.value.desc:''),plan:o.plan||'',amount:o.amount||'',deposit:o.deposit||'Rp 200.45',payStatus:o.payStatus||'PAID',renewOrders:o.renewOrders||[]}}
+function openOrderDetailCore(o){showRentLoading.value=true;payChannel.value='2C2P';cancelBeforePay.value='paid';const _oi=orderInfoOf(o);setTimeout(()=>{if(o.status==='pickup'||o.status==='created'){startOrderTimer()}else{stopOrderTimer()}orderInfo.value=_oi;showRentLoading.value=false},600)}
 function copyText(t,label){var v=(t||'').trim();if(!v||v==='-'){toast('无内容可复制','warn');return}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(function(){toast('复制成功','success')},function(){toast('复制失败','warn')})}else{toast('复制失败','warn')}}
 
 const profileOV=ref(null),profileSub=ref(null),profileMod=ref(null),profileModLoading=ref(false);
@@ -8209,7 +8407,11 @@ chargeOrder:{open:()=>{showChargeOrder.value=true},close:()=>closeChargeOrder()}
 chargeOrderDetail:{open:()=>{showChargeOrderDetail.value=true},close:()=>closeChargeOrderDetail()},
 chargeOrderList:{open:()=>{showChargeOrderList.value=true},close:()=>{showChargeOrderList.value=false}},
 poiSearch:{open:()=>{showPoiSearch.value=true},close:()=>closePoiSearch()},
-chargeList:{open:()=>{showChargeList.value=true},close:()=>closeChargeList()}
+chargeList:{open:()=>{showChargeList.value=true},close:()=>closeChargeList()},
+ovMessage:{open:()=>{profileOV.value='message'},close:()=>{if(profileOV.value==='message')profileOV.value=null}},
+ovNotify:{open:()=>{profileOV.value='notify'},close:()=>{if(profileOV.value==='notify')profileOV.value=null}},
+ovNotifyPage:{open:()=>{profileOV.value='notifyPage'},close:()=>{if(profileOV.value==='notifyPage')profileOV.value=null}},
+ovNotifyOs:{open:()=>{profileOV.value='notifyOs'},close:()=>{if(profileOV.value==='notifyOs')profileOV.value=null}}
 };
 function _navClone(v){return (v&&typeof v==='object')?JSON.parse(JSON.stringify(v)):v}
 function _navR(r){return{get:function(){return r.value},set:function(v){r.value=v}}}
@@ -8254,7 +8456,7 @@ onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);buildChargeDe
 function goSwap(){location.href='swap.html'}
 function setLoggedIn(v){if(v&&firstLogin.value){firstLogin.value=false;switchSource.value='first';loggedIn.value=true;navSwap('subSwitchSystem');toast('请选择系统','info');return}loggedIn.value=v}
 function switchBack(){if(switchSource.value==='first'){switchSource.value='settings';doLogout();return}navBack()}
-return{goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,pushNotify,showPushNotify,renewNotifyTemplates,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
+return{goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyOs,toggleOsNotifyPerm,osSwEnabled,swCls,enterOsNotify,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,setLoginSub,sendLoginCode,doLogin,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,goSwap,firstLogin,switchSource,setLoggedIn,switchBack,curSystemName,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
 });
 
 app.directive('swipe-close',{mounted(el,b){var sx=0,sy=0;el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(sx<40&&dx>60&&Math.abs(dy)<Math.abs(dx)*0.5)b.value()},{passive:true})}});
@@ -8815,7 +9017,7 @@ const ALL_PERM_CODES=[
   'order.package.list','order.package.detail',
   'model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit',
   'account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable',
-  'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.detail','order_config.edit',
+  'position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.detail','order_config.edit','message_config.detail','message_config.edit',
   'alarm.list','alarm.detail',
   'recharge_order.list','recharge_order.detail',
   'charge_order.list','charge_order.detail','charge_order.refund.create','charge_order.refund.list','charge_order.operate.cancel','charge_order.operate.finish',
@@ -8864,9 +9066,9 @@ const permGroups=[
   {id:'user',name:'用户管理',codes:['user.list','user.detail'],items:[
     {c:'user.list',n:'用户列表'},{c:'user.detail',n:'用户详情'}
   ]},
-  {id:'sys',name:'系统配置',codes:['model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit','recharge.list','recharge.add','recharge.edit','recharge.delete','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable','position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.detail','order_config.edit'],items:[
+  {id:'sys',name:'系统配置',codes:['model.list','model.edit','batt_model.list','batt_model.edit','package.list','package.add','package.edit','recharge.list','recharge.add','recharge.edit','recharge.delete','account.list','account.detail','account.add','account.edit','account.status.disable','account.status.enable','position.list','position.detail','position.add','position.edit','position.delete','cs_info.list','cs_info.add','cs_info.edit','cs_info.delete','order_config.detail','order_config.edit','message_config.detail','message_config.edit'],items:[
     {c:'model.list',n:'车型列表'},{c:'model.edit',n:'编辑车型'},{c:'batt_model.list',n:'电池型号列表'},{c:'batt_model.edit',n:'编辑电池型号'},{c:'package.list',n:'套餐列表'},{c:'package.add',n:'新增套餐'},{c:'package.edit',n:'编辑套餐'},{c:'recharge.list',n:'充值配置列表'},{c:'recharge.add',n:'新增充值配置'},{c:'recharge.edit',n:'编辑充值配置'},{c:'recharge.delete',n:'删除充值配置'},{c:'account.list',n:'账号列表'},{c:'account.detail',n:'账号详情'},{c:'account.add',n:'新增账号'},{c:'account.edit',n:'编辑账号'},{c:'account.status.disable',n:'禁用账号'},{c:'account.status.enable',n:'启用账号'},
-    {c:'position.list',n:'职位列表'},{c:'position.detail',n:'职位详情'},{c:'position.add',n:'新增职位'},{c:'position.edit',n:'编辑职位'},{c:'position.delete',n:'删除职位'},{c:'cs_info.list',n:'客服列表'},{c:'cs_info.add',n:'新增客服'},{c:'cs_info.edit',n:'编辑客服'},{c:'cs_info.delete',n:'删除客服'},{c:'order_config.detail',n:'订单配置'},{c:'order_config.edit',n:'编辑配置'}
+    {c:'position.list',n:'职位列表'},{c:'position.detail',n:'职位详情'},{c:'position.add',n:'新增职位'},{c:'position.edit',n:'编辑职位'},{c:'position.delete',n:'删除职位'},{c:'cs_info.list',n:'客服列表'},{c:'cs_info.add',n:'新增客服'},{c:'cs_info.edit',n:'编辑客服'},{c:'cs_info.delete',n:'删除客服'},{c:'order_config.detail',n:'订单配置'},{c:'order_config.edit',n:'编辑配置'},{c:'message_config.detail',n:'消息通知'},{c:'message_config.edit',n:'编辑推送配置'}
   ]}
 ];
 function pickPermGroup(id,codeFilter){
@@ -8950,6 +9152,7 @@ const demoPagePermCtx=computed(()=>{
     if(sub==='csEdit'||ov==='cs')return{title:sub==='csEdit'?(csIdx.value===-1?'新增客服':'编辑客服'):'客服信息',groups:[pickPermGroup('sys',sub==='csEdit'?(csIdx.value===-1?['cs_info.add']:['cs_info.edit','cs_info.delete']):['cs_info.add','cs_info.edit','cs_info.delete'])].filter(Boolean)};
     /* 已在配置页：不露 order_config.detail（入口在「我的」） */
     if(ov==='config')return{title:'订单配置',groups:[pickPermGroup('sys',['order_config.edit'])].filter(Boolean)};
+    if(ov==='msg')return{title:'消息通知',groups:[pickPermGroup('sys',['message_config.edit'])].filter(Boolean)};
     if(ov==='recharge'||sub==='rechargeEdit')return{title:sub==='rechargeEdit'?(rechargeIdx.value===-1?'新增充值配置':'编辑充值配置'):'充值配置',groups:[pickPermGroup('sys',sub==='rechargeEdit'?[rechargeIdx.value===-1?'recharge.add':'recharge.edit']:['recharge.add','recharge.edit','recharge.delete'])].filter(Boolean)};
     if(ov==='store')return{title:'切换门店',groups:[]};
     if(ov==='user'||sub==='userDetail'){
@@ -8957,11 +9160,11 @@ const demoPagePermCtx=computed(()=>{
       return{title:sub==='userDetail'?'用户详情':'用户管理',groups:[pickPermGroup('user',uc)].filter(Boolean)}
     }
     if(ov==='info'||ov==='settings'||sub==='lang'||sub==='bindPhone'||sub==='bindEmail'||sub==='pwdVerify'||sub==='pwdReset')return{title:ov==='settings'||sub==='lang'?'系统设置':ov==='info'?'个人信息':'我的',groups:[]};
-    /* 我的根页：9 个菜单入口码按页面菜单顺序展示（经营管理→员工与用户→运营配置） */
-    return{title:'我的',groups:[{id:'profileRoot',name:'我的',codes:['model.list','batt_model.list','package.list','account.list','position.list','user.list','order_config.detail','cs_info.list','recharge.list'],items:[
+    /* 我的根页：10 个菜单入口码按页面菜单顺序展示（经营管理→员工与用户→运营配置） */
+    return{title:'我的',groups:[{id:'profileRoot',name:'我的',codes:['model.list','batt_model.list','package.list','account.list','position.list','user.list','order_config.detail','message_config.detail','cs_info.list','recharge.list'],items:[
       {c:'model.list',n:'车型管理'},{c:'batt_model.list',n:'电池型号管理'},{c:'package.list',n:'套餐管理'},
       {c:'account.list',n:'账号管理'},{c:'position.list',n:'职位管理'},{c:'user.list',n:'用户管理'},
-      {c:'order_config.detail',n:'订单配置'},{c:'cs_info.list',n:'客服信息'},{c:'recharge.list',n:'充值配置'}
+      {c:'order_config.detail',n:'订单配置'},{c:'message_config.detail',n:'消息通知'},{c:'cs_info.list',n:'客服信息'},{c:'recharge.list',n:'充值配置'}
     ]}].filter(Boolean)};
   }
   return{title:'-',groups:[]};
@@ -9280,11 +9483,11 @@ function orderUnpaidAmountOf(o){return fmtRp(orderUnpaidAmount(o))}
 document.addEventListener('click',function(){searchScopeOpen.value=false})
 const searchPH=computed(()=>'请输入'+(({id:'订单编号',account:'账号',phone:'手机号',email:'邮箱',vin:'车架号'})[searchScope.value]||'订单编号'));
 
-const allStatus=computed(()=>[{v:'created',l:'已创建'},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'逾期未还'},{v:'breach',l:'违约锁单'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'}]);
-const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'逾期未还'},{v:'breach',l:'违约锁单'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'}];
+const allStatus=computed(()=>[{v:'created',l:'已创建'},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'已到期'},{v:'breach',l:'违约锁单'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'}]);
+const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'已到期'},{v:'breach',l:'违约锁单'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'}];
 const paySts=computed(()=>[{v:'pending',l:'待支付'},{v:'processing',l:'支付中'},{v:'paid',l:'已支付'},{v:'refunding',l:'退款中'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}]);
 const demoPayStsFixed=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
-const quickPills=computed(()=>[{l:'全部',v:''},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'逾期未还'}]);
+const quickPills=computed(()=>[{l:'全部',v:''},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'已到期'}]);
   /* 计数口径：各状态订单总量，不受筛选条件与搜索词影响（筛选/搜索只改变下方列表） */
   const qCnt=computed(()=>{const base=demoListEmpty.value?[]:orders.value;const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
 const typePills=computed(()=>[{l:'全部',v:''},{v:'vehicle',l:'车辆租赁'},{v:'battery',l:'电池租赁'},{v:'package',l:'套餐'}]);
@@ -10028,7 +10231,7 @@ function doResetPwd(){
 function goBack(){navBack()}
 function switchBack(){if(switchSource.value==='first'){switchSource.value='settings';doLogout();return}goBack()}
 const hdrTitle=computed(()=>{const m={info:'个人信息',store:'门店列表',model:'车型管理',battModel:'电池型号管理',package:'套餐管理',account:'账号管理',pos:'职位管理',cs:'客服信息',config:'订单配置',recharge:'充值配置',user:'用户管理',settings:'系统设置'};const s={mEdit:'编辑车型',bmEdit:'编辑电池型号',pkgEdit:'编辑套餐',pkgAdd:'新增套餐',aDetail:'账号详情',aAdd:'新增账号',aEdit:'编辑账号',pDetail:'职位详情',pAdd:'新增职位',pEdit:'编辑职位',csEdit:csIdx.value===-1?'新增客服':'编辑客服',lang:'切换语言',bindPhone:'绑定手机号',bindEmail:'绑定邮箱',pwdVerify:'修改密码',pwdReset:'重置密码',userDetail:'用户详情'};return profileSub.value?(s[profileSub.value]||''):(m[profileOV.value]||'')});
-const hdrAction=computed(()=>{if(profileOV.value==='account'&&can('account.add'))return{label:'新增',fn:()=>openAccAdd()};if(profileOV.value==='cs'&&can('cs_info.add'))return{label:'新增',fn:()=>openCsEdit(-1)};if(profileOV.value==='recharge'&&can('recharge.add'))return{label:'新增',fn:()=>openRechargeEdit(-1)};if(profileSub.value==='pDetail'&&can('position.add'))return{label:'新增下级职位',fn:()=>openPosAdd(dp.value.name)};if(profileOV.value==='config'&&can('order_config.edit'))return{label:'保存',fn:saveCfg};return null});
+const hdrAction=computed(()=>{if(profileOV.value==='account'&&can('account.add'))return{label:'新增',fn:()=>openAccAdd()};if(profileOV.value==='cs'&&can('cs_info.add'))return{label:'新增',fn:()=>openCsEdit(-1)};if(profileOV.value==='recharge'&&can('recharge.add'))return{label:'新增',fn:()=>openRechargeEdit(-1)};if(profileSub.value==='pDetail'&&can('position.add'))return{label:'新增下级职位',fn:()=>openPosAdd(dp.value.name)};if(profileOV.value==='config'&&can('order_config.edit'))return{label:'保存',fn:saveCfg};if(profileOV.value==='msg'&&can('message_config.edit'))return{label:'保存',fn:saveMsgCfg};return null});
 const curStore=ref('');
 const menuGroups=computed(()=>{
   const all=[
@@ -10040,6 +10243,7 @@ const menuGroups=computed(()=>{
     {id:'pos',label:'职位管理',icon:'clock',code:'position.list'},
     {id:'user',label:'用户管理',icon:'users',code:'user.list'},
     {id:'config',label:'订单配置',icon:'settings',code:'order_config.detail'},
+    {id:'msg',label:'消息通知',icon:'bell',code:'message_config.detail'},
     {id:'cs',label:'客服信息',icon:'headset',code:'cs_info.list'},
     {id:'recharge',label:'充值配置',icon:'wallet',code:'recharge.list'}
   ];
@@ -10380,8 +10584,54 @@ let delCsI=-1;function delCs(i){if(!can('cs_info.delete')){deny();return}delCsI=
 
 var cfgSaving=ref(false);const cfgErr=ref({pre:'',breach:'',renewAdvanceMinutes:'',renewAdvanceDays:'',renewFailThreshold:''});
 const renewTypeOpts=[{v:'VEHICLE',l:'车辆租赁'},{v:'BATTERY',l:'电池租赁'},{v:'PACKAGE',l:'车电套餐'}];
-const renewStatusOpts=[{v:'IN_USE',l:'租赁中'},{v:'TO_RETURN',l:'即将到期'},{v:'OVERDUE',l:'逾期未还'},{v:'BREACH',l:'违约锁单'}];
+const renewStatusOpts=[{v:'IN_USE',l:'租赁中'},{v:'TO_RETURN',l:'即将到期'},{v:'OVERDUE',l:'已到期'},{v:'BREACH',l:'违约锁单'}];
 function toggleCfgArr(k,v){var a=cfg.value[k];var i=a.indexOf(v);if(i>=0)a.splice(i,1);else a.push(v);}
+/* ══ 消息通知配置（商户端）：只保留「事件开关 + 推送渠道」；触发规则（提前多久 / 连续失败几次）
+   由「订单配置」统一管理（cfg.renewAdvanceMinutes / renewAdvanceDays / renewFailThreshold），此处不再有 timing ══ */
+/* 事件名＝用户端消息标题逐字同句（与 notifyTemplates 的 title / user.home.pushNotify.*Title 键同批，
+   两端命名与译法由此强制一致，见 i18n-key-naming.md「修订二十二」；标题为不含动态值的静态短句
+   （示例时间/金额/天数只出现在用户端消息内容 body），故此处不出现占位符） */
+/* 消息类型＝两级：大类（msgCatOpts）→ 小类（msgEventOpts，cat 指向所属大类）；
+   大类各占一张独立卡（od-cat-card），关闭时其下小类整块隐藏（v-if → 卡头成为卡内唯一内容并自动收边），
+   并保留逻辑守卫拦截程序化触发 */
+/* 大类两分（2026-10-16 定稿）：订单状态 / 费用与退款——续租 3 条属订单生命周期，
+   归入「订单状态」；退款按触发点拆「退款处理中 / 已退款」两个事件（各一个开关、可分别关闭） */
+const msgCatOpts=[
+{k:'orderStatus',l:'订单状态'},
+{k:'feeRefund',l:'费用与退款'}
+];
+const msgEventOpts=[
+{k:'orderCreated',l:'订单已创建',cat:'orderStatus'},
+{k:'orderPaid',l:'订单支付成功',cat:'orderStatus'},
+{k:'deviceBound',l:'订单已开始',cat:'orderStatus'},
+{k:'orderExpiring',l:'订单即将到期',cat:'orderStatus'},
+{k:'renewReminder',l:'订单自动续租',cat:'orderStatus'},
+{k:'renewSuccess',l:'订单自动续租成功',cat:'orderStatus'},
+{k:'renewFailed',l:'订单自动续租失败',cat:'orderStatus'},
+{k:'orderOverdue',l:'订单已到期',cat:'orderStatus'},
+{k:'orderBreach',l:'车辆/电池已远程锁定',cat:'orderStatus'},
+{k:'orderCompleted',l:'订单已完成',cat:'orderStatus'},
+{k:'orderCancelled',l:'订单已取消',cat:'orderStatus'},
+{k:'orderAdjusted',l:'订单金额已调整',cat:'feeRefund'},
+{k:'orderRefunding',l:'退款处理中',cat:'feeRefund'},
+{k:'orderRefunded',l:'退款成功',cat:'feeRefund'}
+];
+/* 推送渠道：手机通知（手机系统推送，OS）/ 消息中心（站内消息，CENTER）——每个事件两条可各自独立开关 */
+const msgChannelOpts=[
+{v:'OS',l:'手机通知'},
+{v:'CENTER',l:'消息中心'}
+];
+const msgCfg=ref({
+enabled:true,
+cats:{orderStatus:true,feeRefund:true},
+events:msgEventOpts.reduce(function(m,e){m[e.k]=true;return m},{}),
+channel:msgEventOpts.reduce(function(m,e){m[e.k]=['OS','CENTER'];return m},{})
+});
+const msgSaving=ref(false);
+/* 渠道开关：仅当该事件所属大类开启时可改（子类整块隐藏后此处为逻辑兜底，拦截程序化触发） */
+function toggleMsgChannel(k,v){const ev=msgEventOpts.find(x=>x.k===k);if(ev&&ev.cat&&!msgCfg.value.cats[ev.cat])return;const a=msgCfg.value.channel[k];const i=a.indexOf(v);if(i>=0)a.splice(i,1);else a.push(v)}
+/* 保存：本页已无触发时机等可非法输入项（触发规则由订单配置管理），仅走权限校验 + 保存反馈 */
+function saveMsgCfg(){if(!can('message_config.edit')){deny();return}if(msgSaving.value)return;msgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;msgSaving.value=false;toast('配置已保存','success')},400)}
 function saveCfg(){if(!can('order_config.edit')){deny();return}if(cfgSaving.value)return;var e={};if(!Number.isInteger(cfg.value.pre)||cfg.value.pre<1||cfg.value.pre>365)e.pre='请输入 1–365 之间的整数';if(!Number.isInteger(cfg.value.breach)||cfg.value.breach<1||cfg.value.breach>365)e.breach='请输入 1–365 之间的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceMinutes)||cfg.value.renewAdvanceMinutes<0||cfg.value.renewAdvanceMinutes>60))e.renewAdvanceMinutes='请输入0-60的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceDays)||cfg.value.renewAdvanceDays<0||cfg.value.renewAdvanceDays>30))e.renewAdvanceDays='请输入0-30的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewFailThreshold)||cfg.value.renewFailThreshold<0||cfg.value.renewFailThreshold>10))e.renewFailThreshold='请输入0-10的整数';cfgErr.value=e;if(e.pre||e.breach||e.renewAdvanceMinutes||e.renewAdvanceDays||e.renewFailThreshold)return;if(cfg.value.renewAuto&&!cfg.value.renewTypes.length){toast('请至少选择一种自动续租订单类型','warn');return}if(cfg.value.renewEnabled&&!cfg.value.renewStatuses.length){toast('请至少选择一种允许续租的订单状态','warn');return}cfgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('配置已保存','success');cfgSaving.value=false},400)}
 /* ══ 充值配置 ══ */
 
@@ -11027,7 +11277,7 @@ appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginMode,loginS
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
-csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,
+csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,msgCfg,msgCatOpts,msgEventOpts,msgChannelOpts,msgSaving,saveMsgCfg,toggleMsgChannel,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,
 profileMdT,profileMdD,profileMdDanger,profileMdOk,
 fE,vErr,vClr,tip,tipShow,tipToggle,tipHide,stage,

@@ -50,7 +50,7 @@
       "breach": "違約鎖單",
       "cancelled": "已取消",
       "created": "已建立",
-      "overdue": "逾期未還",
+      "overdue": "已到期",
       "pickup": "待綁定",
       "progress": "租賃中",
       "return": "即將到期"
@@ -280,7 +280,7 @@
       "amountDue": "應付金額",
       "vehicleOps": "車輛操作",
       "vehicleStartStop": "車輛啟停",
-      "messagePush": "訊息推送",
+      "messageNotify": "訊息通知",
       "renewReminder": "續租提醒",
       "deductReminder": "扣款提醒",
       "hasAlert": "有告警",
@@ -318,7 +318,6 @@
       "balanceFlow": "餘額流水",
       "beforeDue": "到期前",
       "paymentFailed": "扣款失敗",
-      "continuousPaymentFailed": "連續扣款失敗",
       "deleteIrreversible": "刪除後不可恢復",
       "periodWeek": "週租",
       "planMonth": "月租",
@@ -473,7 +472,8 @@
     },
     "toast": {
       "deviceBound": "設備綁定成功",
-      "deviceUnbound": "設備已解綁"
+      "deviceUnbound": "設備已解綁",
+      "msgAllRead": "已將訊息置為已讀"
     },
     "home": {
       "explore": "探索發現",
@@ -488,12 +488,34 @@
       "safetySlogan": "您的安全是我們最關心的事",
       "currentLocation": "當前定位",
       "pushNotify": {
-        "renewReminderTitle": "訂單即將自動續租",
+        "renewReminderTitle": "訂單自動續租",
         "renewSuccessTitle": "訂單自動續租成功",
         "renewFailedTitle": "訂單自動續租失敗",
         "renewReminderBody": "您的訂單將於2026-09-10 12:00:00自動續租，並扣款Rp150.000。如不需要續租，請前往訂單詳情關閉自動續租。",
         "renewSuccessBody": "您的訂單已自動續租成功，扣款Rp150.000，訂單有效期已延長至2026-09-11 12:00:00。",
-        "renewFailedBody": "您的訂單自動續租失敗（第2/3次），原因：餘額不足。請盡快增值，以免續租失敗次數過多導致自動續租功能關閉。"
+        "renewFailedBody": "您的訂單自動續租失敗（第2/3次），餘額不足。請盡快增值，以免續租失敗次數過多導致自動續租功能關閉。",
+        "orderCreatedTitle": "訂單已建立",
+        "orderCreatedBody": "您的訂單YZ202512180001已建立，請在30分鐘內完成支付，逾時未支付訂單將自動取消。",
+        "orderPaidTitle": "訂單支付成功",
+        "orderPaidBody": "您的訂單YZ202512180001已支付成功。請盡快掃描車輛/電池二維碼完成綁定，綁定成功後訂單即開始計費。",
+        "deviceBoundTitle": "訂單已開始",
+        "deviceBoundBody": "您的訂單YZ202512180001已綁定車輛/電池，租期2026-09-01 10:30:00至2026-10-01 10:30:00。",
+        "orderExpiringTitle": "訂單即將到期",
+        "orderExpiringBody": "您的訂單YZ202512180001將於2026-10-01 10:30:00到期，請按時前往門店歸還，或前往訂單詳情辦理續租。",
+        "orderOverdueTitle": "訂單已到期",
+        "orderOverdueBody": "您的訂單YZ202512180001已到期，請及時前往門店歸還，以免產生額外費用；如仍需使用，可前往訂單詳情辦理續租。",
+        "orderBreachTitle": "車輛/電池已遠程鎖定",
+        "orderBreachBody": "您的訂單YZ202512180001已逾期7天，車輛與電池已被遠程鎖定。請立即聯繫門店處理。",
+        "orderCompletedTitle": "訂單已完成",
+        "orderCompletedBody": "您的訂單YZ202512180001已完成，感謝您的使用，期待再次為您服務。",
+        "orderCancelledTitle": "訂單已取消",
+        "orderCancelledBody": "您的訂單YZ202512180001已取消。已支付金額將原路退回。",
+        "orderAdjustedTitle": "訂單金額已調整",
+        "orderAdjustedBody": "您的訂單YZ202512180001金額已由Rp150.000調整為Rp200.000，如有疑問請聯繫門店。",
+        "orderRefundingTitle": "退款處理中",
+        "orderRefundingBody": "您的訂單YZ202512180001退款中，退款金額Rp150.000，預計1–7個工作日原路退回。",
+        "orderRefundedTitle": "退款成功",
+        "orderRefundedBody": "您的訂單YZ202512180001退款Rp150.000已退回原支付渠道，請注意查收。"
       }
     },
     "search": {
@@ -693,6 +715,21 @@
       "refundDetail": "退款明細",
       "refundAmount": "退款金額",
       "orderList": "充電訂單"
+    },
+    "message": {
+      "title": "訊息中心",
+      "empty": "暫無訊息",
+      "emptySub": "新的訂單或續租訊息會顯示在這裡",
+      "categoryOrderStatus": "訂單狀態",
+      "categoryOrderStatusDesc": "訂單狀態、續租扣款等通知",
+      "categoryFeeRefund": "費用與退款",
+      "categoryFeeRefundDesc": "訂單改價、退款等通知",
+      "settingsMaster": "接收訊息通知",
+      "settingsCategoryHead": "訊息類型",
+      "settingsGroupOuter": "應用外",
+      "settingsGroupInner": "應用內",
+      "settingsOsRow": "手機系統通知",
+      "settingsPageRow": "訊息中心頁"
     }
   },
   "merchant": {
@@ -779,12 +816,12 @@
       "autoLockBattery": "自動鎖電池",
       "cancelConfirm": "確定取消該續租？取消後不可恢復",
       "order": "續租單",
-      "failClose": "連續扣款失敗{n}次後關閉訂單自動續租",
+      "failThreshold": "連續扣款失敗次數上限",
       "advanceRange": "請輸入0-30的整數",
       "advanceRangeMinutes": "請輸入0-60的整數",
       "failRange": "請輸入0-10的整數",
       "allowManual": "允許手動續租",
-      "breachDays": "逾期未還{n}天，自動變更為「違約鎖單」狀態",
+      "breachDays": "已到期{n}天，自動變更為「違約鎖單」狀態",
       "needOrderStatus": "請至少選擇一種允許續租的訂單狀態",
       "needOrderType": "請至少選擇一種自動續租訂單類型",
       "cancelSuccess": "續租已取消",
@@ -1316,6 +1353,10 @@
       "offShelf": "下架",
       "current": "當前",
       "available": "可用"
+    },
+    "message": {
+      "channel": "推送渠道",
+      "channelPhone": "手機通知"
     }
   },
   "demo": {
