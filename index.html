@@ -5025,7 +5025,7 @@ body.host-single-m #root-user{display:none}
 <!-- ═══ FILTER SHEET ═══ -->
 <bottom-sheet :open="ordersShowFS" title="全部筛选" :mask-z="600" max-h="70%" @close="ordersShowFS=false">
 <div class="sheet-body px-5 pb-3" style="min-height:0">
-<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">订单状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in allStatus" :key="'fs-'+s.v" data-cp @click="ordersFsStC=ordersFsStC===s.v?'':s.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsStC===s.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
+<div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">订单状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="s in allStatus" :key="'fs-'+s.v" data-cp @click="ordersPickSt(s.v)" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsStC===s.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ s.l }}</div></div></div>
 <div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付渠道</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div data-cp @click="ordersFsPayC=ordersFsPayC==='2c2p'?'':'2c2p'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='2c2p'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">2C2P</div><div data-cp @click="ordersFsPayC=ordersFsPayC==='offline'?'':'offline'" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayC==='offline'?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">线下支付</div></div></div>
 <div style="margin-bottom:20px"><div class="text-[14px] font-semibold" style="margin-bottom:8px">支付状态</div><div style="display:flex;flex-wrap:wrap;gap:8px"><div v-for="p in paySts" :key="'fp-'+p.v" data-cp @click="ordersFsPayStC=ordersFsPayStC===p.v?'':p.v" class="px-3.5 py-1.5 rounded-full text-[13px] font-medium cursor-pointer transition-all" :style="ordersFsPayStC===p.v?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}</div></div></div>
  <div style="margin-bottom:16px" data-od-id="orders-fs-create-time">
@@ -9225,7 +9225,7 @@ const ordersPlaceholder=computed(()=>!ordersEntry.value);
 const ordersLName=computed(()=>{const m={vehicle:'车辆租赁',battery:'电池租赁',package:'车电套餐'};return ordersEntry.value?m[ordersEntry.value]||'车辆租赁':'电池租赁'});
 const ordersListTitle=computed(()=>ordersLName.value);
 const orderEntries=computed(()=>[{v:'vehicle',l:'车辆租赁',icon:'bike',code:'order.list'},{v:'battery',l:'电池租赁',icon:'battery-charging',code:'order.battery.list'},{v:'package',l:'车电套餐',icon:'package',code:'order.package.list'}].filter(e=>can(e.code)));
-function homeOpenOrders(t){navOpen();const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value=_ordDateDef.start;ordersFsEnd.value=_ordDateDef.end;searchScope.value='id';tab.value='orders';triggerListLoading('ol-'+t)}
+function homeOpenOrders(t){navOpen();const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersStFrom.value='';ordersStTouched.value=false;ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';ordersFsStart.value=_ordDateDef.start;ordersFsEnd.value=_ordDateDef.end;searchScope.value='id';tab.value='orders';triggerListLoading('ol-'+t)}
 function closeOrderList(){navBack()}
 /* ══ BATTERY DEVICES (订单 tab → 电池) ══ */
 const battQ=ref(''),battPill=ref('');
@@ -9466,9 +9466,9 @@ const allStatus=computed(()=>[{v:'created',l:'已创建'},{v:'pickup',l:'待绑�
 const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'已到期'},{v:'breach',l:'违约锁单'},{v:'complete',l:'已完成'},{v:'cancelled',l:'已取消'}];
 const paySts=computed(()=>[{v:'pending',l:'待支付'},{v:'processing',l:'支付中'},{v:'paid',l:'已支付'},{v:'refunding',l:'退款中'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}]);
 const demoPayStsFixed=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
-const quickPills=computed(()=>[{l:'全部',v:''},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'已到期'}]);
+const quickPills=computed(()=>[{l:'全部',v:''},{v:'pickup',l:'待绑定'},{v:'progress',l:'租赁中'},{v:'return',l:'即将到期'},{v:'overdue',l:'已到期'},{v:'breach',l:'违约锁单'}]);
   /* 计数口径：各状态订单总量，不受筛选条件与搜索词影响（筛选/搜索只改变下方列表） */
-  const qCnt=computed(()=>{const base=demoListEmpty.value?[]:orders.value;const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0}});
+  const qCnt=computed(()=>{const base=demoListEmpty.value?[]:orders.value;const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0,breach:m['breach']||0}});
 const typePills=computed(()=>[{l:'全部',v:''},{v:'vehicle',l:'车辆租赁'},{v:'battery',l:'电池租赁'},{v:'package',l:'套餐'}]);
 const typeCnt=computed(()=>{const m={};orders.value.forEach(o=>{const ty=o.type||'vehicle';m[ty]=(m[ty]||0)+1});return{'':orders.value.length,vehicle:m['vehicle']||0,battery:m['battery']||0,package:m['package']||0}});
 function fmtYmd(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
@@ -9496,6 +9496,11 @@ function parseYmd(s){
 function ymdFromParts(t){return t.year+'-'+p2(t.month)+'-'+p2(t.day)}
 var _ordDateDef=defaultOrdersDateRange();
 var _roDateDef=defaultRechargeDateRange();
+/* 订单状态来源：'pill'=快捷筛选 chips 写入 / 'fs'=「全部筛选」弹窗写入。
+   用于「chips 选中不写入弹窗」：打开弹窗时若状态来自 chips 则状态组不预选（其余来源照旧预选）。
+   touched=本次弹窗内是否动过状态组：未动过则「确定」沿用 chips 状态（否则会因未预选而误清状态） */
+const ordersStFrom=ref('');
+const ordersStTouched=ref(false);
 const ordersFsSt=ref(''),ordersFsPay=ref(''),ordersFsPaySt=ref(''),ordersFsStart=ref(_ordDateDef.start),ordersFsEnd=ref(_ordDateDef.end);
 const ordersFsStC=ref(''),ordersFsPayC=ref(''),ordersFsPayStC=ref(''),ordersFsStartC=ref(_ordDateDef.start),ordersFsEndC=ref(_ordDateDef.end);
 const ordersDatePicker=ref(null);
@@ -9507,9 +9512,10 @@ const ordersDateDays=computed(()=>{
   const last=new Date(y,m,0).getDate();
   return Array.from({length:last},(_,i)=>i+1);
 });
-/* 高亮口径：任一非时间条件生效，或创建时间区间偏离默认（近一个月）时点亮 */
+/* 高亮口径：只看弹窗筛选项与创建时间区间；快捷 chips 写入的状态（ordersStFrom==='pill'）不计入 */
 const ordersHasF=computed(()=>{
-  if(ordersFsSt.value||ordersFsPay.value||ordersFsPaySt.value)return true;
+  if(ordersFsPay.value||ordersFsPaySt.value)return true;
+  if(ordersFsSt.value&&ordersStFrom.value!=='pill')return true;
   var s=ordersFsStart.value,e=ordersFsEnd.value;
   if(!s||!e)return false;
   return s!==_ordDateDef.start||e!==_ordDateDef.end;
@@ -9957,7 +9963,9 @@ var opRecords=computed(function(){
 });
 
 function ordersOpenFS(){
-  ordersFsStC.value=ordersFsSt.value;
+  /* 快捷 chips 选中的状态不写入弹窗：来自 chips 时状态组不预选；来自弹窗自身或初始态则照旧回填 */
+  ordersFsStC.value=ordersStFrom.value==='pill'?'':ordersFsSt.value;
+  ordersStTouched.value=false;
   ordersFsPayC.value=ordersFsPay.value;
   ordersFsPayStC.value=ordersFsPaySt.value;
   var def=defaultOrdersDateRange();
@@ -9974,6 +9982,13 @@ function ordersSetPill(v){
   ordersPill.value=v;
   ordersFsSt.value=v;
   ordersFsStC.value=v;
+  ordersStFrom.value='pill';
+  ordersStTouched.value=false;
+}
+/* 弹窗内点选订单状态（草稿态 + 标记已触碰：确定时以弹窗选择为准） */
+function ordersPickSt(v){
+  ordersFsStC.value=ordersFsStC.value===v?'':v;
+  ordersStTouched.value=true;
 }
 function ordersPillActive(p){
   if(!ordersFsSt.value)return p.v==='';
@@ -9988,6 +10003,7 @@ function ordersTypeActive(p){
 }
 function ordersResetFS(){
   ordersFsStC.value='';
+  ordersStTouched.value=true;/* 重置=明确清空意图，确定时以弹窗（空）为准 */
   ordersFsPayC.value='';
   ordersFsPayStC.value='';
   var def=defaultOrdersDateRange();
@@ -9999,7 +10015,8 @@ function ordersApplyFS(){
   if(s&&e&&s>e){var t=s;s=e;e=t}
   ordersFsStartC.value=s;
   ordersFsEndC.value=e;
-  ordersFsSt.value=ordersFsStC.value;
+  /* 未触碰状态组且状态来自 chips → 沿用 chips 状态（弹窗未表达状态意图，不因「未预选」而误清） */
+  if(ordersStTouched.value||ordersStFrom.value!=='pill'){ordersFsSt.value=ordersFsStC.value;ordersStFrom.value=ordersFsSt.value?'fs':''}
   ordersFsPay.value=ordersFsPayC.value;
   ordersFsPaySt.value=ordersFsPayStC.value;
   ordersFsStart.value=s;
@@ -10010,6 +10027,8 @@ function ordersApplyFS(){
 function ordersClearFilters(){
   ordersQ.value='';
   ordersPill.value='';
+  ordersStFrom.value='';
+  ordersStTouched.value=false;
   ordersFsSt.value='';ordersFsPay.value='';ordersFsPaySt.value='';
   ordersFsStart.value='';ordersFsEnd.value='';
   ordersFsStC.value='';ordersFsPayC.value='';ordersFsPayStC.value='';
@@ -11237,7 +11256,7 @@ orders,allStatus,demoAllStatus,paySts,demoPayStsFixed,filteredDemoPaySts,quickPi
 ordersType,typePills,typeCnt,ordersSetType,ordersTypeActive,
 ordersEntry,ordersPlaceholder,ordersLName,ordersListTitle,orderEntries,homeOpenOrders,closeOrderList,
 batteries,battQ,battPill,battPills,battPillCnt,batterFiltered,curBatt,battDoSearch,battOpenDetail,battMod,battDischarge,battModTitle,battModDesc,battOpenDischarge,battOpenReportLost,battConfirmMod,openBattLocation,loadBattLocData,battLocLoading,battLocFocus,battLocAddressFull,battLocAddressShort,battLocDistM,battLocWalkMin,battLocBattPt,battLocUserPt,battLocFocusUser,battLocFocusBattery,battLocOpenNav,openBattTrack,battTrackStart,battTrackEnd,battTrackDraft,battTrackTimePicker,battTrackLoading,battTrackPoints,battTrackWheelDay,battTrackWheelMonth,battTrackWheelYear,battTrackWheelHour,battTrackWheelMin,battTrackDays,battTrackMonths,battTrackYears,battTrackHours,battTrackMins,battTrackStartLabel,battTrackEndLabel,battTrackPois,battTrackPolyline,battTrackStartPt,battTrackEndPt,openBattTrackTimePicker,cancelBattTrackTimePicker,confirmBattTrackTimePicker,onBattTrackWheelScroll,battShowFS,battFsModelC,battFsOnlineC,battFsLostC,battHasF,battFsModels,battOpenFS,battToggleFSModel,battToggleFSOnline,battToggleFSLost,battResetFS,battApplyFS,battClearFilters,battSetPill,battView,battToggleView,battMapBatteries,battNoLocationCount,battMapSelected,battMapSelectedBatt,battMapSelect,battMapPinStyle,battCluster,battEditModel,openBattEdit,saveBattEdit,battMoreOpen,battAddModel,battAddNo,battModelQ,battModels,battShowModelSheet,battFilteredModels,canBattSubmit,pickBattModel,openBattAdd,closeBattAdd,submitBattAdd,scanBattNo,scanTarget,scanFrom,vehListScan,battListScan,
-ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
+ordersStFrom,ordersStTouched,ordersFsSt,ordersFsPay,ordersFsPaySt,ordersFsStart,ordersFsEnd,ordersFsStC,ordersFsPayC,ordersFsPayStC,ordersFsStartC,ordersFsEndC,ordersHasF,
 ordersDatePicker,ordersDateDraft,ordersDateYears,ordersDateDays,ordersDateWheelYear,ordersDateWheelMonth,ordersDateWheelDay,
 openOrdersDatePicker,cancelOrdersDatePicker,confirmOrdersDatePicker,onOrdersDateWheelScroll,
 do_,dSt,dPm,dCanceledPaid,dPaySt,demoOpsActive,payStatus,showPaid,refundable,showActions,showPrimaryAction,showDangerAction,showOrderActionsBar,opRecords,feeRows,feeSummary,payChannelsText,feeChannelBreakdown,feeRentOpen,feeDepOpen,feeTotalOpen,feeRowOpen,feeRowBreakdown,feeRowChannel,feeRowOnlyOffline,feeAskAction,feeMoreRow,openRowMore,feeActiveIdx,feeActiveRow,feeActiveRealIdx,feeRowTabLabel,feeStatRows,feeStatAgg,feeStatChannels,
@@ -11248,7 +11267,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDeta
  openRefund,refundChClamp,refundChBlur,submitRefund,refundSaving,
   autoRenew,toggleAutoRenew,dHasRealName,demoSetRealName,demoRenewScenes,demoRenewSceneK,demoRenewSceneKey,demoSetRenewScene,openRefundRecords,curRefunds,refundStLabel,refundStg,refundSourceLabel,rentItems,depositItems,refundRecordsOpenable,refRecOpen,
   depositOf,chLabel,rentPlanText,rentEndOf,psAllocText,buildSplit,showPaySplit,psTab,showMoreActions,psConfirmMod,psDoSubmit,psRent2c2p,psRentWallet,psRentOffline,psDep2c2p,psDepWallet,psDepOffline,psReason,applySplit,openPaySplit,submitPaySplit,psRentPart,psDepPart,psRentSum,psDepSum,psRentValid,psDepValid,psValid,psRentErr,psDepErr,psRentDiff,psDepDiff,canPriceOperate,psActiveChannel,splitPartView,splitPartText,
- ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
+ ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPickSt,ordersPillActive,ordersClearFilters,ordersSyncPillFromStatus,ordersSaving,
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,navOpen,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
   curStore,menuGroups,openMenu,stores,doSwitch,orderStoreNameOf,orderPaidAmountOf,orderUnpaidAmountOf,shopPickTarget,shopPickQ,shopPickList,shopPickCurId,openShopPick,closeShopPick,pickShop,
