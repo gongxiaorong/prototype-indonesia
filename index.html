@@ -8721,7 +8721,8 @@ let pressTimer=null,pressStart=0;const PRESS_DURATION=1500;
 const vehModels=[{name:'雅迪 E-Bike Pro',protocolType:'HTTP'},{name:'雅迪 City Cruiser',protocolType:'TCP'},{name:'雅迪 Mountain X',protocolType:'HTTP'}];
 const vehQ=ref(''),vehPill=ref(''),vehFsModel=ref(''),vehFsOnline=ref(null),vehFsLost=ref(null),vehFsModelC=ref(''),vehFsOnlineC=ref(null),vehFsLostC=ref(null);
 const vehView=ref('list'),mapSelectedVin=ref(null);
-const vehHasF=computed(()=>!!vehFsModel.value||vehFsOnline.value!==null||vehFsLost.value!==null||!!vehPill.value);
+/* 高亮口径：只看弹窗筛选条件；快捷 chips（vehPill）不参与，避免筛选图标与快捷筛选联动 */
+const vehHasF=computed(()=>!!vehFsModel.value||vehFsOnline.value!==null||vehFsLost.value!==null);
 const pills=computed(()=>[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'}]);
 const pillCnt=computed(()=>{const base=demoListEmpty.value?[]:vehicles.value.filter(v=>{if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehFsLost.value!==null&&(v.lost||false)!==vehFsLost.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true});const m={};let n=0;base.forEach(v=>{m[v.status]=(m[v.status]||0)+1;n++});return{'':n,'空闲':m['空闲']||0,'占用中':m['占用中']||0,'租用中':m['租用中']||0}});
 const filtered=computed(()=>demoListEmpty.value?[]:vehicles.value.filter(v=>{if(vehPill.value&&v.status!==vehPill.value)return false;if(vehFsModel.value&&v.model!==vehFsModel.value)return false;if(vehFsOnline.value!==null&&v.online!==vehFsOnline.value)return false;if(vehFsLost.value!==null&&(v.lost||false)!==vehFsLost.value)return false;if(vehQ.value&&!v.vin.toLowerCase().includes(vehQ.value.toLowerCase()))return false;return true}));
@@ -9233,7 +9234,8 @@ const battQ=ref(''),battPill=ref('');
 const battPills=computed(()=>[{l:'全部',v:''},{l:'空闲',v:'空闲'},{l:'占用中',v:'占用中'},{l:'租用中',v:'租用中'}]);
 const battPillCnt=computed(()=>{const base=demoListEmpty.value?[]:batteries.value.filter(b=>{if(battFsModel.value&&b.model!==battFsModel.value)return false;if(battFsOnline.value!==null&&b.online!==battFsOnline.value)return false;if(battFsLost.value!==null&&(b.lost||false)!==battFsLost.value)return false;if(battQ.value){const x=b.battNo+' '+(b.vin||'');if(x.toLowerCase().indexOf(battQ.value.toLowerCase())===-1)return false}return true});const m={};let n=0;base.forEach(b=>{m[b.status]=(m[b.status]||0)+1;n++});return{'':n,空闲:m['空闲']||0,占用中:m['占用中']||0,租用中:m['租用中']||0}});
 const battShowFS=ref(false),battFsModel=ref(''),battFsOnline=ref(null),battFsLost=ref(null),battFsModelC=ref(''),battFsOnlineC=ref(null),battFsLostC=ref(null);
-const battHasF=computed(()=>!!battFsModel.value||battFsOnline.value!==null||battFsLost.value!==null||!!battPill.value);
+/* 高亮口径：只看弹窗筛选条件；快捷 chips（battPill）不参与，避免筛选图标与快捷筛选联动 */
+const battHasF=computed(()=>!!battFsModel.value||battFsOnline.value!==null||battFsLost.value!==null);
 const battFsModels=computed(()=>Array.from(new Set(batteries.value.map(b=>b.model))));
 const batterFiltered=computed(()=>demoListEmpty.value?[]:batteries.value.filter(b=>{if(battPill.value&&b.status!==battPill.value)return false;if(battFsModel.value&&b.model!==battFsModel.value)return false;if(battFsOnline.value!==null&&b.online!==battFsOnline.value)return false;if(battFsLost.value!==null&&(b.lost||false)!==battFsLost.value)return false;if(battQ.value){const x=b.battNo+' '+(b.vin||'');if(x.toLowerCase().indexOf(battQ.value.toLowerCase())===-1)return false}return true}));
 const curBatt=ref(null);
