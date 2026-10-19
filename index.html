@@ -1334,11 +1334,8 @@ body.host-single-m #root-user{display:none}
 <span v-for="(h,i) in poiHistory" :key="'ph'+i" data-cp @click="poiQuery=h" class="rounded-2xl px-3.5 py-[7px] text-[13px] cursor-pointer" style="background:#F2F3F5;color:#333" :data-od-id="'poi-history-'+i">{{ h }}</span>
 </div>
 </div>
-<!-- 区块标题 + 当前位置（对标换电端 .sp-sec / .sp-loc） -->
+<!-- 当前位置（对标换电端 .sp-loc；原「附近充电桩、门店」区块标题已移除） -->
 <template v-if="!poiQuery.trim()">
-<div class="flex items-center mx-0.5 mb-2.5">
-<span class="text-[13px]" style="color:#999">附近充电桩、门店</span>
-</div>
 <div class="flex items-center gap-1.5 mb-3" data-od-id="poi-search-loc">
 <span class="shrink-0 flex items-center" style="color:#333" v-html="luci('crosshair','w-4 h-4')"></span>
 <span class="flex-1 min-w-0 text-[13px] truncate" style="color:#999"><em class="not-italic font-bold" style="color:#111">{{ uLocReady?poiLoc:'未获取到您的位置信息' }}</em></span>
