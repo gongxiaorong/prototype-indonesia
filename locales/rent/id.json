@@ -423,7 +423,7 @@
       "returnReminder": "Sisa 7 hari masa sewa, silakan kembalikan ke toko tepat waktu",
       "billHourly": "Dibebankan per Jam",
       "renewRules": {
-        "1": "Perpanjangan otomatis aktif secara default dan biaya perpanjangan dipotong dari saldo dompet; sistem akan memulai pemotongan otomatis sebelum jatuh tempo: {n} menit sebelum jatuh tempo untuk pesanan sewa per jam, dan {n} hari sebelum jatuh tempo untuk pesanan lainnya.",
+        "1": "Perpanjangan otomatis aktif secara default dan biaya perpanjangan dipotong dari saldo dompet; sistem akan memulai pemotongan otomatis sebelum jatuh tempo: {n} menit sebelum jatuh tempo untuk paket sewa per jam, dan {n} hari sebelum jatuh tempo untuk paket sewa lainnya.",
         "2": "Sistem akan mencoba pemotongan paling banyak {n} kali. Jika pemotongan berhasil, perpanjangan berlaku dan pesanan diperpanjang otomatis; jika semua percobaan pemotongan gagal, perpanjangan otomatis pesanan akan dihentikan.",
         "3": "Jika perpanjangan otomatis gagal, Anda dapat membuka detail pesanan untuk mengajukan perpanjangan secara manual; jenis dan status pesanan yang dapat diperpanjang mengikuti konfigurasi toko, dan pesanan perpanjangan yang belum dibayar harus dilunasi terlebih dahulu."
       },
@@ -662,7 +662,7 @@
       "orderConsume": "Pengeluaran Pesanan"
     },
     "store": {
-      "namePlaceholder": "Masukkan nama toko",
+      "namePlaceholder": "Cari toko",
       "navToStore": "Navigasi ke Toko",
       "empty": "Tidak ada toko",
       "businessHours": "Jam operasional {hours}",
@@ -825,8 +825,8 @@
       "needOrderStatus": "Pilih minimal satu status pesanan yang boleh diperpanjang",
       "needOrderType": "Pilih minimal satu tipe pesanan untuk perpanjangan otomatis",
       "cancelSuccess": "Perpanjangan dibatalkan",
-      "beforeDueAutoDays": "Perpanjang otomatis {n} hari sebelum jatuh tempo untuk pesanan lainnya",
-      "beforeDueAutoMinutes": "Perpanjang otomatis {n} menit sebelum jatuh tempo untuk pesanan sewa per jam",
+      "beforeDueAutoDays": "Perpanjang otomatis {n} hari sebelum jatuh tempo untuk paket sewa lainnya",
+      "beforeDueAutoMinutes": "Perpanjang otomatis {n} menit sebelum jatuh tempo untuk paket sewa per jam",
       "realNameTip": "Saat diaktifkan, pengguna harus memilih informasi identitas terverifikasi saat checkout, atau pesanan tidak dapat dikirim"
     },
     "profile": {

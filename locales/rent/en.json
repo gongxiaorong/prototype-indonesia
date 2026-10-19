@@ -423,7 +423,7 @@
       "returnReminder": "7 days left in the rental period, please return to the store on time",
       "billHourly": "Billed Hourly",
       "renewRules": {
-        "1": "Auto renewal is enabled by default and the renewal fee is deducted from the wallet balance; the system initiates the charge automatically before the due date: {n} minutes before the due date for hourly orders, and {n} days before the due date for other orders.",
+        "1": "Auto renewal is enabled by default and the renewal fee is deducted from the wallet balance; the system initiates the charge automatically before the due date: {n} minutes before the due date for hourly plans, and {n} days before the due date for other plans.",
         "2": "The system attempts the charge at most {n} times. If the charge succeeds, the renewal takes effect and the order is extended automatically; if all charge attempts fail, auto renewal for the order will be terminated.",
         "3": "If auto renewal fails, you can go to the order details page to renew manually; eligible order types and statuses follow the store configuration, and any unpaid renewal order must be paid first."
       },
@@ -662,7 +662,7 @@
       "orderConsume": "Order Expense"
     },
     "store": {
-      "namePlaceholder": "Please enter store name",
+      "namePlaceholder": "Search stores",
       "navToStore": "Navigate to Store",
       "empty": "No Stores",
       "businessHours": "Business hours {hours}",
@@ -825,8 +825,8 @@
       "needOrderStatus": "Select at least one order status allowed to renew",
       "needOrderType": "Select at least one order type for auto renewal",
       "cancelSuccess": "Renewal cancelled",
-      "beforeDueAutoDays": "Auto renew {n} days before due date for other orders",
-      "beforeDueAutoMinutes": "Auto renew {n} minutes before due date for hourly orders",
+      "beforeDueAutoDays": "Auto renew {n} days before due date for other plans",
+      "beforeDueAutoMinutes": "Auto renew {n} minutes before due date for hourly plans",
       "realNameTip": "When enabled, users must select verified identity info at checkout, or the order cannot be submitted"
     },
     "profile": {

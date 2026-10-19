@@ -653,7 +653,7 @@ body.host-single-m #root-user{display:none}
 <div class="px-4 py-3 shrink-0" data-page-node-id="eF0mBtfXSlkExZi7aNm0Ob">
 <div class="store-search-box" data-page-node-id="SW8CFv15oTXDgkuKQYxKHX">
 <span v-html="luci('search','w-4 h-4 text-[#999]')" data-page-node-id="FHMrqceyhbaBr2H1xPr0TX"></span>
-<input type="text" v-model="storeSearch" @keydown.enter.prevent="searchStore" @keyup.enter.prevent="searchStore" enterkeyhint="search" placeholder="请输入门店名称" data-page-node-id="gpbV9HIjG3vbIOuMxkPi8u" />
+<input type="text" v-model="storeSearch" @keydown.enter.prevent="searchStore" @keyup.enter.prevent="searchStore" enterkeyhint="search" placeholder="搜索门店" data-page-node-id="gpbV9HIjG3vbIOuMxkPi8u" />
 </div>
 </div>
 <div class="ptr-indicator" id="ptr-store" data-page-node-id="1XxDGx7vQhFFGfSnhSpBxd"><span class="ptr-text" data-page-node-id="dhlC6JgHzP1jTYovG2mQ34">下拉刷新</span></div>
@@ -6249,23 +6249,51 @@ body.host-single-m #root-user{display:none}
   <!-- 一、订单状态流转 -->
   <div class="od-card">
   <div class="od-sec">订单状态流转</div>
-  <div class="form-row">
-   <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
-    <span>到期前</span>
-    <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.pre" type="number" min="1" @input="cfgErr.pre=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-pre-input"></div>
-    <span>天，自动变更为「即将到期」状态</span>
-   </div>
-   <div v-if="cfgErr.pre" class="form-hint text-[#DC2626]">{{ cfgErr.pre }}</div>
-  </div>
-  <div class="form-row">
-   <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
-    <span>已到期</span>
-    <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.breach" type="number" min="1" @input="cfgErr.breach=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums text-[#DC2626]" data-od-id="cfg-breach-input"></div>
-    <span>天，自动变更为「违约锁单」状态</span>
-   </div>
-   <div v-if="cfgErr.breach" class="form-hint text-[#DC2626]">{{ cfgErr.breach }}</div>
-  </div>
+  <div class="text-sm font-semibold text-[#333]">时租方案</div>
   <div class="od-indent">
+   <div class="form-row">
+    <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
+     <span>到期前</span>
+     <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.hourPre" type="number" min="0" max="60" @input="cfgErr.hourPre=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-hour-pre-input"></div>
+     <span>分钟，自动变更为「即将到期」状态</span>
+    </div>
+    <div v-if="cfgErr.hourPre" class="form-hint text-[#DC2626]">{{ cfgErr.hourPre }}</div>
+   </div>
+   <div class="form-row">
+    <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
+     <span>已到期</span>
+     <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.hourBreach" type="number" min="0" max="60" @input="cfgErr.hourBreach=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-hour-breach-input"></div>
+     <span>分钟，自动变更为「违约锁单」状态</span>
+    </div>
+    <div v-if="cfgErr.hourBreach" class="form-hint text-[#DC2626]">{{ cfgErr.hourBreach }}</div>
+   </div>
+   <div class="flex items-center gap-2 py-1.5 cursor-pointer active:bg-[#F6F7F9] rounded" data-cp @click="cfg.hourLockVehicle=!cfg.hourLockVehicle">
+    <span class="w-[18px] h-[18px] rounded shrink-0 flex items-center justify-center transition-colors" :style="cfg.hourLockVehicle?{background:'var(--accent)',border:'1px solid var(--accent)'}:{background:'#fff',border:'1px solid #CCC'}"><span v-if="cfg.hourLockVehicle" v-html="luci('check','w-3 h-3 text-white')"></span></span>
+    <span class="text-sm font-medium text-[#333]">自动锁车</span>
+   </div>
+   <div class="flex items-center gap-2 py-1.5 cursor-pointer active:bg-[#F6F7F9] rounded" data-cp @click="cfg.hourLockBattery=!cfg.hourLockBattery">
+    <span class="w-[18px] h-[18px] rounded shrink-0 flex items-center justify-center transition-colors" :style="cfg.hourLockBattery?{background:'var(--accent)',border:'1px solid var(--accent)'}:{background:'#fff',border:'1px solid #CCC'}"><span v-if="cfg.hourLockBattery" v-html="luci('check','w-3 h-3 text-white')"></span></span>
+    <span class="text-sm font-medium text-[#333]">自动锁电池</span>
+   </div>
+  </div>
+  <div class="text-sm font-semibold text-[#333]" style="margin-top:18px">其它方案</div>
+  <div class="od-indent">
+   <div class="form-row">
+    <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
+     <span>到期前</span>
+     <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.pre" type="number" min="0" max="365" @input="cfgErr.pre=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-pre-input"></div>
+     <span>天，自动变更为「即将到期」状态</span>
+    </div>
+    <div v-if="cfgErr.pre" class="form-hint text-[#DC2626]">{{ cfgErr.pre }}</div>
+   </div>
+   <div class="form-row">
+    <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
+     <span>已到期</span>
+     <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.breach" type="number" min="0" max="365" @input="cfgErr.breach=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-breach-input"></div>
+     <span>天，自动变更为「违约锁单」状态</span>
+    </div>
+    <div v-if="cfgErr.breach" class="form-hint text-[#DC2626]">{{ cfgErr.breach }}</div>
+   </div>
    <div class="flex items-center gap-2 py-1.5 cursor-pointer active:bg-[#F6F7F9] rounded" data-cp @click="cfg.autoLockVehicle=!cfg.autoLockVehicle">
     <span class="w-[18px] h-[18px] rounded shrink-0 flex items-center justify-center transition-colors" :style="cfg.autoLockVehicle?{background:'var(--accent)',border:'1px solid var(--accent)'}:{background:'#fff',border:'1px solid #CCC'}"><span v-if="cfg.autoLockVehicle" v-html="luci('check','w-3 h-3 text-white')"></span></span>
     <span class="text-sm font-medium text-[#333]">自动锁车</span>
@@ -6323,7 +6351,7 @@ body.host-single-m #root-user{display:none}
      <div class="od-indent-2">
       <div class="form-row">
        <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
-        <span>时租订单到期前</span>
+        <span>时租方案到期前</span>
         <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceMinutes" type="number" min="0" max="60" :disabled="!cfg.renewAuto" @input="cfgErr.renewAdvanceMinutes=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-renew-minutes-input"></div>
         <span>分钟自动续租</span>
        </div>
@@ -6331,7 +6359,7 @@ body.host-single-m #root-user{display:none}
       </div>
       <div class="form-row">
        <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm font-semibold leading-relaxed">
-        <span>其它订单到期前</span>
+        <span>其它方案到期前</span>
         <div class="ff-box mini relative flex items-center w-[60px] shrink-0"><input v-model.number="cfg.renewAdvanceDays" type="number" min="0" max="30" :disabled="!cfg.renewAuto" @input="cfgErr.renewAdvanceDays=''" class="w-full px-2 py-2 text-[15px] font-semibold text-center tabular-nums" data-od-id="cfg-renew-days-input"></div>
         <span>天自动续租</span>
        </div>
@@ -7032,7 +7060,7 @@ var MERGED_REFRESH={fn:null};
 /* 顶层委派件：商户端 setup 内定义真实 publishMerged 并注册句柄；此处让顶层 SYS_* 与用户端调用可用 */
 function publishMerged(){if(MERGED_REFRESH&&MERGED_REFRESH.fn)MERGED_REFRESH.fn();}
 const csList=Vue.ref([]);
-const cfg=Vue.ref({pre:1,breach:3,renewEnabled:true,renewTypes:['VEHICLE','BATTERY','PACKAGE'],renewManual:true,renewStatuses:['IN_USE','TO_RETURN','OVERDUE','BREACH'],renewAuto:true,renewAdvanceMinutes:15,renewAdvanceDays:1,renewRemindDays:1,renewFailThreshold:3,requireRealName:true,autoLockVehicle:true,autoLockBattery:true});
+const cfg=Vue.ref({hourPre:10,hourBreach:10,hourLockVehicle:true,hourLockBattery:true,pre:1,breach:0,autoLockVehicle:true,autoLockBattery:true,renewEnabled:true,renewTypes:['VEHICLE','BATTERY','PACKAGE'],renewManual:true,renewStatuses:['IN_USE','TO_RETURN','OVERDUE','BREACH'],renewAuto:true,renewAdvanceMinutes:10,renewAdvanceDays:0,renewRemindDays:1,renewFailThreshold:10,requireRealName:true});
 const rechargeList=Vue.ref([{id:1,amount:100,giftAmount:10,status:1,remark:'新用户首充优惠'},{id:2,amount:200,giftAmount:30,status:1,remark:'常规定制套餐'},{id:3,amount:500,giftAmount:80,status:1,remark:''}]);
 const rechargeEnabled=Vue.ref(true);
 const rechargeCustom=Vue.ref(true);
@@ -7931,7 +7959,7 @@ const cancelRules='1.订单尚未支付，用户可自行操作取消订单\n2.�
 const noticeRules='1.领取前请检查车辆/电池状态，确认物品状况及性能完好\n2.仅限下单本人领取，不支持代领\n3.车辆/电池损坏需按实际维修费用赔偿\n4.请遵守当地交通法规，安全骑行\n5.库存以门店实际现货为准，建议提前联系门店确认咨询';
 const billingRules='1.租赁开始时间为用户绑定车辆/电池的时间\n2.租金按订单选定的租赁方案（时租、日租、周租、月租）核算\n3.租赁时长不足1个周期的，按1个周期计费';
 const overdueRules='1.请在订单约定时间内归还车辆/电池\n2.若发生逾期归还，商家可选择从押金抵扣逾期产生的相关费用\n3.押金抵扣不足的，商家有权向用户追偿差额\n4.逾期超过约定天数未归还，商家有权对车辆进行远程锁定、对电池限制放电';
-const renewRules='1.自动续租默认开启，续租费用从钱包余额自动扣除；系统将在到期前自动发起扣款：时租订单为到期前 N 分钟，其它订单为到期前 N 天。\n2.系统最多尝试扣款 N 次。扣款成功则续租生效，订单自动延续；若全部扣款尝试均失败，订单自动续租将终止。\n3.自动续租失败后，您可前往订单详情页手动发起续租；可续租的订单类型与状态以门店配置为准，存在未支付的续租单时需先完成支付。';
+const renewRules='1.自动续租默认开启，续租费用从钱包余额自动扣除；系统将在到期前自动发起扣款：时租方案为到期前 N 分钟，其它方案为到期前 N 天。\n2.系统最多尝试扣款 N 次。扣款成功则续租生效，订单自动延续；若全部扣款尝试均失败，订单自动续租将终止。\n3.自动续租失败后，您可前往订单详情页手动发起续租；可续租的订单类型与状态以门店配置为准，存在未支付的续租单时需先完成支付。';
 /* 规则卡片 tab → 文案：订单确认页与订单详情页共用（未知 tab 兜底计费规则） */
 const ruleTexts={notice:noticeRules,billing:billingRules,renew:renewRules,cancel:cancelRules,overdue:overdueRules};
 function rulesOf(tab){return ruleTexts[tab]||ruleTexts.billing}
@@ -10597,7 +10625,7 @@ function onHmWheelScroll(kind,e){
 }
 let delCsI=-1;function delCs(i){if(!can('cs_info.delete')){deny();return}delCsI=i;profileMod.value='delCs'}
 
-var cfgSaving=ref(false);const cfgErr=ref({pre:'',breach:'',renewAdvanceMinutes:'',renewAdvanceDays:'',renewFailThreshold:''});
+var cfgSaving=ref(false);const cfgErr=ref({hourPre:'',hourBreach:'',pre:'',breach:'',renewAdvanceMinutes:'',renewAdvanceDays:'',renewFailThreshold:''});
 const renewTypeOpts=[{v:'VEHICLE',l:'车辆租赁'},{v:'BATTERY',l:'电池租赁'},{v:'PACKAGE',l:'车电套餐'}];
 const renewStatusOpts=[{v:'IN_USE',l:'租赁中'},{v:'TO_RETURN',l:'即将到期'},{v:'OVERDUE',l:'已到期'},{v:'BREACH',l:'违约锁单'}];
 function toggleCfgArr(k,v){var a=cfg.value[k];var i=a.indexOf(v);if(i>=0)a.splice(i,1);else a.push(v);}
@@ -10647,7 +10675,7 @@ const msgSaving=ref(false);
 function toggleMsgChannel(k,v){const ev=msgEventOpts.find(x=>x.k===k);if(ev&&ev.cat&&!msgCfg.value.cats[ev.cat])return;const a=msgCfg.value.channel[k];const i=a.indexOf(v);if(i>=0)a.splice(i,1);else a.push(v)}
 /* 保存：本页已无触发时机等可非法输入项（触发规则由订单配置管理），仅走权限校验 + 保存反馈 */
 function saveMsgCfg(){if(!can('message_config.edit')){deny();return}if(msgSaving.value)return;msgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;msgSaving.value=false;toast('配置已保存','success')},400)}
-function saveCfg(){if(!can('order_config.edit')){deny();return}if(cfgSaving.value)return;var e={};if(!Number.isInteger(cfg.value.pre)||cfg.value.pre<1||cfg.value.pre>365)e.pre='请输入 1–365 之间的整数';if(!Number.isInteger(cfg.value.breach)||cfg.value.breach<1||cfg.value.breach>365)e.breach='请输入 1–365 之间的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceMinutes)||cfg.value.renewAdvanceMinutes<0||cfg.value.renewAdvanceMinutes>60))e.renewAdvanceMinutes='请输入0-60的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceDays)||cfg.value.renewAdvanceDays<0||cfg.value.renewAdvanceDays>30))e.renewAdvanceDays='请输入0-30的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewFailThreshold)||cfg.value.renewFailThreshold<0||cfg.value.renewFailThreshold>10))e.renewFailThreshold='请输入0-10的整数';cfgErr.value=e;if(e.pre||e.breach||e.renewAdvanceMinutes||e.renewAdvanceDays||e.renewFailThreshold)return;if(cfg.value.renewAuto&&!cfg.value.renewTypes.length){toast('请至少选择一种自动续租订单类型','warn');return}if(cfg.value.renewEnabled&&!cfg.value.renewStatuses.length){toast('请至少选择一种允许续租的订单状态','warn');return}cfgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('配置已保存','success');cfgSaving.value=false},400)}
+function saveCfg(){if(!can('order_config.edit')){deny();return}if(cfgSaving.value)return;var e={};if(!Number.isInteger(cfg.value.hourPre)||cfg.value.hourPre<0||cfg.value.hourPre>60)e.hourPre='请输入 0–60 之间的整数';if(!Number.isInteger(cfg.value.hourBreach)||cfg.value.hourBreach<0||cfg.value.hourBreach>60)e.hourBreach='请输入 0–60 之间的整数';if(!Number.isInteger(cfg.value.pre)||cfg.value.pre<0||cfg.value.pre>365)e.pre='请输入 0–365 之间的整数';if(!Number.isInteger(cfg.value.breach)||cfg.value.breach<0||cfg.value.breach>365)e.breach='请输入 0–365 之间的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceMinutes)||cfg.value.renewAdvanceMinutes<0||cfg.value.renewAdvanceMinutes>60))e.renewAdvanceMinutes='请输入0-60的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewAdvanceDays)||cfg.value.renewAdvanceDays<0||cfg.value.renewAdvanceDays>30))e.renewAdvanceDays='请输入0-30的整数';if(cfg.value.renewAuto&&(!Number.isInteger(cfg.value.renewFailThreshold)||cfg.value.renewFailThreshold<0||cfg.value.renewFailThreshold>10))e.renewFailThreshold='请输入0-10的整数';cfgErr.value=e;if(e.hourPre||e.hourBreach||e.pre||e.breach||e.renewAdvanceMinutes||e.renewAdvanceDays||e.renewFailThreshold)return;if(cfg.value.renewAuto&&!cfg.value.renewTypes.length){toast('请至少选择一种自动续租订单类型','warn');return}if(cfg.value.renewEnabled&&!cfg.value.renewStatuses.length){toast('请至少选择一种允许续租的订单状态','warn');return}cfgSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;toast('配置已保存','success');cfgSaving.value=false},400)}
 /* ══ 充值配置 ══ */
 
 
