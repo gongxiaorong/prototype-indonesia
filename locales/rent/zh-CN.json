@@ -519,7 +519,7 @@
       }
     },
     "search": {
-      "placeholder": "搜索目的地",
+      "placeholder": "搜索地点",
       "history": "搜索历史",
       "nearby": "附近充电桩、门店",
       "relocate": "重新定位",

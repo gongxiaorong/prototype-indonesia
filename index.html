@@ -925,7 +925,7 @@ body.host-single-m #root-user{display:none}
 <!-- POI 搜索（参考高德布局：地图顶部悬浮圆角搜索条，点击进入 POI 搜索页） -->
 <div data-cp @click.stop="openPoiSearch()" class="absolute left-3 right-3 top-[50px] z-[30] h-10 bg-white rounded-full flex items-center gap-2.5 px-3.5 cursor-pointer active:opacity-95 transition-opacity" style="box-shadow:0 4px 16px rgba(0,0,0,.16)" data-od-id="home-poi-search">
 <span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-[18px] h-[18px]')"></span>
-<span class="flex-1 min-w-0 text-[13px] truncate" style="color:#8A9999">搜索目的地</span>
+<span class="flex-1 min-w-0 text-[13px] truncate" style="color:#8A9999">搜索地点</span>
 </div>
 <!-- 定位到当前位置 + 充电桩列表入口（列表入口在定位 Fab 下方，点击打开「附近充电桩」列表页） -->
 <div class="absolute right-3 bottom-[68px] z-[25] flex flex-col gap-2.5" data-od-id="home-charge-side-actions">
@@ -1313,13 +1313,13 @@ body.host-single-m #root-user{display:none}
 </kv-card>
 </bottom-sheet>
 
-<!-- POI 搜索页（对标换电端「搜索目的地」：无独立标题行，返回键与搜索条同处导航栏；无关键词=搜索历史 + 附近充电桩、门店，有关键词=结果列表） -->
+<!-- POI 搜索页（对标换电端「搜索地点」：无独立标题行，返回键与搜索条同处导航栏；无关键词=搜索历史 + 附近充电桩、门店，有关键词=结果列表） -->
 <page :open="showPoiSearch" :z="1920" trans="fd" oid="poi-search-page" :swipe-close="navBack">
 <div class="shrink-0 flex items-center gap-2.5 pt-[52px] px-3.5 pb-3" style="background:#F7F8FA">
 <div data-cp @click="navBack()" class="w-8 h-8 shrink-0 flex items-center justify-center cursor-pointer" style="color:#111" data-od-id="poi-search-back"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
 <div class="flex-1 min-w-0 flex items-center gap-2 h-[38px] bg-white rounded-[19px] px-3.5" style="border:1px solid #EDEDED" data-od-id="poi-search-bar">
 <span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-4 h-4')"></span>
-<input v-model="poiQuery" type="text" enterkeyhint="search" placeholder="搜索目的地" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="poi-search-input" @keyup.enter="poiSearchEnter()">
+<input v-model="poiQuery" type="text" enterkeyhint="search" placeholder="搜索地点" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="poi-search-input" @keyup.enter="poiSearchEnter()">
 <span v-if="poiQuery" data-cp @click="poiQuery=''" class="shrink-0 flex items-center cursor-pointer" style="color:#C4C4C4" data-od-id="poi-search-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
 </div>
 </div>
@@ -7513,7 +7513,7 @@ function chargeFocusUser(){
 }
 function openChargeNav(){closeChargeDevice();storeNavSheet.value=true}
 function openChargeScan(){scanCtx.value='charge';navOpen('scan')}
-/* ══ POI 搜索（首页地图顶部搜索条 → 「搜索目的地」页，对标换电端同名页面） ══
+/* ══ POI 搜索（首页地图顶部搜索条 → 「搜索地点」页，对标换电端同名页面） ══
    门店在原型里无真实距离，按门店列表顺序取固定演示距离，保证「附近」排序稳定。 */
 const showPoiSearch=ref(false);
 const poiQuery=ref('');
@@ -7531,7 +7531,7 @@ const poiResult=computed(function(){
   const list=q?out.filter(function(p){return (p.name+' '+p.sub).toLowerCase().indexOf(q)>=0}):out;
   return list.slice().sort(function(a,b){return (a.dist||0)-(b.dist||0)});
 });
-/* 「搜索目的地」POI 库（对标换电端 POIS）：触发了搜索时返回的是地图地点，而非充电桩 / 门店；距离用米数交给 fmtDist */
+/* 「搜索地点」POI 库（对标换电端 POIS）：触发了搜索时返回的是地图地点，而非充电桩 / 门店；距离用米数交给 fmtDist */
 const POI_POIS=[
   {id:'poi1',name:'博雅城市广场',addr:'成都市-双流区-高新区新裕路与雅和北二路交汇',dist:131},
   {id:'poi2',name:'博雅城市广场-B栋',addr:'成都市-双流区-雅和北三路蒂梵尼TOWN东北侧',dist:73},
