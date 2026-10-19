@@ -4,12 +4,77 @@
 
 ---
 
+## 0. 执行与交付
+
+> 本节规定 Agent 每次任务的作业方式（流程与交付口径）；技术细则见 §1–§8，本节只讲怎么干、怎么验、怎么汇报。
+
+### 0.1 开工前
+
+- **先确认目标文件**：`index.html`（租车，唯一权威产物）与 `swap.html`（换电）互不代表对方——除非当次需求明确指派，否则不改 `swap.html`，也不以「对齐换电」为由顺手同步。
+- 先读相关代码与本节规则，再动手；不确定的业务规则先问，不自行假设。
+- 先判断改动性质（结构性 / 纯值，见 0.3），据此决定验证档位。
+
+### 0.2 改动原则
+
+- 最小必要改动；不顺手重构、不顺手归一（z-index、`mask-z`、未归一的滚动区、未统一的视觉细节均属可见变化，须单独决策）。
+- 复用共享组件与 token，禁止手写同形态标记（§3）；文案保持中文字面量、不引入 `t()` 调用（§5）。
+- 不新增依赖、不新增持久化（唯一例外 `yadea:notify-prefs`，§1）。
+
+### 0.3 验证分档
+
+| 档 | 触发条件 | 要求 |
+| --- | --- | --- |
+| ① 结构性 / 交互性 | 模板结构、状态、事件、新增弹窗、导航、数据源切换 | 静态自检（§6.1–6.3）+ **必须 Playwright 实机操作并截图** |
+| ② 纯值 / 文案 | 颜色 / 字号 / 间距 / 文案替换、删除纯展示节点 | 静态自检 + 关键断言，不启浏览器 |
+| ③ 用户指定免验 | 用户明确说「不用验 / 只看代码」 | 仅静态检查 |
+
+临时脚本、本地服务器一律用完关闭清理，不留未提交的散落文件（§8）。
+
+### 0.4 汇报格式
+
+改了哪些文件 / 解决什么问题 / 采用什么方案与取舍 / 执行了哪些验证及结果 / 未解决项与风险；涉及 `swap.html` 的改动**分开说明**（§1）。
+
+### 0.5 提交信息
+
+`ui(<scope>): <中文摘要>` + 括号要点列表，沿用既有惯例（scope 取 `git log` 现有缩写，如 `user` / `mc` / `veh` / `order`）：
+
+```
+ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页搜索条 / POI 搜索页 placeholder 及注释，rent 五语同步）
+```
+
+中文提交信息可直接 `git commit -m`（实测 UTF-8 无乱码）。
+
+---
+
 ## 1. 权威源与构建红线
 
 - `index.html` 是唯一权威源，直接手改。
 - `locales/rent/*.json`（租车）、`locales/swap/*.json`（换电）是唯一文案源；新增/变更文案一律同步进对应目录，**但 HTML 中不写 `t()` 调用**（文案源与源码分离，见 §5）。
 - 版本控制：改完必须自检（见 §6）；`swap.html` 的独立改动与 `index.html` 分开说明。
 - **持久化唯一特例**：全项目只允许一处 `localStorage` —— 键 `yadea:notify-prefs`（用户端消息通知偏好：总开关 / 分类渠道；**系统通知权限态为内存态、不入持久化**——仅由三级页「手机系统通知」开关驱动（原型操作面板入口已下线））。读写**只走** `loadNotifyPrefs()` / `saveNotifyPrefs()` 单一出口，解析异常静默回落默认值。其余任何状态一律内存态，**禁止新增 localStorage**（换电端 `swap.html` 同口径，当前 0 处）。
+
+### 禁止事项集中清单（全项目红线）
+
+以下各条均为现有规则的汇总，**不做新增**；细则以对应章节正文为准。
+
+| 禁止 | 替代做法 | 依据 |
+| --- | --- | --- |
+| 新增 `localStorage` 或其他持久化 | 一律内存态；唯一例外 `yadea:notify-prefs`，且读写只走 `loadNotifyPrefs()` / `saveNotifyPrefs()` | §1 |
+| 在 HTML 中写 `t('key')` 调用或内联译文字符串 | 保持中文字面量，文案改到 `locales/rent|swap/*.json` | §5 |
+| 「为了能取到值」反向改写取值方式 | 同上，文案源与源码分离，禁止反向适配 | §5 |
+| 数字后缀 key（`menu.home0` 类） | 指向已有语义化 key，或新建语义 key 并补三/五语 | §5 |
+| 机翻直接入库、中文常驻译文 | 先写源语言值占位，再显式翻译 | §5 |
+| PascalCase 组件标签、自闭合 `/>` | kebab-case + 显式闭合 `</xxx>` | §2.1 / §2.2 |
+| 自定义指令写内联调用表达式（`v-swipe-close="$emit('close')"`） | 一律传函数 | §2.4 |
+| `:title="中文"` | 纯文本用静态属性，仅表达式加 `:` | §2.6 |
+| 手写 `mr-8` 补偿式顶栏 | 一律用 `nav-bar`（双图标传 `right-wide`） | §3 |
+| 手写同形态标记：`transition name="sl"` 壳、`fd/sh` + 遮罩 + `bottom-0` 面板、`justify-between` 紧凑 KV 行、`w-16/w-20` 定宽行 | 用 `<page>` / `bottom-sheet` / `option-sheet` / `kv-card` / `kv-row` | §3 |
+| 弹窗组件声明 `open: Boolean` | `open` 只声明无类型 + `default:false` | §3 |
+| sheet 内容行（含滚动区底部）自带 `pb-6/7/8` | 底距统一由面板 token 24px / safe-area 提供 | §3 |
+| 禁用态用 `opacity` / 内联 `pointerEvents` / `#F0F1F3` | `:disabled` → `.ff-box.is-disabled`（`#E7E9EC`） | §3 |
+| 弹窗内表单套 `.form-card` 白卡 | `form-field` + `box-class="ff-box-gray"` | §3 |
+| 顺手归一 z-index / `mask-z` | 沿用原层级（`mask-z` 不做归一） | §3 |
+| 引入新依赖或新构建步骤 | 本项目零构建链路，直接开浏览器运行（§8） | §8 |
 
 ## 2. in-DOM 模板铁律
 
@@ -274,3 +339,26 @@
 | 表单禁用态看不出区别 | 旧写法 `opacity`/`#F0F1F3` 与正常灰底几乎同色 | 禁用态一律 `disabled` → `.ff-box.is-disabled`（`#E7E9EC` 深灰，§3 form-field） |
 | 写了 `bare` 却没生效（被套成白底卡） | 裸属性值为空串 `''`（falsy） | 组件内按三态判定 `b===''?true:!!b`（同 kv-row 的 `divider`，§3 form-field） |
 | 胶囊组被套成白底卡 | 未传 `bare`，默认渲染 `.ff-box` | 成组选择（胶囊/chip）一律 `<form-field ... bare>`（§3 form-field） |
+
+## 8. 命令与环境
+
+**无构建链路**：无 `package.json`、无 npm 脚本、无打包 / typecheck；两端产物直接浏览器打开即可运行（CDN Vue3 生产构建 + UnoCSS 运行时）。自检口径见 §6，**不要臆造 npm / lint 脚本**；编辑器诊断可作辅助，不作判据。
+
+| 用途 | 命令 |
+| --- | --- |
+| 本地静态服务（跑截图脚本时需要） | 仓库根目录 `python -m http.server 8137`（租车）/ `8139`（商户，端口见脚本 docstring） |
+| i18n 校验 | `node scripts/i18n_check.mjs`（按 `rent/`、`swap/` 分组输出 MISSING / ORPHAN / PLACEHOLDER / SUFFIX，另含按中文值锚定的跨目录 `TERM` 硬校验，计入退出码） |
+| i18n 翻译对照表 | `node scripts/i18n_reference.mjs` → 仓库根 `<目录名>-translation-reference.html` |
+| SOP 截图（Playwright） | `python scripts/shoot-rental-sop.py`（`#root-user`）/ `python scripts/shoot-merchant-sop.py`（`#root-merchant`）→ `docs/*-sop/images/*.png` |
+
+**无数据库、无接口、无环境变量**：纯前端假数据原型，不得引入迁移 / API 错误码 / 依赖升级等流程。
+
+**规则与事实分离**（规则写在本文件，逐条明细写在事实文档，**勿把明细复制回来**）：
+
+| 文件 | 内容 |
+| --- | --- |
+| `i18n-cross-drift.md` | 跨目录（rent ↔ swap）译法漂移逐条明细 + 裁决栏 |
+| `i18n-internal-align.md` | 目录内「一句中文一个译法」对齐清单 |
+| `i18n-key-naming.md` | key 命名规范化规范与明细（通用文案归通用子命名空间） |
+| `notify-events-timing.md` | 消息通知事件清单与时序（用户端，商户端配置页复用同名事件） |
+| `skills/prototype-sop-authoring/` | SOP 撰写与驱动原型的技能（含 `references/drive-prototype.md`、`references/handbook-conventions.md`） |
