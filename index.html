@@ -10762,10 +10762,10 @@ const msgEventOpts=[
 {k:'orderRefunding',l:'退款处理中',cat:'feeRefund'},
 {k:'orderRefunded',l:'退款成功',cat:'feeRefund'}
 ];
-/* 推送渠道：手机通知（手机系统推送，OS）/ 消息中心（站内消息，CENTER）——每个事件两条可各自独立开关 */
+/* 推送渠道：消息中心（站内消息，CENTER）/ 手机通知（手机系统推送，OS）——每个事件两条可各自独立开关 */
 const msgChannelOpts=[
-{v:'OS',l:'手机通知'},
-{v:'CENTER',l:'消息中心'}
+{v:'CENTER',l:'消息中心'},
+{v:'OS',l:'手机通知'}
 ];
 const msgCfg=ref({
 enabled:true,
