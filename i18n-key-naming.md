@@ -2,6 +2,8 @@
 
 生成日期：2026-09-29　｜　依据：`AGENTS.md` §5（命名空间划分）
 
+> 2026-10-22：`locales/rent/` 已拆分为 `locales/rent-user/`（common+user+demo）与 `locales/rent-merchant/`（common+merchant+demo）；`common.*` / `demo.*` 两端镜像。历史修订条目中的 `locales/rent` 指拆分前目录，**条目内容与键名不回改**。
+
 口径：**通用 UI 文案**（确定 / 至 / 其他 / 取消 / 完成…）应置于 `common` 的**通用子命名空间**（`common.action.*`、`common.label.*`、`common.dateTime.*`、`common.toast.*`、`common.status.*` 等）；**专有文案**才留在 `common.orders.*` / `common.profile.*` / `user.*` / `merchant.*` 等语境位。
 
 判定方法：扫描两端 zh-CN，凡「文案 ∈ 通用词表」却挂在「非通用位」的 key 即候选。跨目录同一中文须合并到**同一个** `common.*` 键（口径 2026-10-14 起改为**按中文值锚定**：两目录只要求同句中文译法一致，键集/键名**不要求互为副本**，见 `i18n-cross-drift.md` 阶段 3）。
@@ -616,3 +618,19 @@
 - **页面注释同步**：页面头注释与 `msgCatOpts` 上方注释补记「大类各占一张独立卡」「关闭时小类块用 `v-if`」口径，删去原「（v-show）」表述。
 - **无键值影响**：纯结构/样式改动，界面文案与 `locales/rent` 五语键值、键数不变。
 - 校验：`node scripts/i18n_check.mjs` 硬错误全 0（MISSING / ORPHAN / PLACEHOLDER / SUFFIX / TERM 均 0）。
+
+### 2026-10-22 修订四十四：i18n 真实接入（目录拆分 + 试点 key 化 + key 体检）
+
+`index.html` 接入 vue-i18n；`locales/rent/` 拆为 `rent-user/`（673 叶子）与 `rent-merchant/`（952 叶子）；试点区段完成 key 化（用户端/商户端登录页、首页、设置/语言页）。
+
+- **重命名 1 条（五语同路径同改、只改键路径不改值、`common.*` 两端同改）**：
+
+  | 旧 key | 新 key | 命中规则 | 目标端 | 理由 |
+  | --- | --- | --- | --- | --- |
+  | `common.label.chargeOrder` | `common.label.rechargeOrder` | R2（键名与值不符） | common（两端同改） | 五语值均为「充值订单 / Recharge Order / Pesanan Isi Ulang / คำสั่งเติมเงิน / 增值訂單」，键名 `chargeOrder`（充电订单）与值语义不符 |
+
+- **保留不改（按既有「改值不改键」口径）**：`common.orderStatus.overdue`（值「已到期」）、`pickup`（「待绑定」）、`return`（「即将到期」）——见修订三十一，状态键名沿用内部枚举语义，历史条目已登记，不重复改名。
+- **归并观察（本阶段不做，避免试点期删键/跨端迁移）**：`merchant.chargingOrder.*` 与 `common.orders.*` / `common.label.*` 同值多键 20 余组、`merchant.chargingDevice.enabled/disabled` 与 `common.status.*`、`user.charge.payTime/refundDetail` 与 `common.orders.*`；留待全量阶段统一处理。
+- **新增键 7 个（五语齐全，2026-10-22 用户确认已复核）**：`common.login.envTitle`（选择环境）、`common.login.register`（注册账号）、`common.toast.codeSent`（验证码已发送）、`common.version.later`（稍后提醒）、`user.login.registerDemo`、`merchant.login.registerDemo`（注册账号（原型演示））、`merchant.home.deviceManagement`（设备管理）。
+- **校验**：`node scripts/i18n_check.mjs` 硬错误全 0（MISSING / ORPHAN / PLACEHOLDER / SUFFIX / TERM / SHARED 均为 0）；`i18n_bundle.mjs` 幂等；`swap/` 未改动。
+- **明细**：`i18n-integration-facts.md`（批次、排除清单）；`i18n-pending-review.md`（新增译文复核记录，7 条均「已复核」）。

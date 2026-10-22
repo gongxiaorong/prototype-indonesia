@@ -1,8 +1,10 @@
 /* i18n 翻译对照表 · 页面运行时（由 scripts/i18n_reference.mjs 内联进产物）
-   读取 window.__I18N_REF__ = { dir, langs:[{code,label,source}], hideable:[code], src } */
+   读取 window.__I18N_REF__ = { dir, dirs:[目录…], langs:[{code,label,source}], hideable:[code], src }
+   dirs 可含多个目录（rent-user + rent-merchant 合并为一张 rent 表）。 */
 (function () {
   var CFG = window.__I18N_REF__ || {};
   var DIR = CFG.dir;
+  var DIRS = CFG.dirs && CFG.dirs.length ? CFG.dirs.slice() : [DIR];
   var LANGS = CFG.langs || [];
   var HIDEABLE = CFG.hideable || [];
   var SRC = CFG.src;
@@ -178,12 +180,24 @@
           return;
         }
         var self = this;
+        /* 每个语言：并发拉取该分组下所有目录，扁平化后合并（共享段值一致，后者覆盖无副作用） */
         var jobs = LANGS.map(function (l) {
-          var url = 'locales/' + DIR + '/' + l.code + '.json';
-          return fetch(url, { cache: 'no-cache' }).then(function (res) {
-            if (!res.ok) throw new Error(l.code + '.json → HTTP ' + res.status);
-            return res.json().then(function (json) { return flatten(json, '', {}); },
-              function () { throw new Error(l.code + '.json 不是合法 JSON'); });
+          var subs = DIRS.map(function (d) {
+            var url = 'locales/' + d + '/' + l.code + '.json';
+            return fetch(url, { cache: 'no-cache' }).then(function (res) {
+              if (!res.ok) throw new Error(d + '/' + l.code + '.json → HTTP ' + res.status);
+              return res.json().then(function (json) { return flatten(json, '', {}); },
+                function () { throw new Error(d + '/' + l.code + '.json 不是合法 JSON'); });
+            });
+          });
+          return Promise.all(subs).then(function (parts) {
+            var merged = {};
+            parts.forEach(function (part) {
+              for (var k in part) {
+                if (Object.prototype.hasOwnProperty.call(part, k)) merged[k] = part[k];
+              }
+            });
+            return merged;
           });
         });
         Promise.all(jobs).then(function (all) {

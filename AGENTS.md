@@ -52,7 +52,8 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 ## 1. 权威源与构建红线
 
 - `index.html` 是唯一权威源，直接手改。
-- `locales/rent/*.json`（租车）、`locales/swap/*.json`（换电）是唯一文案源；新增/变更文案一律同步进对应目录，**但 HTML 中不写 `t()` 调用**（文案源与源码分离，见 §5）。
+- `locales/rent-user/*.json`（租车用户端）、`locales/rent-merchant/*.json`（租车商户端）、`locales/swap/*.json`（换电）是各自权威文案源；新增/变更文案一律同步进对应目录。`index.html` 已接入 vue-i18n（模板 `$t` / JS `t`，见 §5），`swap.html` 仍保持中文字面量。
+- `locales/rent-user/i18n.rent-user.js` 与 `locales/rent-merchant/i18n.rent-merchant.js` 是**生成产物**（`node scripts/i18n_bundle.mjs`），不得手改。
 - 版本控制：改完必须自检（见 §6）；`swap.html` 的独立改动与 `index.html` 分开说明。
 - **持久化唯一特例**：全项目只允许一处 `localStorage` —— 键 `yadea:notify-prefs`（用户端消息通知偏好：总开关 / 分类渠道；**系统通知权限态为内存态、不入持久化**——仅由三级页「手机系统通知」开关驱动（原型操作面板入口已下线））。读写**只走** `loadNotifyPrefs()` / `saveNotifyPrefs()` 单一出口，解析异常静默回落默认值。其余任何状态一律内存态，**禁止新增 localStorage**（换电端 `swap.html` 同口径，当前 0 处）。
 
@@ -63,13 +64,13 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 | 禁止 | 替代做法 | 依据 |
 | --- | --- | --- |
 | 新增 `localStorage` 或其他持久化 | 一律内存态；唯一例外 `yadea:notify-prefs`，且读写只走 `loadNotifyPrefs()` / `saveNotifyPrefs()` | §1 |
-| 在 HTML 中写 `t('key')` 调用或内联译文字符串 | 保持中文字面量，文案改到 `locales/rent|swap/*.json` | §5 |
-| 「为了能取到值」反向改写取值方式 | 同上，文案源与源码分离，禁止反向适配 | §5 |
+| `index.html` 模板/JS 中残留中文字面量文案 | `index.html` 一律 `$t('key')` / `t('key')`，文案落 `locales/rent-user|rent-merchant/*.json`；`swap.html` 暂保持中文字面量 | §5 |
+| 「为了能取到值」反向改写取值方式 | 文案源与源码分离，禁止反向适配 | §5 |
 | 数字后缀 key（`menu.home0` 类） | 指向已有语义化 key，或新建语义 key 并补三/五语 | §5 |
-| 机翻直接入库、中文常驻译文 | 先写源语言值占位，再显式翻译 | §5 |
+| 无标注机翻直接入库、中文常驻译文 | 机翻初稿必须标注「机器初翻·待复核」并输出复核清单 | §5 |
 | PascalCase 组件标签、自闭合 `/>` | kebab-case + 显式闭合 `</xxx>` | §2.1 / §2.2 |
 | 自定义指令写内联调用表达式（`v-swipe-close="$emit('close')"`） | 一律传函数 | §2.4 |
-| `:title="中文"` | 纯文本用静态属性，仅表达式加 `:` | §2.6 |
+| `:title="中文"` | 非文案静态值用静态属性；i18n 文案一律 `:title="$t('key')"` | §2.6 |
 | 手写 `mr-8` 补偿式顶栏 | 一律用 `nav-bar`（双图标传 `right-wide`） | §3 |
 | 手写同形态标记：`transition name="sl"` 壳、`fd/sh` + 遮罩 + `bottom-0` 面板、`justify-between` 紧凑 KV 行、`w-16/w-20` 定宽行 | 用 `<page>` / `bottom-sheet` / `option-sheet` / `kv-card` / `kv-row` | §3 |
 | 弹窗组件声明 `open: Boolean` | `open` 只声明无类型 + `default:false` | §3 |
@@ -275,42 +276,50 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 
 ### 目录与方向
 
-- `locales/` 按项目拆分为两个目录：`rent/`（租车 `index.html`）与 `swap/`（换电 `swap.html`）。两目录内均为 5 个语言文件：`zh-CN.json`（**唯一权威源**）→ `zh-HK / en / id / th`。`swap/` 已按 `swap.html` 源码文案填充为完整词条集（不再是空占位文件，校验脚本对其照常校验，与 `rent/` 同口径）。均为单向同步，互不派生、不回写。
-- **两端 HTML 都不写 `t('key')` 调用**：`index.html` / `swap.html` 保持中文字面量，`locales/*` 是与源码**分离**的文案源产物（供翻译/构建流程消费）。禁止为「能运行/能取到值」反向在 HTML 中改写取值方式或内联译文字符串。
+- `locales/` 按项目与端拆分为三个目录：`rent-user/`（租车用户端 `index.html` 用户 app）、`rent-merchant/`（租车商户端 `index.html` 商户 app）与 `swap/`（换电 `swap.html`）。各目录内均为 5 个语言文件：`zh-CN.json`（**该端唯一权威源**）→ `zh-HK / en / id / th`。均为单向同步，互不派生、不回写。
+- **`index.html` 已接入 vue-i18n**：模板文案一律 `$t('key')`、JS 文案一律 `t('key')`，禁止中文字面量硬编码；用户端实例只取 `window.__RENT_I18N_USER__`（由 `rent-user/*.json` 生成），商户端只取 `window.__RENT_I18N_MERCHANT__`（由 `rent-merchant/*.json` 生成）。一个端区段只复用本端 key。
+- **`swap.html` 待接入**：仍保持中文字面量，`locales/swap/*` 为分离文案源。
+- **共享段镜像**：`common.*` 与 `demo.*` 在 `rent-user` ↔ `rent-merchant` 之间**必须逐字镜像**（key 集合 + 五语值），由 `i18n_check.mjs` 的 `SHARED` 硬错误校验；与 `swap/` 之间仍不要求键集镜像。新增/修改这两段必须两端同改。
 - 嵌套 JSON、点路径 key、各目录内多语言同路径同名；UTF-8 无 BOM、2 空格缩进、结尾换行。
 - 占位符用 vue-i18n `{name}`，各目录内所有语言名称与数量必须一致。
 - **禁止数字后缀 key**（`menu.home0` 类复制粘贴残留），出现即删。
+- **key 命名与重命名**：遵循 `i18n-key-naming.md` 的通用子命名空间口径。接入期（key 化改写前）允许对命名不合理的 key 重命名——须五语同路径同改、只改键路径不改值、产出映射表并经人工逐条核对、按端写入（`common.*` / `demo.*` 两端同改），并登记进 `i18n-key-naming.md`；**禁止脚本无审核自动改名**。key 化落盘后改名须同步改 `index.html` 全部引用。
+- 语言标识映射：`zh-CN→zh-CN`、`zh-HK→zh-HK`、`en→en-US`、`id→id-ID`、`th→th-TH`（Intl 日期用）；`<html lang>` 与实例 locale 随切换同步。
 
 ### 命名空间划分
 
-目录代替项目前缀命名空间（`rental.* → rent/`、`swap.* → swap/`），前缀仅剩段级：
+目录代替项目前缀命名空间（`rental.* → rent-user|rent-merchant`、`swap.* → swap/`），前缀仅剩段级：
 
 | 目录 | 段 | 归属 |
 | --- | --- | --- |
-| 共享 | `common.*` | 两项目共用术语（货币/操作/状态/单位/语种）。**不要求两目录键集/键名互相复制**；一致性按**中文值**锚定——同一句中文两端译法须一致（见下节，校验脚本负责） |
-| `rent/` | `user.* / merchant.* / demo.*` | `index.html` |
+| 共享 | `common.*` | 各端共用术语（货币/操作/状态/单位/语种）。**rent-user ↔ rent-merchant 必须镜像**；与 `swap/` 之间不要求键集/键名互相复制，一致性按**中文值**锚定（见下节） |
+| `rent-user/` | `common.* + user.* + demo.*` | `index.html` 用户端 app |
+| `rent-merchant/` | `common.* + merchant.* + demo.*` | `index.html` 商户端 app |
 | `swap/` | `user.* / merchant.* / demo.*`（业务页），外框架键为顶层 key | `swap.html` |
 
-### 跨目录术语一致性（rent ↔ swap）
+### 跨目录术语一致性（rent-user / rent-merchant ↔ swap）
 
 **只要一句中文（zh-CN 值逐字相同）在两端都出现，`en / id / th / zh-HK` 的译法就必须一致**——同一概念两端各写一个译法即术语漂移，属需修复项，不允许「各自都说得通」而并存。范围不限 `common.*`，覆盖全部 key。
 
 **判定锚点是中文值，不是 key 路径**：同句中文即使两端 key 名完全不同（`user.location.goSetting` ↔ `action.goEnable`）也必须译法一致；反之两端 key 同名但中文不同（`common.orderStatus.breach`=违约锁单 / 已违约）**不算漂移**——`common.*` 不要求两目录互为副本，各端可自行增删键。
 
-- 裁决顺序：① `common.*` 已登记的共享术语 → ② 下方术语基线 → ③ `rent/`（权威产物）侧译法；三项都无基准时先在本节登记译法，再按登记值统一。
+- 裁决顺序：① `common.*` 已登记的共享术语 → ② 下方术语基线 → ③ `rent-user/` 与 `rent-merchant/`（权威产物）侧译法；三项都无基准时先在本节登记译法，再按登记值统一。
 - **同一目录内同样不得出现「一句中文两个译法」**（如 swap 内 `user.profile.title`=Profile 与 `common.profile.personalInfo`=Personal Information、「暂无电池」=No battery / No Batteries 混用）。
 - 允许不同（须是有意为之，且不视为违规）：`demo.*` 演示假数据；空间受限的短标签缩写（Tab 名、单位：`block` 对 `battery(ies)`）；品牌与专名（YADEA、2C2P）。
 - **货币术语基线（2026-09-29 定）**：所有货币相关 key 的 `en/id/th` 一律用简称 `CNY` / `HKD` / `IDR`（不用全称 `Chinese Yuan` / `Hong Kong Dollar` / `Indonesian Rupiah`）；`zh-CN` / `zh-HK` 保持中文（人民币/港币/印尼盾 · 人民幣/港幣/印尼盾）。两端 `common.label.currency*` 与 swap `frame.currency.*` 均适用，属核心术语基线，不再作为「允许不同」的例外。
 - **国际专名保留基线（2026-09-29 定）**：凡涉及国际通用专名/代号（`VIN`、`KYC`、`SN`、`Controller SN` 等）的 key，其 `en` / `id` / `th` 一律保留原文（`VIN`、`KYC`，不音译/意译）；**中文除外**——`zh-CN` / `zh-HK` 仍用中文表达（如「车架号」/「車架號」、「实名信息」/「實名資訊」）。
-- 检查口径：`node scripts/i18n_check.mjs` 按 **zh-CN 值分组**（**不看 key 路径**）比较两目录译文集合，差异计入硬错误 `TERM`（共有同中文条数、译法不一致条数 + 前 12 条样例，**计入退出码**）；`demo.*` 与脚本内 `TERM_ALLOW`（品牌专名 YADEA / 2C2P）排除。逐条明细与裁决栏见 `i18n-cross-drift.md`。
+- 检查口径：`node scripts/i18n_check.mjs` 按 **zh-CN 值分组**（**不看 key 路径**）比较三对目录（`rent-user↔swap`、`rent-merchant↔swap`、`rent-user↔rent-merchant`）的译文集合，差异计入硬错误 `TERM`（共有同中文条数、译法不一致条数 + 前 12 条样例，**计入退出码**）；`demo.*` 与脚本内 `TERM_ALLOW`（品牌专名 YADEA / 2C2P）排除。另有 `SHARED` 硬错误校验 `common.* + demo.*` 两端逐字镜像。逐条明细与裁决栏见 `i18n-cross-drift.md`。
 - 现状基线（2026-10-14 复核，`demo.*` 已排除）：两目录共有同中文文案 **443 条**，**译法不一致 0 条**（`TERM` 硬校验全绿）。治理四步闭环：① **内部译法统一**（同目录「一句中文一个译法」）；② **内部重复 key 清理**（同中文多键合并到 `common.*`，两目录各新建 44 个 common 键、删除全部重复特征键）；③ **跨目录对齐**（2026-09-29 收 52 条，2026-10-14 复检再收 12 条）；④ **key 命名规范化**（通用文案归 `common.action`/`label`/`dateTime`/`toast`/`status` 等通用子命名空间，19 条，见 `i18n-key-naming.md`）。
+- **拆分后现状（2026-10-22）**：三对 `TERM` 共有同中文分别 `rent-user↔swap 404 / rent-merchant↔swap 391 / rent-user↔rent-merchant 384` 条，译法不一致均为 0；`SHARED` 389 键（`common.* + demo.*`）镜像一致。明细与接入过程见 `i18n-integration-facts.md`。
 
 ### 变更流程
 
 ```
-检测（node scripts/i18n_check.mjs，按 rent/ swap/ 两目录分组输出 MISSING/ORPHAN/PLACEHOLDER/SUFFIX，另含按中文值锚定的 TERM 跨目录译法一致性硬校验）
-→ 新增/变更 key 先写源语言值占位 → 显式翻译（禁止机翻直接入库、禁止中文常驻译文）
-→ 重跑校验：各目录 key 集合一致、占位符一致、无数字后缀、**TERM 跨目录同中文文案译法一致**（见上节；不要求 common 键集镜像）
+检测（node scripts/i18n_check.mjs，按 rent-user/ rent-merchant/ swap/ 三目录分组输出 MISSING/ORPHAN/PLACEHOLDER/SUFFIX，
+      另含三对 TERM 跨目录译法一致性 + SHARED 共享段镜像硬校验）
+→ 新增/变更 key 先写源语言值占位 → 显式翻译（机翻初稿必须标注「机器初翻·待复核」并输出复核清单；禁止中文常驻译文）
+→ 改 JSON 后重跑 node scripts/i18n_bundle.mjs 生成两端语言包
+→ 重跑校验：各目录 key 集合一致、占位符一致、无数字后缀、TERM 三对一致、SHARED 镜像一致
 → 格式归一化后提交（幂等：已译项不覆盖）
 ```
 
@@ -345,13 +354,16 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 
 ## 8. 命令与环境
 
-**无构建链路**：无 `package.json`、无 npm 脚本、无打包 / typecheck；两端产物直接浏览器打开即可运行（CDN Vue3 生产构建 + UnoCSS 运行时）。自检口径见 §6，**不要臆造 npm / lint 脚本**；编辑器诊断可作辅助，不作判据。
+**无构建链路**：无 `package.json`、无 npm 脚本、无打包 / typecheck；两端产物直接浏览器打开即可运行（CDN Vue3 / vue-i18n 生产构建 + UnoCSS 运行时）。自检口径见 §6，**不要臆造 npm / lint 脚本**；编辑器诊断可作辅助，不作判据。允许新增**零依赖 Node 脚本**（`scripts/i18n_*.mjs`），不引入依赖与构建步骤。
 
 | 用途 | 命令 |
 | --- | --- |
 | 本地静态服务（跑截图脚本时需要） | 仓库根目录 `python -m http.server 8137`（租车）/ `8139`（商户，端口见脚本 docstring） |
-| i18n 校验 | `node scripts/i18n_check.mjs`（按 `rent/`、`swap/` 分组输出 MISSING / ORPHAN / PLACEHOLDER / SUFFIX，另含按中文值锚定的跨目录 `TERM` 硬校验，计入退出码） |
-| i18n 翻译对照表 | `node scripts/i18n_reference.mjs` → 仓库根 `<目录名>-translation-reference.html` |
+| 拆分语言文件（一次性迁移，幂等） | `node scripts/i18n_split.mjs --write`（默认 dry-run） |
+| 生成两端语言包（JSON → JS） | `node scripts/i18n_bundle.mjs`（改任一端 `*.json` 后必跑） |
+| i18n 校验 | `node scripts/i18n_check.mjs`（按 `rent-user/`、`rent-merchant/`、`swap/` 分组输出 MISSING / ORPHAN / PLACEHOLDER / SUFFIX，另含三对 `TERM` 与 `SHARED` 硬校验，计入退出码） |
+| key 命名体检 / 按映射重命名 | `node scripts/i18n_keyize.mjs --audit ...` / `node scripts/i18n_keyize.mjs --apply-rename <map.json> --write`（默认 dry-run） |
+| i18n 翻译对照表 | `node scripts/i18n_reference.mjs` → 仓库根 `rent-translation-reference.html`（`rent-user` + `rent-merchant` **合并一张**）与 `swap-translation-reference.html` |
 | SOP 截图（Playwright） | `python scripts/shoot-rental-sop.py`（`#root-user`）/ `python scripts/shoot-merchant-sop.py`（`#root-merchant`）→ `docs/*-sop/images/*.png` |
 
 **无数据库、无接口、无环境变量**：纯前端假数据原型，不得引入迁移 / API 错误码 / 依赖升级等流程。
@@ -364,4 +376,6 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 | `i18n-internal-align.md` | 目录内「一句中文一个译法」对齐清单 |
 | `i18n-key-naming.md` | key 命名规范化规范与明细（通用文案归通用子命名空间） |
 | `notify-events-timing.md` | 消息通知事件清单与时序（用户端，商户端配置页复用同名事件） |
+| `i18n-integration-facts.md` | index.html 接入事实（目录拆分、key 化批次、排除清单、产物与已知边界） |
+| `i18n-pending-review.md` | 新增词条译文复核记录（2026-10-22 的 7 条已复核） |
 | `skills/prototype-sop-authoring/` | SOP 撰写与驱动原型的技能（含 `references/drive-prototype.md`、`references/handbook-conventions.md`） |

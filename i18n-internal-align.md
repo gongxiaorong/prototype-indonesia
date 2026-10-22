@@ -1,6 +1,8 @@
-# rent ↔ swap 目录内部对齐清单（阶段 1 · 先内部归一）
+# rent-user / rent-merchant ↔ swap 目录内部对齐清单（阶段 1 · 先内部归一）
 
-生成日期：2026-09-29　｜　来源：`locales/rent/zh-CN.json` × `locales/swap/zh-CN.json` 各自**目录内**按中文值分组（`demo.*` 已排除）
+生成日期：2026-09-29　｜　来源：`locales/rent-user/zh-CN.json`、`locales/rent-merchant/zh-CN.json` × `locales/swap/zh-CN.json` 各自**目录内**按中文值分组（`demo.*` 已排除）
+
+> 2026-10-22：`locales/rent/` 已拆分为 `locales/rent-user/` 与 `locales/rent-merchant/`；历史条目中的 `locales/rent` 指拆分前目录，内容不回改。
 
 依据：`AGENTS.md` §5「同一目录内同样不得出现『一句中文两个译法』」。
 

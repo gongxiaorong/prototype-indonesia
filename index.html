@@ -8,6 +8,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"
         onerror="this.onerror=null;this.src='https://unpkg.com/vue@3/dist/vue.global.prod.js'"></script>
 <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-i18n@11/dist/vue-i18n.global.prod.js"
+        onerror="this.onerror=null;this.src='https://unpkg.com/vue-i18n@11/dist/vue-i18n.global.prod.js'"></script>
+<script src="locales/rent-user/i18n.rent-user.js"></script>
+<script src="locales/rent-merchant/i18n.rent-merchant.js"></script>
 <style id="layer-base">:root{--bg:#F6F7F9;--surface:#FFFFFF;--fg:#111111;--muted:#999999;
   --border:#E5E5E5;--accent:#2B3F5F;--accent-2:#FF6A00;
   --success:#17A34A;--danger:#DC2626;--link:#2F6FEB;
@@ -420,22 +424,22 @@ body.host-single-m #root-user{display:none}
 <!-- 手机号登录 -->
 <template v-if="loginMode==='phone'" data-page-node-id="rjIDWFuGOlHY3sPp4zO76H">
 <div class="form-row" data-od-id="login-phone-row" data-page-node-id="niptlwLtZN0GEliq8lfrX5">
-<div class="form-label" data-page-node-id="Krzs2pstxaE0VweqgMlLyL">手机号</div>
+<div class="form-label" data-page-node-id="Krzs2pstxaE0VweqgMlLyL">{{ $t('common.phone') }}</div>
 <div class="flex items-stretch gap-2.5" data-page-node-id="6Ws3Safxn3i36Og2Pqjcgj">
 <div data-cp @click="openDialCode('login')" class="login-field login-field-dial flex items-center justify-center" data-od-id="login-dial-trigger" data-page-node-id="yVDWcvKQaaOuULjqcz0Udd">
 <span class="text-[15px] font-semibold tabular-nums text-[#111]" data-page-node-id="yr0yMZYT97W2U8zFkxWdVf">{{ loginDial }}</span>
 <span class="text-[#9CA3AF]" v-html="luci('chevron-down','w-3.5 h-3.5')" data-page-node-id="DaXyAxZLCUhjsu4r7gzvl3"></span>
 </div>
 <div class="login-field flex-1 relative flex items-center min-w-0" data-page-node-id="J7RnViUhyWLId5FNMTPvLA">
-<input v-model="loginPhone" type="tel" inputmode="numeric" placeholder="请输入手机号" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginPhone=loginPhone.replace(/\D/g,'')" data-page-node-id="NNME6MqJ7wQYXNWzpBCPTB">
+<input v-model="loginPhone" type="tel" inputmode="numeric" :placeholder="$t('common.login.phonePlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginPhone=loginPhone.replace(/\D/g,'')" data-page-node-id="NNME6MqJ7wQYXNWzpBCPTB">
 <div v-if="loginPhone" data-cp @click="loginPhone=''" class="login-clear absolute right-2.5" data-page-node-id="nuHPB2tU1ixD390AKeHyAk"><span v-html="luci('x','w-3 h-3 text-[#666]')" data-page-node-id="YeFRgNAHSut2ynHfYNt7SM"></span></div>
 </div>
 </div>
 </div>
 <div v-if="loginSub==='password'" class="form-row" data-od-id="login-pwd-row" data-page-node-id="NaDxL49fMx0wHQkPri7w2T">
-<div class="form-label" data-page-node-id="I2X4FX1J5kA1YcA8qAD66f">密码</div>
+<div class="form-label" data-page-node-id="I2X4FX1J5kA1YcA8qAD66f">{{ $t('common.login.passwordLabel') }}</div>
 <div class="login-field relative flex items-center" data-page-node-id="yv0UFZjoL3nh0ohDK75i4z">
-<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" placeholder="请输入密码" maxlength="64" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin" data-page-node-id="YScHoxzraWd34sVtmRR0Mu">
+<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="$t('common.login.passwordPlaceholder')" maxlength="64" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin" data-page-node-id="YScHoxzraWd34sVtmRR0Mu">
 <div class="absolute right-2 flex items-center gap-0.5" data-page-node-id="mUMjZ8Nq7K4OUBrnRVGGV9">
 <div v-if="loginPwd" data-cp @click="loginPwd=''" class="login-clear" data-page-node-id="A0emDcNKUfGnKQzJ0El27v"><span v-html="luci('x','w-3 h-3 text-[#666]')" data-page-node-id="XHwcTc6QZ1wNwJ8IncvIbU"></span></div>
 <div data-cp @click="loginPwdVisible=!loginPwdVisible" class="w-8 h-8 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-page-node-id="KiMwm5yy9LHAqyVvrPCcQG"><span v-html="luci(loginPwdVisible?'eye-off':'eye','w-4 h-4')" data-page-node-id="5XE37CpbBP39rXrB8XET7q"></span></div>
@@ -443,13 +447,13 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div v-else class="form-row" data-od-id="login-sms-row" data-page-node-id="QvzypgKfUaAqDM1MBjM362">
-<div class="form-label" data-page-node-id="3GeYzfOtnAglf3PyEW24zl">验证码</div>
+<div class="form-label" data-page-node-id="3GeYzfOtnAglf3PyEW24zl">{{ $t('common.login.codeLabel') }}</div>
 <div class="flex items-stretch gap-2.5" data-page-node-id="hsKXIYbwPBrR3OCEjJspIT">
 <div class="login-field flex-1 relative flex items-center min-w-0" data-page-node-id="WGkV7V0bP1uljQ59q6k5sc">
-<input v-model="loginCode" type="tel" inputmode="numeric" maxlength="6" placeholder="请输入验证码" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginCode=loginCode.replace(/\D/g,'').slice(0,6)" @keyup.enter="doLogin" data-page-node-id="ZYlmCKgXlEY2FJpdnENF7u">
+<input v-model="loginCode" type="tel" inputmode="numeric" maxlength="6" :placeholder="$t('common.login.codePlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginCode=loginCode.replace(/\D/g,'').slice(0,6)" @keyup.enter="doLogin" data-page-node-id="ZYlmCKgXlEY2FJpdnENF7u">
 <div v-if="loginCode" data-cp @click="loginCode=''" class="login-clear absolute right-2.5" data-page-node-id="v3j5jMwH14CVhqIYC5HU9B"><span v-html="luci('x','w-3 h-3 text-[#666]')" data-page-node-id="1VxG5UiHn4Z9zcRHeLFjJH"></span></div>
 </div>
-<button type="button" data-cp @click="sendLoginCode" :disabled="!canSendCode" class="login-code-btn shrink-0 px-3 text-[13px] font-semibold" :class="loginCd>0?'is-cd':(canSendCode?'is-on':'is-off')">{{ loginCd>0?(loginCd+'s'):'获取验证码' }}</button>
+<button type="button" data-cp @click="sendLoginCode" :disabled="!canSendCode" class="login-code-btn shrink-0 px-3 text-[13px] font-semibold" :class="loginCd>0?'is-cd':(canSendCode?'is-on':'is-off')">{{ loginCd>0?(loginCd+'s'):$t('common.login.getCode') }}</button>
 </div>
 </div>
 </template>
@@ -457,16 +461,16 @@ body.host-single-m #root-user{display:none}
 <!-- 邮箱登录 -->
 <template v-else-if="loginMode==='email'" data-page-node-id="pefOwqLBU8FGdG7hExDoaN">
 <div class="form-row" data-od-id="login-email-row" data-page-node-id="rOHYzeQGrNuIsvlj1Av2ax">
-<div class="form-label" data-page-node-id="4ZfEEUbwHkCxETKfFaF2av">邮箱</div>
+<div class="form-label" data-page-node-id="4ZfEEUbwHkCxETKfFaF2av">{{ $t('common.label.email') }}</div>
 <div class="login-field relative flex items-center" data-page-node-id="rGWYEIREI0dxAWmyN95Hs3">
-<input v-model="loginEmail" type="email" placeholder="请输入邮箱地址" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" data-page-node-id="9gDOg5F7wFkIAy9mYXAyfC">
+<input v-model="loginEmail" type="email" :placeholder="$t('user.profile.emailAddressPlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" data-page-node-id="9gDOg5F7wFkIAy9mYXAyfC">
 <div v-if="loginEmail" data-cp @click="loginEmail=''" class="login-clear absolute right-2.5" data-page-node-id="pzYPvqr9q3QJEbCQ9FvAwJ"><span v-html="luci('x','w-3 h-3 text-[#666]')" data-page-node-id="Dfbp6J8oD0ZZFftTFvloSa"></span></div>
 </div>
 </div>
 <div v-if="loginSub==='password'" class="form-row" data-page-node-id="fE7i4k2tFBzDCsNgAbwetj">
-<div class="form-label" data-page-node-id="gtw0kyisapJviMRAJUhV9p">密码</div>
+<div class="form-label" data-page-node-id="gtw0kyisapJviMRAJUhV9p">{{ $t('common.login.passwordLabel') }}</div>
 <div class="login-field relative flex items-center" data-page-node-id="P3xnuq5dk2V5JyEb01ruIZ">
-<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" placeholder="请输入密码" maxlength="64" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin" data-page-node-id="KuTFiczVLeEl86kx8jvmu3">
+<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="$t('common.login.passwordPlaceholder')" maxlength="64" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin" data-page-node-id="KuTFiczVLeEl86kx8jvmu3">
 <div class="absolute right-2 flex items-center gap-0.5" data-page-node-id="M5YzajFbHME0Xfyo4twOeB">
 <div v-if="loginPwd" data-cp @click="loginPwd=''" class="login-clear" data-page-node-id="5Eer0rlMTvajIHuiVLbiFh"><span v-html="luci('x','w-3 h-3 text-[#666]')" data-page-node-id="udcIBGjs8P2aCE4r41rv1m"></span></div>
 <div data-cp @click="loginPwdVisible=!loginPwdVisible" class="w-8 h-8 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-page-node-id="P2i8ONpOY6TRJ7DQa2QE7X"><span v-html="luci(loginPwdVisible?'eye-off':'eye','w-4 h-4')" data-page-node-id="Gy5xLk4XdhwnHszfYrdp7I"></span></div>
@@ -474,13 +478,13 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div v-else class="form-row" data-page-node-id="8u2NHHyhEEg5m1ChUVgA9J">
-<div class="form-label" data-page-node-id="iMZwrRxD6H4OQYQMA01vny">验证码</div>
+<div class="form-label" data-page-node-id="iMZwrRxD6H4OQYQMA01vny">{{ $t('common.login.codeLabel') }}</div>
 <div class="flex items-stretch gap-2.5" data-page-node-id="88YLdsaaRFQ61EuOU0befP">
 <div class="login-field flex-1 relative flex items-center min-w-0" data-page-node-id="DK8MuFV9cKAcSWudON08LP">
-<input v-model="loginCode" type="tel" inputmode="numeric" maxlength="6" placeholder="请输入邮箱验证码" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginCode=loginCode.replace(/\D/g,'').slice(0,6)" @keyup.enter="doLogin" data-page-node-id="Mn8pgiYDLsl9BB3LGhxWar">
+<input v-model="loginCode" type="tel" inputmode="numeric" maxlength="6" :placeholder="$t('user.login.emailCodePlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginCode=loginCode.replace(/\D/g,'').slice(0,6)" @keyup.enter="doLogin" data-page-node-id="Mn8pgiYDLsl9BB3LGhxWar">
 <div v-if="loginCode" data-cp @click="loginCode=''" class="login-clear absolute right-2.5" data-page-node-id="wQBy7gAHqH5o5cMe9VHRuK"><span v-html="luci('x','w-3 h-3 text-[#666]')" data-page-node-id="bC87wfVKpkFaiiscBQcNzi"></span></div>
 </div>
-<button type="button" data-cp @click="sendLoginCode" :disabled="!canSendCode" class="login-code-btn shrink-0 px-3 text-[13px] font-semibold" :class="loginCd>0?'is-cd':(canSendCode?'is-on':'is-off')">{{ loginCd>0?(loginCd+'s'):'获取验证码' }}</button>
+<button type="button" data-cp @click="sendLoginCode" :disabled="!canSendCode" class="login-code-btn shrink-0 px-3 text-[13px] font-semibold" :class="loginCd>0?'is-cd':(canSendCode?'is-on':'is-off')">{{ loginCd>0?(loginCd+'s'):$t('common.login.getCode') }}</button>
 </div>
 </div>
 </template>
@@ -488,16 +492,16 @@ body.host-single-m #root-user{display:none}
 <!-- 账号登录 -->
 <template v-else data-page-node-id="HPSidNTmGCrk9NnwpFOUo6">
 <div class="form-row" data-od-id="login-account-row" data-page-node-id="IzH6KMRFPYwFwMDm32yCnZ">
-<div class="form-label" data-page-node-id="w06nccl0G2vXivXjvNv4Ga">账号</div>
+<div class="form-label" data-page-node-id="w06nccl0G2vXivXjvNv4Ga">{{ $t('common.label.account') }}</div>
 <div class="login-field relative flex items-center" data-page-node-id="soonwGhKr6vVeGIhyO5ElG">
-<input v-model="loginAccount" type="text" placeholder="请输入账号" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" data-page-node-id="xrGZcUolU6NdtAwTAFiB8H">
+<input v-model="loginAccount" type="text" :placeholder="$t('common.login.accountPlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" data-page-node-id="xrGZcUolU6NdtAwTAFiB8H">
 <div v-if="loginAccount" data-cp @click="loginAccount=''" class="login-clear absolute right-2.5" data-page-node-id="o9wtpGUnwWbDPlTvOlksmN"><span v-html="luci('x','w-3 h-3 text-[#666]')" data-page-node-id="6Og0lVfUhGGVrVfAATEyP9"></span></div>
 </div>
 </div>
 <div class="form-row" data-page-node-id="R1HAcgfGdEWNA7FaxLymKt">
-<div class="form-label" data-page-node-id="BrxmDMDHSeJUO25zzKZEDM">密码</div>
+<div class="form-label" data-page-node-id="BrxmDMDHSeJUO25zzKZEDM">{{ $t('common.login.passwordLabel') }}</div>
 <div class="login-field relative flex items-center" data-page-node-id="4c1lgnQWkQ8qxracH2IBpD">
-<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" placeholder="请输入密码" maxlength="64" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin" data-page-node-id="F5B6Ycg3cFKupNFzb5W7aQ">
+<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="$t('common.login.passwordPlaceholder')" maxlength="64" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin" data-page-node-id="F5B6Ycg3cFKupNFzb5W7aQ">
 <div class="absolute right-2 flex items-center gap-0.5" data-page-node-id="nusk4YoUYiOFHfCI2NJ7dQ">
 <div v-if="loginPwd" data-cp @click="loginPwd=''" class="login-clear" data-page-node-id="rJlhnCCuGM78NdtsT33ZZG"><span v-html="luci('x','w-3 h-3 text-[#666]')" data-page-node-id="voB1llXPlw8J13l18MVjAe"></span></div>
 <div data-cp @click="loginPwdVisible=!loginPwdVisible" class="w-8 h-8 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-page-node-id="QvnXPhU9RNATCpQPD3OwFj"><span v-html="luci(loginPwdVisible?'eye-off':'eye','w-4 h-4')" data-page-node-id="xzpYpvoTE9UvKKiOApi3Jg"></span></div>
@@ -509,25 +513,25 @@ body.host-single-m #root-user{display:none}
 <!-- 协议 -->
 <div class="flex items-start gap-2.5 mb-4 cursor-pointer" data-cp @click="loginAgree=!loginAgree" data-od-id="login-agree" data-page-node-id="3JAFAQNrYVMNmVTEQPYwgn">
 <div class="login-cb" :class="loginAgree?'on':''" data-page-node-id="UleOD1D8YCA88pphoZaChf"><span v-if="loginAgree" v-html="luci('check','w-3 h-3')" data-page-node-id="RFUXPptZNmf4ySw08ZIIjn"></span></div>
-<div class="text-[12px] text-[#6B6B6B] leading-relaxed" data-page-node-id="lhCT0bClBAmw453advTY57">我已阅读并同意<span class="login-link" data-cp @click.stop data-page-node-id="kNQojOto1ssi6nW9meD0XT">《用户隐私政策》</span><span v-if="loginSub==='code'" data-page-node-id="QpAs9MHVf06Bd79PqW9JPX">，未注册的账号将会自动注册</span></div>
+<div class="text-[12px] text-[#6B6B6B] leading-relaxed" data-page-node-id="lhCT0bClBAmw453advTY57">{{ $t('common.login.agreePrefix') }}<span class="login-link" data-cp @click.stop data-page-node-id="kNQojOto1ssi6nW9meD0XT">《{{ $t('common.login.privacyPolicy') }}》</span><span v-if="loginSub==='code'" data-page-node-id="QpAs9MHVf06Bd79PqW9JPX">，{{ $t('user.login.autoRegisterHint') }}</span></div>
 </div>
 
 <div class="form-actions" data-page-node-id="98wJ0SOjwEtcwISVcr9MGw">
-<button type="button" data-cp @click="doLogin" :disabled="!canLogin" class="login-submit" :class="canLogin?'is-on':'is-off'" data-od-id="login-submit" data-page-node-id="9pfZLJjNTy0Yjid51FSkYP">登录</button>
+<button type="button" data-cp @click="doLogin" :disabled="!canLogin" class="login-submit" :class="canLogin?'is-on':'is-off'" data-od-id="login-submit" data-page-node-id="9pfZLJjNTy0Yjid51FSkYP">{{ $t('common.login.login') }}</button>
 </div>
 </div>
 <!-- 验证码 / 密码切换（原位：表单下方、随表单滚动）；账号登录时同位置为「注册账号」入口 -->
 <div class="mt-6 text-center">
 <template v-if="loginMode==='account'">
-<span class="login-switch-primary" data-cp @click="openRegister">注册账号</span>
+<span class="login-switch-primary" data-cp @click="openRegister">{{ $t('common.login.register') }}</span>
 </template>
 <template v-else-if="loginMode==='phone'" data-page-node-id="T9QZbDfsXFZed9oOLugMin">
-<span v-if="loginSub==='password'" class="login-switch-primary" data-cp @click="setLoginSub('code')" data-page-node-id="zRNNAwlMwIgDpDxJLTALOd">验证码登录</span>
-<span v-else class="login-switch-primary" data-cp @click="setLoginSub('password')" data-page-node-id="IoGRDfCfV5oeiXXFhCUBgU">密码登录</span>
+<span v-if="loginSub==='password'" class="login-switch-primary" data-cp @click="setLoginSub('code')" data-page-node-id="zRNNAwlMwIgDpDxJLTALOd">{{ $t('common.login.codeSub') }}</span>
+<span v-else class="login-switch-primary" data-cp @click="setLoginSub('password')" data-page-node-id="IoGRDfCfV5oeiXXFhCUBgU">{{ $t('common.login.passwordSub') }}</span>
 </template>
 <template v-else data-page-node-id="Pd3zYhQlRMT1ksCz3NFve4">
-<span v-if="loginSub==='password'" class="login-switch-primary" data-cp @click="setLoginSub('code')" data-page-node-id="G4BeB0zTVhjhRS9DYGcXWH">验证码登录</span>
-<span v-else class="login-switch-primary" data-cp @click="setLoginSub('password')" data-page-node-id="BZrNWzGUAEJs0cMdBrbj8s">密码登录</span>
+<span v-if="loginSub==='password'" class="login-switch-primary" data-cp @click="setLoginSub('code')" data-page-node-id="G4BeB0zTVhjhRS9DYGcXWH">{{ $t('common.login.codeSub') }}</span>
+<span v-else class="login-switch-primary" data-cp @click="setLoginSub('password')" data-page-node-id="BZrNWzGUAEJs0cMdBrbj8s">{{ $t('common.login.passwordSub') }}</span>
 </template>
 </div>
 </div>
@@ -551,7 +555,7 @@ body.host-single-m #root-user{display:none}
 
 </div>
 <!-- 环境-品牌选择（两级联动滚轮：左列环境、右列品牌；换环境时品牌列跟随刷新并回到该环境首个品牌） -->
-<bottom-sheet :open="loginEnvSheet" title="选择环境" type="B" :mask-z="2100" oid="login-env-mask" panel-oid="login-env-sheet" @close="loginEnvSheet=false" @confirm="confirmLoginEnv">
+<bottom-sheet :open="loginEnvSheet" :title="$t('common.login.envTitle')" type="B" :mask-z="2100" oid="login-env-mask" panel-oid="login-env-sheet" @close="loginEnvSheet=false" @confirm="confirmLoginEnv">
 <div class="relative px-2 pb-6">
 <div class="flex items-stretch gap-0.5 relative">
 <div class="track-wheel-mask"></div>
@@ -572,7 +576,7 @@ body.host-single-m #root-user{display:none}
 
 <!-- 登录内语言选择 -->
 <div v-if="loginView==='lang'" class="absolute inset-0 z-10 bg-[#F6F7F9] flex flex-col" data-od-id="login-lang-page" data-page-node-id="kEoHFRnV3E0yxgHgBBXoF3">
-<nav-bar title="切换语言" border-color="#E5E5E5" data-page-node-id="sW8JtusmHpvO4wJBCZYBYC" @back="loginView='main'"></nav-bar>
+<nav-bar :title="$t('common.action.switchLang')" border-color="#E5E5E5" data-page-node-id="sW8JtusmHpvO4wJBCZYBYC" @back="loginView='main'"></nav-bar>
 <div class="mt-3 mx-4 rounded-xl overflow-hidden bg-white" style="border:1px solid #E5E5E5" data-page-node-id="a85N6maq0wGOKPyqvQCf0A">
 <div v-for="(l,i) in langOptions" :key="l.id" data-cp @click="selectLangFromLogin(l.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" :style="i<langOptions.length-1?'border-bottom:1px solid #EDEDED':''" data-page-node-id="yq9f4GFaG7GYbGloKw5irw">
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="3qaEqvCPi3GczaziRm87AQ">{{ l.label }}</span>
@@ -930,7 +934,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
-<div class="ptr-indicator" id="ptr-home" data-page-node-id="egpUmb6jVMg7p3NryIFeAn"><span class="ptr-text" data-page-node-id="Y5ECXoV2sYgaq3GBG2M9jk">下拉刷新</span></div>
+<div class="ptr-indicator" id="ptr-home" data-page-node-id="egpUmb6jVMg7p3NryIFeAn"><span class="ptr-text" data-page-node-id="Y5ECXoV2sYgaq3GBG2M9jk">{{ $t('common.pullToRefresh') }}</span></div>
 
 <div id="sc-home" class="flex-1 overflow-y-auto min-h-0 px-4 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-page-node-id="d6O6sD4ycFVOCFhaIpZ6vG">
 
@@ -962,7 +966,7 @@ body.host-single-m #root-user{display:none}
 <!-- POI 搜索（参考高德布局：地图顶部悬浮圆角搜索条，点击进入 POI 搜索页） -->
 <div data-cp @click.stop="openPoiSearch()" class="absolute left-3 right-3 top-[50px] z-[30] h-10 bg-white rounded-full flex items-center gap-2.5 px-3.5 cursor-pointer active:opacity-95 transition-opacity" style="box-shadow:0 4px 16px rgba(0,0,0,.16)" data-od-id="home-poi-search">
 <span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-[18px] h-[18px]')"></span>
-<span class="flex-1 min-w-0 text-[13px] truncate" style="color:#8A9999">搜索地点</span>
+<span class="flex-1 min-w-0 text-[13px] truncate" style="color:#8A9999">{{ $t('user.search.placeholder') }}</span>
 </div>
 <!-- 定位到当前位置 + 充电桩列表入口（列表入口在定位 Fab 下方，点击打开「附近充电桩」列表页） -->
 <div class="absolute right-3 bottom-[68px] z-[25] flex flex-col gap-2.5" data-od-id="home-charge-side-actions">
@@ -975,13 +979,13 @@ body.host-single-m #root-user{display:none}
 </div>
 <!-- 扫码充电（底部主操作：充电为高频场景；宽度按内容自适应，居中） -->
 <div data-cp @click.stop="openChargeScan()" class="absolute left-1/2 bottom-3 -translate-x-1/2 z-[30] h-11 px-5 rounded-full flex items-center justify-center gap-1.5 text-white text-[14px] font-semibold whitespace-nowrap cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent);box-shadow:0 6px 20px rgba(43,63,95,.35)" data-od-id="home-charge-scan">
-<span v-html="luci('scan','w-[18px] h-[18px]')"></span><span>扫码充电</span>
+<span v-html="luci('scan','w-[18px] h-[18px]')"></span><span>{{ $t('user.charge.scan') }}</span>
 </div>
 </div>
 
 <!-- 租车入口（图片高度与 banner 一致：180px） -->
 <div data-cp @click="loggedIn?openRent():openLogin('rent')" class="rounded-2xl overflow-hidden mb-4 cursor-pointer active:opacity-90 transition-opacity" style="height:180px;background:linear-gradient(135deg,#1A1A1A 0%,#2D2D2D 100%)" data-od-id="home-rental-entry" data-page-node-id="YKAt1LY1dnR4tXznQRxqh9">
-<div class="w-full h-full flex flex-col items-center justify-center gap-2" data-page-node-id="W5GlXiwU5fE4qfd9G8PDvG"><span v-html="luci('bike','w-14 h-14 text-white/40')" data-page-node-id="x7U4u0jtqTIRLW6UmiNE0l"></span><span class="text-[14px] text-white/40" data-page-node-id="VO9DUkwbXV01GtjjIIWZ3s">租赁入口</span></div>
+<div class="w-full h-full flex flex-col items-center justify-center gap-2" data-page-node-id="W5GlXiwU5fE4qfd9G8PDvG"><span v-html="luci('bike','w-14 h-14 text-white/40')" data-page-node-id="x7U4u0jtqTIRLW6UmiNE0l"></span><span class="text-[14px] text-white/40" data-page-node-id="VO9DUkwbXV01GtjjIIWZ3s">{{ $t('user.home.rentalEntry') }}</span></div>
 </div>
 
 <!-- banner 轮播（紧随租车入口，左右滑动切换 + 圆点定位 + 自动播放） -->
@@ -2291,7 +2295,7 @@ body.host-single-m #root-user{display:none}
 </page>
 
 <!-- 版本检测弹窗（全局，与商户端一致） -->
-<confirm-dialog :open="showVersionCheck" :z="900" oid="version-check-modal" :mask-close="false" data-page-node-id="M3nW9pc2Ebjy5CVtPrcZyF" :title="hasNewVersion?'发现新版本':'已是最新版本'" :cancel-text="hasNewVersion?'退出应用':''" :confirm-text="hasNewVersion?(updating?'下载中…':'立即更新'):'知道了'" confirm-bg="var(--accent)" @close="exitApp" @confirm="hasNewVersion?goUpdate():(showVersionCheck=false)"><template v-if="hasNewVersion"><div class="text-[13px] text-[#666] text-center" data-page-node-id="M2AY8SoEVgd6IDkTpCLpG3">最新版本 V{{ latestVersion }}</div><div class="bg-[#F6F7F9] rounded-lg px-4 py-3 text-[13px] text-[#555] leading-relaxed" data-page-node-id="HYaHINjqjnAsIFQX1wBg7x">{{ updateDesc }}</div></template><div v-else class="text-[13px] text-[#666] text-center" data-page-node-id="bFJTCLGNVpHc5p7gZkPveT">V1.30.0</div></confirm-dialog>
+<confirm-dialog :open="showVersionCheck" :z="900" oid="version-check-modal" :mask-close="false" data-page-node-id="M3nW9pc2Ebjy5CVtPrcZyF" :title="hasNewVersion?$t('common.version.newVersion'):$t('common.version.latest')" :cancel-text="hasNewVersion?$t('common.version.exitApp'):''" :confirm-text="hasNewVersion?(updating?$t('common.version.downloading'):$t('common.version.updateNow')):$t('common.version.gotIt')" confirm-bg="var(--accent)" @close="exitApp" @confirm="hasNewVersion?goUpdate():(showVersionCheck=false)"><template v-if="hasNewVersion"><div class="text-[13px] text-[#666] text-center" data-page-node-id="M2AY8SoEVgd6IDkTpCLpG3">{{ $t('common.version.latestVersion', { version: latestVersion }) }}</div><div class="bg-[#F6F7F9] rounded-lg px-4 py-3 text-[13px] text-[#555] leading-relaxed" data-page-node-id="HYaHINjqjnAsIFQX1wBg7x">{{ updateDesc }}</div></template><div v-else class="text-[13px] text-[#666] text-center" data-page-node-id="bFJTCLGNVpHc5p7gZkPveT">V1.30.0</div></confirm-dialog>
 <page :open="appExited" :z="950" trans="fd" oid="app-exited-overlay" bg="black" data-page-node-id="q13jdnnFC4bjzMFxOedt3i"><exited-view @relaunch="relaunchApp" data-page-node-id="MAjfi7AZPIXmTC5xywr3Yl"></exited-view></page>
 
 
@@ -2381,25 +2385,25 @@ body.host-single-m #root-user{display:none}
    </page>
 <!-- 系统设置 -->
 <page :open="profileOV==='settings'" :z="500" :swipe-close="navBack" oid="settings-page" data-page-node-id="e9sBHEKJ1KYFoCBG3fSYGe">
-<nav-bar title="系统设置" border-color="#E5E5E5" data-page-node-id="0mRKNlehE3fZ9BPQLGzV5D" @back="navBack()"></nav-bar>
+<nav-bar :title="$t('common.profile.settings')" border-color="#E5E5E5" data-page-node-id="0mRKNlehE3fZ9BPQLGzV5D" @back="navBack()"></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-28 hid" data-page-node-id="ixwcV2HNAueDz6Qln2PeoM">
-<div class="text-[13px] font-medium text-[#999] mb-2 px-1" data-page-node-id="Ps15cy0z8ngucTdzNy5BLq">通用设置</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 px-1" data-page-node-id="Ps15cy0z8ngucTdzNy5BLq">{{ $t('common.profile.settingsGeneral') }}</div>
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5" data-page-node-id="q9FVD4uuHrrR0gCnJGnVd4">
 <div data-cp @click="navOpen('subLang')" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED" data-od-id="settings-lang-row" data-page-node-id="4rusVz0lp1YmDrned8LSS0">
-<span class="flex-1 text-[15px] font-medium" data-page-node-id="6XASv3lpOTUQABsMFJIHWT">切换语言</span>
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="6XASv3lpOTUQABsMFJIHWT">{{ $t('common.action.switchLang') }}</span>
 <div class="flex items-center gap-1" data-page-node-id="WiTXyVm3HwuybSx4n5xJ3Y"><span class="text-[13px] text-[#666] mr-1" data-page-node-id="5Sgk1eYBj6xPdzlnHXRUMZ">{{ appLangLabel }}</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="MD4mjwo5HUAnPGCm06WfBK"></span></div>
 </div>
 
 
 
 <div data-cp @click="checkVersion" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="settings-version-row" data-page-node-id="4pIREs1BFxMyfgwI6wkCXL">
-<span class="flex-1 text-[15px] font-medium" data-page-node-id="IlOnrV6x0DU8oSNnCOqd7W">当前版本</span>
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="IlOnrV6x0DU8oSNnCOqd7W">{{ $t('common.profile.settingsVersion') }}</span>
 <div class="flex items-center gap-1" data-page-node-id="ANDeV37Dlk9XdL4vm13njl"><span class="text-[13px] text-[#666] font-mono" data-page-node-id="j8J1bkBMiUl7Hd7XDKeBLH">V1.30.0</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="QdnYv2HR99oTLMNO0hQoly"></span></div>
 </div>
 </div>
 </div>
 <div class="absolute bottom-7 left-5 right-5" data-od-id="settings-logout-btn" data-page-node-id="NSNwr9TyBGJL8oCNkRyB5y">
-<button data-cp @click="profileMod='logout'" class="w-full py-4 rounded-xl text-[16px] font-semibold cursor-pointer active:opacity-90 transition-colors" style="background:#fff;border:1px solid #E5E5E5;color:#DC2626" data-page-node-id="288K5YO0tjXMpZXjiIQkuV">退出登录</button>
+<button data-cp @click="profileMod='logout'" class="w-full py-4 rounded-xl text-[16px] font-semibold cursor-pointer active:opacity-90 transition-colors" style="background:#fff;border:1px solid #E5E5E5;color:#DC2626" data-page-node-id="288K5YO0tjXMpZXjiIQkuV">{{ $t('common.action.logout') }}</button>
 </div>
 </page>
 
@@ -2699,7 +2703,7 @@ body.host-single-m #root-user{display:none}
 
 
 <page :open="profileSub==='lang'" :z="510" :swipe-close="navBack" oid="settings-lang-page" data-page-node-id="KY5BYKblUJ96SwnLyLUpJJ">
-<nav-bar title="切换语言" border-color="#E5E5E5" data-page-node-id="lPN9lsNwjr0aQRR5JyyXe9" @back="navBack()"></nav-bar>
+<nav-bar :title="$t('common.action.switchLang')" border-color="#E5E5E5" data-page-node-id="lPN9lsNwjr0aQRR5JyyXe9" @back="navBack()"></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" data-page-node-id="TaC8oeABnNvp63k0eWhF99">
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5" data-page-node-id="8RyX6VfXlkCMn8mRJr2LNV">
 <div v-for="(lg,i) in langOptions" :key="lg.id" data-cp @click="selectLang(lg.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" :style="i<langOptions.length-1?{borderBottom:'1px solid #EDEDED'}:{}" data-page-node-id="yU7pcAWy7iExcFNsXNLlGU">
@@ -2714,12 +2718,12 @@ body.host-single-m #root-user{display:none}
 
 <transition name="tab-fade" mode="out-in" data-page-node-id="nNL3PHBJ3r1u17XPQnPu32">
 <div v-if="!loggedIn" data-cp @click="openLogin('home')" class="absolute left-0 right-0 z-[99] flex items-center justify-between px-4 py-3 cursor-pointer active:opacity-90" style="bottom:83px;background:#2B3F5F" data-od-id="home-login-banner" data-page-node-id="Bw0GFVEto7rjaSzaZ4Gqhn">
-<span class="text-[13px] text-white font-medium" data-page-node-id="Wrdx04Tzbtl9eGQvC2Znfr">您还未登录，点我快速登录</span>
-<button data-cp @click.stop="openLogin('home')" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold text-white" style="border:1px solid rgba(255,255,255,.5);background:transparent" data-page-node-id="kwqcdaFMUCCOwgTDA76LRN">去登录</button>
+<span class="text-[13px] text-white font-medium" data-page-node-id="Wrdx04Tzbtl9eGQvC2Znfr">{{ $t('user.common.notLoggedInTap') }}</span>
+<button data-cp @click.stop="openLogin('home')" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold text-white" style="border:1px solid rgba(255,255,255,.5);background:transparent" data-page-node-id="kwqcdaFMUCCOwgTDA76LRN">{{ $t('user.common.goLogin') }}</button>
 </div>
 </transition>
 
-<tab-bar :items="[{key:'home',icon:'home',label:'首页',activeWhen:tab==='home'},{key:'vehicles',icon:'bike',label:'我的爱车',activeWhen:tab==='vehicles'},{key:'profile',icon:'user',label:'我的',activeWhen:tab==='profile'}]" active-color="#FF6A00" @select="setTab"></tab-bar>
+<tab-bar :items="[{key:'home',icon:'home',label:$t('common.tab.home'),activeWhen:tab==='home'},{key:'vehicles',icon:'bike',label:$t('user.tab.vehicles'),activeWhen:tab==='vehicles'},{key:'profile',icon:'user',label:$t('common.tab.profile'),activeWhen:tab==='profile'}]" active-color="#FF6A00" @select="setTab"></tab-bar>
 <div class="absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[135px] h-[5px] bg-black/30 rounded-full z-[2001]" data-page-node-id="c6SZMPOBu6tTqh4JnTAMYt"></div>
 
 <!-- 租赁类型（OptionSheet：统一单选列表；in-DOM 模板必须 kebab-case + 显式闭合） -->
@@ -2787,7 +2791,7 @@ body.host-single-m #root-user{display:none}
 <span class="text-[16px] font-bold" :style="r.amount>=0?{color:'#17A34A'}:{color:'#DC2626'}">{{ r.amount<0?'-':(r.amount>0?'+':'') }}{{ fmtRp(Math.abs(r.amount),2) }}</span>
 </div>
 <div class="flex items-center justify-between" data-page-node-id="cGpLbDuWpOaVDeVdrIEpCe">
-<span class="text-[13px] text-[#999]" data-page-node-id="T8Synh249SYQvLCCUtAWNV">{{ new Date(r.createdAt).toLocaleString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).replace(/\//g,'-') }}</span>
+<span class="text-[13px] text-[#999]" data-page-node-id="T8Synh249SYQvLCCUtAWNV">{{ new Date(r.createdAt).toLocaleString(intlLocale,{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).replace(/\//g,'-') }}</span>
 <span class="text-[12px] text-[#999]" data-page-node-id="gaFEfC7m4CWCiJyQAcrli5">余额 <span class="text-[#666] font-medium" data-page-node-id="cLtzMYqVPBiyxGE0uyaXco">{{ r.balanceAfter!=null?fmtRp(r.balanceAfter,2):'-' }}</span></span>
 </div>
 </div>
@@ -2837,7 +2841,7 @@ body.host-single-m #root-user{display:none}
 <span class="text-[16px] font-bold" :style="r.amount>=0?{color:'#17A34A'}:{color:'#DC2626'}">{{ r.amount<0?'-':(r.amount>0?'+':'') }}{{ fmtRp(Math.abs(r.amount),2) }}</span>
 </div>
 <div class="flex items-center justify-between" data-page-node-id="EFPC7HLCC0Epf5sItsWnlk">
-<span class="text-[13px] text-[#999]" data-page-node-id="77gQmHmdnZcWlzCY9oehNZ">{{ new Date(r.createdAt).toLocaleString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).replace(/\//g,'-') }}</span>
+<span class="text-[13px] text-[#999]" data-page-node-id="77gQmHmdnZcWlzCY9oehNZ">{{ new Date(r.createdAt).toLocaleString(intlLocale,{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).replace(/\//g,'-') }}</span>
 <span class="text-[12px] text-[#999]" data-page-node-id="B62AZof2ekyGxwosb8Ax4l">余额 <span class="text-[#666] font-medium" data-page-node-id="3Vsr4C6mHq4mY3VzHekJbY">{{ r.balanceAfter!=null?fmtRp(r.balanceAfter,2):'-' }}</span></span>
 </div>
 </div>
@@ -3249,23 +3253,23 @@ body.host-single-m #root-user{display:none}
 <!-- 手机号登录 -->
 <template v-if="loginMode==='phone'">
 <div class="form-row" data-od-id="login-phone-row">
-<div class="form-label">手机号</div>
+<div class="form-label">{{ $t('common.phone') }}</div>
 <div class="flex items-stretch gap-2.5">
 <div data-cp @click="openDialCode('login')" class="login-field login-field-dial flex items-center justify-center" data-od-id="login-dial-trigger">
 <span class="text-[15px] font-semibold tabular-nums text-[#111]">{{ loginDial }}</span>
 <span class="text-[#9CA3AF]" v-html="luci('chevron-down','w-3.5 h-3.5')"></span>
 </div>
 <div class="login-field flex-1 relative flex items-center min-w-0">
-<input v-model="loginPhone" type="tel" inputmode="numeric" :placeholder="'请输入手机号'" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginPhone=loginPhone.replace(/\D/g,'')">
+<input v-model="loginPhone" type="tel" inputmode="numeric" :placeholder="$t('common.login.phonePlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginPhone=loginPhone.replace(/\D/g,'')">
 <div v-if="loginPhone" data-cp @click="loginPhone=''" class="login-clear absolute right-2.5"><span v-html="luci('x','w-3 h-3 text-[#666]')"></span></div>
 </div>
 </div>
 <div v-if="loginErr.phone" class="form-hint text-[#DC2626]">{{ loginErr.phone }}</div>
 </div>
 <div v-if="loginSub==='password'" class="form-row" data-od-id="login-pwd-row">
-<div class="form-label">密码</div>
+<div class="form-label">{{ $t('common.login.passwordLabel') }}</div>
 <div class="login-field relative flex items-center">
-<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="'请输入密码'" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin">
+<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="$t('common.login.passwordPlaceholder')" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin">
 <div class="absolute right-2 flex items-center gap-0.5">
 <div v-if="loginPwd" data-cp @click="loginPwd=''" class="login-clear"><span v-html="luci('x','w-3 h-3 text-[#666]')"></span></div>
 <div data-cp @click="loginPwdVisible=!loginPwdVisible" class="w-8 h-8 flex items-center justify-center cursor-pointer text-[#6B6B6B]"><span v-html="luci(loginPwdVisible?'eye-off':'eye','w-4 h-4')"></span></div>
@@ -3274,13 +3278,13 @@ body.host-single-m #root-user{display:none}
 <div v-if="loginErr.pwd" class="form-hint text-[#DC2626]">{{ loginErr.pwd }}</div>
 </div>
 <div v-else class="form-row" data-od-id="login-sms-row">
-<div class="form-label">验证码</div>
+<div class="form-label">{{ $t('common.login.codeLabel') }}</div>
 <div class="flex items-stretch gap-2.5">
 <div class="login-field flex-1 relative flex items-center min-w-0">
-<input v-model="loginCode" type="tel" inputmode="numeric" maxlength="6" placeholder="请输入验证码" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginCode=loginCode.replace(/\D/g,'').slice(0,6)" @keyup.enter="doLogin">
+<input v-model="loginCode" type="tel" inputmode="numeric" maxlength="6" :placeholder="$t('common.login.codePlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginCode=loginCode.replace(/\D/g,'').slice(0,6)" @keyup.enter="doLogin">
 <div v-if="loginCode" data-cp @click="loginCode=''" class="login-clear absolute right-2.5"><span v-html="luci('x','w-3 h-3 text-[#666]')"></span></div>
 </div>
-<button type="button" data-cp @click="sendLoginCode" :disabled="!canSendCode" class="login-code-btn shrink-0 px-3 text-[13px] font-semibold" :class="loginCd>0?'is-cd':(canSendCode?'is-on':'is-off')">{{ loginCd>0?(loginCd+'s'):'获取验证码' }}</button>
+<button type="button" data-cp @click="sendLoginCode" :disabled="!canSendCode" class="login-code-btn shrink-0 px-3 text-[13px] font-semibold" :class="loginCd>0?'is-cd':(canSendCode?'is-on':'is-off')">{{ loginCd>0?(loginCd+'s'):$t('common.login.getCode') }}</button>
 </div>
 <div v-if="loginErr.code" class="form-hint text-[#DC2626]">{{ loginErr.code }}</div>
 </div>
@@ -3289,17 +3293,17 @@ body.host-single-m #root-user{display:none}
 <!-- 邮箱登录 -->
 <template v-else-if="loginMode==='email'">
 <div class="form-row" data-od-id="login-email-row">
-<div class="form-label">邮箱</div>
+<div class="form-label">{{ $t('common.label.email') }}</div>
 <div class="login-field relative flex items-center">
-<input v-model="loginEmail" type="email" :placeholder="'请输入邮箱'" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]">
+<input v-model="loginEmail" type="email" :placeholder="$t('common.login.emailPlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]">
 <div v-if="loginEmail" data-cp @click="loginEmail=''" class="login-clear absolute right-2.5"><span v-html="luci('x','w-3 h-3 text-[#666]')"></span></div>
 </div>
 <div v-if="loginErr.email" class="form-hint text-[#DC2626]">{{ loginErr.email }}</div>
 </div>
 <div v-if="loginSub==='password'" class="form-row">
-<div class="form-label">密码</div>
+<div class="form-label">{{ $t('common.login.passwordLabel') }}</div>
 <div class="login-field relative flex items-center">
-<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="'请输入密码'" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin">
+<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="$t('common.login.passwordPlaceholder')" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin">
 <div class="absolute right-2 flex items-center gap-0.5">
 <div v-if="loginPwd" data-cp @click="loginPwd=''" class="login-clear"><span v-html="luci('x','w-3 h-3 text-[#666]')"></span></div>
 <div data-cp @click="loginPwdVisible=!loginPwdVisible" class="w-8 h-8 flex items-center justify-center cursor-pointer text-[#6B6B6B]"><span v-html="luci(loginPwdVisible?'eye-off':'eye','w-4 h-4')"></span></div>
@@ -3308,13 +3312,13 @@ body.host-single-m #root-user{display:none}
 <div v-if="loginErr.pwd" class="form-hint text-[#DC2626]">{{ loginErr.pwd }}</div>
 </div>
 <div v-else class="form-row">
-<div class="form-label">验证码</div>
+<div class="form-label">{{ $t('common.login.codeLabel') }}</div>
 <div class="flex items-stretch gap-2.5">
 <div class="login-field flex-1 relative flex items-center min-w-0">
-<input v-model="loginCode" type="tel" inputmode="numeric" maxlength="6" :placeholder="'请输入验证码'" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginCode=loginCode.replace(/\D/g,'').slice(0,6)" @keyup.enter="doLogin">
+<input v-model="loginCode" type="tel" inputmode="numeric" maxlength="6" :placeholder="$t('common.login.codePlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]" @input="loginCode=loginCode.replace(/\D/g,'').slice(0,6)" @keyup.enter="doLogin">
 <div v-if="loginCode" data-cp @click="loginCode=''" class="login-clear absolute right-2.5"><span v-html="luci('x','w-3 h-3 text-[#666]')"></span></div>
 </div>
-<button type="button" data-cp @click="sendLoginCode" :disabled="!canSendCode" class="login-code-btn shrink-0 px-3 text-[13px] font-semibold" :class="loginCd>0?'is-cd':(canSendCode?'is-on':'is-off')">{{ loginCd>0?(loginCd+'s'):'获取验证码' }}</button>
+<button type="button" data-cp @click="sendLoginCode" :disabled="!canSendCode" class="login-code-btn shrink-0 px-3 text-[13px] font-semibold" :class="loginCd>0?'is-cd':(canSendCode?'is-on':'is-off')">{{ loginCd>0?(loginCd+'s'):$t('common.login.getCode') }}</button>
 </div>
 <div v-if="loginErr.code" class="form-hint text-[#DC2626]">{{ loginErr.code }}</div>
 </div>
@@ -3323,17 +3327,17 @@ body.host-single-m #root-user{display:none}
 <!-- 账号登录 -->
 <template v-else>
 <div class="form-row" data-od-id="login-account-row">
-<div class="form-label">账号</div>
+<div class="form-label">{{ $t('common.label.account') }}</div>
 <div class="login-field relative flex items-center">
-<input v-model="loginAccount" type="text" :placeholder="'请输入账号'" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]">
+<input v-model="loginAccount" type="text" :placeholder="$t('common.login.accountPlaceholder')" class="w-full pl-3.5 pr-9 py-3.5 text-[15px]">
 <div v-if="loginAccount" data-cp @click="loginAccount=''" class="login-clear absolute right-2.5"><span v-html="luci('x','w-3 h-3 text-[#666]')"></span></div>
 </div>
 <div v-if="loginErr.account" class="form-hint text-[#DC2626]">{{ loginErr.account }}</div>
 </div>
 <div class="form-row">
-<div class="form-label">密码</div>
+<div class="form-label">{{ $t('common.login.passwordLabel') }}</div>
 <div class="login-field relative flex items-center">
-<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="'请输入密码'" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin">
+<input v-model="loginPwd" :type="loginPwdVisible?'text':'password'" :placeholder="$t('common.login.passwordPlaceholder')" class="w-full pl-3.5 pr-20 py-3.5 text-[15px]" @keyup.enter="doLogin">
 <div class="absolute right-2 flex items-center gap-0.5">
 <div v-if="loginPwd" data-cp @click="loginPwd=''" class="login-clear"><span v-html="luci('x','w-3 h-3 text-[#666]')"></span></div>
 <div data-cp @click="loginPwdVisible=!loginPwdVisible" class="w-8 h-8 flex items-center justify-center cursor-pointer text-[#6B6B6B]"><span v-html="luci(loginPwdVisible?'eye-off':'eye','w-4 h-4')"></span></div>
@@ -3346,21 +3350,21 @@ body.host-single-m #root-user{display:none}
 <!-- 协议 -->
 <div class="flex items-start gap-2.5 mb-4 cursor-pointer" data-cp @click="loginAgree=!loginAgree" data-od-id="login-agree">
 <div class="login-cb" :class="loginAgree?'on':''"><span v-if="loginAgree" v-html="luci('check','w-3 h-3')"></span></div>
-<div class="text-[12px] text-[#6B6B6B] leading-relaxed">我已阅读并同意<span class="login-link" data-cp @click.stop>《用户隐私政策》</span></div>
+<div class="text-[12px] text-[#6B6B6B] leading-relaxed">{{ $t('common.login.agreePrefix') }}<span class="login-link" data-cp @click.stop>《{{ $t('common.login.privacyPolicy') }}》</span></div>
 </div>
 
 <div class="form-actions">
-<button type="button" data-cp @click="doLogin" :disabled="!canLogin" class="login-submit" :class="canLogin?'is-on':'is-off'" data-od-id="login-submit">登录</button>
+<button type="button" data-cp @click="doLogin" :disabled="!canLogin" class="login-submit" :class="canLogin?'is-on':'is-off'" data-od-id="login-submit">{{ $t('common.login.login') }}</button>
 </div>
 </div>
 <!-- 验证码 / 密码切换（原位：表单下方、随表单滚动）；账号登录时同位置为「注册账号」入口 -->
 <div class="mt-6 text-center">
 <template v-if="loginMode==='account'">
-<span class="login-switch-primary" data-cp @click="openRegister">注册账号</span>
+<span class="login-switch-primary" data-cp @click="openRegister">{{ $t('common.login.register') }}</span>
 </template>
 <template v-else>
-<span v-if="loginSub==='password'" class="login-switch-primary" data-cp @click="setLoginSub('code')">验证码登录</span>
-<span v-else class="login-switch-primary" data-cp @click="setLoginSub('password')">密码登录</span>
+<span v-if="loginSub==='password'" class="login-switch-primary" data-cp @click="setLoginSub('code')">{{ $t('common.login.codeSub') }}</span>
+<span v-else class="login-switch-primary" data-cp @click="setLoginSub('password')">{{ $t('common.login.passwordSub') }}</span>
 </template>
 </div>
 </div>
@@ -3384,7 +3388,7 @@ body.host-single-m #root-user{display:none}
 
 </div>
 <!-- 环境-品牌选择（两级联动滚轮：左列环境、右列品牌；换环境时品牌列跟随刷新并回到该环境首个品牌） -->
-<bottom-sheet :open="loginEnvSheet" title="选择环境" type="B" :mask-z="2100" oid="login-env-mask" panel-oid="login-env-sheet" @close="loginEnvSheet=false" @confirm="confirmLoginEnv">
+<bottom-sheet :open="loginEnvSheet" :title="$t('common.login.envTitle')" type="B" :mask-z="2100" oid="login-env-mask" panel-oid="login-env-sheet" @close="loginEnvSheet=false" @confirm="confirmLoginEnv">
 <div class="relative px-2 pb-6">
 <div class="flex items-stretch gap-0.5 relative">
 <div class="track-wheel-mask"></div>
@@ -3407,7 +3411,7 @@ body.host-single-m #root-user{display:none}
 <div v-if="loginView==='lang'" class="absolute inset-0 z-10 bg-[#F6F7F9] flex flex-col" data-od-id="login-lang-page">
 <div class="pt-14 px-4 pb-3 flex items-center bg-white shrink-0" style="border-bottom:1px solid #E5E5E5">
 <div class="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer" data-cp @click="loginView='main'"><span v-html="luci('arrow-left','w-5 h-5')"></span></div>
-<div class="flex-1 text-center text-[17px] font-semibold mr-9">切换语言</div>
+<div class="flex-1 text-center text-[17px] font-semibold mr-9">{{ $t('common.action.switchLang') }}</div>
 </div>
 <div class="mt-3 mx-4 rounded-xl overflow-hidden bg-white" style="border:1px solid #E5E5E5">
 <div v-for="(l,i) in langOptions" :key="l.id" data-cp @click="selectLangFromLogin(l.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" :style="i<langOptions.length-1?'border-bottom:1px solid #EDEDED':''">
@@ -3429,11 +3433,11 @@ body.host-single-m #root-user{display:none}
 
 </div>
 </div>
-<div class="ptr-indicator" id="ptr-home"><span class="ptr-text">下拉刷新</span></div>
+<div class="ptr-indicator" id="ptr-home"><span class="ptr-text">{{ $t('common.pullToRefresh') }}</span></div>
 <div id="sc-home" @vue:mounted="()=>initPullToRefresh('sc-home','ptr-home',refreshHome)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-4 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
 
 <template v-if="can('home.stats.business')">
-<div class="flex justify-between items-center mb-3"><span class="text-[15px] font-semibold">经营数据</span></div>
+<div class="flex justify-between items-center mb-3"><span class="text-[15px] font-semibold">{{ $t('merchant.home.bizStatsTitle') }}</span></div>
 <transition-group name="item" tag="div" class="grid grid-cols-2 gap-2.5">
 <div class="bg-white border border-[#E5E5E5] rounded-xl p-4" v-for="(s,i) in bizStats" :key="s.label" :style="{transitionDelay:i*60+'ms',boxShadow:'0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)'}">
 <div class="text-xs text-[#6B6B6B] font-medium mb-2">{{ s.label }}</div>
@@ -3445,7 +3449,7 @@ body.host-single-m #root-user{display:none}
 </transition-group>
 </template>
 <template v-if="can('home.stats.vehicle')">
-<div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">车辆运营</span></div>
+<div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">{{ $t('merchant.home.vehStatsTitle') }}</span></div>
 <transition-group name="item" tag="div" class="grid grid-cols-2 gap-2.5">
 <div class="bg-white border border-[#E5E5E5] rounded-xl p-4 cursor-pointer active:bg-[#F6F7F9] select-none" v-for="(s,i) in vehStats" :key="s.label" :style="{transitionDelay:i*60+'ms',boxShadow:'0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)'}" data-cp @click="goHomeVehStat(s)">
 <div class="text-xs text-[#6B6B6B] font-medium mb-2">{{ s.label }}</div>
@@ -3454,7 +3458,7 @@ body.host-single-m #root-user{display:none}
 </transition-group>
 </template>
 <template v-if="orderEntries.length||can('recharge_order.list')">
-<div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">订单管理</span></div>
+<div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">{{ $t('merchant.perm.permOrderManage') }}</span></div>
 <div class="grid grid-cols-2 gap-2.5">
 <div v-for="e in orderEntries" :key="e.v" data-cp @click="homeOpenOrders(e.v)" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" :data-od-id="'home-order-entry-'+e.v" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci(e.icon,'w-6 h-6 text-[var(--accent)]')"></span></div>
@@ -3462,27 +3466,27 @@ body.host-single-m #root-user{display:none}
 </div>
 <div v-if="can('charge_order.list')" data-cp @click="coOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-charge-order-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('plug-zap','w-6 h-6 text-[var(--accent)]')"></span></div>
-<span class="text-[14px] font-semibold text-[#1A1A1A]">充电订单</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A]">{{ $t('merchant.chargingOrder.title') }}</span>
 </div>
 <div v-if="can('recharge_order.list')" data-cp @click="roOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-recharge-order-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('wallet','w-6 h-6 text-[var(--accent)]')"></span></div>
-<span class="text-[14px] font-semibold text-[#1A1A1A]">充值订单</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A]">{{ $t('common.label.rechargeOrder') }}</span>
 </div>
 </div>
 </template>
 <!-- 设备管理（充电桩）：模块不参与权限控制，入口常显 -->
-<div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">设备管理</span></div>
+<div class="flex justify-between items-center mb-3 mt-5"><span class="text-[15px] font-semibold">{{ $t('merchant.home.deviceManagement') }}</span></div>
 <div class="grid grid-cols-2 gap-2.5">
 <div data-cp @click="cdOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-charge-device-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('battery-charging','w-6 h-6 text-[var(--accent)]')"></span></div>
-<span class="text-[14px] font-semibold text-[#1A1A1A]">充电桩</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A]">{{ $t('merchant.chargingDevice.title') }}</span>
 </div>
 </div>
 <template v-if="can('alarm.list')">
 <div class="flex justify-between items-center mb-3 mt-5">
-<span class="text-[15px] font-semibold">最近告警</span>
+<span class="text-[15px] font-semibold">{{ $t('common.home.recentAlerts') }}</span>
 <span v-if="can('alarm.list')" class="flex items-center gap-0.5 text-sm text-[var(--link)] font-medium cursor-pointer select-none active:opacity-70" data-cp @click="homeOpen('alerts')">
-全部<span v-if="pendingAlertCount" class="ml-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10px] font-semibold flex items-center justify-center">{{ pendingAlertCount>99?'99+':pendingAlertCount }}</span>
+{{ $t('common.label.all') }}<span v-if="pendingAlertCount" class="ml-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10px] font-semibold flex items-center justify-center">{{ pendingAlertCount>99?'99+':pendingAlertCount }}</span>
 <span v-html="luci('chevron-right','w-4 h-4')"></span>
 </span>
 </div>
@@ -3490,11 +3494,11 @@ body.host-single-m #root-user{display:none}
 <transition-group name="item">
 <div class="px-4 py-3.5 border-b border-[#E5E5E5] last:border-b-0 cursor-pointer active:bg-[#F6F7F9]" v-for="(a,i) in recent" :key="a.id" :style="{transitionDelay:i*80+'ms'}" data-cp @click="openAlertDetail(a)">
 <div class="flex justify-between items-center mb-1 gap-2">
-<span class="text-sm font-semibold truncate">车架号：{{ a.vin }}</span>
+<span class="text-sm font-semibold truncate">{{ $t('common.vehicles.frameNo') }}：{{ a.vin }}</span>
 <span class="text-[11px] font-semibold px-2 py-0.5 rounded-[4px] shrink-0" :class="lvBg(a.lv)">{{ alertTypeLabel(a.type) }}</span>
 </div>
 <div class="flex justify-between items-center gap-2">
-<span class="text-xs text-[#999] truncate">最近触发：{{ a.time }}</span>
+<span class="text-xs text-[#999] truncate">{{ $t('merchant.alert.lastTrigger') }}：{{ a.time }}</span>
 <span class="text-[11px] font-medium px-1.5 py-0.5 rounded shrink-0" :class="stBg(a.status)">{{ stLabel(a.status) }}</span>
 </div>
 </div>
@@ -3502,14 +3506,14 @@ body.host-single-m #root-user{display:none}
 </div>
 <div v-else class="flex flex-col items-center py-10" data-od-id="home-alerts-empty">
 <div class="w-14 h-14 rounded-full bg-[#ECFDF3] flex items-center justify-center mb-3"><span v-html="luci('shield-check','w-7 h-7 text-[#17A34A]')"></span></div>
-<div class="text-[15px] font-semibold text-[#111] mb-1">暂无待处理告警</div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">{{ $t('merchant.home.noPendingAlerts') }}</div>
 </div>
 </template>
 <template v-if="!can('home.stats.business')&&!can('home.stats.vehicle')&&!can('alarm.list')&&!orderEntries.length&&!can('recharge_order.list')">
 <div class="flex flex-col items-center justify-center py-24" data-od-id="home-no-perm-empty">
 <div class="w-14 h-14 rounded-full bg-[#F2F3F5] flex items-center justify-center mb-3"><span v-html="luci('lock','w-7 h-7 text-[#999]')"></span></div>
-<div class="text-[15px] font-semibold text-[#111] mb-1">暂无可访问内容</div>
-<div class="text-[12px] text-[#999]">当前账号没有首页任何功能权限，请联系管理员开通</div>
+<div class="text-[15px] font-semibold text-[#111] mb-1">{{ $t('merchant.common.emptyNoAccess') }}</div>
+<div class="text-[12px] text-[#999]">{{ $t('common.toast.noHomePermission') }}</div>
 </div>
 </template>
 </div>
@@ -6547,23 +6551,23 @@ body.host-single-m #root-user{display:none}
 
 
 <page :open="profileOV==='settings'" :z="500" :swipe-close="()=>goBack()" oid="settings-page">
-<nav-bar title="系统设置" border-color="#E5E5E5" @back="goBack"></nav-bar>
+<nav-bar :title="$t('common.profile.settings')" border-color="#E5E5E5" @back="goBack"></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-28 hid">
-<div class="text-[13px] font-medium text-[#999] mb-2 px-1">通用设置</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 px-1">{{ $t('common.profile.settingsGeneral') }}</div>
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
 <div data-cp @click="navOpen();profileSub='lang'" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED" data-od-id="settings-lang-row">
-<span class="flex-1 text-[15px] font-medium">切换语言</span>
+<span class="flex-1 text-[15px] font-medium">{{ $t('common.action.switchLang') }}</span>
 <div class="flex items-center gap-1"><span class="text-[13px] text-[#666] mr-1">{{ appLangLabel }}</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
 </div>
 
 <div data-cp @click="checkVersion" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="settings-version-row">
-<span class="flex-1 text-[15px] font-medium">当前版本</span>
+<span class="flex-1 text-[15px] font-medium">{{ $t('common.profile.settingsVersion') }}</span>
 <div class="flex items-center gap-1"><span class="text-[13px] text-[#666] font-mono">V1.3.8</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
 </div>
 </div>
 </div>
 <div class="absolute bottom-7 left-5 right-5" data-od-id="settings-logout-btn">
-<button data-cp @click="profileMod='logout'" class="w-full py-4 rounded-xl text-[16px] font-semibold cursor-pointer active:opacity-90 transition-colors" style="background:#fff;border:1px solid #E5E5E5;color:#DC2626">退出登录</button>
+<button data-cp @click="profileMod='logout'" class="w-full py-4 rounded-xl text-[16px] font-semibold cursor-pointer active:opacity-90 transition-colors" style="background:#fff;border:1px solid #E5E5E5;color:#DC2626">{{ $t('common.action.logout') }}</button>
 </div>
 </page>
 
@@ -6571,7 +6575,7 @@ body.host-single-m #root-user{display:none}
 
 <!-- 切换语言 -->
 <page :open="profileSub==='lang'" :z="510" :swipe-close="()=>goBack()" oid="settings-lang-page">
-<nav-bar title="切换语言" border-color="#E5E5E5" @back="goBack"></nav-bar>
+<nav-bar :title="$t('common.action.switchLang')" border-color="#E5E5E5" @back="goBack"></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
 <div v-for="(lg,i) in langOptions" :key="lg.id" data-cp @click="selectLang(lg.id)" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" :style="i<langOptions.length-1?{borderBottom:'1px solid #EDEDED'}:{}">
@@ -6613,10 +6617,10 @@ body.host-single-m #root-user{display:none}
 </transition>
 
 <!-- ═══ UNIFIED TAB BAR ═══ -->
-<tab-bar :items="[{key:'home',icon:'home',label:'首页',activeWhen:tab==='home',hidden:!can('home.view')},{key:'vehicles',icon:'bike',label:'车辆',activeWhen:tab==='vehicles',hidden:!can('vehicle.list')},{key:'orders',icon:'battery-charging',label:'电池',activeWhen:tab==='orders'&&!ordersOV,hidden:!can('battery.list'),go:function(){setTab('orders');ordersOV=null}},{key:'profile',icon:'user',label:'我的',activeWhen:tab==='profile'}]" :show="!showLogin" active-color="#2B3F5F" @select="setTab"></tab-bar>
+<tab-bar :items="[{key:'home',icon:'home',label:$t('common.tab.home'),activeWhen:tab==='home',hidden:!can('home.view')},{key:'vehicles',icon:'bike',label:$t('common.tab.vehicles'),activeWhen:tab==='vehicles',hidden:!can('vehicle.list')},{key:'orders',icon:'battery-charging',label:$t('common.tab.battery'),activeWhen:tab==='orders'&&!ordersOV,hidden:!can('battery.list'),go:function(){setTab('orders');ordersOV=null}},{key:'profile',icon:'user',label:$t('common.tab.profile'),activeWhen:tab==='profile'}]" :show="!showLogin" active-color="#2B3F5F" @select="setTab"></tab-bar>
 
 <!-- 版本检测弹窗（全局） -->
-<confirm-dialog :open="showVersionCheck" :z="900" oid="version-check-modal" :mask-close="false" :title="hasNewVersion?'发现新版本':'已是最新版本'" :cancel-text="hasNewVersion?(protoForceUpdate==='force'?'退出应用':'稍后提醒'):''" :confirm-text="hasNewVersion?(updating?'下载中…':'立即更新'):'知道了'" confirm-bg="var(--accent)" @close="hasNewVersion&&protoForceUpdate==='force'?exitApp():(showVersionCheck=false)" @confirm="hasNewVersion?goUpdate():(showVersionCheck=false)"><template v-if="hasNewVersion"><div class="text-[13px] text-[#666] text-center">最新版本 V{{ latestVersion }}</div><div class="bg-[#F6F7F9] rounded-lg px-4 py-3 text-[13px] text-[#555] leading-relaxed">{{ updateDesc }}</div></template><template v-else><div class="w-14 h-14 rounded-full flex items-center justify-center mb-3" style="background:#EBF1FD"><span v-html="luci('check','w-7 h-7 text-[var(--accent)]')"></span></div><div class="text-[13px] text-[#666] text-center">V1.3.8</div></template></confirm-dialog>
+<confirm-dialog :open="showVersionCheck" :z="900" oid="version-check-modal" :mask-close="false" :title="hasNewVersion?$t('common.version.newVersion'):$t('common.version.latest')" :cancel-text="hasNewVersion?(protoForceUpdate==='force'?$t('common.version.exitApp'):$t('common.version.later')):''" :confirm-text="hasNewVersion?(updating?$t('common.version.downloading'):$t('common.version.updateNow')):$t('common.version.gotIt')" confirm-bg="var(--accent)" @close="hasNewVersion&&protoForceUpdate==='force'?exitApp():(showVersionCheck=false)" @confirm="hasNewVersion?goUpdate():(showVersionCheck=false)"><template v-if="hasNewVersion"><div class="text-[13px] text-[#666] text-center">{{ $t('common.version.latestVersion', { version: latestVersion }) }}</div><div class="bg-[#F6F7F9] rounded-lg px-4 py-3 text-[13px] text-[#555] leading-relaxed">{{ updateDesc }}</div></template><template v-else><div class="w-14 h-14 rounded-full flex items-center justify-center mb-3" style="background:#EBF1FD"><span v-html="luci('check','w-7 h-7 text-[var(--accent)]')"></span></div><div class="text-[13px] text-[#666] text-center">V1.3.8</div></template></confirm-dialog>
 <!-- ═══ 用户管理 — 详情 ═══ -->
 <page :open="profileSub==='userDetail'" :z="510" :swipe-close="()=>goBack()" oid="user-detail-page">
 <nav-bar title="用户详情" border-color="#E5E5E5" @back="goBack"></nav-bar>
@@ -7801,7 +7805,9 @@ function saveAccount(){if(!accValid.value)return;profileAccount.value=accDraft.v
 function openNicknameEdit(){navOpen('nickname');profileSub.value='nickname';nickDraft.value=profileNickname.value}
 function saveNickname(){if(!nickValid.value)return;profileNickname.value=nickDraft.value.trim();toast('昵称已保存','success');navBack()}
 const appLang=ref('zh-CN');
-const langOptions=[{id:'en',label:'English'},{id:'zh-CN',label:'简体中文'},{id:'zh-HK',label:'繁體中文（中國香港）'},{id:'id',label:'Bahasa Indonesia'}];
+const I18N_LOCALE={ 'zh-CN':'zh-CN','zh-HK':'zh-HK','en':'en-US','id':'id-ID','th':'th-TH' };
+const intlLocale=computed(()=>I18N_LOCALE[appLang.value]||'zh-CN');
+const langOptions=[{id:'en',label:'English'},{id:'zh-CN',label:'简体中文'},{id:'zh-HK',label:'繁體中文（中國香港）'},{id:'id',label:'Bahasa Indonesia'},{id:'th',label:'ไทย'}];
 const appLangLabel=computed(()=>{const f=langOptions.find(x=>x.id===appLang.value);return f?f.label:'简体中文'});
 const showLogin=ref(false);
 const loginView=ref('main');
@@ -7892,55 +7898,55 @@ const canSendCode=computed(()=>{if(loginCd.value>0||!loginAgree.value)return fal
 const canLogin=computed(()=>{if(!loginAgree.value)return false;if(loginMode.value==='phone'){if(!(loginPhone.value||'').trim())return false;return loginSub.value==='password'?!!(loginPwd.value||'').trim():!!(loginCode.value||'').trim()}if(loginMode.value==='email'){if(!(loginEmail.value||'').trim())return false;return loginSub.value==='password'?!!(loginPwd.value||'').trim():!!(loginCode.value||'').trim()}return!!(loginAccount.value||'').trim()&&!!(loginPwd.value||'').trim()});
 function resetLoginForm(){loginView.value='main';loginMode.value='phone';loginSub.value='password';loginPhone.value='';loginEmail.value='';loginAccount.value='';loginPwd.value='';loginCode.value='';loginPwdVisible.value=false;loginAgree.value=false;dialQ.value='';dialPickerSource.value=null;if(loginCdTimer){clearInterval(loginCdTimer);loginCdTimer=null}loginCd.value=0}
 function loginOpenLang(){loginView.value='lang'}
-function selectLangFromLogin(id){appLang.value=id;loginView.value='main'}
+function selectLangFromLogin(id){appLang.value=id;i18n.global.locale.value=id;document.documentElement.lang=id;loginView.value='main'}
 function openDialCode(src){dialQ.value='';dialPickerSource.value=src||'login'}
 function closeDialPicker(){dialPickerSource.value=null;dialQ.value=''}
 function pickDial(c){const s=dialPickerSource.value;if(s==='bind'){bpArea.value=c.code}else{loginDial.value=c.code}closeDialPicker()}
 function setLoginMode(m){loginMode.value=m;loginSub.value='password';loginCodeChannel.value='sms';loginPwd.value='';loginCode.value='';if(loginCdTimer){clearInterval(loginCdTimer);loginCdTimer=null}loginCd.value=0}
 /* 账号登录时的「注册账号」入口（原型无注册页：toast 提示） */
-function openRegister(){toast('注册账号（原型演示）','info')}
-const LOGIN_MODE_OPTS=[{v:'phone',l:'手机号',icon:'smartphone'},{v:'email',l:'邮箱',icon:'mail'},{v:'account',l:'账号',icon:'user'}];
+function openRegister(){toast(t('user.login.registerDemo'),'info')}
+const LOGIN_MODE_OPTS=[{v:'phone',lc:'common.phone',icon:'smartphone'},{v:'email',lc:'common.label.email',icon:'mail'},{v:'account',lc:'common.label.account',icon:'user'}];
 const LOGIN_SOCIAL_OPTS=[{v:'google',l:'Google',icon:'google'},{v:'whatsapp',l:'WhatsApp',icon:'whatsapp'}];
 /* 入口：账号方式只列「非当前模式」；例外——正在用 WhatsApp 验证码时仍显示「手机号」入口（点它回到短信/密码登录）。
    三方 Google 常驻，WhatsApp 正在使用（验证码渠道=whatsapp）时隐藏 */
-const loginSwitchEntries=computed(()=>LOGIN_MODE_OPTS.filter(function(m){return m.v!==loginMode.value||(m.v==='phone'&&loginCodeChannel.value==='whatsapp')}));
+const loginSwitchEntries=computed(()=>LOGIN_MODE_OPTS.filter(function(m){return m.v!==loginMode.value||(m.v==='phone'&&loginCodeChannel.value==='whatsapp')}).map(function(m){return {...m,l:t(m.lc)}}));
 const loginSocialEntries=computed(()=>LOGIN_SOCIAL_OPTS.filter(function(s){return !(s.v==='whatsapp'&&loginCodeChannel.value==='whatsapp')}));
 /* 三方入口点击：WhatsApp 本质是手机号 + 验证码，切到手机号验证码登录并标记渠道；Google 走模拟授权 */
 function loginSocialClick(v){if(v==='whatsapp'){setLoginMode('phone');setLoginSub('code');loginCodeChannel.value='whatsapp';return}socialLogin()}
 /* 三方登录（Google，原型：模拟三方授权成功，跳过表单校验；仍需勾选隐私政策） */
 function socialLogin(){
-  if(!loginAgree.value){toast('请先阅读并同意隐私政策','warn');return}
+  if(!loginAgree.value){toast(t('common.login.needAgree'),'warn');return}
   showRentLoading.value=true;
-  setTimeout(function(){showRentLoading.value=false;resetLoginForm();loggedIn.value=true;const r=pendingRoute.value;pendingRoute.value=null;if(r==='rent'){navSwap('rent');toast('登录成功','success');return}navDrop('login');if(r==='vehicles'||r==='profile'){tab.value=r;toast('登录成功','success');return}tab.value='home';toast('登录成功','success')},600)
+  setTimeout(function(){showRentLoading.value=false;resetLoginForm();loggedIn.value=true;const r=pendingRoute.value;pendingRoute.value=null;if(r==='rent'){navSwap('rent');toast(t('common.toast.loginSuccess'),'success');return}navDrop('login');if(r==='vehicles'||r==='profile'){tab.value=r;toast(t('common.toast.loginSuccess'),'success');return}tab.value='home';toast(t('common.toast.loginSuccess'),'success')},600)
 }
 function setLoginSub(s){loginSub.value=s;loginCodeChannel.value='sms';loginPwd.value='';loginCode.value='';if(loginCdTimer){clearInterval(loginCdTimer);loginCdTimer=null}loginCd.value=0}
-function sendLoginCode(){if(!canSendCode.value)return;toast('验证码已发送','success');if(loginCdTimer)clearInterval(loginCdTimer);loginCd.value=60;loginCdTimer=setInterval(function(){loginCd.value--;if(loginCd.value<=0){clearInterval(loginCdTimer);loginCdTimer=null}},1000)}
-const MSG={accountRequired:'请输入账号',accountFormat:'账号仅支持字母、数字、下划线',phoneRequired:'请输入手机号',phoneDigit:'手机号仅支持数字',phoneMismatch:'手机号格式不正确，请检查号码与区号是否匹配',emailRequired:'请输入邮箱',emailFormat:'邮箱格式不正确',emailLen:'邮箱地址不能超过 255 位',pwdRequired:'请输入密码',pwdLen:'密码长度需为 6–64 位',pwdChars:'密码仅支持大小写字母、数字、键盘符号',confirmRequired:'请再次输入密码',confirmMismatch:'两次输入的密码不一致',codeRequired:'请输入验证码',codeFormat:'验证码格式不正确'};
+function sendLoginCode(){if(!canSendCode.value)return;toast(t('common.toast.codeSent'),'success');if(loginCdTimer)clearInterval(loginCdTimer);loginCd.value=60;loginCdTimer=setInterval(function(){loginCd.value--;if(loginCd.value<=0){clearInterval(loginCdTimer);loginCdTimer=null}},1000)}
+const MSG=computed(()=>({accountRequired:t('common.login.accountPlaceholder'),accountFormat:t('common.toast.accountFormat'),phoneRequired:t('common.login.phonePlaceholder'),phoneDigit:t('common.toast.phoneDigit'),phoneMismatch:t('common.toast.phoneFormat'),emailRequired:t('common.login.emailPlaceholder'),emailFormat:t('common.profile.emailFormatError'),emailLen:t('common.toast.emailLength'),pwdRequired:t('common.login.passwordPlaceholder'),pwdLen:t('common.toast.pwdLength'),pwdChars:t('common.toast.pwdChars'),confirmRequired:t('common.profile.pwdConfirmPlaceholder'),confirmMismatch:t('common.profile.pwdMismatch'),codeRequired:t('common.login.codePlaceholder'),codeFormat:t('common.toast.codeFormat')}));
 const EMAIL_RE=/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 function simulatePhoneValid(area,number){const t={'+86':[11,11],'+852':[8,8],'+853':[8,8],'+886':[9,10],'+62':[9,12],'+65':[8,8],'+60':[9,10],'+66':[9,10],'+84':[9,11],'+91':[10,10]};const r=t[area];if(!r)return true;const len=(number||'').length;return len>=r[0]&&len<=r[1]}
 function doLogin(){
-  if(!loginAgree.value){toast('请先阅读并同意隐私政策','warn');return}
+  if(!loginAgree.value){toast(t('common.login.needAgree'),'warn');return}
   let err='';
   if(loginMode.value==='phone'){
-    if(!(loginPhone.value||'').trim())err=MSG.phoneRequired;
-    else if(!/^\d+$/.test(loginPhone.value))err=MSG.phoneDigit;
-    else if(!simulatePhoneValid(loginDial.value,loginPhone.value))err=MSG.phoneMismatch;
-    else if(loginSub.value==='password'){if(!(loginPwd.value||'').trim())err=MSG.pwdRequired;else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value))err=MSG.pwdChars}
-    else{if(!(loginCode.value||'').trim())err=MSG.codeRequired;else if(!/^\d{6}$/.test(loginCode.value))err=MSG.codeFormat}
+    if(!(loginPhone.value||'').trim())err=MSG.value.phoneRequired;
+    else if(!/^\d+$/.test(loginPhone.value))err=MSG.value.phoneDigit;
+    else if(!simulatePhoneValid(loginDial.value,loginPhone.value))err=MSG.value.phoneMismatch;
+    else if(loginSub.value==='password'){if(!(loginPwd.value||'').trim())err=MSG.value.pwdRequired;else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value))err=MSG.value.pwdChars}
+    else{if(!(loginCode.value||'').trim())err=MSG.value.codeRequired;else if(!/^\d{6}$/.test(loginCode.value))err=MSG.value.codeFormat}
   }else if(loginMode.value==='email'){
-    if(!(loginEmail.value||'').trim())err=MSG.emailRequired;
-    else if((loginEmail.value||'').length>255)err=MSG.emailLen;
-    else if(!EMAIL_RE.test(loginEmail.value))err=MSG.emailFormat;
-    else if(loginSub.value==='password'){if(!(loginPwd.value||'').trim())err=MSG.pwdRequired;else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value))err=MSG.pwdChars}
-    else{if(!(loginCode.value||'').trim())err=MSG.codeRequired;else if(!/^\d{6}$/.test(loginCode.value))err=MSG.codeFormat}
+    if(!(loginEmail.value||'').trim())err=MSG.value.emailRequired;
+    else if((loginEmail.value||'').length>255)err=MSG.value.emailLen;
+    else if(!EMAIL_RE.test(loginEmail.value))err=MSG.value.emailFormat;
+    else if(loginSub.value==='password'){if(!(loginPwd.value||'').trim())err=MSG.value.pwdRequired;else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value))err=MSG.value.pwdChars}
+    else{if(!(loginCode.value||'').trim())err=MSG.value.codeRequired;else if(!/^\d{6}$/.test(loginCode.value))err=MSG.value.codeFormat}
   }else{
-    if(!(loginAccount.value||'').trim())err=MSG.accountRequired;
-    else if(!/^[a-zA-Z0-9_]{1,20}$/.test(loginAccount.value))err=MSG.accountFormat;
-    else if(!(loginPwd.value||'').trim())err=MSG.pwdRequired;
-    else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value))err=MSG.pwdChars;
+    if(!(loginAccount.value||'').trim())err=MSG.value.accountRequired;
+    else if(!/^[a-zA-Z0-9_]{1,20}$/.test(loginAccount.value))err=MSG.value.accountFormat;
+    else if(!(loginPwd.value||'').trim())err=MSG.value.pwdRequired;
+    else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value))err=MSG.value.pwdChars;
   }
   if(err){toast(err,'warn');return}
-  showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;resetLoginForm();loggedIn.value=true;const r=pendingRoute.value;pendingRoute.value=null;if(r==='rent'){navSwap('rent');toast('登录成功','success');return}navDrop('login');if(r==='vehicles'||r==='profile'){tab.value=r;toast('登录成功','success');return}tab.value='home';toast('登录成功','success')},600)}
+  showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;resetLoginForm();loggedIn.value=true;const r=pendingRoute.value;pendingRoute.value=null;if(r==='rent'){navSwap('rent');toast(t('common.toast.loginSuccess'),'success');return}navDrop('login');if(r==='vehicles'||r==='profile'){tab.value=r;toast(t('common.toast.loginSuccess'),'success');return}tab.value='home';toast(t('common.toast.loginSuccess'),'success')},600)}
 function openLogin(route){if(route)pendingRoute.value=route;navOpen('login')}
 
 const showRent=ref(false);
@@ -8228,9 +8234,9 @@ let bpTmr,beTmr;
 function openBindPhone(){bpPhone.value='';bpCode.value='';clearInterval(bpTmr);bpCd.value=0;navOpen('subBindPhone')}
 function openBindEmail(){beEmail.value='';beCode.value='';clearInterval(beTmr);beCd.value=0;navOpen('subBindEmail')}
 function sendBpCode(){if(!bpPhone.value||bpCd.value>0)return;bpCd.value=60;clearInterval(bpTmr);bpTmr=setInterval(()=>{bpCd.value--;if(bpCd.value<=0)clearInterval(bpTmr)},1000)}
-function doBindPhone(){if(!(bpPhone.value||'').trim()){toast(MSG.phoneRequired,'warn');return}if(!/^\d+$/.test(bpPhone.value)){toast(MSG.phoneDigit,'warn');return}if(!simulatePhoneValid(bpArea.value,bpPhone.value)){toast(MSG.phoneMismatch,'warn');return}if(!(bpCode.value||'').trim()){toast(MSG.codeRequired,'warn');return}if(!/^\d{6}$/.test(bpCode.value)){toast(MSG.codeFormat,'warn');return}const next=bpArea.value+' '+bpPhone.value.trim();if(hasPhone.value&&next===boundPhone.value){toast('请输入新的手机号','info');return}showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;toast(hasPhone.value?'手机号替换成功':'手机号绑定成功','success');boundPhone.value=next;hasPhone.value=true;bpPhone.value='';bpCode.value='';clearInterval(bpTmr);bpCd.value=0;navDrop('subBindPhone')},600)}
+function doBindPhone(){if(!(bpPhone.value||'').trim()){toast(MSG.value.phoneRequired,'warn');return}if(!/^\d+$/.test(bpPhone.value)){toast(MSG.value.phoneDigit,'warn');return}if(!simulatePhoneValid(bpArea.value,bpPhone.value)){toast(MSG.value.phoneMismatch,'warn');return}if(!(bpCode.value||'').trim()){toast(MSG.value.codeRequired,'warn');return}if(!/^\d{6}$/.test(bpCode.value)){toast(MSG.value.codeFormat,'warn');return}const next=bpArea.value+' '+bpPhone.value.trim();if(hasPhone.value&&next===boundPhone.value){toast('请输入新的手机号','info');return}showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;toast(hasPhone.value?'手机号替换成功':'手机号绑定成功','success');boundPhone.value=next;hasPhone.value=true;bpPhone.value='';bpCode.value='';clearInterval(bpTmr);bpCd.value=0;navDrop('subBindPhone')},600)}
 function sendBeCode(){if(!beEmail.value||beCd.value>0)return;beCd.value=60;clearInterval(beTmr);beTmr=setInterval(()=>{beCd.value--;if(beCd.value<=0)clearInterval(beTmr)},1000)}
-function doBindEmail(){if(!(beEmail.value||'').trim()){toast(MSG.emailRequired,'warn');return}if((beEmail.value||'').length>255){toast(MSG.emailLen,'warn');return}if(!EMAIL_RE.test(beEmail.value)){toast(MSG.emailFormat,'warn');return}if(!(beCode.value||'').trim()){toast(MSG.codeRequired,'warn');return}if(!/^\d{6}$/.test(beCode.value)){toast(MSG.codeFormat,'warn');return}const next=beEmail.value.trim();if(hasEmail.value&&next===boundEmail.value){toast('请输入新的邮箱','info');return}showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;toast(hasEmail.value?'邮箱替换成功':'邮箱绑定成功','success');boundEmail.value=next;hasEmail.value=true;beEmail.value='';beCode.value='';clearInterval(beTmr);beCd.value=0;navDrop('subBindEmail')},600)}
+function doBindEmail(){if(!(beEmail.value||'').trim()){toast(MSG.value.emailRequired,'warn');return}if((beEmail.value||'').length>255){toast(MSG.value.emailLen,'warn');return}if(!EMAIL_RE.test(beEmail.value)){toast(MSG.value.emailFormat,'warn');return}if(!(beCode.value||'').trim()){toast(MSG.value.codeRequired,'warn');return}if(!/^\d{6}$/.test(beCode.value)){toast(MSG.value.codeFormat,'warn');return}const next=beEmail.value.trim();if(hasEmail.value&&next===boundEmail.value){toast('请输入新的邮箱','info');return}showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;toast(hasEmail.value?'邮箱替换成功':'邮箱绑定成功','success');boundEmail.value=next;hasEmail.value=true;beEmail.value='';beCode.value='';clearInterval(beTmr);beCd.value=0;navDrop('subBindEmail')},600)}
 
 const pwdChannel=ref('phone');
 const pwdCode=ref(''),pwdCd=ref(0);
@@ -8240,8 +8246,8 @@ const canConfirmPwd=computed(()=>{const a=(npwd.value||'').trim(),b=(npwd2.value
 function openPwdFlow(){if(!hasPhone.value&&!hasEmail.value){toast('请先绑定手机号或邮箱','info');return}pwdChannel.value=hasPhone.value?'phone':'email';pwdCode.value='';clearInterval(pwdTmr);pwdCd.value=0;npwd.value='';npwd2.value='';npwdVis.value=false;npwd2Vis.value=false;navOpen('subPwdVerify')}
 function switchPwdChannel(ch){if(ch==='phone'&&!hasPhone.value)return;if(ch==='email'&&!hasEmail.value)return;if(pwdChannel.value===ch)return;pwdChannel.value=ch;pwdCode.value='';clearInterval(pwdTmr);pwdCd.value=0}
 function sendPwdCode(ch){if(pwdCd.value>0)return;const channel=ch||pwdChannel.value;if(channel==='phone'&&!hasPhone.value)return;if(channel==='email'&&!hasEmail.value)return;pwdChannel.value=channel;pwdCd.value=60;clearInterval(pwdTmr);pwdTmr=setInterval(()=>{pwdCd.value--;if(pwdCd.value<=0)clearInterval(pwdTmr)},1000)}
-function nextPwdVerify(){if(!(pwdCode.value||'').trim()){toast(MSG.codeRequired,'warn');return}if(!/^\d{6}$/.test(pwdCode.value)){toast(MSG.codeFormat,'warn');return}npwd.value='';npwd2.value='';npwdVis.value=false;npwd2Vis.value=false;navOpen('subPwdReset')}
-function doResetPwd(){const a=(npwd.value||'').trim(),b=(npwd2.value||'').trim();if(!a){toast(MSG.pwdRequired,'warn');return}if(!b){toast(MSG.confirmRequired,'warn');return}if(a.length<6||a.length>64){toast(MSG.pwdLen,'warn');return}if(!/^[!-~]{6,64}$/.test(a)){toast(MSG.pwdChars,'warn');return}if(a!==b){toast(MSG.confirmMismatch,'warn');return}showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;hasPwd.value=true;toast('密码已更新','success');clearInterval(pwdTmr);pwdCd.value=0;pwdCode.value='';npwd.value='';npwd2.value='';navDrop('subPwdVerify')},600)}
+function nextPwdVerify(){if(!(pwdCode.value||'').trim()){toast(MSG.value.codeRequired,'warn');return}if(!/^\d{6}$/.test(pwdCode.value)){toast(MSG.value.codeFormat,'warn');return}npwd.value='';npwd2.value='';npwdVis.value=false;npwd2Vis.value=false;navOpen('subPwdReset')}
+function doResetPwd(){const a=(npwd.value||'').trim(),b=(npwd2.value||'').trim();if(!a){toast(MSG.value.pwdRequired,'warn');return}if(!b){toast(MSG.value.confirmRequired,'warn');return}if(a.length<6||a.length>64){toast(MSG.value.pwdLen,'warn');return}if(!/^[!-~]{6,64}$/.test(a)){toast(MSG.value.pwdChars,'warn');return}if(a!==b){toast(MSG.value.confirmMismatch,'warn');return}showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;hasPwd.value=true;toast('密码已更新','success');clearInterval(pwdTmr);pwdCd.value=0;pwdCode.value='';npwd.value='';npwd2.value='';navDrop('subPwdVerify')},600)}
 
 const showVersionCheck=ref(false),hasNewVersion=ref(false),latestVersion=ref('V1.30.0'),updateDesc=ref(''),updating=ref(0),appExited=ref(false);
 const showWallet=ref(false),showWalletLedger=ref(false),showTopup=ref(false),walletBalanceVisible=ref(true);
@@ -8357,8 +8363,8 @@ function confirmBind(){if(bindConfirmLoading.value)return;const d=scanBindDevice
 function goUpdate(){updating.value=1;setTimeout(function(){updating.value=2;toast('正在下载更新包…','info')},200);setTimeout(function(){updating.value=3;toast('安装包已下载，即将安装','success')},1500);setTimeout(function(){showVersionCheck.value=false;updating.value=0;toast('更新完成！已升级至 V'+(latestVersion.value),'success')},2200)}
 function exitApp(){showVersionCheck.value=false;appExited.value=true}
 function relaunchApp(){appExited.value=false}
-function selectLang(id){appLang.value=id;navDrop('subLang')}
-function doLogout(){navReset();profileMod.value=null;profileOV.value=null;profileSub.value=null;dialPickerSource.value=null;resetLoginForm();loggedIn.value=false;showLogin.value=false;showRent.value=false;showStore.value=false;showVehicle.value=false;showConfirm.value=false;showOrderDetail.value=false;showMyOrders.value=false;showOrderList.value=false;showRefundList.value=false;showConfirmDocs.value=false;showDocSheet.value=false;docDeleteMod.value=false;previewImage.value=null;docText.value='';confirmDocs.value=[];idInfoList.value=[];showIdInfoSheet.value=false;idPhotos.value=[];driverPhotos.value=[];showIdAction.value=false;showIdPreview.value=false;showIdPicker.value=false;idActionTarget.value=null;showWallet.value=false;showTopup.value=false;walletAccount.value.activeStoreId=null;stopOrderTimer();tab.value='home';toast('已退出登录','info')}
+function selectLang(id){appLang.value=id;i18n.global.locale.value=id;document.documentElement.lang=id;navDrop('subLang')}
+function doLogout(){navReset();profileMod.value=null;profileOV.value=null;profileSub.value=null;dialPickerSource.value=null;resetLoginForm();loggedIn.value=false;showLogin.value=false;showRent.value=false;showStore.value=false;showVehicle.value=false;showConfirm.value=false;showOrderDetail.value=false;showMyOrders.value=false;showOrderList.value=false;showRefundList.value=false;showConfirmDocs.value=false;showDocSheet.value=false;docDeleteMod.value=false;previewImage.value=null;docText.value='';confirmDocs.value=[];idInfoList.value=[];showIdInfoSheet.value=false;idPhotos.value=[];driverPhotos.value=[];showIdAction.value=false;showIdPreview.value=false;showIdPicker.value=false;idActionTarget.value=null;showWallet.value=false;showTopup.value=false;walletAccount.value.activeStoreId=null;stopOrderTimer();tab.value='home';toast(t('common.toast.logout'),'info')}
 const profileMdT=computed(()=>{if(profileMod.value==='logout')return'退出登录';if(profileMod.value==='cancelAccount')return'注销账号';return''});
 const profileMdD=computed(()=>{if(profileMod.value==='logout')return'确定要退出当前账号吗？退出后需重新登录。';if(profileMod.value==='cancelAccount')return'确定要注销当前账号吗？注销后所有数据将被清除，且无法恢复。';return''});
 const profileMdDanger=computed(()=>profileMod.value==='logout'||profileMod.value==='cancelAccount');
@@ -8524,7 +8530,7 @@ if(showChargeList.value)return 'chargeList';
 
 onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);buildChargeDevices();setInterval(function(){goHomeBanner((homeBannerIdx.value+1)%homeBanners.length)},4000)});
 function setLoggedIn(v){loggedIn.value=v}
-return{goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyCenter,toggleNotifyOs,toggleOsNotifyPerm,centerSwEnabled,osSwEnabled,swCls,enterOsNotify,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,langOptions,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,setLoggedIn,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
+return{goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyCenter,toggleNotifyOs,toggleOsNotifyPerm,centerSwEnabled,osSwEnabled,swCls,enterOsNotify,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,intlLocale,langOptions,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,orderPlanDisplay,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,setLoggedIn,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
 });
 
 app.directive('swipe-close',{mounted(el,b){var sx=0,sy=0;el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(sx<40&&dx>60&&Math.abs(dy)<Math.abs(dx)*0.5)b.value()},{passive:true})}});
@@ -8550,6 +8556,9 @@ el.addEventListener('touchcancel',function(){clearTimeout(pressT);end()},{passiv
 }
 /* 拖拽结束后的紧随 click 一律吞掉（时间窗判定：mouseup 已先一步复位状态，用标志位会漏判） */
 el.addEventListener('click',function(e){if(Date.now()-dragEndAt<350){e.preventDefault();e.stopPropagation()}},true)}});
+const i18n=VueI18n.createI18n({legacy:false,globalInjection:true,locale:'zh-CN',fallbackLocale:'zh-CN',messages:window.__RENT_I18N_USER__||{}});
+app.use(i18n);
+const t=(k,...a)=>i18n.global.t(k,...a);
 registerSheetKit(app);
 app.mount(root);
 
@@ -8566,6 +8575,8 @@ const app=createApp({
 setup(){
 const tab=ref('home');
 const appLang=ref('zh-CN');
+const I18N_LOCALE={ 'zh-CN':'zh-CN','zh-HK':'zh-HK','en':'en-US','id':'id-ID','th':'th-TH' };
+const intlLocale=computed(()=>I18N_LOCALE[appLang.value]||'zh-CN');
 
 
 const toasts=ref([]);const _tt={n:0};
@@ -8585,18 +8596,18 @@ function simulatePhoneValid(code,num){var map={'+86':11,'+62':[9,12],'+44':[10,1
 /* ══ 工具函数（品牌加载状态 / 金额格式化） ══ */
 const brandLoading=ref(false);
 /* ══ 枚举标签（中文直出，保留透传映射便于维护） ══ */
-const _ALERT_TYPE_MAP={'车辆离线':'车辆离线','GPS信号丢失':'GPS信号丢失','GPS定位过时':'GPS定位过时','疑似断电':'疑似断电'};
+const _ALERT_TYPE_MAP=computed(()=>({'车辆离线':t('merchant.home.alertTypeOffline'),'GPS信号丢失':t('merchant.home.alertTypeGpsLost'),'GPS定位过时':t('merchant.home.alertTypeGpsStale'),'疑似断电':t('merchant.home.alertTypePowerOff')}));
 const _VEH_STATUS_MAP={'空闲':'空闲','占用中':'占用中','租用中':'租用中'};
 const _IGNORE_REASON_MAP={'误报':'误报','已现场处理':'已现场处理','重复告警':'重复告警','其他':'其他'};
-function alertTypeLabel(type){return _ALERT_TYPE_MAP[type]||type}
+function alertTypeLabel(type){return _ALERT_TYPE_MAP.value[type]||type}
 function vehStatusLabel(status){return _VEH_STATUS_MAP[status]||status}
 function ignoreReasonLabel(reason){return _IGNORE_REASON_MAP[reason]||reason}
 /* ══ HOME ══ */
 const homeOV=ref(null);const homeRefreshing=ref(false);
 /* 首页门店名跟随「我的 → 切换门店」的当前门店 */
 const store=computed(()=>({name:curStore.value||'—'}));
-const bizStats=computed(()=>[{label:'今日收款',value:fmtRp(3240),trend:null},{label:'本月收款',value:fmtRp(28500),trend:null},{label:'租赁中',value:'18',trend:null},{label:'即将到期',value:'8',trend:null}]);
- const vehStats=computed(()=>[{label:'在线车辆',value:'42',online:true},{label:'离线车辆',value:'8',danger:true,online:false}]);
+const bizStats=computed(()=>[{label:t('merchant.home.bizStats.todayRevenue'),value:fmtRp(3240),trend:null},{label:t('merchant.home.bizStats.monthRevenue'),value:fmtRp(28500),trend:null},{label:t('common.orderStatus.progress'),value:'18',trend:null},{label:t('common.orderStatus.return'),value:'8',trend:null}]);
+ const vehStats=computed(()=>[{label:t('merchant.home.vehStats.online'),value:'42',online:true},{label:t('merchant.home.vehStats.offline'),value:'8',danger:true,online:false}]);
  function goHomeVehStat(s){navOpen();if(!can('home.stats.vehicle')){deny();return}if(!can('vehicle.list')){deny();return}homeOV.value=null;curAlert.value=null;alertMod.value=null;vehOV.value=null;vehQ.value='';vehPill.value='';vehFsModel.value='';vehFsLost.value=null;vehFsOnline.value=s.online===true?true:s.online===false?false:null;tab.value='vehicles'}
  const ALERTS_SEED=[
   {id:1,vin:'LSVAU2Z0A00888000',type:'车辆离线',lv:'p0',status:'pending',time:'2024-10-24 10:45:18',firstTime:'2024-10-24 08:12:05',duration:'2小时33分',count:3,location:'北京市朝阳区望京街道附近',orderId:'YD202501180004',icon:'wifi-off',ignoreReason:'',closeSource:'',closedTime:'',timeline:[
@@ -8682,7 +8693,7 @@ const ignoreReasons=['误报','已现场处理','重复告警','其他'];
 
 const LV={p0:'bg-[#FEF2F2] text-[#DC2626]',p1:'bg-[#FFFBEB] text-[#D97706]',p2:'bg-[#EBF1FD] text-[var(--accent)]'};
 const ST={pending:'bg-[#FEF2F2] text-[#DC2626]',processing:'bg-[#FFFBEB] text-[#D97706]',ignored:'bg-[#F6F7F9] text-[#6B6B6B]',closed:'bg-[#ECFDF3] text-[#17A34A]'};
-const ST_L=computed(()=>({pending:'待处理',processing:'处理中',ignored:'已忽略',closed:'已关闭'}));
+const ST_L=computed(()=>({pending:t('merchant.status.pending'),processing:t('common.status.processing'),ignored:t('merchant.status.ignored'),closed:t('merchant.status.closed')}));
 const CLOSE_SRC_L=computed(()=>({auto:'自动恢复',manual:'人工处理'}));
 const LV_L=computed(()=>({p0:'高',p1:'中',p2:'低'}));
 function lvBg(lv){return LV[lv]||LV.p2}
@@ -9315,7 +9326,7 @@ const ordersPlaceholder=computed(()=>!ordersEntry.value);
 /* 列表标题即订单类型名称（车辆租赁 / 电池租赁 / 车电套餐），不再拼「订单列表」后缀 */
 const ordersLName=computed(()=>{const m={vehicle:'车辆租赁',battery:'电池租赁',package:'车电套餐'};return ordersEntry.value?m[ordersEntry.value]||'车辆租赁':'电池租赁'});
 const ordersListTitle=computed(()=>ordersLName.value);
-const orderEntries=computed(()=>[{v:'vehicle',l:'车辆租赁',icon:'bike',code:'order.list'},{v:'battery',l:'电池租赁',icon:'battery-charging',code:'order.battery.list'},{v:'package',l:'车电套餐',icon:'package',code:'order.package.list'}].filter(e=>can(e.code)));
+const orderEntries=computed(()=>[{v:'vehicle',l:t('common.orders.typeVehicle'),icon:'bike',code:'order.list'},{v:'battery',l:t('common.orders.typeBattery'),icon:'battery-charging',code:'order.battery.list'},{v:'package',l:t('common.orders.typePackage'),icon:'package',code:'order.package.list'}].filter(e=>can(e.code)));
 function homeOpenOrders(t){navOpen();const listCode=t==='battery'?'order.battery.list':t==='package'?'order.package.list':'order.list';if(!can(listCode)){deny();return}ordersEntry.value=t;ordersType.value=t;ordersOV.value='olist';ordersMod.value=null;ordersQ.value='';ordersPill.value='';ordersFsSt.value=[];ordersFsPlan.value=[];ordersFsPay.value=[];ordersFsPaySt.value=[];ordersFsStart.value=_ordDateDef.start;ordersFsEnd.value=_ordDateDef.end;searchScope.value='id';tab.value='orders';triggerListLoading('ol-'+t)}
 function closeOrderList(){navBack()}
 /* ══ BATTERY DEVICES (订单 tab → 电池) ══ */
@@ -10357,9 +10368,9 @@ const menuGroups=computed(()=>{
   return items.length?[{name:'常用功能',items}]:[];
 });
 function openMenu(id){if(id==='user'&&!can('user.list')){deny();return}if(id==='recharge'&&!can('recharge.list')){deny();return}navOpen();profileOV.value=id;brandLoading.value=true;setTimeout(function(){brandLoading.value=false},600)}
-const langOptions=[{id:'en',label:'English'},{id:'zh-CN',label:'简体中文'},{id:'zh-HK',label:'繁體中文（中國香港）'},{id:'id',label:'Bahasa Indonesia'}];
-const appLangLabel=computed(()=>'简体中文');
-function selectLang(id){navDrop();profileSub.value=null}
+const langOptions=[{id:'en',label:'English'},{id:'zh-CN',label:'简体中文'},{id:'zh-HK',label:'繁體中文（中國香港）'},{id:'id',label:'Bahasa Indonesia'},{id:'th',label:'ไทย'}];
+const appLangLabel=computed(()=>{const f=langOptions.find(x=>x.id===appLang.value);return f?f.label:'简体中文'});
+function selectLang(id){appLang.value=id;i18n.global.locale.value=id;document.documentElement.lang=id;navDrop();profileSub.value=null}
 const showLogin=ref(false);
 const loginView=ref('main');
 /* 登录页「环境-品牌」：入口显示「环境 - 品牌」，点开两列滚轮（左环境 + 右品牌，二级联动），确定后回填。
@@ -10448,37 +10459,37 @@ const dialFiltered=computed(()=>{const q=(dialQ.value||'').trim().toLowerCase().
 const canSendCode=computed(()=>{if(loginCd.value>0||!loginAgree.value)return false;if(loginMode.value==='phone')return!!(loginPhone.value||'').trim();if(loginMode.value==='email')return!!(loginEmail.value||'').trim();return false});
 const canLogin=computed(()=>{if(!loginAgree.value)return false;if(loginMode.value==='phone'){if(!(loginPhone.value||'').trim())return false;return loginSub.value==='password'?!!(loginPwd.value||'').trim():!!(loginCode.value||'').trim()}if(loginMode.value==='email'){if(!(loginEmail.value||'').trim())return false;return loginSub.value==='password'?!!(loginPwd.value||'').trim():!!(loginCode.value||'').trim()}return!!(loginAccount.value||'').trim()&&!!(loginPwd.value||'').trim()});
 function resetLoginForm(){loginView.value='main';loginMode.value='phone';loginSub.value='password';loginPhone.value='';loginEmail.value='';loginAccount.value='';loginPwd.value='';loginCode.value='';loginPwdVisible.value=false;loginAgree.value=false;dialQ.value='';dialPickerSource.value=null;if(loginCdTimer){clearInterval(loginCdTimer);loginCdTimer=null}loginCd.value=0}
-function doLogout(){profileMod.value=null;navReset();profileOV.value=null;navDrop();profileSub.value=null;dialPickerSource.value=null;resetLoginForm();showLogin.value=true;toast('已退出登录','info')}
+function doLogout(){profileMod.value=null;navReset();profileOV.value=null;navDrop();profileSub.value=null;dialPickerSource.value=null;resetLoginForm();showLogin.value=true;toast(t('common.toast.logout'),'info')}
 function demoLogin(){navReset();showLogin.value=false;resetLoginForm();loginErr.value={};tab.value=can('home.view')?'home':'profile';enforceTabPerms();toast('登录成功','success')}
 function demoLogout(){navReset();resetLoginForm();showLogin.value=true}
 function closeLogin(){if(dialPickerSource.value==='login'){closeDialPicker();return}if(loginView.value!=='main'){loginView.value='main'}}
 function loginOpenLang(){loginView.value='lang'}
-function selectLangFromLogin(id){loginView.value='main'}
+function selectLangFromLogin(id){appLang.value=id;i18n.global.locale.value=id;document.documentElement.lang=id;loginView.value='main'}
 function openDialCode(src){dialQ.value='';dialPickerSource.value=src||'login'}
 function closeDialPicker(){dialPickerSource.value=null;dialQ.value=''}
 function pickDial(c){const s=dialPickerSource.value;if(s==='bind'){bpArea.value=c.code}else if(s==='account'){fa.value.code=c.code}else if(s==='cs'){fc.value.code=c.code}else{loginDial.value=c.code}closeDialPicker()}
 function setLoginMode(m){loginMode.value=m;loginSub.value=m==='account'?'password':'password';loginCodeChannel.value='sms';loginPwd.value='';loginCode.value='';if(loginCdTimer){clearInterval(loginCdTimer);loginCdTimer=null}loginCd.value=0}
 /* 账号登录时的「注册账号」入口（原型无注册页：toast 提示） */
-function openRegister(){toast('注册账号（原型演示）','info')}
-const LOGIN_MODE_OPTS=[{v:'phone',l:'手机号',icon:'smartphone'},{v:'email',l:'邮箱',icon:'mail'},{v:'account',l:'账号',icon:'user'}];
+function openRegister(){toast(t('merchant.login.registerDemo'),'info')}
+const LOGIN_MODE_OPTS=[{v:'phone',lc:'common.phone',icon:'smartphone'},{v:'email',lc:'common.label.email',icon:'mail'},{v:'account',lc:'common.label.account',icon:'user'}];
 const LOGIN_SOCIAL_OPTS=[{v:'google',l:'Google',icon:'google'},{v:'whatsapp',l:'WhatsApp',icon:'whatsapp'}];
 /* 入口：账号方式只列「非当前模式」；例外——正在用 WhatsApp 验证码时仍显示「手机号」入口（点它回到短信/密码登录）。
    三方 Google 常驻，WhatsApp 正在使用（验证码渠道=whatsapp）时隐藏 */
-const loginSwitchEntries=computed(()=>LOGIN_MODE_OPTS.filter(function(m){return m.v!==loginMode.value||(m.v==='phone'&&loginCodeChannel.value==='whatsapp')}));
+const loginSwitchEntries=computed(()=>LOGIN_MODE_OPTS.filter(function(m){return m.v!==loginMode.value||(m.v==='phone'&&loginCodeChannel.value==='whatsapp')}).map(m=>({...m,l:t(m.lc)})));
 const loginSocialEntries=computed(()=>LOGIN_SOCIAL_OPTS.filter(function(s){return !(s.v==='whatsapp'&&loginCodeChannel.value==='whatsapp')}));
 /* 三方入口点击：WhatsApp 本质是手机号 + 验证码，切到手机号验证码登录并标记渠道；Google 走模拟授权 */
 function loginSocialClick(v){if(v==='whatsapp'){setLoginMode('phone');setLoginSub('code');loginCodeChannel.value='whatsapp';return}socialLogin()}
 /* 三方登录（Google，原型：模拟三方授权成功，跳过表单校验；仍需勾选隐私政策） */
 function socialLogin(){
-  if(!loginAgree.value){toast('请先阅读并同意隐私政策','warn');return}
+  if(!loginAgree.value){toast(t('common.login.needAgree'),'warn');return}
   brandLoading.value=true;
-  setTimeout(function(){brandLoading.value=false;showLogin.value=false;resetLoginForm();loginErr.value={};tab.value=can('home.view')?'home':'profile';enforceTabPerms();toast('登录成功','success')},600)
+  setTimeout(function(){brandLoading.value=false;showLogin.value=false;resetLoginForm();loginErr.value={};tab.value=can('home.view')?'home':'profile';enforceTabPerms();toast(t('common.toast.loginSuccess'),'success')},600)
 }
 function setLoginSub(s){loginSub.value=s;loginCodeChannel.value='sms';loginPwd.value='';loginCode.value='';if(loginCdTimer){clearInterval(loginCdTimer);loginCdTimer=null}loginCd.value=0}
-function sendLoginCode(){if(!canSendCode.value)return;toast('验证码已发送','success');if(loginCdTimer)clearInterval(loginCdTimer);loginCd.value=60;loginCdTimer=setInterval(function(){loginCd.value--;if(loginCd.value<=0){clearInterval(loginCdTimer);loginCdTimer=null}},1000)}
+function sendLoginCode(){if(!canSendCode.value)return;toast(t('common.toast.codeSent'),'success');if(loginCdTimer)clearInterval(loginCdTimer);loginCd.value=60;loginCdTimer=setInterval(function(){loginCd.value--;if(loginCd.value<=0){clearInterval(loginCdTimer);loginCdTimer=null}},1000)}
 const loginErr=ref({});
-function loginValid(){var m=loginMode.value,s=loginSub.value;if(m==='phone'){var p=(loginPhone.value||'').trim();if(!p)return{field:'phone',msg:'请输入手机号'};if(!/^\d+$/.test(p))return{field:'phone',msg:'手机号仅支持数字'};if(!simulatePhoneValid(loginDial.value,p))return{field:'phone',msg:'手机号格式不正确，请检查号码与区号是否匹配'}}else if(m==='email'){var em=(loginEmail.value||'').trim();if(!em)return{field:'email',msg:'请输入邮箱'};if(em.length>255)return{field:'email',msg:'邮箱地址不能超过 255 位'};if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))return{field:'email',msg:'邮箱格式不正确'}}else{var ac=(loginAccount.value||'').trim();if(!ac)return{field:'account',msg:'请输入账号'};if(!/^[a-zA-Z0-9_]{1,20}$/.test(ac))return{field:'account',msg:'账号仅支持字母、数字、下划线'}}if(s==='password'){var pw=(loginPwd.value||'').trim();if(!pw)return{field:'pwd',msg:'请输入密码'};if(!/^[A-Za-z0-9!-~]{1,64}$/.test(pw))return{field:'pwd',msg:'密码仅支持大小写字母、数字、键盘符号'}}else{var cd=(loginCode.value||'').trim();if(!cd)return{field:'code',msg:'请输入验证码'};if(!/^\d{6}$/.test(cd))return{field:'code',msg:'验证码格式不正确'}}return null}
-function doLogin(){if(!loginAgree.value){toast('请先阅读并同意隐私政策','warn');return}var err=loginValid();loginErr.value={};if(err){loginErr.value[err.field]=err.msg;return}brandLoading.value=true;setTimeout(function(){brandLoading.value=false;showLogin.value=false;resetLoginForm();loginErr.value={};tab.value=can('home.view')?'home':'profile';enforceTabPerms();toast('登录成功','success')},600)}
+function loginValid(){var m=loginMode.value,s=loginSub.value;if(m==='phone'){var p=(loginPhone.value||'').trim();if(!p)return{field:'phone',msg:t('common.login.phonePlaceholder')};if(!/^\d+$/.test(p))return{field:'phone',msg:t('common.toast.phoneDigit')};if(!simulatePhoneValid(loginDial.value,p))return{field:'phone',msg:t('common.toast.phoneFormat')}}else if(m==='email'){var em=(loginEmail.value||'').trim();if(!em)return{field:'email',msg:t('common.login.emailPlaceholder')};if(em.length>255)return{field:'email',msg:t('common.toast.emailLength')};if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))return{field:'email',msg:t('common.profile.emailFormatError')}}else{var ac=(loginAccount.value||'').trim();if(!ac)return{field:'account',msg:t('common.login.accountPlaceholder')};if(!/^[a-zA-Z0-9_]{1,20}$/.test(ac))return{field:'account',msg:t('common.toast.accountFormat')}}if(s==='password'){var pw=(loginPwd.value||'').trim();if(!pw)return{field:'pwd',msg:t('common.login.passwordPlaceholder')};if(!/^[A-Za-z0-9!-~]{1,64}$/.test(pw))return{field:'pwd',msg:t('common.toast.pwdChars')}}else{var cd=(loginCode.value||'').trim();if(!cd)return{field:'code',msg:t('common.login.codePlaceholder')};if(!/^\d{6}$/.test(cd))return{field:'code',msg:t('common.toast.codeFormat')}}return null}
+function doLogin(){if(!loginAgree.value){toast(t('common.login.needAgree'),'warn');return}var err=loginValid();loginErr.value={};if(err){loginErr.value[err.field]=err.msg;return}brandLoading.value=true;setTimeout(function(){brandLoading.value=false;showLogin.value=false;resetLoginForm();loginErr.value={};tab.value=can('home.view')?'home':'profile';enforceTabPerms();toast(t('common.toast.loginSuccess'),'success')},600)}
 watch([loginPhone,loginPwd,loginCode,loginEmail,loginAccount],()=>{if(Object.keys(loginErr.value).length)loginErr.value={}});
 
 function doSwitch(n){if(n===curStore.value){navDrop();profileOV.value=null;return}curStore.value=n;navDrop();profileOV.value=null}
@@ -11453,7 +11464,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDeta
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,navOpen,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
   curStore,menuGroups,openMenu,stores,doSwitch,orderStoreNameOf,orderPaidAmountOf,orderUnpaidAmountOf,shopPickTarget,shopPickQ,shopPickList,shopPickCurId,openShopPick,closeShopPick,pickShop,
-appLang,appLangLabel,langOptions,selectLang,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,loginErr,doLogout,demoLogin,demoLogout,
+appLang,appLangLabel,intlLocale,langOptions,selectLang,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,openPkgPicker,pkgPick,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
@@ -11468,6 +11479,9 @@ coOrders,coOV,curChargeOrder,coQ,coSearchScope,coSearchScopeOpen,coSearchScopeOp
 }
 });
 app.directive('swipe-close',{mounted(el,b){var sx=0,sy=0;el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(sx<40&&dx>60&&Math.abs(dy)<Math.abs(dx)*0.5)b.value()},{passive:true})}});
+const i18n=VueI18n.createI18n({legacy:false,globalInjection:true,locale:'zh-CN',fallbackLocale:'zh-CN',messages:window.__RENT_I18N_MERCHANT__||{}});
+app.use(i18n);
+const t=(k,...a)=>i18n.global.t(k,...a);
 registerSheetKit(app);
 app.mount(root);
 }

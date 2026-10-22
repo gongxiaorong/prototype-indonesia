@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * ════════ i18n 校验 — 按 locales/{rent,swap} 两目录分组检查五语一致性
+ * ════════ i18n 校验 — 按 locales/{rent-user,rent-merchant,swap} 三目录分组检查五语一致性
  * ════════ 用法：node scripts/i18n_check.mjs
  *
  * 口径对齐 AGENTS.md §5：
- *  - 目录代替项目前缀命名空间：rent/（user./merchant./demo.）、swap/
+ *  - 目录代替项目前缀命名空间：rent-user/（common./user./demo.）、
+ *    rent-merchant/（common./merchant./demo.）、swap/
  *  - zh-CN.json 为唯一权威源，en/id/th/zh-HK 单向派生
  *  - 某目录无 zh-CN.json 或内容为空时跳过该目录
+ *  - rent 拆分后两端共享 common.* + demo.*，该段必须两端镜像（见 SHARED）
  *
  * 硬错误（计入退出码，exit 1）：
  *  - MISSING     某语言缺键
@@ -15,15 +17,19 @@
  *  - SUFFIX      数字后缀残留键：末段去掉末尾数字后「同名键也存在」才算
  *                （menu.home0 vs menu.home 并存）；days7 / billingRules.3 / tianneng72V20 属合法业务名，不报
  *  - TERM        跨目录同义中文（zh-CN 值逐字相同）译法不一致，见 AGENTS.md §5
- *                「跨目录术语一致性（rent ↔ swap）」。判定**锚点是中文值、不是 key 路径**：
- *                两目录同一句中文即使 key 完全不同，en/id/th/zh-HK 也必须一致；
- *                反之 key 同名但中文不同的不算漂移（common 段不要求两目录互相复制）。
+ *                「跨目录术语一致性」。判定**锚点是中文值、不是 key 路径**：
+ *                同句中文即使 key 完全不同，en/id/th/zh-HK 也必须一致；
+ *                反之 key 同名但中文不同的不算漂移。
+ *                三对独立比对：rent-user↔swap、rent-merchant↔swap、rent-user↔rent-merchant。
  *                demo.* 与 TERM_ALLOW（品牌专名）已排除；逐条明细见 i18n-cross-drift.md
+ *  - SHARED      rent 拆分后的共享段镜像：rent-user 与 rent-merchant 的
+ *                common.* + demo.* key 集合必须一致，且五语值逐字一致
+ *                （该段由两端共用，任一端单独改动即迁移/维护错误）
  *
  * 人工复核项（不计入退出码）：
  *  - NUMBER      数字集合与源不一致。中文常以汉字表示（百公里 / 两位 / 一张），
  *                译文写阿拉伯数字（100 km / 2 / 1）；日期本地化（7月 → Jul）同理。需人眼扫一遍
- *  - STATUS      与中文逐字相同。rent/ 实测来源：demo.* 演示假数据、品牌专名（2C2P）、
+ *  - STATUS      与中文逐字相同。rent-user / rent-merchant 实测来源：demo.* 演示假数据、品牌专名（2C2P）、
  *                繁简同形词（押金 / 退款 / 重置），通常无需处理
  */
 import fs from 'node:fs';
@@ -31,7 +37,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const DIRS = ['rent', 'swap'];
+const DIRS = ['rent-user', 'rent-merchant', 'swap'];
 const LANGS = ['zh-CN', 'en', 'id', 'th', 'zh-HK'];
 const SRC = 'zh-CN';
 
@@ -123,55 +129,117 @@ for (const dir of DIRS) {
   console.log('');
 }
 
-// ── 跨目录同义中文译法一致性（AGENTS.md §5：同一句中文两端译法必须一致）──
-// 口径：按 zh-CN 值分组（**不看 key 路径**），同一组中文在 rent 与 swap 的译文集合必须相同。
+// ── 跨目录同义中文译法一致性（AGENTS.md §5：同一句中文任意两目录译法必须一致）──
+// 口径：按 zh-CN 值分组（**不看 key 路径**），同一组中文在两目录的译文集合必须相同。
+// 三对独立比对（rent 已按端拆分，故除 swap 两对外还要比对 rent-user ↔ rent-merchant）。
 // 差异计入硬错误 TERM。demo.* 整体排除；TERM_ALLOW（品牌专名）命中项排除。
-// 说明：common 段不要求两目录键集镜像——同句中文 key 各异也按本规则比对，key 同名而中文不同不算漂移。
-if (dirFull.rent && dirFull.swap) {
+// 说明：common 段不要求跨目录键集镜像——同句中文 key 各异也按本规则比对，key 同名而中文不同不算漂移。
+const TERM_PAIRS = [
+  ['rent-user', 'swap'],
+  ['rent-merchant', 'swap'],
+  ['rent-user', 'rent-merchant'],
+];
+
+/** 「同义中文」分组：zh-CN 值 → 该目录下所有 key（排除 demo.* 与 TERM_ALLOW 命中项） */
+function termGroup(dir) {
+  const m = new Map();
+  const src = dirFull[dir][SRC];
+  for (const k of Object.keys(src)) {
+    if (k.startsWith('demo.')) continue;
+    const zh = (src[k] || '').trim();
+    if (TERM_ALLOW.some((t) => zh.includes(t))) continue;
+    if (!m.has(zh)) m.set(zh, []);
+    m.get(zh).push(k);
+  }
+  return m;
+}
+
+/** 比对一对目录，返回 { shared, rows } */
+function termCompare(a, b) {
   const others = LANGS.filter((l) => l !== SRC);
-  const allowed = (zh) => TERM_ALLOW.some((t) => zh.includes(t));
-  const group = (dir) => {
-    const m = new Map();
-    for (const k of Object.keys(dirFull[dir][SRC])) {
-      if (k.startsWith('demo.')) continue;
-      const zh = dirFull[dir][SRC][k].trim();
-      if (allowed(zh)) continue;
-      if (!m.has(zh)) m.set(zh, []);
-      m.get(zh).push(k);
-    }
-    return m;
-  };
-  const rm = group('rent');
-  const sm = group('swap');
-  const sharedZh = [...rm.keys()].filter((zh) => sm.has(zh));
+  const am = termGroup(a);
+  const bm = termGroup(b);
+  const sharedZh = [...am.keys()].filter((zh) => bm.has(zh));
   const perLang = {};
   const rows = [];
   for (const zh of sharedZh) {
     const hit = [];
     for (const lang of others) {
-      const rv = [...new Set(rm.get(zh).map((k) => dirFull.rent[lang][k] ?? '<缺>'))].sort();
-      const sv = [...new Set(sm.get(zh).map((k) => dirFull.swap[lang][k] ?? '<缺>'))].sort();
-      if (rv.join('\u0000') !== sv.join('\u0000')) {
+      const av = [...new Set(am.get(zh).map((k) => dirFull[a][lang]?.[k] ?? '<缺>'))].sort();
+      const bv = [...new Set(bm.get(zh).map((k) => dirFull[b][lang]?.[k] ?? '<缺>'))].sort();
+      if (av.join('\u0000') !== bv.join('\u0000')) {
         perLang[lang] = (perLang[lang] || 0) + 1;
-        hit.push(lang + ' rent「' + rv.join(' / ') + '」swap「' + sv.join(' / ') + '」');
+        hit.push(lang + ' ' + a + '「' + av.join(' / ') + '」' + b + '「' + bv.join(' / ') + '」');
       }
     }
-    if (hit.length) rows.push({ zh, rk: rm.get(zh), sk: sm.get(zh), hit });
+    if (hit.length) rows.push({ zh, ak: am.get(zh), bk: bm.get(zh), hit });
   }
-  console.log('== 跨目录同义中文译法（rent vs swap）==');
+  return { sharedZh, perLang, rows };
+}
+
+for (const [a, b] of TERM_PAIRS) {
+  const title = '== 跨目录同义中文译法（' + a + ' vs ' + b + '）==';
+  if (!dirFull[a] || !dirFull[b]) {
+    console.log(title + ' 跳过（某一目录为空占位）');
+    continue;
+  }
+  const { sharedZh, perLang, rows } = termCompare(a, b);
+  console.log(title);
   console.log('  共有同中文 ' + sharedZh.length + ' 条，译法不一致 ' + rows.length +
-    ' 条（TERM，计入退出码）：' + others.map((l) => l + '=' + (perLang[l] || 0)).join(' '));
+    ' 条（TERM，计入退出码）：' +
+    LANGS.filter((l) => l !== SRC).map((l) => l + '=' + (perLang[l] || 0)).join(' '));
   rows.slice(0, 12).forEach((r) => {
-    console.log('    · ' + short(r.zh) + '  [' + r.rk[0] + ' ↔ ' + r.sk[0] + ']');
+    console.log('    · ' + short(r.zh) + '  [' + r.ak[0] + ' ↔ ' + r.bk[0] + ']');
     r.hit.forEach((h) => console.log('        ' + h));
   });
   if (rows.length > 12) console.log('    …其余 ' + (rows.length - 12) + ' 条明细见 i18n-cross-drift.md');
   failures += rows.length;
+}
+
+// ── 共享段镜像（rent 拆分专用硬错误 SHARED）──
+// rent-user 与 rent-merchant 由同一份 locales/rent 拆出，common.* + demo.* 两端共用：
+// key 集合必须一致，且五语（zh-CN/en/id/th/zh-HK）值逐字一致。差异说明拆分迁移有误，不得单端改文案。
+const SHARED_SEGS = ['common.', 'demo.'];
+const isSharedKey = (k) => SHARED_SEGS.some((s) => k.startsWith(s));
+
+if (!dirFull['rent-user'] || !dirFull['rent-merchant']) {
+  console.log('== 共享段镜像（rent-user ↔ rent-merchant）== 跳过（某一目录为空占位）');
 } else {
-  console.log('== 跨目录同义中文译法 == 跳过（某一目录为空占位）');
+  const A = dirFull['rent-user'];
+  const B = dirFull['rent-merchant'];
+  const ka = new Set(Object.keys(A[SRC]).filter(isSharedKey));
+  const kb = new Set(Object.keys(B[SRC]).filter(isSharedKey));
+  const union = [...new Set([...ka, ...kb])].sort();
+  const rows = []; /* { key, langs[] } */
+  let points = 0;
+  for (const k of union) {
+    const langs = [];
+    if (!ka.has(k) || !kb.has(k)) {
+      langs.push(ka.has(k) ? '仅 rent-user 有' : '仅 rent-merchant 有');
+      points++;
+    } else {
+      for (const lang of LANGS) {
+        const av = A[lang]?.[k];
+        const bv = B[lang]?.[k];
+        if (av !== bv) {
+          langs.push(lang);
+          points++;
+        }
+      }
+    }
+    if (langs.length) rows.push({ key: k, langs });
+  }
+  console.log('== 共享段镜像（rent-user ↔ rent-merchant）==');
+  console.log('  common.* + demo.* 共 ' + union.length + ' 键，SHARED=' + points +
+    (rows.length ? '（涉及 ' + rows.length + ' 个 key，计入退出码）' : '（计入退出码）'));
+  rows.slice(0, 8).forEach((r) => {
+    console.log('    · ' + r.key + '  [差: ' + r.langs.join(', ') + ']');
+  });
+  if (rows.length > 8) console.log('    …其余 ' + (rows.length - 8) + ' 个 key 的差异未展开');
+  failures += points;
 }
 
 console.log('\n结果：' + (failures
-  ? '失败 ' + failures + ' 项（MISSING/ORPHAN/PLACEHOLDER/SUFFIX/TERM）'
+  ? '失败 ' + failures + ' 项（MISSING/ORPHAN/PLACEHOLDER/SUFFIX/TERM/SHARED）'
   : '通过：无硬错误') + '；NUMBER / STATUS 为人工复核项，不影响退出码');
 process.exit(failures ? 1 : 0);

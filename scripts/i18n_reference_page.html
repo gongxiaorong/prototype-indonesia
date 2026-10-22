@@ -64,7 +64,7 @@ mark{background:#FFE58F;padding:0 1px;border-radius:2px}
 
     <div class="tip" v-if="error">
       <div>{{ error }}</div>
-      <div style="margin-top:6px">本页通过 fetch 读取 <code>locales/{{ dir }}/*.json</code>，请用 http(s) 访问：仓库根目录执行
+      <div style="margin-top:6px">本页通过 fetch 读取 <code>{{LOCALES}}/*.json</code>，请用 http(s) 访问：仓库根目录执行
         <code>python -m http.server 8000</code>，再打开 <code>http://localhost:8000/{{ dir }}-translation-reference.html</code>。</div>
     </div>
 

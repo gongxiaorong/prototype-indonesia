@@ -1,6 +1,8 @@
-# rent ↔ swap 跨目录同义中文译法清单（阶段 2 · 跨目录对齐 ＋ 阶段 3 · 中文值锚定复检）
+# rent-user / rent-merchant ↔ swap 跨目录同义中文译法清单（阶段 2 · 跨目录对齐 ＋ 阶段 3 · 中文值锚定复检）
 
-生成日期：2026-09-29（内部译法统一 + 重复 key 清理后重生成）　｜　来源：`locales/rent/zh-CN.json` × `locales/swap/zh-CN.json` 按**中文值分组**比对（`demo.*` 已排除）
+生成日期：2026-09-29（内部译法统一 + 重复 key 清理后重生成）　｜　来源：`locales/rent-user/zh-CN.json`、`locales/rent-merchant/zh-CN.json` × `locales/swap/zh-CN.json` 按**中文值分组**比对（`demo.*` 已排除）
+
+> 2026-10-22：`locales/rent/` 已拆分为 `locales/rent-user/`（common+user+demo）与 `locales/rent-merchant/`（common+merchant+demo）；本文件历史条目中的 `locales/rent` 均指拆分前目录，条目内容与键名不回改。
 
 前置：两端各自内部已完成「一句中文一个 key、一个译法」（含重复 key 合并到 `common.*`）。
 

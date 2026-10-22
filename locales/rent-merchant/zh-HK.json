@@ -44,7 +44,9 @@
       "phonePlaceholder": "請輸入手機號",
       "privacyPolicy": "隱私政策",
       "accountPlaceholder": "請輸入帳號",
-      "passwordPlaceholder": "請輸入密碼"
+      "passwordPlaceholder": "請輸入密碼",
+      "envTitle": "選擇環境",
+      "register": "註冊帳號"
     },
     "orderStatus": {
       "breach": "違約鎖單",
@@ -187,7 +189,8 @@
       "noHomePermission": "當前帳號沒有首頁任何功能權限，請聯繫管理員開通",
       "nothingToCopy": "無內容可複製",
       "saveSuccess": "儲存成功",
-      "copySuccess": "複製成功"
+      "copySuccess": "複製成功",
+      "codeSent": "驗證碼已發送"
     },
     "vehicles": {
       "addVinPlaceholder": "請輸入車架號",
@@ -231,7 +234,8 @@
       "packageDownloaded": "安裝包已下載，即將安裝",
       "relaunch": "重新打開應用",
       "updateComplete": "更新完成！已升級至 V{version}",
-      "updateNow": "立即更新"
+      "updateNow": "立即更新",
+      "later": "稍後提醒"
     },
     "wallet": {
       "rechargeBalance": "增值餘額",
@@ -313,7 +317,7 @@
       "unselected": "未選擇",
       "originalRent": "原租金",
       "originalDeposit": "原按金",
-      "chargeOrder": "增值訂單",
+      "rechargeOrder": "增值訂單",
       "renewal": "續租",
       "balanceFlow": "餘額流水",
       "beforeDue": "到期前",
@@ -398,338 +402,6 @@
       "disabled": "停用",
       "enabled": "啟用",
       "processing": "處理中"
-    }
-  },
-  "user": {
-    "orders": {
-      "noticeRules": {
-        "1": "領取前請檢查車輛/電池狀態，確認物品狀況及性能完好",
-        "2": "僅限下單本人領取，不支援代領",
-        "3": "車輛/電池損壞需按實際維修費用賠償",
-        "4": "請遵守當地交通法規，安全騎行",
-        "5": "庫存以門店實際現貨為準，建議提前聯絡門店確認諮詢"
-      },
-      "renter": "用車人",
-      "selfPickupReturn": "自行前往門店領取/歸還",
-      "totalDays": "共{n}天",
-      "payNow": "立即付款",
-      "tabOverdue": "逾期規則",
-      "storeInfo": "門店資訊",
-      "rentDurationTotal": "租賃時長（共{n}{unit}）",
-      "confirmDeleteDoc": "確定刪除這份資料嗎？",
-      "tabBilling": "計費規則",
-      "tabRenew": "續租規則",
-      "contactStore": "聯絡門店",
-      "returnReminder": "租期剩餘7天，請按時前往門店歸還",
-      "billHourly": "按小時計費",
-      "renewRules": {
-        "1": "自動續租預設開啟，續租費用從錢包餘額自動扣除；系統將於到期前自動發起扣款：時租方案為到期前{n}分鐘，其他方案為到期前{n}天。",
-        "2": "系統最多嘗試扣款{n}次。扣款成功則續租生效，訂單自動延續；若全部扣款嘗試均失敗，訂單自動續租將終止。",
-        "3": "自動續租失敗後，您可前往訂單詳情頁手動發起續租；可續租的訂單類型與狀態以門店設定為準，存在未支付的續租單時需先完成支付。"
-      },
-      "billingRules": {
-        "1": "租賃開始時間為用戶綁定車輛/電池的時間",
-        "2": "租金按訂單選定的租賃方案（時租、日租、週租、月租）核算",
-        "3": "租賃時長不足1個週期的，按1個週期計費"
-      },
-      "returnTimeLabel": "歸還時間",
-      "overdueRules": {
-        "1": "請在訂單約定時間內歸還車輛/電池",
-        "2": "若發生逾期歸還，商戶可選擇從按金抵扣逾期產生的相關費用",
-        "3": "按金抵扣不足的，商戶有權向用戶追償差額",
-        "4": "逾期超過約定天數未歸還，商戶有權對車輛進行遠程鎖定、對電池限制放電"
-      },
-      "cancelRules": {
-        "1": "訂單尚未付款，用戶可自行操作取消訂單",
-        "2": "訂單已付款但未領取車輛/電池，用戶可自行操作取消訂單",
-        "3": "領取車輛/電池後，需與商戶協商處理，具體退費以雙方協商結果為準",
-        "4": "租金、按金將在訂單取消後於 7 個工作日內按原付款路徑退還"
-      },
-      "rentDuration": "租賃時長",
-      "takeReturnInfo": "取還資訊",
-      "days30": "30天",
-      "timeOrdered": "下單",
-      "subtotalRp": "小計 Rp {amount}",
-      "subtotal": "小計",
-      "confirmOrder": "確認訂單",
-      "unitHour": "小時",
-      "confirmTitle": "訂單確認",
-      "tabCancel": "取消規則",
-      "mainOrder": "主訂單",
-      "myOrders": "我的訂單",
-      "docsUnit": "份",
-      "breachReminder": "已逾期 7 天，訂單已鎖定，請立即聯繫門店處理",
-      "uploadNotSupported": "當前訂單狀態暫不支持上傳",
-      "tabNotice": "租賃須知",
-      "overdueReminder": "訂單已到期，請及時前往門店歸還",
-      "countdownCancel": "剩餘{time}，超時未付款，訂單將自動取消",
-      "days7": "7天",
-      "unitDay": "天",
-      "billDaily": "按天計費",
-      "timePickup": "取車",
-      "pickupStartHint": "領取車輛/電池後開始計算訂單時長",
-      "selectPlanAndPay": "選擇租賃方案並付款"
-    },
-    "toast": {
-      "deviceBound": "設備綁定成功",
-      "deviceUnbound": "設備已解綁",
-      "msgAllRead": "已將訊息置為已讀"
-    },
-    "home": {
-      "explore": "探索發現",
-      "rentalEntry": "租賃入口",
-      "safeRide": "安全騎行",
-      "distNearestStore": "距最近門店{dist}",
-      "noMatchRegion": "未找到匹配地區",
-      "relocate": "重新定位",
-      "alertFilterProcessing": "處理中...",
-      "buyNow": "立即選購",
-      "rentalIntro": "租車介紹",
-      "safetySlogan": "您的安全是我們最關心的事",
-      "currentLocation": "當前定位",
-      "pushNotify": {
-        "renewReminderTitle": "訂單自動續租",
-        "renewSuccessTitle": "訂單自動續租成功",
-        "renewFailedTitle": "訂單自動續租失敗",
-        "renewReminderBody": "您的訂單將於2026-09-10 12:00:00自動續租，並扣款Rp150.000。如不需要續租，請前往訂單詳情關閉自動續租。",
-        "renewSuccessBody": "您的訂單已自動續租成功，扣款Rp150.000，訂單有效期已延長至2026-09-11 12:00:00。",
-        "renewFailedBody": "您的訂單自動續租失敗（第2/3次），餘額不足。請盡快增值，以免續租失敗次數過多導致自動續租功能關閉。",
-        "orderCreatedTitle": "訂單已建立",
-        "orderCreatedBody": "您的訂單YZ202512180001已建立，請在30分鐘內完成支付，逾時未支付訂單將自動取消。",
-        "orderPaidTitle": "訂單支付成功",
-        "orderPaidBody": "您的訂單YZ202512180001已支付成功。請盡快掃描車輛/電池二維碼完成綁定，綁定成功後訂單即開始計費。",
-        "deviceBoundTitle": "訂單已開始",
-        "deviceBoundBody": "您的訂單YZ202512180001已綁定車輛/電池，租期2026-09-01 10:30:00至2026-10-01 10:30:00。",
-        "orderExpiringTitle": "訂單即將到期",
-        "orderExpiringBody": "您的訂單YZ202512180001將於2026-10-01 10:30:00到期，請按時前往門店歸還，或前往訂單詳情辦理續租。",
-        "orderOverdueTitle": "訂單已到期",
-        "orderOverdueBody": "您的訂單YZ202512180001已到期，請及時前往門店歸還，以免產生額外費用；如仍需使用，可前往訂單詳情辦理續租。",
-        "orderBreachTitle": "車輛/電池已遠程鎖定",
-        "orderBreachBody": "您的訂單YZ202512180001已逾期7天，車輛與電池已被遠程鎖定。請立即聯繫門店處理。",
-        "orderCompletedTitle": "訂單已完成",
-        "orderCompletedBody": "您的訂單YZ202512180001已完成，感謝您的使用，期待再次為您服務。",
-        "orderCancelledTitle": "訂單已取消",
-        "orderCancelledBody": "您的訂單YZ202512180001已取消。已支付金額將原路退回。",
-        "orderAdjustedTitle": "訂單金額已調整",
-        "orderAdjustedBody": "您的訂單YZ202512180001金額已由Rp150.000調整為Rp200.000，如有疑問請聯繫門店。",
-        "orderRefundingTitle": "退款處理中",
-        "orderRefundingBody": "您的訂單YZ202512180001退款中，退款金額Rp150.000，預計1–7個工作日原路退回。",
-        "orderRefundedTitle": "退款成功",
-        "orderRefundedBody": "您的訂單YZ202512180001退款Rp150.000已退回原支付渠道，請注意查收。"
-      }
-    },
-    "search": {
-      "placeholder": "搜尋地點",
-      "history": "搜尋歷史",
-      "nearby": "附近充電樁、門店",
-      "relocate": "重新定位",
-      "noLocation": "未獲取您的位置資訊",
-      "noPoi": "沒有找到相關地點"
-    },
-    "location": {
-      "appAuthTitle": "允許「雅迪租車」使用你的位置資訊嗎？",
-      "appAuthDesc": "您的位置資訊將用於查找附近的充電樁與門店",
-      "serviceTitle": "定位服務",
-      "serviceDesc": "請在系統設定中開啟定位服務，以獲取附近的充電樁與門店",
-      "deny": "不允許",
-      "allow": "允許",
-      "goSetting": "去開啟",
-      "demoAuth": "定位授權",
-      "demoAuthorized": "已授權",
-      "demoUnauthorized": "未授權",
-      "demoOn": "已開啟",
-      "demoOff": "未開啟"
-    },
-    "profile": {
-      "newPwdPlaceholder": "請輸入 6–64 位新密碼",
-      "confirmNewPwdPlaceholder": "請再次輸入新密碼",
-      "noMaterial": "暫無資料",
-      "currentBound": "當前已綁定：{value}",
-      "phoneVerify": "手機號驗證",
-      "confirmNewPwd": "確認新密碼",
-      "feedback": "意見反饋",
-      "myVehiclesCount": "我的車輛 ({n})",
-      "myBatteriesCount": "我的電池 ({n})",
-      "myDevices": "我的裝置",
-      "emailAddressPlaceholder": "請輸入郵箱地址",
-      "aboutUs": "關於我們",
-      "privacyPolicy": "《用戶隱私政策》"
-    },
-    "common": {
-      "notLoggedInTap": "您還未登入，點我快速登入",
-      "langZhCN": "簡體中文",
-      "materialDeleted": "資料已刪除",
-      "clickBlankClose": "點擊空白處關閉",
-      "goLogin": "前往登入",
-      "copiedFormat": "{label}已複製"
-    },
-    "vehicles": {
-      "vehicleNamePlaceholder": "請輸入車輛名稱",
-      "motorUnlocked": "未鎖電機",
-      "findVehicle": "尋車",
-      "goHomeToBind": "請前往主頁下單後綁定",
-      "lockOpen": "開鎖",
-      "unbindVehicleDesc": "解綁後該車輛將從你的帳號下移除，相關智慧服務將一併失效",
-      "walkInfo": "步行{m}分鐘",
-      "vehicleNameHint": "輸入車輛名稱（最多 64 字）",
-      "cmdSending": "指令下發中…",
-      "motorLocked": "已鎖電機",
-      "noDeviceBound": "未綁定設備",
-      "unbind": "解除綁定",
-      "confirmBindVehicle": "確認將該車輛綁定到你的帳號？",
-      "noDevice": "暫無設備",
-      "noSwitchableDevice": "暫無可切換設備",
-      "deviceLocation": "設備位置",
-      "companionTime": "陪伴時間",
-      "track": "軌跡",
-      "companionMileage": "陪伴里程",
-      "unbindVehicle": "解綁車輛",
-      "lockClose": "關鎖",
-      "serviceEnabled": "已開通",
-      "smartServices": "智能服務",
-      "vehicleName": "車輛名稱",
-      "distanceInfo": "距您{m}米",
-      "goHome": "前往主頁",
-      "confirmBindBattery": "確認將該電池綁定到你的帳號？",
-      "powerOn": "啟動",
-      "powerOff": "斷電",
-      "powerOnToast": "已啟動",
-      "powerOffToast": "已斷電",
-      "unnamedVehicle": "未命名車輛"
-    },
-    "battery": {
-      "unbind": "解綁電池",
-      "orderProgress": "訂單進行中",
-      "unbindDesc": "解綁後該電池將從你的帳號下移除"
-    },
-    "login": {
-      "emailCodePlaceholder": "請輸入郵箱驗證碼",
-      "autoRegisterHint": "未註冊的帳號將會自動註冊"
-    },
-    "idInfo": {
-      "idPhoto": "身份證照片",
-      "notUploaded": "未上傳",
-      "idNoPlaceholder": "請輸入證件號碼",
-      "editRealName": "編輯實名資訊",
-      "licensePhoto": "駕駛證照片",
-      "selectRealName": "選擇實名資訊",
-      "addRealName": "新增實名資訊",
-      "title": "證件資訊",
-      "materialUploaded": "資料已上傳",
-      "reupload": "重新上傳",
-      "deletePhoto": "刪除照片",
-      "addImage": "上傳圖片",
-      "idPhotoRequired": "請至少上傳1張身份證照片",
-      "licensePhotoRequired": "請至少上傳1張駕駛證照片",
-      "photoHint": "請上傳清晰證件照，避免反光（最多2張）",
-      "noRealName": "暫無實名資訊",
-      "deleteRealName": "刪除實名資訊",
-      "confirmDeleteRealName": "確定要刪除該實名資訊嗎？",
-      "realNameRequired": "請先選擇實名資訊",
-      "realNameSelected": "已選擇實名資訊",
-      "realNameUpdated": "實名資訊已更新",
-      "realNameDeleted": "實名資訊已刪除",
-      "photoDeleted": "照片已刪除",
-      "saveSuccess": "證件資訊儲存成功",
-      "photoLimitExceeded": "圖片數量超出上限",
-      "photoMaxTwo": "最多上傳2張",
-      "licenseShort": "駕照",
-      "detail": "實名詳情",
-      "photoSelected": "{source}：已選中一張圖片",
-      "photoReplaced": "{source}：已替換當前圖片"
-    },
-    "plan": {
-      "selectPlan": "選擇方案",
-      "rentNow": "立即租",
-      "empty": "暫無方案",
-      "noService": "該租賃類型與方案暫無可選服務",
-      "rentalType": "租賃類型",
-      "renewalType": "續租類型",
-      "renewalPlan": "續租方案"
-    },
-    "wallet": {
-      "topupCustom": "自訂金額",
-      "title": "我的錢包",
-      "topupBonus": "贈送{amount}",
-      "balancePay": "錢包付款",
-      "topupSuccess": "增值成功",
-      "selectAmount": "請選擇增值金額"
-    },
-    "walletType": {
-      "consume": "消費",
-      "rechargeRefund": "增值退款",
-      "gift": "贈送",
-      "orderConsume": "訂單消費"
-    },
-    "store": {
-      "namePlaceholder": "搜尋門店",
-      "navToStore": "導航到店",
-      "empty": "暫無門店",
-      "businessHours": "營業時間{hours}",
-      "selectStore": "選擇門店",
-      "navTitle": "導航",
-      "mapAmap": "高德地圖",
-      "mapBaidu": "百度地圖",
-      "mapGoogle": "谷歌地圖"
-    },
-    "tab": {
-      "vehicles": "我的車輛"
-    },
-    "pwd": {
-      "resend": "重新獲取"
-    },
-    "charge": {
-      "title": "充電",
-      "scan": "掃碼充電",
-      "deviceDetail": "設備詳情",
-      "deviceLoading": "設備載入中…",
-      "deviceNo": "設備編號",
-      "deviceNoPlaceholder": "請輸入設備編號",
-      "deviceNotFound": "設備不存在",
-      "deviceInUseRetry": "該設備使用中，請更換",
-      "deviceConnected": "設備連接成功",
-      "listTitle": "充電樁和門店",
-      "statusIdle": "閒置",
-      "statusInUse": "使用中",
-      "statusCharging": "充電中",
-      "statusCompleted": "已完成",
-      "address": "地址",
-      "distance": "距離",
-      "unitPrice": "單價",
-      "pricePerMinute": "/分鐘",
-      "maxDuration": "最長充電時長",
-      "orderTitle": "充電下單",
-      "duration": "充電時長",
-      "durationSummary": "充電時長（共{n}分鐘）",
-      "durationAria": "充電時長（分鐘）",
-      "orderAmount": "訂單金額",
-      "payChannel": "付款渠道",
-      "basicInfo": "基礎資訊",
-      "chargeDetail": "充電明細",
-      "store": "所屬門店",
-      "customer": "用戶帳號",
-      "payStatus": "付款狀態",
-      "payTime": "付款時間",
-      "selectDuration": "選擇充電時長",
-      "actualDuration": "實際充電時長",
-      "refundDetail": "退款明細",
-      "refundAmount": "退款金額",
-      "orderList": "充電訂單"
-    },
-    "message": {
-      "title": "訊息中心",
-      "empty": "暫無訊息",
-      "emptySub": "新的訂單或續租訊息會顯示在這裡",
-      "categoryOrderStatus": "訂單狀態",
-      "categoryOrderStatusDesc": "訂單狀態、續租扣款等通知",
-      "categoryFeeRefund": "費用與退款",
-      "categoryFeeRefundDesc": "訂單改價、退款等通知",
-      "settingsMaster": "接收訊息通知",
-      "settingsCategoryHead": "訊息類型",
-      "settingsGroupOuter": "應用外",
-      "settingsGroupInner": "應用內",
-      "settingsOsRow": "手機系統通知",
-      "settingsPageRow": "訊息中心頁"
     }
   },
   "merchant": {
@@ -1003,7 +675,8 @@
       "noAlertsSub": "所有車輛營運正常",
       "alertTypePowerOff": "疑似斷電",
       "alertCenter": "告警中心",
-      "alertTypeGpsLost": "GPS信號丟失"
+      "alertTypeGpsLost": "GPS信號丟失",
+      "deviceManagement": "設備管理"
     },
     "vehicles": {
       "confirmArmDesc": "確定對車輛設防？",
@@ -1240,7 +913,8 @@
       "csList": "客戶服務列表"
     },
     "login": {
-      "welcome": "歡迎登入"
+      "welcome": "歡迎登入",
+      "registerDemo": "註冊帳號（原型演示）"
     },
     "model": {
       "list": "車型列表"
