@@ -980,8 +980,9 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="flex-1 overflow-y-auto hide-scroll px-5" style="min-height:0">
 <div v-for="(o,i) in areaList" :key="i" data-cp @click="pickAreaItem(o)" class="flex items-center gap-3 py-3.5 cursor-pointer active:opacity-70" style="border-bottom:1px solid #F5F5F5">
-<span class="flex-1 text-[14px] truncate">{{ areaLevel===3 ? ((areaCity?areaCity.name:'')+o) : o }}</span>
+<span class="flex-1 text-[14px] truncate">{{ areaOpStep ? ((areaCityNode?areaCityNode.name:'')+o) : o }}</span>
 </div>
+<div v-if="!areaList.length" class="sp-empty">{{ areaEmptyText }}</div>
 </div>
 </bottom-sheet>
 <!-- 首次登录：按定位区域匹配运营商，多运营商弹窗选择 -->
@@ -1568,6 +1569,8 @@ body.host-single-m #root-user{display:none}
   <div class="demo-ops-chip" data-cp @click="pickMockCity('成都市')" :class="mockCity==='成都市'?'is-on':''">成都市·多</div>
   <div class="demo-ops-chip" data-cp @click="pickMockCity('绵阳市')" :class="mockCity==='绵阳市'?'is-on':''">绵阳市·单</div>
   <div class="demo-ops-chip" data-cp @click="pickMockCity('乐山市')" :class="mockCity==='乐山市'?'is-on':''">乐山市·未开通</div>
+  <div class="demo-ops-chip" data-cp @click="pickMockCity('石家庄市')" :class="mockCity==='石家庄市'?'is-on':''">石家庄市·多</div>
+  <div class="demo-ops-chip" data-cp @click="pickMockCity('保定市')" :class="mockCity==='保定市'?'is-on':''">保定市·未开通</div>
 </div>
 </div>
 <div v-if="showSearch" class="demo-ops-section" data-od-id="demo-search-history">
@@ -3820,20 +3823,63 @@ function authState(bus,ext){
 
 /* 登录页（用户端主模板，含区号选择 + 登录内语言） */
 
-/* 换电区域：国 / 省 / 市 三级数据（该市有多个运营商时追加「运营商」一级） */
+/* 换电区域：国 / 省 / 市 三级数据（该市有多个运营商时追加「运营商」一级）
+   对齐行政区划接口：level 1 国/地区、level 2 省/直辖市/自治区、level 3 市；
+   无 children 的节点即接口中的 leaf（中国香港、北京市等直辖市），选中后直接作为末级区域加入
+   无运营商的末级区域（自身无 operators 且无任一可选子级）视为未开通，不在选择器中展示
+   原型模拟范围：仅「四川省成都市 / 北京市 / 中国香港」带模拟运营商，其余区域不铺模拟数据（一律按未开通处理） */
 var AREA_TREE=[
   {name:'中国',children:[
+    {name:'北京市',operators:['朝阳区运营商','海淀区运营商','丰台区运营商']},
+    {name:'天津市'},
+    {name:'河北省',children:[
+      {name:'石家庄市'},{name:'唐山市'},
+      {name:'秦皇岛市'},{name:'邯郸市'},{name:'邢台市'},{name:'保定市'},
+      {name:'张家口市'},{name:'承德市'},{name:'沧州市'},{name:'廊坊市'},{name:'衡水市'}
+    ]},
+    {name:'山西省',children:[{name:'太原市'},{name:'大同市'},{name:'长治市'}]},
+    {name:'内蒙古自治区',children:[{name:'呼和浩特市'},{name:'包头市'},{name:'鄂尔多斯市'}]},
+    {name:'辽宁省',children:[{name:'沈阳市'},{name:'大连市'},{name:'鞍山市'}]},
+    {name:'吉林省',children:[{name:'长春市'},{name:'吉林市'},{name:'延边朝鲜族自治州'}]},
+    {name:'黑龙江省',children:[{name:'哈尔滨市'},{name:'齐齐哈尔市'},{name:'大庆市'}]},
+    {name:'上海市'},
+    {name:'江苏省',children:[{name:'南京市'},{name:'苏州市'},{name:'无锡市'},{name:'常州市'},{name:'南通市'}]},
+    {name:'浙江省',children:[{name:'杭州市'},{name:'宁波市'},{name:'温州市'},{name:'嘉兴市'},{name:'金华市'}]},
+    {name:'安徽省',children:[{name:'合肥市'},{name:'芜湖市'},{name:'蚌埠市'}]},
+    {name:'福建省',children:[{name:'福州市'},{name:'厦门市'},{name:'泉州市'}]},
+    {name:'江西省',children:[{name:'南昌市'},{name:'赣州市'},{name:'九江市'}]},
+    {name:'山东省',children:[{name:'济南市'},{name:'青岛市'},{name:'烟台市'},{name:'潍坊市'}]},
+    {name:'河南省',children:[{name:'郑州市'},{name:'洛阳市'},{name:'南阳市'}]},
+    {name:'湖北省',children:[{name:'武汉市'},{name:'宜昌市'},{name:'襄阳市'}]},
+    {name:'湖南省',children:[{name:'长沙市'},{name:'株洲市'},{name:'衡阳市'}]},
+    {name:'广东省',children:[{name:'广州市'},{name:'深圳市'},{name:'东莞市'}]},
+    {name:'广西壮族自治区',children:[{name:'南宁市'},{name:'柳州市'},{name:'桂林市'}]},
+    {name:'海南省',children:[{name:'海口市'},{name:'三亚市'}]},
+    {name:'重庆市'},
     {name:'四川省',children:[
       {name:'成都市',operators:['双流区运营商','金牛区运营商','武侯区运营商','高新区运营商','锦江区运营商']},
-      {name:'绵阳市',operators:['涪城区运营商']},
+      {name:'绵阳市'},
+      {name:'德阳市'},
       {name:'乐山市'}
     ]},
-    {name:'广东省',children:[
-      {name:'深圳市',operators:['南山区运营商','福田区运营商','龙岗区运营商']},
-      {name:'东莞市',operators:['东莞城区运营商']}
-    ]}
-  ]}
+    {name:'贵州省',children:[{name:'贵阳市'},{name:'遵义市'}]},
+    {name:'云南省',children:[{name:'昆明市'},{name:'曲靖市'},{name:'大理白族自治州'}]},
+    {name:'西藏自治区',children:[{name:'拉萨市'},{name:'日喀则市'}]},
+    {name:'陕西省',children:[{name:'西安市'},{name:'宝鸡市'},{name:'咸阳市'}]},
+    {name:'甘肃省',children:[{name:'兰州市'},{name:'天水市'}]},
+    {name:'青海省',children:[{name:'西宁市'}]},
+    {name:'宁夏回族自治区',children:[{name:'银川市'},{name:'石嘴山市'}]},
+    {name:'新疆维吾尔自治区',children:[{name:'乌鲁木齐市'},{name:'克拉玛依市'}]}
+  ]},
+  {name:'中国香港',operators:['中西区运营商','油尖旺区运营商','沙田区运营商']}
 ];
+/* 区域可选性：自身有运营商，或任一子级可选（未开通的末级区域整条链路不进选择器） */
+function areaOpen(n){
+  if((n.operators||[]).length)return true;
+  var ch=n.children||[];
+  for(var i=0;i<ch.length;i++){if(areaOpen(ch[i]))return true}
+  return false;
+}
 
 /* ===== 换电用户端 ===== */
 var _ua=Vue.createApp({
@@ -4259,25 +4305,33 @@ var _ua=Vue.createApp({
     /* 所属加盟商的押金配置开关 */
     var depositEnabled=Vue.ref(true);
     var showDepositModal=Vue.ref(false),planDetail=Vue.ref(null);
-    /* 选择层级：0 国 / 1 省 / 2 市 / 3 运营商（市内多运营商时才追加该级） */
-    var areaCountry=Vue.ref(null),areaProvince=Vue.ref(null),areaCity=Vue.ref(null);
+    /* 选择路径：数组长度即已到达层级（0 国 / 1 省 / 2 市…），末级统一为「选择运营商」
+       末级区域节点（接口中的 leaf，如中国香港、北京市等直辖市）无下级，选中后同样只列运营商 */
+    var areaPath=Vue.ref([]);
     /* 运营商显示名：城市 + 运营商名（如「成都市双流区运营商」） */
     function areaLabel(a){return a?((a.city||'')+(a.name||'')):''}
     var addedOperators=Vue.computed(function(){return swapAreas.value.map(function(a){return a.name})});
-    var areaLevel=Vue.computed(function(){if(!areaCountry.value)return 0;if(!areaProvince.value)return 1;if(!areaCity.value)return 2;return 3});
+    var areaCityNode=Vue.computed(function(){var p=areaPath.value;return p.length?p[p.length-1]:null});
+    /* 是否已进入运营商层：当前节点为末级区域（无 children） */
+    var areaOpStep=Vue.computed(function(){var n=areaCityNode.value;return !!n&&!(n.children||[]).length});
     var areaCrumbs=Vue.computed(function(){
-      return [{label:'中国',name:areaCountry.value?areaCountry.value.name:null},
-              {label:'省份',name:areaProvince.value?areaProvince.value.name:null},
-              {label:'城市',name:areaCity.value?areaCity.value.name:null},
-              {label:'运营商',name:null}];
+      /* 逐级展示：只显示已到达的层级，标题统一为「请选择」（选中后显示该层名称）；下一级仅在上一级已选时才出现 */
+      var all=areaPath.value.map(function(n){return {label:'请选择',name:n.name}});
+      all.push({label:'请选择',name:null});
+      return all;
     });
     var areaList=Vue.computed(function(){
-      var lv=areaLevel.value;
-      if(lv===0)return AREA_TREE.map(function(n){return n.name});
-      if(lv===1)return (areaCountry.value.children||[]).map(function(n){return n.name});
-      if(lv===2)return (areaProvince.value.children||[]).map(function(n){return n.name});
+      var n=areaCityNode.value;
+      /* 国家级 / 省市级：只列「可选」节点（自身有运营商或任一子级可选），未开通的末级区域不展示 */
+      if(!n)return AREA_TREE.filter(areaOpen).map(function(x){return x.name});
+      if((n.children||[]).length)return n.children.filter(areaOpen).map(function(x){return x.name});
       /* 运营商层级过滤掉已加入「换电区域」列表的数据（避免重复添加） */
-      return (areaCity.value.operators||[]).filter(function(n){return addedOperators.value.indexOf(n)===-1});
+      return (n.operators||[]).filter(function(x){return addedOperators.value.indexOf(x)===-1});
+    });
+    /* 运营商层无数据时的提示：该区域未开通 vs 运营商已全部加入 */
+    var areaEmptyText=Vue.computed(function(){
+      if(!areaOpStep.value)return '暂无相关数据';
+      return ((areaCityNode.value.operators)||[]).length?'该城市运营商已全部添加':'该城市暂未开通换电服务';
     });
     /* 首页地图点位（仅模拟「可用」点位，不含灰色禁用点；换电 / 还电 / 门店 三视图各自独立数据）
        点位仅两种形态：pin + 右上角数字角标（换电=站点序号，还电=空仓数）｜门店无角标、仅下方文案
@@ -4468,7 +4522,10 @@ var _ua=Vue.createApp({
     function resolveLocCity(){return mockCity.value}
     function findCityNode(city){
       for(var i=0;i<AREA_TREE.length;i++){
-        var provs=AREA_TREE[i].children||[];
+        var top=AREA_TREE[i];
+        /* 顶层即末级区域（如中国香港）：直接命中，province 为空 */
+        if(!(top.children||[]).length){if(top.name===city)return {province:'',node:top};continue}
+        var provs=top.children||[];
         for(var j=0;j<provs.length;j++){
           var cityNode=(provs[j].children||[]).filter(function(c){return c.name===city})[0];
           if(cityNode)return {province:provs[j].name,node:cityNode};
@@ -4550,13 +4607,11 @@ var _ua=Vue.createApp({
     /* 原型操作：换电区域列表数据 有数据/无数据（恢复时重建带 sel:true 的默认项，避免复用被 pickSwapArea 改写 sel 的共享对象） */
     function setSwapAreasEmpty(on){swapAreas.value=on?[]:[{id:DEFAULT_AREA.id,name:DEFAULT_AREA.name,region:DEFAULT_AREA.region,city:DEFAULT_AREA.city,sel:true}]}
     function areaFind(list,name){for(var i=0;i<list.length;i++){if(list[i].name===name)return list[i]}return null}
-    function openAreaSheet(){areaCountry.value=AREA_TREE[0];areaProvince.value=null;areaCity.value=null;showAreaSheet.value=true}
+    /* 打开时不预选国家：面包屑从第一级「请选择」开始，随选择逐级出现并替换为名称 */
+    function openAreaSheet(){areaPath.value=[];showAreaSheet.value=true}
     function closeAreaSheet(){showAreaSheet.value=false}
-    function areaGoto(level){
-      if(level<=0){areaCountry.value=null;areaProvince.value=null;areaCity.value=null;return}
-      if(level<=1){areaProvince.value=null;areaCity.value=null;return}
-      areaCity.value=null;
-    }
+    /* 点面包屑第 i 格 → 回退到该格之前（i=0 回到第一级列表） */
+    function areaGoto(i){areaPath.value=areaPath.value.slice(0,i)}
     /* 新增：仅追加到列表，不改变选中状态（选中由列表点击单独处理） */
     function addSwapArea(name,region,city){
       var exists=false;
@@ -4565,18 +4620,15 @@ var _ua=Vue.createApp({
       showAreaSheet.value=false;
     }
     function pickAreaItem(name){
-      var lv=areaLevel.value;
-      if(lv===0){areaCountry.value=areaFind(AREA_TREE,name);return}
-      if(lv===1){areaProvince.value=areaFind(areaCountry.value.children,name);return}
-      if(lv===2){
-        var city=areaFind(areaProvince.value.children,name);
-        areaCity.value=city;
-        var ops=city.operators||[];
-        /* 该市仅一个运营商（或没有运营商）：不再追加一级，直接加入 */
-        if(ops.length<=1)addSwapArea(ops[0]||city.name,areaProvince.value.name+city.name,city.name);
-        return;
-      }
-      addSwapArea(name,areaProvince.value.name+areaCity.value.name,areaCity.value.name);
+      var n=areaCityNode.value;
+      /* 第一级：国 / 地区 */
+      if(!n){var country=areaFind(AREA_TREE,name);if(country)areaPath.value=[country];return}
+      /* 仍有下级（省 / 市）：继续下钻 */
+      if((n.children||[]).length){var next=areaFind(n.children,name);if(next)areaPath.value=areaPath.value.concat([next]);return}
+      /* 末级一律是运营商：加入区域并关闭弹窗
+         名称 = 运营商名；区域 = 省级起各级名称拼接（末级区域节点即自身，如「中国香港」「北京市」） */
+      var path=areaPath.value;
+      addSwapArea(name,path.slice(1).map(function(x){return x.name}).join('')||path[0].name,path[path.length-1].name);
     }
     function reloadAreaData(){
       areaReloading.value=true;
@@ -4714,7 +4766,7 @@ var _ua=Vue.createApp({
     }
     /* 页面级状态注册进导航快照（Tab / 换电流程 / 站点 / 电池详情 / 订单详情 / 记录范围） */
     auth.addNavRefs([tab,swapShow,swapStep,swapMode,showSwapManual,showLevelWarn,showChoice,showFlowEnd,curStation,curCab,batteryDetailRec,planOrderDetail,swapRecordsScope]);
-    return Object.assign({pageLoading,tab,setTab,settingsOpen,toasts:toastBus.list,toast,goScan,goLocate,goRefresh,goLayer,mapType,MAP_TYPES,mapPoints,mapTheme,showMapSheet,pickMapType,openMapPoint,showSearch,searchQ,searchCenter,searchHistory,locNearby,searchList,poiList,openSearch,closeSearch,clearSearchQ,doSearch,pickHistory,pickPoi,clearSearchCenter,mapWorldStyle,clearSearchHistory,setSearchHistory,relocate,pickSearchStation,selPoint,selStore,closeSelPoint,closeSelStore,callStore,openStoreDetail,pointStat,openSelDetail,openReservedDetail,onMapClick,isCabReserved,hasReservedOther,bookCab,stationReserved,bookFromStation,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,callStation,scanFromCard,goReturnScan,bookFromCard,reservedCab,reserveLeft,swapOngoing,bookDisabled,fmtReserve,cancelReserve,askCancelReserve,closeCancelReserve,confirmCancelReserve,showCancelReserve,onBookClick,openReservedCard,goFlowNow,setSwapOngoing,showPrecheck,precheckDesc,precheckTitle,precheckConfirmText,closePrecheck,precheckPass,confirmPrecheck,showIdNeeded,closeIdNeeded,confirmIdNeeded,setIdAuthed,stations,locAppAuth,setLocAppAuth,showLocAppAuth,allowLocAppAuth,denyLocAppAuth,locReady,locAuth,setLocAuth,showLocAuth,allowLocAuth,dismissLocAuth,goEnableLoc,swapAreaSet,areaNoService,setSwapArea,goSetSwapArea,swapAreas,setSwapAreasEmpty,showAreaSheet,addedOperators,areaCity,areaCrumbs,areaLevel,areaList,areaGoto,pickAreaItem,openSwapArea,pickSwapArea,openAreaSheet,closeAreaSheet,curArea,areaReloading,areaLabel,planList,planBought,setPlanBought,depositState,setDepositState,depositFree,setDepositFree,payDeposit,askRefund,confirmRefundTip,refundOkDone,showRefundTip,showRefundOk,openDeposit,DEPOSIT_TIPS,batteryList,batteryDetailRec,setBatteryEmpty,curStation,curCab,showBorrow,borrowLoading,returnLoading,cancelReserveLoading,cancelPlanLoading,refundTipLoading,showReturn,returnBattery,cabinetFull,setCabinetFull,openBorrow,confirmBorrow,openReturn,confirmReturn,BATTERY_STAT,GAUGE_TICKS,TRACK_POIS,openMyBattery,openBatteryDetail,openBatteryFind,openBatteryTrack,swapRecords,swapRecordsView,setSwapRecordsEmpty,openSwapRecords,openSwapRecordsAll,copyText,cards,activeCards,expiredCards,setCardPackEmpty,openCardPack,openCardExpired,goPlanRenew,planOrders,planOrdersView,PLAN_ORDER_FILTERS,planOrderFilter,setPlanOrderFilter,setPlanOrdersEmpty,openPlanOrders,planOrderDetail,openPlanOrder,payPlanOrder,planOrderLeft,fmtCountdown,cancelPlanOrder,showCancelPlanTip,depositEnabled,setDepositEnabled,setPlanEmpty,showDepositModal,planDetail,openPlanDetail,closePlanDetail,goPayDeposit,payPlan,swapShow,swapStep,swapCtx,swapTitle,demoQrOk,demoSameOperator,demoOnline,demoDist,demoResumeType,demoLevelLow,planMax,setPlanMax,swapStart,swapScan,swapTorch,showSwapManual,swapManualNo,swapManualOpen,confirmSwapManual,swapBranch,showChoice,choiceDesc,swapChoiceBorrow,swapChoiceSwap,swapToBorrow,isBorrowFlow,borrowOpenPct,borrowLeft,borrowSlotNo,borrowFailType,borrowFailTitle,stepDot,stepText,stepLine,swapBorrowRetry,swapBorrowDone,flowDoneHome,isReturnFlow,swapMode,returnOpenPct,returnLeft,returnSlotNo,returnOpenChoice,returnTakeChoice,returnRun,returnRetry,returnFailHome,borrowRun,borrowOpenChoice,borrowTakeChoice,netLost,setNetLost,showFlowEnd,flowEndHome,isSwapFlow,swapOpenPct,swapFullPct,swapLeft,swapTakeLeft,swapSlotNo,swapOpenChoice,swapPutChoice,swapFullChoice,swapTakeChoice,swapFailTitle,swapRun,swapFlowRetry,swapFailHome,swapClose,swapResume,showLevelWarn,swapLevelCancel,swapLevelContinue,setBoundCount,showOperatorPicker,operatorOptions,pickFirstLoginOperator,closeOperatorPicker,operatorPickerCity,mockCity,pickMockCity,firstLoginRegionFlow},auth,sideSetup('换电用户端',toastBus))
+    return Object.assign({pageLoading,tab,setTab,settingsOpen,toasts:toastBus.list,toast,goScan,goLocate,goRefresh,goLayer,mapType,MAP_TYPES,mapPoints,mapTheme,showMapSheet,pickMapType,openMapPoint,showSearch,searchQ,searchCenter,searchHistory,locNearby,searchList,poiList,openSearch,closeSearch,clearSearchQ,doSearch,pickHistory,pickPoi,clearSearchCenter,mapWorldStyle,clearSearchHistory,setSearchHistory,relocate,pickSearchStation,selPoint,selStore,closeSelPoint,closeSelStore,callStore,openStoreDetail,pointStat,openSelDetail,openReservedDetail,onMapClick,isCabReserved,hasReservedOther,bookCab,stationReserved,bookFromStation,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,callStation,scanFromCard,goReturnScan,bookFromCard,reservedCab,reserveLeft,swapOngoing,bookDisabled,fmtReserve,cancelReserve,askCancelReserve,closeCancelReserve,confirmCancelReserve,showCancelReserve,onBookClick,openReservedCard,goFlowNow,setSwapOngoing,showPrecheck,precheckDesc,precheckTitle,precheckConfirmText,closePrecheck,precheckPass,confirmPrecheck,showIdNeeded,closeIdNeeded,confirmIdNeeded,setIdAuthed,stations,locAppAuth,setLocAppAuth,showLocAppAuth,allowLocAppAuth,denyLocAppAuth,locReady,locAuth,setLocAuth,showLocAuth,allowLocAuth,dismissLocAuth,goEnableLoc,swapAreaSet,areaNoService,setSwapArea,goSetSwapArea,swapAreas,setSwapAreasEmpty,showAreaSheet,addedOperators,areaCityNode,areaOpStep,areaCrumbs,areaList,areaEmptyText,areaGoto,pickAreaItem,openSwapArea,pickSwapArea,openAreaSheet,closeAreaSheet,curArea,areaReloading,areaLabel,planList,planBought,setPlanBought,depositState,setDepositState,depositFree,setDepositFree,payDeposit,askRefund,confirmRefundTip,refundOkDone,showRefundTip,showRefundOk,openDeposit,DEPOSIT_TIPS,batteryList,batteryDetailRec,setBatteryEmpty,curStation,curCab,showBorrow,borrowLoading,returnLoading,cancelReserveLoading,cancelPlanLoading,refundTipLoading,showReturn,returnBattery,cabinetFull,setCabinetFull,openBorrow,confirmBorrow,openReturn,confirmReturn,BATTERY_STAT,GAUGE_TICKS,TRACK_POIS,openMyBattery,openBatteryDetail,openBatteryFind,openBatteryTrack,swapRecords,swapRecordsView,setSwapRecordsEmpty,openSwapRecords,openSwapRecordsAll,copyText,cards,activeCards,expiredCards,setCardPackEmpty,openCardPack,openCardExpired,goPlanRenew,planOrders,planOrdersView,PLAN_ORDER_FILTERS,planOrderFilter,setPlanOrderFilter,setPlanOrdersEmpty,openPlanOrders,planOrderDetail,openPlanOrder,payPlanOrder,planOrderLeft,fmtCountdown,cancelPlanOrder,showCancelPlanTip,depositEnabled,setDepositEnabled,setPlanEmpty,showDepositModal,planDetail,openPlanDetail,closePlanDetail,goPayDeposit,payPlan,swapShow,swapStep,swapCtx,swapTitle,demoQrOk,demoSameOperator,demoOnline,demoDist,demoResumeType,demoLevelLow,planMax,setPlanMax,swapStart,swapScan,swapTorch,showSwapManual,swapManualNo,swapManualOpen,confirmSwapManual,swapBranch,showChoice,choiceDesc,swapChoiceBorrow,swapChoiceSwap,swapToBorrow,isBorrowFlow,borrowOpenPct,borrowLeft,borrowSlotNo,borrowFailType,borrowFailTitle,stepDot,stepText,stepLine,swapBorrowRetry,swapBorrowDone,flowDoneHome,isReturnFlow,swapMode,returnOpenPct,returnLeft,returnSlotNo,returnOpenChoice,returnTakeChoice,returnRun,returnRetry,returnFailHome,borrowRun,borrowOpenChoice,borrowTakeChoice,netLost,setNetLost,showFlowEnd,flowEndHome,isSwapFlow,swapOpenPct,swapFullPct,swapLeft,swapTakeLeft,swapSlotNo,swapOpenChoice,swapPutChoice,swapFullChoice,swapTakeChoice,swapFailTitle,swapRun,swapFlowRetry,swapFailHome,swapClose,swapResume,showLevelWarn,swapLevelCancel,swapLevelContinue,setBoundCount,showOperatorPicker,operatorOptions,pickFirstLoginOperator,closeOperatorPicker,operatorPickerCity,mockCity,pickMockCity,firstLoginRegionFlow},auth,sideSetup('换电用户端',toastBus))
   }})
 registerSheetKit(_ua);_ua.mount(document.getElementById('root-user'));
 
