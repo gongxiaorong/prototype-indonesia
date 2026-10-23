@@ -25,7 +25,8 @@
       "thailand": "ประเทศไทย",
       "uk": "สหราชอาณาจักร",
       "usa": "สหรัฐอเมริกา",
-      "vietnam": "เวียดนาม"
+      "vietnam": "เวียดนาม",
+      "hongkong": "ฮ่องกง"
     },
     "login": {
       "accountMode": "บัญชี",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "กรุณากรอกหมายเลขแบตเตอรี่",
       "typeBattery": "เช่าแบตเตอรี่",
       "typeVehicle": "เช่ายานพาหนะ",
-      "typePackage": "แพ็กเกจยานพาหนะและแบตเตอรี่"
+      "typePackage": "แพ็กเกจยานพาหนะและแบตเตอรี่",
+      "orderNoPlaceholder": "กรุณากรอกหมายเลขคำสั่งซื้อ"
     },
     "profile": {
       "avatar": "รูปโปรไฟล์",
@@ -264,7 +266,9 @@
       "datePickerMonth": "เดือน",
       "datePickerDay": "วัน",
       "second": "วินาที",
-      "rangeTo": "ถึง"
+      "rangeTo": "ถึง",
+      "startDate": "วันที่เริ่ม",
+      "endDate": "วันที่สิ้นสุด"
     },
     "label": {
       "account": "บัญชี",
@@ -361,7 +365,10 @@
       "done": "เสร็จสิ้น",
       "retry": "ลองใหม่",
       "continue": "ดำเนินการต่อ",
-      "enable": "เปิด"
+      "enable": "เปิด",
+      "clear": "ล้าง",
+      "useCurrentLocation": "ใช้ตำแหน่งปัจจุบัน",
+      "confirmLabel": "ยืนยัน"
     },
     "unit": {
       "vehicle": "คัน",
@@ -441,7 +448,19 @@
       "changeShopFirst": "กรุณาปิดใช้งานอุปกรณ์ก่อนเปลี่ยนร้านค้า",
       "confirmDisableDesc": "ยืนยันปิดใช้งานอุปกรณ์นี้หรือไม่",
       "confirmEnableDesc": "ยืนยันเปิดใช้งานอุปกรณ์นี้หรือไม่",
-      "empty": "ไม่มีอุปกรณ์"
+      "empty": "ไม่มีอุปกรณ์",
+      "addSuccess": "เพิ่มอุปกรณ์แล้ว",
+      "infoSaved": "บันทึกข้อมูลอุปกรณ์แล้ว",
+      "priceSaved": "บันทึกการตั้งราคาแล้ว",
+      "shopChanged": "เปลี่ยนสโตร์แล้ว",
+      "disabledToast": "ปิดใช้งานอุปกรณ์แล้ว",
+      "enabledToast": "เปิดใช้งานอุปกรณ์แล้ว",
+      "addTitle": "เพิ่มอุปกรณ์",
+      "editTitle": "แก้ไขอุปกรณ์",
+      "disableAction": "ปิดใช้งานอุปกรณ์",
+      "enableAction": "เปิดใช้งานอุปกรณ์",
+      "addrMapSelect": "เลือกบนแผนที่",
+      "inputDeviceNo": "กรุณากรอกหมายเลขอุปกรณ์"
     },
     "chargingOrder": {
       "title": "คำสั่งซื้อการชาร์จ",
@@ -472,7 +491,9 @@
       "finishOrder": "สิ้นสุดคำสั่งซื้อ",
       "refund": "คืนเงิน",
       "empty": "ไม่มีคำสั่งซื้อ",
-      "emptyRefund": "ไม่มีประวัติการคืนเงิน"
+      "emptyRefund": "ไม่มีประวัติการคืนเงิน",
+      "detailTitle": "รายละเอียดคำสั่งชาร์จ",
+      "refundListTitle": "บันทึกการคืนเงินคำสั่งชาร์จ"
     },
     "renewal": {
       "allowOrderRenew": "อนุญาตต่ออายุคำสั่งซื้อ",
@@ -647,7 +668,10 @@
       "selectBindVehicle": "กรุณาเลือกยานพาหนะที่ต้องการผูก",
       "selectBindBattery": "กรุณาเลือกแบตเตอรี่ที่ต้องการผูก",
       "vehicleUnbound": "ยกเลิกการผูกยานพาหนะแล้ว",
-      "batteryUnbound": "ยกเลิกการผูกแบตเตอรี่แล้ว"
+      "batteryUnbound": "ยกเลิกการผูกแบตเตอรี่แล้ว",
+      "editPushConfig": "แก้ไขการตั้งค่าการแจ้งเตือน",
+      "unbindVehicleTitle": "ยกเลิกการผูกยานพาหนะ",
+      "unbindBatteryTitle": "ยกเลิกการผูกแบตเตอรี่"
     },
     "home": {
       "view": "ภาพรวม",
@@ -830,7 +854,12 @@
       "unselected": "ยังไม่ได้เลือกร้านค้า",
       "selectFirst": "กรุณาเลือกร้านค้าก่อน",
       "selectedToast": "เลือกร้านค้าแล้ว",
-      "splitHint": "กระเป๋าเงินแต่ละร้านค้าคิดแยกกัน การเติมเงินและยอดคงเหลือใช้เฉพาะร้านค้าที่เลือก"
+      "splitHint": "กระเป๋าเงินแต่ละร้านค้าคิดแยกกัน การเติมเงินและยอดคงเหลือใช้เฉพาะร้านค้าที่เลือก",
+      "ledgerOrderConsume": "ค่าใช้จ่ายคำสั่งซื้อ",
+      "ledgerRechargeRefund": "คืนเงินการเติม",
+      "ledgerGift": "โบนัส",
+      "confirmDeleteRechargeDesc": "ลบการตั้งค่าเติมเงินนี้หรือไม่? ไม่สามารถกู้คืนได้",
+      "title": "กระเป๋าเงิน"
     },
     "orders": {
       "vehicleBound": "ผูกยานพาหนะแล้ว",
@@ -893,7 +922,29 @@
       "refundSource": "แหล่งที่มา",
       "optional": "ไม่จำเป็น",
       "battNoLabel": "หมายเลขแบตเตอรี่:",
-      "bindBatteryHint": "ผูกแบตเตอรี่กับคำสั่งซื้อนี้"
+      "bindBatteryHint": "ผูกแบตเตอรี่กับคำสั่งซื้อนี้",
+      "refundDoneFull": "คืนเงินเสร็จสิ้น: คืนเต็มจำนวน",
+      "refundDonePartial": "คืนเงินเสร็จสิ้น: คืนบางส่วน",
+      "listVehicleTitle": "รายการคำสั่งซื้อรถ",
+      "listBatteryTitle": "รายการคำสั่งซื้อแบตเตอรี่",
+      "listPackageTitle": "รายการคำสั่งซื้อแพ็กเกจ",
+      "listRechargeTitle": "รายการคำสั่งซื้อเติมเงิน",
+      "listChargeTitle": "รายการคำสั่งซื้อการชาร์จ",
+      "batteryNo": "หมายเลขแบตเตอรี่",
+      "refundChannel": "ช่องทางการคืนเงิน",
+      "endReason": "เหตุผลการสิ้นสุด",
+      "endOrderTitle": "สิ้นสุดคำสั่งซื้อนี้",
+      "endOrderConfirm": "สิ้นสุดคำสั่งซื้อนี้?",
+      "endReasonPlaceholder": "กรุณากรอกเหตุผลการสิ้นสุด (ไม่เกิน 255 ตัวอักษร)",
+      "cancelReasonPlaceholder": "กรุณากรอกเหตุผลการยกเลิก",
+      "endOrderHint": "เมื่อสิ้นสุดแล้วคำสั่งซื้อจะเปลี่ยนเป็น \"เสร็จสิ้น\"; คำสั่งซื้อที่ชำระแล้วจะบันทึกเวลาชำระ ส่วนที่ยังไม่ชำระจะไม่บันทึก",
+      "refundConfirmTotal": "ยืนยันการคืนเงิน? ยอดคืนรวม {amount}",
+      "refundConfirmAmount": "ยืนยันการคืนเงิน? จำนวนเงินคืน {amount}",
+      "unitHour": "ชั่วโมง",
+      "unitDay": "วัน",
+      "unitWeek": "สัปดาห์",
+      "unitMonth": "เดือน",
+      "endOrderConfirmDesc": "สิ้นสุดคำสั่งซื้อนี้? จะไม่สามารถกลับไปเป็นกำลังชาร์จได้"
     },
     "perm": {
       "permViewOrderDetail": "ดูรายละเอียดคำสั่งซื้อ",
@@ -973,7 +1024,8 @@
     "package": {
       "namePlaceholder": "กรุณากรอกชื่อแพ็กเกจ",
       "list": "รายการแพ็กเกจ",
-      "manage": "การจัดการแพ็กเกจ"
+      "manage": "การจัดการแพ็กเกจ",
+      "imageSizeHint": "ขนาด: {w}px × {h}px"
     },
     "vehicle": {
       "list": "รายการยานพาหนะ",
@@ -999,7 +1051,6 @@
       "list": "รายการตำแหน่ง"
     },
     "dialcode": {
-      "hongkong": "ฮ่องกง ประเทศจีน",
       "noResults": "ไม่พบประเทศ/ภูมิภาคที่ตรงกัน"
     },
     "batt_model": {
@@ -1031,7 +1082,44 @@
     },
     "message": {
       "channel": "ช่องทางพุช",
-      "channelPhone": "การแจ้งเตือนบนมือถือ"
+      "channelPhone": "การแจ้งเตือนบนมือถือ",
+      "settingsCategoryHead": "ประเภทข้อความ",
+      "channelCenter": "ศูนย์ข้อความ",
+      "categoryFeeRefund": "ค่าใช้จ่ายและการคืนเงิน"
+    },
+    "map": {
+      "noResult": "ไม่พบสถานที่ที่เกี่ยวข้อง"
+    },
+    "config": {
+      "hourlyPlan": "แพ็กเกจรายชั่วโมง",
+      "otherPlan": "แพ็กเกจอื่น ๆ",
+      "hourlyPlanBefore": "ก่อนแพ็กเกจรายชั่วโมงหมดอายุ",
+      "otherPlanBefore": "ก่อนแพ็กเกจอื่นหมดอายุ",
+      "autoRenewMinutes": "ต่ออายุอัตโนมัติเป็นนาที",
+      "autoRenewDays": "ต่ออายุอัตโนมัติเป็นวัน",
+      "toExpiringMinutes": "นาที แล้วสถานะจะเปลี่ยนเป็น \"ใกล้หมดอายุ\"",
+      "toExpiringDays": "วัน แล้วสถานะจะเปลี่ยนเป็น \"ใกล้หมดอายุ\"",
+      "toBreachMinutes": "นาที แล้วสถานะจะเปลี่ยนเป็น \"ถูกล็อกจากการผิดสัญญา\"",
+      "toBreachDays": "วัน แล้วสถานะจะเปลี่ยนเป็น \"ถูกล็อกจากการผิดสัญญา\""
+    },
+    "unit": {
+      "copies": "เอกสาร"
+    },
+    "notify": {
+      "renewReminderTitle": "ต่ออายุคำสั่งซื้ออัตโนมัติ",
+      "renewSuccessTitle": "ต่ออายุคำสั่งซื้ออัตโนมัติสำเร็จ",
+      "renewFailedTitle": "ต่ออายุคำสั่งซื้ออัตโนมัติไม่สำเร็จ",
+      "orderCreatedTitle": "สร้างคำสั่งซื้อแล้ว",
+      "orderPaidTitle": "ชำระเงินสำเร็จ",
+      "deviceBoundTitle": "คำสั่งซื้อเริ่มแล้ว",
+      "orderExpiringTitle": "คำสั่งซื้อใกล้ครบกำหนด",
+      "orderOverdueTitle": "คำสั่งซื้อหมดอายุแล้ว",
+      "orderBreachTitle": "ยานพาหนะ/แบตเตอรี่ถูกล็อคระยะไกล",
+      "orderCompletedTitle": "คำสั่งซื้อเสร็จสิ้น",
+      "orderCancelledTitle": "ยกเลิกคำสั่งซื้อแล้ว",
+      "orderAdjustedTitle": "ปรับจำนวนเงินคำสั่งซื้อแล้ว",
+      "orderRefundingTitle": "กำลังดำเนินการคืนเงิน",
+      "orderRefundedTitle": "คืนเงินสำเร็จ"
     }
   },
   "demo": {

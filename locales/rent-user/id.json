@@ -25,7 +25,8 @@
       "thailand": "Thailand",
       "uk": "Inggris",
       "usa": "Amerika Serikat",
-      "vietnam": "Vietnam"
+      "vietnam": "Vietnam",
+      "hongkong": "Hong Kong"
     },
     "login": {
       "accountMode": "Akun",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "Masukkan nomor baterai",
       "typeBattery": "Sewa Baterai",
       "typeVehicle": "Sewa Kendaraan",
-      "typePackage": "Paket Kendaraan & Baterai"
+      "typePackage": "Paket Kendaraan & Baterai",
+      "orderNoPlaceholder": "Masukkan nomor pesanan"
     },
     "profile": {
       "avatar": "Foto Profil",
@@ -264,7 +266,9 @@
       "datePickerMonth": "Bulan",
       "datePickerDay": "Hari",
       "second": "Detik",
-      "rangeTo": "sampai"
+      "rangeTo": "sampai",
+      "startDate": "Tanggal Mulai",
+      "endDate": "Tanggal Selesai"
     },
     "label": {
       "account": "Akun",
@@ -361,7 +365,10 @@
       "done": "Selesai",
       "retry": "Coba Lagi",
       "continue": "Lanjutkan",
-      "enable": "Aktifkan"
+      "enable": "Aktifkan",
+      "clear": "Kosongkan",
+      "useCurrentLocation": "Gunakan Lokasi Saat Ini",
+      "confirmLabel": "Konfirmasi"
     },
     "unit": {
       "vehicle": "unit",
@@ -474,7 +481,15 @@
       "timePickup": "Diambil",
       "pickupStartHint": "Durasi pesanan dihitung setelah kendaraan/baterai diambil",
       "selectPlanAndPay": "Pilih paket sewa dan bayar",
-      "orderPlaced": "Pesanan dibuat"
+      "orderPlaced": "Pesanan dibuat",
+      "refundReason": "Alasan Pengembalian Dana",
+      "batteryNo": "Nomor Baterai",
+      "cancelRenew": "Batalkan Perpanjangan",
+      "cancelRenewConfirm": "Batalkan perpanjangan ini? Tindakan ini tidak dapat dibatalkan",
+      "pay": "Bayar",
+      "payPartialRefund": "Pengembalian Sebagian",
+      "payFullRefund": "Pengembalian Penuh",
+      "payProcessing": "Pembayaran Diproses"
     },
     "toast": {
       "deviceBound": "Perangkat berhasil diikat",
@@ -568,7 +583,8 @@
       "materialDeleted": "Materi telah dihapus",
       "clickBlankClose": "Ketuk area kosong untuk menutup",
       "goLogin": "Masuk",
-      "copiedFormat": "{label} disalin"
+      "copiedFormat": "{label} disalin",
+      "moreOps": "Aksi Lainnya"
     },
     "vehicles": {
       "vehicleNamePlaceholder": "Masukkan nama kendaraan",
@@ -648,7 +664,10 @@
       "licenseShort": "SIM",
       "detail": "Detail KYC",
       "photoSelected": "{source}: 1 gambar dipilih",
-      "photoReplaced": "{source}: gambar saat ini diganti"
+      "photoReplaced": "{source}: gambar saat ini diganti",
+      "license": "SIM",
+      "supplement": "Dokumen Tambahan",
+      "deleteConfirm": "Hapus informasi identitas ini? Tindakan ini tidak dapat dibatalkan."
     },
     "plan": {
       "selectPlan": "Pilih Paket",
@@ -663,11 +682,14 @@
       "topupCustom": "Jumlah Kustom",
       "title": "Dompet Saya",
       "topupBonus": "Bonus {amount}",
-      "balancePay": "Pembayaran Dompet",
+      "balancePay": "Dompet",
       "topupSuccess": "Isi ulang berhasil",
       "selectAmount": "Silakan pilih jumlah",
       "storeSelected": "Toko dipilih",
-      "selectStoreFirst": "Pilih toko terlebih dahulu"
+      "selectStoreFirst": "Pilih toko terlebih dahulu",
+      "selectStoreWallet": "Pilih Dompet Toko",
+      "giftAmount": "Jumlah Bonus",
+      "rechargeDetail": "Detail Top Up"
     },
     "walletType": {
       "consume": "Konsumsi",
@@ -728,7 +750,8 @@
       "actualDuration": "Durasi Pengisian Aktual",
       "refundDetail": "Detail Pengembalian Dana",
       "refundAmount": "Jumlah Pengembalian Dana",
-      "orderList": "Pesanan Pengisian Daya"
+      "orderList": "Pesanan Pengisian Daya",
+      "noDevices": "Tidak ada stasiun pengisian atau toko"
     },
     "message": {
       "title": "Pusat Pesan",

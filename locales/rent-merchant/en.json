@@ -25,7 +25,8 @@
       "thailand": "Thailand",
       "uk": "United Kingdom",
       "usa": "United States",
-      "vietnam": "Vietnam"
+      "vietnam": "Vietnam",
+      "hongkong": "Hong Kong"
     },
     "login": {
       "accountMode": "Account",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "Please enter battery number",
       "typeBattery": "Battery Rental",
       "typeVehicle": "Vehicle Rental",
-      "typePackage": "Vehicle & Battery Package"
+      "typePackage": "Vehicle & Battery Package",
+      "orderNoPlaceholder": "Enter order number"
     },
     "profile": {
       "avatar": "Avatar",
@@ -264,7 +266,9 @@
       "datePickerMonth": "Month",
       "datePickerDay": "Day",
       "second": "Second",
-      "rangeTo": "to"
+      "rangeTo": "to",
+      "startDate": "Start Date",
+      "endDate": "End Date"
     },
     "label": {
       "account": "Account",
@@ -361,7 +365,10 @@
       "done": "Done",
       "retry": "Retry",
       "continue": "Continue",
-      "enable": "On"
+      "enable": "On",
+      "clear": "Clear",
+      "useCurrentLocation": "Use Current Location",
+      "confirmLabel": "Confirm"
     },
     "unit": {
       "vehicle": "vehicle(s)",
@@ -441,7 +448,19 @@
       "changeShopFirst": "Please disable the device before changing its store",
       "confirmDisableDesc": "Are you sure you want to disable this device?",
       "confirmEnableDesc": "Are you sure you want to enable this device?",
-      "empty": "No device"
+      "empty": "No device",
+      "addSuccess": "Device added",
+      "infoSaved": "Device info saved",
+      "priceSaved": "Pricing saved",
+      "shopChanged": "Store changed",
+      "disabledToast": "Device disabled",
+      "enabledToast": "Device enabled",
+      "addTitle": "Add device",
+      "editTitle": "Edit device",
+      "disableAction": "Disable device",
+      "enableAction": "Enable device",
+      "addrMapSelect": "Select on Map",
+      "inputDeviceNo": "Please enter device number"
     },
     "chargingOrder": {
       "title": "Charging Orders",
@@ -472,7 +491,9 @@
       "finishOrder": "Finish Order",
       "refund": "Refund",
       "empty": "No Orders",
-      "emptyRefund": "No refund records"
+      "emptyRefund": "No refund records",
+      "detailTitle": "Charging order details",
+      "refundListTitle": "Charging order refund records"
     },
     "renewal": {
       "allowOrderRenew": "Allow Order Renewal",
@@ -647,7 +668,10 @@
       "selectBindVehicle": "Please select a vehicle to bind",
       "selectBindBattery": "Please select a battery to bind",
       "vehicleUnbound": "Vehicle unbound",
-      "batteryUnbound": "Battery unbound"
+      "batteryUnbound": "Battery unbound",
+      "editPushConfig": "Edit push settings",
+      "unbindVehicleTitle": "Unbind Vehicle",
+      "unbindBatteryTitle": "Unbind Battery"
     },
     "home": {
       "view": "Overview",
@@ -830,7 +854,12 @@
       "unselected": "No store selected",
       "selectFirst": "Please select a store first",
       "selectedToast": "Store selected",
-      "splitHint": "Each store wallet settles independently; top-up and balance apply only to the selected store"
+      "splitHint": "Each store wallet settles independently; top-up and balance apply only to the selected store",
+      "ledgerOrderConsume": "Order Expense",
+      "ledgerRechargeRefund": "Top-up Refund",
+      "ledgerGift": "Bonus",
+      "confirmDeleteRechargeDesc": "Delete this top-up config? This cannot be undone.",
+      "title": "Wallet"
     },
     "orders": {
       "vehicleBound": "Vehicle bound",
@@ -893,7 +922,29 @@
       "refundSource": "Source",
       "optional": "Optional",
       "battNoLabel": "Battery No.:",
-      "bindBatteryHint": "Bind a battery to this order"
+      "bindBatteryHint": "Bind a battery to this order",
+      "refundDoneFull": "Refund completed: full refund",
+      "refundDonePartial": "Refund completed: partial refund",
+      "listVehicleTitle": "Vehicle order list",
+      "listBatteryTitle": "Battery order list",
+      "listPackageTitle": "Package order list",
+      "listRechargeTitle": "Top-up order list",
+      "listChargeTitle": "Charging order list",
+      "batteryNo": "Battery No.",
+      "refundChannel": "Refund channel",
+      "endReason": "End reason",
+      "endOrderTitle": "End this order",
+      "endOrderConfirm": "End this order?",
+      "endReasonPlaceholder": "Enter end reason (max 255 characters)",
+      "cancelReasonPlaceholder": "Enter cancellation reason",
+      "endOrderHint": "The order becomes \"Completed\" after ending; paid orders record the payment time, unpaid orders do not.",
+      "refundConfirmTotal": "Confirm refund? Total refund {amount}",
+      "refundConfirmAmount": "Confirm refund? Refund amount {amount}",
+      "unitHour": "Hours",
+      "unitDay": "Days",
+      "unitWeek": "Weeks",
+      "unitMonth": "Months",
+      "endOrderConfirmDesc": "End this order? It cannot return to charging afterwards."
     },
     "perm": {
       "permViewOrderDetail": "View Order Details",
@@ -973,7 +1024,8 @@
     "package": {
       "namePlaceholder": "Please enter package name",
       "list": "Package List",
-      "manage": "Package Management"
+      "manage": "Package Management",
+      "imageSizeHint": "Size: {w}px × {h}px"
     },
     "vehicle": {
       "list": "Vehicle list",
@@ -999,7 +1051,6 @@
       "list": "Position list"
     },
     "dialcode": {
-      "hongkong": "Hong Kong, China",
       "noResults": "No matching country/region found"
     },
     "batt_model": {
@@ -1031,7 +1082,44 @@
     },
     "message": {
       "channel": "Push Channel",
-      "channelPhone": "Phone Notification"
+      "channelPhone": "Phone Notification",
+      "settingsCategoryHead": "Message Types",
+      "channelCenter": "Message Center",
+      "categoryFeeRefund": "Fees & Refunds"
+    },
+    "map": {
+      "noResult": "No matching places found"
+    },
+    "config": {
+      "hourlyPlan": "Hourly plan",
+      "otherPlan": "Other plans",
+      "hourlyPlanBefore": "Before hourly plan expires",
+      "otherPlanBefore": "Before other plans expire",
+      "autoRenewMinutes": "Auto-renew in minutes",
+      "autoRenewDays": "Auto-renew in days",
+      "toExpiringMinutes": "minutes, then status changes to \"Expiring Soon\"",
+      "toExpiringDays": "days, then status changes to \"Expiring Soon\"",
+      "toBreachMinutes": "minutes, then status changes to \"Default Locked\"",
+      "toBreachDays": "days, then status changes to \"Default Locked\""
+    },
+    "unit": {
+      "copies": "document(s)"
+    },
+    "notify": {
+      "renewReminderTitle": "Order Auto Renewal",
+      "renewSuccessTitle": "Order Auto Renewed Successfully",
+      "renewFailedTitle": "Order Auto Renewal Failed",
+      "orderCreatedTitle": "Order Created",
+      "orderPaidTitle": "Payment Successful",
+      "deviceBoundTitle": "Order Started",
+      "orderExpiringTitle": "Order Due Soon",
+      "orderOverdueTitle": "Order Has Expired",
+      "orderBreachTitle": "Vehicle/Battery Remotely Locked",
+      "orderCompletedTitle": "Order Completed",
+      "orderCancelledTitle": "Order cancelled",
+      "orderAdjustedTitle": "Order Amount Adjusted",
+      "orderRefundingTitle": "Refund in Progress",
+      "orderRefundedTitle": "Refund Successful"
     }
   },
   "demo": {

@@ -25,7 +25,8 @@
       "thailand": "泰国",
       "uk": "英国",
       "usa": "美国",
-      "vietnam": "越南"
+      "vietnam": "越南",
+      "hongkong": "中国香港"
     },
     "login": {
       "accountMode": "账号登录",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "请输入电池编号",
       "typeBattery": "电池租赁",
       "typeVehicle": "车辆租赁",
-      "typePackage": "车电套餐"
+      "typePackage": "车电套餐",
+      "orderNoPlaceholder": "请输入订单编号"
     },
     "profile": {
       "avatar": "头像",
@@ -264,7 +266,9 @@
       "datePickerMonth": "月",
       "datePickerDay": "日",
       "second": "秒",
-      "rangeTo": "至"
+      "rangeTo": "至",
+      "startDate": "开始日期",
+      "endDate": "结束日期"
     },
     "label": {
       "account": "账号",
@@ -361,7 +365,10 @@
       "done": "完成",
       "retry": "重试",
       "continue": "继续",
-      "enable": "开启"
+      "enable": "开启",
+      "clear": "清空",
+      "useCurrentLocation": "使用当前定位",
+      "confirmLabel": "确认"
     },
     "unit": {
       "vehicle": "辆",
@@ -474,7 +481,15 @@
       "timePickup": "取用",
       "pickupStartHint": "领取车辆/电池后开始计算订单时长",
       "selectPlanAndPay": "选择租赁方案并支付",
-      "orderPlaced": "下单成功"
+      "orderPlaced": "下单成功",
+      "refundReason": "退款原因",
+      "batteryNo": "电池编号",
+      "cancelRenew": "取消续租",
+      "cancelRenewConfirm": "确定取消该续租？取消后不可恢复",
+      "pay": "支付",
+      "payPartialRefund": "部分退款",
+      "payFullRefund": "全部退款",
+      "payProcessing": "支付中"
     },
     "toast": {
       "deviceBound": "设备绑定成功",
@@ -568,7 +583,8 @@
       "materialDeleted": "资料已删除",
       "clickBlankClose": "点击空白处关闭",
       "goLogin": "去登录",
-      "copiedFormat": "{label}已复制"
+      "copiedFormat": "{label}已复制",
+      "moreOps": "更多操作"
     },
     "vehicles": {
       "vehicleNamePlaceholder": "请输入车辆名称",
@@ -648,7 +664,10 @@
       "licenseShort": "驾照",
       "detail": "实名详情",
       "photoSelected": "{source}：已选中一张图片",
-      "photoReplaced": "{source}：已替换当前图片"
+      "photoReplaced": "{source}：已替换当前图片",
+      "license": "驾驶证",
+      "supplement": "补充资料",
+      "deleteConfirm": "确定要删除该实名信息吗？删除后不可恢复"
     },
     "plan": {
       "selectPlan": "选择方案",
@@ -667,7 +686,10 @@
       "topupSuccess": "充值成功",
       "selectAmount": "请选择充值金额",
       "storeSelected": "已选择门店",
-      "selectStoreFirst": "请先选择门店"
+      "selectStoreFirst": "请先选择门店",
+      "selectStoreWallet": "选择门店钱包",
+      "giftAmount": "赠送金额",
+      "rechargeDetail": "充值明细"
     },
     "walletType": {
       "consume": "消费",
@@ -728,7 +750,8 @@
       "actualDuration": "实际充电时长",
       "refundDetail": "退款明细",
       "refundAmount": "退款金额",
-      "orderList": "充电订单"
+      "orderList": "充电订单",
+      "noDevices": "暂无充电桩和门店"
     },
     "message": {
       "title": "消息中心",

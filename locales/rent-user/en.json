@@ -25,7 +25,8 @@
       "thailand": "Thailand",
       "uk": "United Kingdom",
       "usa": "United States",
-      "vietnam": "Vietnam"
+      "vietnam": "Vietnam",
+      "hongkong": "Hong Kong"
     },
     "login": {
       "accountMode": "Account",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "Please enter battery number",
       "typeBattery": "Battery Rental",
       "typeVehicle": "Vehicle Rental",
-      "typePackage": "Vehicle & Battery Package"
+      "typePackage": "Vehicle & Battery Package",
+      "orderNoPlaceholder": "Enter order number"
     },
     "profile": {
       "avatar": "Avatar",
@@ -264,7 +266,9 @@
       "datePickerMonth": "Month",
       "datePickerDay": "Day",
       "second": "Second",
-      "rangeTo": "to"
+      "rangeTo": "to",
+      "startDate": "Start Date",
+      "endDate": "End Date"
     },
     "label": {
       "account": "Account",
@@ -361,7 +365,10 @@
       "done": "Done",
       "retry": "Retry",
       "continue": "Continue",
-      "enable": "On"
+      "enable": "On",
+      "clear": "Clear",
+      "useCurrentLocation": "Use Current Location",
+      "confirmLabel": "Confirm"
     },
     "unit": {
       "vehicle": "vehicle(s)",
@@ -474,7 +481,15 @@
       "timePickup": "Pickup",
       "pickupStartHint": "Order duration starts after the vehicle/battery is picked up",
       "selectPlanAndPay": "Select a rental plan and pay",
-      "orderPlaced": "Order placed"
+      "orderPlaced": "Order placed",
+      "refundReason": "Refund Reason",
+      "batteryNo": "Battery No.",
+      "cancelRenew": "Cancel Renewal",
+      "cancelRenewConfirm": "Cancel this renewal? This cannot be undone",
+      "pay": "Pay",
+      "payPartialRefund": "Partial Refund",
+      "payFullRefund": "Full Refund",
+      "payProcessing": "Processing"
     },
     "toast": {
       "deviceBound": "Device bound successfully",
@@ -568,7 +583,8 @@
       "materialDeleted": "Material deleted",
       "clickBlankClose": "Tap blank area to close",
       "goLogin": "Log in",
-      "copiedFormat": "{label} copied"
+      "copiedFormat": "{label} copied",
+      "moreOps": "More Actions"
     },
     "vehicles": {
       "vehicleNamePlaceholder": "Please enter vehicle name",
@@ -648,7 +664,10 @@
       "licenseShort": "License",
       "detail": "KYC Details",
       "photoSelected": "{source}: 1 image selected",
-      "photoReplaced": "{source}: current image replaced"
+      "photoReplaced": "{source}: current image replaced",
+      "license": "Driver's License",
+      "supplement": "Additional Documents",
+      "deleteConfirm": "Delete this identity info? This cannot be undone."
     },
     "plan": {
       "selectPlan": "Select Plan",
@@ -663,11 +682,14 @@
       "topupCustom": "Custom Amount",
       "title": "My Wallet",
       "topupBonus": "Bonus {amount}",
-      "balancePay": "Wallet Payment",
+      "balancePay": "Wallet",
       "topupSuccess": "Top-up successful",
       "selectAmount": "Please select an amount",
       "storeSelected": "Store selected",
-      "selectStoreFirst": "Please select a store first"
+      "selectStoreFirst": "Please select a store first",
+      "selectStoreWallet": "Select Store Wallet",
+      "giftAmount": "Bonus Amount",
+      "rechargeDetail": "Top-up Details"
     },
     "walletType": {
       "consume": "Consumption",
@@ -728,7 +750,8 @@
       "actualDuration": "Actual Charging Duration",
       "refundDetail": "Refund Details",
       "refundAmount": "Refund Amount",
-      "orderList": "Charging Orders"
+      "orderList": "Charging Orders",
+      "noDevices": "No charging stations or stores nearby"
     },
     "message": {
       "title": "Message Center",

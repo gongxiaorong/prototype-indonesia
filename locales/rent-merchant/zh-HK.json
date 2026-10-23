@@ -25,7 +25,8 @@
       "thailand": "泰國",
       "uk": "英國",
       "usa": "美國",
-      "vietnam": "越南"
+      "vietnam": "越南",
+      "hongkong": "中國香港"
     },
     "login": {
       "accountMode": "帳號登入",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "請輸入電池編號",
       "typeBattery": "電池租賃",
       "typeVehicle": "車輛租賃",
-      "typePackage": "車電套餐"
+      "typePackage": "車電套餐",
+      "orderNoPlaceholder": "請輸入訂單編號"
     },
     "profile": {
       "avatar": "頭像",
@@ -264,7 +266,9 @@
       "datePickerMonth": "月",
       "datePickerDay": "日",
       "second": "秒",
-      "rangeTo": "至"
+      "rangeTo": "至",
+      "startDate": "開始日期",
+      "endDate": "結束日期"
     },
     "label": {
       "account": "帳號",
@@ -361,7 +365,10 @@
       "done": "完成",
       "retry": "重試",
       "continue": "繼續",
-      "enable": "開啟"
+      "enable": "開啟",
+      "clear": "清空",
+      "useCurrentLocation": "使用當前定位",
+      "confirmLabel": "確認"
     },
     "unit": {
       "vehicle": "輛",
@@ -441,7 +448,19 @@
       "changeShopFirst": "請先停用設備後再更換門店",
       "confirmDisableDesc": "確定要停用該設備嗎？",
       "confirmEnableDesc": "確定要啟用該設備嗎？",
-      "empty": "暫無設備"
+      "empty": "暫無設備",
+      "addSuccess": "設備已新增",
+      "infoSaved": "設備資訊已儲存",
+      "priceSaved": "定價已儲存",
+      "shopChanged": "所屬門店已更換",
+      "disabledToast": "設備已禁用",
+      "enabledToast": "設備已啟用",
+      "addTitle": "新增設備",
+      "editTitle": "編輯設備",
+      "disableAction": "禁用設備",
+      "enableAction": "啟用設備",
+      "addrMapSelect": "地圖選擇地址",
+      "inputDeviceNo": "請輸入設備編號"
     },
     "chargingOrder": {
       "title": "充電訂單",
@@ -472,7 +491,9 @@
       "finishOrder": "結束訂單",
       "refund": "退款",
       "empty": "暫無訂單",
-      "emptyRefund": "暫無退款記錄"
+      "emptyRefund": "暫無退款記錄",
+      "detailTitle": "充電訂單詳情",
+      "refundListTitle": "充電訂單退款記錄"
     },
     "renewal": {
       "allowOrderRenew": "允許訂單續租",
@@ -647,7 +668,10 @@
       "selectBindVehicle": "請選擇綁定車輛",
       "selectBindBattery": "請選擇綁定電池",
       "vehicleUnbound": "車輛已解綁",
-      "batteryUnbound": "電池已解綁"
+      "batteryUnbound": "電池已解綁",
+      "editPushConfig": "編輯推送設定",
+      "unbindVehicleTitle": "解綁車輛",
+      "unbindBatteryTitle": "解綁電池"
     },
     "home": {
       "view": "首頁總覽",
@@ -830,7 +854,12 @@
       "unselected": "未選門店",
       "selectFirst": "請先選擇門店",
       "selectedToast": "已選擇門店",
-      "splitHint": "各門店錢包獨立結算，增值 / 餘額僅對應所選門店"
+      "splitHint": "各門店錢包獨立結算，增值 / 餘額僅對應所選門店",
+      "ledgerOrderConsume": "訂單消費",
+      "ledgerRechargeRefund": "增值退款",
+      "ledgerGift": "贈送",
+      "confirmDeleteRechargeDesc": "確定刪除該充值配置？刪除後不可恢復。",
+      "title": "錢包"
     },
     "orders": {
       "vehicleBound": "車輛已綁定",
@@ -893,7 +922,29 @@
       "refundSource": "來源",
       "optional": "可選",
       "battNoLabel": "電池編號：",
-      "bindBatteryHint": "請為訂單綁定指定電池"
+      "bindBatteryHint": "請為訂單綁定指定電池",
+      "refundDoneFull": "退款已辦結：全部退款",
+      "refundDonePartial": "退款已辦結：部分退款",
+      "listVehicleTitle": "車輛訂單列表",
+      "listBatteryTitle": "電池訂單列表",
+      "listPackageTitle": "套餐訂單列表",
+      "listRechargeTitle": "充值訂單列表",
+      "listChargeTitle": "充電訂單列表",
+      "batteryNo": "電池編號",
+      "refundChannel": "退款渠道",
+      "endReason": "結束原因",
+      "endOrderTitle": "結束該訂單",
+      "endOrderConfirm": "確定結束該訂單？",
+      "endReasonPlaceholder": "請輸入結束原因（不超過 255 字）",
+      "cancelReasonPlaceholder": "請輸入取消原因",
+      "endOrderHint": "結束後訂單進入「已完成」；已支付訂單會補記支付時間，未支付訂單不產生支付時間",
+      "refundConfirmTotal": "確認執行退款？合計退款 {amount}",
+      "refundConfirmAmount": "確認執行退款？退款金額 {amount}",
+      "unitHour": "小時",
+      "unitDay": "天",
+      "unitWeek": "週",
+      "unitMonth": "個月",
+      "endOrderConfirmDesc": "確定結束該訂單？結束後訂單不可恢復為充電中"
     },
     "perm": {
       "permViewOrderDetail": "查看訂單詳情",
@@ -973,7 +1024,8 @@
     "package": {
       "namePlaceholder": "請輸入套餐名稱",
       "list": "套餐列表",
-      "manage": "套餐管理"
+      "manage": "套餐管理",
+      "imageSizeHint": "尺寸：{w}px × {h}px"
     },
     "vehicle": {
       "list": "車輛列表",
@@ -999,7 +1051,6 @@
       "list": "職位列表"
     },
     "dialcode": {
-      "hongkong": "中國香港",
       "noResults": "未找到匹配的國家/地區"
     },
     "batt_model": {
@@ -1031,7 +1082,44 @@
     },
     "message": {
       "channel": "推送渠道",
-      "channelPhone": "手機通知"
+      "channelPhone": "手機通知",
+      "settingsCategoryHead": "訊息類型",
+      "channelCenter": "訊息中心",
+      "categoryFeeRefund": "費用與退款"
+    },
+    "map": {
+      "noResult": "沒有找到相關地點"
+    },
+    "config": {
+      "hourlyPlan": "時租方案",
+      "otherPlan": "其它方案",
+      "hourlyPlanBefore": "時租方案到期前",
+      "otherPlanBefore": "其它方案到期前",
+      "autoRenewMinutes": "分鐘自動續租",
+      "autoRenewDays": "天自動續租",
+      "toExpiringMinutes": "分鐘，自動變更為「即將到期」狀態",
+      "toExpiringDays": "天，自動變更為「即將到期」狀態",
+      "toBreachMinutes": "分鐘，自動變更為「違約鎖單」狀態",
+      "toBreachDays": "天，自動變更為「違約鎖單」狀態"
+    },
+    "unit": {
+      "copies": "份"
+    },
+    "notify": {
+      "renewReminderTitle": "訂單自動續租",
+      "renewSuccessTitle": "訂單自動續租成功",
+      "renewFailedTitle": "訂單自動續租失敗",
+      "orderCreatedTitle": "訂單已建立",
+      "orderPaidTitle": "訂單支付成功",
+      "deviceBoundTitle": "訂單已開始",
+      "orderExpiringTitle": "訂單即將到期",
+      "orderOverdueTitle": "訂單已到期",
+      "orderBreachTitle": "車輛/電池已遠程鎖定",
+      "orderCompletedTitle": "訂單已完成",
+      "orderCancelledTitle": "訂單已取消",
+      "orderAdjustedTitle": "訂單金額已調整",
+      "orderRefundingTitle": "退款處理中",
+      "orderRefundedTitle": "退款成功"
     }
   },
   "demo": {

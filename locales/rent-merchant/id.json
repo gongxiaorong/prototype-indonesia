@@ -25,7 +25,8 @@
       "thailand": "Thailand",
       "uk": "Inggris",
       "usa": "Amerika Serikat",
-      "vietnam": "Vietnam"
+      "vietnam": "Vietnam",
+      "hongkong": "Hong Kong"
     },
     "login": {
       "accountMode": "Akun",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "Masukkan nomor baterai",
       "typeBattery": "Sewa Baterai",
       "typeVehicle": "Sewa Kendaraan",
-      "typePackage": "Paket Kendaraan & Baterai"
+      "typePackage": "Paket Kendaraan & Baterai",
+      "orderNoPlaceholder": "Masukkan nomor pesanan"
     },
     "profile": {
       "avatar": "Foto Profil",
@@ -264,7 +266,9 @@
       "datePickerMonth": "Bulan",
       "datePickerDay": "Hari",
       "second": "Detik",
-      "rangeTo": "sampai"
+      "rangeTo": "sampai",
+      "startDate": "Tanggal Mulai",
+      "endDate": "Tanggal Selesai"
     },
     "label": {
       "account": "Akun",
@@ -361,7 +365,10 @@
       "done": "Selesai",
       "retry": "Coba Lagi",
       "continue": "Lanjutkan",
-      "enable": "Aktifkan"
+      "enable": "Aktifkan",
+      "clear": "Kosongkan",
+      "useCurrentLocation": "Gunakan Lokasi Saat Ini",
+      "confirmLabel": "Konfirmasi"
     },
     "unit": {
       "vehicle": "unit",
@@ -441,7 +448,19 @@
       "changeShopFirst": "Nonaktifkan pengisi daya terlebih dahulu sebelum mengganti toko",
       "confirmDisableDesc": "Yakin ingin menonaktifkan pengisi daya ini?",
       "confirmEnableDesc": "Yakin ingin mengaktifkan pengisi daya ini?",
-      "empty": "Tidak ada perangkat"
+      "empty": "Tidak ada perangkat",
+      "addSuccess": "Perangkat ditambahkan",
+      "infoSaved": "Info perangkat disimpan",
+      "priceSaved": "Harga disimpan",
+      "shopChanged": "Toko diubah",
+      "disabledToast": "Perangkat dinonaktifkan",
+      "enabledToast": "Perangkat diaktifkan",
+      "addTitle": "Tambah perangkat",
+      "editTitle": "Edit perangkat",
+      "disableAction": "Nonaktifkan perangkat",
+      "enableAction": "Aktifkan perangkat",
+      "addrMapSelect": "Pilih di Peta",
+      "inputDeviceNo": "Masukkan nomor pengisi daya"
     },
     "chargingOrder": {
       "title": "Pesanan Pengisian Daya",
@@ -472,7 +491,9 @@
       "finishOrder": "Akhiri Pesanan",
       "refund": "Pengembalian Dana",
       "empty": "Tidak ada pesanan",
-      "emptyRefund": "Belum ada riwayat pengembalian dana"
+      "emptyRefund": "Belum ada riwayat pengembalian dana",
+      "detailTitle": "Detail pesanan pengisian",
+      "refundListTitle": "Riwayat pengembalian pesanan pengisian"
     },
     "renewal": {
       "allowOrderRenew": "Izinkan Perpanjangan Pesanan",
@@ -647,7 +668,10 @@
       "selectBindVehicle": "Pilih kendaraan yang akan diikat",
       "selectBindBattery": "Pilih baterai yang akan diikat",
       "vehicleUnbound": "Kendaraan telah dilepas ikatannya",
-      "batteryUnbound": "Baterai telah dilepas ikatannya"
+      "batteryUnbound": "Baterai telah dilepas ikatannya",
+      "editPushConfig": "Edit pengaturan push",
+      "unbindVehicleTitle": "Lepas Kendaraan",
+      "unbindBatteryTitle": "Lepas Baterai"
     },
     "home": {
       "view": "Ikhtisar",
@@ -830,7 +854,12 @@
       "unselected": "Belum ada toko dipilih",
       "selectFirst": "Pilih toko terlebih dahulu",
       "selectedToast": "Toko dipilih",
-      "splitHint": "Setiap dompet toko diselesaikan secara terpisah; isi ulang dan saldo hanya untuk toko yang dipilih"
+      "splitHint": "Setiap dompet toko diselesaikan secara terpisah; isi ulang dan saldo hanya untuk toko yang dipilih",
+      "ledgerOrderConsume": "Pengeluaran Pesanan",
+      "ledgerRechargeRefund": "Pengembalian Isi Ulang",
+      "ledgerGift": "Bonus",
+      "confirmDeleteRechargeDesc": "Hapus konfigurasi isi ulang ini? Tindakan ini tidak dapat dibatalkan.",
+      "title": "Dompet"
     },
     "orders": {
       "vehicleBound": "Kendaraan terikat",
@@ -893,7 +922,29 @@
       "refundSource": "Sumber",
       "optional": "Opsional",
       "battNoLabel": "Nomor Baterai:",
-      "bindBatteryHint": "Ikatkan baterai ke pesanan ini"
+      "bindBatteryHint": "Ikatkan baterai ke pesanan ini",
+      "refundDoneFull": "Refund selesai: pengembalian penuh",
+      "refundDonePartial": "Refund selesai: pengembalian sebagian",
+      "listVehicleTitle": "Daftar pesanan kendaraan",
+      "listBatteryTitle": "Daftar pesanan baterai",
+      "listPackageTitle": "Daftar pesanan paket",
+      "listRechargeTitle": "Daftar pesanan isi ulang",
+      "listChargeTitle": "Daftar pesanan pengisian",
+      "batteryNo": "Nomor Baterai",
+      "refundChannel": "Saluran pengembalian dana",
+      "endReason": "Alasan berakhir",
+      "endOrderTitle": "Akhiri pesanan ini",
+      "endOrderConfirm": "Akhiri pesanan ini?",
+      "endReasonPlaceholder": "Masukkan alasan berakhir (maks. 255 karakter)",
+      "cancelReasonPlaceholder": "Masukkan alasan pembatalan",
+      "endOrderHint": "Setelah diakhiri, pesanan menjadi \"Selesai\"; pesanan yang sudah dibayar mencatat waktu pembayaran, pesanan belum dibayar tidak.",
+      "refundConfirmTotal": "Konfirmasi pengembalian dana? Total pengembalian {amount}",
+      "refundConfirmAmount": "Konfirmasi pengembalian dana? Jumlah pengembalian {amount}",
+      "unitHour": "Jam",
+      "unitDay": "Hari",
+      "unitWeek": "Minggu",
+      "unitMonth": "Bulan",
+      "endOrderConfirmDesc": "Akhiri pesanan ini? Status tidak dapat kembali ke sedang mengisi."
     },
     "perm": {
       "permViewOrderDetail": "Lihat Detail Pesanan",
@@ -973,7 +1024,8 @@
     "package": {
       "namePlaceholder": "Masukkan nama paket",
       "list": "Daftar Paket",
-      "manage": "Manajemen Paket"
+      "manage": "Manajemen Paket",
+      "imageSizeHint": "Ukuran: {w}px × {h}px"
     },
     "vehicle": {
       "list": "Daftar kendaraan",
@@ -999,7 +1051,6 @@
       "list": "Daftar jabatan"
     },
     "dialcode": {
-      "hongkong": "Hong Kong, Tiongkok",
       "noResults": "Negara/wilayah tidak ditemukan"
     },
     "batt_model": {
@@ -1031,7 +1082,44 @@
     },
     "message": {
       "channel": "Saluran Push",
-      "channelPhone": "Notifikasi Ponsel"
+      "channelPhone": "Notifikasi Ponsel",
+      "settingsCategoryHead": "Jenis Pesan",
+      "channelCenter": "Pusat Pesan",
+      "categoryFeeRefund": "Biaya & Pengembalian Dana"
+    },
+    "map": {
+      "noResult": "Tempat terkait tidak ditemukan"
+    },
+    "config": {
+      "hourlyPlan": "Paket per jam",
+      "otherPlan": "Paket lainnya",
+      "hourlyPlanBefore": "Sebelum paket per jam berakhir",
+      "otherPlanBefore": "Sebelum paket lain berakhir",
+      "autoRenewMinutes": "Perpanjangan otomatis dalam menit",
+      "autoRenewDays": "Perpanjangan otomatis dalam hari",
+      "toExpiringMinutes": "menit, lalu status berubah menjadi \"Segera Berakhir\"",
+      "toExpiringDays": "hari, lalu status berubah menjadi \"Segera Berakhir\"",
+      "toBreachMinutes": "menit, lalu status berubah menjadi \"Terkunci Wanprestasi\"",
+      "toBreachDays": "hari, lalu status berubah menjadi \"Terkunci Wanprestasi\""
+    },
+    "unit": {
+      "copies": "dokumen"
+    },
+    "notify": {
+      "renewReminderTitle": "Perpanjangan Otomatis Pesanan",
+      "renewSuccessTitle": "Perpanjangan Otomatis Pesanan Berhasil",
+      "renewFailedTitle": "Perpanjangan Otomatis Pesanan Gagal",
+      "orderCreatedTitle": "Pesanan Dibuat",
+      "orderPaidTitle": "Pembayaran Berhasil",
+      "deviceBoundTitle": "Pesanan Dimulai",
+      "orderExpiringTitle": "Pesanan Segera Berakhir",
+      "orderOverdueTitle": "Pesanan Telah Berakhir",
+      "orderBreachTitle": "Kendaraan/Baterai Dikunci Jarak Jauh",
+      "orderCompletedTitle": "Pesanan Selesai",
+      "orderCancelledTitle": "Pesanan telah dibatalkan",
+      "orderAdjustedTitle": "Jumlah Pesanan Disesuaikan",
+      "orderRefundingTitle": "Pengembalian Dana Diproses",
+      "orderRefundedTitle": "Pengembalian Dana Berhasil"
     }
   },
   "demo": {

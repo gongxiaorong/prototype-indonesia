@@ -25,7 +25,8 @@
       "thailand": "泰国",
       "uk": "英国",
       "usa": "美国",
-      "vietnam": "越南"
+      "vietnam": "越南",
+      "hongkong": "中国香港"
     },
     "login": {
       "accountMode": "账号登录",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "请输入电池编号",
       "typeBattery": "电池租赁",
       "typeVehicle": "车辆租赁",
-      "typePackage": "车电套餐"
+      "typePackage": "车电套餐",
+      "orderNoPlaceholder": "请输入订单编号"
     },
     "profile": {
       "avatar": "头像",
@@ -264,7 +266,9 @@
       "datePickerMonth": "月",
       "datePickerDay": "日",
       "second": "秒",
-      "rangeTo": "至"
+      "rangeTo": "至",
+      "startDate": "开始日期",
+      "endDate": "结束日期"
     },
     "label": {
       "account": "账号",
@@ -361,7 +365,10 @@
       "done": "完成",
       "retry": "重试",
       "continue": "继续",
-      "enable": "开启"
+      "enable": "开启",
+      "clear": "清空",
+      "useCurrentLocation": "使用当前定位",
+      "confirmLabel": "确认"
     },
     "unit": {
       "vehicle": "辆",
@@ -441,7 +448,19 @@
       "changeShopFirst": "请先禁用设备后再更换门店",
       "confirmDisableDesc": "确定要禁用该设备吗？",
       "confirmEnableDesc": "确定要启用该设备吗？",
-      "empty": "暂无设备"
+      "empty": "暂无设备",
+      "addSuccess": "设备已新增",
+      "infoSaved": "设备信息已保存",
+      "priceSaved": "定价已保存",
+      "shopChanged": "所属门店已更换",
+      "disabledToast": "设备已禁用",
+      "enabledToast": "设备已启用",
+      "addTitle": "新增设备",
+      "editTitle": "编辑设备",
+      "disableAction": "禁用设备",
+      "enableAction": "启用设备",
+      "addrMapSelect": "地图选择地址",
+      "inputDeviceNo": "请输入设备编号"
     },
     "chargingOrder": {
       "title": "充电订单",
@@ -472,7 +491,9 @@
       "finishOrder": "结束订单",
       "refund": "退款",
       "empty": "暂无订单",
-      "emptyRefund": "暂无退款记录"
+      "emptyRefund": "暂无退款记录",
+      "detailTitle": "充电订单详情",
+      "refundListTitle": "充电订单退款记录"
     },
     "renewal": {
       "allowOrderRenew": "允许订单续租",
@@ -647,7 +668,10 @@
       "selectBindVehicle": "请选择绑定车辆",
       "selectBindBattery": "请选择绑定电池",
       "vehicleUnbound": "车辆已解绑",
-      "batteryUnbound": "电池已解绑"
+      "batteryUnbound": "电池已解绑",
+      "editPushConfig": "编辑推送配置",
+      "unbindVehicleTitle": "解绑车辆",
+      "unbindBatteryTitle": "解绑电池"
     },
     "home": {
       "view": "首页总览",
@@ -830,7 +854,12 @@
       "unselected": "未选门店",
       "selectFirst": "请先选择门店",
       "selectedToast": "已选择门店",
-      "splitHint": "各门店钱包独立结算，充值余额仅对应所选门店"
+      "splitHint": "各门店钱包独立结算，充值余额仅对应所选门店",
+      "ledgerOrderConsume": "订单消费",
+      "ledgerRechargeRefund": "充值退款",
+      "ledgerGift": "赠送",
+      "confirmDeleteRechargeDesc": "确定删除该充值配置？删除后不可恢复。",
+      "title": "钱包"
     },
     "orders": {
       "vehicleBound": "车辆已绑定",
@@ -893,7 +922,29 @@
       "refundSource": "来源",
       "optional": "可选",
       "battNoLabel": "电池编号：",
-      "bindBatteryHint": "请为订单绑定指定电池"
+      "bindBatteryHint": "请为订单绑定指定电池",
+      "refundDoneFull": "退款已办结：全部退款",
+      "refundDonePartial": "退款已办结：部分退款",
+      "listVehicleTitle": "车辆订单列表",
+      "listBatteryTitle": "电池订单列表",
+      "listPackageTitle": "套餐订单列表",
+      "listRechargeTitle": "充值订单列表",
+      "listChargeTitle": "充电订单列表",
+      "batteryNo": "电池编号",
+      "refundChannel": "退款渠道",
+      "endReason": "结束原因",
+      "endOrderTitle": "结束该订单",
+      "endOrderConfirm": "确定结束该订单？",
+      "endReasonPlaceholder": "请输入结束原因（不超过 255 字）",
+      "cancelReasonPlaceholder": "请输入取消原因",
+      "endOrderHint": "结束后订单进入「已完成」；已支付订单会补记支付时间，未支付订单不产生支付时间",
+      "refundConfirmTotal": "确认执行退款？合计退款 {amount}",
+      "refundConfirmAmount": "确认执行退款？退款金额 {amount}",
+      "unitHour": "小时",
+      "unitDay": "天",
+      "unitWeek": "周",
+      "unitMonth": "个月",
+      "endOrderConfirmDesc": "确定结束该订单？结束后订单不可恢复为充电中"
     },
     "perm": {
       "permViewOrderDetail": "查看订单详情",
@@ -973,7 +1024,8 @@
     "package": {
       "namePlaceholder": "请输入套餐名称",
       "list": "套餐列表",
-      "manage": "套餐管理"
+      "manage": "套餐管理",
+      "imageSizeHint": "尺寸：{w}px × {h}px"
     },
     "vehicle": {
       "list": "车辆列表",
@@ -999,7 +1051,6 @@
       "list": "职位列表"
     },
     "dialcode": {
-      "hongkong": "中国香港",
       "noResults": "未找到匹配的国家/地区"
     },
     "batt_model": {
@@ -1031,7 +1082,44 @@
     },
     "message": {
       "channel": "推送渠道",
-      "channelPhone": "手机通知"
+      "channelPhone": "手机通知",
+      "settingsCategoryHead": "消息类型",
+      "channelCenter": "消息中心",
+      "categoryFeeRefund": "费用与退款"
+    },
+    "map": {
+      "noResult": "没有找到相关地点"
+    },
+    "config": {
+      "hourlyPlan": "时租方案",
+      "otherPlan": "其它方案",
+      "hourlyPlanBefore": "时租方案到期前",
+      "otherPlanBefore": "其它方案到期前",
+      "autoRenewMinutes": "分钟自动续租",
+      "autoRenewDays": "天自动续租",
+      "toExpiringMinutes": "分钟，自动变更为「即将到期」状态",
+      "toExpiringDays": "天，自动变更为「即将到期」状态",
+      "toBreachMinutes": "分钟，自动变更为「违约锁单」状态",
+      "toBreachDays": "天，自动变更为「违约锁单」状态"
+    },
+    "unit": {
+      "copies": "份"
+    },
+    "notify": {
+      "renewReminderTitle": "订单自动续租",
+      "renewSuccessTitle": "订单自动续租成功",
+      "renewFailedTitle": "订单自动续租失败",
+      "orderCreatedTitle": "订单已创建",
+      "orderPaidTitle": "订单支付成功",
+      "deviceBoundTitle": "订单已开始",
+      "orderExpiringTitle": "订单即将到期",
+      "orderOverdueTitle": "订单已到期",
+      "orderBreachTitle": "车辆/电池已远程锁定",
+      "orderCompletedTitle": "订单已完成",
+      "orderCancelledTitle": "订单已取消",
+      "orderAdjustedTitle": "订单金额已调整",
+      "orderRefundingTitle": "退款处理中",
+      "orderRefundedTitle": "退款成功"
     }
   },
   "demo": {

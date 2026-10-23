@@ -25,7 +25,8 @@
       "thailand": "泰國",
       "uk": "英國",
       "usa": "美國",
-      "vietnam": "越南"
+      "vietnam": "越南",
+      "hongkong": "中國香港"
     },
     "login": {
       "accountMode": "帳號登入",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "請輸入電池編號",
       "typeBattery": "電池租賃",
       "typeVehicle": "車輛租賃",
-      "typePackage": "車電套餐"
+      "typePackage": "車電套餐",
+      "orderNoPlaceholder": "請輸入訂單編號"
     },
     "profile": {
       "avatar": "頭像",
@@ -264,7 +266,9 @@
       "datePickerMonth": "月",
       "datePickerDay": "日",
       "second": "秒",
-      "rangeTo": "至"
+      "rangeTo": "至",
+      "startDate": "開始日期",
+      "endDate": "結束日期"
     },
     "label": {
       "account": "帳號",
@@ -361,7 +365,10 @@
       "done": "完成",
       "retry": "重試",
       "continue": "繼續",
-      "enable": "開啟"
+      "enable": "開啟",
+      "clear": "清空",
+      "useCurrentLocation": "使用當前定位",
+      "confirmLabel": "確認"
     },
     "unit": {
       "vehicle": "輛",
@@ -474,7 +481,15 @@
       "timePickup": "取車",
       "pickupStartHint": "領取車輛/電池後開始計算訂單時長",
       "selectPlanAndPay": "選擇租賃方案並付款",
-      "orderPlaced": "下單成功"
+      "orderPlaced": "下單成功",
+      "refundReason": "退款原因",
+      "batteryNo": "電池編號",
+      "cancelRenew": "取消續租",
+      "cancelRenewConfirm": "確定取消該續租？取消後不可恢復",
+      "pay": "支付",
+      "payPartialRefund": "部分退款",
+      "payFullRefund": "全額退款",
+      "payProcessing": "付款中"
     },
     "toast": {
       "deviceBound": "設備綁定成功",
@@ -568,7 +583,8 @@
       "materialDeleted": "資料已刪除",
       "clickBlankClose": "點擊空白處關閉",
       "goLogin": "前往登入",
-      "copiedFormat": "{label}已複製"
+      "copiedFormat": "{label}已複製",
+      "moreOps": "更多操作"
     },
     "vehicles": {
       "vehicleNamePlaceholder": "請輸入車輛名稱",
@@ -648,7 +664,10 @@
       "licenseShort": "駕照",
       "detail": "實名詳情",
       "photoSelected": "{source}：已選中一張圖片",
-      "photoReplaced": "{source}：已替換當前圖片"
+      "photoReplaced": "{source}：已替換當前圖片",
+      "license": "駕駛證",
+      "supplement": "補充資料",
+      "deleteConfirm": "確定要刪除該實名資訊嗎？刪除後不可恢復"
     },
     "plan": {
       "selectPlan": "選擇方案",
@@ -663,11 +682,14 @@
       "topupCustom": "自訂金額",
       "title": "我的錢包",
       "topupBonus": "贈送{amount}",
-      "balancePay": "錢包付款",
+      "balancePay": "錢包",
       "topupSuccess": "增值成功",
       "selectAmount": "請選擇增值金額",
       "storeSelected": "已選擇門店",
-      "selectStoreFirst": "請先選擇門店"
+      "selectStoreFirst": "請先選擇門店",
+      "selectStoreWallet": "選擇門店錢包",
+      "giftAmount": "贈送金額",
+      "rechargeDetail": "增值明細"
     },
     "walletType": {
       "consume": "消費",
@@ -728,7 +750,8 @@
       "actualDuration": "實際充電時長",
       "refundDetail": "退款明細",
       "refundAmount": "退款金額",
-      "orderList": "充電訂單"
+      "orderList": "充電訂單",
+      "noDevices": "暫無充電樁和門店"
     },
     "message": {
       "title": "訊息中心",

@@ -25,7 +25,8 @@
       "thailand": "ประเทศไทย",
       "uk": "สหราชอาณาจักร",
       "usa": "สหรัฐอเมริกา",
-      "vietnam": "เวียดนาม"
+      "vietnam": "เวียดนาม",
+      "hongkong": "ฮ่องกง"
     },
     "login": {
       "accountMode": "บัญชี",
@@ -104,7 +105,8 @@
       "batteryNoPlaceholder": "กรุณากรอกหมายเลขแบตเตอรี่",
       "typeBattery": "เช่าแบตเตอรี่",
       "typeVehicle": "เช่ายานพาหนะ",
-      "typePackage": "แพ็กเกจยานพาหนะและแบตเตอรี่"
+      "typePackage": "แพ็กเกจยานพาหนะและแบตเตอรี่",
+      "orderNoPlaceholder": "กรุณากรอกหมายเลขคำสั่งซื้อ"
     },
     "profile": {
       "avatar": "รูปโปรไฟล์",
@@ -264,7 +266,9 @@
       "datePickerMonth": "เดือน",
       "datePickerDay": "วัน",
       "second": "วินาที",
-      "rangeTo": "ถึง"
+      "rangeTo": "ถึง",
+      "startDate": "วันที่เริ่ม",
+      "endDate": "วันที่สิ้นสุด"
     },
     "label": {
       "account": "บัญชี",
@@ -361,7 +365,10 @@
       "done": "เสร็จสิ้น",
       "retry": "ลองใหม่",
       "continue": "ดำเนินการต่อ",
-      "enable": "เปิด"
+      "enable": "เปิด",
+      "clear": "ล้าง",
+      "useCurrentLocation": "ใช้ตำแหน่งปัจจุบัน",
+      "confirmLabel": "ยืนยัน"
     },
     "unit": {
       "vehicle": "คัน",
@@ -474,7 +481,15 @@
       "timePickup": "รับ",
       "pickupStartHint": "เริ่มนับระยะเวลาคำสั่งซื้อหลังจากรับยานพาหนะ/แบตเตอรี่",
       "selectPlanAndPay": "เลือกแพ็กเกจเช่าและชำระเงิน",
-      "orderPlaced": "สั่งซื้อสำเร็จ"
+      "orderPlaced": "สั่งซื้อสำเร็จ",
+      "refundReason": "เหตุผลการคืนเงิน",
+      "batteryNo": "หมายเลขแบตเตอรี่",
+      "cancelRenew": "ยกเลิกการต่ออายุ",
+      "cancelRenewConfirm": "ยกเลิกการต่ออายุนี้หรือไม่? ไม่สามารถย้อนกลับได้",
+      "pay": "ชำระเงิน",
+      "payPartialRefund": "คืนเงินบางส่วน",
+      "payFullRefund": "คืนเงินเต็มจำนวน",
+      "payProcessing": "กำลังดำเนินการ"
     },
     "toast": {
       "deviceBound": "ผูกอุปกรณ์สำเร็จ",
@@ -568,7 +583,8 @@
       "materialDeleted": "ลบวัสดุแล้ว",
       "clickBlankClose": "แตะพื้นที่ว่างเพื่อปิด",
       "goLogin": "เข้าสู่ระบบ",
-      "copiedFormat": "คัดลอก {label} แล้ว"
+      "copiedFormat": "คัดลอก {label} แล้ว",
+      "moreOps": "การดำเนินการเพิ่มเติม"
     },
     "vehicles": {
       "vehicleNamePlaceholder": "กรุณากรอกชื่อยานพาหนะ",
@@ -648,7 +664,10 @@
       "licenseShort": "ใบขับขี่",
       "detail": "รายละเอียด KYC",
       "photoSelected": "{source}: เลือกรูปภาพ 1 รูป",
-      "photoReplaced": "{source}: แทนที่รูปภาพปัจจุบันแล้ว"
+      "photoReplaced": "{source}: แทนที่รูปภาพปัจจุบันแล้ว",
+      "license": "ใบอนุญาตขับขี่",
+      "supplement": "เอกสารเพิ่มเติม",
+      "deleteConfirm": "ลบข้อมูลยืนยันตัวตนนี้หรือไม่? ไม่สามารถกู้คืนได้"
     },
     "plan": {
       "selectPlan": "เลือกแผน",
@@ -663,11 +682,14 @@
       "topupCustom": "จำนวนเงินกำหนดเอง",
       "title": "กระเป๋าเงินของฉัน",
       "topupBonus": "โบนัส {amount}",
-      "balancePay": "ชำระด้วยกระเป๋าเงิน",
+      "balancePay": "กระเป๋าเงิน",
       "topupSuccess": "เติมเงินสำเร็จ",
       "selectAmount": "กรุณาเลือกจำนวนเงิน",
       "storeSelected": "เลือกร้านค้าแล้ว",
-      "selectStoreFirst": "กรุณาเลือกร้านค้าก่อน"
+      "selectStoreFirst": "กรุณาเลือกร้านค้าก่อน",
+      "selectStoreWallet": "เลือกกระเป๋าเงินร้านค้า",
+      "giftAmount": "จำนวนโบนัส",
+      "rechargeDetail": "รายละเอียดการเติมเงิน"
     },
     "walletType": {
       "consume": "การบริโภค",
@@ -728,7 +750,8 @@
       "actualDuration": "ระยะเวลาชาร์จจริง",
       "refundDetail": "รายละเอียดการคืนเงิน",
       "refundAmount": "จำนวนเงินคืน",
-      "orderList": "คำสั่งซื้อการชาร์จ"
+      "orderList": "คำสั่งซื้อการชาร์จ",
+      "noDevices": "ไม่มีสถานีชาร์จหรือร้านค้า"
     },
     "message": {
       "title": "ศูนย์ข้อความ",
