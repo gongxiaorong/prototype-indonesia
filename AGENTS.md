@@ -361,7 +361,6 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 | 用途 | 命令 |
 | --- | --- |
 | 本地静态服务（跑截图脚本时需要） | 仓库根目录 `python -m http.server 8137`（租车）/ `8139`（商户，端口见脚本 docstring） |
-| 拆分语言文件（一次性迁移，幂等） | `node scripts/i18n_split.mjs --write`（默认 dry-run） |
 | 生成两端语言包（JSON → JS） | `node scripts/i18n_bundle.mjs`（改任一端 `*.json` 后必跑） |
 | i18n 校验 | `node scripts/i18n_check.mjs`（按 `rent-user/`、`rent-merchant/`、`swap/` 分组输出 MISSING / ORPHAN / PLACEHOLDER / SUFFIX，另含三对 `TERM` 与 `SHARED` 硬校验，计入退出码） |
 | key 命名体检 / 按映射重命名 | `node scripts/i18n_keyize.mjs --audit ...` / `node scripts/i18n_keyize.mjs --apply-rename <map.json> --write`（默认 dry-run） |
