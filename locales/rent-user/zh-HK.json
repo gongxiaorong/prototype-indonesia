@@ -190,7 +190,8 @@
       "nothingToCopy": "無內容可複製",
       "saveSuccess": "儲存成功",
       "copySuccess": "複製成功",
-      "codeSent": "驗證碼已發送"
+      "codeSent": "驗證碼已發送",
+      "accountSaved": "帳號已儲存"
     },
     "vehicles": {
       "addVinPlaceholder": "請輸入車架號",
@@ -472,12 +473,14 @@
       "billDaily": "按天計費",
       "timePickup": "取車",
       "pickupStartHint": "領取車輛/電池後開始計算訂單時長",
-      "selectPlanAndPay": "選擇租賃方案並付款"
+      "selectPlanAndPay": "選擇租賃方案並付款",
+      "orderPlaced": "下單成功"
     },
     "toast": {
       "deviceBound": "設備綁定成功",
       "deviceUnbound": "設備已解綁",
-      "msgAllRead": "已將訊息置為已讀"
+      "msgAllRead": "已將訊息置為已讀",
+      "renewFailedUnpaid": "存在未支付訂單，續租失敗"
     },
     "home": {
       "explore": "探索發現",
@@ -599,7 +602,11 @@
       "powerOff": "斷電",
       "powerOnToast": "已啟動",
       "powerOffToast": "已斷電",
-      "unnamedVehicle": "未命名車輛"
+      "unnamedVehicle": "未命名車輛",
+      "noBindableBattery": "暫無可綁定電池",
+      "noBindableVehicle": "暫無可綁定車輛",
+      "lockClosed": "已關鎖",
+      "lockOpened": "已開鎖"
     },
     "battery": {
       "unbind": "解綁電池",
@@ -658,7 +665,9 @@
       "topupBonus": "贈送{amount}",
       "balancePay": "錢包付款",
       "topupSuccess": "增值成功",
-      "selectAmount": "請選擇增值金額"
+      "selectAmount": "請選擇增值金額",
+      "storeSelected": "已選擇門店",
+      "selectStoreFirst": "請先選擇門店"
     },
     "walletType": {
       "consume": "消費",

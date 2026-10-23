@@ -190,7 +190,8 @@
       "nothingToCopy": "無內容可複製",
       "saveSuccess": "儲存成功",
       "copySuccess": "複製成功",
-      "codeSent": "驗證碼已發送"
+      "codeSent": "驗證碼已發送",
+      "accountSaved": "帳號已儲存"
     },
     "vehicles": {
       "addVinPlaceholder": "請輸入車架號",
@@ -849,7 +850,7 @@
       "refundModalTotalLabel": "合計退款",
       "confirmLostDesc": "報失後車輛電機將被鎖定，無法正常騎行",
       "listBattery": "電池租賃",
-      "refundModalRentLimit": "可退{amount}",
+      "refundModalRentLimit": "可退 {amount}",
       "confirmUnlostDesc": "解除報失後車輛電機將被解鎖，恢復騎行",
       "battBound": "電池已綁定",
       "docViewOnlyMode": "當前狀態僅支持查看",

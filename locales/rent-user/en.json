@@ -190,7 +190,8 @@
       "nothingToCopy": "Nothing to copy",
       "saveSuccess": "Saved successfully",
       "copySuccess": "Copied",
-      "codeSent": "Verification code sent"
+      "codeSent": "Verification code sent",
+      "accountSaved": "Account saved"
     },
     "vehicles": {
       "addVinPlaceholder": "Please enter VIN",
@@ -472,12 +473,14 @@
       "billDaily": "Billed Daily",
       "timePickup": "Pickup",
       "pickupStartHint": "Order duration starts after the vehicle/battery is picked up",
-      "selectPlanAndPay": "Select a rental plan and pay"
+      "selectPlanAndPay": "Select a rental plan and pay",
+      "orderPlaced": "Order placed"
     },
     "toast": {
       "deviceBound": "Device bound successfully",
       "deviceUnbound": "Device unbound",
-      "msgAllRead": "Messages marked as read"
+      "msgAllRead": "Messages marked as read",
+      "renewFailedUnpaid": "Renewal failed: unpaid order exists"
     },
     "home": {
       "explore": "Explore",
@@ -599,7 +602,11 @@
       "powerOff": "Power Off",
       "powerOnToast": "Started",
       "powerOffToast": "Powered off",
-      "unnamedVehicle": "Unnamed vehicle"
+      "unnamedVehicle": "Unnamed vehicle",
+      "noBindableBattery": "No battery available to bind",
+      "noBindableVehicle": "No vehicle available to bind",
+      "lockClosed": "Locked",
+      "lockOpened": "Unlocked"
     },
     "battery": {
       "unbind": "Unbind Battery",
@@ -658,7 +665,9 @@
       "topupBonus": "Bonus {amount}",
       "balancePay": "Wallet Payment",
       "topupSuccess": "Top-up successful",
-      "selectAmount": "Please select an amount"
+      "selectAmount": "Please select an amount",
+      "storeSelected": "Store selected",
+      "selectStoreFirst": "Please select a store first"
     },
     "walletType": {
       "consume": "Consumption",

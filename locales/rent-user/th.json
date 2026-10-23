@@ -190,7 +190,8 @@
       "nothingToCopy": "ไม่มีอะไรให้คัดลอก",
       "saveSuccess": "บันทึกสำเร็จ",
       "copySuccess": "คัดลอกแล้ว",
-      "codeSent": "ส่งรหัสยืนยันแล้ว"
+      "codeSent": "ส่งรหัสยืนยันแล้ว",
+      "accountSaved": "บันทึกบัญชีแล้ว"
     },
     "vehicles": {
       "addVinPlaceholder": "กรุณากรอกหมายเลขตัวถัง",
@@ -472,12 +473,14 @@
       "billDaily": "คิดค่าใช้จ่ายรายวัน",
       "timePickup": "รับ",
       "pickupStartHint": "เริ่มนับระยะเวลาคำสั่งซื้อหลังจากรับยานพาหนะ/แบตเตอรี่",
-      "selectPlanAndPay": "เลือกแพ็กเกจเช่าและชำระเงิน"
+      "selectPlanAndPay": "เลือกแพ็กเกจเช่าและชำระเงิน",
+      "orderPlaced": "สั่งซื้อสำเร็จ"
     },
     "toast": {
       "deviceBound": "ผูกอุปกรณ์สำเร็จ",
       "deviceUnbound": "ยกเลิกการผูกอุปกรณ์",
-      "msgAllRead": "ทำเครื่องหมายข้อความว่าอ่านแล้ว"
+      "msgAllRead": "ทำเครื่องหมายข้อความว่าอ่านแล้ว",
+      "renewFailedUnpaid": "ต่ออายุไม่สำเร็จ: มีคำสั่งซื้อที่ยังไม่ชำระ"
     },
     "home": {
       "explore": "สำรวจ",
@@ -599,7 +602,11 @@
       "powerOff": "ปิดเครื่อง",
       "powerOnToast": "สตาร์ทแล้ว",
       "powerOffToast": "ปิดเครื่องแล้ว",
-      "unnamedVehicle": "ยานพาหนะที่ยังไม่ตั้งชื่อ"
+      "unnamedVehicle": "ยานพาหนะที่ยังไม่ตั้งชื่อ",
+      "noBindableBattery": "ไม่มีแบตเตอรี่ให้ผูก",
+      "noBindableVehicle": "ไม่มียานพาหนะให้ผูก",
+      "lockClosed": "ล็อคแล้ว",
+      "lockOpened": "ปลดล็อคแล้ว"
     },
     "battery": {
       "unbind": "ยกเลิกการผูกแบตเตอรี่",
@@ -658,7 +665,9 @@
       "topupBonus": "โบนัส {amount}",
       "balancePay": "ชำระด้วยกระเป๋าเงิน",
       "topupSuccess": "เติมเงินสำเร็จ",
-      "selectAmount": "กรุณาเลือกจำนวนเงิน"
+      "selectAmount": "กรุณาเลือกจำนวนเงิน",
+      "storeSelected": "เลือกร้านค้าแล้ว",
+      "selectStoreFirst": "กรุณาเลือกร้านค้าก่อน"
     },
     "walletType": {
       "consume": "การบริโภค",

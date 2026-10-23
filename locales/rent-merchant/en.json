@@ -190,7 +190,8 @@
       "nothingToCopy": "Nothing to copy",
       "saveSuccess": "Saved successfully",
       "copySuccess": "Copied",
-      "codeSent": "Verification code sent"
+      "codeSent": "Verification code sent",
+      "accountSaved": "Account saved"
     },
     "vehicles": {
       "addVinPlaceholder": "Please enter VIN",

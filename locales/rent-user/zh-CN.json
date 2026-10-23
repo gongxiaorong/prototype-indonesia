@@ -190,7 +190,8 @@
       "nothingToCopy": "无内容可复制",
       "saveSuccess": "保存成功",
       "copySuccess": "复制成功",
-      "codeSent": "验证码已发送"
+      "codeSent": "验证码已发送",
+      "accountSaved": "账号已保存"
     },
     "vehicles": {
       "addVinPlaceholder": "请输入车架号",
@@ -472,12 +473,14 @@
       "billDaily": "按天计费",
       "timePickup": "取用",
       "pickupStartHint": "领取车辆/电池后开始计算订单时长",
-      "selectPlanAndPay": "选择租赁方案并支付"
+      "selectPlanAndPay": "选择租赁方案并支付",
+      "orderPlaced": "下单成功"
     },
     "toast": {
       "deviceBound": "设备绑定成功",
       "deviceUnbound": "设备已解绑",
-      "msgAllRead": "已将消息置为已读"
+      "msgAllRead": "已将消息置为已读",
+      "renewFailedUnpaid": "存在未支付订单，续租失败"
     },
     "home": {
       "explore": "探索发现",
@@ -599,7 +602,11 @@
       "powerOff": "断电",
       "powerOnToast": "已启动",
       "powerOffToast": "已断电",
-      "unnamedVehicle": "未命名车辆"
+      "unnamedVehicle": "未命名车辆",
+      "noBindableBattery": "暂无可绑定电池",
+      "noBindableVehicle": "暂无可绑定车辆",
+      "lockClosed": "已关锁",
+      "lockOpened": "已开锁"
     },
     "battery": {
       "unbind": "解绑电池",
@@ -658,7 +665,9 @@
       "topupBonus": "赠送{amount}",
       "balancePay": "钱包",
       "topupSuccess": "充值成功",
-      "selectAmount": "请选择充值金额"
+      "selectAmount": "请选择充值金额",
+      "storeSelected": "已选择门店",
+      "selectStoreFirst": "请先选择门店"
     },
     "walletType": {
       "consume": "消费",

@@ -190,7 +190,8 @@
       "nothingToCopy": "Tidak ada yang dapat disalin",
       "saveSuccess": "Berhasil disimpan",
       "copySuccess": "Disalin",
-      "codeSent": "Kode verifikasi terkirim"
+      "codeSent": "Kode verifikasi terkirim",
+      "accountSaved": "Akun disimpan"
     },
     "vehicles": {
       "addVinPlaceholder": "Masukkan nomor rangka",
@@ -472,12 +473,14 @@
       "billDaily": "Dibebankan per Hari",
       "timePickup": "Diambil",
       "pickupStartHint": "Durasi pesanan dihitung setelah kendaraan/baterai diambil",
-      "selectPlanAndPay": "Pilih paket sewa dan bayar"
+      "selectPlanAndPay": "Pilih paket sewa dan bayar",
+      "orderPlaced": "Pesanan dibuat"
     },
     "toast": {
       "deviceBound": "Perangkat berhasil diikat",
       "deviceUnbound": "Perangkat dilepas",
-      "msgAllRead": "Pesan ditandai sudah dibaca"
+      "msgAllRead": "Pesan ditandai sudah dibaca",
+      "renewFailedUnpaid": "Perpanjangan gagal: ada pesanan yang belum dibayar"
     },
     "home": {
       "explore": "Jelajahi",
@@ -599,7 +602,11 @@
       "powerOff": "Matikan",
       "powerOnToast": "Sudah menyala",
       "powerOffToast": "Sudah mati",
-      "unnamedVehicle": "Kendaraan tanpa nama"
+      "unnamedVehicle": "Kendaraan tanpa nama",
+      "noBindableBattery": "Tidak ada baterai untuk diikat",
+      "noBindableVehicle": "Tidak ada kendaraan untuk diikat",
+      "lockClosed": "Terkunci",
+      "lockOpened": "Kunci Terbuka"
     },
     "battery": {
       "unbind": "Lepas Baterai",
@@ -658,7 +665,9 @@
       "topupBonus": "Bonus {amount}",
       "balancePay": "Pembayaran Dompet",
       "topupSuccess": "Isi ulang berhasil",
-      "selectAmount": "Silakan pilih jumlah"
+      "selectAmount": "Silakan pilih jumlah",
+      "storeSelected": "Toko dipilih",
+      "selectStoreFirst": "Pilih toko terlebih dahulu"
     },
     "walletType": {
       "consume": "Konsumsi",

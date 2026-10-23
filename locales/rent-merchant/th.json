@@ -190,7 +190,8 @@
       "nothingToCopy": "ไม่มีอะไรให้คัดลอก",
       "saveSuccess": "บันทึกสำเร็จ",
       "copySuccess": "คัดลอกแล้ว",
-      "codeSent": "ส่งรหัสยืนยันแล้ว"
+      "codeSent": "ส่งรหัสยืนยันแล้ว",
+      "accountSaved": "บันทึกบัญชีแล้ว"
     },
     "vehicles": {
       "addVinPlaceholder": "กรุณากรอกหมายเลขตัวถัง",

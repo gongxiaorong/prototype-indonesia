@@ -190,7 +190,8 @@
       "nothingToCopy": "Tidak ada yang dapat disalin",
       "saveSuccess": "Berhasil disimpan",
       "copySuccess": "Disalin",
-      "codeSent": "Kode verifikasi terkirim"
+      "codeSent": "Kode verifikasi terkirim",
+      "accountSaved": "Akun disimpan"
     },
     "vehicles": {
       "addVinPlaceholder": "Masukkan nomor rangka",

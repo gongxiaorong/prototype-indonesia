@@ -190,7 +190,8 @@
       "nothingToCopy": "无内容可复制",
       "saveSuccess": "保存成功",
       "copySuccess": "复制成功",
-      "codeSent": "验证码已发送"
+      "codeSent": "验证码已发送",
+      "accountSaved": "账号已保存"
     },
     "vehicles": {
       "addVinPlaceholder": "请输入车架号",
@@ -849,7 +850,7 @@
       "refundModalTotalLabel": "合计退款",
       "confirmLostDesc": "报失后车辆电机将被锁定，无法正常骑行",
       "listBattery": "电池租赁",
-      "refundModalRentLimit": "可退{amount}",
+      "refundModalRentLimit": "可退 {amount}",
       "confirmUnlostDesc": "解除报失后车辆电机将被解锁，恢复骑行",
       "battBound": "电池已绑定",
       "docViewOnlyMode": "当前状态仅支持查看",
