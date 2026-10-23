@@ -322,7 +322,7 @@
       "unselected": "Not Selected",
       "originalRent": "Original Rent",
       "originalDeposit": "Original Deposit",
-      "rechargeOrder": "Recharge Order",
+      "rechargeOrder": "Top-up Order",
       "renewal": "Renewal",
       "balanceFlow": "Balance Statement",
       "beforeDue": "Before Due",
@@ -521,14 +521,14 @@
       "cancelSuccess": "Renewal cancelled",
       "beforeDueAutoDays": "Auto renew {n} days before due date for other plans",
       "beforeDueAutoMinutes": "Auto renew {n} minutes before due date for hourly plans",
-      "realNameTip": "When enabled, users must select verified identity info at checkout, or the order cannot be submitted"
+      "realNameTip": "When enabled, users must select verified KYC info at checkout, or the order cannot be submitted"
     },
     "profile": {
       "noMatchUser": "No matching user",
       "menuStore": "Switch Store",
       "priceNotNegative": "Please enter 0 or a positive number, with at most 2 decimal places",
       "accountCredHint": "Please keep the following account information safe",
-      "configSaved": "Configuration saved",
+      "configSaved": "Config saved",
       "menuAccount": "Account Management",
       "confirmEnableDesc": "Are you sure you want to re-enable this account? It will be able to log in normally after enabling.",
       "confirmDeletePosition": "Delete Position",
@@ -612,7 +612,7 @@
       "packageAdd": "Add Package",
       "phoneBound": "Phone bound",
       "positionError": "Please select a position",
-      "menuConfig": "Order Configuration",
+      "menuConfig": "Order Config",
       "lastUpdateLabel": "Updated Time: {time}",
       "roleStaff": "Staff",
       "userInfo": "User Info",
@@ -669,7 +669,7 @@
       "selectBindBattery": "Please select a battery to bind",
       "vehicleUnbound": "Vehicle unbound",
       "batteryUnbound": "Battery unbound",
-      "editPushConfig": "Edit push settings",
+      "editPushConfig": "Edit Push Config",
       "unbindVehicleTitle": "Unbind Vehicle",
       "unbindBatteryTitle": "Unbind Battery"
     },
@@ -782,7 +782,7 @@
       "countSuffix": "times",
       "findFromAlertSub": "Send flash and honk command",
       "closeSourceManual": "Manual",
-      "ignoreTitle": "Ignore",
+      "ignoreTitle": "Ignore Alert",
       "noHistory": "No records",
       "ignoreHandled": "Handled On-site",
       "orderId": "Related Order",
@@ -914,7 +914,7 @@
       "payment2c2p": "2C2P",
       "payStatus": "Payment Status",
       "listPackage": "Vehicle & Battery Package",
-      "listRecharge": "Recharge Order",
+      "listRecharge": "Top-up Order",
       "rechargeDetail": "Top-up Order Details",
       "rechargeRefunds": "Top-up Refund Records",
       "typePackage": "Package",
@@ -957,7 +957,7 @@
         "ordPkg": "Package orders",
         "ordBatt": "Battery orders"
       },
-      "sysConfig": "System Configuration",
+      "sysConfig": "System Config",
       "permRefundProcess": "Refund Processing",
       "permDashboard": "Dashboard",
       "userList": "User List",
@@ -1060,7 +1060,7 @@
       "list": "Account list"
     },
     "order_config": {
-      "edit": "Edit configuration",
+      "edit": "Edit Config",
       "statusFlow": "Order Status Flow"
     },
     "status": {

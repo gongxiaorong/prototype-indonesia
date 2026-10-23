@@ -322,7 +322,7 @@
       "unselected": "ยังไม่เลือก",
       "originalRent": "ค่าเช่าเดิม",
       "originalDeposit": "เงินมัดจำเดิม",
-      "rechargeOrder": "คำสั่งเติมเงิน",
+      "rechargeOrder": "คำสั่งซื้อเติมเงิน",
       "renewal": "การต่ออายุ",
       "balanceFlow": "รายการยอดคงเหลือ",
       "beforeDue": "ก่อนครบกำหนด",
@@ -638,10 +638,10 @@
       "idPhoto": "รูปบัตรประชาชน",
       "notUploaded": "ยังไม่ได้อัปโหลด",
       "idNoPlaceholder": "กรุณากรอกหมายเลขบัตรประชาชน",
-      "editRealName": "แก้ไขข้อมูลยืนยันตัวตน",
+      "editRealName": "แก้ไขข้อมูล KYC",
       "licensePhoto": "รูปใบอนุญาต",
-      "selectRealName": "เลือกข้อมูลยืนยันตัวตน",
-      "addRealName": "เพิ่มข้อมูลยืนยันตัวตน",
+      "selectRealName": "เลือกข้อมูล KYC",
+      "addRealName": "เพิ่มข้อมูล KYC",
       "title": "ข้อมูลเอกสาร",
       "materialUploaded": "อัปโหลดวัสดุแล้ว",
       "reupload": "อัปโหลดใหม่",
@@ -667,7 +667,7 @@
       "photoReplaced": "{source}: แทนที่รูปภาพปัจจุบันแล้ว",
       "license": "ใบอนุญาตขับขี่",
       "supplement": "เอกสารเพิ่มเติม",
-      "deleteConfirm": "ลบข้อมูลยืนยันตัวตนนี้หรือไม่? ไม่สามารถกู้คืนได้"
+      "deleteConfirm": "ลบข้อมูล KYC นี้หรือไม่? ไม่สามารถกู้คืนได้"
     },
     "plan": {
       "selectPlan": "เลือกแผน",

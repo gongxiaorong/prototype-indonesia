@@ -1059,17 +1059,17 @@ body.host-single-m #root-user{display:none}
   <div class="grid gap-3 mb-3" :class="(currentVehicle && currentVehicle.status === '租用中') ? 'grid-cols-2' : 'grid-cols-3'" data-od-id="mv-quick-actions" data-page-node-id="kgwdxzB0DYzvbKW1ICv6CK">
     <div v-show="opLock" class="bg-white rounded-2xl flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" :class="lockLoading?'opacity-70 pointer-events-none':''" data-cp @click="toggleLock" data-od-id="mv-quick-lock" data-page-node-id="wWsktb7PV1ZSUgyTXglytq">
       <span v-html="luci(lockLoading?'loader':(locked?'lock':'unlock'),'w-6 h-6 transition-all '+(lockLoading?'anim-spin':''))" :style="locked?{color:'#DC2626'}:{color:'#2F6FEB'}" data-page-node-id="JsB52O9r8f6rDS5spEBLbP"></span>
-      <span class="text-[12px] font-medium" :style="locked?{color:'#DC2626'}:{color:'#333'}" data-page-node-id="bGjyUW5X6Qge3CpEsusS8h">{{ lockLoading?$t('user.vehicles.cmdSending'):(locked?$t('user.vehicles.lockOpen'):$t('user.vehicles.lockClose')) }}</span>
+      <span class="text-[12px] font-medium text-center" :style="locked?{color:'#DC2626'}:{color:'#333'}" data-page-node-id="bGjyUW5X6Qge3CpEsusS8h">{{ lockLoading?$t('user.vehicles.cmdSending'):(locked?$t('user.vehicles.lockOpen'):$t('user.vehicles.lockClose')) }}</span>
     </div>
     <div v-show="opHorn" class="bg-white rounded-2xl flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" :style="hornLoading?{background:'#FFF3E0',borderColor:'#E67E22',pointerEvents:'none'}:{}" data-cp @click="sendHorn" data-od-id="mv-quick-horn" data-page-node-id="qWNh2U1y0yEEATb7YQ5FPI">
       <span v-html="luci(hornLoading?'loader':'volume-2','w-6 h-6 transition-all '+(hornLoading?'anim-spin':''))" :style="hornLoading?{color:'#E67E22'}:{color:'#FF6A00'}" data-page-node-id="wt4Hoj66ndufIHwn1sIFzv"></span>
-      <span class="text-[12px] font-medium" :style="hornLoading?{color:'#E67E22'}:{color:'#333'}" data-page-node-id="KZKLbZpQNuF3jmX3oYL0b4">{{ hornLoading?$t('common.vehicles.findingVehicle'):$t('user.vehicles.findVehicle') }}</span>
+      <span class="text-[12px] font-medium text-center" :style="hornLoading?{color:'#E67E22'}:{color:'#333'}" data-page-node-id="KZKLbZpQNuF3jmX3oYL0b4">{{ hornLoading?$t('common.vehicles.findingVehicle'):$t('user.vehicles.findVehicle') }}</span>
     </div>
     <div v-if="currentVehicle && currentVehicle.status !== '租用中'" class="bg-white rounded-2xl py-3.5 flex flex-col items-center gap-2" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-page-node-id="EuNDYc8CbDYwu25E4KygbE">
       <span v-html="luci('users','w-6 h-6 text-[#FF6A00]')" data-page-node-id="lL5Uw8Ato4B33It3TpsMCz"></span>
-      <span class="text-[12px] font-medium text-[#333]" data-page-node-id="LkO8T9utUcCGZgnqLhfE6K">{{ $t('user.orders.renter') }}</span>
+      <span class="text-[12px] font-medium text-[#333] text-center" data-page-node-id="LkO8T9utUcCGZgnqLhfE6K">{{ $t('user.orders.renter') }}</span>
     </div>
-    <div v-show="opPower" class="bg-white rounded-2xl flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" :class="engineLoading?'opacity-70 pointer-events-none':''" data-cp @click="togglePower" data-od-id="mv-quick-power" data-page-node-id="MvPwr00a"><span v-html="luci(engineLoading?'loader':(engineOn?'power':'zap'),'w-6 h-6 transition-all '+(engineLoading?'anim-spin':''))" :style="engineOn?{color:'#22D098'}:{color:'#FF6A00'}" data-page-node-id="MvPwr01a"></span><span class="text-[12px] font-medium">{{ engineLoading?$t('user.vehicles.cmdSending'):(engineOn?$t('user.vehicles.powerOff'):$t('user.vehicles.powerOn')) }}</span></div>
+    <div v-show="opPower" class="bg-white rounded-2xl flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" :class="engineLoading?'opacity-70 pointer-events-none':''" data-cp @click="togglePower" data-od-id="mv-quick-power" data-page-node-id="MvPwr00a"><span v-html="luci(engineLoading?'loader':(engineOn?'power':'zap'),'w-6 h-6 transition-all '+(engineLoading?'anim-spin':''))" :style="engineOn?{color:'#22D098'}:{color:'#FF6A00'}" data-page-node-id="MvPwr01a"></span><span class="text-[12px] font-medium text-center">{{ engineLoading?$t('user.vehicles.cmdSending'):(engineOn?$t('user.vehicles.powerOff'):$t('user.vehicles.powerOn')) }}</span></div>
   </div>
 
   <!-- 双并列地图卡片 -->
@@ -1850,31 +1850,31 @@ body.host-single-m #root-user{display:none}
 <div class="relative w-12 h-12 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#FFF4E6,#FFE8CC)" data-page-node-id="fdGC3eQ2IZH1BcrfCz23JC">
 <span v-html="luci('bike','w-6 h-6 text-[#FF6A00]')" data-page-node-id="UEWd22IQZhkTKzedz2OinB"></span>
 </div>
-<span class="text-[15px] font-semibold text-[#1A1A1A]" data-page-node-id="WEU7SZYou6cgJJjCEKZg3W">{{ $t('common.orders.typeVehicle') }}</span>
+<span class="text-[15px] font-semibold text-[#1A1A1A] text-center" data-page-node-id="WEU7SZYou6cgJJjCEKZg3W">{{ $t('common.orders.typeVehicle') }}</span>
 </div>
 <div class="bg-white rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openOrderCategory('电池租赁')" data-od-id="order-cat-battery" data-page-node-id="sn6jw5MS3Ptl3zjQDzXBUi">
 <div class="relative w-12 h-12 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#E8F4FF,#D1E9FF)" data-page-node-id="ctx9xsZbhCeNGS7WbqABzT">
 <span v-html="luci('battery','w-6 h-6 text-[#2B3F5F]')" data-page-node-id="UHTgm75EKTHrENffkGhtVb"></span>
 </div>
-<span class="text-[15px] font-semibold text-[#1A1A1A]" data-page-node-id="C09ibw1qFnwXtoaAK8Q4IZ">{{ $t('common.orders.typeBattery') }}</span>
+<span class="text-[15px] font-semibold text-[#1A1A1A] text-center" data-page-node-id="C09ibw1qFnwXtoaAK8Q4IZ">{{ $t('common.orders.typeBattery') }}</span>
 </div>
 <div class="bg-white rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openOrderCategory('车电套餐')" data-od-id="order-cat-combo" data-page-node-id="t5IxwpxTIgsB8fOXdoreqA">
 <div class="relative w-12 h-12 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#F0E8FF,#E0D1FF)" data-page-node-id="Wcdt2SUaifLv0madJf0iws">
 <span v-html="luci('package','w-6 h-6 text-[#7C3AED]')" data-page-node-id="xwezmbiKbdan7KlhglGTtZ"></span>
 </div>
-<span class="text-[15px] font-semibold text-[#1A1A1A]" data-page-node-id="1eIy3kIQtOramI2RIDjRbQ">{{ $t('common.orders.typePackage') }}</span>
+<span class="text-[15px] font-semibold text-[#1A1A1A] text-center" data-page-node-id="1eIy3kIQtOramI2RIDjRbQ">{{ $t('common.orders.typePackage') }}</span>
 </div>
 <div class="bg-white rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openChargeOrderList()" data-od-id="order-cat-charge">
 <div class="relative w-12 h-12 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">
 <span v-html="luci('plug-zap','w-6 h-6 text-[#F59E0B]')"></span>
 </div>
-<span class="text-[15px] font-semibold text-[#1A1A1A]">{{ $t('user.charge.orderList') }}</span>
+<span class="text-[15px] font-semibold text-[#1A1A1A] text-center">{{ $t('user.charge.orderList') }}</span>
 </div>
 <div class="bg-white rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-cp @click="openRechargeList()" data-od-id="order-cat-recharge" data-page-node-id="hHpLVoUmeK2WAipZLuMDuV">
 <div class="relative w-12 h-12 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#E6FAF0,#C7F0DC)" data-page-node-id="9nuR2fiXUAuO4PqE85M5Dk">
 <span v-html="luci('credit-card','w-6 h-6 text-[#17A34A]')" data-page-node-id="53TJGSs33LD8n3zSqz74Nz"></span>
 </div>
-<span class="text-[15px] font-semibold text-[#1A1A1A]" data-page-node-id="2ZHExXSLLabVVz90Pt3C3c">{{ $t('common.label.rechargeOrder') }}</span>
+<span class="text-[15px] font-semibold text-[#1A1A1A] text-center" data-page-node-id="2ZHExXSLLabVVz90Pt3C3c">{{ $t('common.label.rechargeOrder') }}</span>
 </div>
 </div>
 </div>
@@ -2787,7 +2787,7 @@ body.host-single-m #root-user{display:none}
 <div v-else data-page-node-id="lbv0IfNNSyALJgLdtn0xj7">
 <div v-for="(r,i) in walletLedgerActive.slice(0,5)" :key="i" class="px-4 py-3.5" :style="i<walletLedgerActive.slice(0,5).length-1?'border-bottom:1px solid #F5F5F5':''" :data-od-id="'wallet-ledger-row-'+r.type" data-page-node-id="gXzbFZDTqS4j4jTN5Jy8L3">
 <div class="flex items-center justify-between mb-2" data-page-node-id="dCTsTFUafV40Q4auqRbqxJ">
-<span class="text-[14px] font-semibold text-[#1A1A1A]" data-page-node-id="aMha3nXaojFXHieuBSsKFu">{{ r.type==='recharge'?$t('common.wallet.topup'):r.type==='rechargeRefund'?$t('user.walletType.rechargeRefund'):r.type==='orderConsume'?$t('user.walletType.orderConsume'):r.type==='orderRefund'?$t('common.wallet.orderRefund'):r.type==='gift'?$t('user.walletType.gift'):r.type==='deduct'?$t('common.wallet.deduct'):r.type }}</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A] text-center" data-page-node-id="aMha3nXaojFXHieuBSsKFu">{{ r.type==='recharge'?$t('common.wallet.topup'):r.type==='rechargeRefund'?$t('user.walletType.rechargeRefund'):r.type==='orderConsume'?$t('user.walletType.orderConsume'):r.type==='orderRefund'?$t('common.wallet.orderRefund'):r.type==='gift'?$t('user.walletType.gift'):r.type==='deduct'?$t('common.wallet.deduct'):r.type }}</span>
 <span class="text-[16px] font-bold" :style="r.amount>=0?{color:'#17A34A'}:{color:'#DC2626'}">{{ r.amount<0?'-':(r.amount>0?'+':'') }}{{ fmtRp(Math.abs(r.amount),2) }}</span>
 </div>
 <div class="flex items-center justify-between" data-page-node-id="cGpLbDuWpOaVDeVdrIEpCe">
@@ -2837,7 +2837,7 @@ body.host-single-m #root-user{display:none}
 <template v-else data-page-node-id="j6st7Q261L1IjeOJ42QJG0">
 <div v-for="r in walletLedgerList" :key="r.id" class="bg-white rounded-2xl px-4 py-3.5 mb-2.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-page-node-id="4rYxyeYRzMiqZLG0EQTUpA">
 <div class="flex items-center justify-between mb-2" data-page-node-id="Hw4hkiacAhRQHaRXPZHTRv">
-<span class="text-[14px] font-semibold text-[#1A1A1A]" data-page-node-id="SUkJB8xGEk6yUbPj0Yhpju">{{ r.type==='recharge'?$t('common.wallet.topup'):r.type==='rechargeRefund'?$t('user.walletType.rechargeRefund'):r.type==='orderConsume'?$t('user.walletType.orderConsume'):r.type==='orderRefund'?$t('common.wallet.orderRefund'):r.type==='gift'?$t('user.walletType.gift'):r.type==='deduct'?$t('common.wallet.deduct'):r.type }}</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A] text-center" data-page-node-id="SUkJB8xGEk6yUbPj0Yhpju">{{ r.type==='recharge'?$t('common.wallet.topup'):r.type==='rechargeRefund'?$t('user.walletType.rechargeRefund'):r.type==='orderConsume'?$t('user.walletType.orderConsume'):r.type==='orderRefund'?$t('common.wallet.orderRefund'):r.type==='gift'?$t('user.walletType.gift'):r.type==='deduct'?$t('common.wallet.deduct'):r.type }}</span>
 <span class="text-[16px] font-bold" :style="r.amount>=0?{color:'#17A34A'}:{color:'#DC2626'}">{{ r.amount<0?'-':(r.amount>0?'+':'') }}{{ fmtRp(Math.abs(r.amount),2) }}</span>
 </div>
 <div class="flex items-center justify-between" data-page-node-id="EFPC7HLCC0Epf5sItsWnlk">
@@ -3462,15 +3462,15 @@ body.host-single-m #root-user{display:none}
 <div class="grid grid-cols-2 gap-2.5">
 <div v-for="e in orderEntries" :key="e.v" data-cp @click="homeOpenOrders(e.v)" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" :data-od-id="'home-order-entry-'+e.v" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci(e.icon,'w-6 h-6 text-[var(--accent)]')"></span></div>
-<span class="text-[14px] font-semibold text-[#1A1A1A]">{{ e.l }}</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A] text-center">{{ e.l }}</span>
 </div>
 <div v-if="can('charge_order.list')" data-cp @click="coOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-charge-order-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('plug-zap','w-6 h-6 text-[var(--accent)]')"></span></div>
-<span class="text-[14px] font-semibold text-[#1A1A1A]">{{ $t('merchant.chargingOrder.title') }}</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A] text-center">{{ $t('merchant.chargingOrder.title') }}</span>
 </div>
 <div v-if="can('recharge_order.list')" data-cp @click="roOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-recharge-order-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('wallet','w-6 h-6 text-[var(--accent)]')"></span></div>
-<span class="text-[14px] font-semibold text-[#1A1A1A]">{{ $t('common.label.rechargeOrder') }}</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A] text-center">{{ $t('common.label.rechargeOrder') }}</span>
 </div>
 </div>
 </template>
@@ -3479,7 +3479,7 @@ body.host-single-m #root-user{display:none}
 <div class="grid grid-cols-2 gap-2.5">
 <div data-cp @click="cdOpenList" class="bg-white border border-[#E5E5E5] rounded-xl py-4 flex flex-col items-center cursor-pointer active:bg-[#F6F7F9] select-none" data-od-id="home-charge-device-entry" style="box-shadow:0 1px 3px rgba(0,0,0,0.04),0 1px 2px rgba(0,0,0,0.06)">
 <div class="w-11 h-11 rounded-xl bg-[#EBF1FD] flex items-center justify-center mb-2"><span v-html="luci('battery-charging','w-6 h-6 text-[var(--accent)]')"></span></div>
-<span class="text-[14px] font-semibold text-[#1A1A1A]">{{ $t('merchant.chargingDevice.title') }}</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A] text-center">{{ $t('merchant.chargingDevice.title') }}</span>
 </div>
 </div>
 <template v-if="can('alarm.list')">
@@ -3745,20 +3745,20 @@ body.host-single-m #root-user{display:none}
 <div class="absolute bottom-0 left-0 w-full transition-all duration-75 ease-linear" :style="{height:pressProgress+'%',background:locked?'rgba(220,38,38,0.1)':'rgba(39,111,235,0.1)'}"></div>
 <div class="relative z-10 flex flex-col items-center gap-1 transition-all" :style="lockJustDone?{transform:'scale(1.08)'}:{transform:'scale(1)'}">
 <span v-html="luci(locked?'lock':'unlock','w-7 h-7 transition-all')"></span>
-<span class="text-[13px] font-semibold">{{ locked?$t('merchant.vehicles.pressToLock'):$t('merchant.vehicles.pressToUnlock') }}</span>
+<span class="text-[13px] font-semibold text-center">{{ locked?$t('merchant.vehicles.pressToLock'):$t('merchant.vehicles.pressToUnlock') }}</span>
 </div>
 </div>
 <div v-if="can('vehicle.command.find_car')" class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);transition:all .3s" :style="findLoading?{background:'#FFF3E0',borderColor:'#E67E22',pointerEvents:'none'}:{}" data-cp @click="doFind">
 <span v-html="luci(findLoading?'loader':'locate','w-7 h-7 transition-all'+(findLoading?' anim-spin':''))" :style="findLoading?{color:'#E67E22'}:{}"></span>
-<span class="text-[13px] font-semibold" :style="findLoading?{color:'#E67E22'}:{}">{{ findLoading?$t('common.vehicles.findingVehicle'):$t('merchant.vehicles.findVehicle') }}</span>
+<span class="text-[13px] font-semibold text-center" :style="findLoading?{color:'#E67E22'}:{}">{{ findLoading?$t('common.vehicles.findingVehicle'):$t('merchant.vehicles.findVehicle') }}</span>
 </div>
 <div v-if="can('vehicle.command.arm')" class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-cp @click="vehOpenArm">
 <span v-html="luci('shield-check','w-7 h-7 transition-all')"></span>
-<span class="text-[13px] font-semibold">{{ armed?$t('merchant.vehicles.actionDisarm'):$t('merchant.vehicles.actionArm') }}</span>
+<span class="text-[13px] font-semibold text-center">{{ armed?$t('merchant.vehicles.actionDisarm'):$t('merchant.vehicles.actionArm') }}</span>
 </div>
 <div v-if="can('vehicle.command.motor_lock')" class="bg-white rounded-xl p-4 flex flex-col items-center justify-center gap-2 min-h-[90px] cursor-pointer select-none active:bg-[#F6F7F9] transition-all" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-cp @click="vehOpenMotorLock">
 <span v-html="luci('alert-triangle','w-7 h-7 transition-all')"></span>
-<span class="text-[13px] font-semibold">{{ motorLocked?$t('merchant.vehicles.batteryUnlockMotor'):$t('merchant.vehicles.batteryLockMotor') }}</span>
+<span class="text-[13px] font-semibold text-center">{{ motorLocked?$t('merchant.vehicles.batteryUnlockMotor'):$t('merchant.vehicles.batteryLockMotor') }}</span>
 </div>
 </div>
 <kv-card :title="dv.vin" label-width="5rem" class="mb-3" :copyable="!!dv.vin" @copy="t=>copyText(t,$t('common.vehicles.frameNo'))">
@@ -4239,7 +4239,7 @@ body.host-single-m #root-user{display:none}
 <div class="grid grid-cols-4 gap-2">
 <div data-cp @click="battOpenDischarge" class="flex flex-col items-center gap-1.5 cursor-pointer select-none active:opacity-70" data-od-id="batt-detail-discharge-op">
 <div class="w-10 h-10 rounded-full flex items-center justify-center" :style="{background:battDischarge?'#DC2626':'#16A34A'}"><span v-html="luci(battDischarge?'zap-off':'zap','w-5 h-5 text-white')"></span></div>
-<span class="text-[11px] font-medium text-[#666]">{{ battDischarge?$t('common.vehicles.batteryDischargeOff'):$t('common.vehicles.batteryDischargeOn') }}</span>
+<span class="text-[11px] font-medium text-[#666] text-center">{{ battDischarge?$t('common.vehicles.batteryDischargeOff'):$t('common.vehicles.batteryDischargeOn') }}</span>
 </div>
 </div>
 </kv-card>
@@ -4608,7 +4608,7 @@ body.host-single-m #root-user{display:none}
 <!-- ═══ 自动续租 · 卡片（参考 C 端订单详情，仅本地开关状态） ═══ -->
 <div v-if="['created','pickup','progress','return','overdue','breach'].indexOf(dSt)!==-1" class="bg-white rounded-2xl p-4 mb-3 flex items-center justify-between" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="od-autorenew">
 <div class="flex-1 min-w-0 pr-3">
-<div class="text-[14px] font-semibold text-[#1A1A1A]">{{ $t('common.orders.autoRenew') }}</div>
+<div class="text-[14px] font-semibold text-[#1A1A1A] text-center">{{ $t('common.orders.autoRenew') }}</div>
 <div class="text-[12px] text-[#999] mt-0.5">{{ $t('merchant.common.renewalAutoDeduct') }}</div>
 </div>
 <div class="relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0" :style="autoRenew?'background:var(--accent)':'background:#E5E5E5'" data-cp @click="toggleAutoRenew" data-od-id="autorenew-switch">
@@ -6715,7 +6715,7 @@ body.host-single-m #root-user{display:none}
 <template v-else>
 <div v-for="r in uFlowList" :key="r.ledgerNo" class="bg-white rounded-2xl px-4 py-3.5 mb-2.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)">
 <div class="flex items-center justify-between mb-2">
-<span class="text-[14px] font-semibold text-[#1A1A1A]">{{ r.txnType }}</span>
+<span class="text-[14px] font-semibold text-[#1A1A1A] text-center">{{ r.txnType }}</span>
 <span class="text-[16px] font-bold tabular-nums" :style="uFlowAmt(r).neg?{color:'#DC2626'}:{color:'#17A34A'}">{{ uFlowAmt(r).neg?'-':(uFlowAmt(r).val>0?'+':'') }}{{ fmtRp(Number(uFlowAmt(r).val),2) }}</span>
 </div>
 <div class="flex items-center justify-between">
@@ -7231,11 +7231,14 @@ function registerSheetKit(app){
   /* KV 行：label 左 / value 右；value 可选复制；key 与 value 均可插槽自定义。
      用法：<kv-row label="车架编号" :value="vin" :copyable="!!vin" @copy="t=>copyText(t,'车架编号')"></kv-row>
      props: label(左文本；⚠️ 不能命名为 key——Vue 保留属性) / value / copyable / copyText(缺省取 value)
-            / labelWidth(覆盖卡片下发值，如 '5rem'、'auto') / labelClass / valueClass / valueStyle
+            / labelWidth(标签列「最小宽度」，覆盖卡片下发值，如 '5rem'；label 内容更宽时自动放宽，保证多语言下标签完整显示)
+            / labelClass / valueClass / valueStyle
             / divider(该行「上方」是否画虚线：不写=跟随 kv-card 的 divider；:divider="true" 强制画；:divider="false" 强制不画；裸写 divider 视同 true)
             / align('center' 默认：label 与 value 垂直居中对齐，value 内含图标时也不会错位；多行 value 要与首行对齐时传 'top')
      slots: key / value（覆盖默认文本）；emits: copy(payload = copyText || value)。
      ⚠️ 行的分隔线只在「相邻两行之间」出现：首行上方默认不画，末行下方默认不画（即最后一个 key-value 默认关闭）。
+     ⚠️ 标签列永不截断（min-width + max-width:60%，超出仅在 60% 处折行），value 列 flex-1 + truncate 省略号；
+        英文/印尼语/泰语标签更长时自动占据更多宽度，value 相应收缩（值右侧仍与卡片右缘对齐，不影响视觉对齐）。
      ⚠️ 行高统一 32px = py-2(16) + 内容 16px（13px 文字行框）→ 行内图标/元素高度必须 ≤16px（
         用 w-4 h-4 的盒子 + w-3.5 h-3.5 的 svg）；超过会把该行撑高、与相邻行不齐（多行 value 行除外，用 align="top"）。 */
   app.component('kv-row',{
@@ -7246,7 +7249,7 @@ function registerSheetKit(app){
     /* 行级分隔线的三态：null=继承卡片；true/false=显式开关（裸属性得到空串 ''，按 HTML 语义视为 true） */
     computed:{kvLineOn:function(){var d=this.divider;if(d===undefined||d===null)return null;return d===''?true:!!d},kvLineClass:function(){var on=this.kvLineOn;return on===null?'':(on?'':'kv-noline')},kvLineStyle:function(){return this.kvLineOn===true?'border-top:1px dashed #E5E5E5;margin-top:-1px':''}},
     methods:{kvCopy:function(){this.$emit('copy',this.copyText||this.value)}},
-    template:'<div class="kv-row flex py-2" :class="[align===\'top\'?\'items-start\':\'items-center\',kvLineClass]" :style="kvLineStyle"><span class="shrink-0 text-[13px]" style="color:#999" :class="labelClass" :style="{width:labelWidth||kvLabelWidth}"><slot name="key">{{ label }}</slot></span><span class="flex-1 min-w-0 text-right pl-3 text-[13px] truncate" style="color:#333333" :class="valueClass" :style="valueStyle||{}"><slot name="value">{{ value }}</slot></span><span v-if="copyable" class="shrink-0 pl-1.5" data-cp @click.stop="kvCopy" v-html="luci(\'copy\',\'w-4 h-4 text-[#999] cursor-pointer active:text-[var(--link)]\')"></span></div>'
+    template:'<div class="kv-row flex py-2" :class="[align===\'top\'?\'items-start\':\'items-center\',kvLineClass]" :style="kvLineStyle"><span class="shrink-0 text-[13px] break-words" style="color:#999" :class="labelClass" :style="{minWidth:labelWidth||kvLabelWidth,maxWidth:\'60%\'}"><slot name="key">{{ label }}</slot></span><span class="flex-1 min-w-0 text-right pl-3 text-[13px] truncate" style="color:#333333" :class="valueClass" :style="valueStyle||{}"><slot name="value">{{ value }}</slot></span><span v-if="copyable" class="shrink-0 pl-1.5" data-cp @click.stop="kvCopy" v-html="luci(\'copy\',\'w-4 h-4 text-[#999] cursor-pointer active:text-[var(--link)]\')"></span></div>'
   });
   /* FormField：页面级表单字段外壳（label + 状态容器 + 计数 + 错误/提示）。
      用法：<form-field :label="$t('merchant.profile.packageName')" required :error="fE.name" :counter="(fpk.name||'').length" counter-max="64">

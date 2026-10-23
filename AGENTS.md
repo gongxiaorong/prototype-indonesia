@@ -195,7 +195,7 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
   - `align="top"` 用于多行 value；value 默认 `truncate`，要换行须 `value-class="whitespace-normal break-words"`。
 - 分隔线只在**相邻两行之间**（首行上方、末行下方天然不画）。
 - 行高恒 **32px**（`py-2` + 16px 内容，13px 文字行框）→ 行内图标/元素高度 ≤16px；多行 value 行除外（`align="top"`）。
-- 视觉基线：壳 `bg-white rounded-2xl px-4 py-3.5` + `1px solid #E5E5E5` + `0 1px 3px rgba(0,0,0,.04)`；标题 15px `semibold` `#333333`；label 13px `#999`（默认宽 4rem，长标签传 `label-width="5rem"`）；value 13px `#333333` 右对齐（组件默认色）。
+- 视觉基线：壳 `bg-white rounded-2xl px-4 py-3.5` + `1px solid #E5E5E5` + `0 1px 3px rgba(0,0,0,.04)`；标题 15px `semibold` `#333333`；label 13px `#999`（**宽度为「最小宽度」**：默认 4rem、长标签传 `label-width="5rem"`，内容更宽时自动放宽至 `max-width:60%` 后折行，**label 永不截断**——多语言下必须完整显示）；value 13px `#333333` 右对齐、单行 `truncate`（**超长省略号，不折行**）（组件默认色）。
 - 间距（组件负责）：标题栏→首块 **14px**、行↔行 **16px**、行/自定义内容→footer **16px**；内容方**不要再自带顶距**。
 - **非 KV 结构**（费用/退款渠道明细树、可展开行等）：外壳仍用 `kv-card`，内容原样放默认插槽（**不经 `kv-row`、不开 `divider`**）。
 - 保留手写（例外）：自动续租开关卡、钱包余额卡等**非行式卡**；`newAccCred`（账号创建成功单按钮结果页）。
@@ -324,6 +324,8 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 ```
 
 术语基线：车辆=Vehicle/Kendaraan/ยานพาหนะ、押金=Deposit/Jaminan、退款=Refund/Pengembalian Dana。
+**高频词基线（2026-10-23 定，三目录同口径，改任一端必须同改其余端同中文词条）**：配置=Config/Konfigurasi/การตั้งค่า（zh-HK 统一「配置」）、充值=Top-up/Isi Ulang/เติมเงิน（zh-HK「增值」）、充值订单=Top-up Order/Pesanan Isi Ulang/คำสั่งซื้อเติมเงิน、实名=KYC（en/id/th 均用 KYC，中文仍「实名」，zh-HK「實名」）、订单=Order/Pesanan/คำสั่งซื้อ、门店=Store/Toko/ร้านค้า、设备=Device/Perangkat/อุปกรณ์（「充电桩」=Charger/Pengisi Daya/ที่ชาร์จ）、告警=Alert/Peringatan/แจ้งเตือน、套餐=Package/Paket/แพ็กเกจ、钱包=Wallet/Dompet/กระเป๋า、续租=Renew/Perpanjang/ต่ออายุ。
+自查口径：`node scripts/i18n_check.mjs` 的 `TERM` 只按**整句中文**比对跨目录，同一概念的中文措辞不同（如「订单配置」vs「充值配置」）查不出词级漂移，新增词条须对照本节基线人工核对。
 
 ## 6. 改动自检清单（提交前必做）
 

@@ -241,12 +241,12 @@
       "later": "Ingatkan Nanti"
     },
     "wallet": {
-      "rechargeBalance": "Saldo Top Up",
+      "rechargeBalance": "Saldo Isi Ulang",
       "topup": "Isi Ulang",
       "bonusBalance": "Saldo Bonus",
-      "topupAmountPlaceholder": "Masukkan jumlah top up",
+      "topupAmountPlaceholder": "Masukkan jumlah isi ulang",
       "availableBalance": "Saldo Tersedia",
-      "topupAmount": "Jumlah Top Up",
+      "topupAmount": "Jumlah Isi Ulang",
       "deduct": "Potong",
       "orderRefund": "Pengembalian Pesanan"
     },
@@ -638,10 +638,10 @@
       "idPhoto": "Foto KTP",
       "notUploaded": "Belum diunggah",
       "idNoPlaceholder": "Masukkan nomor dokumen",
-      "editRealName": "Edit Info Verifikasi",
+      "editRealName": "Edit Info KYC",
       "licensePhoto": "Foto SIM",
-      "selectRealName": "Pilih Info Verifikasi",
-      "addRealName": "Tambah Info Verifikasi",
+      "selectRealName": "Pilih Info KYC",
+      "addRealName": "Tambah Info KYC",
       "title": "Info Dokumen",
       "materialUploaded": "Materi diunggah",
       "reupload": "Unggah Ulang",
@@ -667,7 +667,7 @@
       "photoReplaced": "{source}: gambar saat ini diganti",
       "license": "SIM",
       "supplement": "Dokumen Tambahan",
-      "deleteConfirm": "Hapus informasi identitas ini? Tindakan ini tidak dapat dibatalkan."
+      "deleteConfirm": "Hapus info KYC ini? Tindakan ini tidak dapat dibatalkan."
     },
     "plan": {
       "selectPlan": "Pilih Paket",
@@ -689,7 +689,7 @@
       "selectStoreFirst": "Pilih toko terlebih dahulu",
       "selectStoreWallet": "Pilih Dompet Toko",
       "giftAmount": "Jumlah Bonus",
-      "rechargeDetail": "Detail Top Up"
+      "rechargeDetail": "Detail Isi Ulang"
     },
     "walletType": {
       "consume": "Konsumsi",
@@ -717,13 +717,13 @@
     "charge": {
       "title": "Pengisian Daya",
       "scan": "Pindai untuk Mengisi Daya",
-      "deviceDetail": "Detail Pengisi Daya",
-      "deviceLoading": "Memuat pengisi daya…",
-      "deviceNo": "Nomor Pengisi Daya",
-      "deviceNoPlaceholder": "Masukkan nomor pengisi daya",
-      "deviceNotFound": "Pengisi Daya tidak ditemukan",
-      "deviceInUseRetry": "Pengisi Daya sedang digunakan, silakan pilih yang lain",
-      "deviceConnected": "Pengisi Daya berhasil terhubung",
+      "deviceDetail": "Detail Perangkat",
+      "deviceLoading": "Memuat perangkat…",
+      "deviceNo": "Nomor Perangkat",
+      "deviceNoPlaceholder": "Masukkan nomor perangkat",
+      "deviceNotFound": "Perangkat tidak ditemukan",
+      "deviceInUseRetry": "Perangkat sedang digunakan, silakan pilih yang lain",
+      "deviceConnected": "Perangkat berhasil terhubung",
       "listTitle": "Pengisi Daya & Toko",
       "statusIdle": "Menganggur",
       "statusInUse": "Sedang Digunakan",

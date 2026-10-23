@@ -322,7 +322,7 @@
       "unselected": "Not Selected",
       "originalRent": "Original Rent",
       "originalDeposit": "Original Deposit",
-      "rechargeOrder": "Recharge Order",
+      "rechargeOrder": "Top-up Order",
       "renewal": "Renewal",
       "balanceFlow": "Balance Statement",
       "beforeDue": "Before Due",
@@ -638,10 +638,10 @@
       "idPhoto": "ID Photo",
       "notUploaded": "Not uploaded",
       "idNoPlaceholder": "Please enter the ID number",
-      "editRealName": "Edit Real-Name Info",
+      "editRealName": "Edit KYC Info",
       "licensePhoto": "License Photo",
-      "selectRealName": "Select Real-Name Info",
-      "addRealName": "Add Real-Name Info",
+      "selectRealName": "Select KYC Info",
+      "addRealName": "Add KYC Info",
       "title": "Document Info",
       "materialUploaded": "Materials uploaded",
       "reupload": "Re-upload",
@@ -667,7 +667,7 @@
       "photoReplaced": "{source}: current image replaced",
       "license": "Driver's License",
       "supplement": "Additional Documents",
-      "deleteConfirm": "Delete this identity info? This cannot be undone."
+      "deleteConfirm": "Delete this KYC info? This cannot be undone."
     },
     "plan": {
       "selectPlan": "Select Plan",

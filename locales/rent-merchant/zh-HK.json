@@ -528,7 +528,7 @@
       "menuStore": "切換門店",
       "priceNotNegative": "請輸入 0 或正數，小數最多兩位",
       "accountCredHint": "請妥善保管以下帳號資訊",
-      "configSaved": "設定已儲存",
+      "configSaved": "配置已儲存",
       "menuAccount": "帳號管理",
       "confirmEnableDesc": "確定重新啟用該帳號？啟用後可正常登入。",
       "confirmDeletePosition": "刪除職位",
@@ -612,7 +612,7 @@
       "packageAdd": "新增套餐",
       "phoneBound": "已綁定手機號",
       "positionError": "請選擇職位",
-      "menuConfig": "訂單設定",
+      "menuConfig": "訂單配置",
       "lastUpdateLabel": "更新時間：{time}",
       "roleStaff": "員工",
       "userInfo": "用戶資料",
@@ -669,7 +669,7 @@
       "selectBindBattery": "請選擇綁定電池",
       "vehicleUnbound": "車輛已解綁",
       "batteryUnbound": "電池已解綁",
-      "editPushConfig": "編輯推送設定",
+      "editPushConfig": "編輯推送配置",
       "unbindVehicleTitle": "解綁車輛",
       "unbindBatteryTitle": "解綁電池"
     },
@@ -782,7 +782,7 @@
       "countSuffix": "次",
       "findFromAlertSub": "發送閃爍鳴笛指令",
       "closeSourceManual": "人工處理",
-      "ignoreTitle": "忽略",
+      "ignoreTitle": "忽略告警",
       "noHistory": "暫無記錄",
       "ignoreHandled": "已現場處理",
       "orderId": "關聯訂單",
@@ -858,7 +858,7 @@
       "ledgerOrderConsume": "訂單消費",
       "ledgerRechargeRefund": "增值退款",
       "ledgerGift": "贈送",
-      "confirmDeleteRechargeDesc": "確定刪除該充值配置？刪除後不可恢復。",
+      "confirmDeleteRechargeDesc": "確定刪除此增值配置？刪除後不可恢復。",
       "title": "錢包"
     },
     "orders": {
@@ -928,7 +928,7 @@
       "listVehicleTitle": "車輛訂單列表",
       "listBatteryTitle": "電池訂單列表",
       "listPackageTitle": "套餐訂單列表",
-      "listRechargeTitle": "充值訂單列表",
+      "listRechargeTitle": "增值訂單列表",
       "listChargeTitle": "充電訂單列表",
       "batteryNo": "電池編號",
       "refundChannel": "退款渠道",
@@ -1060,7 +1060,7 @@
       "list": "帳號列表"
     },
     "order_config": {
-      "edit": "編輯設定",
+      "edit": "編輯配置",
       "statusFlow": "訂單狀態流轉"
     },
     "status": {
