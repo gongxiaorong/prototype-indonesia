@@ -4841,9 +4841,9 @@ function mAbnRecs(types,opt){
   }
   return out
 }
-/* 机柜使用记录（文档 §八 机柜使用记录 / ark_operation_record）：记录运维、商家对柜子的操作行为 + 系统自动操作
+/* 机柜使用记录（文档 §八 机柜使用记录 / ark_operation_record）：记录运维、商户对柜子的操作行为 + 系统自动操作
    操作人展示口径：仅显示手机号 > 邮箱 > 账号（不显示姓名），手机号带区号；无权限账号或系统自动操作显示「系统」
-   content = 操作内容、sourceType = 操作平台（MAINTAIN 平台端 / MERCHANT 商家端 / SYSTEM 平台端）、
+   content = 操作内容、sourceType = 操作平台（MAINTAIN 平台端 / MERCHANT 商户端 / SYSTEM 平台端）、
    result = 1 成功 / 0 失败、createTime = 操作时间 */
 function mUse(name,phone,email,account,content,sourceType,result,createTime,system){
   return {name:name,phone:phone,email:email,account:account,content:content,sourceType:sourceType,result:result,createTime:createTime,system:!!system}
@@ -5374,7 +5374,7 @@ var _ma=Vue.createApp({
       if(r.system)return '系统';
       return r.phone||r.email||r.account||'系统'
     }
-    function cabUseSourceLabel(t){return {MAINTAIN:'平台端',MERCHANT:'商家端',SYSTEM:'平台端'}[t]||t||'-'}
+    function cabUseSourceLabel(t){return {MAINTAIN:'平台端',MERCHANT:'商户端',SYSTEM:'平台端'}[t]||t||'-'}
     function cabUseResultLabel(r){return (r&&r.result===0)?'失败':'成功'}
     var cabUseList=Vue.computed(function(){
       if(demoListEmpty.value)return [];/* 原型操作「列表数据 = 空数据」 */

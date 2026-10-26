@@ -731,7 +731,7 @@
       }
     },
     "useSource": {
-      "merchant": "商家端",
+      "merchant": "商户端",
       "platform": "平台端",
       "system": "系统"
     }
