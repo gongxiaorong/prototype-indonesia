@@ -71,6 +71,12 @@ body.host-single-m #root-user{display:none}
 .sm-poi .pnm{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:3px;font-size:10px;color:#455A4C;background:rgba(255,255,255,.9);border-radius:4px;padding:1px 5px;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
 .sm-poi.on .pdot{background:#FF6A00;width:12px;height:12px}
 .sm-loc-btn{position:absolute;right:12px;bottom:12px;width:38px;height:38px;border-radius:12px;background:#fff;border:none;box-shadow:0 1px 5px rgba(0,0,0,.15);color:#2B3F5F;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20}
+/* 中心准星（深色圆环 + 细杆，杆尖即取点位置）与「我的位置」蓝点（数值对齐 indonesia-next 充电桩选点页） */
+.sm-center-pin{display:flex;flex-direction:column;align-items:center;transform:translateY(-50%)}
+.sm-center-pin .mcp-head{width:24px;height:24px;border-radius:50%;border:6.5px solid #3D3D3D;background:#fff;box-sizing:border-box}
+.sm-center-pin .mcp-stem{width:3px;height:22px;background:#3D3D3D;border-radius:0 0 2px 2px}
+.sm-me{position:relative;width:20px;height:20px;border-radius:50%;background:#1A73E8;border:3.5px solid #fff;box-shadow:0 0 0 5px rgba(26,115,232,.16),0 1px 4px rgba(0,0,0,.18);box-sizing:border-box}
+.sm-me::after{content:'';position:absolute;left:100%;top:50%;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid #1A73E8;transform:translate(-2px,-50%) rotate(-24deg);transform-origin:left center}
 .sw-station{position:absolute;display:flex;flex-direction:column;align-items:center;cursor:pointer;transform:translate(-50%,-50%)}
 .sw-station .pin{position:relative;width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18)}
 .sw-station .pin .num{position:absolute;right:-5px;top:-5px;min-width:15px;height:15px;padding:0 3px;border-radius:8px;background:#fff;border:1px solid #15B88C;color:#15B88C;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
@@ -1783,6 +1789,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div v-if="battList.length" class="text-[12px] mb-2.5" style="color:#999">共 {{ battList.length }} 条</div>
 <empty-state v-if="!battList.length" icon="battery-charging" text="暂无电池">
 <div v-if="battQ||battFilterActive" data-cp @click="battQ='';battFilterReset();battFilterConfirm()" class="mt-4 h-9 px-5 rounded-full flex items-center text-[13px] font-medium cursor-pointer" style="background:#EEF1F8;color:#2B3F5F" data-od-id="batt-empty-reset">清空筛选</div>
 </empty-state>
@@ -1815,6 +1822,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div v-if="cabList.length" class="text-[12px] mb-2.5" style="color:#999">共 {{ cabList.length }} 条</div>
 <empty-state v-if="!cabList.length" icon="box" text="暂无换电柜">
 <div v-if="cabQ||cabFilterActive" data-cp @click="cabQ='';cabFilterReset();cabFilterConfirm()" class="mt-4 h-9 px-5 rounded-full flex items-center text-[13px] font-medium cursor-pointer" style="background:#EEF1F8;color:#2B3F5F" data-od-id="cab-empty-reset">清空筛选</div>
 </empty-state>
@@ -1930,12 +1938,12 @@ body.host-single-m #root-user{display:none}
 <div data-cp @click="openStoreList()" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border-bottom:1px solid #EDEDED" data-od-id="mine-store-entry">
 <div class="w-7 h-7 flex items-center justify-center mr-3 text-[#666]"><span v-html="luci('store','w-5 h-5')"></span></div>
 <span class="flex-1 text-[15px] font-medium" style="color:#111">门店管理</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] mr-1">共 {{ stores.length }} 家</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
+<div class="flex items-center gap-1"><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
 </div>
 <div data-cp @click="openStationList()" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" data-od-id="mine-station-entry">
 <div class="w-7 h-7 flex items-center justify-center mr-3 text-[#666]"><span v-html="luci('map-pin','w-5 h-5')"></span></div>
 <span class="flex-1 text-[15px] font-medium" style="color:#111">站点管理</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] mr-1">共 {{ stations.length }} 个</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
+<div class="flex items-center gap-1"><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
 </div>
 <!-- 数据看板入口暂时隐藏（恢复：去掉本段 HTML 注释即可；分隔线已改为该行的 border-top） -->
 <!-- <div data-cp @click="openDashboard()" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border-top:1px solid #EDEDED" data-od-id="mine-dashboard-entry">
@@ -2545,13 +2553,14 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+<div v-if="storeView.length" class="text-[12px] mb-2.5" style="color:#999">共 {{ storeView.length }} 条</div>
 <empty-state v-if="!storeView.length" icon="store" text="暂无门店" root-class="flex flex-col items-center justify-center py-14" circle-class="w-14 h-14 rounded-full flex items-center justify-center mb-4 bg-[#F0F0F0]" icon-class="w-7 h-7 text-[#BBB]" text-class="text-[14px] font-semibold text-[#333]"></empty-state>
 <kv-card v-for="s in storeView" :key="s.id" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="openStoreDetail(s.id)" :data-od-id="'store-item-'+s.id">
 <template #title><span class="min-w-0 truncate">{{ s.name }}</span></template>
 <kv-row label="门店地址" :value="s.addr"></kv-row>
 <kv-row label="营业时间" :value="s.hours||'-'"></kv-row>
 <kv-row label="关联站点" :value="s.stationId?stationNameOf(s.stationId):'-'"></kv-row>
-<template #footer><div class="card-actions -mx-4 -mb-3.5 rounded-b-2xl overflow-hidden"><div class="card-action-btn" style="color:var(--link)" data-cp @click.stop="openStoreForm(s.id)" :data-od-id="'store-edit-'+s.id">编辑</div></div></template>
+<template #footer><div class="card-actions -mx-4 -mb-3.5 rounded-b-2xl overflow-hidden"><div class="card-action-btn" style="color:var(--link)" data-cp @click.stop="openStoreForm(s.id)" :data-od-id="'store-edit-'+s.id">编辑</div><div v-if="canDeleteStore(s)" class="card-action-btn" style="color:#FF4343" data-cp @click.stop="askDeleteStore(s.id)" :data-od-id="'store-del-'+s.id">删除</div></div></template>
 </kv-card>
 </div>
 </page>
@@ -2649,7 +2658,7 @@ body.host-single-m #root-user{display:none}
 <span class="flex-1 min-w-0">
 <span v-if="storeForm.stationId" class="block text-[15px] font-medium truncate" style="color:#111">{{ stationNameOf(storeForm.stationId) }}</span>
 <span v-if="storeForm.stationId" class="block text-[12px] mt-0.5 truncate" style="color:#999">{{ stationAddrOf(storeForm.stationId) }}</span>
-<span v-else class="block text-[15px]" style="color:#999">选择关联站点</span>
+<span v-else class="block text-[15px]" style="color:#999">选择站点</span>
 </span>
 <span class="shrink-0" v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
 </div>
@@ -2670,10 +2679,19 @@ body.host-single-m #root-user{display:none}
 <button data-cp @click="saveStore()" class="w-full h-[50px] flex items-center justify-center rounded-xl text-[16px] font-semibold border-none cursor-pointer transition-colors active:opacity-90" style="background:#2B3F5F;color:#fff" data-od-id="store-form-submit">保存</button>
 </div>
 </page>
-<!-- 选择地址（地图拖拽取点 + 候选地址列表 + 右下 Fab 使用当前定位；确认后回填门店表单地址框） -->
+<!-- 选择地址（地图拖拽取点 + POI 搜索浮层 + 我的位置 + 候选地址列表 + 右下 Fab 使用当前定位；确认后回填门店表单地址框）
+     交互对齐 indonesia-next 分支「充电桩 · 选择地址」：世界层仍为容器 2×2，候选点/我的位置一律按 lx%/ly% 百分比定位 -->
 <page :open="mPage==='storeMap'" :z="700" oid="mstore-map-page">
 <nav-bar title="选择地址" border-color="#E5E5E5" @back="closePage()"></nav-bar>
-<div ref="storeMapBox" class="flex-1 min-h-0 relative overflow-hidden select-none" style="background:#EAEFE7;touch-action:none" @pointerdown="storeMapDown" @pointermove="storeMapMove" @pointerup="storeMapUp" @pointercancel="storeMapUp">
+<div ref="storeMapBox" class="flex-1 min-h-0 relative overflow-hidden select-none" style="background:#EAEFE7;touch-action:none" @pointerdown="storeMapDown" @pointermove="storeMapMove" @pointerup="storeMapUp" @pointercancel="storeMapUp" data-od-id="store-map-canvas">
+<!-- POI 搜索：浮层置于地图之上，阻止 pointer 事件冒泡以免误触发地图拖拽 -->
+<div class="absolute left-3 right-3 top-3 z-10" @pointerdown.stop @pointermove.stop @pointerup.stop @pointercancel.stop data-od-id="store-map-search">
+<div class="flex items-center gap-2 px-3 h-10 rounded-xl bg-white" style="box-shadow:0 1px 5px rgba(0,0,0,.15)">
+<span class="shrink-0 flex items-center" style="color:#6B6B6B" v-html="luci('search','w-4 h-4')"></span>
+<input v-model="storeMapQ" type="text" placeholder="搜索地址" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="store-map-search-input">
+<span v-if="storeMapQ" data-cp @click="storeMapQ=''" class="shrink-0 flex items-center justify-center cursor-pointer" style="color:#C4C4C4" data-od-id="store-map-search-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
+</div>
+</div>
 <div class="sm-world" :style="storeMapWorldStyle">
 <div class="sm-road-h" style="top:12%"></div>
 <div class="sm-road-h" style="top:38%"></div>
@@ -2691,16 +2709,21 @@ body.host-single-m #root-user{display:none}
 <span class="pdot"></span>
 <span class="pnm">{{ p.name }}</span>
 </div>
+<!-- 我的当前位置（蓝色方向点；世界层坐标＝「使用当前定位」的定位点 mStoreLoc，拖拽地图时随之移动） -->
+<div class="absolute z-[2] -translate-x-1/2 -translate-y-1/2" :style="{left:mStoreLoc.lx+'%',top:mStoreLoc.ly+'%'}" data-od-id="store-map-me-pt">
+<div class="sm-me"></div>
 </div>
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-<div class="w-9 h-9 rounded-full flex items-center justify-center text-white" style="background:#FF6A00;box-shadow:0 2px 10px rgba(0,0,0,.28)"><span v-html="luci('map-pin','w-5 h-5')"></span></div>
+</div>
+<!-- 地图中心点（固定于画布正中心：深色圆环 + 细杆，杆尖即取点位置） -->
+<div class="absolute inset-0 z-[15] flex items-center justify-center pointer-events-none" data-od-id="store-map-center-pin">
+<div class="sm-center-pin"><div class="mcp-head"></div><div class="mcp-stem"></div></div>
 </div>
 <!-- 当前定位：地图右下 Fab 触发（未就绪时依次拉起 定位授权 → 定位服务，就绪后直接取定位地址） -->
 <button data-cp @pointerdown.stop @click="mUseStoreLoc()" class="sm-loc-btn" data-od-id="store-map-loc-fab" title="使用当前定位"><span v-html="luci('crosshair','w-5 h-5')"></span></button>
 </div>
 <div class="shrink-0 bg-white" style="border-top:1px solid #F0F0F0">
 <div class="overflow-y-auto hide-scroll pt-2 pb-2" style="max-height:34vh">
-<div v-for="(p,pi) in storeMapPoints" :key="p.addr" data-cp @click="pickStoreMapPoint(p)" class="flex items-center gap-3 px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'store-map-point-'+pi">
+<div v-for="(p,pi) in storeMapList" :key="p.addr" data-cp @click="pickStoreMapPoint(p)" class="flex items-center gap-3 px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'store-map-point-'+pi">
 <div class="flex-1 min-w-0">
 <div class="text-[14px] font-medium truncate" :style="storeMapDraft===p.addr?{color:'var(--accent)'}:{color:'#111'}">{{ p.name }}</div>
 <div class="text-[12px] mt-0.5 truncate" style="color:#999">{{ p.addr }}</div>
@@ -2708,6 +2731,7 @@ body.host-single-m #root-user{display:none}
 <span class="text-[11px] shrink-0" style="color:#BBB">{{ p.dist }}</span>
 <span v-if="storeMapDraft===p.addr" v-html="luci('check','w-4 h-4 text-[var(--accent)]')"></span>
 </div>
+<empty-state v-if="!storeMapList.length" icon="" text="未找到匹配地点" text-class="text-[13px] font-normal text-[#999]" root-class="flex flex-col items-center justify-center text-center py-[34px]" data-od-id="store-map-search-empty"></empty-state>
 </div>
 <div class="px-4 pt-2" style="padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))">
 <button data-cp @click="confirmStoreMap()" class="w-full h-[48px] flex items-center justify-center rounded-xl text-[16px] font-semibold border-none cursor-pointer active:opacity-90" style="background:#2B3F5F;color:#fff" data-od-id="store-map-confirm">确认</button>
@@ -2726,6 +2750,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+<div v-if="stationView.length" class="text-[12px] mb-2.5" style="color:#999">共 {{ stationView.length }} 条</div>
 <empty-state v-if="!stationView.length" icon="map-pin" text="暂无站点" root-class="flex flex-col items-center justify-center py-14" circle-class="w-14 h-14 rounded-full flex items-center justify-center mb-4 bg-[#F0F0F0]" icon-class="w-7 h-7 text-[#BBB]" text-class="text-[14px] font-semibold text-[#333]"></empty-state>
 <kv-card v-for="s in stationView" :key="s.id" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="openStationDetail(s.id)" :data-od-id="'station-item-'+s.id">
 <template #title><span class="min-w-0 truncate">{{ s.name }}</span></template>
@@ -2733,7 +2758,7 @@ body.host-single-m #root-user{display:none}
 <kv-row label="营业时间" :value="s.hours||'-'"></kv-row>
 <kv-row label="换电柜" :value="cabsOfStation(s.id).length + ' 台'"></kv-row>
 <kv-row label="所属门店" :value="storeOfStation(s.id)?storeOfStation(s.id).name:'-'"></kv-row>
-<template #footer><div class="card-actions -mx-4 -mb-3.5 rounded-b-2xl overflow-hidden"><div class="card-action-btn" style="color:var(--link)" data-cp @click.stop="openStationForm(s.id)" :data-od-id="'station-edit-'+s.id">编辑</div></div></template>
+<template #footer><div class="card-actions -mx-4 -mb-3.5 rounded-b-2xl overflow-hidden"><div class="card-action-btn" style="color:var(--link)" data-cp @click.stop="openStationForm(s.id)" :data-od-id="'station-edit-'+s.id">编辑</div><div v-if="canDeleteStation(s)" class="card-action-btn" style="color:#FF4343" data-cp @click.stop="askDeleteStation(s.id)" :data-od-id="'station-del-'+s.id">删除</div></div></template>
 </kv-card>
 </div>
 </page>
@@ -2912,7 +2937,7 @@ body.host-single-m #root-user{display:none}
 <confirm-dialog :open="mShowLocAppAuth" z="2010" oid="m-loc-app-auth-modal" title="允许“雅迪换电”使用你的位置信息吗？" desc="您的位置信息将用于定位门店地址" :cancel-text="'不允许'" :confirm-text="'允许'" confirm-bg="var(--accent)" @close="mDenyLocAppAuth()" @confirm="mAllowLocAppAuth()"></confirm-dialog>
 <confirm-dialog :open="mShowLocAuth" z="1800" oid="m-loc-service-modal" title="定位服务" desc="请在系统设置中开启定位服务，以自动获取门店地址" :cancel-text="'取消'" :confirm-text="'去开启'" confirm-bg="var(--accent)" @close="mCancelLocService()" @confirm="mAllowLocAuth()"></confirm-dialog>
 <!-- 门店关联站点（门店表单用：已被其他门店关联的站点不展示；再次点击已选 = 取消关联） -->
-<bottom-sheet :open="storeStationSheet" title="选择关联站点" :mask-z="750" max-h="65%" oid="store-station-mask" panel-oid="store-station-sheet" @close="closeStoreStationPick()">
+<bottom-sheet :open="storeStationSheet" title="选择站点" :mask-z="750" max-h="65%" oid="store-station-mask" panel-oid="store-station-sheet" @close="closeStoreStationPick()">
 <div class="sheet-search">
 <span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
 <input v-model="storeStationQ" type="text" placeholder="搜索站点名称" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]">
@@ -4808,7 +4833,10 @@ var M_STATIONS=[
   {id:'ST01',name:'双流航空港站',addr:'成都市双流区黄河中路 88 号 1F 门口',hours:'08:00:00-22:00:00',contact:'王经理',phone:'028-8888 6666',photos:[{id:'STP01-1',time:'2026-09-20 10:12:33'}]},
   {id:'ST02',name:'金牛万达站',addr:'成都市金牛区金牛万达 B1 停车场 P2 区',hours:'09:00:00-21:30:00',contact:'李经理',phone:'028-8666 1234',photos:[]},
   {id:'ST03',name:'武侯吾悦站',addr:'成都市武侯区吾悦广场东侧广场',hours:'10:00:00-22:00:00',contact:'张经理',phone:'028-8777 5566',photos:[]},
-  {id:'ST04',name:'高新天府站',addr:'成都市高新区天府三街 199 号 1F',hours:'08:30:00-21:00:00',contact:'赵经理',phone:'028-8555 7788',photos:[]}
+  {id:'ST04',name:'高新天府站',addr:'成都市高新区天府三街 199 号 1F',hours:'08:30:00-21:00:00',contact:'赵经理',phone:'028-8555 7788',photos:[]},
+  /* 第 5 条 ST05：演示「可删除」基准——未绑定任何换电柜、也未被门店关联，故列表卡出现「删除」；
+     ST01~ST04 都绑有机柜（或被门店关联），按规则不显示删除按钮 */
+  {id:'ST05',name:'兴隆湖站',addr:'成都市天府新区兴隆湖环湖路 1 号',hours:'08:00:00-21:00:00',contact:'',phone:'',photos:[]}
 ];
 /* 加盟商（对标租车商户端「切换门店」）：当前登录商户可切换的加盟商，层级为 加盟商 → 门店 → 站点 → 换电柜 → 电池；
    切换只改「当前加盟商」上下文（原型不做数据过滤，门店/站点等仍为同一份演示数据） */
@@ -4863,7 +4891,7 @@ var M_CABINETS=[
   /* 列表前两条为演示基准（机柜列表与电池列表口径一致：第 1 项全正常 / 第 2 项全异常）
      第 1 条 K7A3：上线 + 在线 + 无告警 + 无故障 + 已启用（仅留 1 条已解除的故障记录，保持与「无故障」一致）
      第 2 条 R8B4：下线 + 离线 + 有告警 + 有故障 + 未启用（告警/故障记录与状态一致，详情页次级页有数据） */
-  {no:'K7A3F9D2M5Q8T1B4',name:'双流航空港站 1 号柜',stationId:'ST01',model:'YD-C12',doors:12,bizOnline:true,netOnline:true,fault:false,alarm:false,enabled:true,faults:mAbnRecs(FAULT_TYPES.slice(0,1),{doors:['01'],batts:['BT-2026-0001']}),flow:'98.989 M',power:'6.89 kw.h',createdAt:'2023-03-20 18:26:22',updatedAt:'2024-09-18 10:52:31',slots:mSlots(12,[1,2,5,8],{5:{reserved:true},8:{illegal:true}})},
+  {no:'K7A3F9D2M5Q8T1B4',name:'双流航空港站 1 号柜',stationId:'ST01',model:'YD-C12',doors:12,bizOnline:true,netOnline:true,fault:false,alarm:false,enabled:true,faults:mAbnRecs(FAULT_TYPES.slice(0,1),{doors:['01'],batts:['BT-2026-0001']}),flow:'98.989 M',power:'6.89 kw.h',createdAt:'2023-03-20 18:26:22',updatedAt:'2024-09-18 10:52:31',slots:mSlots(12,[1,5,8],{5:{reserved:true},8:{illegal:true}})},
   {no:'R8B4L1E6N3G9U2C5',name:'双流航空港站 2 号柜',stationId:'ST01',model:'YD-C08',doors:8,bizOnline:false,netOnline:false,fault:true,alarm:true,enabled:false,alarms:mAbnRecs(DOOR_ALARM_TYPES,{doors:['01','02','03','04','05','06','07','08']}),faults:mAbnRecs(FAULT_TYPES.slice(0,3),{doors:['01'],batts:['BT-2026-0005']}),flow:'42.310 M',power:'3.24 kw.h',createdAt:'2023-05-08 09:14:06',updatedAt:'2024-09-19 10:52:44',slots:mSlots(8,[1])},
   /* 第 3 条 M9H5：演示「无站点归属」（stationId 空）→ 列表 / 详情的站点与地址一律显示 - */
   {no:'M9H5T2F7P4S1V6D3',name:'金牛万达站 1 号柜',stationId:'',model:'YD-C12',doors:12,bizOnline:true,netOnline:true,fault:true,alarm:true,enabled:true,alarms:[{content:'电芯高温告警',doorId:'02',powerSn:'BT-2026-0006',startTime:'2026-09-19 15:36:20',status:0},{content:'柜门充电电源告警',doorId:'02',powerSn:'BT-2026-0006',startTime:'2026-09-19 15:19:47',status:1,endTime:'2026-09-19 16:16:47'},{content:'电池被盗告警',doorId:'02',powerSn:'BT-2026-0006',startTime:'2026-09-19 15:03:14',status:0},{content:'电池不识别告警',doorId:'02',powerSn:'BT-2026-0006',startTime:'2026-09-19 14:46:41',status:0},{content:'满仓告警',doorId:'',powerSn:'',startTime:'2026-09-19 14:30:08',status:1,endTime:'2026-09-19 15:27:08'},{content:'开多仓告警',doorId:'',powerSn:'',startTime:'2026-09-19 14:13:35',status:1,endTime:'2026-09-19 15:10:35'},{content:'烟雾',doorId:'',powerSn:'',startTime:'2026-09-19 13:57:02',status:0},{content:'浸水',doorId:'',powerSn:'',startTime:'2026-09-19 13:40:29',status:0}],faults:[{content:'MOS异常',doorId:'02',powerSn:'BT-2026-0006',startTime:'2026-09-19 14:18:52',status:0},{content:'超高温保护',doorId:'02',powerSn:'BT-2026-0006',startTime:'2026-09-19 13:47:16',status:1,endTime:'2026-09-19 16:08:09'}],flow:'76.502 M',power:'5.10 kw.h',createdAt:'2023-04-02 14:38:51',updatedAt:'2024-09-19 14:22:10',slots:mSlots(12,[2])},
@@ -4892,10 +4920,11 @@ M_CABINETS.forEach(function(c,i){
 });
 var M_BATTERIES=[
   /* 列表前两条为演示基准（电池列表与机柜列表口径一致：第 1 项全正常 / 第 2 项全异常）
-     第 1 条 0001：在线 + 柜内 + 未租用 + 已满电
-     第 2 条 0002：离线 + 异常中（柜内离线即异常，详情页「电池状态」为异常中） */
+     第 1 条 0001：在线 + 柜内 + 未租用 + 已满电（状态全绿）
+     第 2 条 0002：离线 + 柜外 + 已租用（状态全红；柜外租用不属于「电池状态」4 态 → 该行不显示，当前归属显示持有人）
+     0002 已被借出，故 K7A3 柜 02 号仓同步置为空仓（occupied 移除），避免仓内有电池与柜外租用并存 */
   {no:'BT-2026-0001',soc:100,cycles:126,health:96,cabState:'inCab',rentState:'unrented',netOnline:true,charging:false,at:'K7A3F9D2M5Q8T1B4-01',records:[mRec('2026-09-16 14:05','charge','入柜充电，SOC 12% → 100%'),mRec('2026-09-16 09:20','return','由用户 U8812 归还至 K7A3F9D2M5Q8T1B4-01 仓位')]},
-  {no:'BT-2026-0002',soc:9,cycles:98,health:94,cabState:'inCab',rentState:'unrented',netOnline:false,charging:false,at:'K7A3F9D2M5Q8T1B4-02',records:[mRec('2026-09-18 21:10','return','由用户 U6521 归还至 K7A3F9D2M5Q8T1B4-02 仓位，通讯中断状态待同步'),mRec('2026-09-18 08:32','borrow','用户 U6521 于 K7A3F9D2M5Q8T1B4-02 借出')]},
+  {no:'BT-2026-0002',soc:9,cycles:98,health:94,cabState:'outCab',rentState:'rented',netOnline:false,charging:false,at:'+62 813-4471',holder:{phone:'+62 813-4471',email:'',account:''},records:[mRec('2026-09-22 08:47','borrow','用户 U6521 于 K7A3F9D2M5Q8T1B4-02 借出，通讯中断状态待同步'),mRec('2026-09-18 21:10','return','由用户 U6521 归还至 K7A3F9D2M5Q8T1B4-02 仓位')]},
   {no:'BT-2026-0003',soc:100,cycles:154,health:91,cabState:'inCab',rentState:'unrented',netOnline:true,charging:false,at:'K7A3F9D2M5Q8T1B4-05',records:[mRec('2026-09-15 18:40','charge','入柜充电，SOC 20% → 100%'),mRec('2026-09-15 12:05','return','由用户 U3390 归还至 K7A3F9D2M5Q8T1B4-05 仓位')]},
   {no:'BT-2026-0004',soc:67,cycles:212,health:88,cabState:'inCab',rentState:'unrented',netOnline:true,charging:true,at:'K7A3F9D2M5Q8T1B4-08',records:[mRec('2026-09-19 07:15','charge','入柜充电，SOC 33% → 67%'),mRec('2026-09-18 19:50','return','由用户 U7712 归还至 K7A3F9D2M5Q8T1B4-08 仓位')]},
   {no:'BT-2026-0005',soc:74,cycles:88,health:95,cabState:'inCab',rentState:'unrented',netOnline:false,charging:false,at:'R8B4L1E6N3G9U2C5-01',records:[mRec('2026-09-19 09:02','alarm','与 R8B4L1E6N3G9U2C5 柜通讯中断，状态待同步'),mRec('2026-09-17 16:20','return','由用户 U2188 归还至 R8B4L1E6N3G9U2C5-01 仓位')]},
@@ -4920,7 +4949,7 @@ function mRent(user,status,swapOrderNo,borrowTime,borrowNo,returnTime,returnNo){
 function rentUser(r){return (r&&(r.phone||r.email||r.account))||'-'}
 var M_BATT_RENTS={
   'BT-2026-0001':[mRent('+62 812-3390',0,'SW20260922103058','2026-09-22 10:30','K7A3F9D2M5Q8T1B4','',''),mRent('+62 812-3390',1,'SW20260916081244','2026-09-16 08:12','M9H5T2F7P4S1V6D3','2026-09-16 09:20','K7A3F9D2M5Q8T1B4'),mRent('+62 865-2210',1,'SW20260913084019','2026-09-13 08:40','K7A3F9D2M5Q8T1B4','2026-09-13 11:05','K7A3F9D2M5Q8T1B4')],
-  'BT-2026-0002':[mRent('+62 813-4471',1,'SW20260918083207','2026-09-18 08:32','K7A3F9D2M5Q8T1B4','2026-09-18 21:10','K7A3F9D2M5Q8T1B4')],
+  'BT-2026-0002':[mRent('+62 813-4471',0,'SW20260922084712','2026-09-22 08:47','K7A3F9D2M5Q8T1B4','',''),mRent('+62 813-4471',1,'SW20260918083207','2026-09-18 08:32','K7A3F9D2M5Q8T1B4','2026-09-18 21:10','K7A3F9D2M5Q8T1B4')],
   'BT-2026-0003':[mRent('+62 811-2098',1,'SW20260915091502','2026-09-15 09:15','M9H5T2F7P4S1V6D3','2026-09-15 12:05','K7A3F9D2M5Q8T1B4')],
   'BT-2026-0004':[mRent('+62 816-7732',1,'SW20260918074011','2026-09-18 07:40','P2K7V5H1R6U9Y4F2','2026-09-18 19:50','K7A3F9D2M5Q8T1B4')],
   'BT-2026-0005':[mRent('+62 812-8823',1,'SW20260917090526','2026-09-17 09:05','K7A3F9D2M5Q8T1B4','2026-09-17 16:20','R8B4L1E6N3G9U2C5')],
@@ -5575,6 +5604,14 @@ var _ma=Vue.createApp({
     /* ── 门店地址：可编辑输入 + 输入即联想 + 地图选点（拖拽吸附）+ 当前定位（定位授权 → 定位服务 两层校验链） ── */
     var storeMapPoints=M_STORE_ADDR_POINTS;
     var storeMapDraft=Vue.ref('');
+    /* 选点页 POI 搜索（对齐 indonesia-next 充电桩选点页）：name + addr 模糊匹配，清空即恢复全量；
+       仅过滤下方候选列表，地图上的点位始终全量展示 */
+    var storeMapQ=Vue.ref('');
+    var storeMapList=Vue.computed(function(){
+      var q=String(storeMapQ.value||'').trim().toLowerCase();
+      if(!q)return storeMapPoints;
+      return storeMapPoints.filter(function(p){return ((p.name||'')+' '+(p.addr||'')).toLowerCase().indexOf(q)>-1});
+    });
     var storeAddrSugOpen=Vue.ref(false),stationAddrSugOpen=Vue.ref(false);
     function addrForm(t){return t==='station'?stationForm:storeForm}
     function addrErr(t){return t==='station'?stationErr:storeErr}
@@ -5654,6 +5691,7 @@ var _ma=Vue.createApp({
     var storeMapTarget=Vue.ref('store');
     function openStoreMap(target){
       storeMapTarget.value=target||'store';
+      storeMapQ.value='';
       var cur=String(addrForm(storeMapTarget.value).addr||'').trim();
       var hit=storeMapPoints.filter(function(p){return p.addr===cur})[0];
       addrSugOpen(storeMapTarget.value).value=false;
@@ -5690,7 +5728,7 @@ var _ma=Vue.createApp({
       var phoneRaw=String(f.phone||'').trim();
       if(phoneRaw&&!/^[0-9+\- ]{6,20}$/.test(phoneRaw)){storeErr.phone='联系电话格式不正确';ok=false}
       if(!storeFormImgs.value.length){storeErr.photos='请上传门店封面';ok=false}
-      if(!String(f.addr||'').trim()){storeErr.addr='请输入或选择门店地址';ok=false}
+      if(!String(f.addr||'').trim()){storeErr.addr='请输入或选择地址';ok=false}
       if(f.stationId&&stationTaken(f.stationId,f.id)){storeErr.station='该站点已被其他门店关联';ok=false}
       if(!ok){storeErrScroll('mstore-form-page');return}
       var phoneFull=phoneRaw?(String(f.dial||'+86').trim()+' '+phoneRaw):'';
@@ -5738,7 +5776,7 @@ var _ma=Vue.createApp({
       var phoneRaw=String(f.phone||'').trim();
       if(phoneRaw&&!/^[0-9+\- ]{6,20}$/.test(phoneRaw)){stationErr.phone='联系方式格式不正确';ok=false}
       if(!stationFormImgs.value.length){stationErr.photos='请上传站点封面';ok=false}
-      if(!String(f.addr||'').trim()){stationErr.addr='请输入或选择站点地址';ok=false}
+      if(!String(f.addr||'').trim()){stationErr.addr='请输入或选择地址';ok=false}
       if(!ok){storeErrScroll('mstation-form-page');return}
       var hours=hf+'-'+ht,phoneFull=phoneRaw?(String(f.dial||'+86').trim()+' '+phoneRaw):'',photos=stationFormImgs.value.slice();
       if(f.id){
@@ -5780,6 +5818,28 @@ var _ma=Vue.createApp({
     }
     function storeStationOptions(storeId){return stations.value.map(function(s){return {value:s.id,label:s.name,disabled:stationTaken(s.id,storeId)}})}
 
+    /* ── 删除门店 / 站点（列表卡 footer「删除」入口，二次确认走 mConfirm 通用弹窗，确认钮沿用默认蓝渐变） ──
+       入口按关联关系显示：门店仍关联站点、站点仍绑换电柜或被门店关联时不显示「删除」按钮（先解绑才出现）
+       两向都先解绑再删，避免留下孤儿机柜与悬空关联 */
+    function canDeleteStore(s){return !!(s&&!(s.stationId&&stationOf(s.stationId)))}
+    function canDeleteStation(s){return !!(s&&!cabsOfStation(s.id).length&&!storeOfStation(s.id))}
+    function askDeleteStore(id){
+      var s=storeOf(id);if(!s||!canDeleteStore(s))return;
+      mAsk('删除门店','确定要删除该门店吗？',function(){
+        var i=stores.value.map(function(x){return x.id}).indexOf(id);
+        if(i>-1)stores.value.splice(i,1);
+        toastPush('门店已删除','success');
+      });
+    }
+    function askDeleteStation(id){
+      var st=stationOf(id);if(!st||!canDeleteStation(st))return;
+      mAsk('删除站点','确定要删除该站点吗？',function(){
+        var i=stations.value.map(function(x){return x.id}).indexOf(id);
+        if(i>-1)stations.value.splice(i,1);
+        toastPush('站点已删除','success');
+      });
+    }
+
     /* ── Tab 切换：清栈并复位二级页与弹窗 ── */
     function setTab(t){tab.value=t;settingsOpen.value=false;mPage.value='';storeQ.value='';stationQ.value='';cabQ.value='';battQ.value='';showCabFilter.value=false;showBattFilter.value=false;showDoorInfo.value=false;showBindCab.value=false;cabStationSheet.value=false;storeStationSheet.value=false;storeHmPick.value=null;auth.navReset();if(t!=='mine')mTriggerListLoading(t)}
 
@@ -5804,11 +5864,11 @@ var _ma=Vue.createApp({
       openBattFilter,closeBattFilter,battDraftSet,battFilterReset,battFilterConfirm,
       openBattAdd,closeBattAdd,openBattAddScan,submitBattAdd,battAddNo,battAddNoErr,
       mAsk,mConfirmClose,mConfirmOk,cabAskBiz,cabAskFault,cabAskAlarm,cabAskEnabled,cabAskOpenAll,cabAskOpenEmpty,
-      storeForm,storeErr,stationForm,stationErr,bindStationId,openStoreForm,closeStoreForm,toggleStoreService,pickStoreStation,saveStore,openStationForm,closeStationForm,saveStation,openBindCab,closeBindCab,bindCabScan,bindCabQ,bindCabSel,bindCabList,confirmBindCab,askUnbindCab,storeStationOptions,
+      storeForm,storeErr,stationForm,stationErr,bindStationId,openStoreForm,closeStoreForm,toggleStoreService,pickStoreStation,saveStore,openStationForm,closeStationForm,saveStation,openBindCab,closeBindCab,bindCabScan,bindCabQ,bindCabSel,bindCabList,confirmBindCab,askUnbindCab,storeStationOptions,askDeleteStore,askDeleteStation,canDeleteStore,canDeleteStation,
       storePhotoView,openStoreDetailImg,stationPhotoView,openStationDetailImg,M_STORE_SERVICES,
       storeStationSheet,storeStationQ,storeStationList,openStoreStationPick,closeStoreStationPick,
       storeHmPick,storeHmDraft,storeHmMins,storeHmSecs,storeHmWheelHour,storeHmWheelMin,storeHmWheelSec,trackHours,p2,hhmmss,openStoreHmPick,setStoreHmHour,setStoreHmMin,setStoreHmSec,cancelStoreHmPick,confirmStoreHmPick,onStoreHmScroll,
-      storeMapPoints,storeMapDraft,openStoreMap,pickStoreMapPoint,confirmStoreMap,
+      storeMapPoints,storeMapDraft,storeMapQ,storeMapList,openStoreMap,pickStoreMapPoint,confirmStoreMap,
       storeAddrSugOpen,stationAddrSugOpen,storeAddrSugList,stationAddrSugList,onAddrInput,closeAddrSug,pickAddrSug,clearAddr,
       storeMapBox,storeMapWorldStyle,storeMapDragging,storeMapDown,storeMapMove,storeMapUp,storeMapCenterOn,
       mLocAppAuth,mLocAuth,mLocReady,mShowLocAppAuth,mShowLocAuth,mAllowLocAppAuth,mDenyLocAppAuth,mAllowLocAuth,mCancelLocService,mUseStoreLoc,mStoreLoc,
