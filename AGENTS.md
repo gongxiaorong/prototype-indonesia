@@ -323,7 +323,7 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 → 格式归一化后提交（幂等：已译项不覆盖）
 ```
 
-术语基线：车辆=Vehicle/Kendaraan/ยานพาหนะ、押金=Deposit/Jaminan、退款=Refund/Pengembalian Dana。
+术语基线：车辆=Vehicle/Kendaraan/ยานพาหนะ、车型=Vehicle Model/Model Kendaraan/รุ่นรถ、型号=Model/Model/รุ่น、押金=Deposit/Jaminan、退款=Refund/Pengembalian Dana。
 **高频词基线（2026-10-23 定，三目录同口径，改任一端必须同改其余端同中文词条）**：配置=Config/Konfigurasi/การตั้งค่า（zh-HK 统一「配置」）、充值=Top-up/Isi Ulang/เติมเงิน（zh-HK「增值」）、充值订单=Top-up Order/Pesanan Isi Ulang/คำสั่งซื้อเติมเงิน、实名=KYC（en/id/th 均用 KYC，中文仍「实名」，zh-HK「實名」）、订单=Order/Pesanan/คำสั่งซื้อ、门店=Store/Toko/ร้านค้า、设备=Device/Perangkat/อุปกรณ์（「充电桩」=Charger/Pengisi Daya/ที่ชาร์จ）、告警=Alert/Peringatan/แจ้งเตือน、套餐=Package/Paket/แพ็กเกจ、钱包=Wallet/Dompet/กระเป๋า、续租=Renew/Perpanjang/ต่ออายุ。
 自查口径：`node scripts/i18n_check.mjs` 的 `TERM` 只按**整句中文**比对跨目录，同一概念的中文措辞不同（如「订单配置」vs「充值配置」）查不出词级漂移，新增词条须对照本节基线人工核对。
 
