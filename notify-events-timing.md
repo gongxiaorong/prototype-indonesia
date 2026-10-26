@@ -1,12 +1,12 @@
 # 消息通知 · 事件清单（用户端）
 
-> 范围：仅用户端 App（消息中心条目 + 手机系统通知）。商户端「消息通知」配置页同步提供各事件开关，事件名复用用户端标题文案。
-> 文案源：`locales/rent-user/zh-CN.json`（用户端）与 `locales/rent-merchant/zh-CN.json`（商户端配置页），五语同名键；键位映射与命名口径见 `i18n-key-naming.md`。
+> 范围：仅用户端 App（消息中心条目 + 手机系统通知）。商户端「消息通知」配置页提供各事件开关，事件名与用户端标题逐字一致。
+> 文案源：用户端 `locales/rent-user/*.json` 的 `user.home.pushNotify.{id}Title` / `{id}Body`（另有 `{id}BodyTpl` 插值模板）；商户端 `locales/rent-merchant/*.json` 只有标题键 `merchant.notify.{id}Title`（无正文键）。两端各五语、键集一致，命名口径见 `AGENTS.md §5`。
 > 展示顺序：消息中心为一列平铺卡片（无「今天/昨天」分组），**按通知时间倒序（最新在上）**，同一天再按通知时分倒序；下表顺序为事件分类顺序（订单状态 1–11 / 费用与退款 12–14），与消息中心的展示顺序无关。
 
 ## 事件清单（14 条：标题 + 正文 + 触发时机）
 
-「事件（标题）」列＝商户端事件名＝用户端消息中心标题，**逐字一致**（共用同一批 `user.home.pushNotify.*Title` 键）。
+「事件（标题）」列＝商户端事件名（`merchant.notify.{id}Title`）＝用户端消息中心标题（`user.home.pushNotify.{id}Title`），两端各自持键、**值逐字一致**。
 
 「正文」列＝五语 `user.home.pushNotify.*Body` 键值（本表取 `zh-CN.json` 权威值），**动态值一律用示例值直写**，与 `notifyTemplates[].body` 在 `notifySample()` 下的插值结果逐字相同——可直接作为文案交付件使用。
 

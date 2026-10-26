@@ -21,7 +21,7 @@
  *                同句中文即使 key 完全不同，en/id/th/zh-HK 也必须一致；
  *                反之 key 同名但中文不同的不算漂移。
  *                三对独立比对：rent-user↔swap、rent-merchant↔swap、rent-user↔rent-merchant。
- *                demo.* 与 TERM_ALLOW（品牌专名）已排除；逐条明细见 i18n-cross-drift.md
+ *                demo.* 与 TERM_ALLOW（品牌专名）已排除；口径见 AGENTS.md §5
  *  - SHARED      rent 拆分后的共享段镜像：rent-user 与 rent-merchant 的
  *                common.* + demo.* key 集合必须一致，且五语值逐字一致
  *                （该段由两端共用，任一端单独改动即迁移/维护错误）
@@ -192,7 +192,7 @@ for (const [a, b] of TERM_PAIRS) {
     console.log('    · ' + short(r.zh) + '  [' + r.ak[0] + ' ↔ ' + r.bk[0] + ']');
     r.hit.forEach((h) => console.log('        ' + h));
   });
-  if (rows.length > 12) console.log('    …其余 ' + (rows.length - 12) + ' 条明细见 i18n-cross-drift.md');
+  if (rows.length > 12) console.log('    …其余 ' + (rows.length - 12) + ' 条未展开');
   failures += rows.length;
 }
 

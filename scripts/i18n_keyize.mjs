@@ -28,7 +28,7 @@
  *      - 断言：五语键集合一致、每端叶子键数改名前一致、from 必须存在、to 必须不存在；
  *        任一断言失败即报错退出，不落盘。默认 dry-run，仅 --write 写文件。
  *
- * 口径对齐 AGENTS.md §5 与 i18n-integration-plan.md §5.1（五条判定标准）。
+ * 口径对齐 AGENTS.md §5（通用文案归通用子命名空间）。
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -400,10 +400,10 @@ function extractRange(maskedLines, range) {
 }
 
 // ══════════════════════════════════════════════════════════════════════
-// A2. 命名候选（规格 §5.1 五条判定标准）
+// A2. 命名候选（AGENTS.md §5：通用词表 → 通用子命名空间）
 // ══════════════════════════════════════════════════════════════════════
 
-/** 规则 1：通用词表 → 通用子命名空间（i18n-integration-plan.md §5.1-1） */
+/** 规则 1：通用词表 → 通用子命名空间（AGENTS.md §5） */
 const GENERIC_TARGET = {
   确定: 'common.action.confirm',
   取消: 'common.action.cancel',

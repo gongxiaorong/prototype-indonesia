@@ -323,7 +323,9 @@
       "model": "Model",
       "other": "Other",
       "settings": "Settings",
-      "tip": "Tip"
+      "tip": "Tip",
+      "unitWeek": "Weeks",
+      "unitMonth": "Month"
     },
     "action": {
       "cancel": "Cancel",
@@ -450,7 +452,11 @@
       "disableAction": "Disable device",
       "enableAction": "Enable device",
       "addrMapSelect": "Select on Map",
-      "inputDeviceNo": "Please enter device number"
+      "inputDeviceNo": "Please enter device number",
+      "deviceNoExists": "Device number already exists",
+      "priceRequired": "Please enter unit price",
+      "maxDurationRequired": "Please enter max charging duration",
+      "maxDurationInteger": "Max charging duration must be an integer"
     },
     "chargingOrder": {
       "title": "Charging Orders",
@@ -480,7 +486,8 @@
       "refund": "Refund",
       "empty": "No Orders",
       "detailTitle": "Charging order details",
-      "refundListTitle": "Charging order refund records"
+      "refundListTitle": "Charging order refund records",
+      "refundExceed": "Refund amount exceeds refundable amount"
     },
     "renewal": {
       "allowOrderRenew": "Allow Order Renewal",
@@ -654,7 +661,8 @@
       "batteryUnbound": "Battery unbound",
       "editPushConfig": "Edit Push Config",
       "unbindVehicleTitle": "Unbind Vehicle",
-      "unbindBatteryTitle": "Unbind Battery"
+      "unbindBatteryTitle": "Unbind Battery",
+      "rangeInteger": "Please enter an integer between {min} and {max}"
     },
     "home": {
       "view": "Overview",
@@ -787,6 +795,7 @@
       "firstTrigger": "First Triggered",
       "actionIgnore": "Ignore",
       "timelineIgnoredReason": "Ignored · {reason}",
+      "timelineTriggered": "Trigger #{n}",
       "duration": "Duration",
       "goVehicleSub": "Go to vehicle details and controls",
       "historyTitle": "History",
@@ -805,6 +814,7 @@
       "rechargeUserInfo": "User Info",
       "giftEdit": "Edit Bonus Balance",
       "giftAmountPlaceholder": "Please enter bonus amount",
+      "amountRequired": "Please enter an amount",
       "rechargeConfigEditSuccess": "Top-up config updated",
       "balance": "Balance",
       "giftFrozen": "Frozen Bonus",
@@ -850,6 +860,7 @@
       "refundOperator": "Operator",
       "refundModalReasonPlaceholder": "Please enter refund reason...",
       "confirmPayDesc": "Confirm completing this payment?",
+      "confirmPayTitle": "Confirm payment",
       "imagePreviewClose": "Tap anywhere to close",
       "confirmRefundDesc": "End this order? Total refund Rp{total}",
       "docDeleteDesc": "Are you sure you want to delete this document? This action cannot be undone.",
@@ -870,6 +881,7 @@
       "customer": "User Account",
       "refundSourcePlatform": "Operations Platform",
       "endOrder": "End Order",
+      "confirmEndOrderDesc": "End this order?",
       "payPartialRefund": "Partial Refund",
       "refundSourceMerchant": "Merchant App",
       "filterPaymentChannel": "Payment Channel",
@@ -890,7 +902,6 @@
       "opReturnVehicle": "Return vehicle",
       "orderEnded": "Order ended",
       "vehicleChanged": "Vehicle changed",
-      "payment2c2p": "2C2P",
       "payStatus": "Payment Status",
       "listPackage": "Vehicle & Battery Package",
       "listRecharge": "Top-up Order",
@@ -917,13 +928,22 @@
       "endReasonPlaceholder": "Enter end reason (max 255 characters)",
       "cancelReasonPlaceholder": "Enter cancellation reason",
       "endOrderHint": "The order becomes \"Completed\" after ending; paid orders record the payment time, unpaid orders do not.",
+      "mainOrder": "Main Order",
       "refundConfirmTotal": "Confirm refund? Total refund {amount}",
       "refundConfirmAmount": "Confirm refund? Refund amount {amount}",
       "unitHour": "Hours",
       "unitDay": "Days",
       "unitWeek": "Weeks",
       "unitMonth": "Months",
-      "endOrderConfirmDesc": "End this order? It cannot return to charging afterwards."
+      "endOrderConfirmDesc": "End this order? It cannot return to charging afterwards.",
+      "batteryTotal": "{n} batteries",
+      "splitRentMore": "Original rent {orig}, total across channels {sum}, increased by {diff}",
+      "splitRentLess": "Original rent {orig}, total across channels {sum}, decreased by {diff}",
+      "splitDepMore": "Original deposit {orig}, total across channels {sum}, increased by {diff}",
+      "splitDepLess": "Original deposit {orig}, total across channels {sum}, decreased by {diff}",
+      "cancelReasonMax": "Cancellation reason must be within {n} characters",
+      "endReasonRequired": "Please enter the end reason",
+      "endReasonMax": "End reason must be within {n} characters"
     },
     "perm": {
       "permViewOrderDetail": "View Order Details",
@@ -1004,7 +1024,8 @@
       "namePlaceholder": "Please enter package name",
       "list": "Package List",
       "manage": "Package Management",
-      "imageSizeHint": "Size: {w}px × {h}px"
+      "weekDaysRequired": "Enter weekly rental days",
+      "monthDaysRequired": "Enter monthly rental days"
     },
     "vehicle": {
       "list": "Vehicle list",
@@ -1020,7 +1041,8 @@
       "confirm": "Confirm Price Adjustment",
       "before": "Before Adjustment",
       "saved": "Price adjustment saved",
-      "after": "After Adjustment"
+      "after": "After Adjustment",
+      "changeConfirmDesc": "Original rent {rent}, original deposit {deposit}; after change, rent {newRent}, deposit {newDeposit}."
     },
     "position": {
       "list": "Position list"
@@ -1095,48 +1117,6 @@
       "orderAdjustedTitle": "Order Amount Adjusted",
       "orderRefundingTitle": "Refund in Progress",
       "orderRefundedTitle": "Refund Successful"
-    }
-  },
-  "demo": {
-    "model": {
-      "lediSAA": "乐迪SAA",
-      "lediSAABatt": "乐迪SAA+天能72V20Ah",
-      "tianneng72V20": "天能锂电72V20Ah",
-      "chaowei72V32": "超威黑金72V32Ah",
-      "tianneng72V20Short": "天能72V20Ah",
-      "yadeaGuanneng3S9Max": "雅迪冠能3 S9 MAX",
-      "chaowei72V32Space": "超威黑金 72V32Ah",
-      "tiannengLithium72V20Space": "天能锂电 72V20Ah",
-      "tiannengLithium48V20": "天能锂电 48V20Ah",
-      "xinghengLithium48V24": "星恒锂电 48V24Ah",
-      "yadeaEBikePro": "雅迪 E-Bike Pro",
-      "yadeaGuannengQ7": "雅迪冠能Q7",
-      "yadeaLePao": "雅迪乐跑版",
-      "yadeaXiaoGangPao": "雅迪小钢炮"
-    },
-    "customer": {
-      "zs": "张三",
-      "ls": "李四",
-      "ww": "王五",
-      "zl": "赵六",
-      "sq": "孙七",
-      "zb": "周八",
-      "wj": "吴九",
-      "zs10": "郑十"
-    },
-    "address": {
-      "shenzhenNanshan": "深圳市南山区",
-      "bjChaoyangGongti": "北京市朝阳区工体北路",
-      "bjChaoyangSanlitun": "北京市朝阳区三里屯",
-      "bjXichengXidan": "北京市西城区西单",
-      "bjChaoyangWangjing": "北京市朝阳区望京街道",
-      "bjChaoyangWangjingNear": "北京市朝阳区望京街道附近",
-      "shPudongZhangjiang": "上海市浦东新区张江路",
-      "cdWuhouTianfu": "成都市武侯区天府大道中段",
-      "gzTianheTiyuxi": "广州市天河区体育西路",
-      "hzXihuWensanlu": "杭州市西湖区文三路",
-      "njGulouZhongshanbei": "南京市鼓楼区中山北路",
-      "shenzhenNanshanScience": "深圳市南山区科技园"
     }
   }
 }

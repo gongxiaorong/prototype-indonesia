@@ -323,7 +323,9 @@
       "model": "型号",
       "other": "其他",
       "settings": "设置",
-      "tip": "提示"
+      "tip": "提示",
+      "unitWeek": "周",
+      "unitMonth": "月"
     },
     "action": {
       "cancel": "取消",
@@ -450,7 +452,6 @@
       "takeReturnInfo": "取还信息",
       "days30": "30天",
       "timeOrdered": "下单",
-      "subtotalRp": "小计 Rp {amount}",
       "subtotal": "小计",
       "confirmOrder": "确认订单",
       "unitHour": "小时",
@@ -477,7 +478,8 @@
       "pay": "支付",
       "payPartialRefund": "部分退款",
       "payFullRefund": "全部退款",
-      "payProcessing": "支付中"
+      "payProcessing": "支付中",
+      "rentDurationShort": "共{n}{unit}"
     },
     "toast": {
       "deviceBound": "设备绑定成功",
@@ -501,31 +503,46 @@
         "renewSuccessTitle": "订单自动续租成功",
         "renewFailedTitle": "订单自动续租失败",
         "renewReminderBody": "您的订单将于2026-09-10 12:00:00自动续租，并扣款Rp150.000。如不需要续租，请前往订单详情关闭自动续租。",
+        "renewReminderBodyTpl": "您的订单将于{dueDate}自动续租，并扣款{amount}。如不需要续租，请前往订单详情关闭自动续租。",
         "renewSuccessBody": "您的订单已自动续租成功，扣款Rp150.000，订单有效期已延长至2026-09-11 12:00:00。",
+        "renewSuccessBodyTpl": "您的订单已自动续租成功，扣款{amount}，订单有效期已延长至{newDueDate}。",
         "renewFailedBody": "您的订单自动续租失败（第2/3次），余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。",
+        "renewFailedBodyTpl": "您的订单自动续租失败（第{failCount}/{threshold}次），余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。",
         "orderCreatedTitle": "订单已创建",
         "orderCreatedBody": "您的订单YZ202512180001已创建，请在30分钟内完成支付，超时未支付订单将自动取消。",
+        "orderCreatedBodyTpl": "您的订单{orderNo}已创建，请在30分钟内完成支付，超时未支付订单将自动取消。",
         "orderPaidTitle": "订单支付成功",
         "orderPaidBody": "您的订单YZ202512180001已支付成功。请尽快扫描车辆/电池二维码完成绑定，绑定成功后订单即开始计费。",
+        "orderPaidBodyTpl": "您的订单{orderNo}已支付成功。请尽快扫描车辆/电池二维码完成绑定，绑定成功后订单即开始计费。",
         "deviceBoundTitle": "订单已开始",
         "deviceBoundBody": "您的订单YZ202512180001已绑定车辆/电池，租期2026-09-01 10:30:00至2026-10-01 10:30:00。",
+        "deviceBoundBodyTpl": "您的订单{orderNo}已绑定车辆/电池，租期{rentStart}至{rentEnd}。",
         "orderExpiringTitle": "订单即将到期",
         "orderExpiringBody": "您的订单YZ202512180001将于2026-10-01 10:30:00到期，请按时前往门店归还，或前往订单详情办理续租。",
+        "orderExpiringBodyTpl": "您的订单{orderNo}将于{rentEnd}到期，请按时前往门店归还，或前往订单详情办理续租。",
         "orderOverdueTitle": "订单已到期",
         "orderOverdueBody": "您的订单YZ202512180001已到期，请及时前往门店归还，以免产生额外费用；如仍需使用，可前往订单详情办理续租。",
+        "orderOverdueBodyTpl": "您的订单{orderNo}已到期，请及时前往门店归还，以免产生额外费用；如仍需使用，可前往订单详情办理续租。",
         "orderBreachTitle": "车辆/电池已远程锁定",
         "orderBreachBody": "您的订单YZ202512180001已逾期7天，车辆与电池已被远程锁定。请立即联系门店处理。",
+        "orderBreachBodyTpl": "您的订单{orderNo}已逾期{days}天，车辆与电池已被远程锁定。请立即联系门店处理。",
         "orderCompletedTitle": "订单已完成",
         "orderCompletedBody": "您的订单YZ202512180001已完成，感谢您的使用，期待再次为您服务。",
+        "orderCompletedBodyTpl": "您的订单{orderNo}已完成，感谢您的使用，期待再次为您服务。",
         "orderCancelledTitle": "订单已取消",
         "orderCancelledBody": "您的订单YZ202512180001已取消。已支付金额将原路退回。",
+        "orderCancelledBodyTpl": "您的订单{orderNo}已取消。已支付金额将原路退回。",
         "orderAdjustedTitle": "订单金额已调整",
         "orderAdjustedBody": "您的订单YZ202512180001金额已由Rp150.000调整为Rp200.000，如有疑问请联系门店。",
+        "orderAdjustedBodyTpl": "您的订单{orderNo}金额已由{oldAmount}调整为{newAmount}，如有疑问请联系门店。",
         "orderRefundingTitle": "退款处理中",
         "orderRefundingBody": "您的订单YZ202512180001退款中，退款金额Rp150.000，预计1–7个工作日原路退回。",
+        "orderRefundingBodyTpl": "您的订单{orderNo}退款中，退款金额{amount}，预计1–7个工作日原路退回。",
         "orderRefundedTitle": "退款成功",
-        "orderRefundedBody": "您的订单YZ202512180001退款Rp150.000已退回原支付渠道，请注意查收。"
-      }
+        "orderRefundedBody": "您的订单YZ202512180001退款Rp150.000已退回原支付渠道，请注意查收。",
+        "orderRefundedBodyTpl": "您的订单{orderNo}退款{amount}已退回原支付渠道，请注意查收。"
+      },
+      "noBattery": "暂无电池"
     },
     "search": {
       "placeholder": "搜索地点",
@@ -607,7 +624,9 @@
       "noBindableBattery": "暂无可绑定电池",
       "noBindableVehicle": "暂无可绑定车辆",
       "lockClosed": "已关锁",
-      "lockOpened": "已开锁"
+      "lockOpened": "已开锁",
+      "current": "当前",
+      "packageName": "套餐名称"
     },
     "battery": {
       "unbind": "解绑电池",
@@ -650,7 +669,8 @@
       "photoReplaced": "{source}：已替换当前图片",
       "license": "驾驶证",
       "supplement": "补充资料",
-      "deleteConfirm": "确定要删除该实名信息吗？删除后不可恢复"
+      "deleteConfirm": "确定要删除该实名信息吗？删除后不可恢复",
+      "idUnselected": "未选择实名信息"
     },
     "plan": {
       "selectPlan": "选择方案",
@@ -672,7 +692,13 @@
       "selectStoreFirst": "请先选择门店",
       "selectStoreWallet": "选择门店钱包",
       "giftAmount": "赠送金额",
-      "rechargeDetail": "充值明细"
+      "rechargeDetail": "充值明细",
+      "balance": "余额",
+      "noTransaction": "暂无交易记录",
+      "noWallet": "暂无已开通门店钱包",
+      "openWallet": "开通门店钱包",
+      "openWalletHint": "开通门店钱包后可查看余额",
+      "splitHint": "各门店钱包独立结算，充值余额仅对应所选门店"
     },
     "walletType": {
       "consume": "消费",
@@ -714,7 +740,6 @@
       "address": "地址",
       "distance": "距离",
       "unitPrice": "单价",
-      "pricePerMinute": "/分钟",
       "maxDuration": "最大充电时长",
       "orderTitle": "充电下单",
       "duration": "充电时长",
@@ -749,48 +774,9 @@
       "settingsGroupInner": "应用内",
       "settingsOsRow": "手机系统通知",
       "settingsPageRow": "消息中心页"
-    }
-  },
-  "demo": {
-    "model": {
-      "lediSAA": "乐迪SAA",
-      "lediSAABatt": "乐迪SAA+天能72V20Ah",
-      "tianneng72V20": "天能锂电72V20Ah",
-      "chaowei72V32": "超威黑金72V32Ah",
-      "tianneng72V20Short": "天能72V20Ah",
-      "yadeaGuanneng3S9Max": "雅迪冠能3 S9 MAX",
-      "chaowei72V32Space": "超威黑金 72V32Ah",
-      "tiannengLithium72V20Space": "天能锂电 72V20Ah",
-      "tiannengLithium48V20": "天能锂电 48V20Ah",
-      "xinghengLithium48V24": "星恒锂电 48V24Ah",
-      "yadeaEBikePro": "雅迪 E-Bike Pro",
-      "yadeaGuannengQ7": "雅迪冠能Q7",
-      "yadeaLePao": "雅迪乐跑版",
-      "yadeaXiaoGangPao": "雅迪小钢炮"
     },
-    "customer": {
-      "zs": "张三",
-      "ls": "李四",
-      "ww": "王五",
-      "zl": "赵六",
-      "sq": "孙七",
-      "zb": "周八",
-      "wj": "吴九",
-      "zs10": "郑十"
-    },
-    "address": {
-      "shenzhenNanshan": "深圳市南山区",
-      "bjChaoyangGongti": "北京市朝阳区工体北路",
-      "bjChaoyangSanlitun": "北京市朝阳区三里屯",
-      "bjXichengXidan": "北京市西城区西单",
-      "bjChaoyangWangjing": "北京市朝阳区望京街道",
-      "bjChaoyangWangjingNear": "北京市朝阳区望京街道附近",
-      "shPudongZhangjiang": "上海市浦东新区张江路",
-      "cdWuhouTianfu": "成都市武侯区天府大道中段",
-      "gzTianheTiyuxi": "广州市天河区体育西路",
-      "hzXihuWensanlu": "杭州市西湖区文三路",
-      "njGulouZhongshanbei": "南京市鼓楼区中山北路",
-      "shenzhenNanshanScience": "深圳市南山区科技园"
+    "renew": {
+      "walletAutoDeduct": "续租费用从钱包自动扣除"
     }
   }
 }

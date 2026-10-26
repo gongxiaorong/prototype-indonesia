@@ -283,7 +283,7 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 - 嵌套 JSON、点路径 key、各目录内多语言同路径同名；UTF-8 无 BOM、2 空格缩进、结尾换行。
 - 占位符用 vue-i18n `{name}`，各目录内所有语言名称与数量必须一致。
 - **禁止数字后缀 key**（`menu.home0` 类复制粘贴残留），出现即删。
-- **key 命名与重命名**：遵循 `i18n-key-naming.md` 的通用子命名空间口径。接入期（key 化改写前）允许对命名不合理的 key 重命名——须五语同路径同改、只改键路径不改值、产出映射表并经人工逐条核对、按端写入（`common.*` / `demo.*` 两端同改），并登记进 `i18n-key-naming.md`；**禁止脚本无审核自动改名**。key 化落盘后改名须同步改 `index.html` 全部引用。
+- **key 命名与重命名**：遵循本节「命名空间划分」的通用子命名空间口径（通用文案归 `common.action`/`label`/`dateTime`/`toast`/`status` 等）。接入期（key 化改写前）允许对命名不合理的 key 重命名——须五语同路径同改、只改键路径不改值、产出映射表并经人工逐条核对、按端写入（`common.*` / `demo.*` 两端同改）；**禁止脚本无审核自动改名**。key 化落盘后改名须同步改 `index.html` 全部引用。
 - 语言标识映射：`zh-CN→zh-CN`、`zh-HK→zh-HK`、`en→en-US`、`id→id-ID`、`th→th-TH`（Intl 日期用）；`<html lang>` 与实例 locale 随切换同步。
 
 ### 命名空间划分
@@ -308,9 +308,9 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 - 允许不同（须是有意为之，且不视为违规）：`demo.*` 演示假数据；空间受限的短标签缩写（Tab 名、单位：`block` 对 `battery(ies)`）；品牌与专名（YADEA、2C2P）。
 - **货币术语基线（2026-09-29 定）**：所有货币相关 key 的 `en/id/th` 一律用简称 `CNY` / `HKD` / `IDR`（不用全称 `Chinese Yuan` / `Hong Kong Dollar` / `Indonesian Rupiah`）；`zh-CN` / `zh-HK` 保持中文（人民币/港币/印尼盾 · 人民幣/港幣/印尼盾）。两端 `common.label.currency*` 与 swap `frame.currency.*` 均适用，属核心术语基线，不再作为「允许不同」的例外。
 - **国际专名保留基线（2026-09-29 定）**：凡涉及国际通用专名/代号（`VIN`、`KYC`、`SN`、`Controller SN` 等）的 key，其 `en` / `id` / `th` 一律保留原文（`VIN`、`KYC`，不音译/意译）；**中文除外**——`zh-CN` / `zh-HK` 仍用中文表达（如「车架号」/「車架號」、「实名信息」/「實名資訊」）。
-- 检查口径：`node scripts/i18n_check.mjs` 按 **zh-CN 值分组**（**不看 key 路径**）比较三对目录（`rent-user↔swap`、`rent-merchant↔swap`、`rent-user↔rent-merchant`）的译文集合，差异计入硬错误 `TERM`（共有同中文条数、译法不一致条数 + 前 12 条样例，**计入退出码**）；`demo.*` 与脚本内 `TERM_ALLOW`（品牌专名 YADEA / 2C2P）排除。另有 `SHARED` 硬错误校验 `common.* + demo.*` 两端逐字镜像。逐条明细与裁决栏见 `i18n-cross-drift.md`。
-- 现状基线（2026-10-14 复核，`demo.*` 已排除）：两目录共有同中文文案 **443 条**，**译法不一致 0 条**（`TERM` 硬校验全绿）。治理四步闭环：① **内部译法统一**（同目录「一句中文一个译法」）；② **内部重复 key 清理**（同中文多键合并到 `common.*`，两目录各新建 44 个 common 键、删除全部重复特征键）；③ **跨目录对齐**（2026-09-29 收 52 条，2026-10-14 复检再收 12 条）；④ **key 命名规范化**（通用文案归 `common.action`/`label`/`dateTime`/`toast`/`status` 等通用子命名空间，19 条，见 `i18n-key-naming.md`）。
-- **拆分后现状（2026-10-22）**：三对 `TERM` 共有同中文分别 `rent-user↔swap 404 / rent-merchant↔swap 391 / rent-user↔rent-merchant 384` 条，译法不一致均为 0；`SHARED` 389 键（`common.* + demo.*`）镜像一致。明细与接入过程见 `i18n-integration-facts.md`。
+- 检查口径：`node scripts/i18n_check.mjs` 按 **zh-CN 值分组**（**不看 key 路径**）比较三对目录（`rent-user↔swap`、`rent-merchant↔swap`、`rent-user↔rent-merchant`）的译文集合，差异计入硬错误 `TERM`（共有同中文条数、译法不一致条数 + 前 12 条样例，**计入退出码**）；`demo.*` 与脚本内 `TERM_ALLOW`（品牌专名 YADEA / 2C2P）排除。另有 `SHARED` 硬错误校验 `common.* + demo.*` 两端逐字镜像，现状数字见下条。
+- 治理历程（历史）：① **内部译法统一**（同目录「一句中文一个译法」）；② **内部重复 key 清理**（同中文多键合并到 `common.*`，两目录各新建 44 个 common 键、删除全部重复特征键）；③ **跨目录对齐**（2026-09-29 收 52 条，2026-10-14 复检再收 12 条）；④ **key 命名规范化**（通用文案归 `common.action`/`label`/`dateTime`/`toast`/`status` 等通用子命名空间，19 条）。
+- **当前现状（2026-10-24 复核）**：三对 `TERM` 共有同中文分别 `rent-user↔swap 401 / rent-merchant↔swap 387 / rent-user↔rent-merchant 438` 条，译法不一致均为 **0**；`SHARED`（`common.* + demo.*`）**359 键**镜像一致（`demo.*` 已清理，两端各剩 0 条）。规模：`rent-user` 680 键 / `rent-merchant` 996 键 / `swap` 1133 键，五语集合一致。
 
 ### 变更流程
 
@@ -373,10 +373,5 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 
 | 文件 | 内容 |
 | --- | --- |
-| `i18n-cross-drift.md` | 跨目录（rent ↔ swap）译法漂移逐条明细 + 裁决栏 |
-| `i18n-internal-align.md` | 目录内「一句中文一个译法」对齐清单 |
-| `i18n-key-naming.md` | key 命名规范化规范与明细（通用文案归通用子命名空间） |
 | `notify-events-timing.md` | 消息通知事件清单与时序（用户端，商户端配置页复用同名事件） |
-| `i18n-integration-facts.md` | index.html 接入事实（目录拆分、key 化批次、排除清单、产物与已知边界） |
-| `i18n-pending-review.md` | 新增词条译文复核记录（2026-10-22 的 7 条已复核） |
 | `skills/prototype-sop-authoring/` | SOP 撰写与驱动原型的技能（含 `references/drive-prototype.md`、`references/handbook-conventions.md`） |

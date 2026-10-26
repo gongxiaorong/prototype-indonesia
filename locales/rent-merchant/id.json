@@ -323,7 +323,9 @@
       "model": "Model",
       "other": "Lainnya",
       "settings": "Pengaturan",
-      "tip": "Petunjuk"
+      "tip": "Petunjuk",
+      "unitWeek": "Minggu",
+      "unitMonth": "Bulan"
     },
     "action": {
       "cancel": "Batal",
@@ -450,7 +452,11 @@
       "disableAction": "Nonaktifkan perangkat",
       "enableAction": "Aktifkan perangkat",
       "addrMapSelect": "Pilih di Peta",
-      "inputDeviceNo": "Masukkan nomor perangkat"
+      "inputDeviceNo": "Masukkan nomor perangkat",
+      "deviceNoExists": "Nomor perangkat sudah ada",
+      "priceRequired": "Masukkan harga satuan",
+      "maxDurationRequired": "Masukkan durasi pengisian daya maks.",
+      "maxDurationInteger": "Durasi pengisian daya maks. harus berupa bilangan bulat"
     },
     "chargingOrder": {
       "title": "Pesanan Pengisian Daya",
@@ -480,7 +486,8 @@
       "refund": "Pengembalian Dana",
       "empty": "Tidak ada pesanan",
       "detailTitle": "Detail pesanan pengisian",
-      "refundListTitle": "Riwayat pengembalian pesanan pengisian"
+      "refundListTitle": "Riwayat pengembalian pesanan pengisian",
+      "refundExceed": "Jumlah pengembalian dana melebihi jumlah yang dapat dikembalikan"
     },
     "renewal": {
       "allowOrderRenew": "Izinkan Perpanjangan Pesanan",
@@ -654,7 +661,8 @@
       "batteryUnbound": "Baterai telah dilepas ikatannya",
       "editPushConfig": "Edit Konfigurasi Push",
       "unbindVehicleTitle": "Lepas Kendaraan",
-      "unbindBatteryTitle": "Lepas Baterai"
+      "unbindBatteryTitle": "Lepas Baterai",
+      "rangeInteger": "Masukkan bilangan bulat antara {min} dan {max}"
     },
     "home": {
       "view": "Ikhtisar",
@@ -787,6 +795,7 @@
       "firstTrigger": "Pemicu Pertama",
       "actionIgnore": "Abaikan",
       "timelineIgnoredReason": "Diabaikan · {reason}",
+      "timelineTriggered": "Pemicu ke-{n}",
       "duration": "Durasi",
       "goVehicleSub": "Buka detail kendaraan dan kontrol",
       "historyTitle": "Riwayat",
@@ -805,6 +814,7 @@
       "rechargeUserInfo": "Info Pengguna",
       "giftEdit": "Ubah Saldo Bonus",
       "giftAmountPlaceholder": "Masukkan jumlah bonus",
+      "amountRequired": "Masukkan jumlah",
       "rechargeConfigEditSuccess": "Konfigurasi isi ulang berhasil diperbarui",
       "balance": "Saldo",
       "giftFrozen": "Bonus Dibekukan",
@@ -850,6 +860,7 @@
       "refundOperator": "Akun Operasi",
       "refundModalReasonPlaceholder": "Masukkan alasan pengembalian dana...",
       "confirmPayDesc": "Konfirmasi penyelesaian pembayaran ini?",
+      "confirmPayTitle": "Konfirmasi pembayaran",
       "imagePreviewClose": "Ketuk di mana saja untuk menutup",
       "confirmRefundDesc": "Akhiri pesanan ini? Total pengembalian Rp{total}",
       "docDeleteDesc": "Yakin hapus dokumen ini? Tidak dapat dibatalkan setelah dihapus.",
@@ -870,6 +881,7 @@
       "customer": "Akun Pengguna",
       "refundSourcePlatform": "Platform Operasi",
       "endOrder": "Akhiri Pesanan",
+      "confirmEndOrderDesc": "Akhiri pesanan ini?",
       "payPartialRefund": "Pengembalian Sebagian",
       "refundSourceMerchant": "Aplikasi Merchant",
       "filterPaymentChannel": "Saluran Pembayaran",
@@ -890,7 +902,6 @@
       "opReturnVehicle": "Kembalikan kendaraan",
       "orderEnded": "Pesanan telah berakhir",
       "vehicleChanged": "Kendaraan diganti",
-      "payment2c2p": "2C2P",
       "payStatus": "Status Pembayaran",
       "listPackage": "Paket Kendaraan & Baterai",
       "listRecharge": "Pesanan Isi Ulang",
@@ -917,13 +928,22 @@
       "endReasonPlaceholder": "Masukkan alasan berakhir (maks. 255 karakter)",
       "cancelReasonPlaceholder": "Masukkan alasan pembatalan",
       "endOrderHint": "Setelah diakhiri, pesanan menjadi \"Selesai\"; pesanan yang sudah dibayar mencatat waktu pembayaran, pesanan belum dibayar tidak.",
+      "mainOrder": "Pesanan Utama",
       "refundConfirmTotal": "Konfirmasi pengembalian dana? Total pengembalian {amount}",
       "refundConfirmAmount": "Konfirmasi pengembalian dana? Jumlah pengembalian {amount}",
       "unitHour": "Jam",
       "unitDay": "Hari",
       "unitWeek": "Minggu",
       "unitMonth": "Bulan",
-      "endOrderConfirmDesc": "Akhiri pesanan ini? Status tidak dapat kembali ke sedang mengisi."
+      "endOrderConfirmDesc": "Akhiri pesanan ini? Status tidak dapat kembali ke sedang mengisi.",
+      "batteryTotal": "{n} baterai",
+      "splitRentMore": "Sewa awal {orig}, total seluruh kanal {sum}, bertambah {diff}",
+      "splitRentLess": "Sewa awal {orig}, total seluruh kanal {sum}, berkurang {diff}",
+      "splitDepMore": "Jaminan awal {orig}, total seluruh kanal {sum}, bertambah {diff}",
+      "splitDepLess": "Jaminan awal {orig}, total seluruh kanal {sum}, berkurang {diff}",
+      "cancelReasonMax": "Alasan pembatalan maksimal {n} karakter",
+      "endReasonRequired": "Masukkan alasan berakhir",
+      "endReasonMax": "Alasan berakhir maksimal {n} karakter"
     },
     "perm": {
       "permViewOrderDetail": "Lihat Detail Pesanan",
@@ -1004,7 +1024,8 @@
       "namePlaceholder": "Masukkan nama paket",
       "list": "Daftar Paket",
       "manage": "Manajemen Paket",
-      "imageSizeHint": "Ukuran: {w}px × {h}px"
+      "weekDaysRequired": "Masukkan jumlah hari sewa mingguan",
+      "monthDaysRequired": "Masukkan jumlah hari sewa bulanan"
     },
     "vehicle": {
       "list": "Daftar kendaraan",
@@ -1020,7 +1041,8 @@
       "confirm": "Konfirmasi Ubah Harga",
       "before": "Sebelum Perubahan",
       "saved": "Perubahan harga tersimpan",
-      "after": "Setelah Perubahan"
+      "after": "Setelah Perubahan",
+      "changeConfirmDesc": "Sewa awal {rent}, jaminan awal {deposit}; setelah perubahan, sewa {newRent}, jaminan {newDeposit}."
     },
     "position": {
       "list": "Daftar jabatan"
@@ -1095,48 +1117,6 @@
       "orderAdjustedTitle": "Jumlah Pesanan Disesuaikan",
       "orderRefundingTitle": "Pengembalian Dana Diproses",
       "orderRefundedTitle": "Pengembalian Dana Berhasil"
-    }
-  },
-  "demo": {
-    "model": {
-      "lediSAA": "乐迪SAA",
-      "lediSAABatt": "乐迪SAA+天能72V20Ah",
-      "tianneng72V20": "天能锂电72V20Ah",
-      "chaowei72V32": "超威黑金72V32Ah",
-      "tianneng72V20Short": "天能72V20Ah",
-      "yadeaGuanneng3S9Max": "雅迪冠能3 S9 MAX",
-      "chaowei72V32Space": "超威黑金 72V32Ah",
-      "tiannengLithium72V20Space": "天能锂电 72V20Ah",
-      "tiannengLithium48V20": "天能锂电 48V20Ah",
-      "xinghengLithium48V24": "星恒锂电 48V24Ah",
-      "yadeaEBikePro": "雅迪 E-Bike Pro",
-      "yadeaGuannengQ7": "雅迪冠能Q7",
-      "yadeaLePao": "雅迪乐跑版",
-      "yadeaXiaoGangPao": "雅迪小钢炮"
-    },
-    "customer": {
-      "zs": "张三",
-      "ls": "李四",
-      "ww": "王五",
-      "zl": "赵六",
-      "sq": "孙七",
-      "zb": "周八",
-      "wj": "吴九",
-      "zs10": "郑十"
-    },
-    "address": {
-      "shenzhenNanshan": "深圳市南山区",
-      "bjChaoyangGongti": "北京市朝阳区工体北路",
-      "bjChaoyangSanlitun": "北京市朝阳区三里屯",
-      "bjXichengXidan": "北京市西城区西单",
-      "bjChaoyangWangjing": "北京市朝阳区望京街道",
-      "bjChaoyangWangjingNear": "北京市朝阳区望京街道附近",
-      "shPudongZhangjiang": "上海市浦东新区张江路",
-      "cdWuhouTianfu": "成都市武侯区天府大道中段",
-      "gzTianheTiyuxi": "广州市天河区体育西路",
-      "hzXihuWensanlu": "杭州市西湖区文三路",
-      "njGulouZhongshanbei": "南京市鼓楼区中山北路",
-      "shenzhenNanshanScience": "深圳市南山区科技园"
     }
   }
 }

@@ -323,7 +323,9 @@
       "model": "Model",
       "other": "Lainnya",
       "settings": "Pengaturan",
-      "tip": "Petunjuk"
+      "tip": "Petunjuk",
+      "unitWeek": "Minggu",
+      "unitMonth": "Bulan"
     },
     "action": {
       "cancel": "Batal",
@@ -450,7 +452,6 @@
       "takeReturnInfo": "Info Pengambilan & Pengembalian",
       "days30": "30 Hari",
       "timeOrdered": "Dipesan",
-      "subtotalRp": "Subtotal Rp {amount}",
       "subtotal": "Subtotal",
       "confirmOrder": "Konfirmasi Pesanan",
       "unitHour": "Jam",
@@ -477,7 +478,8 @@
       "pay": "Bayar",
       "payPartialRefund": "Pengembalian Sebagian",
       "payFullRefund": "Pengembalian Penuh",
-      "payProcessing": "Pembayaran Diproses"
+      "payProcessing": "Pembayaran Diproses",
+      "rentDurationShort": "Total {n} {unit}"
     },
     "toast": {
       "deviceBound": "Perangkat berhasil diikat",
@@ -501,31 +503,46 @@
         "renewSuccessTitle": "Perpanjangan Otomatis Pesanan Berhasil",
         "renewFailedTitle": "Perpanjangan Otomatis Pesanan Gagal",
         "renewReminderBody": "Pesanan Anda akan diperpanjang otomatis pada 2026-09-10 12:00:00 dan dipotong Rp150.000. Jika tidak perlu perpanjangan, silakan buka detail pesanan untuk menonaktifkan perpanjangan otomatis.",
+        "renewReminderBodyTpl": "Pesanan Anda akan diperpanjang otomatis pada {dueDate} dan dipotong {amount}. Jika tidak perlu perpanjangan, silakan buka detail pesanan untuk menonaktifkan perpanjangan otomatis.",
         "renewSuccessBody": "Pesanan Anda berhasil diperpanjang otomatis, dipotong Rp150.000, masa berlaku pesanan diperpanjang hingga 2026-09-11 12:00:00.",
+        "renewSuccessBodyTpl": "Pesanan Anda berhasil diperpanjang otomatis, dipotong {amount}, masa berlaku pesanan diperpanjang hingga {newDueDate}.",
         "renewFailedBody": "Perpanjangan otomatis pesanan Anda gagal (percobaan 2/3), saldo tidak cukup. Mohon segera isi ulang, agar kegagalan perpanjangan yang berulang tidak menonaktifkan perpanjangan otomatis.",
+        "renewFailedBodyTpl": "Perpanjangan otomatis pesanan Anda gagal (percobaan {failCount}/{threshold}), saldo tidak cukup. Mohon segera isi ulang, agar kegagalan perpanjangan yang berulang tidak menonaktifkan perpanjangan otomatis.",
         "orderCreatedTitle": "Pesanan Dibuat",
         "orderCreatedBody": "Pesanan Anda YZ202512180001 telah dibuat. Harap selesaikan pembayaran dalam 30 menit, jika tidak pesanan akan dibatalkan otomatis.",
+        "orderCreatedBodyTpl": "Pesanan Anda {orderNo} telah dibuat. Harap selesaikan pembayaran dalam 30 menit, jika tidak pesanan akan dibatalkan otomatis.",
         "orderPaidTitle": "Pembayaran Berhasil",
         "orderPaidBody": "Pesanan Anda YZ202512180001 berhasil dibayar. Harap segera pindai kode QR kendaraan/baterai untuk menyelesaikan pengikatan; penagihan dimulai setelah terikat.",
+        "orderPaidBodyTpl": "Pesanan Anda {orderNo} berhasil dibayar. Harap segera pindai kode QR kendaraan/baterai untuk menyelesaikan pengikatan; penagihan dimulai setelah terikat.",
         "deviceBoundTitle": "Pesanan Dimulai",
         "deviceBoundBody": "Pesanan Anda YZ202512180001 telah terikat dengan kendaraan/baterai. Masa sewa 2026-09-01 10:30:00 hingga 2026-10-01 10:30:00.",
+        "deviceBoundBodyTpl": "Pesanan Anda {orderNo} telah terikat dengan kendaraan/baterai. Masa sewa {rentStart} hingga {rentEnd}.",
         "orderExpiringTitle": "Pesanan Segera Berakhir",
         "orderExpiringBody": "Pesanan Anda YZ202512180001 akan berakhir pada 2026-10-01 10:30:00. Harap kembalikan di toko tepat waktu, atau perpanjang melalui detail pesanan.",
+        "orderExpiringBodyTpl": "Pesanan Anda {orderNo} akan berakhir pada {rentEnd}. Harap kembalikan di toko tepat waktu, atau perpanjang melalui detail pesanan.",
         "orderOverdueTitle": "Pesanan Telah Berakhir",
         "orderOverdueBody": "Pesanan Anda YZ202512180001 telah berakhir. Harap segera kembalikan di toko agar tidak dikenakan biaya tambahan; jika masih memerlukan, Anda dapat memperpanjang melalui detail pesanan.",
+        "orderOverdueBodyTpl": "Pesanan Anda {orderNo} telah berakhir. Harap segera kembalikan di toko agar tidak dikenakan biaya tambahan; jika masih memerlukan, Anda dapat memperpanjang melalui detail pesanan.",
         "orderBreachTitle": "Kendaraan/Baterai Dikunci Jarak Jauh",
         "orderBreachBody": "Pesanan Anda YZ202512180001 telah terlambat 7 hari dan kendaraan serta baterai telah dikunci jarak jauh. Harap segera hubungi toko.",
+        "orderBreachBodyTpl": "Pesanan Anda {orderNo} telah terlambat {days} hari dan kendaraan serta baterai telah dikunci jarak jauh. Harap segera hubungi toko.",
         "orderCompletedTitle": "Pesanan Selesai",
         "orderCompletedBody": "Pesanan Anda YZ202512180001 telah selesai. Terima kasih atas kepercayaan Anda, kami menantikan layanan berikutnya.",
+        "orderCompletedBodyTpl": "Pesanan Anda {orderNo} telah selesai. Terima kasih atas kepercayaan Anda, kami menantikan layanan berikutnya.",
         "orderCancelledTitle": "Pesanan telah dibatalkan",
         "orderCancelledBody": "Pesanan Anda YZ202512180001 telah dibatalkan. Jumlah yang telah dibayar akan dikembalikan ke metode pembayaran asal.",
+        "orderCancelledBodyTpl": "Pesanan Anda {orderNo} telah dibatalkan. Jumlah yang telah dibayar akan dikembalikan ke metode pembayaran asal.",
         "orderAdjustedTitle": "Jumlah Pesanan Disesuaikan",
         "orderAdjustedBody": "Jumlah pesanan Anda YZ202512180001 telah disesuaikan dari Rp150.000 menjadi Rp200.000. Hubungi toko jika ada pertanyaan.",
+        "orderAdjustedBodyTpl": "Jumlah pesanan Anda {orderNo} telah disesuaikan dari {oldAmount} menjadi {newAmount}. Hubungi toko jika ada pertanyaan.",
         "orderRefundingTitle": "Pengembalian Dana Diproses",
         "orderRefundingBody": "Pesanan Anda YZ202512180001 sedang dalam proses pengembalian dana. Jumlah pengembalian Rp150.000, diperkirakan kembali ke metode pembayaran asal dalam 1–7 hari kerja.",
+        "orderRefundingBodyTpl": "Pesanan Anda {orderNo} sedang dalam proses pengembalian dana. Jumlah pengembalian {amount}, diperkirakan kembali ke metode pembayaran asal dalam 1–7 hari kerja.",
         "orderRefundedTitle": "Pengembalian Dana Berhasil",
-        "orderRefundedBody": "Pengembalian dana Rp150.000 untuk pesanan YZ202512180001 telah dikirim ke metode pembayaran asal. Harap periksa."
-      }
+        "orderRefundedBody": "Pengembalian dana Rp150.000 untuk pesanan YZ202512180001 telah dikirim ke metode pembayaran asal. Harap periksa.",
+        "orderRefundedBodyTpl": "Pengembalian dana {amount} untuk pesanan {orderNo} telah dikirim ke metode pembayaran asal. Harap periksa."
+      },
+      "noBattery": "Tidak ada baterai"
     },
     "search": {
       "placeholder": "Cari lokasi",
@@ -607,7 +624,9 @@
       "noBindableBattery": "Tidak ada baterai untuk diikat",
       "noBindableVehicle": "Tidak ada kendaraan untuk diikat",
       "lockClosed": "Terkunci",
-      "lockOpened": "Kunci Terbuka"
+      "lockOpened": "Kunci Terbuka",
+      "current": "Saat Ini",
+      "packageName": "Nama Paket"
     },
     "battery": {
       "unbind": "Lepas Baterai",
@@ -650,7 +669,8 @@
       "photoReplaced": "{source}: gambar saat ini diganti",
       "license": "SIM",
       "supplement": "Dokumen Tambahan",
-      "deleteConfirm": "Hapus info KYC ini? Tindakan ini tidak dapat dibatalkan."
+      "deleteConfirm": "Hapus info KYC ini? Tindakan ini tidak dapat dibatalkan.",
+      "idUnselected": "Info KYC belum dipilih"
     },
     "plan": {
       "selectPlan": "Pilih Paket",
@@ -672,7 +692,13 @@
       "selectStoreFirst": "Pilih toko terlebih dahulu",
       "selectStoreWallet": "Pilih Dompet Toko",
       "giftAmount": "Jumlah Bonus",
-      "rechargeDetail": "Detail Isi Ulang"
+      "rechargeDetail": "Detail Isi Ulang",
+      "balance": "Saldo",
+      "noTransaction": "Belum ada transaksi",
+      "noWallet": "Belum ada dompet toko yang diaktifkan",
+      "openWallet": "Aktifkan Dompet Toko",
+      "openWalletHint": "Aktifkan dompet toko untuk melihat saldo",
+      "splitHint": "Setiap dompet toko diselesaikan secara terpisah; isi ulang dan saldo hanya untuk toko yang dipilih"
     },
     "walletType": {
       "consume": "Konsumsi",
@@ -714,7 +740,6 @@
       "address": "Alamat",
       "distance": "Jarak",
       "unitPrice": "Harga Satuan",
-      "pricePerMinute": "/menit",
       "maxDuration": "Durasi Pengisian Daya Maks.",
       "orderTitle": "Pesan Pengisian Daya",
       "duration": "Durasi Pengisian Daya",
@@ -749,48 +774,9 @@
       "settingsGroupInner": "Di Dalam Aplikasi",
       "settingsOsRow": "Notifikasi Sistem Ponsel",
       "settingsPageRow": "Halaman Pusat Pesan"
-    }
-  },
-  "demo": {
-    "model": {
-      "lediSAA": "乐迪SAA",
-      "lediSAABatt": "乐迪SAA+天能72V20Ah",
-      "tianneng72V20": "天能锂电72V20Ah",
-      "chaowei72V32": "超威黑金72V32Ah",
-      "tianneng72V20Short": "天能72V20Ah",
-      "yadeaGuanneng3S9Max": "雅迪冠能3 S9 MAX",
-      "chaowei72V32Space": "超威黑金 72V32Ah",
-      "tiannengLithium72V20Space": "天能锂电 72V20Ah",
-      "tiannengLithium48V20": "天能锂电 48V20Ah",
-      "xinghengLithium48V24": "星恒锂电 48V24Ah",
-      "yadeaEBikePro": "雅迪 E-Bike Pro",
-      "yadeaGuannengQ7": "雅迪冠能Q7",
-      "yadeaLePao": "雅迪乐跑版",
-      "yadeaXiaoGangPao": "雅迪小钢炮"
     },
-    "customer": {
-      "zs": "张三",
-      "ls": "李四",
-      "ww": "王五",
-      "zl": "赵六",
-      "sq": "孙七",
-      "zb": "周八",
-      "wj": "吴九",
-      "zs10": "郑十"
-    },
-    "address": {
-      "shenzhenNanshan": "深圳市南山区",
-      "bjChaoyangGongti": "北京市朝阳区工体北路",
-      "bjChaoyangSanlitun": "北京市朝阳区三里屯",
-      "bjXichengXidan": "北京市西城区西单",
-      "bjChaoyangWangjing": "北京市朝阳区望京街道",
-      "bjChaoyangWangjingNear": "北京市朝阳区望京街道附近",
-      "shPudongZhangjiang": "上海市浦东新区张江路",
-      "cdWuhouTianfu": "成都市武侯区天府大道中段",
-      "gzTianheTiyuxi": "广州市天河区体育西路",
-      "hzXihuWensanlu": "杭州市西湖区文三路",
-      "njGulouZhongshanbei": "南京市鼓楼区中山北路",
-      "shenzhenNanshanScience": "深圳市南山区科技园"
+    "renew": {
+      "walletAutoDeduct": "Biaya perpanjangan dipotong otomatis dari dompet"
     }
   }
 }
