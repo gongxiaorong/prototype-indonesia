@@ -1,6 +1,5 @@
 {
   "common": {
-    "copied": "已复制",
     "copyFailed": "复制失败",
     "endTime": "结束时间",
     "phone": "手机号",
@@ -29,19 +28,16 @@
       "hongkong": "中国香港"
     },
     "login": {
-      "accountMode": "账号登录",
       "agreePrefix": "我已阅读并同意",
       "codeLabel": "验证码",
       "codePlaceholder": "请输入验证码",
       "codeSub": "验证码登录",
-      "emailMode": "邮箱登录",
       "emailPlaceholder": "请输入邮箱",
       "getCode": "获取验证码",
       "login": "登录",
       "needAgree": "请先阅读并同意隐私政策",
       "passwordLabel": "密码",
       "passwordSub": "密码登录",
-      "phoneMode": "手机号登录",
       "phonePlaceholder": "请输入手机号",
       "privacyPolicy": "用户隐私政策",
       "accountPlaceholder": "请输入账号",
@@ -85,7 +81,6 @@
       "refundDetail": "退款明细",
       "refundEmptyTitle": "暂无退款记录",
       "refundFailed": "退款失败",
-      "refundModeReturn": "归还",
       "refundRecords": "退款记录",
       "refundSourceUser": "用户端",
       "refundSuccess": "退款成功",
@@ -156,7 +151,6 @@
     },
     "tab": {
       "home": "首页",
-      "orders": "订单",
       "profile": "我的",
       "vehicles": "车辆",
       "battery": "电池"
@@ -183,7 +177,6 @@
       "orderEndedRefunding": "订单已结束，押金退款中",
       "walletInsufficient": "钱包余额不足，请充值",
       "topupNotOpen": "充值功能未开放",
-      "balanceInsufficientChoosePay": "余额不足，请选择其他支付方式或去充值",
       "dialing": "拨号中…",
       "accountDeactivated": "账号已注销",
       "accountStatusUpdated": "账号状态已更新",
@@ -251,15 +244,6 @@
       "orderRefund": "订单退款"
     },
     "dateTime": {
-      "weekday": {
-        "tue": "周二",
-        "wed": "周三",
-        "sat": "周六",
-        "thu": "周四",
-        "mon": "周一",
-        "fri": "周五",
-        "sun": "周日"
-      },
       "hour": "时",
       "minute": "分",
       "datePickerYear": "年",
@@ -278,7 +262,6 @@
       "status": "状态",
       "amount": "金额",
       "type": "类型",
-      "time": "时间",
       "currency": "货币",
       "currencyCNY": "人民币",
       "currencyHKD": "港币",
@@ -294,7 +277,6 @@
       "loggedIn": "已登录",
       "regulator": "监管机构",
       "durationMinutes": "{n}分钟",
-      "businessHours": "营业时间{time}",
       "validUntil": "有效期至{date}",
       "batteryModel": "电池型号",
       "frameNo": "车架编号",
@@ -307,13 +289,8 @@
       "sceneOfficeBuilding": "商业楼宇",
       "sceneOffice": "写字楼",
       "sceneParking": "停车场",
-      "yes": "是",
-      "no": "否",
-      "none": "暂无",
       "selected": "已选择",
       "unselected": "未选择",
-      "originalRent": "原租金",
-      "originalDeposit": "原押金",
       "rechargeOrder": "充值订单",
       "renewal": "续租",
       "balanceFlow": "余额流水",
@@ -322,8 +299,6 @@
       "planMonth": "月租",
       "model": "型号",
       "other": "其他",
-      "settings": "设置",
-      "tip": "提示",
       "unitWeek": "周",
       "unitMonth": "月"
     },
@@ -332,18 +307,14 @@
       "confirm": "确定",
       "delete": "删除",
       "save": "保存",
-      "search": "搜索",
       "unbind": "解绑",
-      "viewDetail": "详情",
       "add": "新增",
       "edit": "编辑",
       "more": "更多",
       "takePhoto": "拍照",
       "change": "更改",
-      "back": "返回",
       "album": "相册",
       "bind": "绑定",
-      "close": "关闭",
       "viewFeeDetail": "查看费用明细",
       "deactivateAccount": "注销账号",
       "viewDetails": "查看详情",
@@ -354,10 +325,6 @@
       "iKnow": "我知道了",
       "collapse": "收起",
       "sort": "排序",
-      "done": "完成",
-      "retry": "重试",
-      "continue": "继续",
-      "enable": "开启",
       "clear": "清空",
       "useCurrentLocation": "使用当前定位",
       "confirmLabel": "确认"
@@ -377,26 +344,11 @@
       "bannerDeal": "DE2 炫彩版 · 到手价Rp 3,499"
     },
     "createTime": "创建时间",
-    "systemSwitch": {
-      "title": "切换系统",
-      "rent": "租车系统",
-      "swap": "换电系统",
-      "charge": "充电系统",
-      "enter": "进入系统",
-      "selectToast": "请选择系统",
-      "action": "切换"
-    },
     "scan": {
       "hint": "请将二维码对准取景框"
     },
     "home": {
       "recentAlerts": "最近告警"
-    },
-    "cabinet": {
-      "disable": "禁用机柜"
-    },
-    "service": {
-      "swap": "换电"
     },
     "status": {
       "disabled": "禁用",
@@ -448,10 +400,8 @@
         "3": "领取车辆/电池后，需与商家协商处理，具体退费以双方协商结果为准",
         "4": "租金、押金将在订单取消后于 7 个工作日内按原支付路径退还"
       },
-      "rentDuration": "租赁时长",
       "takeReturnInfo": "取还信息",
       "days30": "30天",
-      "timeOrdered": "下单",
       "subtotal": "小计",
       "confirmOrder": "确认订单",
       "unitHour": "小时",
@@ -494,7 +444,6 @@
       "distNearestStore": "距最近门店{dist}",
       "noMatchRegion": "未找到匹配地区",
       "relocate": "重新定位",
-      "alertFilterProcessing": "处理中...",
       "buyNow": "立即选购",
       "rentalIntro": "租车介绍",
       "currentLocation": "当前定位",
@@ -502,44 +451,30 @@
         "renewReminderTitle": "订单自动续租",
         "renewSuccessTitle": "订单自动续租成功",
         "renewFailedTitle": "订单自动续租失败",
-        "renewReminderBody": "您的订单将于2026-09-10 12:00:00自动续租，并扣款Rp150.000。如不需要续租，请前往订单详情关闭自动续租。",
         "renewReminderBodyTpl": "您的订单将于{dueDate}自动续租，并扣款{amount}。如不需要续租，请前往订单详情关闭自动续租。",
-        "renewSuccessBody": "您的订单已自动续租成功，扣款Rp150.000，订单有效期已延长至2026-09-11 12:00:00。",
         "renewSuccessBodyTpl": "您的订单已自动续租成功，扣款{amount}，订单有效期已延长至{newDueDate}。",
-        "renewFailedBody": "您的订单自动续租失败（第2/3次），余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。",
         "renewFailedBodyTpl": "您的订单自动续租失败（第{failCount}/{threshold}次），余额不足。请尽快充值，以免续租失败次数过多导致自动续租功能关闭。",
         "orderCreatedTitle": "订单已创建",
-        "orderCreatedBody": "您的订单YZ202512180001已创建，请在30分钟内完成支付，超时未支付订单将自动取消。",
         "orderCreatedBodyTpl": "您的订单{orderNo}已创建，请在30分钟内完成支付，超时未支付订单将自动取消。",
         "orderPaidTitle": "订单支付成功",
-        "orderPaidBody": "您的订单YZ202512180001已支付成功。请尽快扫描车辆/电池二维码完成绑定，绑定成功后订单即开始计费。",
         "orderPaidBodyTpl": "您的订单{orderNo}已支付成功。请尽快扫描车辆/电池二维码完成绑定，绑定成功后订单即开始计费。",
         "deviceBoundTitle": "订单已开始",
-        "deviceBoundBody": "您的订单YZ202512180001已绑定车辆/电池，租期2026-09-01 10:30:00至2026-10-01 10:30:00。",
         "deviceBoundBodyTpl": "您的订单{orderNo}已绑定车辆/电池，租期{rentStart}至{rentEnd}。",
         "orderExpiringTitle": "订单即将到期",
-        "orderExpiringBody": "您的订单YZ202512180001将于2026-10-01 10:30:00到期，请按时前往门店归还，或前往订单详情办理续租。",
         "orderExpiringBodyTpl": "您的订单{orderNo}将于{rentEnd}到期，请按时前往门店归还，或前往订单详情办理续租。",
         "orderOverdueTitle": "订单已到期",
-        "orderOverdueBody": "您的订单YZ202512180001已到期，请及时前往门店归还，以免产生额外费用；如仍需使用，可前往订单详情办理续租。",
         "orderOverdueBodyTpl": "您的订单{orderNo}已到期，请及时前往门店归还，以免产生额外费用；如仍需使用，可前往订单详情办理续租。",
         "orderBreachTitle": "车辆/电池已远程锁定",
-        "orderBreachBody": "您的订单YZ202512180001已逾期7天，车辆与电池已被远程锁定。请立即联系门店处理。",
         "orderBreachBodyTpl": "您的订单{orderNo}已逾期{days}天，车辆与电池已被远程锁定。请立即联系门店处理。",
         "orderCompletedTitle": "订单已完成",
-        "orderCompletedBody": "您的订单YZ202512180001已完成，感谢您的使用，期待再次为您服务。",
         "orderCompletedBodyTpl": "您的订单{orderNo}已完成，感谢您的使用，期待再次为您服务。",
         "orderCancelledTitle": "订单已取消",
-        "orderCancelledBody": "您的订单YZ202512180001已取消。已支付金额将原路退回。",
         "orderCancelledBodyTpl": "您的订单{orderNo}已取消。已支付金额将原路退回。",
         "orderAdjustedTitle": "订单金额已调整",
-        "orderAdjustedBody": "您的订单YZ202512180001金额已由Rp150.000调整为Rp200.000，如有疑问请联系门店。",
         "orderAdjustedBodyTpl": "您的订单{orderNo}金额已由{oldAmount}调整为{newAmount}，如有疑问请联系门店。",
         "orderRefundingTitle": "退款处理中",
-        "orderRefundingBody": "您的订单YZ202512180001退款中，退款金额Rp150.000，预计1–7个工作日原路退回。",
         "orderRefundingBodyTpl": "您的订单{orderNo}退款中，退款金额{amount}，预计1–7个工作日原路退回。",
         "orderRefundedTitle": "退款成功",
-        "orderRefundedBody": "您的订单YZ202512180001退款Rp150.000已退回原支付渠道，请注意查收。",
         "orderRefundedBodyTpl": "您的订单{orderNo}退款{amount}已退回原支付渠道，请注意查收。"
       },
       "noBattery": "暂无电池"
@@ -547,7 +482,6 @@
     "search": {
       "placeholder": "搜索地点",
       "history": "搜索历史",
-      "nearby": "附近充电桩、门店",
       "relocate": "重新定位",
       "noLocation": "未获取到您的位置信息",
       "noPoi": "没有找到相关地点"
@@ -578,8 +512,7 @@
       "myBatteriesCount": "我的电池 ({n})",
       "myDevices": "我的设备",
       "emailAddressPlaceholder": "请输入邮箱地址",
-      "aboutUs": "关于我们",
-      "privacyPolicy": "《用户隐私政策》"
+      "aboutUs": "关于我们"
     },
     "common": {
       "notLoggedInTap": "您还未登录，点我快速登录",
@@ -587,7 +520,6 @@
       "materialDeleted": "资料已删除",
       "clickBlankClose": "点击空白处关闭",
       "goLogin": "去登录",
-      "copiedFormat": "{label}已复制",
       "moreOps": "更多操作"
     },
     "vehicles": {
@@ -684,7 +616,6 @@
     "wallet": {
       "topupCustom": "自定义金额",
       "title": "我的钱包",
-      "topupBonus": "赠送{amount}",
       "balancePay": "钱包",
       "topupSuccess": "充值成功",
       "selectAmount": "请选择充值金额",
@@ -724,7 +655,6 @@
       "resend": "重新获取"
     },
     "charge": {
-      "title": "充电",
       "scan": "扫码充电",
       "deviceDetail": "设备详情",
       "deviceNo": "设备编号",
@@ -750,7 +680,6 @@
       "basicInfo": "基础信息",
       "chargeDetail": "充电明细",
       "store": "所属门店",
-      "customer": "用户账号",
       "payStatus": "支付状态",
       "payTime": "支付时间",
       "selectDuration": "选择充电时长",

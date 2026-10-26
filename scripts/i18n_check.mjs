@@ -8,7 +8,8 @@
  *    rent-merchant/（common./merchant./demo.）、swap/
  *  - zh-CN.json 为唯一权威源，en/id/th/zh-HK 单向派生
  *  - 某目录无 zh-CN.json 或内容为空时跳过该目录
- *  - rent 拆分后两端共享 common.* + demo.*，该段必须两端镜像（见 SHARED）
+ *  - rent-user / rent-merchant 的 common.* 与 demo.* **各自独立维护**，不要求键集镜像；
+ *    两端只要中文相同（zh-CN 值逐字一致），其它语言译法必须一致（由 TERM 覆盖）
  *
  * 硬错误（计入退出码，exit 1）：
  *  - MISSING     某语言缺键
@@ -22,9 +23,7 @@
  *                反之 key 同名但中文不同的不算漂移。
  *                三对独立比对：rent-user↔swap、rent-merchant↔swap、rent-user↔rent-merchant。
  *                demo.* 与 TERM_ALLOW（品牌专名）已排除；口径见 AGENTS.md §5
- *  - SHARED      rent 拆分后的共享段镜像：rent-user 与 rent-merchant 的
- *                common.* + demo.* key 集合必须一致，且五语值逐字一致
- *                （该段由两端共用，任一端单独改动即迁移/维护错误）
+ *                （common.* 同此口径：两端键集可不同，同中文译法须一致）
  *
  * 人工复核项（不计入退出码）：
  *  - NUMBER      数字集合与源不一致。中文常以汉字表示（百公里 / 两位 / 一张），
@@ -196,50 +195,10 @@ for (const [a, b] of TERM_PAIRS) {
   failures += rows.length;
 }
 
-// ── 共享段镜像（rent 拆分专用硬错误 SHARED）──
-// rent-user 与 rent-merchant 由同一份 locales/rent 拆出，common.* + demo.* 两端共用：
-// key 集合必须一致，且五语（zh-CN/en/id/th/zh-HK）值逐字一致。差异说明拆分迁移有误，不得单端改文案。
-const SHARED_SEGS = ['common.', 'demo.'];
-const isSharedKey = (k) => SHARED_SEGS.some((s) => k.startsWith(s));
-
-if (!dirFull['rent-user'] || !dirFull['rent-merchant']) {
-  console.log('== 共享段镜像（rent-user ↔ rent-merchant）== 跳过（某一目录为空占位）');
-} else {
-  const A = dirFull['rent-user'];
-  const B = dirFull['rent-merchant'];
-  const ka = new Set(Object.keys(A[SRC]).filter(isSharedKey));
-  const kb = new Set(Object.keys(B[SRC]).filter(isSharedKey));
-  const union = [...new Set([...ka, ...kb])].sort();
-  const rows = []; /* { key, langs[] } */
-  let points = 0;
-  for (const k of union) {
-    const langs = [];
-    if (!ka.has(k) || !kb.has(k)) {
-      langs.push(ka.has(k) ? '仅 rent-user 有' : '仅 rent-merchant 有');
-      points++;
-    } else {
-      for (const lang of LANGS) {
-        const av = A[lang]?.[k];
-        const bv = B[lang]?.[k];
-        if (av !== bv) {
-          langs.push(lang);
-          points++;
-        }
-      }
-    }
-    if (langs.length) rows.push({ key: k, langs });
-  }
-  console.log('== 共享段镜像（rent-user ↔ rent-merchant）==');
-  console.log('  common.* + demo.* 共 ' + union.length + ' 键，SHARED=' + points +
-    (rows.length ? '（涉及 ' + rows.length + ' 个 key，计入退出码）' : '（计入退出码）'));
-  rows.slice(0, 8).forEach((r) => {
-    console.log('    · ' + r.key + '  [差: ' + r.langs.join(', ') + ']');
-  });
-  if (rows.length > 8) console.log('    …其余 ' + (rows.length - 8) + ' 个 key 的差异未展开');
-  failures += points;
-}
+// ── common.* / demo.* 不做键集镜像校验 ──
+// 两端 common.* 各自独立维护（任一端可单独增删键），同一句中文的译法一致性已由上面的 TERM 校验覆盖。
 
 console.log('\n结果：' + (failures
-  ? '失败 ' + failures + ' 项（MISSING/ORPHAN/PLACEHOLDER/SUFFIX/TERM/SHARED）'
+  ? '失败 ' + failures + ' 项（MISSING/ORPHAN/PLACEHOLDER/SUFFIX/TERM）'
   : '通过：无硬错误') + '；NUMBER / STATUS 为人工复核项，不影响退出码');
 process.exit(failures ? 1 : 0);

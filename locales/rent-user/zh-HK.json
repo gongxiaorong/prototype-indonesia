@@ -1,6 +1,5 @@
 {
   "common": {
-    "copied": "已複製",
     "copyFailed": "複製失敗",
     "endTime": "結束時間",
     "phone": "手機號",
@@ -29,19 +28,16 @@
       "hongkong": "中國香港"
     },
     "login": {
-      "accountMode": "帳號登入",
       "agreePrefix": "我已閱讀並同意",
       "codeLabel": "驗證碼",
       "codePlaceholder": "請輸入驗證碼",
       "codeSub": "驗證碼登入",
-      "emailMode": "電郵登入",
       "emailPlaceholder": "請輸入電郵",
       "getCode": "獲取驗證碼",
       "login": "登入",
       "needAgree": "請先閱讀並同意隱私政策",
       "passwordLabel": "密碼",
       "passwordSub": "密碼登入",
-      "phoneMode": "手機號登入",
       "phonePlaceholder": "請輸入手機號",
       "privacyPolicy": "隱私政策",
       "accountPlaceholder": "請輸入帳號",
@@ -85,7 +81,6 @@
       "refundDetail": "退款明細",
       "refundEmptyTitle": "暫無退款記錄",
       "refundFailed": "退款失敗",
-      "refundModeReturn": "歸還",
       "refundRecords": "退款記錄",
       "refundSourceUser": "用戶端",
       "refundSuccess": "退款成功",
@@ -156,7 +151,6 @@
     },
     "tab": {
       "home": "首頁",
-      "orders": "訂單",
       "profile": "我的",
       "vehicles": "車輛",
       "battery": "電池"
@@ -183,7 +177,6 @@
       "orderEndedRefunding": "訂單已結束，按金退款中",
       "walletInsufficient": "錢包餘額不足，請增值",
       "topupNotOpen": "增值功能未開放",
-      "balanceInsufficientChoosePay": "餘額不足，請選擇其他付款方式或去增值",
       "dialing": "撥號中…",
       "accountDeactivated": "帳號已註銷",
       "accountStatusUpdated": "帳號狀態已更新",
@@ -251,15 +244,6 @@
       "orderRefund": "訂單退款"
     },
     "dateTime": {
-      "weekday": {
-        "tue": "週二",
-        "wed": "週三",
-        "sat": "週六",
-        "thu": "週四",
-        "mon": "週一",
-        "fri": "週五",
-        "sun": "週日"
-      },
       "hour": "時",
       "minute": "分",
       "datePickerYear": "年",
@@ -278,7 +262,6 @@
       "status": "狀態",
       "amount": "金額",
       "type": "類型",
-      "time": "時間",
       "currency": "貨幣",
       "currencyCNY": "人民幣",
       "currencyHKD": "港幣",
@@ -294,7 +277,6 @@
       "loggedIn": "已登入",
       "regulator": "監管機構",
       "durationMinutes": "{n}分鐘",
-      "businessHours": "營業時間{time}",
       "validUntil": "有效期至{date}",
       "batteryModel": "電池型號",
       "frameNo": "車架編號",
@@ -307,13 +289,8 @@
       "sceneOfficeBuilding": "商業樓宇",
       "sceneOffice": "寫字樓",
       "sceneParking": "停車場",
-      "yes": "是",
-      "no": "否",
-      "none": "暫無",
       "selected": "已選擇",
       "unselected": "未選擇",
-      "originalRent": "原租金",
-      "originalDeposit": "原按金",
       "rechargeOrder": "增值訂單",
       "renewal": "續租",
       "balanceFlow": "餘額流水",
@@ -322,8 +299,6 @@
       "planMonth": "月租",
       "model": "型號",
       "other": "其他",
-      "settings": "設定",
-      "tip": "提示",
       "unitWeek": "週",
       "unitMonth": "月"
     },
@@ -332,18 +307,14 @@
       "confirm": "確定",
       "delete": "刪除",
       "save": "儲存",
-      "search": "搜尋",
       "unbind": "解綁",
-      "viewDetail": "詳情",
       "add": "新增",
       "edit": "編輯",
       "more": "更多",
       "takePhoto": "拍照",
       "change": "更改",
-      "back": "返回",
       "album": "相冊",
       "bind": "綁定",
-      "close": "關閉",
       "viewFeeDetail": "查看費用明細",
       "deactivateAccount": "註銷帳號",
       "viewDetails": "查看詳情",
@@ -354,10 +325,6 @@
       "iKnow": "我知道了",
       "collapse": "收起",
       "sort": "排序",
-      "done": "完成",
-      "retry": "重試",
-      "continue": "繼續",
-      "enable": "開啟",
       "clear": "清空",
       "useCurrentLocation": "使用當前定位",
       "confirmLabel": "確認"
@@ -377,26 +344,11 @@
       "bannerDeal": "DE2 炫彩版 · 到手價Rp 3,499"
     },
     "createTime": "建立時間",
-    "systemSwitch": {
-      "title": "切換系統",
-      "rent": "租車系統",
-      "swap": "換電系統",
-      "charge": "充電系統",
-      "enter": "進入系統",
-      "selectToast": "請選擇系統",
-      "action": "切換"
-    },
     "scan": {
       "hint": "請將二維碼對準取景框"
     },
     "home": {
       "recentAlerts": "最近告警"
-    },
-    "cabinet": {
-      "disable": "停用機櫃"
-    },
-    "service": {
-      "swap": "換電"
     },
     "status": {
       "disabled": "停用",
@@ -448,10 +400,8 @@
         "3": "領取車輛/電池後，需與商戶協商處理，具體退費以雙方協商結果為準",
         "4": "租金、按金將在訂單取消後於 7 個工作日內按原付款路徑退還"
       },
-      "rentDuration": "租賃時長",
       "takeReturnInfo": "取還資訊",
       "days30": "30天",
-      "timeOrdered": "下單",
       "subtotal": "小計",
       "confirmOrder": "確認訂單",
       "unitHour": "小時",
@@ -494,7 +444,6 @@
       "distNearestStore": "距最近門店{dist}",
       "noMatchRegion": "未找到匹配地區",
       "relocate": "重新定位",
-      "alertFilterProcessing": "處理中...",
       "buyNow": "立即選購",
       "rentalIntro": "租車介紹",
       "currentLocation": "當前定位",
@@ -502,44 +451,30 @@
         "renewReminderTitle": "訂單自動續租",
         "renewSuccessTitle": "訂單自動續租成功",
         "renewFailedTitle": "訂單自動續租失敗",
-        "renewReminderBody": "您的訂單將於2026-09-10 12:00:00自動續租，並扣款Rp150.000。如不需要續租，請前往訂單詳情關閉自動續租。",
         "renewReminderBodyTpl": "您的訂單將於{dueDate}自動續租，並扣款{amount}。如不需要續租，請前往訂單詳情關閉自動續租。",
-        "renewSuccessBody": "您的訂單已自動續租成功，扣款Rp150.000，訂單有效期已延長至2026-09-11 12:00:00。",
         "renewSuccessBodyTpl": "您的訂單已自動續租成功，扣款{amount}，訂單有效期已延長至{newDueDate}。",
-        "renewFailedBody": "您的訂單自動續租失敗（第2/3次），餘額不足。請盡快增值，以免續租失敗次數過多導致自動續租功能關閉。",
         "renewFailedBodyTpl": "您的訂單自動續租失敗（第{failCount}/{threshold}次），餘額不足。請盡快增值，以免續租失敗次數過多導致自動續租功能關閉。",
         "orderCreatedTitle": "訂單已建立",
-        "orderCreatedBody": "您的訂單YZ202512180001已建立，請在30分鐘內完成支付，逾時未支付訂單將自動取消。",
         "orderCreatedBodyTpl": "您的訂單{orderNo}已建立，請在30分鐘內完成支付，逾時未支付訂單將自動取消。",
         "orderPaidTitle": "訂單支付成功",
-        "orderPaidBody": "您的訂單YZ202512180001已支付成功。請盡快掃描車輛/電池二維碼完成綁定，綁定成功後訂單即開始計費。",
         "orderPaidBodyTpl": "您的訂單{orderNo}已支付成功。請盡快掃描車輛/電池二維碼完成綁定，綁定成功後訂單即開始計費。",
         "deviceBoundTitle": "訂單已開始",
-        "deviceBoundBody": "您的訂單YZ202512180001已綁定車輛/電池，租期2026-09-01 10:30:00至2026-10-01 10:30:00。",
         "deviceBoundBodyTpl": "您的訂單{orderNo}已綁定車輛/電池，租期{rentStart}至{rentEnd}。",
         "orderExpiringTitle": "訂單即將到期",
-        "orderExpiringBody": "您的訂單YZ202512180001將於2026-10-01 10:30:00到期，請按時前往門店歸還，或前往訂單詳情辦理續租。",
         "orderExpiringBodyTpl": "您的訂單{orderNo}將於{rentEnd}到期，請按時前往門店歸還，或前往訂單詳情辦理續租。",
         "orderOverdueTitle": "訂單已到期",
-        "orderOverdueBody": "您的訂單YZ202512180001已到期，請及時前往門店歸還，以免產生額外費用；如仍需使用，可前往訂單詳情辦理續租。",
         "orderOverdueBodyTpl": "您的訂單{orderNo}已到期，請及時前往門店歸還，以免產生額外費用；如仍需使用，可前往訂單詳情辦理續租。",
         "orderBreachTitle": "車輛/電池已遠程鎖定",
-        "orderBreachBody": "您的訂單YZ202512180001已逾期7天，車輛與電池已被遠程鎖定。請立即聯繫門店處理。",
         "orderBreachBodyTpl": "您的訂單{orderNo}已逾期{days}天，車輛與電池已被遠程鎖定。請立即聯繫門店處理。",
         "orderCompletedTitle": "訂單已完成",
-        "orderCompletedBody": "您的訂單YZ202512180001已完成，感謝您的使用，期待再次為您服務。",
         "orderCompletedBodyTpl": "您的訂單{orderNo}已完成，感謝您的使用，期待再次為您服務。",
         "orderCancelledTitle": "訂單已取消",
-        "orderCancelledBody": "您的訂單YZ202512180001已取消。已支付金額將原路退回。",
         "orderCancelledBodyTpl": "您的訂單{orderNo}已取消。已支付金額將原路退回。",
         "orderAdjustedTitle": "訂單金額已調整",
-        "orderAdjustedBody": "您的訂單YZ202512180001金額已由Rp150.000調整為Rp200.000，如有疑問請聯繫門店。",
         "orderAdjustedBodyTpl": "您的訂單{orderNo}金額已由{oldAmount}調整為{newAmount}，如有疑問請聯繫門店。",
         "orderRefundingTitle": "退款處理中",
-        "orderRefundingBody": "您的訂單YZ202512180001退款中，退款金額Rp150.000，預計1–7個工作日原路退回。",
         "orderRefundingBodyTpl": "您的訂單{orderNo}退款中，退款金額{amount}，預計1–7個工作日原路退回。",
         "orderRefundedTitle": "退款成功",
-        "orderRefundedBody": "您的訂單YZ202512180001退款Rp150.000已退回原支付渠道，請注意查收。",
         "orderRefundedBodyTpl": "您的訂單{orderNo}退款{amount}已退回原支付渠道，請注意查收。"
       },
       "noBattery": "暫無電池"
@@ -547,7 +482,6 @@
     "search": {
       "placeholder": "搜尋地點",
       "history": "搜尋歷史",
-      "nearby": "附近充電樁、門店",
       "relocate": "重新定位",
       "noLocation": "未獲取您的位置資訊",
       "noPoi": "沒有找到相關地點"
@@ -578,8 +512,7 @@
       "myBatteriesCount": "我的電池 ({n})",
       "myDevices": "我的裝置",
       "emailAddressPlaceholder": "請輸入郵箱地址",
-      "aboutUs": "關於我們",
-      "privacyPolicy": "《用戶隱私政策》"
+      "aboutUs": "關於我們"
     },
     "common": {
       "notLoggedInTap": "您還未登入，點我快速登入",
@@ -587,7 +520,6 @@
       "materialDeleted": "資料已刪除",
       "clickBlankClose": "點擊空白處關閉",
       "goLogin": "前往登入",
-      "copiedFormat": "{label}已複製",
       "moreOps": "更多操作"
     },
     "vehicles": {
@@ -684,7 +616,6 @@
     "wallet": {
       "topupCustom": "自訂金額",
       "title": "我的錢包",
-      "topupBonus": "贈送{amount}",
       "balancePay": "錢包",
       "topupSuccess": "增值成功",
       "selectAmount": "請選擇增值金額",
@@ -724,7 +655,6 @@
       "resend": "重新獲取"
     },
     "charge": {
-      "title": "充電",
       "scan": "掃碼充電",
       "deviceDetail": "設備詳情",
       "deviceNo": "設備編號",
@@ -750,7 +680,6 @@
       "basicInfo": "基礎資訊",
       "chargeDetail": "充電明細",
       "store": "所屬門店",
-      "customer": "用戶帳號",
       "payStatus": "付款狀態",
       "payTime": "付款時間",
       "selectDuration": "選擇充電時長",

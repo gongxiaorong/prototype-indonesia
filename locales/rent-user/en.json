@@ -1,6 +1,5 @@
 {
   "common": {
-    "copied": "Copied",
     "copyFailed": "Copy failed",
     "endTime": "End Time",
     "phone": "Phone Number",
@@ -29,19 +28,16 @@
       "hongkong": "Hong Kong"
     },
     "login": {
-      "accountMode": "Account",
       "agreePrefix": "I have read and agree to the",
       "codeLabel": "Verification Code",
       "codePlaceholder": "Please enter verification code",
       "codeSub": "Verification Code",
-      "emailMode": "Email",
       "emailPlaceholder": "Please enter email",
       "getCode": "Get Code",
       "login": "Sign In",
       "needAgree": "Please read and agree to the Privacy Policy first",
       "passwordLabel": "Password",
       "passwordSub": "Password",
-      "phoneMode": "Phone",
       "phonePlaceholder": "Please enter phone number",
       "privacyPolicy": "Privacy Policy",
       "accountPlaceholder": "Please enter account",
@@ -85,7 +81,6 @@
       "refundDetail": "Refund Details",
       "refundEmptyTitle": "No refund records",
       "refundFailed": "Refund Failed",
-      "refundModeReturn": "Return",
       "refundRecords": "Refund Records",
       "refundSourceUser": "User App",
       "refundSuccess": "Refund Successful",
@@ -156,7 +151,6 @@
     },
     "tab": {
       "home": "Home",
-      "orders": "Orders",
       "profile": "Profile",
       "vehicles": "Vehicles",
       "battery": "Battery"
@@ -183,7 +177,6 @@
       "orderEndedRefunding": "Order ended, deposit refund in progress",
       "walletInsufficient": "Insufficient wallet balance, please top up",
       "topupNotOpen": "Top-up is not available",
-      "balanceInsufficientChoosePay": "Insufficient balance, choose another payment method or top up",
       "dialing": "Dialing…",
       "accountDeactivated": "Account deactivated",
       "accountStatusUpdated": "Account status updated",
@@ -251,15 +244,6 @@
       "orderRefund": "Order Refund"
     },
     "dateTime": {
-      "weekday": {
-        "tue": "Tue",
-        "wed": "Wed",
-        "sat": "Sat",
-        "thu": "Thu",
-        "mon": "Mon",
-        "fri": "Fri",
-        "sun": "Sun"
-      },
       "hour": "Hour",
       "minute": "Minute",
       "datePickerYear": "Year",
@@ -278,7 +262,6 @@
       "status": "Status",
       "amount": "Amount",
       "type": "Type",
-      "time": "Time",
       "currency": "Currency",
       "currencyCNY": "CNY",
       "currencyHKD": "HKD",
@@ -294,7 +277,6 @@
       "loggedIn": "Logged In",
       "regulator": "Regulator",
       "durationMinutes": "{n} min",
-      "businessHours": "Business hours {time}",
       "validUntil": "Valid until {date}",
       "batteryModel": "Battery Model",
       "frameNo": "Frame No.",
@@ -307,13 +289,8 @@
       "sceneOfficeBuilding": "Office Building",
       "sceneOffice": "Office",
       "sceneParking": "Parking Lot",
-      "yes": "Yes",
-      "no": "No",
-      "none": "None",
       "selected": "Selected",
       "unselected": "Not Selected",
-      "originalRent": "Original Rent",
-      "originalDeposit": "Original Deposit",
       "rechargeOrder": "Top-up Order",
       "renewal": "Renewal",
       "balanceFlow": "Balance Statement",
@@ -322,8 +299,6 @@
       "planMonth": "Monthly",
       "model": "Model",
       "other": "Other",
-      "settings": "Settings",
-      "tip": "Tip",
       "unitWeek": "Weeks",
       "unitMonth": "Month"
     },
@@ -332,18 +307,14 @@
       "confirm": "Confirm",
       "delete": "Delete",
       "save": "Save",
-      "search": "Search",
       "unbind": "Unbind",
-      "viewDetail": "Details",
       "add": "Add",
       "edit": "Edit",
       "more": "More",
       "takePhoto": "Take Photo",
       "change": "Change",
-      "back": "Back",
       "album": "Album",
       "bind": "Bind",
-      "close": "Close",
       "viewFeeDetail": "View Fee Details",
       "deactivateAccount": "Deactivate Account",
       "viewDetails": "View Details",
@@ -354,10 +325,6 @@
       "iKnow": "Got it",
       "collapse": "Collapse",
       "sort": "Sort",
-      "done": "Done",
-      "retry": "Retry",
-      "continue": "Continue",
-      "enable": "On",
       "clear": "Clear",
       "useCurrentLocation": "Use Current Location",
       "confirmLabel": "Confirm"
@@ -377,26 +344,11 @@
       "bannerDeal": "DE2 Color Edition · Only Rp 3,499"
     },
     "createTime": "Created Time",
-    "systemSwitch": {
-      "title": "Switch System",
-      "rent": "Rental System",
-      "swap": "Battery-Swap System",
-      "charge": "Charging System",
-      "enter": "Enter",
-      "selectToast": "Please select a system",
-      "action": "Switch"
-    },
     "scan": {
       "hint": "Align the QR code with the frame"
     },
     "home": {
       "recentAlerts": "Recent Alerts"
-    },
-    "cabinet": {
-      "disable": "Disable Cabinet"
-    },
-    "service": {
-      "swap": "Swap"
     },
     "status": {
       "disabled": "Disabled",
@@ -448,10 +400,8 @@
         "3": "After picking up the vehicle/battery, cancellation requires negotiation with the merchant; the actual refund is subject to the agreement between both parties.",
         "4": "Rent and deposit will be refunded via the original payment method within 7 business days after the order is canceled."
       },
-      "rentDuration": "Rental Duration",
       "takeReturnInfo": "Pickup & Return Info",
       "days30": "30 Days",
-      "timeOrdered": "Ordered",
       "subtotal": "Subtotal",
       "confirmOrder": "Confirm Order",
       "unitHour": "Hours",
@@ -494,7 +444,6 @@
       "distNearestStore": "{dist} to the nearest store",
       "noMatchRegion": "No matching region found",
       "relocate": "Relocate",
-      "alertFilterProcessing": "Processing...",
       "buyNow": "Shop Now",
       "rentalIntro": "Rental Intro",
       "currentLocation": "Current Location",
@@ -502,44 +451,30 @@
         "renewReminderTitle": "Order Auto Renewal",
         "renewSuccessTitle": "Order Auto Renewed Successfully",
         "renewFailedTitle": "Order Auto Renewal Failed",
-        "renewReminderBody": "Your order will auto renew on 2026-09-10 12:00:00 and be charged Rp150.000. If renewal is not needed, please go to the order details to turn off auto renewal.",
         "renewReminderBodyTpl": "Your order will auto renew on {dueDate} and be charged {amount}. If renewal is not needed, please go to the order details to turn off auto renewal.",
-        "renewSuccessBody": "Your order has been auto renewed successfully and Rp150.000 was charged. The order is now valid until 2026-09-11 12:00:00.",
         "renewSuccessBodyTpl": "Your order has been auto renewed successfully and {amount} was charged. The order is now valid until {newDueDate}.",
-        "renewFailedBody": "Your order auto renewal failed (attempt 2/3). Insufficient balance. Please top up as soon as possible, otherwise too many failed renewals will turn off auto renewal.",
         "renewFailedBodyTpl": "Your order auto renewal failed (attempt {failCount}/{threshold}). Insufficient balance. Please top up as soon as possible, otherwise too many failed renewals will turn off auto renewal.",
         "orderCreatedTitle": "Order Created",
-        "orderCreatedBody": "Your order YZ202512180001 has been created. Please complete payment within 30 minutes, otherwise the order will be cancelled automatically.",
         "orderCreatedBodyTpl": "Your order {orderNo} has been created. Please complete payment within 30 minutes, otherwise the order will be cancelled automatically.",
         "orderPaidTitle": "Payment Successful",
-        "orderPaidBody": "Your order YZ202512180001 has been paid successfully. Please scan the vehicle/battery QR code to complete binding as soon as possible; billing starts once bound.",
         "orderPaidBodyTpl": "Your order {orderNo} has been paid successfully. Please scan the vehicle/battery QR code to complete binding as soon as possible; billing starts once bound.",
         "deviceBoundTitle": "Order Started",
-        "deviceBoundBody": "Your order YZ202512180001 has been bound with the vehicle/battery. Rental period: 2026-09-01 10:30:00 to 2026-10-01 10:30:00.",
         "deviceBoundBodyTpl": "Your order {orderNo} has been bound with the vehicle/battery. Rental period: {rentStart} to {rentEnd}.",
         "orderExpiringTitle": "Order Due Soon",
-        "orderExpiringBody": "Your order YZ202512180001 will expire on 2026-10-01 10:30:00. Please return it at the store on time, or renew it from the order details.",
         "orderExpiringBodyTpl": "Your order {orderNo} will expire on {rentEnd}. Please return it at the store on time, or renew it from the order details.",
         "orderOverdueTitle": "Order Has Expired",
-        "orderOverdueBody": "Your order YZ202512180001 has expired. Please return it at the store as soon as possible to avoid extra charges; if you still need it, you can renew it from the order details.",
         "orderOverdueBodyTpl": "Your order {orderNo} has expired. Please return it at the store as soon as possible to avoid extra charges; if you still need it, you can renew it from the order details.",
         "orderBreachTitle": "Vehicle/Battery Remotely Locked",
-        "orderBreachBody": "Your order YZ202512180001 is 7 days overdue and the vehicle and battery have been remotely locked. Please contact the store immediately.",
         "orderBreachBodyTpl": "Your order {orderNo} is {days} days overdue and the vehicle and battery have been remotely locked. Please contact the store immediately.",
         "orderCompletedTitle": "Order Completed",
-        "orderCompletedBody": "Your order YZ202512180001 has been completed. Thank you for your business and we look forward to serving you again.",
         "orderCompletedBodyTpl": "Your order {orderNo} has been completed. Thank you for your business and we look forward to serving you again.",
         "orderCancelledTitle": "Order cancelled",
-        "orderCancelledBody": "Your order YZ202512180001 has been cancelled. The paid amount will be refunded to the original payment method.",
         "orderCancelledBodyTpl": "Your order {orderNo} has been cancelled. The paid amount will be refunded to the original payment method.",
         "orderAdjustedTitle": "Order Amount Adjusted",
-        "orderAdjustedBody": "The amount of your order YZ202512180001 has been adjusted from Rp150.000 to Rp200.000. Please contact the store if you have any questions.",
         "orderAdjustedBodyTpl": "The amount of your order {orderNo} has been adjusted from {oldAmount} to {newAmount}. Please contact the store if you have any questions.",
         "orderRefundingTitle": "Refund in Progress",
-        "orderRefundingBody": "Your order YZ202512180001 is being refunded. Refund amount: Rp150.000, expected to be returned to the original payment method within 1–7 business days.",
         "orderRefundingBodyTpl": "Your order {orderNo} is being refunded. Refund amount: {amount}, expected to be returned to the original payment method within 1–7 business days.",
         "orderRefundedTitle": "Refund Successful",
-        "orderRefundedBody": "Rp150.000 for order YZ202512180001 has been refunded to the original payment method. Please check your account.",
         "orderRefundedBodyTpl": "{amount} for order {orderNo} has been refunded to the original payment method. Please check your account."
       },
       "noBattery": "No Batteries"
@@ -547,7 +482,6 @@
     "search": {
       "placeholder": "Search location",
       "history": "Search History",
-      "nearby": "Nearby Chargers & Stores",
       "relocate": "Relocate",
       "noLocation": "Location unavailable",
       "noPoi": "No matching places found"
@@ -578,8 +512,7 @@
       "myBatteriesCount": "My Batteries ({n})",
       "myDevices": "My devices",
       "emailAddressPlaceholder": "Please enter your email address",
-      "aboutUs": "About Us",
-      "privacyPolicy": "User Privacy Policy"
+      "aboutUs": "About Us"
     },
     "common": {
       "notLoggedInTap": "You are not logged in. Tap to log in",
@@ -587,7 +520,6 @@
       "materialDeleted": "Material deleted",
       "clickBlankClose": "Tap blank area to close",
       "goLogin": "Log in",
-      "copiedFormat": "{label} copied",
       "moreOps": "More Actions"
     },
     "vehicles": {
@@ -684,7 +616,6 @@
     "wallet": {
       "topupCustom": "Custom Amount",
       "title": "My Wallet",
-      "topupBonus": "Bonus {amount}",
       "balancePay": "Wallet",
       "topupSuccess": "Top-up successful",
       "selectAmount": "Please select an amount",
@@ -724,7 +655,6 @@
       "resend": "Resend"
     },
     "charge": {
-      "title": "Charging",
       "scan": "Scan to Charge",
       "deviceDetail": "Device Details",
       "deviceNo": "Device Number",
@@ -750,7 +680,6 @@
       "basicInfo": "Basic Information",
       "chargeDetail": "Charging Details",
       "store": "Store",
-      "customer": "User Account",
       "payStatus": "Payment Status",
       "payTime": "Payment Time",
       "selectDuration": "Selected Duration",

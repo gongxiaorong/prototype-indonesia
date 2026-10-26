@@ -1,6 +1,5 @@
 {
   "common": {
-    "copied": "Tersalin",
     "copyFailed": "Gagal menyalin",
     "endTime": "Waktu Selesai",
     "phone": "Nomor Ponsel",
@@ -29,19 +28,16 @@
       "hongkong": "Hong Kong"
     },
     "login": {
-      "accountMode": "Akun",
       "agreePrefix": "Saya telah membaca dan menyetujui",
       "codeLabel": "Kode Verifikasi",
       "codePlaceholder": "Masukkan kode verifikasi",
       "codeSub": "Kode Verifikasi",
-      "emailMode": "Email",
       "emailPlaceholder": "Masukkan email",
       "getCode": "Dapatkan Kode Verifikasi",
       "login": "Masuk",
       "needAgree": "Silakan baca dan setujui Kebijakan Privasi terlebih dahulu",
       "passwordLabel": "Kata Sandi",
       "passwordSub": "Kata Sandi",
-      "phoneMode": "Nomor Ponsel",
       "phonePlaceholder": "Masukkan nomor ponsel",
       "privacyPolicy": "Kebijakan Privasi",
       "accountPlaceholder": "Masukkan akun",
@@ -85,7 +81,6 @@
       "refundDetail": "Detail Pengembalian Dana",
       "refundEmptyTitle": "Belum ada riwayat pengembalian dana",
       "refundFailed": "Pengembalian Dana Gagal",
-      "refundModeReturn": "Pengembalian",
       "refundRecords": "Riwayat Pengembalian Dana",
       "refundSourceUser": "Aplikasi Pengguna",
       "refundSuccess": "Pengembalian Dana Berhasil",
@@ -156,7 +151,6 @@
     },
     "tab": {
       "home": "Beranda",
-      "orders": "Pesanan",
       "profile": "Profil",
       "vehicles": "Kendaraan",
       "battery": "Baterai"
@@ -183,7 +177,6 @@
       "orderEndedRefunding": "Pesanan berakhir, pengembalian deposit sedang diproses",
       "walletInsufficient": "Saldo dompet tidak cukup, silakan isi ulang",
       "topupNotOpen": "Fitur isi ulang belum tersedia",
-      "balanceInsufficientChoosePay": "Saldo tidak cukup, pilih metode pembayaran lain atau isi ulang",
       "dialing": "Memanggil…",
       "accountDeactivated": "Akun dinonaktifkan",
       "accountStatusUpdated": "Status akun diperbarui",
@@ -251,15 +244,6 @@
       "orderRefund": "Pengembalian Pesanan"
     },
     "dateTime": {
-      "weekday": {
-        "tue": "Sel",
-        "wed": "Rab",
-        "sat": "Sab",
-        "thu": "Kam",
-        "mon": "Sen",
-        "fri": "Jum",
-        "sun": "Minggu"
-      },
       "hour": "Jam",
       "minute": "Menit",
       "datePickerYear": "Tahun",
@@ -278,7 +262,6 @@
       "status": "Status",
       "amount": "Jumlah",
       "type": "Tipe",
-      "time": "Waktu",
       "currency": "Mata Uang",
       "currencyCNY": "CNY",
       "currencyHKD": "HKD",
@@ -294,7 +277,6 @@
       "loggedIn": "Sudah Masuk",
       "regulator": "Regulator",
       "durationMinutes": "{n} menit",
-      "businessHours": "Jam operasional {time}",
       "validUntil": "Berlaku hingga {date}",
       "batteryModel": "Tipe Baterai",
       "frameNo": "No. Rangka",
@@ -307,13 +289,8 @@
       "sceneOfficeBuilding": "Gedung Perkantoran",
       "sceneOffice": "Kantor",
       "sceneParking": "Tempat Parkir",
-      "yes": "Ya",
-      "no": "Tidak",
-      "none": "Tidak ada",
       "selected": "Dipilih",
       "unselected": "Belum Dipilih",
-      "originalRent": "Sewa Awal",
-      "originalDeposit": "Deposit Awal",
       "rechargeOrder": "Pesanan Isi Ulang",
       "renewal": "Perpanjangan",
       "balanceFlow": "Mutasi Saldo",
@@ -322,8 +299,6 @@
       "planMonth": "Bulanan",
       "model": "Model",
       "other": "Lainnya",
-      "settings": "Pengaturan",
-      "tip": "Petunjuk",
       "unitWeek": "Minggu",
       "unitMonth": "Bulan"
     },
@@ -332,18 +307,14 @@
       "confirm": "Konfirmasi",
       "delete": "Hapus",
       "save": "Simpan",
-      "search": "Cari",
       "unbind": "Lepaskan",
-      "viewDetail": "Detail",
       "add": "Tambah",
       "edit": "Sunting",
       "more": "Lainnya",
       "takePhoto": "Ambil Foto",
       "change": "Ubah",
-      "back": "Kembali",
       "album": "Album",
       "bind": "Hubungkan",
-      "close": "Tutup",
       "viewFeeDetail": "Lihat Rincian Biaya",
       "deactivateAccount": "Nonaktifkan Akun",
       "viewDetails": "Lihat Detail",
@@ -354,10 +325,6 @@
       "iKnow": "Saya Mengerti",
       "collapse": "Lipat",
       "sort": "Urutan",
-      "done": "Selesai",
-      "retry": "Coba Lagi",
-      "continue": "Lanjutkan",
-      "enable": "Aktifkan",
       "clear": "Kosongkan",
       "useCurrentLocation": "Gunakan Lokasi Saat Ini",
       "confirmLabel": "Konfirmasi"
@@ -377,26 +344,11 @@
       "bannerDeal": "DE2 Edisi Warna · Hanya Rp 3.499"
     },
     "createTime": "Waktu Dibuat",
-    "systemSwitch": {
-      "title": "Tukar Sistem",
-      "rent": "Sistem Sewa",
-      "swap": "Sistem Tukar Baterai",
-      "charge": "Sistem Pengisian Daya",
-      "enter": "Masuk",
-      "selectToast": "Silakan pilih sistem",
-      "action": "Ganti"
-    },
     "scan": {
       "hint": "Arahkan kode QR ke bingkai"
     },
     "home": {
       "recentAlerts": "Peringatan Terkini"
-    },
-    "cabinet": {
-      "disable": "Nonaktifkan Kabinet"
-    },
-    "service": {
-      "swap": "Tukar"
     },
     "status": {
       "disabled": "Nonaktif",
@@ -448,10 +400,8 @@
         "3": "Setelah mengambil kendaraan/baterai, pembatalan perlu dibicarakan dengan merchant; pengembalian dana ditentukan berdasarkan kesepakatan kedua belah pihak.",
         "4": "Sewa dan deposit akan dikembalikan melalui metode pembayaran asli dalam 7 hari kerja setelah pesanan dibatalkan."
       },
-      "rentDuration": "Durasi Sewa",
       "takeReturnInfo": "Info Pengambilan & Pengembalian",
       "days30": "30 Hari",
-      "timeOrdered": "Dipesan",
       "subtotal": "Subtotal",
       "confirmOrder": "Konfirmasi Pesanan",
       "unitHour": "Jam",
@@ -494,7 +444,6 @@
       "distNearestStore": "{dist} ke toko terdekat",
       "noMatchRegion": "Wilayah yang cocok tidak ditemukan",
       "relocate": "Lokasi Ulang",
-      "alertFilterProcessing": "Memproses...",
       "buyNow": "Beli Sekarang",
       "rentalIntro": "Perkenalan Sewa",
       "currentLocation": "Lokasi Saat Ini",
@@ -502,44 +451,30 @@
         "renewReminderTitle": "Perpanjangan Otomatis Pesanan",
         "renewSuccessTitle": "Perpanjangan Otomatis Pesanan Berhasil",
         "renewFailedTitle": "Perpanjangan Otomatis Pesanan Gagal",
-        "renewReminderBody": "Pesanan Anda akan diperpanjang otomatis pada 2026-09-10 12:00:00 dan dipotong Rp150.000. Jika tidak perlu perpanjangan, silakan buka detail pesanan untuk menonaktifkan perpanjangan otomatis.",
         "renewReminderBodyTpl": "Pesanan Anda akan diperpanjang otomatis pada {dueDate} dan dipotong {amount}. Jika tidak perlu perpanjangan, silakan buka detail pesanan untuk menonaktifkan perpanjangan otomatis.",
-        "renewSuccessBody": "Pesanan Anda berhasil diperpanjang otomatis, dipotong Rp150.000, masa berlaku pesanan diperpanjang hingga 2026-09-11 12:00:00.",
         "renewSuccessBodyTpl": "Pesanan Anda berhasil diperpanjang otomatis, dipotong {amount}, masa berlaku pesanan diperpanjang hingga {newDueDate}.",
-        "renewFailedBody": "Perpanjangan otomatis pesanan Anda gagal (percobaan 2/3), saldo tidak cukup. Mohon segera isi ulang, agar kegagalan perpanjangan yang berulang tidak menonaktifkan perpanjangan otomatis.",
         "renewFailedBodyTpl": "Perpanjangan otomatis pesanan Anda gagal (percobaan {failCount}/{threshold}), saldo tidak cukup. Mohon segera isi ulang, agar kegagalan perpanjangan yang berulang tidak menonaktifkan perpanjangan otomatis.",
         "orderCreatedTitle": "Pesanan Dibuat",
-        "orderCreatedBody": "Pesanan Anda YZ202512180001 telah dibuat. Harap selesaikan pembayaran dalam 30 menit, jika tidak pesanan akan dibatalkan otomatis.",
         "orderCreatedBodyTpl": "Pesanan Anda {orderNo} telah dibuat. Harap selesaikan pembayaran dalam 30 menit, jika tidak pesanan akan dibatalkan otomatis.",
         "orderPaidTitle": "Pembayaran Berhasil",
-        "orderPaidBody": "Pesanan Anda YZ202512180001 berhasil dibayar. Harap segera pindai kode QR kendaraan/baterai untuk menyelesaikan pengikatan; penagihan dimulai setelah terikat.",
         "orderPaidBodyTpl": "Pesanan Anda {orderNo} berhasil dibayar. Harap segera pindai kode QR kendaraan/baterai untuk menyelesaikan pengikatan; penagihan dimulai setelah terikat.",
         "deviceBoundTitle": "Pesanan Dimulai",
-        "deviceBoundBody": "Pesanan Anda YZ202512180001 telah terikat dengan kendaraan/baterai. Masa sewa 2026-09-01 10:30:00 hingga 2026-10-01 10:30:00.",
         "deviceBoundBodyTpl": "Pesanan Anda {orderNo} telah terikat dengan kendaraan/baterai. Masa sewa {rentStart} hingga {rentEnd}.",
         "orderExpiringTitle": "Pesanan Segera Berakhir",
-        "orderExpiringBody": "Pesanan Anda YZ202512180001 akan berakhir pada 2026-10-01 10:30:00. Harap kembalikan di toko tepat waktu, atau perpanjang melalui detail pesanan.",
         "orderExpiringBodyTpl": "Pesanan Anda {orderNo} akan berakhir pada {rentEnd}. Harap kembalikan di toko tepat waktu, atau perpanjang melalui detail pesanan.",
         "orderOverdueTitle": "Pesanan Telah Berakhir",
-        "orderOverdueBody": "Pesanan Anda YZ202512180001 telah berakhir. Harap segera kembalikan di toko agar tidak dikenakan biaya tambahan; jika masih memerlukan, Anda dapat memperpanjang melalui detail pesanan.",
         "orderOverdueBodyTpl": "Pesanan Anda {orderNo} telah berakhir. Harap segera kembalikan di toko agar tidak dikenakan biaya tambahan; jika masih memerlukan, Anda dapat memperpanjang melalui detail pesanan.",
         "orderBreachTitle": "Kendaraan/Baterai Dikunci Jarak Jauh",
-        "orderBreachBody": "Pesanan Anda YZ202512180001 telah terlambat 7 hari dan kendaraan serta baterai telah dikunci jarak jauh. Harap segera hubungi toko.",
         "orderBreachBodyTpl": "Pesanan Anda {orderNo} telah terlambat {days} hari dan kendaraan serta baterai telah dikunci jarak jauh. Harap segera hubungi toko.",
         "orderCompletedTitle": "Pesanan Selesai",
-        "orderCompletedBody": "Pesanan Anda YZ202512180001 telah selesai. Terima kasih atas kepercayaan Anda, kami menantikan layanan berikutnya.",
         "orderCompletedBodyTpl": "Pesanan Anda {orderNo} telah selesai. Terima kasih atas kepercayaan Anda, kami menantikan layanan berikutnya.",
         "orderCancelledTitle": "Pesanan telah dibatalkan",
-        "orderCancelledBody": "Pesanan Anda YZ202512180001 telah dibatalkan. Jumlah yang telah dibayar akan dikembalikan ke metode pembayaran asal.",
         "orderCancelledBodyTpl": "Pesanan Anda {orderNo} telah dibatalkan. Jumlah yang telah dibayar akan dikembalikan ke metode pembayaran asal.",
         "orderAdjustedTitle": "Jumlah Pesanan Disesuaikan",
-        "orderAdjustedBody": "Jumlah pesanan Anda YZ202512180001 telah disesuaikan dari Rp150.000 menjadi Rp200.000. Hubungi toko jika ada pertanyaan.",
         "orderAdjustedBodyTpl": "Jumlah pesanan Anda {orderNo} telah disesuaikan dari {oldAmount} menjadi {newAmount}. Hubungi toko jika ada pertanyaan.",
         "orderRefundingTitle": "Pengembalian Dana Diproses",
-        "orderRefundingBody": "Pesanan Anda YZ202512180001 sedang dalam proses pengembalian dana. Jumlah pengembalian Rp150.000, diperkirakan kembali ke metode pembayaran asal dalam 1–7 hari kerja.",
         "orderRefundingBodyTpl": "Pesanan Anda {orderNo} sedang dalam proses pengembalian dana. Jumlah pengembalian {amount}, diperkirakan kembali ke metode pembayaran asal dalam 1–7 hari kerja.",
         "orderRefundedTitle": "Pengembalian Dana Berhasil",
-        "orderRefundedBody": "Pengembalian dana Rp150.000 untuk pesanan YZ202512180001 telah dikirim ke metode pembayaran asal. Harap periksa.",
         "orderRefundedBodyTpl": "Pengembalian dana {amount} untuk pesanan {orderNo} telah dikirim ke metode pembayaran asal. Harap periksa."
       },
       "noBattery": "Tidak ada baterai"
@@ -547,7 +482,6 @@
     "search": {
       "placeholder": "Cari lokasi",
       "history": "Riwayat Pencarian",
-      "nearby": "Pengisi Daya & Toko Terdekat",
       "relocate": "Lokasi Ulang",
       "noLocation": "Lokasi tidak tersedia",
       "noPoi": "Tempat terkait tidak ditemukan"
@@ -578,8 +512,7 @@
       "myBatteriesCount": "Baterai Saya ({n})",
       "myDevices": "Perangkat saya",
       "emailAddressPlaceholder": "Masukkan alamat email",
-      "aboutUs": "Tentang Kami",
-      "privacyPolicy": "Kebijakan Privasi Pengguna"
+      "aboutUs": "Tentang Kami"
     },
     "common": {
       "notLoggedInTap": "Anda belum masuk. Ketuk untuk masuk",
@@ -587,7 +520,6 @@
       "materialDeleted": "Materi telah dihapus",
       "clickBlankClose": "Ketuk area kosong untuk menutup",
       "goLogin": "Masuk",
-      "copiedFormat": "{label} disalin",
       "moreOps": "Aksi Lainnya"
     },
     "vehicles": {
@@ -684,7 +616,6 @@
     "wallet": {
       "topupCustom": "Jumlah Kustom",
       "title": "Dompet Saya",
-      "topupBonus": "Bonus {amount}",
       "balancePay": "Dompet",
       "topupSuccess": "Isi ulang berhasil",
       "selectAmount": "Silakan pilih jumlah",
@@ -724,7 +655,6 @@
       "resend": "Kirim ulang"
     },
     "charge": {
-      "title": "Pengisian Daya",
       "scan": "Pindai untuk Mengisi Daya",
       "deviceDetail": "Detail Perangkat",
       "deviceNo": "Nomor Perangkat",
@@ -750,7 +680,6 @@
       "basicInfo": "Info Dasar",
       "chargeDetail": "Detail Pengisian Daya",
       "store": "Toko",
-      "customer": "Akun Pengguna",
       "payStatus": "Status Pembayaran",
       "payTime": "Waktu Pembayaran",
       "selectDuration": "Durasi Dipilih",
