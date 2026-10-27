@@ -147,7 +147,7 @@
       "accountFormatHint": "Must start with a letter; letters, numbers and underscores only; 4–20 characters",
       "confirmDeactivateDesc": "Are you sure you want to deactivate this account? All data will be erased and cannot be recovered.",
       "docTypesHint": "You can upload ID, driver's license, contract, etc.",
-      "realName": "KYC",
+      "realName": "Renter",
       "namePlaceholder": "Please enter your name"
     },
     "tab": {
@@ -451,7 +451,7 @@
       "needOrderStatus": "Select at least one order status allowed to renew",
       "needOrderType": "Select at least one order type for auto renewal",
       "cancelSuccess": "Renewal cancelled",
-      "realNameTip": "When enabled, users must select verified KYC info at checkout, or the order cannot be submitted"
+      "realNameTip": "When enabled, users must select a renter at checkout, or the order cannot be submitted"
     },
     "profile": {
       "noMatchUser": "No matching user",
@@ -474,7 +474,7 @@
       "csAddSuccess": "Customer service info added successfully",
       "noPackage": "No Packages",
       "userManage": "User Management",
-      "idInfoUnselected": "No KYC selected",
+      "idInfoUnselected": "No renter selected",
       "emailBound": "Email bound",
       "bindUser": "Bind User",
       "confirmEnable": "Enable Account",
@@ -567,7 +567,7 @@
       "operateTime": "Operation Time",
       "accountDetail": "Account Details",
       "noMatchingPositions": "No matching positions found",
-      "idInfoRequired": "KYC must be uploaded",
+      "idInfoRequired": "Renter info must be uploaded",
       "positionSaved": "Position saved",
       "csTimeError": "Start time cannot be later than or equal to end time",
       "storeList": "Store List",

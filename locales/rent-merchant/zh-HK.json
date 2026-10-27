@@ -147,7 +147,7 @@
       "accountFormatHint": "必須字母開頭，僅支持字母、數字、底線，長度4～20位",
       "confirmDeactivateDesc": "確定要註銷當前帳號嗎？註銷後所有數據將被清除，且無法恢復。",
       "docTypesHint": "可上傳身份證、駕照、合約等",
-      "realName": "實名資訊",
+      "realName": "用車人",
       "namePlaceholder": "請輸入姓名"
     },
     "tab": {
@@ -451,7 +451,7 @@
       "needOrderStatus": "請至少選擇一種允許續租的訂單狀態",
       "needOrderType": "請至少選擇一種自動續租訂單類型",
       "cancelSuccess": "續租已取消",
-      "realNameTip": "開啟後，用戶在下單時必須選擇實名資訊，否則無法提交訂單"
+      "realNameTip": "開啟後，用戶在下單時必須選擇用車人，否則無法提交訂單"
     },
     "profile": {
       "noMatchUser": "未找到匹配用戶",
@@ -474,7 +474,7 @@
       "csAddSuccess": "客戶服務資訊已新增成功",
       "noPackage": "暫無套餐",
       "userManage": "用戶管理",
-      "idInfoUnselected": "未選擇實名資訊",
+      "idInfoUnselected": "未選擇用車人",
       "emailBound": "已綁定電郵",
       "bindUser": "綁定用戶",
       "confirmEnable": "啟用帳號",
@@ -567,7 +567,7 @@
       "operateTime": "操作時間",
       "accountDetail": "帳號詳情",
       "noMatchingPositions": "未找到匹配的職位",
-      "idInfoRequired": "必須上傳實名資訊",
+      "idInfoRequired": "必須上傳用車人資訊",
       "positionSaved": "職位已儲存",
       "csTimeError": "開始時間不能晚於或等於結束時間",
       "storeList": "門店列表",

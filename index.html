@@ -1652,6 +1652,12 @@ body.host-single-m #root-user{display:none}
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="PrMyDev5"></span>
 </div>
 
+<div data-cp @click="navOpen('subIdInfo')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-renter" data-page-node-id="PrRenterRow">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#EBF1FD" data-page-node-id="PrRenterIcon"><span v-html="luci('user','w-[18px] h-[18px] text-[#2B3F5F]')" data-page-node-id="PrRenterIconSvg"></span></div>
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="PrRenterLabel">{{ $t('common.profile.realName') }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="PrRenterChev"></span>
+</div>
+
 <div class="px-4 py-3 flex items-center gap-3" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-about" data-page-node-id="CyBqBThubKVfDMqTUgz1cJ">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#FFF4E6" data-page-node-id="jUQ96GerKuAAEMQNiKUj7x"><span v-html="luci('info','w-[18px] h-[18px] text-[#FF6A00]')" data-page-node-id="AngT0svA3eC6jGNz3awPyq"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="XUHBSnbRLXlRIYQDfe8X97">{{ $t('user.profile.aboutUs') }}</span>
@@ -1768,13 +1774,6 @@ body.host-single-m #root-user{display:none}
       <span class="flex-1 text-[15px] font-medium" data-page-node-id="ooPtYtGSbBU25suyPeZxU0">{{ $t('common.profile.passwordManage') }}</span>
       <span class="text-[13px] text-[#666] mr-1" data-page-node-id="5MuJHqCQGdLxd2G80Zk9yS">{{ hasPwd?$t('common.profile.changePassword'):$t('common.profile.setPassword') }}</span>
       <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="5fhJ77aQMYZxx2Q26rCNwf"></span>
-    </div>
-  </div>
-  <div class="bg-white rounded-xl overflow-hidden mt-3" style="border:1px solid #E5E5E5" data-od-id="profile-id-entry" data-page-node-id="GDETHCsvvmjrQhaUyWLeHw">
-    <div class="flex items-center px-4 py-4 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="navOpen('subIdInfo')" data-page-node-id="RH2afvpFVSajeld1GM32VY">
-      <span class="flex-1 text-[15px] font-medium" data-page-node-id="RFERu5QW9MdyAMUcF54BEY">{{ $t('common.profile.realName') }}</span>
-      <span class="text-[13px] text-[#666] mr-1" data-page-node-id="3WtXhlS6HHGl6TcLEf7ONZ">{{ confirmIdInfo?confirmIdInfo.name:(idInfoCount?idInfoCount+$t('user.orders.docsUnit'):$t('user.idInfo.notUploaded')) }}</span>
-      <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="ynd4B4sLm0JWIVojmu3C91"></span>
     </div>
   </div>
   </div>
@@ -2500,7 +2499,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
-<!-- 实名信息 -->
+<!-- 用车人（原实名信息：概念改为用车人，入口在我的 tab「我的设备」下方） -->
 <page :open="profileSub==='idInfo'" :z="idSelectMode?1910:600" :swipe-close="navBack" oid="id-info-page" data-page-node-id="SDxJEaJrRtqF4sIJRtuked">
   <nav-bar :title="idSelectMode ? $t('user.idInfo.selectRealName') : $t('common.profile.realName')" data-page-node-id="7LqDgY1kYU7fVWEZTp8Wkb" @back="navBack()"><template #right><span class="w-8 h-8 flex items-center justify-center shrink-0 text-sm font-medium text-[#2F6FEB] cursor-pointer active:opacity-70" data-cp @click="openIdAdd" data-page-node-id="wW42VXNUgqSgHNeagFKEVC">{{ $t('common.action.add') }}</span></template></nav-bar>
   <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-3 pb-6" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-page-node-id="hU6GDmuxiD12OSBdviXFHG">
@@ -2521,14 +2520,14 @@ body.host-single-m #root-user{display:none}
     </template>
 
     <div v-else class="flex flex-col items-center justify-center py-20 px-6 text-center" data-od-id="id-list-empty" data-page-node-id="DAkBQn1e28rRSNOZRmRpw8">
-      <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" style="background:#F0F0F0" data-page-node-id="eGn0gCiC28Kay60yccaurB"><span v-html="luci('id-card','w-8 h-8 text-[#BBB]')" data-page-node-id="H4JertZeZBBZ1SeenAr3BQ"></span></div>
+      <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" style="background:#F0F0F0" data-page-node-id="eGn0gCiC28Kay60yccaurB"><span v-html="luci('user','w-8 h-8 text-[#BBB]')" data-page-node-id="H4JertZeZBBZ1SeenAr3BQ"></span></div>
       <div class="text-[15px] font-semibold text-[#333] mb-1.5" data-page-node-id="nAt8gHa9Hsagb06VyGj57a">{{ $t('user.idInfo.noRealName') }}</div>
     </div>
 
   </div>
 </page>
 
-<!-- 实名信息详情（只读） -->
+<!-- 用车人详情（只读） -->
 <page :open="profileSub==='idDetail'" :z="600" :swipe-close="navBack" oid="id-detail-page" data-page-node-id="ka84SGnYcOdxa2U0tVKLGW">
   <nav-bar :title="$t('user.idInfo.detail')" data-page-node-id="49s8MKHLnBCNY1l2i7AMgG" @back="navBack()"><template #right><span class="w-8 h-8 flex items-center justify-center shrink-0 text-sm font-medium text-[#2F6FEB] cursor-pointer active:opacity-70" data-cp @click="openIdEditRecord(idDetailRec)" data-page-node-id="3I2rFBXGkH6q0ag8bgFitP">{{ $t('common.action.edit') }}</span></template></nav-bar>
   <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-6" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-page-node-id="t2lBs6eB5LMAxi809WRImp">
@@ -2595,7 +2594,7 @@ body.host-single-m #root-user{display:none}
 </page>
 
 
-<!-- 新增/编辑实名信息 -->
+<!-- 新增/编辑用车人 -->
 <page :open="profileSub==='idAdd'" :z="idSelectMode?1920:600" :swipe-close="navBack" oid="id-add-page" data-page-node-id="n4qStQsSHyCA6DlhKILZhk">
   <nav-bar :title="idEditingId?$t('user.idInfo.editRealName'):$t('user.idInfo.addRealName')" data-page-node-id="GFvAcOHUr8RYNJ5zsTOTuA" @back="navBack()"></nav-bar>
   <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-4 pb-28" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-page-node-id="bd5luBFcMdxpqNY0tICEry">
@@ -4584,7 +4583,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </kv-card>
 
-<!-- ═══ 实名信息 · 卡片（参考 C 端订单详情：实名信息只读，不支持选择） ═══ -->
+<!-- ═══ 用车人 · 卡片（参考 C 端订单详情：用车人只读，不支持选择） ═══ -->
 <kv-card :title="$t('common.profile.realName')" class="mb-3">
   <template v-if="dHasRealName">
   <kv-row :label="$t('common.label.name')" :value="do_.customer||do_.account||'-'"></kv-row>
@@ -4603,7 +4602,7 @@ body.host-single-m #root-user{display:none}
   </div>
 </kv-card>
 
-<!-- ═══ 车辆信息 · 卡片（实名信息下方） ═══ -->
+<!-- ═══ 车辆信息 · 卡片（用车人下方） ═══ -->
 <kv-card v-if="do_.type!=='battery'" :title="$t('common.vehicles.info')" class="mb-3">
 <template #extra><span v-if="['progress','return','overdue','breach'].indexOf(dSt)!==-1&&orderPerm('operate.change_vehicle')" data-cp @click="openOrderPick('changeVehicle')" class="cursor-pointer select-none text-[var(--link)] active:opacity-70" v-html="luci('refresh-cw','w-4 h-4')"></span><span v-else-if="dSt==='pickup'&&orderPerm('operate.assign_vehicle')" data-cp @click="openOrderPick('assignVehicle')" class="cursor-pointer select-none text-[var(--link)] active:opacity-70" v-html="luci('link','w-4 h-4')"></span></template>
 <kv-row :label="$t('common.vehicles.model')" :value="do_.type==='package'?do_.item.split('+')[0]:do_.item"></kv-row>
@@ -4611,7 +4610,7 @@ body.host-single-m #root-user{display:none}
 <kv-row v-if="dSt!=='created'&&dSt!=='pickup'" :label="$t('common.orders.pickupTime')" :value="do_.rentStart"></kv-row>
 </kv-card>
 
-<!-- ═══ 电池信息 · 卡片（实名信息下方） ═══ -->
+<!-- ═══ 电池信息 · 卡片（用车人下方） ═══ -->
 <kv-card v-if="do_.type!=='vehicle'" :title="$t('common.vehicles.batteryInfo')" class="mb-3">
 <template #extra><span v-if="['progress','return','overdue','breach'].indexOf(dSt)!==-1&&orderPerm('operate.change_battery')" data-cp @click="openOrderPick('changeBattery')" class="cursor-pointer select-none text-[var(--link)] active:opacity-70" v-html="luci('refresh-cw','w-4 h-4')"></span><span v-else-if="dSt==='pickup'&&orderPerm('operate.assign_battery')" data-cp @click="openOrderPick('assignBattery')" class="cursor-pointer select-none text-[var(--link)] active:opacity-70" v-html="luci('link','w-4 h-4')"></span></template>
 <kv-row :label="$t('common.label.model')" :value="do_.type==='package'?do_.item.split('+')[1]:do_.item"></kv-row>
@@ -6447,7 +6446,7 @@ body.host-single-m #root-user{display:none}
   </template>
   </div>
 
-  <!-- 三、实名信息 -->
+  <!-- 三、用车人 -->
   <div class="od-card">
   <div class="od-sec">{{ $t('common.profile.realName') }}</div>
   <div class="form-row">
@@ -6900,7 +6899,7 @@ body.host-single-m #root-user{display:none}
         </div>
       </div>
       <div class="demo-ops-section" data-od-id="demo-order-realname">
-        <div class="demo-ops-label">实名信息</div>
+        <div class="demo-ops-label">用车人</div>
         <div class="demo-ops-chips">
           <div class="demo-ops-chip" :class="{'is-on':dHasRealName}" data-od-id="demo-realname-on" data-cp @click="demoSetRealName(true)">已选择</div>
           <div class="demo-ops-chip" :class="{'is-on-warn':!dHasRealName}" data-od-id="demo-realname-off" data-cp @click="demoSetRealName(false)">未选择</div>
@@ -8110,6 +8109,7 @@ const confPeriodDetail=computed(()=>{
 const idx=rentPeriodIdx.value;const labels=planLbls(),units=planUnits(),daysWords=[t('user.orders.billHourly'),t('user.orders.billDaily'),t('user.orders.days7'),t('user.orders.days30')];
 return{amt:confPeriodBase[idx],unit:units[idx],label:labels[idx],daysWord:daysWords[idx]};});
 function rentNow(v){selectedVehicle.value=v;if(v&&typeof v.pi==='number')rentPeriodIdx.value=v.pi;navOpen('confirm')}
+/* 下单用车人校验：订单配置开启「必须上传用车人信息」时，未选择用车人则阻止提交（提示「请先选择用车人」） */
 function confirmOrder(){if(uploadIdEnabled.value&&!confirmIdInfo.value){toast(t('user.idInfo.realNameRequired'),'warn');return}navOpen('orderDetail');showRentLoading.value=true;const amt=fmtRp(confTotal.value);const _oi={storeName:confStore.value.name,category:'车辆租赁',orderId:'YZ'+new Date().toISOString().slice(0,10).replace(/-/g,'')+(Math.floor(Math.random()*9000)+1000),createTime:new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-'),payee:confPayType.value==='offline'?'线下支付':confPayType.value==='balance'?'钱包':'2C2P',status:'created',statusText:'已创建',statusColor:'#FF8C1B',model:selectedVehicle.value?selectedVehicle.value.name:'乐迪SAA',desc:selectedVehicle.value?selectedVehicle.value.desc:'',planPeriod:rentPeriodIdx.value,planCount:confRentDays.value,plan:'',amount:amt,deposit:'Rp 200.45',payStatus:'UNPAID',renewOrders:[]};setTimeout(()=>{payChannel.value='2C2P';cancelBeforePay.value='paid';orderInfo.value=_oi;startOrderTimer();showRentLoading.value=false},600);if(!orders.value.some(function(o){return (o.id||o.orderId)===_oi.orderId}))SYS_createOrder({orderId:_oi.orderId,category:_oi.category,model:_oi.model,plan:_oi.plan,amount:Number(confTotal.value)||0,frame:selectedVehicle.value?(selectedVehicle.value.vin||''):'',payee:_oi.payee,createTime:_oi.createTime})}
 const showOrderDetail=ref(false);
 const showCancelModal=ref(false);

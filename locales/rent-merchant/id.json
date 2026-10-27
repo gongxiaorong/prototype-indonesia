@@ -147,7 +147,7 @@
       "accountFormatHint": "Harus dimulai dengan huruf; hanya huruf, angka, dan garis bawah; 4–20 karakter",
       "confirmDeactivateDesc": "Yakin ingin menonaktifkan akun ini? Semua data akan dihapus dan tidak dapat dipulihkan.",
       "docTypesHint": "Anda dapat mengunggah KTP, SIM, kontrak, dll.",
-      "realName": "KYC",
+      "realName": "Penyewa",
       "namePlaceholder": "Masukkan nama"
     },
     "tab": {
@@ -451,7 +451,7 @@
       "needOrderStatus": "Pilih minimal satu status pesanan yang boleh diperpanjang",
       "needOrderType": "Pilih minimal satu tipe pesanan untuk perpanjangan otomatis",
       "cancelSuccess": "Perpanjangan dibatalkan",
-      "realNameTip": "Saat diaktifkan, pengguna harus memilih info KYC terverifikasi saat checkout, atau pesanan tidak dapat dikirim"
+      "realNameTip": "Saat diaktifkan, pengguna harus memilih penyewa saat checkout, atau pesanan tidak dapat dikirim"
     },
     "profile": {
       "noMatchUser": "Pengguna tidak ditemukan",
@@ -474,7 +474,7 @@
       "csAddSuccess": "Info layanan pelanggan berhasil ditambahkan",
       "noPackage": "Tidak ada paket",
       "userManage": "Manajemen Pengguna",
-      "idInfoUnselected": "Info KYC belum dipilih",
+      "idInfoUnselected": "Belum ada penyewa dipilih",
       "emailBound": "Email Terhubung",
       "bindUser": "Hubungkan Pengguna",
       "confirmEnable": "Aktifkan Akun",
@@ -567,7 +567,7 @@
       "operateTime": "Waktu Operasi",
       "accountDetail": "Detail Akun",
       "noMatchingPositions": "Posisi tidak ditemukan",
-      "idInfoRequired": "Info KYC wajib diunggah",
+      "idInfoRequired": "Info penyewa wajib diunggah",
       "positionSaved": "Posisi disimpan",
       "csTimeError": "Waktu mulai tidak boleh lebih lambat atau sama dengan waktu selesai",
       "storeList": "Daftar Toko",
