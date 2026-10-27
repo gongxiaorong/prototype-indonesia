@@ -3532,6 +3532,7 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="ptr-indicator" id="ptr-alert"><span class="ptr-text">{{ $t('common.pullToRefresh') }}</span></div>
 <div id="sc-alert" class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+<div v-if="filteredAlerts.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:filteredAlerts.length}) }}</div>
 <div v-if="filteredAlerts.length" class="flex flex-col gap-2.5">
 <transition-group name="item">
  <div class="bg-white border border-[#E5E5E5] rounded-xl overflow-hidden cursor-pointer active:bg-[#F6F7F9]" v-for="(a,i) in filteredAlerts" :key="a.id" :style="{transitionDelay:i*50+'ms'}" data-cp @click="openAlertDetail(a)">
@@ -3639,12 +3640,13 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="bg-white shrink-0" style="padding:12px 20px;border-bottom:1px solid #E5E5E5">
 <div class="filter-tabs" id="vehiclePillRow">
-<div v-for="p in pills" :key="p.v" data-cp @click="vehSetPill(p.v)" class="filter-pill" :style="vehPill===p.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ pillCnt[p.v] }})</div>
+<div v-for="p in pills" :key="p.v" data-cp @click="vehSetPill(p.v)" class="filter-pill" :style="vehPill===p.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}<template v-if="p.v!==''"> ({{ pillCnt[p.v] }})</template></div>
 </div>
 </div>
  <div class="ptr-indicator" id="ptr-veh"><span class="ptr-text">{{ $t('common.pullToRefresh') }}</span></div>
  <template v-if="vehView==='list'">
  <div id="sc-veh" @vue:mounted="()=>initPullToRefresh('sc-veh','ptr-veh',refreshVeh)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+ <div v-if="filtered.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:filtered.length}) }}</div>
  <template v-if="filtered.length">
  <kv-card v-for="v in filtered" :key="v.vin" :title="v.vin" label-width="5rem" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="vehOpenDetail(v)">
  <template #extra><span class="font-medium shrink-0" :style="{color:v.online?'#17A34A':'#D97706'}">{{ v.online?$t('merchant.status.online'):$t('merchant.status.offline') }}</span></template>
@@ -4085,12 +4087,13 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="bg-white shrink-0" style="padding:12px 20px;border-bottom:1px solid #E5E5E5">
 <div class="filter-tabs" id="batteryPillRow">
-<div v-for="p in battPills" :key="p.v" data-cp @click="battSetPill(p.v)" class="filter-pill" :style="battPill===p.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ battPillCnt[p.v] }})</div>
+<div v-for="p in battPills" :key="p.v" data-cp @click="battSetPill(p.v)" class="filter-pill" :style="battPill===p.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}<template v-if="p.v!==''"> ({{ battPillCnt[p.v] }})</template></div>
 </div>
 </div>
 <template v-if="battView==='list'">
 <div class="ptr-indicator" id="ptr-batt"><span class="ptr-text">{{ $t('common.pullToRefresh') }}</span></div>
 <div id="sc-batt" @vue:mounted="()=>initPullToRefresh('sc-batt','ptr-batt',refreshBatt)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div v-if="batterFiltered.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:batterFiltered.length}) }}</div>
 <template v-if="batterFiltered.length">
 <kv-card v-for="b in batterFiltered" :key="b.battNo" :title="b.battNo" label-width="5rem" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="battOpenDetail(b)" :data-od-id="'batt-item-'+b.battNo">
 <template #extra><span class="font-medium shrink-0" :style="{color:b.online?'#17A34A':'#D97706'}">{{ b.online?$t('merchant.status.online'):$t('merchant.status.offline') }}</span></template>
@@ -4184,11 +4187,12 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="bg-white shrink-0" style="padding:10px 20px 8px">
 <div class="filter-tabs" id="orderPillRow">
-<div v-for="p in quickPills" :key="p.v" data-cp @click="ordersSetPill(p.v)" class="filter-pill" :style="ordersPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ qCnt[p.v]||0 }})</div>
+<div v-for="p in quickPills" :key="p.v" data-cp @click="ordersSetPill(p.v)" class="filter-pill" :style="ordersPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}<template v-if="p.v!==''"> ({{ qCnt[p.v]||0 }})</template></div>
 </div>
 </div>
 <div class="ptr-indicator" id="ptr-ord"><span class="ptr-text">{{ $t('common.pullToRefresh') }}</span></div>
 <div id="sc-ord" @vue:mounted="()=>initPullToRefresh('sc-ord','ptr-ord',refreshOrd)" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div v-if="oFiltered.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:oFiltered.length}) }}</div>
 <template v-if="oFiltered.length">
 <kv-card v-for="(o,i) in oFiltered" :key="o.id" :title="o.id" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" label-width="5rem" data-cp @click="ordersOpenDetail(o)">
 <template #extra><span class="text-[13px] font-semibold" :style="stg(o.status)">{{ sl(o.status) }}</span></template>
@@ -4656,6 +4660,7 @@ body.host-single-m #root-user{display:none}
 </div>
 
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" style="touch-action:pan-y">
+<div v-if="rechargeFiltered.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:rechargeFiltered.length}) }}</div>
 <template v-if="rechargeFiltered.length">
 <kv-card v-for="(o,i) in rechargeFiltered" :key="o.orderNo" :title="o.orderNo" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" label-width="5rem" data-cp @click="roOpenDetail(o)">
 <template #extra><span class="text-[13px] font-semibold" :style="{color:roPayStatusTag(o.payStatus).c}">{{ roPayStatusTag(o.payStatus).l }}</span></template>
@@ -5149,10 +5154,11 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="bg-white shrink-0" style="padding:10px 20px 8px"><div class="filter-tabs" id="cdPillRow">
-<div v-for="p in cdPills" :key="p.v" data-cp @click="cdSetPill(p.v)" class="filter-pill" :style="cdPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ cdCnt[p.v]||0 }})</div>
+<div v-for="p in cdPills" :key="p.v" data-cp @click="cdSetPill(p.v)" class="filter-pill" :style="cdPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}<template v-if="p.v!=='all'"> ({{ cdCnt[p.v]||0 }})</template></div>
 </div></div>
 <div class="ptr-indicator" id="ptr-cd"><span class="ptr-text">{{ $t('common.pullToRefresh') }}</span></div>
 <div id="sc-cd" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" @vue:mounted="()=>initPullToRefresh('sc-cd','ptr-cd',refreshCd)" data-od-id="charge-device-list">
+<div v-if="chargeDevFiltered.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:chargeDevFiltered.length}) }}</div>
 <template v-if="chargeDevFiltered.length">
 <div v-for="d in chargeDevFiltered" :key="d.id" data-cp @click="cdOpenDetail(d)" :data-od-id="'cd-item-'+d.id">
 <kv-card label-width="6rem" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]">
@@ -5374,10 +5380,11 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="bg-white shrink-0" style="padding:10px 20px 8px"><div class="filter-tabs" id="coPillRow">
-<div v-for="p in coPills" :key="p.v" data-cp @click="coSetPill(p.v)" class="filter-pill" :style="coPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }} ({{ coCnt[p.v]||0 }})</div>
+<div v-for="p in coPills" :key="p.v" data-cp @click="coSetPill(p.v)" class="filter-pill" :style="coPillActive(p)?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ p.l }}<template v-if="p.v!==''"> ({{ coCnt[p.v]||0 }})</template></div>
 </div></div>
 <div class="ptr-indicator" id="ptr-co"><span class="ptr-text">{{ $t('common.pullToRefresh') }}</span></div>
 <div id="sc-co" class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" @vue:mounted="()=>initPullToRefresh('sc-co','ptr-co',refreshCo)" data-od-id="charge-order-list">
+<div v-if="coFiltered.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:coFiltered.length}) }}</div>
 <template v-if="coFiltered.length">
 <div v-for="o in coFiltered" :key="o.id" data-cp @click="coOpenDetail(o)" :data-od-id="'co-item-'+o.id">
 <kv-card label-width="6rem" class="mb-3 cursor-pointer active:bg-[#F6F7F9]">
@@ -6539,11 +6546,12 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="bg-white shrink-0" style="padding:10px 20px 8px">
   <div class="filter-tabs">
-    <div v-for="t in uStatusTabs" :key="t.v" data-cp @click="uSetPill(t.v)" class="filter-pill" :style="uStatus===t.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t.l }} ({{ uPillCnt[t.l] }})</div>
+    <div v-for="t in uStatusTabs" :key="t.v" data-cp @click="uSetPill(t.v)" class="filter-pill" :style="uStatus===t.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#666',border:'1px solid #E5E5E5'}">{{ t.l }}<template v-if="t.v!==''"> ({{ uPillCnt[t.l] }})</template></div>
   </div>
 </div>
 <!-- 用户列表 -->
 <div class="flex-1 overflow-y-auto px-5 pt-3 pb-10 hid">
+<div v-if="uFiltered.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:uFiltered.length}) }}</div>
 <template v-if="uFiltered.length">
 <kv-card v-for="u in uFiltered" :key="u.id" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="openUserDetail(u)" :data-od-id="'user-item-'+u.id">
 <template #title><span class="min-w-0 truncate">{{ u.account }}</span></template>
@@ -9589,8 +9597,8 @@ const demoAllStatus=[{v:'created',l:'已创建'},{v:'pickup',l:'待绑定'},{v:'
 const paySts=computed(()=>[{v:'pending',l:t('common.orders.payPending')},{v:'processing',l:t('merchant.orders.payProcessing')},{v:'paid',l:t('common.orders.payPaid')},{v:'refunding',l:t('common.orders.refundProcessing')},{v:'partialRefund',l:t('merchant.orders.payPartialRefund')},{v:'fullRefund',l:t('merchant.orders.payFullRefund')}]);
 const demoPayStsFixed=[{v:'pending',l:'待支付'},{v:'partialRefund',l:'部分退款'},{v:'fullRefund',l:'全部退款'}];
 const quickPills=computed(()=>[{l:t('common.label.all'),v:''},{v:'pickup',l:t('common.orderStatus.pickup')},{v:'progress',l:t('common.orderStatus.progress')},{v:'return',l:t('common.orderStatus.return')},{v:'overdue',l:t('common.orderStatus.overdue')},{v:'breach',l:t('common.orderStatus.breach')}]);
-  /* 计数口径：各状态订单总量，不受筛选条件与搜索词影响（筛选/搜索只改变下方列表） */
-  const qCnt=computed(()=>{const base=demoListEmpty.value?[]:orders.value;const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0,breach:m['breach']||0}});
+  /* 计数口径：仅按订单类型区分（本类型各状态订单总量），不受弹窗筛选、租赁时间与搜索词影响 */
+  const qCnt=computed(()=>{const base=demoListEmpty.value?[]:(ordersType.value?orders.value.filter(o=>o.type===ordersType.value):orders.value);const m={};let n=0;base.forEach(o=>{m[o.status]=(m[o.status]||0)+1;n++});return{'':n,pickup:m['pickup']||0,progress:m['progress']||0,'return':m['return']||0,overdue:m['overdue']||0,breach:m['breach']||0}});
 const typePills=computed(()=>[{l:t('common.label.all'),v:''},{v:'vehicle',l:t('common.orders.typeVehicle')},{v:'battery',l:t('common.orders.typeBattery')},{v:'package',l:t('common.orders.typePackage')}]);
 const typeCnt=computed(()=>{const m={};orders.value.forEach(o=>{const ty=o.type||'vehicle';m[ty]=(m[ty]||0)+1});return{'':orders.value.length,vehicle:m['vehicle']||0,battery:m['battery']||0,package:m['package']||0}});
 function fmtYmd(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())}
@@ -9645,7 +9653,9 @@ const ordersHasF=computed(()=>{
 });
 const vehSts=['progress','return','overdue','complete','breach'];
 function hasVehicle(s){return vehSts.indexOf(s)!==-1}
-const oFiltered=computed(()=>demoListEmpty.value?[]:orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsSt.value.length&&ordersFsSt.value.indexOf(o.status)===-1)return false;if(ordersFsPlan.value.length&&ordersFsPlan.value.indexOf(orderPlanPeriod(o))===-1)return false;if(ordersFsPay.value.length&&ordersFsPay.value.indexOf(o.payment)===-1)return false;if(ordersFsPaySt.value.length&&ordersFsPaySt.value.indexOf(o.paySt)===-1)return false;if(ordersFsStart.value&&ordersFsEnd.value){var _rs=(o.rentStart||'').match(/(\d{4}-\d{2}-\d{2})/);if(_rs){var _re=(rentEndOf(o)||'').match(/(\d{4}-\d{2}-\d{2})/);var _rEnd=_re?_re[1]:_rs[1];if(_rEnd<ordersFsStart.value||_rs[1]>ordersFsEnd.value)return false}}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
+/* 订单基础集合：订单类型+方案+渠道+支付状态+租赁时间+搜索（不含状态），列表与快捷计数共用同一口径 */
+const ordersBase=computed(()=>demoListEmpty.value?[]:orders.value.filter(o=>{if(ordersType.value&&o.type!==ordersType.value)return false;if(ordersFsPlan.value.length&&ordersFsPlan.value.indexOf(orderPlanPeriod(o))===-1)return false;if(ordersFsPay.value.length&&ordersFsPay.value.indexOf(o.payment)===-1)return false;if(ordersFsPaySt.value.length&&ordersFsPaySt.value.indexOf(o.paySt)===-1)return false;if(ordersFsStart.value&&ordersFsEnd.value){var _rs=(o.rentStart||'').match(/(\d{4}-\d{2}-\d{2})/);if(_rs){var _re=(rentEndOf(o)||'').match(/(\d{4}-\d{2}-\d{2})/);var _rEnd=_re?_re[1]:_rs[1];if(_rEnd<ordersFsStart.value||_rs[1]>ordersFsEnd.value)return false}}if(ordersQ.value){var f={id:o.id,vin:o.vin||'',battNo:o.battNo||''}[searchScope.value]||o.id;if(f.toLowerCase().indexOf(ordersQ.value.toLowerCase())===-1)return false}return true}));
+const oFiltered=computed(()=>ordersFsSt.value.length?ordersBase.value.filter(o=>ordersFsSt.value.indexOf(o.status)!==-1):ordersBase.value);
 const ORDER_ST_I18N=computed(()=>({created:t('common.orderStatus.created'),pickup:t('common.orderStatus.pickup'),progress:t('common.orderStatus.progress'),'return':t('common.orderStatus.return'),overdue:t('common.orderStatus.overdue'),breach:t('common.orderStatus.breach'),complete:t('merchant.status.completed'),cancelled:t('common.orderStatus.cancelled')}));
 function sl(s){return ORDER_ST_I18N.value[s]||s}
 function stg(s){return {color:ORDER_ST_COLOR[s]||'#333333'}}
@@ -10115,9 +10125,9 @@ function ordersOpenFS(){
   ordersFsPlanC.value=ordersFsPlan.value.slice();
   ordersFsPayC.value=ordersFsPay.value.slice();
   ordersFsPayStC.value=ordersFsPaySt.value.slice();
-  var def=defaultOrdersDateRange();
-  ordersFsStartC.value=ordersFsStart.value||def.start;
-  ordersFsEndC.value=ordersFsEnd.value||def.end;
+  /* 日期按已生效值回填：已清空（不限）时保持空，不再回落默认区间 */
+  ordersFsStartC.value=ordersFsStart.value;
+  ordersFsEndC.value=ordersFsEnd.value;
   ordersShowFS.value=true;
 }
 /* 点快捷 tab：清空弹窗内的状态条件，只保留该单一状态（点「全部」= 清空状态条件） */
