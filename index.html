@@ -209,6 +209,8 @@ body{font-family:var(--font-body)}
    ③ kv行 → 自定义内容、自定义内容之间：由内容自带间距，组件不干预（混排布局由调用方设计）
    无标题栏时 ① 不命中，顶距由卡片 py-3.5 决定；footer 仅在传入 #footer 插槽时渲染。 */
 .kv-head+*:not(.kv-row){padding-top:8px}
+/* 只有标题（无内容行、无 footer）时，标题栏这 6px 不落空：否则卡片底部多 6px、标题偏上 */
+.kv-card>.kv-head:last-child{margin-bottom:0}
 .kv-foot{padding-top:8px}
 </style>
 <style id="layer-user">#root-user .filter-tabs{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain;user-select:none;width:100%;flex-wrap:nowrap;white-space:nowrap}
