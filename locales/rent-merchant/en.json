@@ -509,6 +509,11 @@
       "positionDeleted": "Position deleted",
       "commonFunctions": "Common Features",
       "packageSaved": "Package saved",
+      "syncOrderTip": "Sync {n} orders to the new pricing. This cannot be undone, please proceed with caution.",
+      "syncOrderTitle": "Sync Order Pricing",
+      "syncOrderConfirmDesc": "Sync {n} orders to the new pricing? This cannot be undone, please proceed with caution.",
+      "pkgEditSaved": "Saved successfully",
+      "syncOrderSavedSynced": "Saved successfully. {n} orders synced to the new pricing.",
       "addUserInfo": "Add User Info",
       "storeLevel": {
         "agent": "Agent Store",

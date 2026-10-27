@@ -509,6 +509,11 @@
       "positionDeleted": "Posisi dihapus",
       "commonFunctions": "Fungsi Umum",
       "packageSaved": "Paket telah disimpan",
+      "syncOrderTip": "Sinkronkan {n} pesanan ke harga baru. Tindakan ini tidak dapat dibatalkan, harap berhati-hati.",
+      "syncOrderTitle": "Sinkronkan Harga Pesanan",
+      "syncOrderConfirmDesc": "Sinkronkan {n} pesanan ke harga baru? Tindakan ini tidak dapat dibatalkan, harap berhati-hati.",
+      "pkgEditSaved": "Berhasil disimpan",
+      "syncOrderSavedSynced": "Berhasil disimpan. {n} pesanan disinkronkan ke harga baru.",
       "addUserInfo": "Tambah Info Pengguna",
       "storeLevel": {
         "agent": "Toko Agen",

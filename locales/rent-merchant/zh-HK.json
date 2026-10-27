@@ -509,6 +509,11 @@
       "positionDeleted": "職位已刪除",
       "commonFunctions": "常用功能",
       "packageSaved": "套餐已儲存",
+      "syncOrderTip": "同步 {n} 個訂單為新定價，同步後無法回退，請謹慎操作",
+      "syncOrderTitle": "同步訂單定價",
+      "syncOrderConfirmDesc": "確定同步 {n} 個訂單為新定價嗎？同步後無法回退，請謹慎操作。",
+      "pkgEditSaved": "編輯成功",
+      "syncOrderSavedSynced": "編輯成功，已同步 {n} 個訂單為新定價",
       "addUserInfo": "添加用戶資料",
       "storeLevel": {
         "agent": "代理商門店",
