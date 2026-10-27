@@ -2229,9 +2229,10 @@ body.host-single-m #root-user{display:none}
 <template #title><span data-page-node-id="ntxkGA16k1if0QTZfckDrd">{{ r.kindLabel||r.kind }}</span></template>
 <kv-row :label="$t('common.orders.plan')" :value="planText(r)"></kv-row>
 <kv-row :label="$t('common.profile.rentTime')" align="top" label-class="leading-[1.5]" value-class="leading-[1.5] whitespace-normal"><template #value><span>{{ r.periodStart }}</span><br><span>{{ r.periodEnd }}</span></template></kv-row>
+<kv-row :label="$t('common.createTime')" :value="r.createTime||'-'"></kv-row>
 <kv-row :label="$t('common.orders.rent')" :value="fmtRp(r.rent,2)"></kv-row>
 <kv-row :label="$t('common.orders.deposit')" :value="fmtRp(r.deposit,2)"></kv-row>
-<kv-row :label="$t('common.profile.total')" :value="fmtRp(r.total,2)" value-class="font-semibold" :value-style="{color:'var(--accent)'}"></kv-row>
+<kv-row :label="$t('common.profile.total')" :value="fmtRp(r.total,2)"></kv-row>
 <kv-row :label="$t('user.charge.payChannel')" :value="rechargeChannelText(r.payMethod)"></kv-row>
 <kv-row :label="$t('user.charge.payStatus')" :value="r.payStatus"></kv-row>
 <kv-row v-if="r.payTime&&!r.canceled" :label="$t('user.charge.payTime')" :value="r.payTime"></kv-row>
@@ -4621,7 +4622,7 @@ body.host-single-m #root-user{display:none}
 <!-- ═══ 自动续租 · 卡片（参考 C 端订单详情，仅本地开关状态） ═══ -->
 <div v-if="['created','pickup','progress','return','overdue','breach'].indexOf(dSt)!==-1" class="bg-white rounded-2xl p-4 mb-3 flex items-center justify-between" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="od-autorenew">
 <div class="flex-1 min-w-0 pr-3">
-<div class="text-[14px] font-semibold text-[#1A1A1A] text-center">{{ $t('common.orders.autoRenew') }}</div>
+<div class="text-[14px] font-semibold text-[#1A1A1A]">{{ $t('common.orders.autoRenew') }}</div>
 <div class="text-[12px] text-[#999] mt-0.5">{{ $t('merchant.common.renewalAutoDeduct') }}</div>
 </div>
 <div class="relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0" :style="autoRenew?'background:var(--accent)':'background:#E5E5E5'" data-cp @click="toggleAutoRenew" data-od-id="autorenew-switch">
@@ -4885,6 +4886,7 @@ body.host-single-m #root-user{display:none}
          <template #extra><span data-cp @click="openRowMore(r)" class="w-4 h-4 rounded-full flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] shrink-0" :title="$t('merchant.common.moreOps')"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-[#666]"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></span></template>
 <kv-row :label="$t('common.orders.plan')" :value="planText(r)"></kv-row>
          <kv-row :label="$t('common.profile.rentTime')" align="top" label-class="leading-[1.5]" value-class="leading-[1.5] whitespace-normal"><template #value><span v-html="(r.period||'-').replace(' ~ ','<br>')"></span></template></kv-row>
+         <kv-row :label="$t('common.createTime')" :value="r.createTime||'-'"></kv-row>
          <kv-row :label="$t('common.orders.rent')" :value="fmtRp(r.rent)"></kv-row>
          <kv-row :label="$t('common.orders.deposit')" :value="fmtRp(r.deposit)"></kv-row>
          <kv-row :label="$t('common.profile.total')" :value="fmtRp(r.total)" :value-style="{color:'var(--accent)'}"></kv-row>
@@ -4892,7 +4894,7 @@ body.host-single-m #root-user{display:none}
          <kv-row :label="$t('merchant.chargingOrder.payStatus')" :value="r.payStatusLabel||r.payStatus"></kv-row>
          <kv-row v-if="r.payCode!=='pending'" :label="$t('common.orders.payTime')" :value="r.payTime"></kv-row>
          <div v-if="r.isRenew&&r.payCode==='pending'" class="flex gap-2 pt-1">
-           <div class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-center cursor-pointer active:opacity-90" style="border:1px solid #DC2626;color:#DC2626" data-cp @click="feeAskAction('feeCancelRenew',r)">{{ $t('merchant.renewal.cancel') }}</div>
+           <div class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-center cursor-pointer active:opacity-90" style="border:1px solid var(--accent);color:var(--accent)" data-cp @click="feeAskAction('feeCancelRenew',r)">{{ $t('merchant.renewal.cancel') }}</div>
            <div v-if="feeRowOnlyOffline(r)" class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-white text-center cursor-pointer active:opacity-90" style="background:var(--accent)" data-cp @click="feeAskAction('feePayRenew',r)">{{ $t('merchant.order.operate.confirm_payment') }}</div>
          </div>
        </kv-card>
@@ -8463,7 +8465,7 @@ const feeSummary=computed(()=>{const o=orderInfo.value;if(!o)return{rent:0,depos
 const refundRentOpen=ref(false),refundDepositOpen=ref(false),refundTotalOpen=ref(false);
 const refundChannels=computed(()=>{const rows=feeRows.value;const rm={},dm={},tm={};rows.forEach(r=>{if(r.payCode!=='paid')return;const ch=r.payMethod==='线下支付'?'线下支付':r.payMethod==='钱包'?'钱包':'2C2P';if(r.rent>0)rm[ch]=(rm[ch]||0)+r.rent;if(r.deposit>0)dm[ch]=(dm[ch]||0)+r.deposit});const toArr=m=>Object.keys(m).map(k=>({channel:k,amount:m[k]}));const ra=toArr(rm),da=toArr(dm);ra.concat(da).forEach(x=>{tm[x.channel]=(tm[x.channel]||0)+x.amount});return{rent:ra,deposit:da,total:toArr(tm)}});
 
-const feeRows=computed(()=>{if(demoListEmpty.value)return[];const o=orderInfo.value;if(!o)return[];const _started=o.status!=='created'&&o.status!=='pickup'&&o.status!=='cancelled';const _ps=_started?(o.rentStart||o.pickupTime||''):'';const _pe=_started?(o.rentEnd||planEndOfOrder(o,_ps)):'';const rows=[{kind:'主订单',kindLabel:t('user.orders.mainOrder'),plan:planText(o),periodStart:_ps||confPickupISO.value,periodEnd:_pe||confReturnISO.value,rent:parseRp(o.amount),deposit:parseRp(o.deposit),total:parseRp(o.amount)+parseRp(o.deposit),payStatus:(o.status==='created')?t('common.orders.payPending'):(o.payStatus==='PAID'?t('common.orders.payPaid'):t('common.orders.payPending')),payCode:(o.status==='created')?'pending':(o.payStatus==='PAID'?'paid':'pending'),payMethod:o.payee||'-',payTime:(o.status==='created')?'':(o.payStatus==='PAID'?o.payTime:'')}];(o.renewOrders||[]).forEach(r=>{const cancelled=!!r.canceled;rows.push({kind:(r.renewType==='auto'?'自动续租':'手动续租'),kindLabel:(r.renewType==='auto'?t('common.orders.autoRenew'):t('common.orders.manualRenew')),plan:planText(r),periodStart:r.newRentStart,periodEnd:r.newRentEnd,rent:r.renewRentFee,deposit:0,total:r.renewRentFee,payStatus:cancelled?t('common.orderStatus.cancelled'):(r.payStatus==='PAID'?t('common.orders.payPaid'):t('common.orders.payPending')),payCode:cancelled?'cancelled':(r.payStatus==='PAID'?'paid':'pending'),payMethod:r.payMethod||({OFFLINE:'线下支付',WALLET:'钱包','2C2P':'2C2P'}[r.payChannel]||'-'),payTime:r.payStatus==='PAID'?r.payTime:'',canceled:cancelled,no:r.renewNo})});return rows});
+const feeRows=computed(()=>{if(demoListEmpty.value)return[];const o=orderInfo.value;if(!o)return[];const _started=o.status!=='created'&&o.status!=='pickup'&&o.status!=='cancelled';const _ps=_started?(o.rentStart||o.pickupTime||''):'';const _pe=_started?(o.rentEnd||planEndOfOrder(o,_ps)):'';const rows=[{kind:'主订单',kindLabel:t('user.orders.mainOrder'),plan:planText(o),periodStart:_ps||confPickupISO.value,periodEnd:_pe||confReturnISO.value,rent:parseRp(o.amount),deposit:parseRp(o.deposit),total:parseRp(o.amount)+parseRp(o.deposit),payStatus:(o.status==='created')?t('common.orders.payPending'):(o.payStatus==='PAID'?t('common.orders.payPaid'):t('common.orders.payPending')),payCode:(o.status==='created')?'pending':(o.payStatus==='PAID'?'paid':'pending'),payMethod:o.payee||'-',payTime:(o.status==='created')?'':(o.payStatus==='PAID'?o.payTime:''),createTime:(o.createTime||'-')}];(o.renewOrders||[]).forEach(r=>{const cancelled=!!r.canceled;rows.push({kind:(r.renewType==='auto'?'自动续租':'手动续租'),kindLabel:(r.renewType==='auto'?t('common.orders.autoRenew'):t('common.orders.manualRenew')),plan:planText(r),periodStart:r.newRentStart,periodEnd:r.newRentEnd,rent:r.renewRentFee,deposit:0,total:r.renewRentFee,payStatus:cancelled?t('common.orderStatus.cancelled'):(r.payStatus==='PAID'?t('common.orders.payPaid'):t('common.orders.payPending')),payCode:cancelled?'cancelled':(r.payStatus==='PAID'?'paid':'pending'),payMethod:r.payMethod||({OFFLINE:'线下支付',WALLET:'钱包','2C2P':'2C2P'}[r.payChannel]||'-'),payTime:r.payStatus==='PAID'?r.payTime:'',createTime:(r.createTime||'-'),canceled:cancelled,no:r.renewNo})});return rows});
 const feeCardRow=computed(()=>{const rows=feeRows.value;return rows.find(r=>r.kind==='主订单')||null});
 const rentOpen=ref(false),depositOpen=ref(false),totalOpen=ref(false);
 const feePaid=computed(()=>{const o=orderInfo.value;return !!o&&(o.payStatus==='PAID'||o.status!=='created')});
@@ -10006,7 +10008,7 @@ function buildRenewDemo(v){
   var base=rentEndOf(o); if(!base||base==='-')base='2026-09-28 14:00:00';
   function plus(s,n){ var dt=new Date(String(s).replace(/-/g,'/')); if(isNaN(dt.getTime()))return s; dt.setDate(dt.getDate()+n); var p=function(x){return String(x).padStart(2,'0')}; return dt.getFullYear()+'-'+p(dt.getMonth()+1)+'-'+p(dt.getDate())+' '+p(dt.getHours())+':'+p(dt.getMinutes())+':'+p(dt.getSeconds()); }
   var seq=String(Date.now()).slice(-9);
-  function mk(tag,type,st,days,rent){ return { subOrderNo:'YD'+seq+tag, renewType:type, rentType:'daily', rentCount:days, newRentStart:base, newRentEnd:plus(base,days), renewRentFee:rent, subPayStatus:st, payTime:st==='待支付'?'-':now(), paymentSplit:{ rentSplit:[{method:'2C2P',amount:rent}] } }; }
+  function mk(tag,type,st,days,rent){ return { subOrderNo:'YD'+seq+tag, createTime:now(), renewType:type, rentType:'daily', rentCount:days, newRentStart:base, newRentEnd:plus(base,days), renewRentFee:rent, subPayStatus:st, payTime:st==='待支付'?'-':now(), paymentSplit:{ rentSplit:[{method:'2C2P',amount:rent}] } }; }
   var rows=[];
   if(v==='mp'||v==='all')rows.push(mk('01','AGENT','待支付',2,100));
   if(v==='md'||v==='all')rows.push(mk('02','AGENT','已支付',2,130));
@@ -10024,9 +10026,9 @@ var feeTick=ref(0);
 var feeRows=computed(function(){
   feeTick.value;
   var d=do_.value; if(!d) return [];
-  var main={ kind:'主订单', kindLabel:t('merchant.orders.mainOrder'), renew:'-', plan:planText(d)||rentPlanText(d), period:(d.rentStart||'-')+' ~ '+rentEndOf(d), rent:Number(d.amount)||0, deposit:depositOf(d), total:(Number(d.amount)||0)+depositOf(d), payStatus:feePayStatus(), payCode:(dSt.value==='created'?'pending':(dPaySt.value||'paid')), payTime:(d.payTime||(showPaid.value?'2025-01-18 13:30:00':'-')) };
+  var main={ kind:'主订单', kindLabel:t('merchant.orders.mainOrder'), renew:'-', plan:planText(d)||rentPlanText(d), period:(d.rentStart||'-')+' ~ '+rentEndOf(d), rent:Number(d.amount)||0, deposit:depositOf(d), total:(Number(d.amount)||0)+depositOf(d), payStatus:feePayStatus(), payCode:(dSt.value==='created'?'pending':(dPaySt.value||'paid')), payTime:(d.payTime||(showPaid.value?'2025-01-18 13:30:00':'-')), createTime:(d.created||'-') };
   var rows=[main];
-  (d.renewSubOrders||[]).forEach(function(r){ var _rd=renewDepOf(r,d); rows.push({ kind:renewKindLabel(r), isRenew:true, subOrderNo:r.subOrderNo, payChannel:(r.payChannel||null), renew:renewKindLabel(r), paymentSplit:(r.paymentSplit||null), plan:planText(r)||rentPlanText(r), period:(r.newRentStart||'-')+' ~ '+(r.newRentEnd||'-'), rent:Number(r.renewRentFee)||0, deposit:_rd, total:(Number(r.renewRentFee)||0)+_rd, payStatus:(r.subPayStatus||'-'),payStatusLabel:renewPayStatusLabel(r.subPayStatus),payCode:renewPayStatusCode(r.subPayStatus),payTime:(r.payTime||r.subPayTime||'-') }); });
+  (d.renewSubOrders||[]).forEach(function(r){ var _rd=renewDepOf(r,d); rows.push({ kind:renewKindLabel(r), isRenew:true, subOrderNo:r.subOrderNo, payChannel:(r.payChannel||null), renew:renewKindLabel(r), paymentSplit:(r.paymentSplit||null), plan:planText(r)||rentPlanText(r), period:(r.newRentStart||'-')+' ~ '+(r.newRentEnd||'-'), rent:Number(r.renewRentFee)||0, deposit:_rd, total:(Number(r.renewRentFee)||0)+_rd, payStatus:(r.subPayStatus||'-'),payStatusLabel:renewPayStatusLabel(r.subPayStatus),payCode:renewPayStatusCode(r.subPayStatus),payTime:(r.payTime||r.subPayTime||'-'), createTime:(r.createTime||'-') }); });
   return rows;
 });
 /* ══ 费用卡片：当前展示行（默认最后一条 = 最近一笔续租单/主订单） ══ */
@@ -11386,13 +11388,13 @@ function initI18nData(){
   const statusRank={created:0,pickup:1,progress:2,return:3,overdue:4,breach:5,complete:6,cancelled:7};
   orders.value=[
     {id:'YD202609010001',vin:'LSVAU2Z0A11119000',customer:'Han Min',phone:'+86 13800001234',plan:'月租×' + (1) + '月',amount:450,status:'progress',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-09-01 10:00:00',payment:'offline',paySt:'paid',rentStart:'2026-08-28 14:00:00',renewSubOrders:[
-      {subOrderNo:'YD202609050021',renewType:'AGENT',rentType:'daily',rentCount:3,newRentStart:'2026-09-28 14:00:00',newRentEnd:'2026-10-01 14:00:00',renewRentFee:150,subPayStatus:'待支付',payTime:'-',paymentSplit:{rentSplit:[{method:'2C2P',amount:150}]}},
-      {subOrderNo:'YD202609150033',renewType:'AGENT',rentType:'weekly',rentCount:1,newRentStart:'2026-10-03 14:00:00',newRentEnd:'2026-10-10 14:00:00',renewRentFee:130,subPayStatus:'已支付',payTime:'2026-09-15 10:30:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:130}]}},
-      {subOrderNo:'YD202609200022',renewType:'AGENT',rentType:'daily',rentCount:2,newRentStart:'2026-10-01 14:00:00',newRentEnd:'2026-10-03 14:00:00',renewRentFee:100,subPayStatus:'待支付',payTime:'-',paymentSplit:{rentSplit:[{method:'2C2P',amount:100}]}},
-      {subOrderNo:'YD202609250044',renewType:'MANUAL',rentType:'weekly',rentCount:1,newRentStart:'2026-10-12 14:00:00',newRentEnd:'2026-10-19 14:00:00',renewRentFee:130,subPayStatus:'待支付',payTime:'-',paymentSplit:{rentSplit:[{method:'OFFLINE',amount:130}]}}
+      {subOrderNo:'YD202609050021',createTime:'2026-09-05 09:20:00',renewType:'AGENT',rentType:'daily',rentCount:3,newRentStart:'2026-09-28 14:00:00',newRentEnd:'2026-10-01 14:00:00',renewRentFee:150,subPayStatus:'待支付',payTime:'-',paymentSplit:{rentSplit:[{method:'2C2P',amount:150}]}},
+      {subOrderNo:'YD202609150033',createTime:'2026-09-15 10:28:00',renewType:'AGENT',rentType:'weekly',rentCount:1,newRentStart:'2026-10-03 14:00:00',newRentEnd:'2026-10-10 14:00:00',renewRentFee:130,subPayStatus:'已支付',payTime:'2026-09-15 10:30:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:130}]}},
+      {subOrderNo:'YD202609200022',createTime:'2026-09-20 16:40:00',renewType:'AGENT',rentType:'daily',rentCount:2,newRentStart:'2026-10-01 14:00:00',newRentEnd:'2026-10-03 14:00:00',renewRentFee:100,subPayStatus:'待支付',payTime:'-',paymentSplit:{rentSplit:[{method:'2C2P',amount:100}]}},
+      {subOrderNo:'YD202609250044',createTime:'2026-09-25 11:05:00',renewType:'MANUAL',rentType:'weekly',rentCount:1,newRentStart:'2026-10-12 14:00:00',newRentEnd:'2026-10-19 14:00:00',renewRentFee:130,subPayStatus:'待支付',payTime:'-',paymentSplit:{rentSplit:[{method:'OFFLINE',amount:130}]}}
     ]},
     {id:'YD202609010002',vin:'LSVAU2Z0A44444000',customer:'Wang Fang',phone:'+86 13800004444',plan:'月租×' + (1) + '月',amount:520,status:'progress',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-09-02 11:00:00',payment:'2c2p',paySt:'paid',rentStart:'2026-09-02 14:00:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:520}],depositSplit:[{method:'2C2P',amount:500}]},renewSubOrders:[
-      {subOrderNo:'YD202609150031',renewType:'AGENT',rentType:'weekly',rentCount:1,newRentStart:'2026-10-02 14:00:00',newRentEnd:'2026-10-09 14:00:00',renewRentFee:130,subPayStatus:'已支付',payTime:'2026-09-15 10:30:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:130}]}}
+      {subOrderNo:'YD202609150031',createTime:'2026-09-15 09:15:00',renewType:'AGENT',rentType:'weekly',rentCount:1,newRentStart:'2026-10-02 14:00:00',newRentEnd:'2026-10-09 14:00:00',renewRentFee:130,subPayStatus:'已支付',payTime:'2026-09-15 10:30:00',paymentSplit:{rentSplit:[{method:'2C2P',amount:130}]}}
     ]},
     {id:'YD202608210001',vin:'LSVAU2Z0A11111000',customer:'Chen Yi',phone:'+86 13800001111',plan:'月租×' + (1) + '月',amount:350,status:'created',type:'vehicle',item:'乐迪SAA',created:'2026-08-21 09:00:00',payment:'offline',paySt:'pending',rentStart:'2026-08-21 09:00:00'},
     {id:'YD202608210002',vin:'LSVAU2Z0A22222000',customer:'Li Er',phone:'+86 13800002222',plan:'月租×' + (1) + '月',amount:560,status:'created',type:'vehicle',item:'雅迪冠能3 S9 MAX',created:'2026-08-22 10:00:00',payment:'2c2p',paySt:'pending',rentStart:'2026-08-21 09:30:00',paySplitAudits:[{splitNo:'CF20260801001',operatorAccount:'zhang.wei',createTime:'2026-08-11 15:20:00',reason:'客户要求调高租金并调整渠道',before:{rentFee:560,deposit:500,rentSplit:[{method:'2C2P',amount:560}],depositSplit:[{method:'2C2P',amount:500}]},after:{rentFee:600,deposit:500,rentSplit:[{method:'2C2P',amount:400},{method:'WALLET',amount:200}],depositSplit:[{method:'2C2P',amount:500}]}}]},
