@@ -1609,10 +1609,10 @@ body.host-single-m #root-user{display:none}
 <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style="background:linear-gradient(145deg,#FF6A00 0%,#E55A00 100%);box-shadow:0 4px 12px rgba(255,106,0,.25)" data-page-node-id="5UyMBkF6ZjeMNULRjRp5fD">
 <span v-html="luci('bike','w-6 h-6 text-white')" data-page-node-id="lYaa6pgksmwOAag2qVrIkd"></span>
 </div>
-<div data-cp @click="navOpen('ovInfo')" class="flex-1 min-w-0 flex items-center gap-1.5 cursor-pointer active:opacity-70" data-page-node-id="IRx4Zq05bDpHqCXFyVJfL9">
+<div data-cp @click="loggedIn?navOpen('ovInfo'):openLogin('profile')" class="flex-1 min-w-0 flex items-center gap-1.5 cursor-pointer active:opacity-70" data-od-id="profile-header-main" data-page-node-id="IRx4Zq05bDpHqCXFyVJfL9">
 <div class="min-w-0">
-<div class="text-[16px] font-bold truncate" data-page-node-id="XQZV5hYRpLiBCP0eyPtE9V">User001</div>
-<div class="text-[13px] text-[#666] truncate">{{ hasPhone?boundPhone:(hasEmail?boundEmail:'') }}</div>
+<div class="text-[16px] font-bold truncate" data-page-node-id="XQZV5hYRpLiBCP0eyPtE9V">{{ loggedIn?'User001':$t('user.profile.loginRegister') }}</div>
+<div class="text-[13px] text-[#666] truncate">{{ loggedIn?(hasPhone?boundPhone:(hasEmail?boundEmail:'')):$t('user.profile.guestTip') }}</div>
 </div>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="71UzRVKUzbMqOZDWxPy1Q7"></span>
 </div>
@@ -1629,38 +1629,38 @@ body.host-single-m #root-user{display:none}
 
 <div class="bg-white rounded-2xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06)" data-od-id="profile-menu-card" data-page-node-id="GHBhSDo9EPsbNL15AyGcTg">
 
-<div data-cp @click="openMyOrders" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-order" data-page-node-id="Jnhmsd0lcoaGXvcg4Bkm4k">
+<div v-if="loggedIn" data-cp @click="openMyOrders" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-order" data-page-node-id="Jnhmsd0lcoaGXvcg4Bkm4k">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#EBF1FD" data-page-node-id="IWaUa5H2HoUmxdSiD2QKBF"><span v-html="luci('clipboard-list','w-[18px] h-[18px] text-[#2B3F5F]')" data-page-node-id="2RqSxM7FLCyDSHJBqqWBp9"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="kJ5SCha6BAWD5u9f5tpTT8">{{ $t('user.orders.myOrders') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="Dcl7hiCo64dBVmygFrfzLB"></span>
 </div>
 
-<div data-cp @click="navOpen('ovMessage')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-message" data-page-node-id="PrMsgRow">
+<div v-if="loggedIn" data-cp @click="navOpen('ovMessage')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-message" data-page-node-id="PrMsgRow">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#EBF1FD" data-page-node-id="PrMsgIcon"><span v-html="luci('bell','w-[18px] h-[18px] text-[#2B3F5F]')" data-page-node-id="PrMsgIconSvg"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="PrMsgLabel">{{ $t('user.message.title') }}</span>
 <span v-if="notifyUnread>0" class="min-w-[18px] h-[18px] px-1.5 rounded-full flex items-center justify-center text-[11px] font-semibold text-white shrink-0 tabular-nums" style="background:#DC2626" data-od-id="profile-message-badge" data-page-node-id="PrMsgBadge">{{ notifyUnread>99?'99+':notifyUnread }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="PrMsgChev"></span>
 </div>
 
-<div data-cp @click="openWallet" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-wallet" data-page-node-id="0RgyfkVdCuLoS8c6JRaPd7">
+<div v-if="loggedIn" data-cp @click="openWallet" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-wallet" data-page-node-id="0RgyfkVdCuLoS8c6JRaPd7">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#F0FDF4" data-page-node-id="NXmQ8MucT7IamLtutSguEL"><span v-html="luci('wallet','w-[18px] h-[18px] text-[#17A34A]')" data-page-node-id="VvRhZzzgfRTACMjn4nImTW"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="xRMKnEoEX0AK5Gg4n8qI4Y">{{ $t('user.wallet.title') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="Nh0jcER3Z7mopJiEqo6wHQ"></span>
 </div>
 
-<div data-cp @click="openMyDevices()" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-my-devices" data-page-node-id="PrMyDev1">
+<div v-if="loggedIn" data-cp @click="openMyDevices()" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-my-devices" data-page-node-id="PrMyDev1">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#EBF1FD" data-page-node-id="PrMyDev2"><span v-html="luci('bike','w-[18px] h-[18px] text-[#2B3F5F]')" data-page-node-id="PrMyDev3"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="PrMyDev4">{{ $t('user.profile.myDevices') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="PrMyDev5"></span>
 </div>
 
-<div data-cp @click="navOpen('subIdInfo')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-renter" data-page-node-id="PrRenterRow">
+<div v-if="loggedIn" data-cp @click="navOpen('subIdInfo')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-renter" data-page-node-id="PrRenterRow">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#EBF1FD" data-page-node-id="PrRenterIcon"><span v-html="luci('user','w-[18px] h-[18px] text-[#2B3F5F]')" data-page-node-id="PrRenterIconSvg"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="PrRenterLabel">{{ $t('common.profile.realName') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="PrRenterChev"></span>
 </div>
 
-<div class="px-4 py-3 flex items-center gap-3" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-about" data-page-node-id="CyBqBThubKVfDMqTUgz1cJ">
+<div data-cp @click="navOpen('subAbout')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-about" data-page-node-id="CyBqBThubKVfDMqTUgz1cJ">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#FFF4E6" data-page-node-id="jUQ96GerKuAAEMQNiKUj7x"><span v-html="luci('info','w-[18px] h-[18px] text-[#FF6A00]')" data-page-node-id="AngT0svA3eC6jGNz3awPyq"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="XUHBSnbRLXlRIYQDfe8X97">{{ $t('user.profile.aboutUs') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="lN2yPCcNUCbsHFNKvj0e8N"></span>
@@ -1672,13 +1672,14 @@ body.host-single-m #root-user{display:none}
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="Rw084ySSSoa5m6tmPXYE1x"></span>
 </div>
 
-<div class="px-4 py-3 flex items-center gap-3" data-od-id="profile-feedback" data-page-node-id="h6DKluoaHWOOuqCub5xgGo">
+<div data-cp @click="navOpen('subFeedback')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" data-od-id="profile-feedback" data-page-node-id="h6DKluoaHWOOuqCub5xgGo">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#FEF2F2" data-page-node-id="HteVCrSQnQvBNMTq6ra0GK"><span v-html="luci('message-square','w-[18px] h-[18px] text-[#DC2626]')" data-page-node-id="SQARvhxauHOXVGSlToGU5y"></span></div>
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="ikoHrXCcIP8CD1db0DbkgX">{{ $t('user.profile.feedback') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="dUZ9NeEDQfxBjevQfVpAxm"></span>
 </div>
 
 </div>
+
 </div>
 
 </div></transition>
@@ -2300,7 +2301,7 @@ body.host-single-m #root-user{display:none}
 </page>
 
 <!-- 版本检测弹窗（全局，与商户端一致） -->
-<confirm-dialog :open="showVersionCheck" :z="900" oid="version-check-modal" :mask-close="false" data-page-node-id="M3nW9pc2Ebjy5CVtPrcZyF" :title="hasNewVersion?$t('common.version.newVersion'):$t('common.version.latest')" :cancel-text="hasNewVersion?$t('common.version.exitApp'):''" :confirm-text="hasNewVersion?(updating?$t('common.version.downloading'):$t('common.version.updateNow')):$t('common.version.gotIt')" confirm-bg="var(--accent)" @close="exitApp" @confirm="hasNewVersion?goUpdate():(showVersionCheck=false)"><template v-if="hasNewVersion"><div class="text-[13px] text-[#666] text-center" data-page-node-id="M2AY8SoEVgd6IDkTpCLpG3">{{ $t('common.version.latestVersion', { version: latestVersion }) }}</div><div class="bg-[#F6F7F9] rounded-lg px-4 py-3 text-[13px] text-[#555] leading-relaxed" data-page-node-id="HYaHINjqjnAsIFQX1wBg7x">{{ updateDesc }}</div></template><div v-else class="text-[13px] text-[#666] text-center" data-page-node-id="bFJTCLGNVpHc5p7gZkPveT">V1.30.0</div></confirm-dialog>
+<confirm-dialog :open="showVersionCheck" :z="900" oid="version-check-modal" :mask-close="false" data-page-node-id="M3nW9pc2Ebjy5CVtPrcZyF" :title="hasNewVersion?$t('common.version.newVersion'):$t('common.version.latest')" :cancel-text="hasNewVersion?$t('common.version.exitApp'):''" :confirm-text="hasNewVersion?(updating?$t('common.version.downloading'):$t('common.version.updateNow')):$t('common.version.gotIt')" confirm-bg="var(--accent)" @close="exitApp" @confirm="hasNewVersion?goUpdate():(showVersionCheck=false)"><template v-if="hasNewVersion"><div class="text-[13px] text-[#666] text-center" data-page-node-id="M2AY8SoEVgd6IDkTpCLpG3">{{ $t('common.version.latestVersion', { version: latestVersion }) }}</div><div class="bg-[#F6F7F9] rounded-lg px-4 py-3 text-[13px] text-[#555] leading-relaxed" data-page-node-id="HYaHINjqjnAsIFQX1wBg7x">{{ updateDesc }}</div></template><div v-else class="text-[13px] text-[#666] text-center" data-page-node-id="bFJTCLGNVpHc5p7gZkPveT">V1.3.2</div></confirm-dialog>
 <page :open="appExited" :z="950" trans="fd" oid="app-exited-overlay" bg="black" data-page-node-id="q13jdnnFC4bjzMFxOedt3i"><exited-view @relaunch="relaunchApp" data-page-node-id="MAjfi7AZPIXmTC5xywr3Yl"></exited-view></page>
 
 
@@ -2403,11 +2404,11 @@ body.host-single-m #root-user{display:none}
 
 <div data-cp @click="checkVersion" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="settings-version-row" data-page-node-id="4pIREs1BFxMyfgwI6wkCXL">
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="IlOnrV6x0DU8oSNnCOqd7W">{{ $t('common.profile.settingsVersion') }}</span>
-<div class="flex items-center gap-1" data-page-node-id="ANDeV37Dlk9XdL4vm13njl"><span class="text-[13px] text-[#666] font-mono" data-page-node-id="j8J1bkBMiUl7Hd7XDKeBLH">V1.30.0</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="QdnYv2HR99oTLMNO0hQoly"></span></div>
+<div class="flex items-center gap-1" data-page-node-id="ANDeV37Dlk9XdL4vm13njl"><span class="text-[13px] text-[#666] font-mono" data-page-node-id="j8J1bkBMiUl7Hd7XDKeBLH">V1.3.2</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="QdnYv2HR99oTLMNO0hQoly"></span></div>
 </div>
 </div>
 </div>
-<div class="absolute bottom-7 left-5 right-5" data-od-id="settings-logout-btn" data-page-node-id="NSNwr9TyBGJL8oCNkRyB5y">
+<div v-if="loggedIn" class="absolute bottom-7 left-5 right-5" data-od-id="settings-logout-btn" data-page-node-id="NSNwr9TyBGJL8oCNkRyB5y">
 <button data-cp @click="profileMod='logout'" class="w-full py-4 rounded-xl text-[16px] font-semibold cursor-pointer active:opacity-90 transition-colors" style="background:#fff;border:1px solid #E5E5E5;color:#DC2626" data-page-node-id="288K5YO0tjXMpZXjiIQkuV">{{ $t('common.action.logout') }}</button>
 </div>
 </page>
@@ -2499,6 +2500,88 @@ body.host-single-m #root-user{display:none}
 </kv-card>
 <empty-state v-if="!notifyList.length" icon="bell" :text="$t('user.message.empty')" :sub="$t('user.message.emptySub')" data-page-node-id="MsgCenterEmpty"></empty-state>
 </div>
+</page>
+
+<!-- 关于我们（合规：运营主体与企业信息、版权所有者，登录前后均可查看） -->
+<page :open="profileSub==='about'" :z="600" :swipe-close="navBack" oid="about-page" data-page-node-id="AboutPageRoot">
+  <nav-bar :title="$t('user.profile.aboutUs')" border-color="" data-page-node-id="AboutNavBar" @back="navBack()"></nav-bar>
+  <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide bg-white flex flex-col" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-page-node-id="AboutScroll">
+    <div class="flex flex-col items-center pt-[92px] shrink-0" data-page-node-id="AboutBrand">
+      <img src="images/logo.png" class="w-[96px] h-auto select-none" alt="YADEA" draggable="false" data-page-node-id="AboutLogo">
+      <div class="mt-6 text-[20px] font-semibold" style="color:#1A1A1A" data-page-node-id="AboutBrandName">YADEA ChargeGo</div>
+      <div class="mt-3 text-[14px]" style="color:#999999" data-page-node-id="AboutVersion">{{ $t('user.about.currentVersion') }}：V1.3.2</div>
+    </div>
+    <div class="px-6 mt-auto pb-10 text-center text-[12px] leading-relaxed" style="color:#B0B0B0" data-page-node-id="AboutLegal">
+      <div class="mb-1" data-page-node-id="AboutLegalOperator">PT YADEA DISTRIBUTOR INDONESIA</div>
+      <div class="mb-1" data-page-node-id="AboutLegalAddr">Sequis Tower, Jl. Jend. Sudirman Kav. 71, Jakarta 12190, Indonesia</div>
+      <div data-page-node-id="AboutLegalHotline">{{ $t('user.about.hotline') }}：+62 21 5089 8888</div>
+      <div data-page-node-id="AboutLegalEmail">{{ $t('user.about.email') }}：support@yadea.co.id</div>
+      <div class="mt-3" data-od-id="about-copyright" data-page-node-id="AboutCopyright">{{ $t('user.about.copyright') }}</div>
+    </div>
+  </div>
+</page>
+
+<!-- 意见反馈 -->
+<page :open="profileSub==='feedback'" :z="600" :swipe-close="navBack" oid="feedback-page" data-page-node-id="FbPageRoot">
+  <nav-bar :title="$t('user.profile.feedback')" right-wide data-page-node-id="FbNavBar" @back="navBack()"><template #right><span class="text-[13px] font-medium whitespace-nowrap cursor-pointer active:opacity-70" style="color:#2F6FEB" data-cp @click="navOpen('subFeedbackHistory')" data-od-id="feedback-records" data-page-node-id="FbRecordsBtn">{{ $t('user.feedback.history') }}</span></template></nav-bar>
+  <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-3 pb-28" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-page-node-id="FbScroll">
+    <div class="bg-white rounded-2xl p-5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="feedback-card" data-page-node-id="FbCard">
+      <!-- 反馈类型（单选） -->
+      <form-field :label="$t('user.feedback.typeLabel')" required bare :error="fbTagErr" data-page-node-id="FbTagsRow">
+        <div class="flex flex-wrap gap-2" data-od-id="feedback-tags" data-page-node-id="FbTags">
+          <div v-for="o in fbTagOpts" :key="o.v" data-cp @click="pickFbTag(o.v)" class="filter-pill" :style="fbTag===o.v?{background:'var(--accent)',color:'#fff',border:'1px solid var(--accent)'}:{background:'#fff',color:'#333333',border:'1px solid #E5E5E5'}" :data-od-id="'feedback-tag-'+o.v" :data-page-node-id="'FbTag-'+o.v">{{ o.l }}</div>
+        </div>
+      </form-field>
+      <!-- 问题与意见 -->
+      <form-field :label="$t('user.feedback.contentLabel')" required box-class="ff-box-gray is-area" :error="fbContentErr" :counter="(fbContent||'').length" counter-max="255" oid="feedback-content-row" data-page-node-id="FbContentRow">
+        <textarea v-model="fbContent" maxlength="255" :placeholder="$t('user.feedback.placeholder')" class="w-full h-[96px] px-3.5 py-3 text-[14px] resize-none outline-none bg-transparent" style="caret-color:var(--accent)" data-od-id="feedback-content" data-page-node-id="FbContent" @input="fbContentErr=''"></textarea>
+      </form-field>
+      <!-- 发生问题的图片 -->
+      <form-field :label="$t('user.feedback.photoTip')" bare data-page-node-id="FbPhotoRow">
+      <div class="grid grid-cols-3 gap-2.5" data-od-id="feedback-photos" data-page-node-id="FbPhotos">
+        <div v-for="(p,i) in fbPhotos" :key="p.id" class="relative w-full h-[96px] rounded-xl overflow-hidden cursor-pointer" data-cp @click="openFbPreview(i)" :data-od-id="'feedback-photo-'+i" data-page-node-id="FbPhotoItem">
+          <div class="absolute inset-0 flex items-center justify-center" style="background:linear-gradient(135deg,#2B3F5F 0%,#3E5678 100%)"><span v-html="luci('image','w-8 h-8 text-white/80')" data-page-node-id="FbPhotoIcon"></span></div>
+          <div class="absolute bottom-0 right-0 w-7 h-7 flex items-center justify-center text-white" style="background:rgba(0,0,0,.45)" data-cp @click.stop="openFbMore(i)" :data-od-id="'feedback-photo-more-'+i" data-page-node-id="FbPhotoMore"><span v-html="luci('more-horizontal','w-4 h-4')" data-page-node-id="FbPhotoMoreIcon"></span></div>
+        </div>
+        <div v-if="fbPhotos.length<5" class="relative w-full h-[96px] rounded-xl overflow-hidden cursor-pointer flex flex-col items-center justify-center text-[#6B7280]" style="background:#fff;border:1.5px dashed #D9DEE7" data-cp @click="openFbPicker('add')" data-od-id="feedback-photo-add" data-page-node-id="FbPhotoAdd">
+          <span v-html="luci('plus','w-6 h-6')" data-page-node-id="FbPhotoAddIcon"></span>
+          <span class="text-[12px] mt-1" data-page-node-id="FbPhotoAddLabel">{{ $t('user.idInfo.addImage') }}</span>
+          <span class="text-[10px] mt-0.5 text-[#B0B8C4]" data-page-node-id="FbPhotoCount">{{ fbPhotos.length }}/5</span>
+        </div>
+      </div></form-field>
+    </div>
+  </div>
+  <div class="absolute bottom-7 left-5 right-5" data-page-node-id="FbFoot">
+    <button data-cp @click="submitFeedback" class="w-full h-[50px] flex items-center justify-center rounded-full text-[16px] font-semibold text-white border-none cursor-pointer transition-colors active:opacity-90" style="background:#2B3F5F" data-od-id="feedback-submit" data-page-node-id="FbSubmit">{{ $t('user.feedback.submit') }}</button>
+  </div>
+</page>
+
+<!-- 历史反馈 -->
+<page :open="profileSub==='feedbackHistory'" :z="600" :swipe-close="navBack" oid="feedback-history-page" data-page-node-id="FbHPageRoot">
+  <nav-bar :title="$t('user.feedback.history')" data-page-node-id="FbHNavBar" @back="navBack()"></nav-bar>
+  <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-3 pb-8" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-page-node-id="FbHScroll">
+    <template v-if="fbHistory.length">
+      <kv-card v-for="r in fbHistory" :key="r.id" class="mb-3" :data-od-id="'feedback-record-'+r.id" data-page-node-id="FbHCard">
+        <kv-row :label="$t('user.feedback.typeLabel')" :value="fbTagLabel(r.tag)"></kv-row>
+        <kv-row :label="$t('user.feedback.contentLabel')" :value="r.content||'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+        <kv-row :label="$t('user.feedback.photoTip')" align="top">
+          <template #value>
+            <div v-if="r.photos&&r.photos.length" class="flex flex-wrap justify-end gap-1.5 max-w-[132px] ml-auto" :data-od-id="'feedback-record-'+r.id+'-photos'">
+              <div v-for="(p,i) in r.photos" :key="p.id" data-cp @click="openFbPreviewFrom(r,i)" class="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center shrink-0" style="background:linear-gradient(135deg,#2B3F5F 0%,#3E5678 100%)" :data-od-id="'feedback-record-'+r.id+'-photo-'+i">
+                <span v-html="luci('image','w-4 h-4 text-white/80')"></span>
+              </div>
+            </div>
+            <span v-else>-</span>
+          </template>
+        </kv-row>
+        <kv-row :label="$t('user.feedback.feedbackTime')" :value="r.time"></kv-row>
+        <kv-row :label="$t('user.feedback.handleStatus')" :value="r.status==='handled'?$t('user.feedback.statusHandled'):$t('user.feedback.statusPending')"></kv-row>
+        <kv-row v-if="r.status==='handled'" :label="$t('user.feedback.handleTime')" :value="r.handleTime||'-'"></kv-row>
+        <kv-row v-if="r.status==='handled'" :label="$t('user.feedback.replyContent')" :value="r.reply||'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+      </kv-card>
+    </template>
+    <empty-state v-else icon="message-square" :text="$t('user.feedback.empty')" data-od-id="feedback-history-empty" data-page-node-id="FbHEmpty"></empty-state>
+  </div>
 </page>
 
 <!-- 用车人（原实名信息：概念改为用车人，入口在我的 tab「我的设备」下方） -->
@@ -2670,6 +2753,34 @@ body.host-single-m #root-user{display:none}
   </div>
 </page>
 
+<!-- 意见反馈 · 拍照/相册选择器 -->
+<bottom-sheet :open="showFbPicker" :title="$t('user.idInfo.addImage')" oid="fb-picker-mask" panel-oid="fb-picker-sheet" @close="showFbPicker=false">
+  <div class="px-5 pt-1" data-page-node-id="FbPickerBody">
+    <div class="grid grid-cols-2 gap-2.5" data-page-node-id="FbPickerGrid">
+      <div data-cp @click="pickFbSource('camera')" class="flex flex-col items-center justify-center py-5 rounded-xl cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1.5px solid #E5E5E5" data-od-id="fb-picker-camera" data-page-node-id="FbPickerCamera">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2" style="background:#EBF1FD" data-page-node-id="FbPickerCameraIcon"><span v-html="luci('camera','w-5 h-5 text-[#2B3F5F]')" data-page-node-id="FbPickerCameraSvg"></span></div>
+        <span class="text-[13px] font-medium" data-page-node-id="FbPickerCameraLabel">{{ $t('common.action.takePhoto') }}</span>
+      </div>
+      <div data-cp @click="pickFbSource('album')" class="flex flex-col items-center justify-center py-5 rounded-xl cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border:1.5px solid #E5E5E5" data-od-id="fb-picker-album" data-page-node-id="FbPickerAlbum">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-2" style="background:#EBF1FD" data-page-node-id="FbPickerAlbumIcon"><span v-html="luci('image','w-5 h-5 text-[#2B3F5F]')" data-page-node-id="FbPickerAlbumSvg"></span></div>
+        <span class="text-[13px] font-medium" data-page-node-id="FbPickerAlbumLabel">{{ $t('common.action.album') }}</span>
+      </div>
+    </div>
+  </div></bottom-sheet>
+
+<!-- 意见反馈 · 图片更多操作 -->
+<bottom-sheet :open="showFbAction" :title="$t('user.common.moreOps')" oid="fb-action-mask" panel-oid="fb-action-sheet" @close="showFbAction=false">
+  <div class="px-5 pt-1" data-page-node-id="FbActionBody">
+    <div data-cp @click="fbActionReupload()" class="py-3.5 text-center text-[15px] text-[#1A1A1A] cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F5F5F5" data-od-id="fb-action-reupload" data-page-node-id="FbActionReupload">{{ $t('user.idInfo.reupload') }}</div>
+    <div data-cp @click="fbActionDelete()" class="py-3.5 text-center text-[15px] text-[#FF4343] cursor-pointer active:bg-[#F6F7F9]" data-od-id="fb-action-delete" data-page-node-id="FbActionDelete">{{ $t('user.feedback.deleteImage') }}</div>
+  </div>
+</bottom-sheet>
+
+<!-- 意见反馈 · 图片大图预览 -->
+<page :open="showFbPreview" :z="2500" trans="fd" bg="#000" oid="fb-preview-page" data-page-node-id="FbPreviewPage" @close="showFbPreview=false">
+  <image-viewer :src="fbPreviewItem" @close="showFbPreview=false" data-page-node-id="FbPreviewViewer"></image-viewer>
+</page>
+
 <!-- 拍照/相册选择器 -->
 <bottom-sheet :open="showIdPicker" :title="idPickerKind==='driver'?$t('user.idInfo.licensePhoto'):$t('user.idInfo.idPhoto')" :mask-z="idSelectMode?1921:750" oid="id-picker-mask" panel-oid="id-picker-sheet" @close="showIdPicker=false">
   <div class="px-5 pt-1" data-page-node-id="Pjz0muOCcKskjIghhbaFdQ">
@@ -2722,7 +2833,7 @@ body.host-single-m #root-user{display:none}
 <confirm-dialog :open="profileMod" :title="profileMdT" :desc="profileMdD" :loading="profileModLoading" z="800" oid="profile-modal" @close="(profileMod=null)" @confirm="profileMdOk"></confirm-dialog>
 
 <transition name="tab-fade" mode="out-in" data-page-node-id="nNL3PHBJ3r1u17XPQnPu32">
-<div v-if="!loggedIn" data-cp @click="openLogin('home')" class="absolute left-0 right-0 z-[99] flex items-center justify-between px-4 py-3 cursor-pointer active:opacity-90" style="bottom:83px;background:#2B3F5F" data-od-id="home-login-banner" data-page-node-id="Bw0GFVEto7rjaSzaZ4Gqhn">
+<div v-if="!loggedIn&&tab==='home'" data-cp @click="openLogin('home')" class="absolute left-0 right-0 z-[99] flex items-center justify-between px-4 py-3 cursor-pointer active:opacity-90" style="bottom:83px;background:#2B3F5F" data-od-id="home-login-banner" data-page-node-id="Bw0GFVEto7rjaSzaZ4Gqhn">
 <span class="text-[13px] text-white font-medium" data-page-node-id="Wrdx04Tzbtl9eGQvC2Znfr">{{ $t('user.common.notLoggedInTap') }}</span>
 <button data-cp @click.stop="openLogin('home')" class="px-3 py-1.5 rounded-lg text-[12px] font-semibold text-white" style="border:1px solid rgba(255,255,255,.5);background:transparent" data-page-node-id="kwqcdaFMUCCOwgTDA76LRN">{{ $t('user.common.goLogin') }}</button>
 </div>
@@ -2958,6 +3069,14 @@ body.host-single-m #root-user{display:none}
 <div class="demo-ops-chips">
 <div class="demo-ops-chip" :class="loggedIn?'is-on':''" data-cp @click="setLoggedIn(true)">已登录</div>
 <div class="demo-ops-chip" :class="!loggedIn?'is-on':''" data-cp @click="setLoggedIn(false)">未登录</div>
+</div>
+</div>
+
+<div class="demo-ops-section" data-od-id="demo-feedback-state">
+<div class="demo-ops-label">新反馈状态</div>
+<div class="demo-ops-chips">
+<div class="demo-ops-chip" :class="!demoFbHandled?'is-on':''" data-cp @click="setFbHandled(false)" data-od-id="demo-fb-pending">待处理</div>
+<div class="demo-ops-chip" :class="demoFbHandled?'is-on':''" data-cp @click="setFbHandled(true)" data-od-id="demo-fb-handled">已处理</div>
 </div>
 </div>
 
@@ -7467,7 +7586,7 @@ function findOrderById(id){if(!id)return null;const book=orderDataByCategory||{}
    兜底：消息缺 orderId 或订单号查不到时回落「我的订单」 */
 function onNotifyClick(m){const it=notifyList.value.find(x=>x.id===m.id);if(it)it.read=true;const hit=it?findOrderById(it.orderId):null;if(!hit){openMyOrders();return}orderInfo.value=orderInfoOf(hit.order,hit.cat);if(it&&(it.eventId==='orderRefunding'||it.eventId==='orderRefunded')){openRefundList()}else{showFeeDetail.value=true}}
 function markAllNotifyRead(){notifyList.value.forEach(m=>{m.read=true});toast(t('user.toast.msgAllRead'),'success')}
-var myCarPtrInit=false;function setTab(t){if(!loggedIn.value&&(t==='vehicles'||t==='profile')){openLogin(t);return}tab.value=t;if(t==='vehicles'&&!myCarPtrInit){nextTick(()=>{if(document.getElementById('sc-mycar')){initPullToRefresh('sc-mycar','ptr-mycar',refreshMyCar);myCarPtrInit=true}})}}
+var myCarPtrInit=false;function setTab(t){if(!loggedIn.value&&t==='vehicles'){openLogin(t);return}tab.value=t;if(t==='vehicles'&&!myCarPtrInit){nextTick(()=>{if(document.getElementById('sc-mycar')){initPullToRefresh('sc-mycar','ptr-mycar',refreshMyCar);myCarPtrInit=true}})}}
 
 
 const weatherScene=ref('sunny');
@@ -8200,6 +8319,51 @@ const idSelectMode=ref(false);
 function openIdSelect(){idSelectMode.value=true;navOpen('subIdInfo')}
 function closeIdSelect(){navDrop('subIdInfo')}
 function confirmIdSelect(rec){var r=rec||null;if(!r)return;confirmIdInfo.value=r;navDrop('subIdInfo');toast(t('user.idInfo.realNameSelected'),'info')}
+/* ══ 意见反馈 ══ */
+const fbTagOpts=computed(()=>[
+  {v:'consult',l:t('user.feedback.tagConsult')},
+  {v:'issue',l:t('user.feedback.tagIssue')},
+  {v:'optimize',l:t('user.feedback.tagOptimize')},
+  {v:'support',l:t('user.feedback.tagSupport')},
+  {v:'other',l:t('user.feedback.tagOther')},
+  {v:'station',l:t('user.feedback.tagStation')}
+]);
+const fbTag=ref('');
+const fbContent=ref('');
+const fbTagErr=ref('');
+const fbContentErr=ref('');
+const fbPhotos=ref([]);
+const fbHistory=ref([]);
+const demoFbHandled=ref(false);
+const showFbPicker=ref(false);
+const fbPickerSH=ref('');
+const showFbAction=ref(false);
+const fbActionTarget=ref(null);
+const showFbPreview=ref(false);
+const fbPreviewItem=ref(null);
+function pickFbTag(v){fbTag.value=v;fbTagErr.value=''}
+function fbPhotoItem(){return{id:Date.now()+'-'+Math.random().toString(36).slice(2,6),time:new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-')}}
+function openFbPicker(sh){fbPickerSH.value=sh||'add';showFbPicker.value=true}
+function pickFbSource(src){if(fbPickerSH.value==='reupload'){doFbReupload()}else{commitFbPhoto()}showFbPicker.value=false}
+function commitFbPhoto(){if(fbPhotos.value.length>=5){toast(t('user.feedback.photoMax'),'warn');return}fbPhotos.value.push(fbPhotoItem())}
+function doFbReupload(){var i=fbActionTarget.value;if(i==null)return;var arr=fbPhotos.value.slice();if(arr[i])arr[i]=fbPhotoItem();fbPhotos.value=arr;fbActionTarget.value=null}
+function openFbPreview(i){var p=fbPhotos.value[i];if(!p)return;fbPreviewItem.value={color:'#2B3F5F',label:t('user.feedback.photoTip'),time:p.time};showFbPreview.value=true}
+function openFbPreviewFrom(r,i){var p=(r&&r.photos||[])[i];if(!p)return;fbPreviewItem.value={color:'#2B3F5F',label:t('user.feedback.photoTip'),time:p.time};showFbPreview.value=true}
+function openFbMore(i){fbActionTarget.value=i;showFbAction.value=true}
+function fbActionReupload(){if(fbActionTarget.value==null)return;showFbAction.value=false;openFbPicker('reupload')}
+function fbActionDelete(){var i=fbActionTarget.value;if(i==null)return;var arr=fbPhotos.value.slice();arr.splice(i,1);fbPhotos.value=arr;showFbAction.value=false;fbActionTarget.value=null}
+function setFbHandled(v){demoFbHandled.value=!!v}
+function fbTagLabel(v){var o=fbTagOpts.value.filter(function(x){return x.v===v})[0];return o?o.l:'-'}
+function submitFeedback(){
+  fbTagErr.value=fbTag.value?'':t('user.feedback.typeRequired');
+  fbContentErr.value=(fbContent.value||'').trim()?'':t('user.feedback.contentRequired');
+  if(fbTagErr.value||fbContentErr.value)return;
+  var nowStr=new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-');
+  var handled=!!demoFbHandled.value;
+  fbHistory.value.unshift({id:Date.now(),tag:fbTag.value,content:(fbContent.value||'').trim(),photos:fbPhotos.value.map(function(p){return{id:p.id,time:p.time}}),status:handled?'handled':'pending',handleTime:handled?nowStr:'',reply:handled?t('user.feedback.mockReply'):'',time:nowStr});
+  fbTag.value='';fbContent.value='';fbPhotos.value=[];fbTagErr.value='';fbContentErr.value='';
+  toast(t('user.feedback.submitted'),'success');
+}
 const idPickerSource=ref(null);
 const showIdPreview=ref(false);
 const idPreviewItem=ref(null);
@@ -8303,7 +8467,7 @@ function sendPwdCode(ch){if(pwdCd.value>0)return;const channel=ch||pwdChannel.va
 function nextPwdVerify(){if(!(pwdCode.value||'').trim()){toast(MSG.value.codeRequired,'warn');return}if(!/^\d{6}$/.test(pwdCode.value)){toast(MSG.value.codeFormat,'warn');return}npwd.value='';npwd2.value='';npwdVis.value=false;npwd2Vis.value=false;navOpen('subPwdReset')}
 function doResetPwd(){const a=(npwd.value||'').trim(),b=(npwd2.value||'').trim();if(!a){toast(MSG.value.pwdRequired,'warn');return}if(!b){toast(MSG.value.confirmRequired,'warn');return}if(a.length<6||a.length>64){toast(MSG.value.pwdLen,'warn');return}if(!/^[!-~]{6,64}$/.test(a)){toast(MSG.value.pwdChars,'warn');return}if(a!==b){toast(MSG.value.confirmMismatch,'warn');return}showRentLoading.value=true;setTimeout(function(){showRentLoading.value=false;hasPwd.value=true;toast(t('common.profile.pwdUpdated'),'success');clearInterval(pwdTmr);pwdCd.value=0;pwdCode.value='';npwd.value='';npwd2.value='';navDrop('subPwdVerify')},600)}
 
-const showVersionCheck=ref(false),hasNewVersion=ref(false),latestVersion=ref('V1.30.0'),updateDesc=ref(''),updating=ref(0),appExited=ref(false);
+const showVersionCheck=ref(false),hasNewVersion=ref(false),latestVersion=ref('V1.3.2'),updateDesc=ref(''),updating=ref(0),appExited=ref(false);
 const showWallet=ref(false),showWalletLedger=ref(false),showTopup=ref(false),walletBalanceVisible=ref(true);
 const walletAccount=ref({activeStoreId:'雅迪电动车(双流区雅和北路店)',wallets:{'雅迪电动车(双流区雅和北路店)':{rechargeBalance:250000,bonusBalance:50000,rechargeFrozen:0,bonusFrozen:0,totalBalance:300000,totalFrozen:0,lastUpdated:new Date().toISOString(),opened:true},'雅迪电动车(锦江区春熙路店)':{rechargeBalance:80000,bonusBalance:20000,rechargeFrozen:0,bonusFrozen:0,totalBalance:100000,totalFrozen:0,lastUpdated:new Date().toISOString(),opened:true},'雅迪电动车(武侯区磨子桥店)':{rechargeBalance:0,bonusBalance:0,rechargeFrozen:0,bonusFrozen:0,totalBalance:0,totalFrozen:0,lastUpdated:new Date().toISOString(),opened:false},'雅迪电动车(高新区天府大道店)':{rechargeBalance:0,bonusBalance:0,rechargeFrozen:0,bonusFrozen:0,totalBalance:0,totalFrozen:0,lastUpdated:new Date().toISOString(),opened:false}}});
 const walletActive=computed(()=>{var _w=walletAccount.value.activeStoreId&&walletAccount.value.wallets[walletAccount.value.activeStoreId];if(!_w)return null;var _m=MERGED.myWallet||{};return Object.assign({},_w,{totalBalance:_m.totalBalance!=null?_m.totalBalance:_w.totalBalance,rechargeBalance:_m.rechargeBalance!=null?_m.rechargeBalance:_w.rechargeBalance,bonusBalance:_m.bonusBalance!=null?_m.bonusBalance:_w.bonusBalance,rechargeFrozen:_m.rechargeFrozen!=null?_m.rechargeFrozen:_w.rechargeFrozen,bonusFrozen:_m.bonusFrozen!=null?_m.bonusFrozen:_w.bonusFrozen})});
@@ -8399,7 +8563,7 @@ const scanBindMode=ref(false);
 const scanBindDevice=ref(null);
 const showBindConfirm=ref(false);
 const bindConfirmLoading=ref(false);
-function checkVersion(){showVersionCheck.value=true;hasNewVersion.value=false;latestVersion.value='V1.30.0';updateDesc.value='';updating.value=0}
+function checkVersion(){showVersionCheck.value=true;hasNewVersion.value=false;latestVersion.value='V1.3.2';updateDesc.value='';updating.value=0}
 function doScan(){navDrop('scan');if(scanCtx.value==='charge'){setTimeout(function(){toast(t('user.charge.deviceConnected'),'success')},200);return}var _isB=scanCtx.value==='battery';var _pool=((_isB?SYS_BATTERIES.value:SYS_VEHICLES.value)||[]).filter(function(x){return (_isB?x.battNo:x.vin)&&x.status==='空闲'});var _hit=_pool[0];if(!_hit){toast(t(_isB?'user.vehicles.noBindableBattery':'user.vehicles.noBindableVehicle'),'warn');return}scanBindMode.value=true;if(_isB){scanBindDevice.value={kind:'battery',id:_hit.battNo,code:_hit.battNo,model:_hit.model,soc:(_hit.level!=null?_hit.level:100),source:'manual',discharge:true}}else{scanBindDevice.value={kind:'vehicle',id:100+scanBoundVehicles.value.length,name:_hit.model,vin:_hit.vin,dark:false,source:'manual',locked:false}}setTimeout(function(){navOpen(_isB?'batteryDetail':'vehicleDetail')},60)}
 const scanTorch=ref(false);
 const manualVin=ref('');
@@ -8525,6 +8689,9 @@ scan:{open:()=>{scanning.value=true},close:()=>{scanning.value=false}},
 manualVin:{open:()=>{showManualVin.value=true},close:()=>{showManualVin.value=false}},
 ovInfo:{open:()=>{profileOV.value='info'},close:()=>{if(profileOV.value==='info')profileOV.value=null}},
 ovSettings:{open:()=>{profileOV.value='settings'},close:()=>{if(profileOV.value==='settings')profileOV.value=null}},
+subAbout:{open:()=>{profileSub.value='about'},close:()=>{if(profileSub.value==='about')profileSub.value=null}},
+subFeedback:{open:()=>{profileSub.value='feedback'},close:()=>{if(profileSub.value==='feedback')profileSub.value=null}},
+subFeedbackHistory:{open:()=>{profileSub.value='feedbackHistory'},close:()=>{if(profileSub.value==='feedbackHistory')profileSub.value=null}},
 subIdInfo:{open:()=>{profileSub.value='idInfo'},close:()=>{idSelectMode.value=false;if(profileSub.value==='idInfo')profileSub.value=null}},
 subIdAdd:{open:()=>{profileSub.value='idAdd'},close:()=>{if(profileSub.value==='idAdd')profileSub.value=null}},
 subIdDetail:{open:()=>{profileSub.value='idDetail'},close:()=>{if(profileSub.value==='idDetail')profileSub.value=null}},
@@ -8582,9 +8749,9 @@ if(showChargeList.value)return 'chargeList';
   return '';
 }});
 
-onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);buildChargeDevices();setInterval(function(){goHomeBanner((homeBannerIdx.value+1)%homeBanners.length)},4000)});
+onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);buildChargeDevices();setInterval(function(){goHomeBanner((homeBannerIdx.value+1)%homeBanners.length)},4000);if(!fbHistory.value.length)fbHistory.value.push({id:'fb-mock-1',tag:'issue',content:t('user.feedback.mockContent'),photos:[{id:'fb-mock-p1',time:'2026-10-20 09:12:35'},{id:'fb-mock-p2',time:'2026-10-20 09:12:36'}],status:'handled',handleTime:'2026-10-21 10:26:40',reply:t('user.feedback.mockHandledReply'),time:'2026-10-20 09:12:30'})});
 function setLoggedIn(v){loggedIn.value=v}
-return{goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyCenter,toggleNotifyOs,toggleOsNotifyPerm,centerSwEnabled,osSwEnabled,swCls,enterOsNotify,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,intlLocale,langOptions,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,catOptLabels,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,planText,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,orderListTitle,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,setLoggedIn,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
+return{fbTagOpts,fbTag,fbTagErr,fbContent,fbContentErr,fbPhotos,fbHistory,demoFbHandled,setFbHandled,showFbPicker,showFbAction,showFbPreview,fbPreviewItem,fbActionTarget,pickFbTag,pickFbSource,openFbPicker,openFbPreview,openFbPreviewFrom,openFbMore,fbActionReupload,fbActionDelete,fbTagLabel,submitFeedback,goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyCenter,toggleNotifyOs,toggleOsNotifyPerm,centerSwEnabled,osSwEnabled,swCls,enterOsNotify,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,intlLocale,langOptions,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,catOptLabels,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confPeriodDetail,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,planText,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,orderListTitle,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,confirmPayment,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,setLoggedIn,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
 });
 
 app.directive('swipe-close',{mounted(el,b){var sx=0,sy=0;el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(sx<40&&dx>60&&Math.abs(dy)<Math.abs(dx)*0.5)b.value()},{passive:true})}});
