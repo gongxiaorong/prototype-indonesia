@@ -882,6 +882,7 @@
       "refundTime": "退款時間",
       "status": {
         "active": "已生效",
+        "pending": "待生效",
         "refunded": "已退款"
       }
     },

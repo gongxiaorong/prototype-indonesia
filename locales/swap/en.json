@@ -882,6 +882,7 @@
       "refundTime": "Refund Time",
       "status": {
         "active": "Active",
+        "pending": "Pending activation",
         "refunded": "Refunded"
       }
     },

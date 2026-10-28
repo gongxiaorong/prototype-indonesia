@@ -882,6 +882,7 @@
       "refundTime": "เวลาคืนเงิน",
       "status": {
         "active": "มีผลแล้ว",
+        "pending": "รอมีผล",
         "refunded": "คืนเงินแล้ว"
       }
     },

@@ -882,6 +882,7 @@
       "refundTime": "Waktu Pengembalian Dana",
       "status": {
         "active": "Aktif",
+        "pending": "Menunggu aktivasi",
         "refunded": "Dana Dikembalikan"
       }
     },
