@@ -56,6 +56,8 @@
     },
     "orders": {
       "cancelOrder": "Cancel Order",
+      "anyVehicle": "Any Vehicle Model",
+      "anyBatteryModel": "Any Model",
       "cancelTime": "Cancellation Time",
       "confirmCancelDesc": "Are you sure you want to cancel this order? This cannot be undone.",
       "deposit": "Deposit",

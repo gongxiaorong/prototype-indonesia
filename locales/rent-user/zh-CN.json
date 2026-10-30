@@ -56,6 +56,8 @@
     },
     "orders": {
       "cancelOrder": "取消订单",
+      "anyVehicle": "任意车型",
+      "anyBatteryModel": "任意型号",
       "cancelTime": "取消时间",
       "confirmCancelDesc": "确定取消该订单？取消后不可恢复",
       "deposit": "押金",
