@@ -78,7 +78,6 @@
       "payment": "Payment Method",
       "plan": "Rental Plan",
       "refund": "Refund",
-      "refundCurrentOperator": "Current Account",
       "refundDetail": "Refund Details",
       "refundEmptyTitle": "No refund records",
       "refundFailed": "Refund Failed",
@@ -87,11 +86,6 @@
       "refundSuccess": "Refund Successful",
       "rent": "Rent",
       "status": "Order Status",
-      "refundReasonEarlyReturn": "Early return, rent difference refunded",
-      "refundReasonUserCancel": "User cancelled the order",
-      "refundReasonPriceAdjust": "Customer requested higher rent and channel adjustment",
-      "refundReasonCustomerRequest": "Customer requested a refund",
-      "refundReasonMerchantDiscount": "Merchant discount compensation",
       "autoRenew": "Auto Renewal",
       "refundProcessing": "Refunding",
       "pickupTime": "Pickup Time",
@@ -263,19 +257,10 @@
       "status": "Status",
       "amount": "Amount",
       "type": "Type",
-      "currency": "Currency",
-      "currencyCNY": "CNY",
-      "currencyHKD": "HKD",
-      "currencyIDR": "IDR",
       "registrationTime": "Registration Time",
       "refundSource": "Refund Source",
-      "preCancelStatus": "Status Before Cancellation",
       "amountDue": "Amount Due",
-      "vehicleOps": "Vehicle Operations",
-      "vehicleStartStop": "Vehicle Start/Stop",
       "messageNotify": "Notifications",
-      "hasAlert": "Has Alerts",
-      "loggedIn": "Logged In",
       "regulator": "Regulator",
       "durationMinutes": "{n} min",
       "validUntil": "Valid until {date}",
@@ -283,15 +268,10 @@
       "frameNo": "Frame No.",
       "noPhone": "No phone number",
       "emptyFeeDetail": "No fee details",
-      "permEmptyNode": "No permission nodes on this page",
-      "assistantName": "Xiaodi",
-      "langZhHK": "Traditional Chinese (Hong Kong)",
       "sceneRestaurant": "Restaurant",
       "sceneOfficeBuilding": "Office Building",
       "sceneOffice": "Office",
       "sceneParking": "Parking Lot",
-      "selected": "Selected",
-      "unselected": "Not Selected",
       "rechargeOrder": "Top-up Order",
       "renewal": "Renewal",
       "balanceFlow": "Balance Statement",
@@ -330,19 +310,10 @@
       "useCurrentLocation": "Use Current Location",
       "confirmLabel": "Confirm"
     },
-    "unit": {
-      "vehicle": "vehicle(s)",
-      "battery": "battery(ies)"
-    },
     "promo": {
       "slogan": "Ride Yadea for less",
       "safety": "Your safety is our top priority!",
-      "features": "Locate · Remote lock · Horn",
-      "bannerBattery": "TTFAR Graphene Lithium Battery · 100 km Range",
-      "bannerWarranty": "5-Year Warranty · Worry-Free Riding",
-      "bannerPromo": "5-Year Warranty · Event Jul 17–19",
-      "bannerSafety": "Quality Riding · Safe & Reliable",
-      "bannerDeal": "DE2 Color Edition · Only Rp 3,499"
+      "features": "Locate · Remote lock · Horn"
     },
     "createTime": "Created Time",
     "scan": {
@@ -379,9 +350,6 @@
       "maxDuration": "Max Charging Duration",
       "enableStatus": "Enable Status",
       "usageStatus": "Usage Status",
-      "enabled": "Enabled",
-      "disabled": "Disabled",
-      "idle": "Idle",
       "charging": "Charging",
       "shop": "Store",
       "noShop": "No Store Assigned",
@@ -412,9 +380,7 @@
     },
     "chargingOrder": {
       "title": "Charging Orders",
-      "orderNo": "Order Number",
       "customer": "User Account",
-      "orderStatus": "Order Status",
       "payChannel": "Payment Channel",
       "payStatus": "Payment Status",
       "selectedDuration": "Selected Duration",
@@ -424,10 +390,7 @@
       "basicInfo": "Basic Information",
       "chargeDetail": "Charging Details",
       "refundAmount": "Refund Amount",
-      "refundRecords": "Refund Records",
-      "cancelOrder": "Cancel Order",
       "finishOrder": "Finish Order",
-      "refund": "Refund",
       "detailTitle": "Charging order details",
       "refundListTitle": "Charging order refund records",
       "refundExceed": "Refund amount exceeds refundable amount"
@@ -508,17 +471,12 @@
       "storeLevelLabel": "Store Level",
       "positionDeleted": "Position deleted",
       "commonFunctions": "Common Features",
-      "packageSaved": "Package saved",
       "syncOrderTip": "Sync {n} orders to the new pricing. This cannot be undone, please proceed with caution.",
       "syncOrderTitle": "Sync Order Pricing",
       "syncOrderConfirmDesc": "Sync {n} orders to the new pricing? This cannot be undone, please proceed with caution.",
       "pkgEditSaved": "Saved successfully",
       "syncOrderSavedSynced": "Saved successfully. {n} orders synced to the new pricing.",
       "addUserInfo": "Add User Info",
-      "storeLevel": {
-        "agent": "Agent Store",
-        "operated": "Operated Store"
-      },
       "modelCount": "{n} vehicles total",
       "csAdd": "Add Customer Service",
       "roleStoreManager": "Store Manager",
@@ -551,7 +509,6 @@
       "roleAdmin": "Admin",
       "relateVehicle": "Applicable Vehicle Model",
       "modelName": "Vehicle Model Name",
-      "permControl": "Permission Control",
       "servicePeriod": "Service Period: {start} - {end}",
       "noMatchingModels": "No Matching Vehicle Models Found",
       "accountAddSuccess": "Account created successfully",
@@ -582,7 +539,6 @@
       "accountAdd": "Add Account",
       "confirmPassword": "Confirm Password",
       "csPhonePlaceholder": "Please enter customer service phone number",
-      "notLoggedIn": "Not Logged In",
       "modelSaved": "Vehicle Model Saved",
       "accountEdit": "Edit Account",
       "position": "Position",
@@ -601,13 +557,8 @@
       "rangeInteger": "Please enter an integer between {min} and {max}"
     },
     "home": {
-      "view": "Overview",
       "noMatchingAlertsSub": "No alerts match the current filters",
       "noAlerts": "No Alerts",
-      "stats": {
-        "vehicle": "Vehicle operation statistics",
-        "business": "Business dashboard"
-      },
       "alertTypeGpsStale": "GPS Location Stale",
       "bizStats": {
         "monthRevenue": "This Month's Revenue",
@@ -622,7 +573,6 @@
       "alertTypeOffline": "Vehicle Offline",
       "alertTypeAll": "All Types",
       "vehStatsTitle": "Vehicle Operations",
-      "vehicleMap": "Vehicle map",
       "noPendingAlerts": "No pending alerts",
       "noAlertsSub": "All vehicles are operating normally",
       "alertTypePowerOff": "Suspected Power Off",
@@ -643,18 +593,15 @@
       "armSuccess": "Armed successfully",
       "editVehicleInfo": "Edit Vehicle Info",
       "motorLockHint": "The vehicle cannot be ridden once the motor is locked",
-      "batteryAllOn": "All On",
       "addSuccess": "Added successfully",
       "location": "Vehicle Location",
       "searchBattModelName": "Search Battery Model Name",
-      "commandLock": "Lock/Unlock",
       "motorLockedToast": "Motor locked",
       "batteryEdit": "Edit Battery",
       "batteryModelManage": "Battery Model Management",
       "batteryLockMotor": "Lock Motor",
       "filterOnlineStatus": "Online Status",
       "searchBattModel": "Search Battery Model",
-      "batteryAllOff": "All Off",
       "motorUnlockHint": "The vehicle can be ridden again once the motor is unlocked",
       "inputVinNo": "Enter vehicle number",
       "statusRented": "Rented",
@@ -668,7 +615,6 @@
       "statusIdle": "Idle",
       "pressToLock": "Long Press to Lock",
       "confirmDisarmDesc": "Are you sure you want to disarm this vehicle?",
-      "functionControl": "Function Control",
       "batteryModelName": "Battery Model Name",
       "selectModelType": "Select Model",
       "searchModel": "Search Vehicle Model",
@@ -687,7 +633,6 @@
       "battNoPosSub": "Location syncs after binding the vehicle",
       "batteryNoMatchModel": "No Matching Battery Models Found",
       "enterControllerId": "Enter controller ID",
-      "track": "Vehicle Track",
       "lastLocationUnknown": "Last location unknown",
       "vehicleFilter": "All Filters",
       "batteryModelEdit": "Edit Battery Model",
@@ -712,7 +657,6 @@
       "ignoreHandled": "Handled On-site",
       "orderId": "Related Order",
       "detail": "Alert Details",
-      "list": "Alert List",
       "actionResolve": "Mark Resolved",
       "levelHigh": "High",
       "ignoreMistake": "False Alarm",
@@ -759,7 +703,6 @@
       "rechargeExceedRefund": "Top-up amount exceeds refundable amount",
       "rechargeConfigEdit": "Edit Top-up Config",
       "rechargeConfig": "Top-up Config",
-      "rechargeConfigList": "Top-up Config List",
       "rechargeConfigAddSuccess": "Top-up config added",
       "giftExceedRefund": "Bonus amount exceeds refundable amount",
       "rechargeConfigDelete": "Delete Top-up Config",
@@ -769,9 +712,6 @@
       "rechargeDetail": "Top-up Details",
       "moreOps": "More wallet actions",
       "selectType": "Please select a type",
-      "noFlowStore": "No transaction stores",
-      "selected": "Store selected",
-      "unselected": "No store selected",
       "ledgerOrderConsume": "Order Expense",
       "ledgerRechargeRefund": "Top-up Refund",
       "ledgerGift": "Bonus",
@@ -792,10 +732,7 @@
       "confirmRefundDesc": "End this order? Total refund Rp{total}",
       "docDeleteDesc": "Are you sure you want to delete this document? This action cannot be undone.",
       "payProcessing": "Processing",
-      "paymentOnline": "Online Payment",
-      "refundReasonUserDeposit": "User requested deposit refund",
       "confirmLostDesc": "After reporting lost, the vehicle motor will be locked and cannot be ridden normally",
-      "listBattery": "Battery Rental",
       "refundModalRentLimit": "Refundable Cap {amount}",
       "confirmUnlostDesc": "After clearing the lost report, the vehicle motor will be unlocked and riding will resume",
       "battBound": "Battery bound",
@@ -816,7 +753,6 @@
       "noIdleVehicle": "No idle vehicle available",
       "anyVehicle": "Any Vehicle Model",
       "anyBatteryModel": "Any Model",
-      "listVehicle": "Vehicle Rental",
       "reportLost": "Report Vehicle Lost",
       "lostSuccess": "Reported lost successfully",
       "unlostSuccess": "Lost status cleared",
@@ -824,9 +760,6 @@
       "datePickerStart": "Select start date",
       "orderEnded": "Order ended",
       "vehicleChanged": "Vehicle changed",
-      "payStatus": "Payment Status",
-      "listPackage": "Vehicle & Battery Package",
-      "listRecharge": "Top-up Order",
       "rechargeDetail": "Top-up Order Details",
       "rechargeRefunds": "Top-up Refund Records",
       "typePackage": "Package",
@@ -868,25 +801,12 @@
       "permViewVehOps": "View Vehicle Operations",
       "permOrderManage": "Order Management",
       "permViewOrderList": "View Order List",
-      "group": {
-        "veh": "Vehicle management",
-        "ord": "Vehicle orders",
-        "ordPkg": "Package orders",
-        "ordBatt": "Battery orders"
-      },
-      "sysConfig": "System Config",
       "permRefundProcess": "Refund Processing",
       "permDashboard": "Dashboard",
-      "userList": "User List",
-      "permViewRevenue": "View Revenue Data",
-      "csList": "Customer Service List"
+      "permViewRevenue": "View Revenue Data"
     },
     "login": {
-      "welcome": "Welcome",
       "registerDemo": "Register Account (Prototype Demo)"
-    },
-    "model": {
-      "list": "Vehicle Model List"
     },
     "common": {
       "confirmBind": "Confirm Bind",
@@ -899,7 +819,6 @@
       "thumbnail": "Thumbnail",
       "clickUpload": "Tap to upload",
       "moreOps": "More Actions",
-      "defaultStore": "Default Store",
       "renewalAutoDeduct": "Renewal fee auto-deducted from wallet"
     },
     "battery": {
@@ -910,8 +829,6 @@
       "lostUnlockHint": "The battery will be unlocked once the lost report is cleared",
       "lostLockHint": "Once reported lost, the battery is locked and cannot discharge",
       "dischargeForbid": "After disabling, the device will not be able to discharge",
-      "discharge": "Battery Discharge",
-      "manage": "Battery Management",
       "position": "Battery Location",
       "reportLost": "Report battery as lost",
       "dischargeAllowed": "Discharge allowed",
@@ -930,23 +847,16 @@
       }
     },
     "version": {
-      "suggestUpdate": "Suggest Update",
-      "updateDesc": "- Improved vehicle positioning accuracy\n- Added version detection\n- Fixed known issues",
-      "forceUpdate": "Force Update",
-      "updateAvailable": "Version Update"
+      "updateDesc": "- Improved vehicle positioning accuracy\n- Added version detection\n- Fixed known issues"
     },
     "package": {
       "namePlaceholder": "Please enter package name",
-      "list": "Package List",
       "manage": "Package Management",
       "weekDaysRequired": "Enter weekly rental days",
       "monthDaysRequired": "Enter monthly rental days"
     },
     "vehicle": {
-      "list": "Vehicle list",
-      "command": {
-        "find_car": "Locate vehicle by horn"
-      }
+      "list": "Vehicle list"
     },
     "price": {
       "record": "Price Adjustment Records",
@@ -959,20 +869,10 @@
       "after": "After Adjustment",
       "changeConfirmDesc": "Original rent {rent}, original deposit {deposit}; after change, rent {newRent}, deposit {newDeposit}."
     },
-    "position": {
-      "list": "Position list"
-    },
     "dialcode": {
       "noResults": "No matching country/region found"
     },
-    "batt_model": {
-      "list": "Battery Model List"
-    },
-    "account": {
-      "list": "Account list"
-    },
     "order_config": {
-      "edit": "Edit Config",
       "statusFlow": "Order Status Flow"
     },
     "status": {

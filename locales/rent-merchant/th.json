@@ -78,7 +78,6 @@
       "payment": "วิธีการชำระเงิน",
       "plan": "แผนการเช่า",
       "refund": "คืนเงิน",
-      "refundCurrentOperator": "บัญชีปัจจุบัน",
       "refundDetail": "รายละเอียดการคืนเงิน",
       "refundEmptyTitle": "ไม่มีประวัติการคืนเงิน",
       "refundFailed": "คืนเงินไม่สำเร็จ",
@@ -87,11 +86,6 @@
       "refundSuccess": "คืนเงินสำเร็จ",
       "rent": "ค่าเช่า",
       "status": "สถานะคำสั่งซื้อ",
-      "refundReasonEarlyReturn": "คืนรถก่อนกำหนด คืนส่วนต่างค่าเช่า",
-      "refundReasonUserCancel": "ผู้ใช้ยกเลิกคำสั่งซื้อ",
-      "refundReasonPriceAdjust": "ลูกค้าขอปรับค่าเช่าสูงขึ้นและเปลี่ยนช่องทาง",
-      "refundReasonCustomerRequest": "ลูกค้าขอคืนเงิน",
-      "refundReasonMerchantDiscount": "ค่าชดเชยส่วนลดร้านค้า",
       "autoRenew": "ต่ออายุอัตโนมัติ",
       "refundProcessing": "กำลังคืนเงิน",
       "pickupTime": "เวลารับ",
@@ -263,19 +257,10 @@
       "status": "สถานะ",
       "amount": "จำนวนเงิน",
       "type": "ประเภท",
-      "currency": "สกุลเงิน",
-      "currencyCNY": "CNY",
-      "currencyHKD": "HKD",
-      "currencyIDR": "IDR",
       "registrationTime": "เวลาลงทะเบียน",
       "refundSource": "แหล่งเงินคืน",
-      "preCancelStatus": "สถานะก่อนยกเลิก",
       "amountDue": "ยอดที่ต้องชำระ",
-      "vehicleOps": "การจัดการยานพาหนะ",
-      "vehicleStartStop": "เปิด/ปิดยานพาหนะ",
       "messageNotify": "การแจ้งเตือน",
-      "hasAlert": "มีการแจ้งเตือน",
-      "loggedIn": "เข้าสู่ระบบแล้ว",
       "regulator": "หน่วยงานกำกับดูแล",
       "durationMinutes": "{n} นาที",
       "validUntil": "ใช้ได้ถึง {date}",
@@ -283,15 +268,10 @@
       "frameNo": "หมายเลขตัวถัง",
       "noPhone": "ไม่มีหมายเลขโทรศัพท์",
       "emptyFeeDetail": "ยังไม่มีรายละเอียดค่าใช้จ่าย",
-      "permEmptyNode": "หน้านี้ไม่มีโหนดสิทธิ์การใช้งาน",
-      "assistantName": "เสี่ยวตี๋",
-      "langZhHK": "จีนตัวเต็ม (ฮ่องกง)",
       "sceneRestaurant": "ร้านอาหาร",
       "sceneOfficeBuilding": "อาคารสำนักงาน",
       "sceneOffice": "ออฟฟิศ",
       "sceneParking": "ที่จอดรถ",
-      "selected": "เลือกแล้ว",
-      "unselected": "ยังไม่เลือก",
       "rechargeOrder": "คำสั่งซื้อเติมเงิน",
       "renewal": "การต่ออายุ",
       "balanceFlow": "รายการยอดคงเหลือ",
@@ -330,19 +310,10 @@
       "useCurrentLocation": "ใช้ตำแหน่งปัจจุบัน",
       "confirmLabel": "ยืนยัน"
     },
-    "unit": {
-      "vehicle": "คัน",
-      "battery": "ก้อน"
-    },
     "promo": {
       "slogan": "ขี่ Yadea ในราคาประหยัด",
       "safety": "ความปลอดภัยของคุณคือสิ่งสำคัญที่สุดของเรา!",
-      "features": "ระบุตำแหน่ง · ล็อกระยะไกล · บีบแตร",
-      "bannerBattery": "แบตเตอรี่ลิเทียมกราเฟีน TTFAR · วิ่งไกล 100 กม.",
-      "bannerWarranty": "รับประกัน 5 ปี · ขับขี่อย่างสบายใจ",
-      "bannerPromo": "รับประกัน 5 ปี · กิจกรรม 17–19 ก.ค.",
-      "bannerSafety": "คุณภาพ · ปลอดภัยเชื่อถือได้",
-      "bannerDeal": "DE2 รุ่นสีสัน · เพียง Rp 3,499"
+      "features": "ระบุตำแหน่ง · ล็อกระยะไกล · บีบแตร"
     },
     "createTime": "เวลาสร้าง",
     "scan": {
@@ -379,9 +350,6 @@
       "maxDuration": "ระยะเวลาชาร์จสูงสุด",
       "enableStatus": "สถานะการเปิดใช้งาน",
       "usageStatus": "สถานะการใช้งาน",
-      "enabled": "เปิดใช้งาน",
-      "disabled": "ปิดใช้งาน",
-      "idle": "ว่าง",
       "charging": "กำลังชาร์จ",
       "shop": "ร้านค้า",
       "noShop": "ยังไม่ระบุร้านค้า",
@@ -412,9 +380,7 @@
     },
     "chargingOrder": {
       "title": "คำสั่งซื้อการชาร์จ",
-      "orderNo": "หมายเลขคำสั่งซื้อ",
       "customer": "บัญชีผู้ใช้",
-      "orderStatus": "สถานะคำสั่งซื้อ",
       "payChannel": "ช่องทางการชำระเงิน",
       "payStatus": "สถานะการชำระเงิน",
       "selectedDuration": "ระยะเวลาที่เลือก",
@@ -424,10 +390,7 @@
       "basicInfo": "ข้อมูลพื้นฐาน",
       "chargeDetail": "รายละเอียดการชาร์จ",
       "refundAmount": "จำนวนเงินคืน",
-      "refundRecords": "ประวัติการคืนเงิน",
-      "cancelOrder": "ยกเลิกคำสั่งซื้อ",
       "finishOrder": "สิ้นสุดคำสั่งซื้อ",
-      "refund": "คืนเงิน",
       "detailTitle": "รายละเอียดคำสั่งซื้อการชาร์จ",
       "refundListTitle": "บันทึกการคืนเงินคำสั่งซื้อการชาร์จ",
       "refundExceed": "จำนวนเงินคืนเกินจำนวนที่คืนได้"
@@ -508,17 +471,12 @@
       "storeLevelLabel": "ระดับร้านค้า",
       "positionDeleted": "ลบตำแหน่งแล้ว",
       "commonFunctions": "ฟังก์ชันที่ใช้บ่อย",
-      "packageSaved": "บันทึกแพ็กเกจแล้ว",
       "syncOrderTip": "ซิงค์ {n} รายการสั่งซื้อเป็นราคาใหม่ ไม่สามารถย้อนกลับได้ โปรดดำเนินการอย่างระมัดระวัง",
       "syncOrderTitle": "ซิงค์ราคารายการสั่งซื้อ",
       "syncOrderConfirmDesc": "ยืนยันซิงค์ {n} รายการสั่งซื้อเป็นราคาใหม่หรือไม่? ไม่สามารถย้อนกลับได้ โปรดดำเนินการอย่างระมัดระวัง",
       "pkgEditSaved": "บันทึกสำเร็จ",
       "syncOrderSavedSynced": "บันทึกสำเร็จ ซิงค์ {n} รายการสั่งซื้อเป็นราคาใหม่แล้ว",
       "addUserInfo": "เพิ่มข้อมูลผู้ใช้",
-      "storeLevel": {
-        "agent": "ร้านตัวแทน",
-        "operated": "ร้านที่ดำเนินการเอง"
-      },
       "modelCount": "ยานพาหนะทั้งหมด {n} คัน",
       "csAdd": "เพิ่มบริการลูกค้า",
       "roleStoreManager": "ผู้จัดการร้าน",
@@ -551,7 +509,6 @@
       "roleAdmin": "ผู้ดูแลระบบ",
       "relateVehicle": "รุ่นรถที่รองรับ",
       "modelName": "ชื่อรุ่นรถ",
-      "permControl": "การควบคุมสิทธิ์",
       "servicePeriod": "ระยะเวลาบริการ: {start} - {end}",
       "noMatchingModels": "ไม่พบรุ่นรถที่ตรงกัน",
       "accountAddSuccess": "สร้างบัญชีสำเร็จ",
@@ -582,7 +539,6 @@
       "accountAdd": "เพิ่มบัญชี",
       "confirmPassword": "ยืนยันรหัสผ่าน",
       "csPhonePlaceholder": "กรุณากรอกหมายเลขโทรศัพท์บริการลูกค้า",
-      "notLoggedIn": "ยังไม่ได้เข้าสู่ระบบ",
       "modelSaved": "บันทึกรุ่นรถแล้ว",
       "accountEdit": "แก้ไขบัญชี",
       "position": "ตำแหน่ง",
@@ -601,13 +557,8 @@
       "rangeInteger": "กรุณากรอกจำนวนเต็มระหว่าง {min} ถึง {max}"
     },
     "home": {
-      "view": "ภาพรวม",
       "noMatchingAlertsSub": "ไม่มีการแจ้งเตือนที่ตรงกับตัวกรองปัจจุบัน",
       "noAlerts": "ไม่มีการแจ้งเตือน",
-      "stats": {
-        "vehicle": "สถิติการดำเนินงานยานพาหนะ",
-        "business": "แดชบอร์ดธุรกิจ"
-      },
       "alertTypeGpsStale": "ตำแหน่ง GPS เก่า",
       "bizStats": {
         "monthRevenue": "รายได้เดือนนี้",
@@ -622,7 +573,6 @@
       "alertTypeOffline": "ยานพาหนะออฟไลน์",
       "alertTypeAll": "ทุกประเภท",
       "vehStatsTitle": "การดำเนินงานยานพาหนะ",
-      "vehicleMap": "แผนที่ยานพาหนะ",
       "noPendingAlerts": "ไม่มีการแจ้งเตือนที่รอดำเนินการ",
       "noAlertsSub": "ยานพาหนะทั้งหมดทำงานปกติ",
       "alertTypePowerOff": "สงสัยว่าปิดเครื่อง",
@@ -643,18 +593,15 @@
       "armSuccess": "ตั้งโหมดป้องกันสำเร็จ",
       "editVehicleInfo": "แก้ไขข้อมูลยานพาหนะ",
       "motorLockHint": "ไม่สามารถขับยานพาหนะได้เมื่อล็อคมอเตอร์แล้ว",
-      "batteryAllOn": "เปิดทั้งหมด",
       "addSuccess": "เพิ่มสำเร็จ",
       "location": "ตำแหน่งยานพาหนะ",
       "searchBattModelName": "ค้นหาชื่อรุ่นแบตเตอรี่",
-      "commandLock": "ล็อค/ปลดล็อค",
       "motorLockedToast": "ล็อคมอเตอร์แล้ว",
       "batteryEdit": "แก้ไขแบตเตอรี่",
       "batteryModelManage": "การจัดการรุ่นแบตเตอรี่",
       "batteryLockMotor": "ล็อคมอเตอร์",
       "filterOnlineStatus": "สถานะออนไลน์",
       "searchBattModel": "ค้นหารุ่นแบตเตอรี่",
-      "batteryAllOff": "ปิดทั้งหมด",
       "motorUnlockHint": "สามารถขับยานพาหนะได้อีกครั้งเมื่อปลดล็อคมอเตอร์",
       "inputVinNo": "กรุณากรอกหมายเลขยานพาหนะ",
       "statusRented": "เช่าแล้ว",
@@ -668,7 +615,6 @@
       "statusIdle": "ว่าง",
       "pressToLock": "กดค้างเพื่อล็อค",
       "confirmDisarmDesc": "คุณแน่ใจหรือไม่ที่จะปิดโหมดป้องกันยานพาหนะนี้?",
-      "functionControl": "การควบคุมฟังก์ชัน",
       "batteryModelName": "ชื่อรุ่นแบตเตอรี่",
       "selectModelType": "เลือกรุ่น",
       "searchModel": "ค้นหารุ่นรถ",
@@ -687,7 +633,6 @@
       "battNoPosSub": "ตำแหน่งจะซิงค์หลังจากผูกยานพาหนะ",
       "batteryNoMatchModel": "ไม่พบรุ่นแบตเตอรี่ที่ตรงกัน",
       "enterControllerId": "กรุณากรอกรหัสตัวควบคุม",
-      "track": "เส้นทางยานพาหนะ",
       "lastLocationUnknown": "ไม่ทราบตำแหน่งล่าสุด",
       "vehicleFilter": "ตัวกรองทั้งหมด",
       "batteryModelEdit": "แก้ไขรุ่นแบตเตอรี่",
@@ -712,7 +657,6 @@
       "ignoreHandled": "จัดการที่หน้างาน",
       "orderId": "คำสั่งซื้อที่เกี่ยวข้อง",
       "detail": "รายละเอียดการแจ้งเตือน",
-      "list": "รายการแจ้งเตือน",
       "actionResolve": "ทำเครื่องหมายว่าจัดการแล้ว",
       "levelHigh": "สูง",
       "ignoreMistake": "เตือนเท็จ",
@@ -759,7 +703,6 @@
       "rechargeExceedRefund": "จำนวนเงินเติมเกินจำนวนที่คืนได้",
       "rechargeConfigEdit": "แก้ไขการตั้งค่าเงินเติม",
       "rechargeConfig": "การตั้งค่าเงินเติม",
-      "rechargeConfigList": "รายการการตั้งค่าเงินเติม",
       "rechargeConfigAddSuccess": "เพิ่มการตั้งค่าเงินเติมแล้ว",
       "giftExceedRefund": "จำนวนโบนัสเกินจำนวนที่คืนได้",
       "rechargeConfigDelete": "ลบการตั้งค่าเงินเติม",
@@ -769,9 +712,6 @@
       "rechargeDetail": "รายละเอียดการเติมเงิน",
       "moreOps": "การดำเนินการกระเป๋าเงินเพิ่มเติม",
       "selectType": "กรุณาเลือกประเภท",
-      "noFlowStore": "ไม่มีร้านค้าที่มีรายการเดินบัญชี",
-      "selected": "เลือกร้านค้าแล้ว",
-      "unselected": "ยังไม่ได้เลือกร้านค้า",
       "ledgerOrderConsume": "ค่าใช้จ่ายคำสั่งซื้อ",
       "ledgerRechargeRefund": "คืนเงินการเติม",
       "ledgerGift": "โบนัส",
@@ -792,10 +732,7 @@
       "confirmRefundDesc": "จบคำสั่งซื้อนี้หรือไม่? รวมการคืนเงิน Rp{total}",
       "docDeleteDesc": "คุณแน่ใจหรือไม่ที่จะลบเอกสารนี้? การกระทำนี้ไม่สามารถย้อนกลับได้",
       "payProcessing": "กำลังดำเนินการ",
-      "paymentOnline": "ชำระเงินออนไลน์",
-      "refundReasonUserDeposit": "ผู้ใช้ร้องขอคืนเงินมัดจำ",
       "confirmLostDesc": "หลังจากแจ้งหาย มอเตอร์ยานพาหนะจะถูกล็อคและไม่สามารถขับได้ตามปกติ",
-      "listBattery": "เช่าแบตเตอรี่",
       "refundModalRentLimit": "เพดานการคืนเงิน {amount}",
       "confirmUnlostDesc": "หลังจากล้างรายงานหาย มอเตอร์ยานพาหนะจะถูกปลดล็อคและสามารถขับต่อได้",
       "battBound": "ผูกแบตเตอรี่แล้ว",
@@ -816,7 +753,6 @@
       "noIdleVehicle": "ไม่มียานพาหนะว่าง",
       "anyVehicle": "รุ่นรถใดก็ได้",
       "anyBatteryModel": "รุ่นใดก็ได้",
-      "listVehicle": "เช่ายานพาหนะ",
       "reportLost": "แจ้งยานพาหนะหาย",
       "lostSuccess": "แจ้งหายสำเร็จ",
       "unlostSuccess": "ล้างสถานะหายแล้ว",
@@ -824,9 +760,6 @@
       "datePickerStart": "เลือกวันเริ่มต้น",
       "orderEnded": "คำสั่งซื้อสิ้นสุดแล้ว",
       "vehicleChanged": "เปลี่ยนยานพาหนะแล้ว",
-      "payStatus": "สถานะการชำระเงิน",
-      "listPackage": "แพ็กเกจยานพาหนะและแบตเตอรี่",
-      "listRecharge": "คำสั่งซื้อเติมเงิน",
       "rechargeDetail": "รายละเอียดคำสั่งซื้อเติมเงิน",
       "rechargeRefunds": "ประวัติการคืนเงินเติมเงิน",
       "typePackage": "แพ็กเกจ",
@@ -868,25 +801,12 @@
       "permViewVehOps": "ดูการดำเนินงานยานพาหนะ",
       "permOrderManage": "การจัดการคำสั่งซื้อ",
       "permViewOrderList": "ดูรายการคำสั่งซื้อ",
-      "group": {
-        "veh": "การจัดการยานพาหนะ",
-        "ord": "คำสั่งซื้อยานพาหนะ",
-        "ordPkg": "คำสั่งซื้อแพ็กเกจ",
-        "ordBatt": "คำสั่งซื้อแบตเตอรี่"
-      },
-      "sysConfig": "การตั้งค่าระบบ",
       "permRefundProcess": "การดำเนินการคืนเงิน",
       "permDashboard": "แดชบอร์ด",
-      "userList": "รายชื่อผู้ใช้",
-      "permViewRevenue": "ดูข้อมูลรายได้",
-      "csList": "รายชื่อบริการลูกค้า"
+      "permViewRevenue": "ดูข้อมูลรายได้"
     },
     "login": {
-      "welcome": "ยินดีต้อนรับ",
       "registerDemo": "ลงทะเบียนบัญชี (เดโมต้นแบบ)"
-    },
-    "model": {
-      "list": "รายการรุ่นรถ"
     },
     "common": {
       "confirmBind": "ยืนยันการผูก",
@@ -899,7 +819,6 @@
       "thumbnail": "ภาพขนาดย่อ",
       "clickUpload": "แตะเพื่ออัปโหลด",
       "moreOps": "การดำเนินการเพิ่มเติม",
-      "defaultStore": "ร้านค้าเริ่มต้น",
       "renewalAutoDeduct": "ค่าต่ออายุถูกหักจากกระเป๋าเงินโดยอัตโนมัติ"
     },
     "battery": {
@@ -910,8 +829,6 @@
       "lostUnlockHint": "แบตเตอรี่จะถูกปลดล็อคเมื่อล้างรายงานหาย",
       "lostLockHint": "เมื่อแจ้งหาย แบตเตอรี่จะถูกล็อคและไม่สามารถปล่อยประจุได้",
       "dischargeForbid": "หลังจากปิดใช้งาน อุปกรณ์จะไม่สามารถปล่อยประจุได้",
-      "discharge": "การปล่อยประจุแบตเตอรี่",
-      "manage": "การจัดการแบตเตอรี่",
       "position": "ตำแหน่งแบตเตอรี่",
       "reportLost": "แจ้งแบตเตอรี่หาย",
       "dischargeAllowed": "อนุญาตการปล่อยประจุ",
@@ -930,23 +847,16 @@
       }
     },
     "version": {
-      "suggestUpdate": "แนะนำอัปเดต",
-      "updateDesc": "- ปรับปรุงความแม่นยำตำแหน่งยานพาหนะ\n- เพิ่มการตรวจสอบเวอร์ชัน\n- แก้ไขปัญหาที่ทราบแล้ว",
-      "forceUpdate": "บังคับอัปเดต",
-      "updateAvailable": "อัปเดตเวอร์ชัน"
+      "updateDesc": "- ปรับปรุงความแม่นยำตำแหน่งยานพาหนะ\n- เพิ่มการตรวจสอบเวอร์ชัน\n- แก้ไขปัญหาที่ทราบแล้ว"
     },
     "package": {
       "namePlaceholder": "กรุณากรอกชื่อแพ็กเกจ",
-      "list": "รายการแพ็กเกจ",
       "manage": "การจัดการแพ็กเกจ",
       "weekDaysRequired": "กรุณากรอกจำนวนวันเช่ารายสัปดาห์",
       "monthDaysRequired": "กรุณากรอกจำนวนวันเช่ารายเดือน"
     },
     "vehicle": {
-      "list": "รายการยานพาหนะ",
-      "command": {
-        "find_car": "ระบุตำแหน่งยานพาหนะด้วยเสียงแตร"
-      }
+      "list": "รายการยานพาหนะ"
     },
     "price": {
       "record": "บันทึกการปรับราคา",
@@ -959,20 +869,10 @@
       "after": "หลังการปรับ",
       "changeConfirmDesc": "ค่าเช่าเดิม {rent} เงินประกันเดิม {deposit} หลังปรับราคา ค่าเช่า {newRent} เงินประกัน {newDeposit}"
     },
-    "position": {
-      "list": "รายการตำแหน่ง"
-    },
     "dialcode": {
       "noResults": "ไม่พบประเทศ/ภูมิภาคที่ตรงกัน"
     },
-    "batt_model": {
-      "list": "รายการรุ่นแบตเตอรี่"
-    },
-    "account": {
-      "list": "รายการบัญชี"
-    },
     "order_config": {
-      "edit": "แก้ไขการตั้งค่า",
       "statusFlow": "ลำดับสถานะคำสั่งซื้อ"
     },
     "status": {

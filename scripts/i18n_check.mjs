@@ -69,6 +69,12 @@ function load(dir, lang) {
 
 const ph = (s) => ((String(s).match(/\{[^}]+\}|%[sd]/g)) || []).sort().join('|');
 const nums = (s) => ((String(s).match(/\d+/g)) || []).sort().join(',');
+/** NUMBER 复核白名单：中文数字表意（日期/编号/序数）在译文中本地化（月份缩写等），数字集合必然不同，属人工复核通过项。
+ *  维护方式：核对通过后把 key 加进来并注明理由；新增词条复核通过后同样登记。 */
+const NUM_ALLOW = {
+  'common.promo.bannerBattery': '「百公里」为中文惯用数量表达，译文 100 km / Jarak Tempuh 100 km 属正确本地化，中文原文保留',
+  'common.promo.bannerPromo': '「7月17日-19日」日期本地化（Jul 17–19 / 17–19 Juli / 17–19 ก.ค.），中文数字 7 必然消失',
+};
 const short = (s) => String(s).replace(/\s+/g, ' ').slice(0, 32);
 /** 跨目录译法一致的声明例外：品牌与专名（AGENTS.md §5「允许不同」），命中子串的同中文不参与 TERM 比对 */
 const TERM_ALLOW = ['2C2P', 'YADEA'];
@@ -107,7 +113,7 @@ for (const dir of DIRS) {
     const miss = keys.filter((k) => !(k in f));
     const orphan = Object.keys(f).filter((k) => !(k in src)).sort();
     const phBad = keys.filter((k) => k in f && ph(f[k]) !== ph(src[k]));
-    const numBad = keys.filter((k) => k in f && nums(f[k]) !== nums(src[k]));
+    const numBad = keys.filter((k) => k in f && nums(f[k]) !== nums(src[k]) && !NUM_ALLOW[k]);
     /* demo.* 为演示假数据（zs 张三 / zs10 郑十 这类同前缀不同语义），不适用数字后缀禁令 */
     const suffix = Object.keys(f).filter((k) => k.indexOf('demo.') !== 0 && isSuffixKey(k, all));
     const same = keys.filter((k) => k in f && f[k] === src[k]);

@@ -78,7 +78,6 @@
       "payment": "支付方式",
       "plan": "租赁方案",
       "refund": "退款",
-      "refundCurrentOperator": "当前账号",
       "refundDetail": "退款明细",
       "refundEmptyTitle": "暂无退款记录",
       "refundFailed": "退款失败",
@@ -87,11 +86,6 @@
       "refundSuccess": "退款成功",
       "rent": "租金",
       "status": "订单状态",
-      "refundReasonEarlyReturn": "提前还车，租金差额退还",
-      "refundReasonUserCancel": "用户取消订单",
-      "refundReasonPriceAdjust": "客户要求调高租金并调整渠道",
-      "refundReasonCustomerRequest": "客户要求退款",
-      "refundReasonMerchantDiscount": "商户优惠减免补偿",
       "autoRenew": "自动续租",
       "refundProcessing": "退款中",
       "pickupTime": "取用时间",
@@ -263,19 +257,10 @@
       "status": "状态",
       "amount": "金额",
       "type": "类型",
-      "currency": "货币",
-      "currencyCNY": "人民币",
-      "currencyHKD": "港币",
-      "currencyIDR": "印尼盾",
       "registrationTime": "注册时间",
       "refundSource": "退款来源",
-      "preCancelStatus": "取消前状态",
       "amountDue": "应付金额",
-      "vehicleOps": "车辆操作",
-      "vehicleStartStop": "车辆启停",
       "messageNotify": "消息通知",
-      "hasAlert": "有告警",
-      "loggedIn": "已登录",
       "regulator": "监管机构",
       "durationMinutes": "{n}分钟",
       "validUntil": "有效期至{date}",
@@ -283,15 +268,10 @@
       "frameNo": "车架编号",
       "noPhone": "无手机号",
       "emptyFeeDetail": "暂无费用明细",
-      "permEmptyNode": "当前页无功能权限节点",
-      "assistantName": "小迪",
-      "langZhHK": "繁體中文（中國香港）",
       "sceneRestaurant": "餐饮门店",
       "sceneOfficeBuilding": "商业楼宇",
       "sceneOffice": "写字楼",
       "sceneParking": "停车场",
-      "selected": "已选择",
-      "unselected": "未选择",
       "rechargeOrder": "充值订单",
       "renewal": "续租",
       "balanceFlow": "余额流水",
@@ -330,19 +310,10 @@
       "useCurrentLocation": "使用当前定位",
       "confirmLabel": "确认"
     },
-    "unit": {
-      "vehicle": "辆",
-      "battery": "块"
-    },
     "promo": {
       "slogan": "花小钱 骑雅迪",
       "safety": "您的安全是我们最关心的事！",
-      "features": "定位 · 远程锁定 · 鸣笛",
-      "bannerBattery": "TTFAR石墨烯锂电 · 百公里续航",
-      "bannerWarranty": "5年质保 · 品质保障出行无忧",
-      "bannerPromo": "5年质保 · 活动时间7月17日-19日",
-      "bannerSafety": "品质出行 · 安全可靠",
-      "bannerDeal": "DE2 炫彩版 · 到手价Rp 3,499"
+      "features": "定位 · 远程锁定 · 鸣笛"
     },
     "createTime": "创建时间",
     "scan": {
@@ -379,9 +350,6 @@
       "maxDuration": "最大充电时长",
       "enableStatus": "启用状态",
       "usageStatus": "使用状态",
-      "enabled": "启用",
-      "disabled": "禁用",
-      "idle": "空闲",
       "charging": "充电中",
       "shop": "所属门店",
       "noShop": "未分配门店",
@@ -412,9 +380,7 @@
     },
     "chargingOrder": {
       "title": "充电订单",
-      "orderNo": "订单编号",
       "customer": "用户账号",
-      "orderStatus": "订单状态",
       "payChannel": "支付渠道",
       "payStatus": "支付状态",
       "selectedDuration": "选择充电时长",
@@ -424,10 +390,7 @@
       "basicInfo": "基础信息",
       "chargeDetail": "充电明细",
       "refundAmount": "退款金额",
-      "refundRecords": "退款记录",
-      "cancelOrder": "取消订单",
       "finishOrder": "结束订单",
-      "refund": "退款",
       "detailTitle": "充电订单详情",
       "refundListTitle": "充电订单退款记录",
       "refundExceed": "退款金额超出可退额度"
@@ -456,7 +419,7 @@
     "profile": {
       "noMatchUser": "未找到匹配用户",
       "menuStore": "切换门店",
-      "priceNotNegative": "请输入 0 或正数，小数最多两位",
+      "priceNotNegative": "请输入 0 或正数，小数最多2位",
       "accountCredHint": "请妥善保管以下账号信息",
       "configSaved": "配置已保存",
       "menuAccount": "账号管理",
@@ -508,17 +471,12 @@
       "storeLevelLabel": "门店级别",
       "positionDeleted": "职位已删除",
       "commonFunctions": "常用功能",
-      "packageSaved": "套餐已保存",
       "syncOrderTip": "同步 {n} 个订单为新定价，同步后无法回退，请谨慎操作",
       "syncOrderTitle": "同步订单定价",
       "syncOrderConfirmDesc": "确定同步 {n} 个订单为新定价吗？同步后无法回退，请谨慎操作。",
       "pkgEditSaved": "编辑成功",
       "syncOrderSavedSynced": "编辑成功，已同步 {n} 个订单为新定价",
       "addUserInfo": "添加用户资料",
-      "storeLevel": {
-        "agent": "代理商门店",
-        "operated": "运营门店"
-      },
       "modelCount": "共{n}辆",
       "csAdd": "新增客服",
       "roleStoreManager": "店长",
@@ -551,7 +509,6 @@
       "roleAdmin": "管理员",
       "relateVehicle": "适用车型",
       "modelName": "车型名称",
-      "permControl": "权限控制",
       "servicePeriod": "服务时段：{start} - {end}",
       "noMatchingModels": "未找到匹配的车型",
       "accountAddSuccess": "账号创建成功",
@@ -582,7 +539,6 @@
       "accountAdd": "新增账号",
       "confirmPassword": "确认密码",
       "csPhonePlaceholder": "请输入客服电话号码",
-      "notLoggedIn": "未登录",
       "modelSaved": "车型已保存",
       "accountEdit": "编辑账号",
       "position": "职位",
@@ -601,13 +557,8 @@
       "rangeInteger": "请输入 {min}–{max} 之间的整数"
     },
     "home": {
-      "view": "首页总览",
       "noMatchingAlertsSub": "当前筛选下无匹配告警",
       "noAlerts": "暂无告警",
-      "stats": {
-        "vehicle": "车辆运营统计",
-        "business": "经营数据看板"
-      },
       "alertTypeGpsStale": "GPS定位过时",
       "bizStats": {
         "monthRevenue": "本月收款",
@@ -622,7 +573,6 @@
       "alertTypeOffline": "车辆离线",
       "alertTypeAll": "全部类型",
       "vehStatsTitle": "车辆运营",
-      "vehicleMap": "车辆地图",
       "noPendingAlerts": "暂无待处理告警",
       "noAlertsSub": "所有车辆运营正常",
       "alertTypePowerOff": "疑似断电",
@@ -643,18 +593,15 @@
       "armSuccess": "设防成功",
       "editVehicleInfo": "编辑车辆",
       "motorLockHint": "电机锁定后车辆将无法骑行",
-      "batteryAllOn": "全开",
       "addSuccess": "新增成功",
       "location": "车辆位置",
       "searchBattModelName": "搜索电池型号名称",
-      "commandLock": "开关锁",
       "motorLockedToast": "锁电机成功",
       "batteryEdit": "编辑电池",
       "batteryModelManage": "电池型号管理",
       "batteryLockMotor": "锁电机",
       "filterOnlineStatus": "在线状态",
       "searchBattModel": "搜索电池型号",
-      "batteryAllOff": "全关",
       "motorUnlockHint": "电机解锁后车辆将恢复骑行",
       "inputVinNo": "输入车辆编号",
       "statusRented": "租用中",
@@ -668,7 +615,6 @@
       "statusIdle": "空闲",
       "pressToLock": "长按关锁",
       "confirmDisarmDesc": "确定对车辆解除设防？",
-      "functionControl": "功能控制",
       "batteryModelName": "电池型号名称",
       "selectModelType": "选择型号",
       "searchModel": "搜索车型",
@@ -687,7 +633,6 @@
       "battNoPosSub": "绑定车辆后同步定位",
       "batteryNoMatchModel": "未找到匹配的电池型号",
       "enterControllerId": "请输入中控编号",
-      "track": "车辆轨迹",
       "lastLocationUnknown": "最后位置未知",
       "vehicleFilter": "全部筛选",
       "batteryModelEdit": "编辑电池型号",
@@ -712,7 +657,6 @@
       "ignoreHandled": "已现场处理",
       "orderId": "关联订单",
       "detail": "告警详情",
-      "list": "告警列表",
       "actionResolve": "标记已处理",
       "levelHigh": "高",
       "ignoreMistake": "误报",
@@ -759,7 +703,6 @@
       "rechargeExceedRefund": "充值金额超出可退金额",
       "rechargeConfigEdit": "编辑充值配置",
       "rechargeConfig": "充值配置",
-      "rechargeConfigList": "充值配置列表",
       "rechargeConfigAddSuccess": "充值配置已新增成功",
       "giftExceedRefund": "赠送金额超出可退金额",
       "rechargeConfigDelete": "删除充值配置",
@@ -769,9 +712,6 @@
       "rechargeDetail": "充值明细",
       "moreOps": "更多钱包操作",
       "selectType": "请选择类型",
-      "noFlowStore": "无流水门店",
-      "selected": "已选门店",
-      "unselected": "未选门店",
       "ledgerOrderConsume": "订单消费",
       "ledgerRechargeRefund": "充值退款",
       "ledgerGift": "赠送",
@@ -792,10 +732,7 @@
       "confirmRefundDesc": "确认结束订单？合计退款 Rp{total}",
       "docDeleteDesc": "确定删除该资料？删除后不可恢复。",
       "payProcessing": "支付中",
-      "paymentOnline": "线上支付",
-      "refundReasonUserDeposit": "用户主动申请押金退还",
       "confirmLostDesc": "报失后车辆电机将被锁定，无法正常骑行",
-      "listBattery": "电池租赁",
       "refundModalRentLimit": "可退 {amount}",
       "confirmUnlostDesc": "解除报失后车辆电机将被解锁，恢复骑行",
       "battBound": "电池已绑定",
@@ -816,7 +753,6 @@
       "noIdleVehicle": "暂无空闲车辆可选",
       "anyVehicle": "任意车型",
       "anyBatteryModel": "任意型号",
-      "listVehicle": "车辆租赁",
       "reportLost": "车辆报失",
       "lostSuccess": "报失成功",
       "unlostSuccess": "解除报失成功",
@@ -824,9 +760,6 @@
       "datePickerStart": "选择开始日期",
       "orderEnded": "订单已结束",
       "vehicleChanged": "车辆已更换",
-      "payStatus": "支付状态",
-      "listPackage": "车电套餐",
-      "listRecharge": "充值订单",
       "rechargeDetail": "充值订单详情",
       "rechargeRefunds": "充值退款记录",
       "typePackage": "套餐",
@@ -868,25 +801,12 @@
       "permViewVehOps": "查看车辆运营",
       "permOrderManage": "订单管理",
       "permViewOrderList": "查看订单列表",
-      "group": {
-        "veh": "车辆管理",
-        "ord": "车辆订单",
-        "ordPkg": "套餐订单",
-        "ordBatt": "电池订单"
-      },
-      "sysConfig": "系统配置",
       "permRefundProcess": "退款处理",
       "permDashboard": "仪表盘",
-      "userList": "用户列表",
-      "permViewRevenue": "查看营收数据",
-      "csList": "客服列表"
+      "permViewRevenue": "查看营收数据"
     },
     "login": {
-      "welcome": "欢迎登录",
       "registerDemo": "注册账号（原型演示）"
-    },
-    "model": {
-      "list": "车型列表"
     },
     "common": {
       "confirmBind": "确认绑定",
@@ -899,7 +819,6 @@
       "thumbnail": "缩略图",
       "clickUpload": "点击上传",
       "moreOps": "更多操作",
-      "defaultStore": "默认门店",
       "renewalAutoDeduct": "续租费用从钱包自动扣除"
     },
     "battery": {
@@ -910,8 +829,6 @@
       "lostUnlockHint": "解除报失后电池将被解锁，恢复放电",
       "lostLockHint": "报失后电池将被锁定，无法正常放电",
       "dischargeForbid": "禁止后设备将无法放电",
-      "discharge": "电池放电",
-      "manage": "电池管理",
       "position": "电池位置",
       "reportLost": "电池报失",
       "dischargeAllowed": "已允许放电",
@@ -930,23 +847,16 @@
       }
     },
     "version": {
-      "suggestUpdate": "建议更新",
-      "updateDesc": "- 优化车辆定位精度\n- 新增版本检测功能\n- 修复已知问题",
-      "forceUpdate": "强制更新",
-      "updateAvailable": "版本更新"
+      "updateDesc": "- 优化车辆定位精度\n- 新增版本检测功能\n- 修复已知问题"
     },
     "package": {
       "namePlaceholder": "请输入套餐名称",
-      "list": "套餐列表",
       "manage": "套餐管理",
       "weekDaysRequired": "请输入周租天数",
       "monthDaysRequired": "请输入月租天数"
     },
     "vehicle": {
-      "list": "车辆列表",
-      "command": {
-        "find_car": "寻车鸣笛"
-      }
+      "list": "车辆列表"
     },
     "price": {
       "record": "改价记录",
@@ -959,20 +869,10 @@
       "after": "改价后",
       "changeConfirmDesc": "原租金 {rent}、原押金 {deposit}；改价后租金 {newRent}、押金 {newDeposit}。"
     },
-    "position": {
-      "list": "职位列表"
-    },
     "dialcode": {
       "noResults": "未找到匹配的国家/地区"
     },
-    "batt_model": {
-      "list": "电池型号列表"
-    },
-    "account": {
-      "list": "账号列表"
-    },
     "order_config": {
-      "edit": "编辑配置",
       "statusFlow": "订单状态流转"
     },
     "status": {

@@ -78,7 +78,6 @@
       "payment": "付款方式",
       "plan": "租賃方案",
       "refund": "退款",
-      "refundCurrentOperator": "當前帳號",
       "refundDetail": "退款明細",
       "refundEmptyTitle": "暫無退款記錄",
       "refundFailed": "退款失敗",
@@ -87,11 +86,6 @@
       "refundSuccess": "退款成功",
       "rent": "租金",
       "status": "訂單狀態",
-      "refundReasonEarlyReturn": "提前還車，租金差額退還",
-      "refundReasonUserCancel": "用戶取消訂單",
-      "refundReasonPriceAdjust": "客戶要求調高租金並調整渠道",
-      "refundReasonCustomerRequest": "客戶要求退款",
-      "refundReasonMerchantDiscount": "商戶優惠減免補償",
       "autoRenew": "自動續租",
       "refundProcessing": "退款中",
       "pickupTime": "取用時間",
@@ -263,19 +257,10 @@
       "status": "狀態",
       "amount": "金額",
       "type": "類型",
-      "currency": "貨幣",
-      "currencyCNY": "人民幣",
-      "currencyHKD": "港幣",
-      "currencyIDR": "印尼盾",
       "registrationTime": "註冊時間",
       "refundSource": "退款來源",
-      "preCancelStatus": "取消前狀態",
       "amountDue": "應付金額",
-      "vehicleOps": "車輛操作",
-      "vehicleStartStop": "車輛啟停",
       "messageNotify": "訊息通知",
-      "hasAlert": "有告警",
-      "loggedIn": "已登入",
       "regulator": "監管機構",
       "durationMinutes": "{n}分鐘",
       "validUntil": "有效期至{date}",
@@ -283,15 +268,10 @@
       "frameNo": "車架編號",
       "noPhone": "無手機號",
       "emptyFeeDetail": "暫無費用明細",
-      "permEmptyNode": "當前頁無功能權限節點",
-      "assistantName": "小迪",
-      "langZhHK": "繁體中文（中國香港）",
       "sceneRestaurant": "餐飲門店",
       "sceneOfficeBuilding": "商業樓宇",
       "sceneOffice": "寫字樓",
       "sceneParking": "停車場",
-      "selected": "已選擇",
-      "unselected": "未選擇",
       "rechargeOrder": "增值訂單",
       "renewal": "續租",
       "balanceFlow": "餘額流水",
@@ -330,19 +310,10 @@
       "useCurrentLocation": "使用當前定位",
       "confirmLabel": "確認"
     },
-    "unit": {
-      "vehicle": "輛",
-      "battery": "塊"
-    },
     "promo": {
       "slogan": "花小錢 騎雅迪",
       "safety": "您的安全是我們最關心的事！",
-      "features": "定位 · 遠端鎖定 · 鳴笛",
-      "bannerBattery": "TTFAR石墨烯鋰電 · 百公里續航",
-      "bannerWarranty": "5年質保 · 品質保障出行無憂",
-      "bannerPromo": "5年質保 · 活動時間7月17日-19日",
-      "bannerSafety": "品質出行 · 安全可靠",
-      "bannerDeal": "DE2 炫彩版 · 到手價Rp 3,499"
+      "features": "定位 · 遠端鎖定 · 鳴笛"
     },
     "createTime": "建立時間",
     "scan": {
@@ -379,9 +350,6 @@
       "maxDuration": "最長充電時長",
       "enableStatus": "啟用狀態",
       "usageStatus": "使用狀態",
-      "enabled": "啟用",
-      "disabled": "停用",
-      "idle": "閒置",
       "charging": "充電中",
       "shop": "所屬門店",
       "noShop": "未分配門店",
@@ -412,9 +380,7 @@
     },
     "chargingOrder": {
       "title": "充電訂單",
-      "orderNo": "訂單編號",
       "customer": "用戶帳號",
-      "orderStatus": "訂單狀態",
       "payChannel": "付款渠道",
       "payStatus": "付款狀態",
       "selectedDuration": "選擇充電時長",
@@ -424,10 +390,7 @@
       "basicInfo": "基礎資訊",
       "chargeDetail": "充電明細",
       "refundAmount": "退款金額",
-      "refundRecords": "退款記錄",
-      "cancelOrder": "取消訂單",
       "finishOrder": "結束訂單",
-      "refund": "退款",
       "detailTitle": "充電訂單詳情",
       "refundListTitle": "充電訂單退款記錄",
       "refundExceed": "退款金額超出可退金額"
@@ -456,7 +419,7 @@
     "profile": {
       "noMatchUser": "未找到匹配用戶",
       "menuStore": "切換門店",
-      "priceNotNegative": "請輸入 0 或正數，小數最多兩位",
+      "priceNotNegative": "請輸入 0 或正數，小數最多2位",
       "accountCredHint": "請妥善保管以下帳號資訊",
       "configSaved": "配置已儲存",
       "menuAccount": "帳號管理",
@@ -508,17 +471,12 @@
       "storeLevelLabel": "門店級別",
       "positionDeleted": "職位已刪除",
       "commonFunctions": "常用功能",
-      "packageSaved": "套餐已儲存",
       "syncOrderTip": "同步 {n} 個訂單為新定價，同步後無法回退，請謹慎操作",
       "syncOrderTitle": "同步訂單定價",
       "syncOrderConfirmDesc": "確定同步 {n} 個訂單為新定價嗎？同步後無法回退，請謹慎操作。",
       "pkgEditSaved": "編輯成功",
       "syncOrderSavedSynced": "編輯成功，已同步 {n} 個訂單為新定價",
       "addUserInfo": "添加用戶資料",
-      "storeLevel": {
-        "agent": "代理商門店",
-        "operated": "營運門店"
-      },
       "modelCount": "共{n}輛",
       "csAdd": "新增客戶服務",
       "roleStoreManager": "店長",
@@ -551,7 +509,6 @@
       "roleAdmin": "管理員",
       "relateVehicle": "適用車型",
       "modelName": "車型名稱",
-      "permControl": "權限控制",
       "servicePeriod": "服務時段：{start} - {end}",
       "noMatchingModels": "未找到匹配的車型",
       "accountAddSuccess": "帳號建立成功",
@@ -582,7 +539,6 @@
       "accountAdd": "新增帳號",
       "confirmPassword": "確認密碼",
       "csPhonePlaceholder": "請輸入客戶服務電話號碼",
-      "notLoggedIn": "未登入",
       "modelSaved": "車型已儲存",
       "accountEdit": "編輯帳號",
       "position": "職位",
@@ -601,13 +557,8 @@
       "rangeInteger": "請輸入 {min}–{max} 之間的整數"
     },
     "home": {
-      "view": "首頁總覽",
       "noMatchingAlertsSub": "當前篩選下無匹配告警",
       "noAlerts": "暫無告警",
-      "stats": {
-        "vehicle": "車輛運營統計",
-        "business": "經營數據看板"
-      },
       "alertTypeGpsStale": "GPS定位過時",
       "bizStats": {
         "monthRevenue": "本月收款",
@@ -622,7 +573,6 @@
       "alertTypeOffline": "車輛離線",
       "alertTypeAll": "全部類型",
       "vehStatsTitle": "車輛營運",
-      "vehicleMap": "車輛地圖",
       "noPendingAlerts": "暫無待處理告警",
       "noAlertsSub": "所有車輛營運正常",
       "alertTypePowerOff": "疑似斷電",
@@ -643,18 +593,15 @@
       "armSuccess": "設防成功",
       "editVehicleInfo": "編輯車輛資訊",
       "motorLockHint": "電機鎖定後車輛將無法騎行",
-      "batteryAllOn": "全開",
       "addSuccess": "新增成功",
       "location": "車輛位置",
       "searchBattModelName": "搜尋電池型號名稱",
-      "commandLock": "開關鎖",
       "motorLockedToast": "鎖電機成功",
       "batteryEdit": "編輯電池",
       "batteryModelManage": "電池型號管理",
       "batteryLockMotor": "鎖電機",
       "filterOnlineStatus": "在線狀態",
       "searchBattModel": "搜尋電池型號",
-      "batteryAllOff": "全關",
       "motorUnlockHint": "電機解鎖後車輛將恢復騎行",
       "inputVinNo": "輸入車輛編號",
       "statusRented": "租用中",
@@ -668,7 +615,6 @@
       "statusIdle": "閒置",
       "pressToLock": "長按關鎖",
       "confirmDisarmDesc": "確定對車輛解除設防？",
-      "functionControl": "功能控制",
       "batteryModelName": "電池型號名稱",
       "selectModelType": "選擇型號",
       "searchModel": "搜尋車型",
@@ -687,7 +633,6 @@
       "battNoPosSub": "綁定車輛後同步定位",
       "batteryNoMatchModel": "未找到匹配的電池型號",
       "enterControllerId": "請輸入中控編號",
-      "track": "車輛軌跡",
       "lastLocationUnknown": "最後位置未知",
       "vehicleFilter": "全部篩選",
       "batteryModelEdit": "編輯電池型號",
@@ -712,7 +657,6 @@
       "ignoreHandled": "已現場處理",
       "orderId": "關聯訂單",
       "detail": "告警詳情",
-      "list": "告警列表",
       "actionResolve": "標記已處理",
       "levelHigh": "高",
       "ignoreMistake": "誤報",
@@ -759,7 +703,6 @@
       "rechargeExceedRefund": "增值金額超出可退金額",
       "rechargeConfigEdit": "編輯增值配置",
       "rechargeConfig": "增值配置",
-      "rechargeConfigList": "增值配置列表",
       "rechargeConfigAddSuccess": "增值配置已新增成功",
       "giftExceedRefund": "贈送金額超出可退金額",
       "rechargeConfigDelete": "刪除增值配置",
@@ -769,9 +712,6 @@
       "rechargeDetail": "增值明細",
       "moreOps": "更多錢包操作",
       "selectType": "請選擇類型",
-      "noFlowStore": "無流水門店",
-      "selected": "已選門店",
-      "unselected": "未選門店",
       "ledgerOrderConsume": "訂單消費",
       "ledgerRechargeRefund": "增值退款",
       "ledgerGift": "贈送",
@@ -792,10 +732,7 @@
       "confirmRefundDesc": "確認結束訂單？合計退款 Rp{total}",
       "docDeleteDesc": "確定刪除該資料？刪除後不可恢復。",
       "payProcessing": "付款中",
-      "paymentOnline": "線上付款",
-      "refundReasonUserDeposit": "用戶主動申請按金退還",
       "confirmLostDesc": "報失後車輛電機將被鎖定，無法正常騎行",
-      "listBattery": "電池租賃",
       "refundModalRentLimit": "可退 {amount}",
       "confirmUnlostDesc": "解除報失後車輛電機將被解鎖，恢復騎行",
       "battBound": "電池已綁定",
@@ -816,7 +753,6 @@
       "noIdleVehicle": "暫無空閒車輛可選",
       "anyVehicle": "任意車型",
       "anyBatteryModel": "任意型號",
-      "listVehicle": "車輛租賃",
       "reportLost": "車輛報失",
       "lostSuccess": "報失成功",
       "unlostSuccess": "解除報失成功",
@@ -824,9 +760,6 @@
       "datePickerStart": "選擇開始日期",
       "orderEnded": "訂單已結束",
       "vehicleChanged": "車輛已更換",
-      "payStatus": "付款狀態",
-      "listPackage": "車電套餐",
-      "listRecharge": "增值訂單",
       "rechargeDetail": "增值訂單詳情",
       "rechargeRefunds": "增值退款記錄",
       "typePackage": "套餐",
@@ -868,25 +801,12 @@
       "permViewVehOps": "查看車輛營運",
       "permOrderManage": "訂單管理",
       "permViewOrderList": "查看訂單列表",
-      "group": {
-        "veh": "車輛管理",
-        "ord": "車輛訂單",
-        "ordPkg": "套餐訂單",
-        "ordBatt": "電池訂單"
-      },
-      "sysConfig": "系統配置",
       "permRefundProcess": "退款處理",
       "permDashboard": "儀表盤",
-      "userList": "用戶列表",
-      "permViewRevenue": "查看營收數據",
-      "csList": "客戶服務列表"
+      "permViewRevenue": "查看營收數據"
     },
     "login": {
-      "welcome": "歡迎登入",
       "registerDemo": "註冊帳號（原型演示）"
-    },
-    "model": {
-      "list": "車型列表"
     },
     "common": {
       "confirmBind": "確認綁定",
@@ -899,7 +819,6 @@
       "thumbnail": "縮圖",
       "clickUpload": "點擊上傳",
       "moreOps": "更多操作",
-      "defaultStore": "預設門店",
       "renewalAutoDeduct": "續租費用從錢包自動扣除"
     },
     "battery": {
@@ -910,8 +829,6 @@
       "lostUnlockHint": "解除報失後電池將被解鎖，恢復放電",
       "lostLockHint": "報失後電池將被鎖定，無法正常放電",
       "dischargeForbid": "禁止後設備將無法放電",
-      "discharge": "電池放電",
-      "manage": "電池管理",
       "position": "電池位置",
       "reportLost": "電池報失",
       "dischargeAllowed": "已允許放電",
@@ -930,23 +847,16 @@
       }
     },
     "version": {
-      "suggestUpdate": "建議更新",
-      "updateDesc": "- 優化車輛定位精度\n- 新增版本檢測功能\n- 修復已知問題",
-      "forceUpdate": "強制更新",
-      "updateAvailable": "版本更新"
+      "updateDesc": "- 優化車輛定位精度\n- 新增版本檢測功能\n- 修復已知問題"
     },
     "package": {
       "namePlaceholder": "請輸入套餐名稱",
-      "list": "套餐列表",
       "manage": "套餐管理",
       "weekDaysRequired": "請輸入週租天數",
       "monthDaysRequired": "請輸入月租天數"
     },
     "vehicle": {
-      "list": "車輛列表",
-      "command": {
-        "find_car": "尋車鳴笛"
-      }
+      "list": "車輛列表"
     },
     "price": {
       "record": "改價記錄",
@@ -959,20 +869,10 @@
       "after": "改價後",
       "changeConfirmDesc": "原租金 {rent}、原押金 {deposit}；改價後租金 {newRent}、押金 {newDeposit}。"
     },
-    "position": {
-      "list": "職位列表"
-    },
     "dialcode": {
       "noResults": "未找到匹配的國家/地區"
     },
-    "batt_model": {
-      "list": "電池型號列表"
-    },
-    "account": {
-      "list": "帳號列表"
-    },
     "order_config": {
-      "edit": "編輯配置",
       "statusFlow": "訂單狀態流轉"
     },
     "status": {
