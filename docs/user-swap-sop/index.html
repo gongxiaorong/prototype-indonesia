@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>雅迪换电 · 用户端操作手册（换电系统）</title>
+<style>
+  :root{
+    --ink:#1F1B18; --ink-2:#57504A; --ink-3:#8E857D; --line:#EDE7E2;
+    --brand:#FF5F00; --brand-ink:#D94F00; --brand-soft:#FFF4EC; --brand-line:#FFE2D1;
+    --bg:#F8F6F4; --card:#fff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--brand-ink); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .layout{display:flex; align-items:flex-start; gap:32px; max-width:1180px; margin:0 auto; padding:0 28px 80px}
+
+  /* 封面 */
+  .cover{background:linear-gradient(135deg,#FF7A1F 0%,#FF5F00 55%,#D94900 100%); color:#fff; padding:56px 0 48px; margin-bottom:28px}
+  .cover .inner{max-width:1124px; margin:0 auto; padding:0 28px}
+  .cover .kicker{font-size:13px; letter-spacing:.18em; opacity:.7; text-transform:uppercase}
+  .cover h1{font-size:32px; line-height:1.3; margin:14px 0 10px; font-weight:700}
+  .cover p{margin:0; opacity:.82; font-size:14px}
+  .cover .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px}
+  .cover .meta span{background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:5px 14px; font-size:12.5px}
+
+  /* 目录：超出视口时独立滚动（高度上限 = 100vh − 上下留白 28px×2），标题栏吸顶常驻
+     顶距放在 summary 的 padding 上（而非容器 padding），吸顶时白底才能完整遮住滚过的条目 */
+  .toc{position:sticky; top:28px; flex:0 0 232px; max-height:calc(100vh - 56px); overflow-y:auto; scrollbar-width:thin; scrollbar-color:#DCD4CE transparent; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:0 16px 18px}
+  .toc::-webkit-scrollbar{width:6px}
+  .toc::-webkit-scrollbar-thumb{background:#DCD4CE; border-radius:3px}
+  .toc::-webkit-scrollbar-track{background:transparent}
+  .toc>summary{position:sticky; top:0; z-index:2; background:var(--card); padding:18px 0 0; font-size:13px; margin:0 0 12px; color:var(--ink-3); letter-spacing:.08em; font-weight:600; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:8px; user-select:none}
+  .toc>summary::-webkit-details-marker{display:none}
+  .toc>summary::after{content:''; width:7px; height:7px; border-right:2px solid var(--ink-3); border-bottom:2px solid var(--ink-3); transform:rotate(45deg); transition:transform .2s; margin:0 3px 4px 0}
+  .toc:not([open])>summary{margin-bottom:0}
+  .toc:not([open])>summary::after{transform:rotate(-45deg); margin-bottom:-2px}
+  /* 目录不显示 ol 自动序号：条目本身已带「第 N 章 / x.y」编号，避免出现「2. 第 1 章」「1. 1.1」式重复 */
+  .toc ol{margin:0; padding-left:0; list-style:none; font-size:13.5px}
+  .toc li{margin:7px 0}
+  .toc ol ol{padding-left:14px; font-size:13px; margin-top:6px; list-style:none}
+  .toc ol ol li{margin:5px 0; color:var(--ink-2)}
+
+  main{flex:1; min-width:0}
+
+  section.chapter, section.plain{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:30px 32px; margin-bottom:24px}
+  h2.ch{font-size:21px; margin:0 0 6px; font-weight:700}
+  .ch-sub{color:var(--ink-3); font-size:13.5px; margin:0 0 22px; padding-bottom:16px; border-bottom:1px solid var(--line)}
+  h3.step{font-size:16px; margin:28px 0 10px; padding-left:12px; border-left:3px solid var(--brand); font-weight:700}
+  h3.step:first-of-type{margin-top:6px}
+  h4{font-size:14.5px; margin:20px 0 8px; font-weight:700}
+  p{margin:8px 0}
+  ul,ol{margin:8px 0; padding-left:22px}
+  li{margin:5px 0}
+  code{background:var(--brand-soft); border:1px solid var(--brand-line); color:var(--brand-ink); border-radius:5px; padding:1px 6px; font-size:13px; font-family:ui-monospace,Consolas,Menlo,monospace}
+  b,strong{font-weight:700}
+
+  /* 图片 */
+  .shots{display:flex; flex-wrap:wrap; gap:20px; margin:16px 0 4px}
+  figure{margin:0; text-align:center}
+  figure img{width:248px; height:auto; border-radius:22px; border:1px solid var(--line); background:#fff; box-shadow:0 6px 20px rgba(146,80,30,.10); display:block}
+  figcaption{font-size:12.5px; color:var(--ink-3); margin-top:9px; line-height:1.55}
+  figure.wide img{width:268px}
+
+  /* 提示块 */
+  .tip{border-radius:12px; padding:14px 16px; margin:14px 0; font-size:13.5px; border:1px solid}
+  .tip.info{background:#F8F6F3; border-color:#EDE7E2}
+  .tip.rule{background:var(--brand-soft); border-color:var(--brand-line)}
+  .tip.warn{background:#FFF6F3; border-color:#F8DCD3}
+  .tip .t{display:block; font-weight:700; margin-bottom:5px; font-size:13px}
+  .tip.rule .t{color:var(--brand-ink)}
+  .tip.info .t{color:var(--brand-ink)}
+  .tip.warn .t{color:#C0341C}
+  .tip p:first-of-type{margin-top:0}
+  .tip p:last-child{margin-bottom:0}
+
+  /* 流程徽标 */
+  .flow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:14px 0 6px; font-size:13px; color:var(--ink-2)}
+  .flow i{font-style:normal; background:var(--brand-soft); border:1px solid var(--brand-line); color:var(--brand-ink); border-radius:7px; padding:3px 10px}
+  .flow em{font-style:normal; color:var(--ink-3)}
+
+  /* FAQ */
+  details.faq{border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin:10px 0; background:#fff}
+  details.faq[open]{background:#FFFCFA}
+  details.faq summary{cursor:pointer; font-weight:600; font-size:14px; outline:none}
+  details.faq p{margin:10px 0 2px; color:var(--ink-2); font-size:13.5px}
+
+  /* 速查表 */
+  .tw{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:14px 0; border-radius:10px}
+  .tw table{margin:0; min-width:440px}
+  table{width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top}
+  th{background:var(--brand-soft); color:#7A3D00; font-weight:600; white-space:nowrap}
+  td:first-child{white-space:nowrap}
+
+  footer{text-align:center; color:var(--ink-3); font-size:12.5px; padding:8px 0 40px}
+
+  /* 回到顶部（移动端） */
+  #toTop{position:fixed; right:16px; bottom:20px; width:42px; height:42px; border-radius:50%; border:1px solid var(--line); background:#fff; color:var(--brand); font-size:17px; line-height:1; padding:0; box-shadow:0 6px 18px rgba(146,80,30,.18); cursor:pointer; display:none; z-index:60}
+  #toTop.on{display:block}
+
+  @media (max-width:900px){
+    body{font-size:15px}
+    .cover{padding:38px 0 32px; margin-bottom:18px}
+    .cover h1{font-size:23px}
+    .layout{display:block; padding:0 16px 56px}
+    .toc{position:sticky; top:0; z-index:20; margin:0 -16px 16px; padding:0 16px 12px; border-radius:0; border-width:0 0 1px; box-shadow:0 2px 10px rgba(146,80,30,.07)}
+    .toc>summary{padding-top:12px}
+    .toc[open]{max-height:calc(100vh - 24px); overflow-y:auto; -webkit-overflow-scrolling:touch}
+    .toc ol{font-size:14px}
+    .toc li{margin:9px 0}
+    .toc ol ol li{margin:7px 0}
+    section.chapter, section.plain{padding:22px 18px; border-radius:14px; margin-bottom:16px}
+    h2.ch{font-size:19px}
+    .ch-sub{font-size:13px; margin-bottom:18px; padding-bottom:14px}
+    h3.step{font-size:15.5px; margin:24px 0 8px}
+    .shots{gap:16px; justify-content:center}
+    figure img{width:100%; max-width:300px; margin:0 auto}
+    table{font-size:13px}
+    th,td{padding:8px 10px}
+    .tw table{min-width:400px}
+    .tip{font-size:13.5px; padding:13px 14px}
+    .flow{font-size:12.5px}
+  }
+  @media (max-width:420px){
+    .layout{padding:0 12px 48px}
+    .toc{margin:0 -12px 16px; padding:0 12px 12px}
+    section.chapter, section.plain{padding:18px 14px}
+    .cover h1{font-size:20px}
+    .cover p{font-size:13px}
+    figure img{border-radius:18px}
+    .shots{gap:12px}
+  }
+  @media print{
+    body{background:#fff}
+    #toTop{display:none!important}
+    .cover{background:#FF5F00 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+    .toc{display:none}
+    .tw{overflow:visible}
+    .tw table{min-width:0}
+    .layout{display:block; max-width:none; padding:0}
+    section.chapter, section.plain{border:0; border-radius:0; padding:0 0 18px; margin-bottom:18px; break-inside:auto}
+    h3.step{break-after:avoid}
+    figure{break-inside:avoid}
+    figure img{box-shadow:none}
+    .shots{gap:14px}
+    figure img{width:210px}
+  }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="inner">
+    <div class="kicker">YADEA SWAP · USER GUIDE</div>
+    <h1>雅迪换电 · 用户端操作手册</h1>
+    <p>覆盖登录注册、地图找站与预约、扫码换电 / 借电 / 还电、套餐与订单、押金、电池与账号资料全流程，按 UI 设计稿逐屏说明。</p>
+    <div class="meta">
+      <span>适用范围：换电用户端（App / 小程序）</span>
+      <span>截图版本：用户端 · 简体中文设计稿</span>
+      <span>示例币种：印尼盾 Rp</span>
+      <span>文档版本：v1.0</span>
+      <span>更新日期：2026-10-30</span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <details class="toc" open>
+    <summary>目录</summary>
+    <ol>
+      <li><a href="#ch0">阅读指引</a></li>
+      <li><a href="#ch1">第 1 章 登录与注册</a>
+        <ol>
+          <li><a href="#s1-1">1.1 登录方式</a></li>
+          <li><a href="#s1-2">1.2 注册账号</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch2">第 2 章 首页与地图</a>
+        <ol>
+          <li><a href="#s2-1">2.1 首次进入与定位授权</a></li>
+          <li><a href="#s2-2">2.2 地图类型与站点气泡</a></li>
+          <li><a href="#s2-3">2.3 选中站点与预约</a></li>
+          <li><a href="#s2-4">2.4 搜索目的地</a></li>
+          <li><a href="#s2-5">2.5 门店详情</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch3">第 3 章 站点详情与预约</a>
+        <ol>
+          <li><a href="#s3-1">3.1 换电站点详情</a></li>
+          <li><a href="#s3-2">3.2 导航与取消预约</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch4">第 4 章 扫码与使用条件</a>
+        <ol>
+          <li><a href="#s4-1">4.1 扫码与手动输入机柜编号</a></li>
+          <li><a href="#s4-2">4.2 使用前的条件检查</a></li>
+          <li><a href="#s4-3">4.3 电量提示与操作选择</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch5">第 5 章 换电流程（4 步）</a>
+        <ol>
+          <li><a href="#s5-1">5.1 第 1 步 打开空仓</a></li>
+          <li><a href="#s5-2">5.2 第 2 步 放入旧电池</a></li>
+          <li><a href="#s5-3">5.3 第 3 步 打开满电仓</a></li>
+          <li><a href="#s5-4">5.4 第 4 步 取出新电池与完成</a></li>
+          <li><a href="#s5-5">5.5 异常与网络中断</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch6">第 6 章 借电流程（2 步）</a>
+        <ol>
+          <li><a href="#s6-1">6.1 打开满电仓与取电</a></li>
+          <li><a href="#s6-2">6.2 借电完成</a></li>
+          <li><a href="#s6-3">6.3 异常与网络中断</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch7">第 7 章 还电流程（2 步）</a>
+        <ol>
+          <li><a href="#s7-1">7.1 打开空仓</a></li>
+          <li><a href="#s7-2">7.2 归还成功与放入失败</a></li>
+          <li><a href="#s7-3">7.3 异常与网络中断</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch8">第 8 章 套餐购买与我的套餐</a>
+        <ol>
+          <li><a href="#s8-1">8.1 套餐列表</a></li>
+          <li><a href="#s8-2">8.2 套餐详情与支付</a></li>
+          <li><a href="#s8-3">8.3 我的套餐</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch9">第 9 章 订单管理</a>
+        <ol>
+          <li><a href="#s9-1">9.1 订单入口与列表</a></li>
+          <li><a href="#s9-2">9.2 订单详情与支付</a></li>
+          <li><a href="#s9-3">9.3 退款与取消</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch10">第 10 章 我的</a>
+        <ol>
+          <li><a href="#s10-1">10.1 我的页与入口</a></li>
+          <li><a href="#s10-2">10.2 我的电池</a></li>
+          <li><a href="#s10-3">10.3 换电记录</a></li>
+          <li><a href="#s10-4">10.4 我的押金</a></li>
+          <li><a href="#s10-5">10.5 换电区域</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch11">第 11 章 个人信息与账号安全</a>
+        <ol>
+          <li><a href="#s11-1">11.1 个人信息总览</a></li>
+          <li><a href="#s11-2">11.2 绑定与更换手机号</a></li>
+          <li><a href="#s11-3">11.3 绑定与更换邮箱</a></li>
+          <li><a href="#s11-4">11.4 修改密码</a></li>
+          <li><a href="#s11-5">11.5 实名认证</a></li>
+          <li><a href="#s11-6">11.6 系统设置与退出登录</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch12">第 12 章 切换系统</a>
+        <ol>
+          <li><a href="#s12-1">12.1 切换到换电系统</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch13">第 13 章 常见问题</a></li>
+      <li><a href="#ch14">附录　规则与状态速查</a></li>
+    </ol>
+  </details>
+
+  <main>
+    <section class="chapter" id="ch0">
+      <h2 class="ch">阅读指引</h2>
+      <p class="ch-sub">本手册以「换电用户端」的界面设计图为底稿，按真实操作路径逐屏说明入口、操作步骤、提示与结果。</p>
+
+      <h4>适用读者</h4>
+      <ul>
+        <li><b>换电用户</b>：按章节顺序操作，遇到不熟悉的页面直接看对应截图。</li>
+        <li><b>门店 / 一线服务人员</b>：按图指导用户完成注册、购套餐、扫码换电与还电。</li>
+        <li><b>客服</b>：按图定位用户所在环节，快速判断问题出在哪一步。</li>
+      </ul>
+
+      <h4>术语与口径</h4>
+      <div class="tw">
+        <table>
+          <tr><th>术语</th><th>含义</th></tr>
+          <tr><td>站点</td><td>地图上可换电 / 可还电的位置，一个站点可放置多个换电柜。</td></tr>
+          <tr><td>换电柜 / 柜机</td><td>存放电池的柜体，柜号如 A01、A03；一个站点可放多个换电柜。</td></tr>
+          <tr><td>满电仓 / 空仓</td><td>存放满电电池的仓位 / 可放入旧电池的空仓位；站点卡片上的两个数字即两类仓位数量。</td></tr>
+          <tr><td>换电 / 借电 / 还电</td><td>换电＝放旧取新（4 步）；借电＝只取满电电池（2 步）；还电＝只归还电池（2 步）。</td></tr>
+          <tr><td>换电区域</td><td>用户选择的运营商服务区域（国家 → 省份 → 城市 → 运营商），未设置时无法购买套餐与扫码使用。</td></tr>
+          <tr><td>押金</td><td>按运营商配置的换电押金，未缴纳（或未免押）无法使用换电与购买套餐。</td></tr>
+        </table>
+      </div>
+
+      <div class="tip info">
+        <span class="t">关于截图与品牌</span>
+        <p>截图取自「用户端 · 简体中文」设计稿：启动页品牌为 Sunlight Eco-Tech、登录页与站点照片为雅迪标识，属设计稿示意。截图中的用户昵称、站点名、柜号、订单号、金额均为演示数据，不代表线上真实值。</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch1">
+      <h2 class="ch">第 1 章 登录与注册</h2>
+      <p class="ch-sub">三种登录方式与账号注册。App 冷启动进入租车系统，进入换电系统的方式见第 12 章。</p>
+
+      <h3 class="step" id="s1-1">1.1 登录方式</h3>
+      <p>登录页由首页横幅「您还未登录，点我快速登录」、套餐页「去登录」、首页「扫码换电」或任意需要登录的操作唤起（图 1）。左上角返回键可关闭登录页回到原页面；右上角可切换语言。</p>
+      <p>页面底部提供三个入口切换登录方式：<b>账号登录</b>（默认）、<b>手机号登录</b>、<b>邮箱登录</b>；手机号与邮箱内部还能再切「验证码登录 / 密码登录」。密码框右侧的眼睛图标可查看已输入的密码，账号框右侧的清除按钮可一键清空重填。</p>
+      <p>按页面提示填写对应内容即可：手机号登录需先选左侧国际区号，验证码登录点「获取验证码」并等待短信；下方「我已阅读并同意《用户隐私政策》」需勾选后才能点登录。用未注册的手机号 / 邮箱验证码登录会自动创建账号，是最省事的注册方式。</p>
+      <div class="shots">
+        <figure><img src="images/登录-账号登录-未填写.png" alt="账号登录"><figcaption>图 1　账号登录（未填写）</figcaption></figure>
+        <figure><img src="images/登录-手机号-验证码登录-未填写1.png" alt="手机号验证码登录"><figcaption>图 2　手机号验证码登录（未填写）</figcaption></figure>
+        <figure><img src="images/登录-手机号-密码登录-未填写2.png" alt="手机号密码登录"><figcaption>图 3　手机号密码登录（未填写）</figcaption></figure>
+        <figure><img src="images/登录-手机号-密码登录-填写.png" alt="手机号密码登录已填写"><figcaption>图 4　手机号密码登录（已填写）</figcaption></figure>
+        <figure><img src="images/登录-邮箱-验证码登录-未填写1.png" alt="邮箱验证码登录"><figcaption>图 5　邮箱验证码登录（未填写）</figcaption></figure>
+        <figure><img src="images/登录-邮箱-验证码登录-填写.png" alt="邮箱验证码登录已填写"><figcaption>图 6　邮箱验证码登录（已填写）</figcaption></figure>
+        <figure><img src="images/登录-邮箱-密码登录-填写.png" alt="邮箱密码登录"><figcaption>图 7　邮箱密码登录（已填写）</figcaption></figure>
+      </div>
+      <div class="tip info">
+        <span class="t">提示</span>
+        <p>信息填写完整且勾选协议后，登录按钮才会变为可点的深蓝色（图 4、图 6、图 7）；如果按钮点不动，先确认是否漏勾下方协议。</p>
+      </div>
+
+      <h3 class="step" id="s1-2">1.2 注册账号</h3>
+      <p>在账号登录页点击「注册账号」进入账号注册页（图 8）。按页面提示填写账号、密码并再次输入密码确认，勾选下方的用户隐私政策后点「注册」。</p>
+      <ul>
+        <li>两次输入的密码需要一致，密码框右侧眼睛图标可查看已输入内容。</li>
+        <li>注册成功后返回登录页，用刚设置的账号与密码登录。</li>
+        <li>不想单独注册时，也可直接在登录页用手机号 / 邮箱验证码登录，系统会自动创建账号。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/登录-账号注册.png" alt="账号注册"><figcaption>图 8　账号注册（未填写）</figcaption></figure>
+        <figure><img src="images/登录-账号注册（已输入）.png" alt="账号注册已输入"><figcaption>图 9　账号注册（已输入，密码可切换可见）</figcaption></figure>
+      </div>
+
+    </section>
+
+    <section class="chapter" id="ch2">
+      <h2 class="ch">第 2 章 首页与地图</h2>
+      <p class="ch-sub">首页是换电的主入口：定位决定能看到哪些站点，地图类型决定找「换电」还是「还电」，预约则锁定柜机与仓位。</p>
+
+      <h3 class="step" id="s2-1">2.1 首次进入与定位授权</h3>
+      <p>从租车系统切换到换电系统后，未登录进入换电首页时（图 10），顶部为「请输入目的地」搜索条，中部为地图与站点气泡，右侧竖排三个浮动按钮（切换地图、回到当前定位、刷新），底部主按钮为「扫码换电」。</p>
+      <p>定位未开启时，地图上方出现横幅「定位服务未开启 / 开启后才能获取附近换电站点」并带「去开启」按钮（图 11）。点击后弹出「定位服务」说明弹窗，选择「去开启」会拉起系统定位授权（图 12）：</p>
+      <ul>
+        <li>允许：地图定位到当前位置并加载附近站点。</li>
+        <li>不允许：不阻塞浏览，地图停在默认城市中心，可用搜索目的地手动查找站点。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/首页_未登录_换电地图.png" alt="未登录首页"><figcaption>图 10　未登录首页（换电地图）</figcaption></figure>
+        <figure><img src="images/首页_未登录_获取定位.png" alt="定位服务弹窗"><figcaption>图 11　定位未开启横幅与说明弹窗</figcaption></figure>
+        <figure><img src="images/首页_未登录_获取位置权限.png" alt="系统定位授权"><figcaption>图 12　系统定位授权</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s2-2">2.2 地图类型与站点气泡</h3>
+      <p>右侧第一个浮动按钮打开「切换地图」面板（图 17），三种地图用颜色区分：<b>换电</b>（绿色闪电）、<b>还电</b>（橙色电池）、<b>门店</b>（蓝色门店），选中项带蓝色描边。三种地图共用底部站点卡片，但展示的点位与筛选条件不同。</p>
+      <ul>
+        <li><b>换电地图</b>（图 13、图 14）：气泡数字为该站点可换电池数量，数量多时显示「10+」；带「推荐」角标的为推荐站点；灰色气泡表示暂不可用（无可用满电电池）。</li>
+        <li><b>还电地图</b>（图 15、图 16）：只展示可归还电池的站点，气泡颜色为橙色，用于「手上还有电池要还」的场景。</li>
+        <li><b>门店地图</b>（图 17、图 18）：展示门店（含换电柜的门店），点击气泡弹出门店卡片，可进入门店详情查看换电 / 租车 / 售后等服务标签。</li>
+      </ul>
+      <p>当用户存在未结束的换电 / 借电 / 还电流程时，首页顶部会出现「您有一个进行中的流程」+「立即前往」横幅（图 13），点击直接回到该流程页，避免重复开仓。</p>
+      <div class="shots">
+        <figure><img src="images/首页_换电地图_有流程提示.png" alt="进行中流程"><figcaption>图 13　进行中流程提示（换电地图）</figcaption></figure>
+        <figure><img src="images/首页_切换地图_换电地图选中.png" alt="换电地图"><figcaption>图 14　切换地图：换电被选中</figcaption></figure>
+        <figure><img src="images/首页_切换地图_还电地图.png" alt="还电地图"><figcaption>图 15　还电地图（橙色气泡）</figcaption></figure>
+        <figure><img src="images/首页_切换地图_还电地图选中.png" alt="还电地图选中"><figcaption>图 16　切换地图：还电被选中</figcaption></figure>
+        <figure><img src="images/首页_切换地图_门店地图选中.png" alt="门店地图"><figcaption>图 17　切换地图：门店被选中</figcaption></figure>
+        <figure><img src="images/首页_已登录_门店地图_选中门店.png" alt="门店选中"><figcaption>图 18　门店地图选中门店</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s2-3">2.3 选中站点与预约</h3>
+      <p>点击任意站点气泡后，页面顶部浮出站点横幅、底部弹出站点卡片：</p>
+      <ul>
+        <li>顶部横幅：站点名、地址、预约状态与倒计时（如「预约中 | 09分59秒」）、右侧「取消预约」。</li>
+        <li>底部卡片：站点名与地址、替换站点用的关闭键、「可换电池 / 空仓」两个统计值、底部「扫码换电」+「预约换电」（预约后变为「取消预约」）。</li>
+      </ul>
+      <p>已预约某个柜机时，其他柜机的「预约换电」按钮变为灰色不可点（图 21），避免同一账号占用多个仓位。已预约状态下点击「取消预约」会弹出二次确认（图 20）：「确定取消预约？取消预约后，10分钟内不可再次预约」，取消 / 确认两个按钮。</p>
+      <div class="shots">
+        <figure><img src="images/首页_换电地图_选中站点_顶部预约信息.png" alt="顶部预约信息"><figcaption>图 19　选中站点：顶部预约横幅 + 底部卡片</figcaption></figure>
+        <figure><img src="images/首页_换电地图_选中站点_顶部预约信息-取消预约.png" alt="取消预约确认"><figcaption>图 20　取消预约二次确认</figcaption></figure>
+        <figure><img src="images/首页_换电地图_选中站点_顶部预约信息-不可预约.png" alt="不可预约"><figcaption>图 21　已预约其他柜机时预约按钮不可用</figcaption></figure>
+        <figure><img src="images/首页_换电地图_选中站点_预约中_底部预约信息.png" alt="预约中底部信息"><figcaption>图 22　预约中：底部主按钮切换为取消预约</figcaption></figure>
+        <figure><img src="images/首页_还电站点_详情.png" alt="还电站点详情"><figcaption>图 23　还电视图下的站点详情（无预约入口）</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">预约规则</span>
+        <p>预约默认保留 <b>10 分钟</b>（倒计时从预约成功开始），超时未到柜则自动释放并提示「预约已超时，可重新预约」；主动取消后 <b>10 分钟内不可再次预约</b>；同一时间只允许预约一个柜机。预约只锁定仓位，不产生费用，实际扣次以扫码换电成功为准。</p>
+      </div>
+      <div class="tip info">
+        <span class="t">提示</span>
+        <p>还电场景（图 23）不提供预约：因为还电只需要一个空仓，任一可用站点均可归还，预约会人为降低仓位周转率。</p>
+      </div>
+
+      <h3 class="step" id="s2-4">2.4 搜索目的地</h3>
+      <p>点击首页顶部搜索条进入「搜索目的地」页。按使用状态分为五种界面：</p>
+      <ul>
+        <li><b>未开启定位</b>（图 24）：提示当前无法获取位置并提供「去开启」，同时仍展示历史搜索。</li>
+        <li><b>无历史搜索</b>（图 25）：仅展示「附近换电站点」与「重新定位」。</li>
+        <li><b>有历史搜索</b>（图 26）：顶部「搜索历史」标签（可点选直接搜索），右上角垃圾桶清空历史；下方为「附近换电站点」列表，每项显示距离与「可借 / 可还」数量，点击进入站点详情。</li>
+        <li><b>已输入</b>（图 27）：输入关键字后实时联想地点与站点。</li>
+        <li><b>输入无结果</b>（图 28）：显示「没有找到相关地点」空态，输入框右侧清除键可一键清空重输。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/首页_搜索目的地_未输入_未开启位置.png" alt="搜索未开启定位"><figcaption>图 24　搜索页：定位未开启</figcaption></figure>
+        <figure><img src="images/首页_搜索目的地_未输入_无历史搜索.png" alt="无历史搜索"><figcaption>图 25　搜索页：无历史搜索</figcaption></figure>
+        <figure><img src="images/首页_搜索目的地_未输入_有历史搜索.png" alt="有历史搜索"><figcaption>图 26　搜索页：有历史搜索与附近站点</figcaption></figure>
+        <figure><img src="images/首页_搜索目的地_已输入.png" alt="已输入"><figcaption>图 27　搜索页：已输入关键字</figcaption></figure>
+        <figure><img src="images/首页_搜索目的地_输入_空.png" alt="搜索无结果"><figcaption>图 28　搜索页：无匹配结果</figcaption></figure>
+      </div>
+      <div class="tip info">
+        <span class="t">提示</span>
+        <p>搜索历史保存在本地缓存，最多保留最近若干条；点击垃圾桶即清空，清空后页面回落为「无历史搜索」形态（图 25）。</p>
+      </div>
+
+      <h3 class="step" id="s2-5">2.5 门店详情</h3>
+      <p>在门店地图点击门店气泡后进入「门店详情」（图 29、图 30）。页面上半部分为门店实景照片，下方信息卡依次为：</p>
+      <ul>
+        <li>门店名称、地址、服务标签（换电 / 租车 / 售后|维修 / 买车|电池）。</li>
+        <li>营业时间（如 09:00–19:00）、电话拨号键、距离与导航入口。</li>
+        <li>该门店下的换电柜卡片：柜编码、柜号（A01）、可换电池 / 空仓数量、「预约换电」按钮。</li>
+      </ul>
+      <p>门店与换电站点的区别在于：门店是线下服务网点，可能同时提供租车、维修、售车服务；站点强调换电能力，一个门店可以放置多个换电柜。</p>
+      <div class="shots">
+        <figure><img src="images/首页_已登录_门店地图_选中门店_详情_未预约1.png" alt="门店详情1"><figcaption>图 29　门店详情（服务标签与柜位）</figcaption></figure>
+        <figure><img src="images/首页_已登录_门店地图_选中门店_详情_未预约2.png" alt="门店详情2"><figcaption>图 30　门店详情（页面下滚）</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch3">
+      <h2 class="ch">第 3 章 站点详情与预约</h2>
+      <p class="ch-sub">站点详情是「查看柜位 → 锁定仓门」的页面；预约成功后首页与详情页都会出现倒计时，逾期自动释放。</p>
+
+      <h3 class="step" id="s3-1">3.1 换电站点详情</h3>
+      <p>从地图站点卡片、搜索结果或附近站点列表进入「站点详情」。页面自上而下为：站点实景照片 → 站点信息卡 → 换电柜卡片列表（一个柜一张卡）。</p>
+      <ul>
+        <li><b>站点信息</b>：站点名称、地址、营业时间（如 09:00–19:00）、电话拨号、距离与导航（如 1.2km）。</li>
+        <li><b>换电柜卡片</b>：柜编码、柜号（如 A01 号换电柜）、「可换电池 / 空仓」两个数字、「预约换电」按钮。</li>
+        <li><b>未预约</b>（图 31）：每个柜都有「预约换电」按钮，点击即锁定该柜的一个仓位。</li>
+        <li><b>已预约</b>（图 32）：被预约柜的按钮区替换为「预约中 | 09分59秒」与「取消预约」，其余柜的预约按钮置灰。</li>
+      </ul>
+      <div class="shots">
+        <figure class="wide"><img src="images/首页_换电站点_详情_未预约.png" alt="站点详情未预约"><figcaption>图 31　站点详情（未预约，整页）</figcaption></figure>
+        <figure class="wide"><img src="images/首页_换电站点_详情_已预约.png" alt="站点详情已预约"><figcaption>图 32　站点详情（已预约，整页）</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>多柜站点必须指定柜机：点「预约换电」时若未指明柜号，页面提示「请选择要预约的柜机」。可换电池为 0 的柜不允许预约；空仓为 0 只影响还电，不影响换电与借电。</p>
+      </div>
+
+      <h3 class="step" id="s3-2">3.2 导航与取消预约</h3>
+      <p>点击站点信息卡右侧的距离 / 导航图标（图 33），会弹出地图应用选择：高德地图、百度地图、谷歌地图（按设备已安装应用展示）。选择后跳出 App 进行路线导航，返回后仍停留在站点详情，预约状态不丢失。</p>
+      <p>点击「取消预约」弹出二次确认（图 34）：标题「取消预约」，描述「确定取消预约？取消预约后，10分钟内不可再次预约」，按钮为「取消 / 确认」。确认后：</p>
+      <ul>
+        <li>预约横幅与倒计时移除，柜位释放给其他用户。</li>
+        <li>该账号进入 10 分钟冷却期，期间所有柜机的「预约换电」均不可用。</li>
+        <li>首页、站点详情、底部卡片三处的预约态同步清除。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/首页_换电站点_详情_已预约_导航.png" alt="导航"><figcaption>图 33　导航地图选择</figcaption></figure>
+        <figure><img src="images/首页_换电站点_详情_已预约_取消预约.png" alt="取消预约"><figcaption>图 34　取消预约确认</figcaption></figure>
+      </div>
+      <div class="tip warn">
+        <span class="t">注意</span>
+        <p>预约超时、主动取消、预约后成功换电，这三种情况都会结束预约态；其中主动取消后 10 分钟内不可再次预约（弹窗中已注明）。</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch4">
+      <h2 class="ch">第 4 章 扫码与使用条件</h2>
+      <p class="ch-sub">扫码是换电的起点。扫码后系统会先检查是否具备使用条件，再看可分配电池的电量，最后由你选择「借电」还是「换电」。</p>
+
+      <h3 class="step" id="s4-1">4.1 扫码与手动输入机柜编号</h3>
+      <p>在首页点击「扫码换电」进入扫码页（图 35）。页面为全屏取景框，提示语「请将二维码对准取景框」，底部三个入口：手电筒（图 36，暗光环境补光）、键盘（手动输入机柜编号）、相册（从相册识别二维码）。左上角返回键退出扫码。</p>
+      <p>点击键盘图标进入「机柜编号」页（图 37、图 38）：按提示「请输入机柜编号」输入柜体上标注的编号，输入框右侧会实时显示已输入的字数。输入后「确定」由灰变蓝，点击即等同扫码成功；输入有误可清空重填。</p>
+      <p>扫码结果按固定顺序判定，命中任一条即中止并提示：</p>
+      <div class="flow"><i>二维码无效</i><em>›</em><i>不支持跨运营商换电</i><em>›</em><i>设备已离线</i><em>›</em><i>距离过远无法操作</i></div>
+      <div class="shots">
+        <figure><img src="images/首页_换电地图_扫码换电_扫码（手电筒关）.png" alt="扫码页"><figcaption>图 35　扫码页（手电筒关闭）</figcaption></figure>
+        <figure><img src="images/首页_换电地图_扫码换电_扫码（手电筒开）.png" alt="扫码手电筒开"><figcaption>图 36　扫码页（手电筒开启）</figcaption></figure>
+        <figure><img src="images/添加车辆-扫码-输入机柜编号（未输入）.png" alt="机柜编号未输入"><figcaption>图 37　手动输入机柜编号（未输入）</figcaption></figure>
+        <figure><img src="images/添加电池-扫码-输入机柜编号（输入）.png" alt="机柜编号已输入"><figcaption>图 38　手动输入机柜编号（已输入，确定可点）</figcaption></figure>
+      </div>
+      <div class="tip info">
+        <span class="t">提示</span>
+        <p>「距离过远」由扫码时手机定位与柜机位置的距离判定，通常要求用户在柜机附近操作；室内信号漂移导致误判时，建议靠近柜机并重新定位后再扫。</p>
+      </div>
+
+      <h3 class="step" id="s4-2">4.2 使用前的条件检查</h3>
+      <p>扫码成功后，系统会先确认是否具备使用条件。任一项不满足都会弹窗提示，按提示补全后回到扫码页重新扫码即可：</p>
+      <ul>
+        <li><b>未登录</b>：直接拉起登录页，登录成功后回到原扫码流程。</li>
+        <li><b>未实名</b>（图 39）：弹窗「实名认证 / 请先完成实名认证后再使用换电服务」，按钮「取消 / 去认证」。</li>
+        <li><b>未设置换电区域</b>：在「我的 → 换电区域」新增并选中区域（见 10.5）。</li>
+        <li><b>未缴押金</b>（图 40）：弹窗「未缴纳押金 / 请先缴纳押金，方可使用换电服务」，按钮「取消 / 前往缴纳」；已免押用户跳过此项。</li>
+        <li><b>未购套餐</b>（图 41）：弹窗「未购买套餐 / 请您先购买套餐，再使用换电服务。」，按钮「取消 / 立即购买」。</li>
+        <li><b>有进行中流程</b>：不新开流程，直接回到未结束的流程页继续操作。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/首页_已登录_扫码未实名.png" alt="未实名"><figcaption>图 39　未实名拦截</figcaption></figure>
+        <figure><img src="images/首页_换电地图_扫码换电_未缴纳押金.png" alt="未缴纳押金"><figcaption>图 40　未缴纳押金拦截</figcaption></figure>
+        <figure><img src="images/首页_换电地图_扫码换电_未购买套餐.png" alt="未购买套餐"><figcaption>图 41　未购买套餐拦截</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s4-3">4.3 电量提示与操作选择</h3>
+      <p>条件满足后，系统会检查可分配电池的电量。若电量偏低（低于 70%），先弹提示（图 42）：标题「电量偏低」，描述「可分配的电池电量偏低（&lt;70%），继续使用可能会影响您的续航里程。」，按钮「取消 / 继续」。点「取消」则停留在扫码页，不会打开任何仓门。</p>
+      <p>随后按用户当前持有的电池数量决定操作类型（图 43）：</p>
+      <ul>
+        <li>持有 <b>0 块</b>：直接进入借电（2 步）。</li>
+        <li>持有数量 <b>达到上限</b>（如 3 块）：直接进入换电（4 步）。</li>
+        <li>介于两者之间：弹窗「选择操作」，描述「检测到您已持有 N 块电池（上限 M 块）」，按钮「借电 / 换电」，由用户选择。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/首页_换电地图_扫码换电_扫码_电量低提示.png" alt="电量偏低"><figcaption>图 42　可分配电池电量偏低提示</figcaption></figure>
+        <figure><img src="images/首页_换电地图_扫码换电_扫码_选择操作提示.png" alt="选择操作"><figcaption>图 43　选择操作（借电 / 换电）</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>选择「换电」需要柜内同时存在可用空仓与满电仓；选择「借电」只需要满电仓。二者都会占用一次套餐次数（不限次套餐除外），失败不扣次。</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch5">
+      <h2 class="ch">第 5 章 换电流程（4 步）</h2>
+      <p class="ch-sub">换电＝放旧取新：打开空仓 → 放入旧电池 → 打开满电仓 → 取出新电池。每步都有进度、倒计时与独立失败态。</p>
+      <div class="flow"><i>打开空仓</i><em>›</em><i>放入旧电池</i><em>›</em><i>打开满电仓</i><em>›</em><i>取出新电池</i></div>
+
+      <h3 class="step" id="s5-1">5.1 第 1 步 打开空仓</h3>
+      <p>进入换电页后顶部为 4 步进度条，当前步高亮橙色，已完成的步显示为实心深色数字。第 1 步执行「空仓门打开中（x%）」（图 44），进度条随柜体返回的进度推进。</p>
+      <p>仓门打开后停止在待操作态（图 45）：「05号 ｜ 仓门已打开」，下方提示「请放入旧电池并关闭仓门 ｜ 60s」，倒计时从 60 秒开始，用于限制仓位长时间敞开。</p>
+      <p>若柜体回报开门失败（图 46）：显示「仓门打开失败」+「流程结束原因说明」，按钮「重试」回到扫码页（本流程结束、不扣次）。</p>
+      <div class="shots">
+        <figure><img src="images/扫码_换电_空仓打开中.png" alt="空仓打开中"><figcaption>图 44　第 1 步：空仓门打开中（进度）</figcaption></figure>
+        <figure><img src="images/扫码_换电_空仓打开中_已打开.png" alt="空仓已打开"><figcaption>图 45　第 1 步：仓门已打开，等待放入旧电池（60s）</figcaption></figure>
+        <figure><img src="images/扫码_换电_空仓打开中_失败.png" alt="空仓打开失败"><figcaption>图 46　第 1 步：仓门打开失败（可重试）</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s5-2">5.2 第 2 步 放入旧电池</h3>
+      <p>用户把旧电池放入已打开的仓位并关闭仓门，柜体检测到电池后自动进入第 3 步，无需在手机上点确认。60 秒倒计时内未检测到放入动作时：有网络则继续等待柜体推送，无网络则按「网络断开」处理（见 5.5）。</p>
+      <p>若柜体判定放入失败（图 47）：「旧电池放入失败」+ 原因说明，按钮「返回首页」。此时旧电池仍在用户手中，本次换电不扣次，可重新扫码再次尝试。</p>
+      <div class="shots">
+        <figure><img src="images/扫码_换电_放入旧电池_失败.png" alt="旧电池放入失败"><figcaption>图 47　第 2 步：旧电池放入失败</figcaption></figure>
+      </div>
+      <div class="tip warn">
+        <span class="t">注意</span>
+        <p>旧电池必须与柜体匹配且状态可识别（未损坏、非他站锁定电池）。放入失败时不要反复强行推入，先取出电池检查仓位是否有异物，再重新扫码。</p>
+      </div>
+
+      <h3 class="step" id="s5-3">5.3 第 3 步 打开满电仓</h3>
+      <p>第 3 步「满电仓门打开中（x%）」（图 48），成功后显示「A03号 ｜ 仓门已打开」与「请取走电池并关闭仓门 ｜ 60s」（图 49）。此处同样有 60 秒取电窗口，超时按网络状态处理。</p>
+      <p>满电仓打开失败（图 50）显示「仓门打开失败」+ 原因说明，按钮为「返回首页」。由于此时旧电池已被柜体收走，流程不能简单重试，需以记录为准联系客服处理。</p>
+      <div class="shots">
+        <figure><img src="images/扫码_换电_满电仓打开中.png" alt="满电仓打开中"><figcaption>图 48　第 3 步：满电仓门打开中</figcaption></figure>
+        <figure><img src="images/扫码_换电_满电仓打开中_已打开.png" alt="满电仓已打开"><figcaption>图 49　第 3 步：满电仓已打开，等待取电（60s）</figcaption></figure>
+        <figure><img src="images/扫码_换电_满电仓打开中_失败.png" alt="满电仓打开失败"><figcaption>图 50　第 3 步：满电仓打开失败</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s5-4">5.4 第 4 步 取出新电池与完成</h3>
+      <p>取出满电电池并关闭仓门，柜体确认后进入完成页（图 51）：「电池取出成功，换电完成」，点击「完成」回到首页。此时系统写入一条换电记录（站点、柜号、电池编号、取还时间），旧电池解绑、新电池绑定到当前账号。</p>
+      <p>未完成取电的两种失败形态：</p>
+      <ul>
+        <li><b>新电池取出失败</b>（图 52）：柜体检测异常，按钮「返回首页」。</li>
+        <li><b>未取出电池</b>（图 53）：60 秒内未取走电池，按钮「重试」，可回到扫码页重新扫码取电。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/扫码_换电_取出新电池_成功.png" alt="换电完成"><figcaption>图 51　换电完成</figcaption></figure>
+        <figure><img src="images/扫码_换电_取出新电池_失败.png" alt="新电池取出失败"><figcaption>图 52　新电池取出失败</figcaption></figure>
+        <figure><img src="images/扫码_换电_未取出电池.png" alt="未取出电池"><figcaption>图 53　未取出电池（可重试）</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>只有「换电完成」才写入换电记录并扣减套餐次数；任一环节失败或超时都不扣次。已打开的仓门必须先关闭，否则该仓位继续被占用，影响其他用户使用。</p>
+      </div>
+
+      <h3 class="step" id="s5-5">5.5 异常与网络中断</h3>
+      <p>三个待操作环节（放入旧电池、取出新电池等）共用同一套超时逻辑：倒计时归零时先检测网络——</p>
+      <ul>
+        <li><b>有网络</b>：不主动结束流程，继续等待柜体的推送结果（柜门可能仍开着，用户可继续操作）。</li>
+        <li><b>无网络</b>：弹出「网络断开」提示（图 54）：「网络连接已断开，请检查网络状况」，仅「确认」按钮，确认后回到首页，流程结束。</li>
+      </ul>
+      <p>恢复网络后可重新扫码继续；若旧电池已被柜体收走，建议先在「我的 → 换电记录」确认本次是否已完成，再决定是否需要重新操作，避免重复换电。</p>
+      <div class="shots">
+        <figure><img src="images/扫码_换电_网络断开.png" alt="网络断开"><figcaption>图 54　网络断开提示</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch6">
+      <h2 class="ch">第 6 章 借电流程（2 步）</h2>
+      <p class="ch-sub">借电＝只取电池、不放旧电池。适用于手上没有电池、需要临时多带一块满电电池的场景。</p>
+      <div class="flow"><i>打开满电仓</i><em>›</em><i>取出电池</i></div>
+
+      <h3 class="step" id="s6-1">6.1 打开满电仓与取电</h3>
+      <p>借电流程只有 2 步，顶部进度条显示「打开满电仓 → 取出电池」。第 1 步执行开仓，界面显示「满电仓门打开中（x%）」（图 55）；打开成功后提示「A01号 ｜ 仓门已打开」「请取走电池并关闭仓门 ｜ 60s」（图 56）。</p>
+      <p>开仓失败时显示「仓门打开失败」+ 原因说明，按钮为「重试」，点击回到扫码页重新开始（图 57）。</p>
+      <div class="shots">
+        <figure><img src="images/扫码_借电_满电仓打开中.png" alt="借电开仓中"><figcaption>图 55　借电第 1 步：满电仓门打开中</figcaption></figure>
+        <figure><img src="images/扫码_借电_满电仓打开中_已打开.png" alt="借电仓门已打开"><figcaption>图 56　借电第 1 步：仓门已打开，等待取电（60s）</figcaption></figure>
+        <figure><img src="images/扫码_借电_满电仓打开中_失败.png" alt="借电开仓失败"><figcaption>图 57　借电第 1 步：仓门打开失败（可重试）</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s6-2">6.2 借电完成</h3>
+      <p>取出电池并关闭仓门后进入完成页（图 58）：「电池取出成功，借电完成」，点「完成」回到首页。系统写入一条借电记录，状态为「使用中」，并把该电池绑定到当前账号——之后可在「我的 → 我的电池」查看电量、位置与使用时长。</p>
+      <div class="shots">
+        <figure><img src="images/扫码_借电_取出电池.png" alt="借电完成"><figcaption>图 58　借电完成</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>借电会占用套餐次数（不限次套餐除外），并使账号持有电池数 +1；达到持有上限后再次扫码只能走换电，不再询问「借电 / 换电」。</p>
+      </div>
+
+      <h3 class="step" id="s6-3">6.3 异常与网络中断</h3>
+      <p>借电的 60 秒取电窗口同样按网络状态处理：有网络继续等待柜体推送，无网络则弹「网络断开」提示（图 59），确认后回首页，流程结束、不扣次。恢复网络后可重新扫码，仓门仍开着时优先取走电池并关门。</p>
+      <div class="shots">
+        <figure><img src="images/扫码_借电_网络断开.png" alt="借电网络断开"><figcaption>图 59　借电过程网络断开</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch7">
+      <h2 class="ch">第 7 章 还电流程（2 步）</h2>
+      <p class="ch-sub">还电＝只归还电池。入口有两处：换电地图切到「还电」后扫码，或「我的电池 → 扫码还电」。</p>
+      <div class="flow"><i>打开空仓</i><em>›</em><i>放入电池</i></div>
+
+      <h3 class="step" id="s7-1">7.1 打开空仓</h3>
+      <p>还电顶部进度条为 2 步「打开空仓 → 放入电池」。第 1 步显示「空仓门打开中（x%）」（图 60），成功后提示仓号、门已打开，并给出 60 秒放入窗口（图 61）。</p>
+      <p>空仓打开失败（图 62）：「仓门打开失败」+ 原因说明，按钮「重试」回到扫码页。失败常见原因是该柜暂无可用空仓，可换一个站点或换电柜重试。</p>
+      <div class="shots">
+        <figure><img src="images/扫码还电_空仓打开中.png" alt="还电开仓中"><figcaption>图 60　还电第 1 步：空仓门打开中</figcaption></figure>
+        <figure><img src="images/扫码还电_空仓打开_已打开.png" alt="还电仓门已打开"><figcaption>图 61　还电第 1 步：仓门已打开，等待放入电池（60s）</figcaption></figure>
+        <figure><img src="images/扫码还电_空仓打开_失败.png" alt="还电开仓失败"><figcaption>图 62　还电第 1 步：仓门打开失败（可重试）</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s7-2">7.2 归还成功与放入失败</h3>
+      <p>放入电池并关闭仓门，柜体检测通过后进入完成页（图 63）：「电池归还成功，还电完成」，点「完成」回到首页。此时系统写入还电记录，解除该电池与账号的绑定，并回收柜位。</p>
+      <p>若柜体判定放入失败（图 64）：显示「电池放入失败」+ 原因说明，按钮为「返回首页」。电池会退回给用户，不扣次，可换柜重试。</p>
+      <div class="shots">
+        <figure><img src="images/扫码还电_空仓打开_已打开_归还成功.png" alt="还电完成"><figcaption>图 63　还电完成</figcaption></figure>
+        <figure><img src="images/扫码还电_空仓打开_已打开_电池放入失败.png" alt="电池放入失败"><figcaption>图 64　电池放入失败</figcaption></figure>
+      </div>
+      <div class="tip info">
+        <span class="t">提示</span>
+        <p>还电成功后，这块电池会从「我的电池」中移除，本次归还信息可在「我的 → 换电记录」中查看（取电柜子、还电柜子、还电时间）。</p>
+      </div>
+
+      <h3 class="step" id="s7-3">7.3 异常与网络中断</h3>
+      <p>放入窗口内断网时，弹出「网络断开」提示（图 65）：标题「网络断开」、描述「网络连接已断开，请检查网络状况」，仅「确认」按钮，确认后回首页。恢复网络后可重新扫码；若电池已被柜体收下，先在换电记录中确认本次是否已完成，不要重复归还。</p>
+      <div class="shots">
+        <figure><img src="images/扫码还电_空仓打开_已打开_网络断开.png" alt="还电网络断开"><figcaption>图 65　还电过程网络断开</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch8">
+      <h2 class="ch">第 8 章 套餐购买与我的套餐</h2>
+      <p class="ch-sub">套餐是扫码换电的前置条件：先选区域与套餐，支付成功后套餐生效，再回到首页扫码。</p>
+
+      <h3 class="step" id="s8-1">8.1 套餐列表</h3>
+      <p>底部「套餐」tab 进入「购买套餐」（图 66）。页面顶部为当前区域（运营商名称或城市）+「我的套餐 / 我的卡包」入口，下方为套餐卡片列表，可继续上滑（图 67）。</p>
+      <ul>
+        <li>卡片上显示：套餐名称、现价（红色）、原价（灰色删除线）、有效期（如「有效期：30 天」）。</li>
+        <li>点击卡片或「查看详情」打开套餐详情面板（见 8.2）。</li>
+        <li>未登录（图 68）：顶部深蓝横幅「您还未登录，点我快速登录」+「去登录」，列表区显示「暂无相关数据」。</li>
+        <li>未设置换电区域（图 69）：横幅「您尚未设置换电区域」+「去设置」，不展示套餐列表。</li>
+        <li>区域无在售套餐（图 70）：空态「暂无相关数据」。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/购买换电套餐.png" alt="套餐列表"><figcaption>图 66　套餐列表</figcaption></figure>
+        <figure><img src="images/购买换电套餐_一屏展示.png" alt="套餐列表上滑"><figcaption>图 67　套餐列表（多套餐滚动）</figcaption></figure>
+        <figure><img src="images/购买换电套餐_未登录.png" alt="套餐未登录"><figcaption>图 68　未登录状态</figcaption></figure>
+        <figure><img src="images/购买换电套餐_未设置换电区域.png" alt="套餐未设区域"><figcaption>图 69　未设置换电区域</figcaption></figure>
+        <figure><img src="images/购买换电套餐_无数据.png" alt="套餐无数据"><figcaption>图 70　当前区域暂无套餐</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s8-2">8.2 套餐详情与支付</h3>
+      <p>点击套餐卡片底部弹出「套餐详情」面板：标题右侧关闭键，面板内为套餐名称、参数表（有效期 / 换电次数 / 可借电池）、「套餐描述」，底部左侧为应付金额、右侧「立即支付」。</p>
+      <ul>
+        <li><b>不限次套餐</b>（图 71）：「换电次数」显示「不限次」。</li>
+        <li><b>限次套餐</b>（图 72）：显示具体次数（如「30 次」）与可借电池数（如「10 块」）。</li>
+        <li>描述较长时可上滑查看完整内容（图 73），支付按钮固定底部不随内容滚动。</li>
+        <li><b>未缴押金</b>（图 74）：点击立即支付弹窗「未缴纳押金 / 请您先缴纳押金，再购买套餐」，按钮「取消 / 前往缴纳」。</li>
+      </ul>
+      <p>支付成功后生成一笔「换电套餐」订单（状态「已支付」），套餐立即生效并出现在「我的套餐」中；支付失败或超时则订单停留在「待支付」，可在订单详情重新支付。</p>
+      <div class="shots">
+        <figure><img src="images/购买换电套餐_购买弹窗_不限次.png" alt="不限次套餐详情"><figcaption>图 71　套餐详情（不限次）</figcaption></figure>
+        <figure><img src="images/购买换电套餐_购买弹窗_限次数.png" alt="限次套餐详情"><figcaption>图 72　套餐详情（限次）</figcaption></figure>
+        <figure><img src="images/购买换电套餐_购买弹窗上滑.png" alt="套餐详情上滑"><figcaption>图 73　套餐详情上滑查看描述</figcaption></figure>
+        <figure><img src="images/换电套餐_未缴纳押金弹窗.png" alt="未缴押金"><figcaption>图 74　未缴纳押金时不可购买</figcaption></figure>
+      </div>
+      <h3 class="step" id="s8-3">8.3 我的套餐</h3>
+      <p>从「我的 → 我的套餐」或套餐页右上「我的套餐」进入。每张卡片显示：套餐名称、状态标签「生效中」（绿色）、剩余次数、可借电池、有效期、有效期至（精确到时分秒）（图 75）。</p>
+      <ul>
+        <li>右上角「已失效」进入失效套餐列表（图 76）：标题「失效套餐」，卡片标签为「已失效」。</li>
+        <li>失效套餐为空（图 77）：「暂无失效套餐」。</li>
+        <li>无任何套餐（图 78）：空态「暂无套餐」，可返回套餐页购买。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/我的_我的套餐.png" alt="我的套餐"><figcaption>图 75　我的套餐（生效中）</figcaption></figure>
+        <figure><img src="images/我的_我的套餐_失效套餐.png" alt="失效套餐"><figcaption>图 76　失效套餐列表</figcaption></figure>
+        <figure><img src="images/我的_我的套餐_失效套餐空.png" alt="失效套餐空"><figcaption>图 77　暂无失效套餐</figcaption></figure>
+        <figure><img src="images/我的_我的套餐_无数据.png" alt="暂无套餐"><figcaption>图 78　暂无套餐</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>套餐到期后自动失效，不再出现在生效列表，只进「已失效」；未用完的次数随失效一起作废。同一账号可同时拥有多个生效套餐，扫码换电时自动使用其中可用的套餐。</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch9">
+      <h2 class="ch">第 9 章 订单管理</h2>
+      <p class="ch-sub">换电套餐订单的查询、支付、取消与退款：状态从「待支付」开始，支付成功转「已支付」，退款则经「退款中」到「已退款」。</p>
+      <div class="flow"><i>待支付</i><em>›</em><i>已支付</i><em>›</em><i>退款中</i><em>›</em><i>已退款</i></div>
+
+      <h3 class="step" id="s9-1">9.1 订单入口与列表</h3>
+      <p>「我的 → 我的订单」先进入订单类型页（图 79），当前仅「换电套餐」一个分类，点击进入订单列表；右上角为订单插画空态装饰，无操作。</p>
+      <p>列表页（图 80）顶部为状态 tab：<b>全部 / 待支付 / 已支付 / 退款中 / 已退款</b>，每个 tab 内按创建时间倒序展示订单卡片：</p>
+      <ul>
+        <li>卡片第一行：套餐名称 + 右侧状态标签（待支付橙、已支付绿、退款中 / 已退款 / 已取消 灰）。</li>
+        <li>参数区：有效期、换电次数、可借电池。</li>
+        <li>底行：创建时间 + 订单金额（如 <code>Rp 345.677.566</code>）。</li>
+        <li>无数据（图 81）：空态「暂无订单」。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/我的-我的订单.png" alt="订单入口"><figcaption>图 79　我的订单（订单类型入口）</figcaption></figure>
+        <figure class="wide"><img src="images/我的-我的订单-换电套餐.png" alt="订单列表"><figcaption>图 80　换电套餐订单列表（各状态）</figcaption></figure>
+        <figure><img src="images/我的-我的订单-换电套餐空.png" alt="订单空态"><figcaption>图 81　暂无订单</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s9-2">9.2 订单详情与支付</h3>
+      <p>点击订单卡片进入「订单详情」。待支付订单顶部有红色倒计时条：「剩余29分59秒，超时未支付，订单将自动取消」（图 82），下方依次为套餐信息卡、订单信息卡（订单编号、创建时间、订单金额 / 实付金额、支付时间）、底部「取消订单」与「立即支付」。</p>
+      <p>点击「取消订单」弹出确认（图 83）：「取消订单 / 确定取消该订单？取消后不可恢复」，按钮「取消 / 确定」；确认后订单转为「已取消」，不可恢复。</p>
+      <p>支付成功后订单转「已支付」：套餐仍在有效期内显示 <b>生效中</b>（图 84），套餐到期后同一订单显示 <b>已失效</b>（图 85），两种状态都不影响订单记录本身。</p>
+      <div class="shots">
+        <figure><img src="images/我的-我的订单-换电套餐-待支付.png" alt="待支付详情"><figcaption>图 82　待支付订单详情（30 分钟倒计时）</figcaption></figure>
+        <figure><img src="images/我的-我的订单-换电套餐-待支付-取消订单.png" alt="取消订单确认"><figcaption>图 83　取消订单确认</figcaption></figure>
+        <figure><img src="images/我的-我的订单-换电套餐-已支付（生效中）.png" alt="已支付生效中"><figcaption>图 84　已支付（套餐生效中）</figcaption></figure>
+        <figure><img src="images/我的-我的订单-换电套餐-已支付（已失效）.png" alt="已支付已失效"><figcaption>图 85　已支付（套餐已失效）</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>待支付订单需在 <b>30 分钟内</b>完成付款，超时会自动取消且不扣款；已支付订单不能取消，只能申请退款。联系客服时提供订单详情里的订单编号，可快速定位这笔订单。</p>
+      </div>
+
+      <h3 class="step" id="s9-3">9.3 退款与取消</h3>
+      <p>已支付订单申请退款后进入「退款中」（图 86），此时订单不可再次操作，页面展示退款信息（申请时间、退款金额、退款渠道）；退款到账后转为「已退款」（图 87），状态标签为灰色，金额不再高亮。</p>
+      <p>未支付且已超过有效期的订单显示「已取消」（图 88）：仅保留套餐与金额信息，无操作按钮。已退款与已取消订单均保留在「全部」中，可按对应 tab 过滤。</p>
+      <div class="shots">
+        <figure><img src="images/我的-我的订单-换电套餐-退款中.png" alt="退款中"><figcaption>图 86　退款中</figcaption></figure>
+        <figure><img src="images/我的-我的订单-换电套餐-已退款.png" alt="已退款"><figcaption>图 87　已退款</figcaption></figure>
+        <figure><img src="images/我的-我的订单-换电套餐-已取消.png" alt="已取消"><figcaption>图 88　已取消</figcaption></figure>
+      </div>
+      <div class="tip warn">
+        <span class="t">注意</span>
+        <p>退款中的订单不可再次申请退款；审核期间该套餐不再参与扣次，避免出现「已退款仍可用」。退款失败会在订单详情给出原因，可重新发起。</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch10">
+      <h2 class="ch">第 10 章 我的</h2>
+      <p class="ch-sub">「我的」是换电业务的个人中心：订单、套餐、电池、换电记录、押金、换电区域六个入口，外加个人信息与系统设置。</p>
+
+      <h3 class="step" id="s10-1">10.1 我的页与入口</h3>
+      <p>底部 tab「我的」进入个人中心（图 89）。页面结构自上而下：</p>
+      <ul>
+        <li><b>头部</b>：头像、昵称、手机号（点击进入个人信息），右上角齿轮进入系统设置。</li>
+        <li><b>系统卡</b>：「换电系统」图标 + 名称 + 右侧「切换」，点击进入「切换系统」页。</li>
+        <li><b>功能列表</b>：我的订单、我的套餐、我的电池、换电记录、我的押金、换电区域，每项右侧有箭头。</li>
+        <li><b>底部 tab</b>：首页 / 套餐 / 我的，当前 tab 高亮。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/我的(3).png" alt="我的页"><figcaption>图 89　我的（换电系统）</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s10-2">10.2 我的电池</h3>
+      <p>「我的电池」列出当前账号绑定 / 持有的电池（图 90），每张卡片显示电池编号、电池位置、绑定时间；没有电池时显示空态「暂无电池」（图 91）。</p>
+      <p>点击电池进入电池详情（图 104、图 105、图 106）：</p>
+      <ul>
+        <li>顶部仪表盘：剩余电量百分比（0–100 分档，图 92–图 103 为各电量区间的仪表形态）。</li>
+        <li>三个核心指标：剩余电量（%）、剩余里程（约 x km）、使用时长（x 分钟）。</li>
+        <li>电池编号、电池位置、绑定时间。</li>
+        <li>两张地图卡：「当前位置」显示电池所在站点，「轨迹」显示历史移动路线；底部红字「扫码还电」直接进入还电扫码。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/我的_我的电池.png" alt="电池列表"><figcaption>图 90　我的电池列表</figcaption></figure>
+        <figure><img src="images/我的_我的电池空.png" alt="电池空态"><figcaption>图 91　暂无电池</figcaption></figure>
+      </div>
+      <h4>剩余电量分档形态</h4>
+      <p>仪表盘按电量区间更换颜色与刻度（0% 为红色告警态，100% 为满格态），各档界面如下：</p>
+      <div class="shots">
+        <figure><img src="images/我的_我的电池_购电模式_0%.png" alt="电量0%"><figcaption>图 92　剩余电量 0%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式1_9%.png" alt="电量1-9%"><figcaption>图 93　剩余电量 1%–9%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式10%_19%.png" alt="电量10-19%"><figcaption>图 94　剩余电量 10%–19%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式20%_29%.png" alt="电量20-29%"><figcaption>图 95　剩余电量 20%–29%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式_30%-39%.png" alt="电量30-39%"><figcaption>图 96　剩余电量 30%–39%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式_40%-49%.png" alt="电量40-49%"><figcaption>图 97　剩余电量 40%–49%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式_50%-59%.png" alt="电量50-59%"><figcaption>图 98　剩余电量 50%–59%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式_60%-69%.png" alt="电量60-69%"><figcaption>图 99　剩余电量 60%–69%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式_70%-79%.png" alt="电量70-79%"><figcaption>图 100　剩余电量 70%–79%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式_80%-89%.png" alt="电量80-89%"><figcaption>图 101　剩余电量 80%–89%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式_90%-99%.png" alt="电量90-99%"><figcaption>图 102　剩余电量 90%–99%</figcaption></figure>
+        <figure><img src="images/我的_我的电池_购电模式_100%.png" alt="电量100%"><figcaption>图 103　剩余电量 100%</figcaption></figure>
+      </div>
+      <div class="shots">
+        <figure><img src="images/电池-电池详情-当前位置1.png" alt="电池当前位置"><figcaption>图 104　电池详情：当前位置卡</figcaption></figure>
+        <figure><img src="images/电池-电池详情-当前位置2.png" alt="电池当前位置地图"><figcaption>图 105　电池详情：当前位置地图展开</figcaption></figure>
+        <figure><img src="images/电池-电池详情-历史轨迹.png" alt="电池历史轨迹"><figcaption>图 106　电池详情：历史轨迹</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>剩余里程与使用时长由电池电量与单车功耗估算，仅作参考；电量越低仪表越偏告警色（0% 为红色告警态，100% 为满格态）。电池与账号在借电或换电成功时绑定，还电成功后解绑。</p>
+      </div>
+
+      <h3 class="step" id="s10-3">10.3 换电记录</h3>
+      <p>「换电记录」按时间倒序展示换电 / 借电 / 还电记录（图 107）。每条记录包含：订单编号、电池编号、取电柜子、还电柜子、取电时间、还电时间，右侧复制图标可一键复制该项内容，复制成功提示「复制成功」。</p>
+      <p>只借电未还电时，还电柜子与还电时间为空，表示电池仍在用户手中。无记录时显示「暂无记录」（图 108）。</p>
+      <div class="shots">
+        <figure><img src="images/我的_换电记录.png" alt="换电记录"><figcaption>图 107　换电记录列表（含复制提示）</figcaption></figure>
+        <figure><img src="images/我的_换电记录空.png" alt="换电记录空态"><figcaption>图 108　暂无记录</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s10-4">10.4 我的押金</h3>
+      <p>押金按运营商收取，一个账号可对应多个运营商的押金。押金详情页顶部为深色押金卡：押金名称（换电押金）、状态标签、运营商、金额。</p>
+      <ul>
+        <li><b>未缴纳</b>（图 109）：标签「未缴纳」，展示「押金须知」四条——先缴后享、不可抵扣换电费、随时可退、损失赔偿；底部「立即支付」。</li>
+        <li><b>已免押</b>（图 110）：金额位置显示「已免押」，无需缴纳即可使用换电服务。</li>
+        <li><b>已缴纳</b>（图 111）：标签「已缴纳」，须知切换为「退押须知」两条——随时可退、损失赔偿；底部「申请退款」。</li>
+        <li><b>退款中</b>：按钮变为灰色「退款审核中」，不可重复申请。</li>
+      </ul>
+      <p>点击「申请退款」弹出提示（图 112）：「温馨提示 / 您当前持有生效中的换电套餐，押金退还后，换电权益将暂停。确认申请退还押金吗？」，按钮「我再想想 / 申请退款」。确认后进入审核，成功时提示（图 113）：「申请成功 / 押金会在 7 个工作日内原路退回至您原支付账户，请您耐心等候。/ 知道了」。</p>
+      <div class="shots">
+        <figure><img src="images/我的_我的押金_未缴纳_押金详情.png" alt="押金未缴纳"><figcaption>图 109　押金详情（未缴纳）</figcaption></figure>
+        <figure><img src="images/我的_我的押金_未缴纳_押金详情_已免押.png" alt="押金已免押"><figcaption>图 110　押金详情（已免押）</figcaption></figure>
+        <figure><img src="images/我的_我的押金_已缴纳_押金详情.png" alt="押金已缴纳"><figcaption>图 111　押金详情（已缴纳）</figcaption></figure>
+        <figure><img src="images/我的_我的押金_已缴纳_押金详情_申请退款_确认弹窗.png" alt="申请退款确认"><figcaption>图 112　申请退款确认</figcaption></figure>
+        <figure><img src="images/我的_我的押金_已缴纳_押金详情_申请退款_申请成功提示.png" alt="退款申请成功"><figcaption>图 113　退款申请成功提示</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>押金只作为设备保障，<b>不可抵扣换电费用</b>；退还后换电权益立即暂停，需重新缴纳才能继续使用。押金金额由所在区域的运营商配置，以页面显示的金额为准。</p>
+      </div>
+
+      <h3 class="step" id="s10-5">10.5 换电区域</h3>
+      <p>「换电区域」管理账号可用的运营商区域（图 114）。列表每行为运营商名称 + 所在省市区，当前生效区域右侧带橙色勾选；底部「新增」按钮添加区域，无区域时显示空态「暂无换电区域 / 请点击下方「新增」添加」（图 115）。</p>
+      <p>点击「新增」进入四级级联选择，面包屑统一显示「请选择」：</p>
+      <div class="flow"><i>国家</i><em>›</em><i>省份 / 地区</i><em>›</em><i>城市</i><em>›</em><i>运营商</i></div>
+      <ul>
+        <li>国家列表（图 116）：选择服务所在国家，当前为中国。</li>
+        <li>省份 / 地区（图 117）：如四川省。</li>
+        <li>城市（图 118）：如成都市；该城市未开通时提示「该城市暂未开通换电服务」。</li>
+        <li>运营商（图 119）：显示「城市 + 运营商」名称；该城市运营商已全部添加时提示「该城市运营商已全部添加」。</li>
+      </ul>
+      <p>选定运营商后回到区域列表，新区域加入并可直接点选切换为当前区域。</p>
+      <div class="shots">
+        <figure><img src="images/我的_换电区域.png" alt="换电区域列表"><figcaption>图 114　换电区域列表（当前区域带勾选）</figcaption></figure>
+        <figure><img src="images/我的_换电区域空.png" alt="换电区域空态"><figcaption>图 115　暂无换电区域</figcaption></figure>
+        <figure><img src="images/我的_换电区域_新增_选择地区_国家.png" alt="选择国家"><figcaption>图 116　新增区域：选择国家</figcaption></figure>
+        <figure><img src="images/我的_换电区域_新增_选择地区_省份／地区.png" alt="选择省份"><figcaption>图 117　新增区域：选择省份 / 地区</figcaption></figure>
+        <figure><img src="images/我的_换电区域_新增_选择地区_城市.png" alt="选择城市"><figcaption>图 118　新增区域：选择城市</figcaption></figure>
+        <figure><img src="images/我的_换电区域_新增_选择地区_运营商.png" alt="选择运营商"><figcaption>图 119　新增区域：选择运营商</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch11">
+      <h2 class="ch">第 11 章 个人信息与账号安全</h2>
+      <p class="ch-sub">从「我的」点头像进入个人信息，可维护昵称、账号、手机号、邮箱、密码与实名信息；系统设置负责语言、系统与退出登录。</p>
+
+      <h3 class="step" id="s11-1">11.1 个人信息总览</h3>
+      <p>个人信息页为纯列表结构（图 120、图 121），每行右侧显示当前值并带箭头：</p>
+      <ul>
+        <li><b>头像</b>：点击更换头像（从相册 / 拍照）。</li>
+        <li><b>账号</b>：登录账号，可修改，修改后需用新账号登录。</li>
+        <li><b>昵称</b>：展示昵称，如「小迪」。</li>
+        <li><b>手机号 / 邮箱地址</b>：未绑定显示灰色「未绑定」，已绑定显示脱敏后的号码 / 邮箱。</li>
+        <li><b>密码管理</b>：未设置密码时显示「设置密码」，已设置显示「修改密码」。</li>
+        <li><b>实名信息</b>：「未实名」为灰色，「已实名」为深色。</li>
+        <li><b>注销账号</b>：页面底部独立按钮，二次确认后清除数据且不可恢复。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/个人信息1.png" alt="个人信息未绑定"><figcaption>图 120　个人信息（未绑定手机号 / 邮箱、未实名）</figcaption></figure>
+        <figure><img src="images/个人信息2.png" alt="个人信息已绑定"><figcaption>图 121　个人信息（已绑定、已实名）</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s11-2">11.2 绑定与更换手机号</h3>
+      <p>未绑定手机号时点击「手机号 → 未绑定」进入「绑定手机号」（图 122）：区号选择 + 手机号输入 + 验证码（右侧「获取验证码」60 秒倒计时）+ 底部「绑定」。填写完整后按钮变为可点（图 123）。</p>
+      <p>已绑定后同一行进入「更换手机号」（图 124、图 125）：页面顶部显示「当前已绑定：+86 17654654333」，下方输入新手机号与验证码，确认后原号码解绑、新号码生效，提示「手机号替换成功」。</p>
+      <div class="shots">
+        <figure><img src="images/个人信息-绑定手机号1.png" alt="绑定手机号"><figcaption>图 122　绑定手机号（未填写）</figcaption></figure>
+        <figure><img src="images/个人信息-绑定手机号2.png" alt="绑定手机号已填"><figcaption>图 123　绑定手机号（已填写）</figcaption></figure>
+        <figure><img src="images/个人信息-更换手机号1.png" alt="更换手机号"><figcaption>图 124　更换手机号（显示当前绑定）</figcaption></figure>
+        <figure><img src="images/个人信息-更换手机号2.png" alt="更换手机号已填"><figcaption>图 125　更换手机号（已填写新号码）</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>手机号用于登录与找回密码，更换时需先通过新号码的验证码验证。未绑定手机号不影响换电，但无法使用手机号验证码登录。</p>
+      </div>
+
+      <h3 class="step" id="s11-3">11.3 绑定与更换邮箱</h3>
+      <p>邮箱流程与手机号一致：未绑定时进入「绑定邮箱」（图 126、图 127），输入邮箱地址 + 验证码 + 「绑定」；已绑定时进入「更换邮箱」（图 128、图 129），顶部显示「当前已绑定：xxx@xxx.com」，验证新邮箱后替换。</p>
+      <p>邮箱可用于接收订单 / 退款通知，也可作为登录方式（邮箱验证码 / 密码登录）。邮箱不要求唯一，但同一账号只保留一个。</p>
+      <div class="shots">
+        <figure><img src="images/个人信息-绑定邮箱1.png" alt="绑定邮箱"><figcaption>图 126　绑定邮箱（未填写）</figcaption></figure>
+        <figure><img src="images/个人信息-绑定邮箱2.png" alt="绑定邮箱已填"><figcaption>图 127　绑定邮箱（已填写）</figcaption></figure>
+        <figure><img src="images/个人信息-更换邮箱1.png" alt="更换邮箱"><figcaption>图 128　更换邮箱（显示当前绑定）</figcaption></figure>
+        <figure><img src="images/个人信息-更换邮箱2.png" alt="更换邮箱已填"><figcaption>图 129　更换邮箱（已填写新邮箱）</figcaption></figure>
+      </div>
+
+      <h3 class="step" id="s11-4">11.4 修改密码</h3>
+      <p>密码管理入口按是否已设置密码显示「设置密码 / 修改密码」。修改密码分两步：先验证身份，再设置新密码。</p>
+      <div class="flow"><i>手机号 / 邮箱验证</i><em>›</em><i>重置密码</i></div>
+      <ul>
+        <li><b>身份验证</b>：默认「手机号验证」（图 130），展示当前手机号与验证码输入框，底部可切到「邮箱验证」（图 131）。获取并填写验证码后点「下一步」。</li>
+        <li><b>重置密码</b>（图 132、图 133）：标题「重置密码」，两个输入框分别输入新密码与确认新密码，右侧眼睛图标可查看已输入内容；两次一致后「确认」可点，成功提示「密码已更新」。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/个人信息-修改密码1.png" alt="修改密码手机验证"><figcaption>图 130　修改密码：手机号验证</figcaption></figure>
+        <figure><img src="images/个人信息-修改密码2.png" alt="修改密码邮箱验证"><figcaption>图 131　修改密码：切换邮箱验证</figcaption></figure>
+        <figure><img src="images/个人信息-修改密码3.png" alt="重置密码未填"><figcaption>图 132　重置密码（未填写）</figcaption></figure>
+        <figure><img src="images/个人信息-修改密码4.png" alt="重置密码已填"><figcaption>图 133　重置密码（已填写，可切换可见）</figcaption></figure>
+      </div>
+      <div class="tip rule">
+        <span class="t">规则</span>
+        <p>新密码设置成功后旧密码立即失效，其他已登录的设备需用新密码重新登录。</p>
+      </div>
+
+      <h3 class="step" id="s11-5">11.5 实名认证</h3>
+      <p>未实名时点击「实名信息 → 未实名」进入「新增实名信息」（图 134），需要填写或上传三项：</p>
+      <ul>
+        <li><b>姓名</b>：与证件一致的本人姓名。</li>
+        <li><b>身份证</b>：证件号码。</li>
+        <li><b>身份证照片</b>：点击相机框上传（图 136），最多 2 张，按提示「请上传清晰证件照，避免反光」拍摄；上传后可预览、可删除重传（图 137）。</li>
+      </ul>
+      <p>漏填或漏传时点「保存」会在对应项提示缺少的内容（图 138）；补齐后提交，个人信息页的实名状态即变为「已实名」。</p>
+      <p>已实名后进入「实名详情」（图 139、图 140）：姓名、脱敏身份证号（如 <code>33********************</code>）、身份证照片，底部「编辑」可修改并重新提交。</p>
+      <div class="shots">
+        <figure><img src="images/个人信息-实名认证-新增1.png" alt="新增实名"><figcaption>图 134　新增实名信息（未填写）</figcaption></figure>
+        <figure><img src="images/个人信息-实名认证-新增2.png" alt="新增实名已上传"><figcaption>图 135　新增实名信息（已上传证件照）</figcaption></figure>
+        <figure><img src="images/个人信息-实名认证-新增-上传.png" alt="上传证件照"><figcaption>图 136　上传身份证照片</figcaption></figure>
+        <figure><img src="images/个人信息-实名认证-新增-预览.png" alt="证件照预览"><figcaption>图 137　证件照预览 / 删除重传</figcaption></figure>
+        <figure><img src="images/个人信息-实名认证-新增（提示）.png" alt="实名填写提示"><figcaption>图 138　漏填时的逐项提示</figcaption></figure>
+        <figure><img src="images/个人信息-实名信息-实名详情1.png" alt="实名详情"><figcaption>图 139　实名详情（脱敏展示）</figcaption></figure>
+        <figure><img src="images/个人信息-实名信息-实名详情2.png" alt="实名详情2"><figcaption>图 140　实名详情（证件照查看）</figcaption></figure>
+      </div>
+      <div class="tip warn">
+        <span class="t">注意</span>
+        <p>实名是扫码换电的前提条件之一（见 4.2），未实名时扫码会被拦截；实名信息与账号一一对应，修改后需要重新提交审核。</p>
+      </div>
+
+      <h3 class="step" id="s11-6">11.6 系统设置与退出登录</h3>
+      <p>「我的」右上角齿轮进入「系统设置」（图 141）。页面分「通用设置」一组与底部退出按钮：</p>
+      <ul>
+        <li><b>切换语言</b>：右侧显示当前语言（如「简体中文」），点击进入语言列表。</li>
+        <li><b>切换系统</b>：右侧显示当前系统（如「换电系统」），点击进入「切换系统」页（见第 12 章）。</li>
+        <li><b>当前版本</b>：只读展示，如 <code>V1.21</code>，用于客诉定位。</li>
+        <li><b>退出登录</b>：底部独立按钮，点击弹出确认（图 142）：「退出登录 / 确定要退出当前账号吗？退出后需重新登录。」，确认后清除登录态并回到登录页。</li>
+      </ul>
+      <div class="shots">
+        <figure><img src="images/我的-系统设置.png" alt="系统设置"><figcaption>图 141　系统设置</figcaption></figure>
+        <figure><img src="images/个人信息-系统设置-退出登录.png" alt="退出登录"><figcaption>图 142　退出登录确认</figcaption></figure>
+      </div>
+      <div class="tip info">
+        <span class="t">提示</span>
+        <p>退出登录只清除本机的登录态，不会删除订单、套餐、押金与换电记录；重新登录后数据原样恢复。</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch12">
+      <h2 class="ch">第 12 章 切换系统</h2>
+      <p class="ch-sub">App 冷启动进入租车系统；要使用换电，需要先切换到换电系统。两套系统共用同一账号，切换不用重新登录。</p>
+
+      <h3 class="step" id="s12-1">12.1 切换到换电系统</h3>
+      <p>App 冷启动固定进入<b>租车系统</b>，不会先弹出切换页。进入换电系统需要主动切换，两处入口都能打开「切换系统」页（图 143）：</p>
+      <ul>
+        <li>「我的」页顶部系统卡右侧「切换」。</li>
+        <li>「我的 → 系统设置 → 切换系统」。</li>
+      </ul>
+      <p>在「切换系统」页点击「换电系统」卡片（或卡片内「进入系统」），即进入换电首页。切换只改变当前使用的业务模块：换电系统的底部 tab 为「首页 / 套餐 / 我的」，首页是换电地图；账号、登录状态、语言与个人信息在两套系统间共用，切换后不会退出登录。</p>
+      <div class="shots">
+        <figure><img src="images/切换系统.png" alt="切换系统"><figcaption>图 143　「切换系统」页（列出可进入的系统）</figcaption></figure>
+      </div>
+      <div class="tip info">
+        <span class="t">提示</span>
+        <p>切回租车系统的方式相同：在换电系统「我的」页点顶部系统卡右侧「切换」，选择租车系统即可。两套系统的「我的」页菜单不同，认准底部 tab 与菜单项即可判断当前在哪套系统。</p>
+      </div>
+    </section>
+
+    <section class="plain" id="ch13">
+      <h2 class="ch">第 13 章 常见问题</h2>
+      <p class="ch-sub">按用户最常遇到的拦截、失败与状态疑问整理，可直接用于客服话术。</p>
+
+      <details class="faq"><summary>Q1　扫码后一直提示「未缴纳押金 / 未购买套餐」，怎么排查？</summary>
+        <p>扫码前系统会确认几项条件，按提示逐项检查即可：是否已登录、实名是否为「已实名」（我的 → 个人信息）、「我的 → 换电区域」是否已添加并选中区域、押金是否为「已缴纳 / 已免押」（我的 → 我的押金）、是否有「生效中」的套餐（我的 → 我的套餐）。补全任一项后回到扫码页重新扫码。</p></details>
+      <details class="faq"><summary>Q2　预约的柜机迟到会怎样？取消后为什么不能马上再约？</summary>
+        <p>预约保留 10 分钟，倒计时结束会自动释放，并提示「预约已超时，可重新预约」；主动取消后 10 分钟内所有柜机都不可再预约，这是为了避免反复占位。</p></details>
+      <details class="faq"><summary>Q3　提示「电量偏低（&lt;70%）」还能换吗？</summary>
+        <p>可以。该提示只是告知当前可分配电池电量不高，可能影响续航；点「继续」照常进入换电 / 借电，点「取消」则停留在扫码页、不开仓、不扣次。</p></details>
+      <details class="faq"><summary>Q4　仓门打不开 / 放入失败 / 取出失败，会扣套餐次数吗？</summary>
+        <p>不会。只有走到「换电完成 / 借电完成 / 还电完成」才写记录并扣次；打开失败可「重试」回扫码页，旧电池放入失败与新电池取出失败按页面按钮返回首页，均不扣次。</p></details>
+      <details class="faq"><summary>Q5　流程进行中手机断网了怎么办？</summary>
+        <p>倒计时结束时若断网，会弹「网络断开」提示并回首页，流程结束、不扣次。恢复网络后重新扫码即可；如果旧电池已被柜体收走而新电池未取出，以换电记录为准联系客服处理，避免重复操作。</p></details>
+      <details class="faq"><summary>Q6　为什么首页地图上的站点是灰色的？</summary>
+        <p>灰色气泡表示该站点当前没有可用满电电池（或暂不可用），不可换电；此时切到「还电地图」仍可归还电池。气泡上的数字是可用满电电池数量，「10+」表示 10 块以上。</p></details>
+      <details class="faq"><summary>Q7　押金退款多久到账？退款后还能换电吗？</summary>
+        <p>申请成功后提示「押金会在 7 个工作日内原路退回至您原支付账户」。退款审核期间按钮显示「退款审核中」；押金退还后换电权益立即暂停，需重新缴纳或重新获得免押资格才能继续使用。</p></details>
+      <details class="faq"><summary>Q8　套餐买了没生效 / 订单一直显示待支付？</summary>
+        <p>套餐以订单「已支付」为生效条件。待支付订单有 30 分钟倒计时，超时自动取消；在订单详情点「立即支付」完成付款后，套餐进入「我的套餐」并显示「生效中」。若已扣款但订单仍显示待支付，保存订单详情里的订单编号联系客服核对。</p></details>
+      <details class="faq"><summary>Q9　同一账号能同时有多个套餐 / 多个换电区域吗？</summary>
+        <p>可以。套餐可叠加，扫码换电时会自动使用其中可用的套餐；换电区域可以添加多个，但同一时刻只有一个生效区域，首页、套餐页与站点列表都按当前生效区域显示。</p></details>
+      <details class="faq"><summary>Q10　换电记录里的「还电柜子 / 还电时间」为什么是空的？</summary>
+        <p>只借电未还电时，电池仍在用户手中，还电柜子与还电时间为空，记录状态为「使用中」。完成还电后该条记录补齐还电信息，并解除电池与账号的绑定。</p></details>
+    </section>
+
+    <section class="plain" id="ch14">
+      <h2 class="ch">附录　规则与状态速查</h2>
+      <p class="ch-sub">把散落在各章的阈值、状态与文案集中成表，便于测试用例编写与客诉速查。</p>
+
+      <h4>表 1　倒计时与时间阈值</h4>
+      <div class="tw">
+        <table>
+          <tr><th>场景</th><th>时长</th><th>超时 / 到期行为</th></tr>
+          <tr><td>预约保留</td><td>10 分钟（09分59秒起倒计）</td><td>自动释放仓位，提示「预约已超时，可重新预约」</td></tr>
+          <tr><td>取消预约冷却</td><td>10 分钟</td><td>期间所有柜机不可预约</td></tr>
+          <tr><td>验证码</td><td>60 秒</td><td>可重新获取，旧验证码失效</td></tr>
+          <tr><td>仓门待操作</td><td>60 秒</td><td>有网继续等推送；断网弹「网络断开」回首页</td></tr>
+          <tr><td>待支付订单</td><td>30 分钟</td><td>自动取消，转「已取消」</td></tr>
+          <tr><td>押金退款</td><td>7 个工作日</td><td>原路退回原支付账户</td></tr>
+        </table>
+      </div>
+
+      <h4>表 2　订单状态</h4>
+      <div class="tw">
+        <table>
+          <tr><th>状态</th><th>触发</th><th>可执行操作</th></tr>
+          <tr><td>待支付</td><td>提交订单未付款</td><td>立即支付 / 取消订单（30 分钟内）</td></tr>
+          <tr><td>已支付</td><td>支付成功</td><td>查看详情；套餐生效中 / 已失效随有效期变化</td></tr>
+          <tr><td>退款中</td><td>已支付订单申请退款</td><td>不可重复申请，权益暂停</td></tr>
+          <tr><td>已退款</td><td>退款到账</td><td>仅查看</td></tr>
+          <tr><td>已取消</td><td>手动取消或超时未支付</td><td>仅查看，不可恢复</td></tr>
+        </table>
+      </div>
+
+      <h4>表 3　换电前需要满足的条件</h4>
+      <div class="tw">
+        <table>
+          <tr><th>条件</th><th>未满足时的提示与去处</th></tr>
+          <tr><td>已登录</td><td>弹窗要求登录，登录后回到扫码页</td></tr>
+          <tr><td>已实名</td><td>「请先完成实名认证后再使用换电服务」→ 去认证</td></tr>
+          <tr><td>已添加并选中换电区域</td><td>在「我的 → 换电区域」新增并选中</td></tr>
+          <tr><td>押金已缴纳或已免押</td><td>「请先缴纳押金，方可使用换电服务」→ 前往缴纳</td></tr>
+          <tr><td>有生效中的套餐</td><td>「请您先购买套餐，再使用换电服务。」→ 立即购买</td></tr>
+          <tr><td>没有未结束的流程</td><td>直接回到未结束的流程页继续操作</td></tr>
+        </table>
+      </div>
+
+      <h4>表 4　三种流程对比</h4>
+      <div class="tw">
+        <table>
+          <tr><th>流程</th><th>步骤</th><th>结果</th><th>电池绑定</th></tr>
+          <tr><td>换电</td><td>打开空仓 → 放入旧电池 → 打开满电仓 → 取出新电池</td><td>换电完成，写换电记录</td><td>旧电池解绑、新电池绑定</td></tr>
+          <tr><td>借电</td><td>打开满电仓 → 取出电池</td><td>借电完成，记录为「使用中」</td><td>新电池绑定，持有数 +1</td></tr>
+          <tr><td>还电</td><td>打开空仓 → 放入电池</td><td>还电完成，回收柜位</td><td>电池解绑，持有数 −1</td></tr>
+        </table>
+      </div>
+
+      <h4>表 5　页面与图号索引</h4>
+      <div class="tw">
+        <table>
+          <tr><th>章节</th><th>内容</th><th>图号</th></tr>
+          <tr><td>第 1 章</td><td>登录、注册</td><td>图 1 – 图 9</td></tr>
+          <tr><td>第 2 章</td><td>首页定位、地图类型、预约、搜索、门店</td><td>图 10 – 图 30</td></tr>
+          <tr><td>第 3 章</td><td>站点详情、导航、取消预约</td><td>图 31 – 图 34</td></tr>
+          <tr><td>第 4 章</td><td>扫码、手动输入、使用条件、电量与操作选择</td><td>图 35 – 图 43</td></tr>
+          <tr><td>第 5 章</td><td>换电四步与异常</td><td>图 44 – 图 54</td></tr>
+          <tr><td>第 6 章</td><td>借电两步与异常</td><td>图 55 – 图 59</td></tr>
+          <tr><td>第 7 章</td><td>还电两步与异常</td><td>图 60 – 图 65</td></tr>
+          <tr><td>第 8 章</td><td>套餐列表、详情支付、我的套餐</td><td>图 66 – 图 78</td></tr>
+          <tr><td>第 9 章</td><td>订单列表、详情支付、退款与取消</td><td>图 79 – 图 88</td></tr>
+          <tr><td>第 10 章</td><td>我的、电池、换电记录、押金、换电区域</td><td>图 89 – 图 119</td></tr>
+          <tr><td>第 11 章</td><td>个人信息、手机邮箱、密码、实名、设置</td><td>图 120 – 图 142</td></tr>
+          <tr><td>第 12 章</td><td>切换到换电系统</td><td>图 143</td></tr>
+
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<button id="toTop" aria-label="回到顶部">↑</button>
+<footer>雅迪换电 · 用户端操作手册 v1.0（2026-10-30）｜截图取自用户端简体中文设计稿</footer>
+
+<script>
+/* 截图：点击查看原图 */
+document.querySelectorAll('figure img').forEach(function (img) {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', function () {
+    window.open(img.getAttribute('src'), '_blank', 'noopener');
+  });
+});
+
+/* 目录：窄屏默认收起，点击条目后自动收起 */
+var toc = document.querySelector('details.toc');
+if (toc) {
+  var mq = window.matchMedia('(max-width: 900px)');
+  var sync = function () {
+    if (mq.matches) { toc.removeAttribute('open'); } else { toc.setAttribute('open', ''); }
+  };
+  sync();
+  if (mq.addEventListener) { mq.addEventListener('change', sync); }
+  toc.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A' && mq.matches) { toc.removeAttribute('open'); }
+  });
+}
+
+/* 回到顶部 */
+var btn = document.getElementById('toTop');
+if (btn) {
+  var onScroll = function () {
+    if (window.scrollY > 600) { btn.classList.add('on'); } else { btn.classList.remove('on'); }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+}
+</script>
+</body>
+</html>
