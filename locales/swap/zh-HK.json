@@ -801,7 +801,7 @@
       "payFirstDesc": "請您先繳纳按金，再購買套餐",
       "payFirstToast": "請先繳纳按金，方可使用換電服務",
       "refundNotice": "退按金須知",
-      "refundOkDesc": "按金會在 7 個工作日內原路退回，請留意到帳通知。",
+      "refundOkDesc": "押金會在 {n} 個工作日內原路退回至您原支付賬戶，請您耐心等候。",
       "refundOkTitle": "申請成功",
       "refundTipDesc": "您當前持有生效中的換電套餐，按金退還後，換電權益將暫停。確認申請退還按金嗎？",
       "refunding": "退款審核中",
@@ -906,7 +906,7 @@
     },
     "profile": {
       "accountSaved": "帳號已儲存",
-      "currentBound": "當前已綁定：{value}",
+      "currentBound": "當前已綁定：{v}",
       "idVerify": "實名認證",
       "unverified": "未實名",
       "verified": "已實名"
@@ -980,7 +980,9 @@
       "choiceTitle": "選擇操作",
       "heldDesc": "檢測到您已持有 {count} 塊電池（上限 {max} 塊）",
       "lowBatteryDesc": "可分配的電池電量偏低（<70%），繼續使用可能會影響您的續航里程。",
-      "lowBatteryTitle": "電量偏低"
+      "lowBatteryTitle": "電量偏低",
+      "doorOpeningFullN": "滿電倉門打開中（{n}）",
+      "doorOpeningEmptyN": "空倉門打開中（{n}）"
     },
     "swapFlow": {
       "doneDesc": "電池取出成功，換電完成",
@@ -1236,7 +1238,7 @@
       "exitApp": "退出應用",
       "gotIt": "知道了",
       "latest": "已是最新版本",
-      "latestVersion": "最新版本 V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "發現新版本",
       "packageDownloaded": "安裝包已下載，即將安裝",
       "relaunch": "重新打開應用",

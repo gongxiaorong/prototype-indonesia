@@ -801,7 +801,7 @@
       "payFirstDesc": "Silakan bayar jaminan terlebih dahulu, lalu beli paket",
       "payFirstToast": "Bayar jaminan terlebih dahulu untuk menggunakan layanan tukar",
       "refundNotice": "Ketentuan Pengembalian Jaminan",
-      "refundOkDesc": "Jaminan akan dikembalikan ke saluran pembayaran awal dalam 7 hari kerja. Mohon perhatikan notifikasinya.",
+      "refundOkDesc": "Deposit akan dikembalikan ke akun pembayaran asli Anda dalam {n} hari kerja. Mohon tunggu dengan sabar.",
       "refundOkTitle": "Pengajuan Berhasil",
       "refundTipDesc": "Anda memiliki paket tukar baterai yang aktif. Setelah jaminan dikembalikan, manfaat tukar baterai Anda akan ditangguhkan. Konfirmasi pengajuan pengembalian jaminan?",
       "refunding": "Pengembalian Dana Sedang Ditinjau",
@@ -906,7 +906,7 @@
     },
     "profile": {
       "accountSaved": "Akun disimpan",
-      "currentBound": "Saat ini terikat: {value}",
+      "currentBound": "Saat ini terikat: {v}",
       "idVerify": "Verifikasi Identitas",
       "unverified": "Belum Verifikasi",
       "verified": "Sudah Verifikasi"
@@ -980,7 +980,9 @@
       "choiceTitle": "Pilih Tindakan",
       "heldDesc": "Anda sudah memegang {count} baterai (maksimal {max})",
       "lowBatteryDesc": "Baterai yang dialokasikan berdaya rendah (<70%). Penggunaan berkelanjutan dapat memengaruhi jarak tempuh Anda.",
-      "lowBatteryTitle": "Daya Rendah"
+      "lowBatteryTitle": "Daya Rendah",
+      "doorOpeningFullN": "Membuka pintu baterai penuh ({n})",
+      "doorOpeningEmptyN": "Membuka pintu kosong ({n})"
     },
     "swapFlow": {
       "doneDesc": "Baterai berhasil diambil. Tukar baterai selesai.",
@@ -1236,7 +1238,7 @@
       "exitApp": "Keluar Aplikasi",
       "gotIt": "Mengerti",
       "latest": "Sudah versi terbaru",
-      "latestVersion": "Versi terbaru V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "Versi baru ditemukan",
       "packageDownloaded": "Paket instalasi telah diunduh, akan segera dipasang",
       "relaunch": "Buka kembali aplikasi",

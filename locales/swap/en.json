@@ -801,7 +801,7 @@
       "payFirstDesc": "Please pay the deposit before buying a package",
       "payFirstToast": "Please pay the deposit before using the swap service",
       "refundNotice": "Deposit Refund Notice",
-      "refundOkDesc": "The deposit will be refunded to the original payment channel within 7 business days. Please watch for the notification.",
+      "refundOkDesc": "The deposit will be refunded to your original payment account within {n} working days. Please wait patiently.",
       "refundOkTitle": "Request Submitted",
       "refundTipDesc": "You currently have an active swap package. After the deposit is refunded, your swap benefits will be suspended. Confirm the refund request?",
       "refunding": "Refund Under Review",
@@ -906,7 +906,7 @@
     },
     "profile": {
       "accountSaved": "Account saved",
-      "currentBound": "Currently bound: {value}",
+      "currentBound": "Currently bound: {v}",
       "idVerify": "Identity Verification",
       "unverified": "Not verified",
       "verified": "Verified"
@@ -980,7 +980,9 @@
       "choiceTitle": "Select Action",
       "heldDesc": "You already hold {count} batteries (limit {max})",
       "lowBatteryDesc": "The allocated battery has low power (<70%). Continued use may affect your range.",
-      "lowBatteryTitle": "Low Battery"
+      "lowBatteryTitle": "Low Battery",
+      "doorOpeningFullN": "Opening full-battery door ({n})",
+      "doorOpeningEmptyN": "Opening empty door ({n})"
     },
     "swapFlow": {
       "doneDesc": "Battery taken out. Swap complete.",
@@ -1236,7 +1238,7 @@
       "exitApp": "Exit App",
       "gotIt": "Got it",
       "latest": "Already the latest version",
-      "latestVersion": "Latest Version V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "New Version Found",
       "packageDownloaded": "Installation package downloaded, installing now",
       "relaunch": "Reopen App",

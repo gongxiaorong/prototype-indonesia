@@ -801,7 +801,7 @@
       "payFirstDesc": "请您先缴纳押金，再购买套餐",
       "payFirstToast": "请先缴纳押金，方可使用换电服务",
       "refundNotice": "退押须知",
-      "refundOkDesc": "押金会在 7 个工作日内原路退回，请留意到账通知。",
+      "refundOkDesc": "押金会在 {n} 个工作日内原路退回至您原支付账户，请您耐心等候。",
       "refundOkTitle": "申请成功",
       "refundTipDesc": "您当前持有生效中的换电套餐，押金退还后，换电权益将暂停。确认申请退还押金吗？",
       "refunding": "退款审核中",
@@ -906,7 +906,7 @@
     },
     "profile": {
       "accountSaved": "账号已保存",
-      "currentBound": "当前已绑定：{value}",
+      "currentBound": "当前已绑定：{v}",
       "idVerify": "实名认证",
       "unverified": "未实名",
       "verified": "已实名"
@@ -980,7 +980,9 @@
       "choiceTitle": "选择操作",
       "heldDesc": "检测到您已持有 {count} 块电池（上限 {max} 块）",
       "lowBatteryDesc": "可分配的电池电量偏低（<70%），继续使用可能会影响您的续航里程。",
-      "lowBatteryTitle": "电量偏低"
+      "lowBatteryTitle": "电量偏低",
+      "doorOpeningFullN": "满电仓门打开中（{n}）",
+      "doorOpeningEmptyN": "空仓门打开中（{n}）"
     },
     "swapFlow": {
       "doneDesc": "电池取出成功，换电完成",
@@ -1236,7 +1238,7 @@
       "exitApp": "退出应用",
       "gotIt": "知道了",
       "latest": "已是最新版本",
-      "latestVersion": "最新版本 V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "发现新版本",
       "packageDownloaded": "安装包已下载，即将安装",
       "relaunch": "重新打开应用",

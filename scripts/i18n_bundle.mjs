@@ -96,3 +96,4 @@ function buildBundle(srcDir, varName, outFile) {
 
 buildBundle('locales/rent-user', 'window.__RENT_I18N_USER__', 'i18n.rent-user.js');
 buildBundle('locales/rent-merchant', 'window.__RENT_I18N_MERCHANT__', 'i18n.rent-merchant.js');
+buildBundle('locales/swap', 'window.__SWAP_I18N__', 'i18n.swap.js');
