@@ -46,6 +46,7 @@
 
 每一步 = 「改状态 → 清 toast → 截图」：
 
+{% raw %}
 ```python
 def step(label, code, wait=350):
     page.evaluate(INIT_JS)                    # 幂等
@@ -54,6 +55,7 @@ def step(label, code, wait=350):
     page.wait_for_timeout(wait)               # 等 Vue 异步更新
     page.locator('#root-merchant').screenshot(path=os.path.join(OUT, f'{n:02d}-{label}.png'))
 ```
+{% endraw %}
 
 跑完打印 `FAILS` 列表与图片总数，与事先列好的「步骤 → 状态变量 → 图文件名」清单逐条核对。
 
