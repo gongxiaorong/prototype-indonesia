@@ -5336,10 +5336,9 @@ body.host-single-m #root-user{display:none}
 </form-field>
 <form-field :label="$t('merchant.chargingDevice.address')" required bare :error="cdErr.address">
 <div class="ff-box" :class="cdErr.address?'is-error':''">
-<input :value="cdAddForm.address" @input="cdAddForm.address=$event.target.value;cdErr.address=''" type="text" maxlength="60" :placeholder="$t('merchant.chargingDevice.addrPlaceholder')" class="w-full pl-3.5 pr-20 py-3 text-[15px]" data-od-id="cd-add-addr">
-<div class="absolute right-2.5 flex items-center gap-1">
-<div v-if="cdAddForm.address" data-cp @click="cdClearAddr('add')" class="w-7 h-7 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-od-id="cd-add-addr-clear"><span v-html="luci('x','w-4 h-4')"></span></div>
-<div data-cp @click="cdOpenAddrMap('add')" class="w-8 h-8 flex items-center justify-center cursor-pointer shrink-0" style="color:#2B3F5F" :title="$t('merchant.chargingDevice.addrMapSelect')" data-od-id="cd-add-addr-map"><span v-html="luci('map-pin','w-[18px] h-[18px]')"></span></div>
+<div data-cp @click="cdOpenAddrMap('add')" class="w-full flex items-center gap-2 px-3.5 py-3 cursor-pointer" data-od-id="cd-add-addr">
+<span class="flex-1 text-[15px] truncate" :class="cdAddForm.address?'':'text-[#B0B8C4]'">{{ cdAddForm.address || $t('merchant.chargingDevice.addrPlaceholder') }}</span>
+<span class="shrink-0" v-html="luci('map-pin','w-[18px] h-[18px] text-[#2B3F5F]')"></span>
 </div>
 </div>
 </form-field>
@@ -5368,10 +5367,9 @@ body.host-single-m #root-user{display:none}
 </form-field>
 <form-field :label="$t('merchant.chargingDevice.address')" required bare :error="cdErr.address">
 <div class="ff-box" :class="cdErr.address?'is-error':''">
-<input :value="cdModForm.address" @input="cdModForm.address=$event.target.value;cdErr.address=''" type="text" maxlength="60" :placeholder="$t('merchant.chargingDevice.addrPlaceholder')" class="w-full pl-3.5 pr-20 py-3 text-[15px]" data-od-id="cd-mod-addr">
-<div class="absolute right-2.5 flex items-center gap-1">
-<div v-if="cdModForm.address" data-cp @click="cdClearAddr('edit')" class="w-7 h-7 flex items-center justify-center cursor-pointer text-[#6B6B6B]" data-od-id="cd-mod-addr-clear"><span v-html="luci('x','w-4 h-4')"></span></div>
-<div data-cp @click="cdOpenAddrMap('edit')" class="w-8 h-8 flex items-center justify-center cursor-pointer shrink-0" style="color:#2B3F5F" :title="$t('merchant.chargingDevice.addrMapSelect')" data-od-id="cd-mod-addr-map"><span v-html="luci('map-pin','w-[18px] h-[18px]')"></span></div>
+<div data-cp @click="cdOpenAddrMap('edit')" class="w-full flex items-center gap-2 px-3.5 py-3 cursor-pointer" data-od-id="cd-mod-addr">
+<span class="flex-1 text-[15px] truncate" :class="cdModForm.address?'':'text-[#B0B8C4]'">{{ cdModForm.address || $t('merchant.chargingDevice.addrPlaceholder') }}</span>
+<span class="shrink-0" v-html="luci('map-pin','w-[18px] h-[18px] text-[#2B3F5F]')"></span>
 </div>
 </div>
 </form-field>
@@ -11251,7 +11249,6 @@ function cdListScan(){scanFrom.value='cdList';scanTarget.value='charge';scanning
 /* 候选点：name/addr/dist + lx/ly（假地图世界层百分比坐标，用于拖拽吸附与准星居中；定位点也取自本表） */
 const CD_ADDR_POINTS=[{name:'双流航空港商圈',addr:'成都市双流区航空港街道黄河中路 88 号',dist:'120m',lx:50,ly:45},{name:'空港国际城',addr:'成都市双流区空港国际城 3 号门',dist:'480m',lx:32,ly:64},{name:'川大江安校区',addr:'成都市双流区川大路二段 2 号',dist:'1.2km',lx:70,ly:30},{name:'双流万达广场',addr:'成都市双流区西航港大道中四段 199 号',dist:'2.1km',lx:20,ly:24},{name:'双流西站',addr:'成都市双流区西航港街道双流西站广场',dist:'3.4km',lx:78,ly:72}];
 /* 表单地址不再做输入联想：地址只能经「选择地址」页的 POI 搜索取点回填（字段本身为只读选择行） */
-function cdClearAddr(which){if(which==='edit')cdModForm.value.address='';else cdAddForm.value.address='';cdErr.value.address=''}
 /* —— 选择地址页：地图拖拽取点（世界层 2×2 + 松手吸附候选点，算法照搬换电端） —— */
 const cdAddrTarget=ref('add');
 /* POI 搜索：关键字过滤候选地址（name + addr 模糊匹配），清空即恢复全量 */
@@ -11753,7 +11750,7 @@ hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,c
 profileMdT,profileMdD,profileMdDanger,profileMdOk,
 fE,vErr,vClr,tip,tipShow,tipToggle,tipHide,stage,
 roOV,curRechargeOrder,roRefundMod,roRefundConfirm,roRefundForm,roRefunds,rechargeOrders,roPayStatusTag,roPayChannelText,roOpenList,roOpenDetail,roCloseList,roGoBack,roCanRefund,roCanRefundRecords,roOpenRefunds,roRefundTotal,roOpenRefund,roSubmitRefund,roConfirmRefund,roCancelMod,roCancelLoading,ignoreLoading,vehModLoading,battModLoading,psDoLoading,ordersModLoading,profileModLoading,uUnbindLoading,roRefundLoading,delDocLoading,roRequestCancel,roConfirmCancel,roQ,roSearchScope,roSearchScopeOpen,roSearchScopeOpts,roSearchScopeLabel,roSearchPH,roStatus,roStatusTabs,roStatusActive,roTabCnt,roHasF,rechargeFiltered,roShowFS,roFsPayC,roFsPayStC,roFsPayStOpts,roPayChannels,roFsStartC,roFsEndC,roFsMinC,roFsMaxC,roOpenFS,roToggleFsPay,roToggleFsPaySt,roResetFS,roApplyFS,roDoSearch,setRoSearchScope,roClearFilters,rechargeCustomerText,roDatePicker,roDateDraft,roDateWheelYear,roDateWheelMonth,roDateWheelDay,roDateYears,roDateDays,openRoDatePicker,cancelRoDatePicker,confirmRoDatePicker,onRoDateWheelScroll,
-chargeDevices,cdOV,curChargeDev,cdQ,cdPill,cdMod,cdConfirm,cdAddForm,cdModForm,cdErr,cdSaving,cdConfirmLoading,cdMoreOpen,cdPills,cdCnt,cdPillActive,cdSetPill,cdOpenFS,cdResetFS,cdApplyFS,cdDoSearch,cdClearFilters,cdFsStatus,cdFsStatusC,cdFsUsage,cdShowFS,cdHasF,chargeDevFiltered,cdEnableTag,cdUsageTag,cdPriceText,cdDurText,storeNameOf,cdOpenList,cdOpenDetail,cdOpenAdd,cdListScan,CD_ADDR_POINTS,cdStoreLoc,cdClearAddr,cdAddrTarget,cdMapQ,cdMapList,cdMapBox,cdMapOff,cdMapDragging,cdMapDraft,cdMapWorldStyle,cdMapDown,cdMapMove,cdMapUp,cdOpenAddrMap,cdPickMapPoint,cdConfirmAddrMap,cdLocAppAuth,cdLocService,cdShowLocAppAuth,cdShowLocService,cdUseLoc,cdAllowLocAppAuth,cdDenyLocAppAuth,cdCancelLocService,cdAllowLocService,cdCloseList,cdGoBack,cdOpenMod,cdCloseMod,cdSaveAdd,cdSaveEdit,cdSavePrice,cdAskToggle,cdDoToggle,cdConfirmTitle,cdConfirmDesc,refreshCd,
+chargeDevices,cdOV,curChargeDev,cdQ,cdPill,cdMod,cdConfirm,cdAddForm,cdModForm,cdErr,cdSaving,cdConfirmLoading,cdMoreOpen,cdPills,cdCnt,cdPillActive,cdSetPill,cdOpenFS,cdResetFS,cdApplyFS,cdDoSearch,cdClearFilters,cdFsStatus,cdFsStatusC,cdFsUsage,cdShowFS,cdHasF,chargeDevFiltered,cdEnableTag,cdUsageTag,cdPriceText,cdDurText,storeNameOf,cdOpenList,cdOpenDetail,cdOpenAdd,cdListScan,CD_ADDR_POINTS,cdStoreLoc,cdAddrTarget,cdMapQ,cdMapList,cdMapBox,cdMapOff,cdMapDragging,cdMapDraft,cdMapWorldStyle,cdMapDown,cdMapMove,cdMapUp,cdOpenAddrMap,cdPickMapPoint,cdConfirmAddrMap,cdLocAppAuth,cdLocService,cdShowLocAppAuth,cdShowLocService,cdUseLoc,cdAllowLocAppAuth,cdDenyLocAppAuth,cdCancelLocService,cdAllowLocService,cdCloseList,cdGoBack,cdOpenMod,cdCloseMod,cdSaveAdd,cdSaveEdit,cdSavePrice,cdAskToggle,cdDoToggle,cdConfirmTitle,cdConfirmDesc,refreshCd,
 coOrders,coOV,curChargeOrder,coQ,coSearchScope,coSearchScopeOpen,coSearchScopeOpts,coSearchScopeLabel,coSearchPH,coPill,coPills,coOrderStatusOpts,coCnt,coPillActive,coSetPill,coPickSt,coToggleFsChannel,coSetSearchScope,coDoSearch,coOpenFS,coToggleFsPaySt,coResetFS,coApplyFS,coClearFilters,coFiltered,coFsOrderSt,coFsOrderStC,coFsChannel,coFsChannelC,coFsPaySt,coFsPayStC,coFsStart,coFsEnd,coFsStartC,coFsEndC,coShowFS,coHasF,coPayStatusOpts,CO_PAY_CHANNELS,coOrderStatusTag,coPayStatusTag,coRefundStatusTag,coPayChannelText,coRefundedAmount,coRefundable,coCanRefund,coCanRefundRecords,coShowPayTime,coDurText,coAmountText,coOpenList,coOpenDetail,coCloseList,coGoBack,coOpenRefundRecords,coRefunds,coCancelMod,coCancelConfirm,coCancelLoading,coCancelForm,coCancelErr,coRequestCancel,coSubmitCancel,coConfirmCancel,coFinishMod,coFinishConfirm,coFinishLoading,coFinishForm,coFinishErr,coRequestFinish,coSubmitFinish,coConfirmFinish,coRefundMod,coRefundConfirm,coRefundLoading,coRefundForm,coRefundErr,coOpenRefund,coSubmitRefund,coConfirmRefund,refreshCo,coActionsVisible,coDatePicker,coDateDraft,coDateYears,coDateDays,coDateWheelYear,coDateWheelMonth,coDateWheelDay,openCoDatePicker,cancelCoDatePicker,confirmCoDatePicker,onCoDateWheelScroll
 };
 }
