@@ -220,7 +220,7 @@
       "exitApp": "ออกจากแอป",
       "gotIt": "เข้าใจแล้ว",
       "latest": "เป็นเวอร์ชันล่าสุดแล้ว",
-      "latestVersion": "เวอร์ชันล่าสุด V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "พบเวอร์ชันใหม่",
       "packageDownloaded": "ดาวน์โหลดแพ็กเกจติดตั้งแล้ว กำลังติดตั้ง",
       "relaunch": "เปิดแอปอีกครั้ง",

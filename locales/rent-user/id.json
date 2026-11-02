@@ -222,11 +222,12 @@
       "exitApp": "Keluar Aplikasi",
       "gotIt": "Mengerti",
       "latest": "Sudah versi terbaru",
-      "latestVersion": "Versi terbaru V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "Versi baru ditemukan",
       "packageDownloaded": "Paket instalasi telah diunduh, akan segera dipasang",
       "relaunch": "Buka kembali aplikasi",
       "updateComplete": "Pembaruan selesai! Ditingkatkan ke V{version}",
+      "updateDesc": "- Meningkatkan akurasi posisi kendaraan\n- Menambahkan deteksi versi\n- Memperbaiki masalah yang diketahui",
       "updateNow": "Perbarui Sekarang",
       "later": "Ingatkan Nanti"
     },

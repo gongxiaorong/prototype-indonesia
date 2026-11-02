@@ -220,7 +220,7 @@
       "exitApp": "退出应用",
       "gotIt": "知道了",
       "latest": "已是最新版本",
-      "latestVersion": "最新版本 V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "发现新版本",
       "packageDownloaded": "安装包已下载，即将安装",
       "relaunch": "重新打开应用",

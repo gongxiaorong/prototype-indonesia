@@ -222,11 +222,12 @@
       "exitApp": "Exit App",
       "gotIt": "Got it",
       "latest": "Already the latest version",
-      "latestVersion": "Latest Version V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "New Version Found",
       "packageDownloaded": "Installation package downloaded, installing now",
       "relaunch": "Reopen App",
       "updateComplete": "Update complete! Upgraded to V{version}",
+      "updateDesc": "- Improved vehicle positioning accuracy\n- Added version detection\n- Fixed known issues",
       "updateNow": "Update Now",
       "later": "Remind Me Later"
     },

@@ -220,7 +220,7 @@
       "exitApp": "Keluar Aplikasi",
       "gotIt": "Mengerti",
       "latest": "Sudah versi terbaru",
-      "latestVersion": "Versi terbaru V{version}",
+      "latestVersion": "V{version}",
       "newVersion": "Versi baru ditemukan",
       "packageDownloaded": "Paket instalasi telah diunduh, akan segera dipasang",
       "relaunch": "Buka kembali aplikasi",
