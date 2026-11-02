@@ -652,7 +652,10 @@
       "statusAlarming": "告警中",
       "statusFaulting": "故障中",
       "statusResolved": "已解除",
-      "time": "操作時間"
+      "time": "操作時間",
+      "takeCab": "取電櫃子",
+      "backCab": "還電櫃子",
+      "orderSeg": " · 訂單 {no}"
     },
     "slot": {
       "disabledTag": "停用中"
@@ -1055,7 +1058,8 @@
       "phonePlaceholder": "請輸入手機號",
       "privacyPolicy": "隱私政策",
       "accountPlaceholder": "請輸入帳號",
-      "passwordPlaceholder": "請輸入密碼"
+      "passwordPlaceholder": "請輸入密碼",
+      "resend": "重新獲取"
     },
     "orderStatus": {
       "breach": "已違約",

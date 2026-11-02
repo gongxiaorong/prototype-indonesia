@@ -652,7 +652,10 @@
       "statusAlarming": "告警中",
       "statusFaulting": "故障中",
       "statusResolved": "已解除",
-      "time": "操作时间"
+      "time": "操作时间",
+      "takeCab": "取电柜子",
+      "backCab": "还电柜子",
+      "orderSeg": " · 订单 {no}"
     },
     "slot": {
       "disabledTag": "禁用中"
@@ -1055,7 +1058,8 @@
       "phonePlaceholder": "请输入手机号",
       "privacyPolicy": "用户隐私政策",
       "accountPlaceholder": "请输入账号",
-      "passwordPlaceholder": "请输入密码"
+      "passwordPlaceholder": "请输入密码",
+      "resend": "重新获取"
     },
     "orderStatus": {
       "breach": "已违约",

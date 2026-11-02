@@ -652,7 +652,10 @@
       "statusAlarming": "Dalam Alarm",
       "statusFaulting": "Dalam Gangguan",
       "statusResolved": "Selesai",
-      "time": "Waktu Operasi"
+      "time": "Waktu Operasi",
+      "takeCab": "Kabinet Ambil",
+      "backCab": "Kabinet Kembali",
+      "orderSeg": " · Pesanan {no}"
     },
     "slot": {
       "disabledTag": "Dinonaktifkan"
@@ -1055,7 +1058,8 @@
       "phonePlaceholder": "Masukkan nomor ponsel",
       "privacyPolicy": "Kebijakan Privasi",
       "accountPlaceholder": "Masukkan akun",
-      "passwordPlaceholder": "Masukkan kata sandi"
+      "passwordPlaceholder": "Masukkan kata sandi",
+      "resend": "Kirim ulang"
     },
     "orderStatus": {
       "breach": "Pelanggaran",

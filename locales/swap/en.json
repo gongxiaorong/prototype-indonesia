@@ -652,7 +652,10 @@
       "statusAlarming": "Alarming",
       "statusFaulting": "Faulted",
       "statusResolved": "Resolved",
-      "time": "Operation Time"
+      "time": "Operation Time",
+      "takeCab": "Pickup Cabinet",
+      "backCab": "Return Cabinet",
+      "orderSeg": " · Order {no}"
     },
     "slot": {
       "disabledTag": "Disabled"
@@ -1055,7 +1058,8 @@
       "phonePlaceholder": "Please enter phone number",
       "privacyPolicy": "Privacy Policy",
       "accountPlaceholder": "Please enter account",
-      "passwordPlaceholder": "Please enter password"
+      "passwordPlaceholder": "Please enter password",
+      "resend": "Resend"
     },
     "orderStatus": {
       "breach": "Breached",

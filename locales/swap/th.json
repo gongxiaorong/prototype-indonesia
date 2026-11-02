@@ -652,7 +652,10 @@
       "statusAlarming": "กำลังแจ้งเตือน",
       "statusFaulting": "กำลังขัดข้อง",
       "statusResolved": "แก้ไขแล้ว",
-      "time": "เวลาดำเนินการ"
+      "time": "เวลาดำเนินการ",
+      "takeCab": "ตู้รับแบต",
+      "backCab": "ตู้คืนแบต",
+      "orderSeg": " · คำสั่งซื้อ {no}"
     },
     "slot": {
       "disabledTag": "ปิดใช้งานอยู่"
@@ -1055,7 +1058,8 @@
       "phonePlaceholder": "กรุณากรอกหมายเลขโทรศัพท์",
       "privacyPolicy": "นโยบายความเป็นส่วนตัว",
       "accountPlaceholder": "กรุณากรอกบัญชี",
-      "passwordPlaceholder": "กรุณากรอกรหัสผ่าน"
+      "passwordPlaceholder": "กรุณากรอกรหัสผ่าน",
+      "resend": "ส่งใหม่"
     },
     "orderStatus": {
       "breach": "ละเมิดสัญญา",
