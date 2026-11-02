@@ -1,0 +1,599 @@
+{
+  "label": {
+    "langZhCN": "簡體中文",
+    "noData": "暫無相關數據",
+    "map": {
+      "amap": "高德地圖",
+      "baidu": "百度地圖",
+      "google": "谷歌地圖"
+    },
+    "unit": {
+      "cabinet": "台"
+    },
+    "failed": "失敗"
+  },
+  "common": {
+    "label": {
+      "langZhHK": "繁體中文（中國香港）",
+      "assistantName": "小迪",
+      "all": "全部",
+      "hasAlert": "有告警",
+      "email": "電郵",
+      "account": "帳號",
+      "name": "姓名"
+    },
+    "systemSwitch": {
+      "swap": "換電系統",
+      "selectToast": "請選擇系統",
+      "action": "切換",
+      "title": "切換系統",
+      "rent": "租車系統",
+      "enter": "進入系統",
+      "charge": "充電系統"
+    },
+    "login": {
+      "accountPlaceholder": "請輸入帳號",
+      "phonePlaceholder": "請輸入手機號",
+      "emailPlaceholder": "請輸入電郵",
+      "passwordPlaceholder": "請輸入密碼",
+      "codePlaceholder": "請輸入驗證碼",
+      "needAgree": "請先閱讀並同意隱私政策",
+      "passwordLabel": "密碼",
+      "codeLabel": "驗證碼",
+      "getCode": "獲取驗證碼",
+      "agreePrefix": "我已閱讀並同意",
+      "login": "登入",
+      "codeSub": "驗證碼登入",
+      "passwordSub": "密碼登入",
+      "emailMode": "電郵登入",
+      "accountMode": "帳號登入",
+      "phoneMode": "手機號登入",
+      "resend": "重新獲取"
+    },
+    "toast": {
+      "accountFormat": "帳號僅支援字母、數字、下劃線",
+      "phoneDigit": "手機號僅允許數字",
+      "pwdChars": "密碼僅支援大小寫字母、數字、鍵盤符號",
+      "codeFormat": "驗證碼格式不正確",
+      "loginSuccess": "登入成功",
+      "logout": "已登出",
+      "copySuccess": "複製成功",
+      "saveSuccess": "儲存成功"
+    },
+    "profile": {
+      "emailFormatError": "電郵格式不正確",
+      "nicknameSaved": "暱稱已儲存",
+      "needBindFirst": "請先綁定手機號或電郵",
+      "inputNewPhone": "請輸入新的手機號",
+      "phoneReplaced": "手機號替換成功",
+      "phoneBoundSuccess": "手機號綁定成功",
+      "inputNewEmail": "請輸入新的電郵",
+      "emailReplaced": "電郵替換成功",
+      "emailBoundSuccess": "電郵綁定成功",
+      "pwdMismatch": "兩次輸入的密碼不一致",
+      "pwdUpdated": "密碼已更新",
+      "namePlaceholder": "請輸入姓名",
+      "positionDefaultName": "當前位置",
+      "personalInfo": "個人資訊",
+      "avatar": "頭像",
+      "notBound": "未綁定",
+      "emailAddress": "電郵地址",
+      "passwordManage": "密碼管理",
+      "changePassword": "修改密碼",
+      "setPassword": "設定密碼",
+      "settings": "系統設定",
+      "settingsGeneral": "通用設定",
+      "settingsVersion": "當前版本",
+      "bindPhone": "綁定手機號",
+      "bindEmail": "綁定電郵",
+      "verifyByEmail": "電郵驗證",
+      "resetPassword": "重設密碼",
+      "newPassword": "新密碼"
+    },
+    "action": {
+      "takePhoto": "拍照",
+      "album": "相冊",
+      "edit": "編輯",
+      "save": "儲存",
+      "cancel": "取消",
+      "confirm": "確定",
+      "add": "新增",
+      "viewDetail": "詳情",
+      "switchLang": "切換語言",
+      "logout": "登出",
+      "confirmReplace": "確認替換",
+      "bind": "綁定",
+      "nextStep": "下一步"
+    },
+    "service": {
+      "swap": "換電"
+    },
+    "dateTime": {
+      "minute": "分",
+      "second": "秒",
+      "hour": "時"
+    },
+    "orders": {
+      "batteryNoPlaceholder": "請輸入電池編號",
+      "orderId": "訂單編號"
+    },
+    "vehicles": {
+      "batteryLevel": "電量",
+      "batteryDetail": "電池詳情",
+      "historyTrack": "歷史軌跡",
+      "batteryDischargeOff": "禁止放電",
+      "batteryDischargeOn": "允許放電",
+      "distanceFromYou": "距您",
+      "meter": "米",
+      "walk": "步行",
+      "walkMin": "分鐘",
+      "trackStartPin": "起",
+      "trackEndPin": "終"
+    },
+    "tab": {
+      "battery": "電池",
+      "home": "首頁",
+      "profile": "我的"
+    },
+    "status": {
+      "disabled": "停用",
+      "enabled": "啟用"
+    },
+    "startTime": "開始時間",
+    "endTime": "結束時間",
+    "scan": {
+      "hint": "請將二維碼對準取景框"
+    },
+    "unit": {
+      "battery": "塊"
+    },
+    "reset": "重設",
+    "phone": "手機號",
+    "dialcode": {
+      "searchPlaceholder": "搜尋國家/地區或區號"
+    },
+    "version": {
+      "newVersion": "發現新版本",
+      "latest": "已是最新版本",
+      "gotIt": "知道了"
+    },
+    "copied": "已複製",
+    "cabinet": {
+      "disable": "停用機櫃"
+    }
+  },
+  "user": {
+    "profile": {
+      "accountSaved": "帳號已儲存"
+    },
+    "bindEmail": {
+      "lengthToast": "電郵長度不能超過255"
+    },
+    "pwd": {
+      "confirmPlaceholder": "請再次輸入新密碼",
+      "lengthToast": "密碼長度需為 6-64 位",
+      "phoneVerify": "手機號驗證",
+      "newPlaceholder": "請輸入 6–64 位新密碼",
+      "confirmLabel": "確認新密碼"
+    },
+    "idInfo": {
+      "photoMaxTwo": "最多上傳2張",
+      "photoDeleted": "照片已刪除",
+      "idPhotoRequired": "請至少上傳1張身份證照片",
+      "updated": "實名認證已更新",
+      "added": "實名認證已添加"
+    },
+    "id": {
+      "cardNoPlaceholder": "請輸入證件號碼"
+    },
+    "borrow": {
+      "noFullBatteryToast": "當前櫃機暫無可借滿電電池",
+      "successToast": "借電成功，電池已存入「我的電池」"
+    },
+    "records": {
+      "borrowSuccess": "借電成功",
+      "statusUsing": "使用中",
+      "returnSuccess": "還電成功",
+      "statusDone": "已完成",
+      "swapSuccess": "換電成功",
+      "borrowCabinet": "取電櫃子",
+      "returnCabinet": "還電櫃子",
+      "borrowTime": "取電時間",
+      "returnTime": "還電時間"
+    },
+    "return": {
+      "noBattery": "您當前沒有可歸還的電池"
+    },
+    "returnFlow": {
+      "title": "還電"
+    },
+    "swap": {
+      "borrow": "借電"
+    },
+    "home": {
+      "scanSwap": "掃碼換電",
+      "cityUnopened": "該城市暫未開通換電服務"
+    },
+    "manual": {
+      "cabinetNoPlaceholder": "請輸入機櫃編號",
+      "cabinetNo": "機櫃編號"
+    },
+    "swapFlow": {
+      "openFailed": "倉門打開失敗",
+      "putOldFailed": "舊電池放入失敗",
+      "takeNewFailed": "新電池取出失敗"
+    },
+    "borrowFlow": {
+      "notTaken": "未取出電池"
+    },
+    "deposit": {
+      "payFirstToast": "請先繳纳按金，方可使用換電服務",
+      "unpaidTitle": "未繳纳按金",
+      "notice1Tag": "先繳後享",
+      "notice1Line1": "需繳纳按金後",
+      "notice1Line2": "方可享受換電服務",
+      "notice2Tag": "不可抵扣換電費",
+      "notice2Line1": "按金不可用於換電",
+      "notice2Line2": "費用抵扣",
+      "notice3Tag": "隨時可退",
+      "notice3Line1": "歸還電池後",
+      "notice3Line2": "按金隨時可退",
+      "notice4Tag": "損失賠償",
+      "notice4Line1": "設備丟失或損壞",
+      "notice4Line2": "需按金賠償損失"
+    },
+    "package": {
+      "buyFirstDesc": "請您先購買套餐，再使用換電服務。",
+      "notBought": "未購買套餐"
+    },
+    "locate": {
+      "searchPlaceholder": "請輸入站點名稱或地址",
+      "noResult": "未找到相關地點"
+    },
+    "reserve": {
+      "selectCabinet": "請選擇要預約的櫃機",
+      "timeoutToast": "預約已超時，可重新預約"
+    },
+    "battery": {
+      "empty": "暫無電池",
+      "no": "電池編號"
+    },
+    "station": {
+      "emptySlot": "空倉",
+      "storeDetail": "門店詳情",
+      "detail": "站點詳情"
+    },
+    "search": {
+      "noPoi": "沒有找到相關地點"
+    },
+    "location": {
+      "title": "定位服務"
+    },
+    "login": {
+      "privacyPolicyLink": "《用戶隱私政策》"
+    },
+    "dialcode": {
+      "noMatch": "未找到匹配地區"
+    },
+    "version": {
+      "later": "稍後提醒"
+    }
+  },
+  "demoOps": {
+    "exitedApp": "已退出應用（演示）",
+    "flowResume": "流程恢復",
+    "qrInvalid": "二維碼無效，請重新掃碼",
+    "crossOperator": "不支持跨營運商換電",
+    "deviceOffline": "設備已離線，暫無法使用",
+    "tooFar": "距離過遠無法操作，請靠近機櫃重新掃碼",
+    "online": "在線",
+    "offline": "離線",
+    "cabNotExist": "機櫃編碼不存在",
+    "cabUsed": "機櫃編碼已被使用",
+    "addSuccess": "新增成功",
+    "success": "成功"
+  },
+  "action": {
+    "scanReturn": "掃碼還電",
+    "goPay": "前往繳纳",
+    "buyNow": "立即購買",
+    "clearFilter": "清空篩選",
+    "uploadImage": "上傳圖片",
+    "more": "更多操作",
+    "reupload": "重新上傳",
+    "tapToClose": "點擊空白處關閉",
+    "deny": "不允許",
+    "allow": "允許",
+    "goEnable": "去開啟"
+  },
+  "merchant": {
+    "store": {
+      "service": {
+        "rent": "租車",
+        "repair": "售後/維修",
+        "sell": "賣車/電池"
+      },
+      "searchPlaceholder": "搜尋門店名稱",
+      "empty": "暫無門店",
+      "addr": "門店地址",
+      "hours": "營業時間",
+      "station": "關聯站點",
+      "notExist": "門店不存在",
+      "contact": "聯繫人",
+      "phone": "聯繫電話",
+      "services": "關鍵業務",
+      "photos": "門店封面",
+      "formTitle": "門店資訊",
+      "name": "門店名稱",
+      "namePlaceholder": "請輸入門店名稱",
+      "addrPlaceholder": "請輸入地址或選擇地址",
+      "pickOnMap": "地圖選擇地址",
+      "contactPlaceholder": "請輸入聯繫人姓名",
+      "phonePlaceholder": "請輸入聯繫電話",
+      "selectStation": "選擇關聯站點",
+      "addrMapSearch": "搜尋地點",
+      "phoneInvalid": "聯繫電話格式不正確",
+      "coverRequired": "請上傳門店封面",
+      "addrRequired": "請輸入或選擇門店地址",
+      "stationTaken": "該站點已被其他門店關聯",
+      "saveSuccess": "門店資訊已儲存",
+      "addSuccess": "門店已新增"
+    },
+    "tab": {
+      "store": "門店",
+      "station": "站點",
+      "cabinet": "換電櫃"
+    },
+    "battery": {
+      "owner": "當前歸屬",
+      "cabinetStatus": "在櫃狀態",
+      "rentStatus": "租用狀態",
+      "status": "電池狀態",
+      "addTitle": "新增電池",
+      "notExist": "電池不存在",
+      "noLocation": "暫無定位 · 點擊查看",
+      "params": "電池參數",
+      "voltage": "電壓",
+      "current": "電流",
+      "health": "健康度",
+      "cycles": "循環次數",
+      "control": "電池控制",
+      "service": "電池服務",
+      "rentRecord": "租借記錄",
+      "rentUser": "租借用戶",
+      "noRentRecord": "暫無租借記錄",
+      "charging": "充電中",
+      "full": "已滿電",
+      "reserved": "預約中",
+      "abnormal": "異常中",
+      "lastLocationUnknown": "最後位置未知",
+      "noExists": "電池編號已存在",
+      "copiedNo": "電池編號已複製",
+      "dischargeForbid": "禁止後設備將無法放電",
+      "dischargeAllow": "允許後設備可正常放電",
+      "dischargeForbidden": "已禁止放電",
+      "dischargeAllowed": "已允許放電"
+    },
+    "cabinet": {
+      "empty": "暫無換電櫃",
+      "station": "當前站點",
+      "bizStatus": "營運狀態",
+      "enabledStatus": "啟用狀態",
+      "alarmStatus": "告警狀態",
+      "faultStatus": "故障狀態",
+      "detailTitle": "換電櫃詳情",
+      "notExist": "換電櫃不存在",
+      "name": "機櫃名稱",
+      "addr": "當前地址",
+      "control": "機櫃控制",
+      "offline": "下線",
+      "online": "上線",
+      "openAllDoors": "倉門全開",
+      "openEmptyDoors": "空倉全開",
+      "service": "機櫃服務",
+      "alarm": "機櫃告警",
+      "fault": "機櫃故障",
+      "usageRecord": "使用記錄",
+      "photos": "機櫃圖片",
+      "slotStatus": "倉位狀態",
+      "slot": {
+        "hasBattery": "有電池"
+      },
+      "noPhoto": "暫無圖片",
+      "editTitle": "編輯換電櫃",
+      "namePlaceholder": "請輸入機櫃名稱",
+      "selectStation": "選擇站點",
+      "maxPhotos": "最多上傳10張",
+      "alarmList": "告警列表",
+      "faultList": "故障列表",
+      "alarmSearchPlaceholder": "請輸入告警內容",
+      "faultSearchPlaceholder": "請輸入故障內容",
+      "currentStatus": "當前狀態",
+      "slotLabel": "倉位",
+      "doorLabel": "倉門",
+      "wholeCabinet": "整櫃",
+      "alarmContent": "告警內容",
+      "faultContent": "故障內容",
+      "noUsageRecord": "暫無使用記錄",
+      "addTitle": "新增換電櫃",
+      "scanInput": "掃碼輸入",
+      "manualTitle": "輸入機櫃編號",
+      "manualDesc": "請輸入機櫃銘牌上的機櫃編號",
+      "deletePhoto": "刪除圖片",
+      "searchStation": "搜尋站點名稱",
+      "noStationFound": "未找到站點",
+      "doorOpened": "已開倉",
+      "doorIsOpen": "門已開",
+      "openDoor": "開門",
+      "scanSuccess": "掃碼成功",
+      "scanSuccessFilled": "掃碼成功，編號已輸入",
+      "imageDeleted": "圖片已刪除",
+      "copiedNo": "機櫃編碼已複製",
+      "bizOfflineTitle": "下線機櫃",
+      "bizOnlineTitle": "上線機櫃",
+      "bizOfflineConfirm": "下線後該機櫃暫停對外換電服務，確認下線？",
+      "bizOnlineConfirm": "上線後該機櫃恢復對外換電服務，確認上線？",
+      "faultClearTitle": "清除故障標記",
+      "faultMarkTitle": "標記為故障",
+      "alarmClearTitle": "清除告警",
+      "alarmTriggerTitle": "觸發告警",
+      "enableTitle": "啟用機櫃",
+      "disableConfirm": "停用後該機櫃將不可使用，確認停用？",
+      "enableConfirm": "啟用後該機櫃恢復可用，確認啟用？",
+      "noEmptySlot": "該櫃暫無可開倉的空倉"
+    },
+    "home": {
+      "todayOverview": "今日經營概覽",
+      "realtime": "實時",
+      "todaySwapCount": "今日換電次數",
+      "todayRevenue": "今日營收",
+      "cabinetOnlineRate": "櫃在線率",
+      "quickEntry": "快捷入口",
+      "storeManage": "門店管理",
+      "stationManage": "站點管理",
+      "dashboard": "數據看板",
+      "deviceAlarm": "設備告警",
+      "noAlarm": "暫無設備告警",
+      "commonActions": "常用功能",
+      "switchFranchisee": "切換加盟商"
+    },
+    "record": {
+      "operator": "操作人",
+      "content": "操作內容",
+      "platform": "操作平台",
+      "result": "操作結果",
+      "time": "操作時間",
+      "statusAlarming": "告警中",
+      "statusFaulting": "故障中",
+      "statusResolved": "已解除",
+      "emptyAlarm": "暫無告警記錄",
+      "emptyFault": "暫無故障記錄"
+    },
+    "dashboard": {
+      "cabinetTotal": "換電櫃總數",
+      "batteryInCabinet": "櫃內電池",
+      "renting": "租用中",
+      "swapTrend7d": "近 7 日換電趨勢",
+      "cabinetStatusDist": "機櫃狀態分布",
+      "batteryStatusDist": "電池狀態分布",
+      "alarmStats": "告警統計",
+      "noAlarm": "暫無告警"
+    },
+    "map": {
+      "title": "選擇地址",
+      "useCurrentLocation": "使用當前定位"
+    },
+    "station": {
+      "empty": "暫無站點",
+      "addr": "站點地址",
+      "store": "所屬門店",
+      "notExist": "站點不存在",
+      "no": "站點編號",
+      "phone": "聯繫方式",
+      "photos": "站點封面",
+      "bindCabinet": "綁定換電櫃",
+      "noBoundCabinet": "暫未綁定換電櫃",
+      "unbindCabinet": "解綁換電櫃",
+      "editTitle": "編輯站點",
+      "addTitle": "新增站點",
+      "name": "站點名稱",
+      "namePlaceholder": "請輸入站點名稱",
+      "contactPlaceholder": "請輸入",
+      "bindSearchPlaceholder": "請輸入換電櫃編號",
+      "noCabinetFound": "未找到換電櫃",
+      "noFreeCabinet": "暫無空閒換電櫃可選",
+      "confirmBind": "確認綁定",
+      "unbound": "未綁定站點",
+      "phoneInvalid": "聯繫方式格式不正確",
+      "coverRequired": "請上傳站點封面",
+      "addrRequired": "請輸入或選擇站點地址",
+      "saveSuccess": "站點資訊已儲存",
+      "addSuccess": "站點已新增"
+    },
+    "filter": {
+      "title": "全部篩選",
+      "netStatus": "聯網狀態",
+      "enabled": "已啟用",
+      "disabled": "未啟用",
+      "noAlarm": "無告警",
+      "noFault": "無故障",
+      "hasFault": "有故障",
+      "inCabinet": "櫃內",
+      "outCabinet": "櫃外",
+      "unrented": "未租用",
+      "rented": "已租用"
+    },
+    "location": {
+      "appAuthDesc": "您的位置資訊將用於定位門店地址",
+      "serviceDesc": "請在系統設定中開啟定位服務，以自動獲取門店地址"
+    },
+    "alarmPage": {
+      "type": {
+        "cabFault": "櫃故障",
+        "tempAlarm": "溫度告警",
+        "bizOffline": "營運下線",
+        "commError": "通訊異常",
+        "battOffline": "電池離線"
+      }
+    },
+    "useSource": {
+      "system": "系統",
+      "platform": "平台端",
+      "merchant": "商戶端"
+    },
+    "slot": {
+      "disabledTag": "停用中"
+    },
+    "door": {
+      "remoteControl": "遠程控制倉門",
+      "enable": "啟用倉門",
+      "disable": "停用倉門",
+      "enableConfirm": "啟用後該倉門恢復對外服務，確認啟用？",
+      "disableConfirm": "停用後該倉門停止對外服務，確認停用？",
+      "remoteOpen": "遠程開倉",
+      "openSent": "開倉指令已下發"
+    },
+    "alarm": {
+      "battType": {
+        "cellTempHigh": "電芯高溫告警"
+      }
+    },
+    "fault": {
+      "type": {
+        "overTemp": "過溫保護"
+      }
+    },
+    "form": {
+      "pickOnMap": "請在地圖上選擇地址",
+      "hoursRequired": "請選擇營業時間",
+      "hoursRange": "結束時間需晚於開始時間",
+      "contactMax": "聯繫人不能超過 64 個字符"
+    },
+    "bindCab": {
+      "pickFirst": "請先選擇換電櫃",
+      "unbindConfirm": "確認將該換電櫃與當前站點解綁？解綁後該換電櫃將變為空閒，可重新綁定站點",
+      "unboundToast": "已解綁站點"
+    }
+  },
+  "demo": {
+    "map": {
+      "road": {
+        "huangheMiddleRoad": "黃河中路",
+        "hangkonggangStreet": "航空港街道",
+        "xihanggangAvenue": "西航港大道",
+        "shuangliuWestSquare": "雙流西站廣場"
+      }
+    },
+    "battery": {
+      "trackZhonghe": "中和街道"
+    },
+    "poi": {
+      "p1": {
+        "name": "博雅城市廣場"
+      }
+    }
+  },
+  "placeholder": {
+    "email": "請輸入郵箱地址"
+  }
+}

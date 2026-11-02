@@ -34,7 +34,7 @@ const LANGS = [
 const SRC = 'zh-CN';
 
 /** 对照表分组：rent 两端合并为一张表（其余目录各自一张） */
-const GROUP_OF = (dir) => (dir.startsWith('rent-') ? 'rent' : dir);
+const GROUP_OF = (dir) => (dir.startsWith('rent-') ? 'rent' : dir.startsWith('swap-user') ? 'swap-user' : dir.startsWith('swap-merchant') ? 'swap-merchant' : dir);
 
 const pageTpl = readFileSync(join(SCRIPT_DIR, 'i18n_reference_page.html'), 'utf8');
 const appJs = readFileSync(join(SCRIPT_DIR, 'i18n_reference_app.js'), 'utf8');

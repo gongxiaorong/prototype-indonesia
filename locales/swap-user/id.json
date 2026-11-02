@@ -1,0 +1,531 @@
+{
+  "user": {
+    "home": {
+      "buyPackage": "Beli Paket",
+      "recommend": "Rekomendasi",
+      "searchPlaceholder": "Masukkan tujuan",
+      "processingNotice": "Anda memiliki proses yang sedang berjalan",
+      "notLoginTips": "Anda belum masuk. Ketuk untuk masuk",
+      "locationOffTitle": "Layanan Lokasi Belum Aktif",
+      "locationOffDesc": "Aktifkan untuk menemukan stasiun tukar baterai terdekat",
+      "areaUnsetTitle": "Anda belum mengatur area tukar baterai",
+      "areaClosed": "Layanan belum tersedia di area ini",
+      "scanSwap": "Pindai untuk Tukar",
+      "selectOperator": "Silakan pilih operator",
+      "cityUnopened": "Layanan tukar baterai belum tersedia di kota ini"
+    },
+    "tab": {
+      "package": "Paket Saya",
+      "orders": "Pesanan Saya",
+      "battery": "Baterai Saya"
+    },
+    "records": {
+      "swapRecord": "Riwayat Tukar Baterai",
+      "borrowCabinet": "Kabinet Pinjam",
+      "returnCabinet": "Kabinet Kembali",
+      "borrowTime": "Waktu Pinjam",
+      "returnTime": "Waktu Kembali",
+      "borrowSuccess": "Berhasil Meminjam",
+      "statusUsing": "Sedang Digunakan",
+      "returnSuccess": "Berhasil Mengembalikan",
+      "statusDone": "Selesai",
+      "swapSuccess": "Berhasil Menukar"
+    },
+    "deposit": {
+      "title": "Jaminan Saya",
+      "detailTitle": "Detail Jaminan",
+      "swapDeposit": "Jaminan Tukar Baterai",
+      "paid": "Sudah Dibayar",
+      "unpaid": "Belum Dibayar",
+      "free": "Jaminan Dibebaskan",
+      "refundNotice": "Ketentuan Pengembalian Jaminan",
+      "notice": "Ketentuan Jaminan",
+      "refunding": "Pengembalian Dana Sedang Ditinjau",
+      "refundTipDesc": "Anda memiliki paket tukar baterai yang aktif. Setelah jaminan dikembalikan, manfaat tukar baterai Anda akan ditangguhkan. Konfirmasi pengajuan pengembalian jaminan?",
+      "refundOkTitle": "Pengajuan Berhasil",
+      "unpaidTitle": "Jaminan Belum Dibayar",
+      "payFirstDesc": "Silakan bayar jaminan terlebih dahulu, lalu beli paket",
+      "payFirstToast": "Bayar jaminan terlebih dahulu untuk menggunakan layanan tukar",
+      "notice1Tag": "Bayar Dulu",
+      "notice1Line1": "Jaminan harus dibayar sebelum",
+      "notice1Line2": "Anda dapat menikmati layanan tukar",
+      "notice2Tag": "Tidak Dapat Dipotong",
+      "notice2Line1": "Jaminan tidak dapat digunakan untuk",
+      "notice2Line2": "potongan biaya tukar",
+      "notice3Tag": "Dapat Dikembalikan Kapan Saja",
+      "notice3Line1": "Setelah mengembalikan baterai,",
+      "notice3Line2": "jaminan dapat dikembalikan kapan saja",
+      "notice4Tag": "Kompensasi Kerugian",
+      "notice4Line1": "Jika perangkat hilang atau rusak,",
+      "notice4Line2": "jaminan akan menutup kerugian"
+    },
+    "area": {
+      "title": "Area Tukar Baterai",
+      "empty": "Belum ada area tukar baterai",
+      "emptyHint": "Ketuk “Tambah” di bawah untuk menambahkan"
+    },
+    "station": {
+      "swappableBattery": "Baterai Tersedia",
+      "emptySlot": "Slot Kosong",
+      "bookSwap": "Reservasi Tukar",
+      "cancelBookingDesc": "Batalkan reservasi ini? Anda tidak dapat melakukan reservasi lagi dalam 10 menit.",
+      "storeDetail": "Detail Toko",
+      "detail": "Detail Stasiun"
+    },
+    "swap": {
+      "lowBatteryTitle": "Daya Rendah",
+      "choiceTitle": "Pilih Tindakan",
+      "borrow": "Pinjam Daya"
+    },
+    "login": {
+      "privacyPolicyLink": "Kebijakan Privasi Pengguna",
+      "autoRegisterHint": ". Akun yang belum terdaftar akan didaftarkan otomatis.",
+      "resendPrefix": "Kirim ulang ("
+    },
+    "dialcode": {
+      "noMatch": "Wilayah yang cocok tidak ditemukan"
+    },
+    "profile": {
+      "idVerify": "Verifikasi Identitas",
+      "verified": "Sudah Verifikasi",
+      "unverified": "Belum Verifikasi",
+      "accountSaved": "Akun disimpan"
+    },
+    "pwd": {
+      "phoneVerify": "Verifikasi Nomor Ponsel",
+      "newPlaceholder": "Masukkan kata sandi baru (6-64 karakter)",
+      "confirmLabel": "Konfirmasi Kata Sandi Baru",
+      "confirmPlaceholder": "Masukkan kembali kata sandi baru",
+      "lengthToast": "Panjang kata sandi harus 6-64 karakter"
+    },
+    "id": {
+      "detailTitle": "Detail KYC",
+      "photo": "Foto KTP",
+      "cardNoPlaceholder": "Masukkan nomor dokumen",
+      "photoTip": "Unggah foto dokumen yang jelas, hindari pantulan (maksimal 2)",
+      "neededDesc": "Silakan selesaikan verifikasi identitas sebelum menggunakan layanan tukar baterai"
+    },
+    "version": {
+      "later": "Ingatkan Nanti"
+    },
+    "location": {
+      "title": "Layanan Lokasi",
+      "desc": "Kami memerlukan lokasi Anda untuk menemukan stasiun tukar baterai terdekat. Buka Pengaturan dan aktifkan layanan lokasi.",
+      "appAuthDesc": "Lokasi Anda akan digunakan untuk menemukan stasiun tukar baterai terdekat"
+    },
+    "search": {
+      "title": "Cari Tujuan",
+      "placeholder": "Cari stasiun atau alamat",
+      "history": "Riwayat Pencarian",
+      "nearby": "Stasiun Tukar Terdekat",
+      "noLocation": "Lokasi tidak tersedia",
+      "noPoi": "Tempat terkait tidak ditemukan",
+      "noStation": "Stasiun terkait tidak ditemukan"
+    },
+    "selectOperator": {
+      "title": "Pilih Operator"
+    },
+    "battery": {
+      "empty": "Tidak ada baterai",
+      "location": "Lokasi Baterai",
+      "bindTime": "Waktu Pengikatan",
+      "soc": "Daya Tersisa",
+      "range": "Jarak Tersisa",
+      "usageTime": "Durasi Pemakaian",
+      "no": "Nomor Baterai",
+      "track": "Jejak"
+    },
+    "borrow": {
+      "title": "Konfirmasi Pinjam Daya",
+      "unavailable": "Tidak Dapat Meminjam",
+      "fromPrefix": "Akan meminjam dari",
+      "oneBattery": "Pinjam satu baterai terisi penuh",
+      "availableFull": "Baterai Penuh Tersedia",
+      "noFullBattery": "Kabinet ini tidak memiliki baterai penuh. Silakan menuju kabinet atau stasiun lain.",
+      "noFullBatteryToast": "Belum ada baterai terisi penuh di kabinet ini",
+      "successToast": "Berhasil meminjam baterai. Tersimpan di Baterai Saya"
+    },
+    "return": {
+      "title": "Kembalikan ke Kabinet Ini",
+      "confirm": "Konfirmasi Pengembalian",
+      "select": "Pilih baterai yang akan dikembalikan",
+      "noBattery": "Anda tidak memiliki baterai untuk dikembalikan"
+    },
+    "network": {
+      "title": "Jaringan Terputus",
+      "desc": "Koneksi jaringan terputus. Silakan periksa jaringan Anda."
+    },
+    "swapFlow": {
+      "step1": "Buka Slot Baterai Penuh",
+      "step2": "Ambil Baterai",
+      "opening": "Membuka pintu baterai penuh",
+      "openFailed": "Gagal membuka pintu",
+      "stepPutOld": "Masukkan Baterai Lama",
+      "stepTakeNew": "Ambil Baterai Baru",
+      "doorOpening": "Membuka pintu kabinet",
+      "putAndClose": "Silakan masukkan baterai lama dan tutup pintunya",
+      "takeAndClose": "Silakan ambil baterai dan tutup pintunya",
+      "doneTitle": "Tukar Baterai Selesai",
+      "doneDesc": "Baterai berhasil diambil. Tukar baterai selesai.",
+      "putOldFailed": "Gagal memasukkan baterai lama",
+      "takeNewFailed": "Gagal mengambil baterai baru"
+    },
+    "flow": {
+      "endReason": "Alasan proses berakhir"
+    },
+    "borrowFlow": {
+      "doorOpened": "Pintu kabinet terbuka",
+      "doorOpenedTip": "| Pintu kabinet terbuka",
+      "takeAndClose": "Silakan ambil baterai dan tutup pintunya |",
+      "doneTitle": "Pinjam Daya Selesai",
+      "doneDesc": "Baterai berhasil diambil. Pinjam daya selesai.",
+      "notTaken": "Baterai belum diambil"
+    },
+    "returnFlow": {
+      "title": "Kembalikan",
+      "step1": "Buka Slot Kosong",
+      "step2": "Masukkan Baterai",
+      "opening": "Membuka pintu slot kosong",
+      "putFailed": "Gagal memasukkan baterai",
+      "putAndClose": "Silakan masukkan baterai lama dan tutup pintunya |",
+      "doneTitle": "Pengembalian Selesai",
+      "doneDesc": "Baterai berhasil dikembalikan. Pengembalian selesai."
+    },
+    "manual": {
+      "cabinetNo": "Nomor Kabinet",
+      "cabinetNoPlaceholder": "Masukkan nomor kabinet"
+    },
+    "map": {
+      "switchMap": "Ganti Peta"
+    },
+    "package": {
+      "expired": "Kedaluwarsa",
+      "active": "Aktif",
+      "remainTimes": "Sisa Pemakaian",
+      "borrowableBattery": "Baterai Dapat Dipinjam",
+      "validity": "Masa Berlaku",
+      "validUntil": "Berlaku Hingga",
+      "empty": "Tidak ada paket",
+      "expiredTitle": "Paket Kedaluwarsa",
+      "emptyExpired": "Belum ada paket kedaluwarsa",
+      "swapPackage": "Paket Tukar Baterai",
+      "swapTimes": "Jumlah Tukar",
+      "detailTitle": "Detail Paket",
+      "descTitle": "Deskripsi Paket",
+      "buyFirstDesc": "Beli paket terlebih dahulu sebelum menggunakan layanan tukar.",
+      "notBought": "Belum membeli paket"
+    },
+    "order": {
+      "status": {
+        "active": "Aktif",
+        "refunded": "Dana Dikembalikan"
+      },
+      "infoTitle": "Informasi Pesanan",
+      "amount": "Jumlah Pesanan",
+      "paidAmount": "Jumlah Dibayar",
+      "refundInfo": "Informasi Pengembalian Dana",
+      "refundAmount": "Jumlah Pengembalian Dana",
+      "refundTime": "Waktu Pengembalian Dana"
+    },
+    "bindEmail": {
+      "lengthToast": "Email tidak boleh lebih dari 255 karakter"
+    },
+    "idInfo": {
+      "photoMaxTwo": "Maksimal 2 foto",
+      "photoDeleted": "Foto dihapus",
+      "idPhotoRequired": "Unggah setidaknya 1 foto KTP",
+      "updated": "Verifikasi identitas diperbarui",
+      "added": "Verifikasi identitas ditambahkan"
+    },
+    "locate": {
+      "searchPlaceholder": "Masukkan nama atau alamat stasiun",
+      "noResult": "Tempat terkait tidak ditemukan"
+    },
+    "reserve": {
+      "selectCabinet": "Pilih kabinet yang ingin direservasi",
+      "timeoutToast": "Reservasi habis waktu. Anda dapat mereservasi lagi"
+    }
+  },
+  "action": {
+    "goNow": "Pergi Sekarang",
+    "cancelBooking": "Batalkan Reservasi",
+    "goLogin": "Masuk",
+    "goEnable": "Buka Pengaturan",
+    "goSet": "Buka Pengaturan",
+    "navigate": "Navigasi",
+    "notUploaded": "Belum diunggah",
+    "uploadImage": "Unggah Gambar",
+    "more": "Aksi Lainnya",
+    "reupload": "Unggah Ulang",
+    "deletePhoto": "Hapus Foto",
+    "deny": "Jangan Izinkan",
+    "allow": "Izinkan",
+    "relocate": "Lokasi Ulang",
+    "payNow": "Bayar Sekarang",
+    "refund": "Ajukan Pengembalian Dana",
+    "thinkAgain": "Pikir Dulu",
+    "backHome": "Kembali ke Beranda",
+    "scanReturn": "Pindai untuk Kembalikan",
+    "goPay": "Bayar Sekarang",
+    "goVerify": "Verifikasi Sekarang",
+    "buyNow": "Beli Sekarang"
+  },
+  "label": {
+    "noData": "Tidak ada data",
+    "tips": "Perhatian",
+    "failed": "Gagal",
+    "about": "Sekitar ",
+    "noRecord": "Belum ada catatan",
+    "unit": {
+      "day": "Hari"
+    },
+    "langZhCN": "Bahasa Mandarin",
+    "map": {
+      "amap": "Amap",
+      "baidu": "Baidu Maps",
+      "google": "Google Maps"
+    }
+  },
+  "common": {
+    "systemSwitch": {
+      "swap": "Sistem Tukar Baterai",
+      "action": "Ganti",
+      "title": "Tukar Sistem",
+      "rent": "Sistem Sewa",
+      "enter": "Masuk",
+      "charge": "Sistem Pengisian Daya",
+      "selectToast": "Silakan pilih sistem"
+    },
+    "tab": {
+      "home": "Beranda",
+      "profile": "Profil"
+    },
+    "action": {
+      "cancel": "Batal",
+      "confirm": "Konfirmasi",
+      "continue": "Lanjutkan",
+      "switchLang": "Bahasa",
+      "deactivateAccount": "Nonaktifkan Akun",
+      "save": "Simpan",
+      "logout": "Keluar",
+      "confirmReplace": "Konfirmasi Ganti",
+      "bind": "Hubungkan",
+      "nextStep": "Lanjut",
+      "edit": "Sunting",
+      "takePhoto": "Ambil Foto",
+      "album": "Album",
+      "add": "Tambah",
+      "retry": "Coba Lagi",
+      "done": "Selesai",
+      "enable": "Aktifkan",
+      "close": "Tutup"
+    },
+    "service": {
+      "swap": "Tukar"
+    },
+    "phone": "Nomor Ponsel",
+    "login": {
+      "phonePlaceholder": "Masukkan nomor ponsel",
+      "passwordLabel": "Kata Sandi",
+      "passwordPlaceholder": "Masukkan kata sandi",
+      "codeLabel": "Kode Verifikasi",
+      "codePlaceholder": "Masukkan kode verifikasi",
+      "getCode": "Dapatkan Kode Verifikasi",
+      "accountPlaceholder": "Masukkan akun",
+      "agreePrefix": "Saya telah membaca dan menyetujui",
+      "login": "Masuk",
+      "codeSub": "Kode Verifikasi",
+      "passwordSub": "Kata Sandi",
+      "emailMode": "Email",
+      "accountMode": "Akun",
+      "phoneMode": "Nomor Ponsel",
+      "emailPlaceholder": "Masukkan email",
+      "needAgree": "Silakan baca dan setujui Kebijakan Privasi terlebih dahulu"
+    },
+    "label": {
+      "email": "Email",
+      "account": "Akun",
+      "name": "Nama",
+      "none": "Tidak ada",
+      "loggedIn": "Sudah Masuk",
+      "yes": "Ya",
+      "no": "Tidak",
+      "langZhHK": "Tionghoa Tradisional (Hong Kong)",
+      "assistantName": "Xiaodi"
+    },
+    "profile": {
+      "personalInfo": "Info Pribadi",
+      "avatar": "Foto Profil",
+      "nickname": "Nama Panggilan",
+      "notBound": "Belum Terhubung",
+      "emailAddress": "Alamat Email",
+      "passwordManage": "Manajemen Kata Sandi",
+      "changePassword": "Ubah Kata Sandi",
+      "setPassword": "Atur Kata Sandi",
+      "editNickname": "Ubah Nama Panggilan",
+      "nicknamePlaceholder": "Masukkan nama panggilan",
+      "nicknameHint": "Panjang 2–20 karakter; huruf, angka, dan simbol diperbolehkan",
+      "editAccount": "Ubah Akun",
+      "accountFormatHint": "Harus dimulai dengan huruf; hanya huruf, angka, dan garis bawah; 4–20 karakter",
+      "settings": "Pengaturan Sistem",
+      "settingsGeneral": "Pengaturan Umum",
+      "settingsVersion": "Versi Saat Ini",
+      "bindPhone": "Hubungkan Ponsel",
+      "bindEmail": "Hubungkan Email",
+      "verifyByEmail": "Verifikasi Email",
+      "resetPassword": "Atur Ulang Kata Sandi",
+      "newPassword": "Kata Sandi Baru",
+      "namePlaceholder": "Masukkan nama",
+      "positionDefaultName": "Lokasi Saat Ini",
+      "emailFormatError": "Format email tidak benar",
+      "nicknameSaved": "Nama panggilan disimpan",
+      "needBindFirst": "Silakan hubungkan nomor ponsel atau email terlebih dahulu",
+      "inputNewPhone": "Masukkan nomor ponsel baru",
+      "phoneReplaced": "Nomor ponsel berhasil diganti",
+      "phoneBoundSuccess": "Nomor ponsel berhasil dihubungkan",
+      "inputNewEmail": "Masukkan email baru",
+      "emailReplaced": "Email berhasil diganti",
+      "emailBoundSuccess": "Email berhasil dihubungkan",
+      "pwdMismatch": "Kata sandi yang dimasukkan tidak cocok",
+      "pwdUpdated": "Kata sandi telah diperbarui"
+    },
+    "orders": {
+      "docIdCard": "KTP",
+      "orderId": "Nomor Pesanan",
+      "noOrders": "Tidak ada pesanan",
+      "detail": "Detail Pesanan",
+      "payPending": "Menunggu Pembayaran",
+      "cancelTime": "Waktu Pembatalan",
+      "payTime": "Waktu Pembayaran",
+      "cancelOrder": "Batalkan Pesanan",
+      "confirmCancelDesc": "Yakin batalkan pesanan ini? Tindakan ini tidak dapat dibatalkan."
+    },
+    "version": {
+      "newVersion": "Versi baru ditemukan",
+      "latest": "Sudah versi terbaru",
+      "downloading": "Mengunduh…",
+      "updateNow": "Perbarui Sekarang",
+      "gotIt": "Mengerti"
+    },
+    "unit": {
+      "battery": "unit"
+    },
+    "scan": {
+      "hint": "Arahkan kode QR ke bingkai"
+    },
+    "vehicles": {
+      "batteryDetail": "Detail Baterai",
+      "walkMin": "menit",
+      "distanceFromYou": "Jarak dari Anda",
+      "meter": "m",
+      "walk": "Berjalan",
+      "historyTrack": "Lintasan Historis",
+      "trackStartPin": "Mulai",
+      "trackEndPin": "Akhir"
+    },
+    "startTime": "Waktu Mulai",
+    "endTime": "Waktu Selesai",
+    "orderStatus": {
+      "cancelled": "Dibatalkan"
+    },
+    "createTime": "Waktu Dibuat",
+    "toast": {
+      "accountFormat": "Akun hanya boleh berisi huruf, angka, dan garis bawah",
+      "phoneDigit": "Nomor ponsel hanya boleh berisi angka",
+      "pwdChars": "Kata sandi hanya boleh berisi huruf, angka, dan simbol keyboard",
+      "codeFormat": "Format kode verifikasi tidak valid",
+      "loginSuccess": "Berhasil masuk",
+      "logout": "Telah keluar"
+    },
+    "dateTime": {
+      "minute": "Menit",
+      "second": "Detik"
+    }
+  },
+  "placeholder": {
+    "email": "Masukkan alamat email",
+    "emailCode": "Masukkan kode verifikasi email"
+  },
+  "demoOps": {
+    "title": "Kontrol Prototipe",
+    "functionControl": "Kontrol Fungsi",
+    "loginStatus": "Status Masuk",
+    "notLoggedIn": "Belum Masuk",
+    "firstLogin": "Login Pertama",
+    "locationAuth": "Izin Lokasi",
+    "authorized": "Diberikan",
+    "unauthorized": "Belum diberikan",
+    "on": "Aktif",
+    "off": "Nonaktif",
+    "mockCity": "Kota Simulasi",
+    "has": "Ada",
+    "set": "Sudah diatur",
+    "unset": "Belum diatur",
+    "verified": "Sudah verifikasi",
+    "unverified": "Belum verifikasi",
+    "deposit": "Pembayaran Jaminan",
+    "bought": "Sudah dibeli",
+    "notBought": "Belum dibeli",
+    "ongoingFlow": "Proses Berjalan",
+    "flowScene": "Skenario Proses",
+    "borrowing": "Sedang Meminjam",
+    "swapping": "Sedang Menukar",
+    "depositFreeStatus": "Status Bebas Jaminan",
+    "notFree": "Tidak dibebaskan",
+    "depositStatus": "Status Jaminan",
+    "refunding": "Sedang Dikembalikan",
+    "depositConfig": "Konfigurasi Jaminan",
+    "listData": "Data Daftar",
+    "hasData": "Ada data",
+    "noData": "Tanpa data",
+    "cabinetFullStock": "Stok Baterai Penuh Kabinet",
+    "hasFull": "Ada yang penuh",
+    "noFull": "Tidak ada yang penuh",
+    "flowControl": "Kontrol Proses",
+    "mainFlow": "Proses Utama",
+    "simulate": "Simulasi",
+    "qrCode": "Kode QR",
+    "valid": "Valid",
+    "invalid": "Tidak valid",
+    "sameOperator": "Operator Sama",
+    "cabinetStatus": "Status Kabinet",
+    "online": "Online",
+    "offline": "Offline",
+    "distance": "Jarak",
+    "batteryPower": "Daya Baterai yang Dapat Dialokasikan",
+    "boundBattery": "Baterai Terikat",
+    "bound0": "0 buah",
+    "bound1": "1 buah",
+    "bound2": "2 buah",
+    "packageLimit": "Batas Pinjam Paket",
+    "borrowMainFlow": "Proses Utama Pinjam",
+    "doorOpen": "Pembukaan Pintu Kabinet",
+    "success": "Berhasil",
+    "batteryTaken": "Baterai Diambil",
+    "taken": "Sudah diambil",
+    "notTaken": "Belum diambil",
+    "network": "Jaringan",
+    "hasNet": "Ada jaringan",
+    "noNet": "Tanpa jaringan",
+    "returnMainFlow": "Proses Utama Pengembalian",
+    "swapMainFlow": "Proses Utama Tukar",
+    "exitedApp": "Aplikasi keluar (demo)",
+    "flowResume": "Alur dilanjutkan",
+    "qrInvalid": "Kode QR tidak valid. Silakan pindai ulang",
+    "crossOperator": "Tukar baterai antar operator tidak didukung",
+    "deviceOffline": "Perangkat offline dan sementara tidak dapat digunakan",
+    "tooFar": "Jarak terlalu jauh. Dekati kabinet dan pindai ulang"
+  },
+  "merchant": {
+    "store": {
+      "service": {
+        "rent": "Sewa",
+        "repair": "Purnajual/Perbaikan",
+        "sell": "Penjualan Kendaraan/Baterai"
+      }
+    },
+    "tab": {
+      "store": "Toko"
+    }
+  }
+}

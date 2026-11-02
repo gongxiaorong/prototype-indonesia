@@ -1,0 +1,599 @@
+{
+  "label": {
+    "langZhCN": "Bahasa Mandarin",
+    "noData": "Tidak ada data",
+    "map": {
+      "amap": "Amap",
+      "baidu": "Baidu Maps",
+      "google": "Google Maps"
+    },
+    "unit": {
+      "cabinet": " unit"
+    },
+    "failed": "Gagal"
+  },
+  "common": {
+    "label": {
+      "langZhHK": "Tionghoa Tradisional (Hong Kong)",
+      "assistantName": "Xiaodi",
+      "all": "Semua",
+      "hasAlert": "Ada Peringatan",
+      "email": "Email",
+      "account": "Akun",
+      "name": "Nama"
+    },
+    "systemSwitch": {
+      "swap": "Sistem Tukar Baterai",
+      "selectToast": "Silakan pilih sistem",
+      "action": "Ganti",
+      "title": "Tukar Sistem",
+      "rent": "Sistem Sewa",
+      "enter": "Masuk",
+      "charge": "Sistem Pengisian Daya"
+    },
+    "login": {
+      "accountPlaceholder": "Masukkan akun",
+      "phonePlaceholder": "Masukkan nomor ponsel",
+      "emailPlaceholder": "Masukkan email",
+      "passwordPlaceholder": "Masukkan kata sandi",
+      "codePlaceholder": "Masukkan kode verifikasi",
+      "needAgree": "Silakan baca dan setujui Kebijakan Privasi terlebih dahulu",
+      "passwordLabel": "Kata Sandi",
+      "codeLabel": "Kode Verifikasi",
+      "getCode": "Dapatkan Kode Verifikasi",
+      "agreePrefix": "Saya telah membaca dan menyetujui",
+      "login": "Masuk",
+      "codeSub": "Kode Verifikasi",
+      "passwordSub": "Kata Sandi",
+      "emailMode": "Email",
+      "accountMode": "Akun",
+      "phoneMode": "Nomor Ponsel",
+      "resend": "Kirim ulang"
+    },
+    "toast": {
+      "accountFormat": "Akun hanya boleh berisi huruf, angka, dan garis bawah",
+      "phoneDigit": "Nomor ponsel hanya boleh berisi angka",
+      "pwdChars": "Kata sandi hanya boleh berisi huruf, angka, dan simbol keyboard",
+      "codeFormat": "Format kode verifikasi tidak valid",
+      "loginSuccess": "Berhasil masuk",
+      "logout": "Telah keluar",
+      "copySuccess": "Disalin",
+      "saveSuccess": "Berhasil disimpan"
+    },
+    "profile": {
+      "emailFormatError": "Format email tidak benar",
+      "nicknameSaved": "Nama panggilan disimpan",
+      "needBindFirst": "Silakan hubungkan nomor ponsel atau email terlebih dahulu",
+      "inputNewPhone": "Masukkan nomor ponsel baru",
+      "phoneReplaced": "Nomor ponsel berhasil diganti",
+      "phoneBoundSuccess": "Nomor ponsel berhasil dihubungkan",
+      "inputNewEmail": "Masukkan email baru",
+      "emailReplaced": "Email berhasil diganti",
+      "emailBoundSuccess": "Email berhasil dihubungkan",
+      "pwdMismatch": "Kata sandi yang dimasukkan tidak cocok",
+      "pwdUpdated": "Kata sandi telah diperbarui",
+      "namePlaceholder": "Masukkan nama",
+      "positionDefaultName": "Lokasi Saat Ini",
+      "personalInfo": "Info Pribadi",
+      "avatar": "Foto Profil",
+      "notBound": "Belum Terhubung",
+      "emailAddress": "Alamat Email",
+      "passwordManage": "Manajemen Kata Sandi",
+      "changePassword": "Ubah Kata Sandi",
+      "setPassword": "Atur Kata Sandi",
+      "settings": "Pengaturan Sistem",
+      "settingsGeneral": "Pengaturan Umum",
+      "settingsVersion": "Versi Saat Ini",
+      "bindPhone": "Hubungkan Ponsel",
+      "bindEmail": "Hubungkan Email",
+      "verifyByEmail": "Verifikasi Email",
+      "resetPassword": "Atur Ulang Kata Sandi",
+      "newPassword": "Kata Sandi Baru"
+    },
+    "action": {
+      "takePhoto": "Ambil Foto",
+      "album": "Album",
+      "edit": "Sunting",
+      "save": "Simpan",
+      "cancel": "Batal",
+      "confirm": "Konfirmasi",
+      "add": "Tambah",
+      "viewDetail": "Detail",
+      "switchLang": "Bahasa",
+      "logout": "Keluar",
+      "confirmReplace": "Konfirmasi Ganti",
+      "bind": "Hubungkan",
+      "nextStep": "Lanjut"
+    },
+    "service": {
+      "swap": "Tukar"
+    },
+    "dateTime": {
+      "minute": "Menit",
+      "second": "Detik",
+      "hour": "Jam"
+    },
+    "orders": {
+      "batteryNoPlaceholder": "Masukkan nomor baterai",
+      "orderId": "Nomor Pesanan"
+    },
+    "vehicles": {
+      "batteryLevel": "Level Baterai",
+      "batteryDetail": "Detail Baterai",
+      "historyTrack": "Lintasan Historis",
+      "batteryDischargeOff": "Nonaktifkan Pelepasan",
+      "batteryDischargeOn": "Izinkan Pelepasan",
+      "distanceFromYou": "Jarak dari Anda",
+      "meter": "m",
+      "walk": "Berjalan",
+      "walkMin": "menit",
+      "trackStartPin": "Mulai",
+      "trackEndPin": "Akhir"
+    },
+    "tab": {
+      "battery": "Baterai",
+      "home": "Beranda",
+      "profile": "Profil"
+    },
+    "status": {
+      "disabled": "Nonaktif",
+      "enabled": "Aktif"
+    },
+    "startTime": "Waktu Mulai",
+    "endTime": "Waktu Selesai",
+    "scan": {
+      "hint": "Arahkan kode QR ke bingkai"
+    },
+    "unit": {
+      "battery": "unit"
+    },
+    "reset": "Atur Ulang",
+    "phone": "Nomor Ponsel",
+    "dialcode": {
+      "searchPlaceholder": "Cari negara/wilayah atau kode"
+    },
+    "version": {
+      "newVersion": "Versi baru ditemukan",
+      "latest": "Sudah versi terbaru",
+      "gotIt": "Mengerti"
+    },
+    "copied": "Tersalin",
+    "cabinet": {
+      "disable": "Nonaktifkan Kabinet"
+    }
+  },
+  "user": {
+    "profile": {
+      "accountSaved": "Akun disimpan"
+    },
+    "bindEmail": {
+      "lengthToast": "Email tidak boleh lebih dari 255 karakter"
+    },
+    "pwd": {
+      "confirmPlaceholder": "Masukkan kembali kata sandi baru",
+      "lengthToast": "Panjang kata sandi harus 6-64 karakter",
+      "phoneVerify": "Verifikasi Nomor Ponsel",
+      "newPlaceholder": "Masukkan kata sandi baru (6-64 karakter)",
+      "confirmLabel": "Konfirmasi Kata Sandi Baru"
+    },
+    "idInfo": {
+      "photoMaxTwo": "Maksimal 2 foto",
+      "photoDeleted": "Foto dihapus",
+      "idPhotoRequired": "Unggah setidaknya 1 foto KTP",
+      "updated": "Verifikasi identitas diperbarui",
+      "added": "Verifikasi identitas ditambahkan"
+    },
+    "id": {
+      "cardNoPlaceholder": "Masukkan nomor dokumen"
+    },
+    "borrow": {
+      "noFullBatteryToast": "Belum ada baterai terisi penuh di kabinet ini",
+      "successToast": "Berhasil meminjam baterai. Tersimpan di Baterai Saya"
+    },
+    "records": {
+      "borrowSuccess": "Berhasil Meminjam",
+      "statusUsing": "Sedang Digunakan",
+      "returnSuccess": "Berhasil Mengembalikan",
+      "statusDone": "Selesai",
+      "swapSuccess": "Berhasil Menukar",
+      "borrowCabinet": "Kabinet Pinjam",
+      "returnCabinet": "Kabinet Kembali",
+      "borrowTime": "Waktu Pinjam",
+      "returnTime": "Waktu Kembali"
+    },
+    "return": {
+      "noBattery": "Anda tidak memiliki baterai untuk dikembalikan"
+    },
+    "returnFlow": {
+      "title": "Kembalikan"
+    },
+    "swap": {
+      "borrow": "Pinjam Daya"
+    },
+    "home": {
+      "scanSwap": "Pindai untuk Tukar",
+      "cityUnopened": "Layanan tukar baterai belum tersedia di kota ini"
+    },
+    "manual": {
+      "cabinetNoPlaceholder": "Masukkan nomor kabinet",
+      "cabinetNo": "Nomor Kabinet"
+    },
+    "swapFlow": {
+      "openFailed": "Gagal membuka pintu",
+      "putOldFailed": "Gagal memasukkan baterai lama",
+      "takeNewFailed": "Gagal mengambil baterai baru"
+    },
+    "borrowFlow": {
+      "notTaken": "Baterai belum diambil"
+    },
+    "deposit": {
+      "payFirstToast": "Bayar jaminan terlebih dahulu untuk menggunakan layanan tukar",
+      "unpaidTitle": "Jaminan Belum Dibayar",
+      "notice1Tag": "Bayar Dulu",
+      "notice1Line1": "Jaminan harus dibayar sebelum",
+      "notice1Line2": "Anda dapat menikmati layanan tukar",
+      "notice2Tag": "Tidak Dapat Dipotong",
+      "notice2Line1": "Jaminan tidak dapat digunakan untuk",
+      "notice2Line2": "potongan biaya tukar",
+      "notice3Tag": "Dapat Dikembalikan Kapan Saja",
+      "notice3Line1": "Setelah mengembalikan baterai,",
+      "notice3Line2": "jaminan dapat dikembalikan kapan saja",
+      "notice4Tag": "Kompensasi Kerugian",
+      "notice4Line1": "Jika perangkat hilang atau rusak,",
+      "notice4Line2": "jaminan akan menutup kerugian"
+    },
+    "package": {
+      "buyFirstDesc": "Beli paket terlebih dahulu sebelum menggunakan layanan tukar.",
+      "notBought": "Belum membeli paket"
+    },
+    "locate": {
+      "searchPlaceholder": "Masukkan nama atau alamat stasiun",
+      "noResult": "Tempat terkait tidak ditemukan"
+    },
+    "reserve": {
+      "selectCabinet": "Pilih kabinet yang ingin direservasi",
+      "timeoutToast": "Reservasi habis waktu. Anda dapat mereservasi lagi"
+    },
+    "battery": {
+      "empty": "Tidak ada baterai",
+      "no": "Nomor Baterai"
+    },
+    "station": {
+      "emptySlot": "Slot Kosong",
+      "storeDetail": "Detail Toko",
+      "detail": "Detail Stasiun"
+    },
+    "search": {
+      "noPoi": "Tempat terkait tidak ditemukan"
+    },
+    "location": {
+      "title": "Layanan Lokasi"
+    },
+    "login": {
+      "privacyPolicyLink": "Kebijakan Privasi Pengguna"
+    },
+    "dialcode": {
+      "noMatch": "Wilayah yang cocok tidak ditemukan"
+    },
+    "version": {
+      "later": "Ingatkan Nanti"
+    }
+  },
+  "demoOps": {
+    "exitedApp": "Aplikasi keluar (demo)",
+    "flowResume": "Alur dilanjutkan",
+    "qrInvalid": "Kode QR tidak valid. Silakan pindai ulang",
+    "crossOperator": "Tukar baterai antar operator tidak didukung",
+    "deviceOffline": "Perangkat offline dan sementara tidak dapat digunakan",
+    "tooFar": "Jarak terlalu jauh. Dekati kabinet dan pindai ulang",
+    "online": "Online",
+    "offline": "Offline",
+    "cabNotExist": "Kode Kabinet Tidak Ditemukan",
+    "cabUsed": "Kode Kabinet Sudah Digunakan",
+    "addSuccess": "Berhasil ditambahkan",
+    "success": "Berhasil"
+  },
+  "action": {
+    "scanReturn": "Pindai untuk Kembalikan",
+    "goPay": "Bayar Sekarang",
+    "buyNow": "Beli Sekarang",
+    "clearFilter": "Hapus Filter",
+    "uploadImage": "Unggah Gambar",
+    "more": "Aksi Lainnya",
+    "reupload": "Unggah Ulang",
+    "tapToClose": "Ketuk area kosong untuk menutup",
+    "deny": "Jangan Izinkan",
+    "allow": "Izinkan",
+    "goEnable": "Buka Pengaturan"
+  },
+  "merchant": {
+    "store": {
+      "service": {
+        "rent": "Sewa",
+        "repair": "Purnajual/Perbaikan",
+        "sell": "Penjualan Kendaraan/Baterai"
+      },
+      "searchPlaceholder": "Cari nama toko",
+      "empty": "Tidak ada toko",
+      "addr": "Alamat Toko",
+      "hours": "Jam Operasional",
+      "station": "Stasiun Terkait",
+      "notExist": "Toko tidak ditemukan",
+      "contact": "Kontak",
+      "phone": "Telepon Kontak",
+      "services": "Layanan Utama",
+      "photos": "Sampul Toko",
+      "formTitle": "Informasi Toko",
+      "name": "Nama Toko",
+      "namePlaceholder": "Masukkan nama toko",
+      "addrPlaceholder": "Masukkan atau pilih alamat",
+      "pickOnMap": "Pilih di Peta",
+      "contactPlaceholder": "Masukkan nama kontak",
+      "phonePlaceholder": "Masukkan nomor telepon kontak",
+      "selectStation": "Pilih Stasiun Terkait",
+      "addrMapSearch": "Cari lokasi",
+      "phoneInvalid": "Format nomor telepon tidak valid",
+      "coverRequired": "Silakan unggah foto sampul toko",
+      "addrRequired": "Masukkan atau pilih alamat toko",
+      "stationTaken": "Stasiun ini sudah terkait dengan toko lain",
+      "saveSuccess": "Informasi toko disimpan",
+      "addSuccess": "Toko ditambahkan"
+    },
+    "tab": {
+      "store": "Toko",
+      "station": "Stasiun",
+      "cabinet": "Kabinet Tukar Baterai"
+    },
+    "battery": {
+      "owner": "Kepemilikan Saat Ini",
+      "cabinetStatus": "Status di Kabinet",
+      "rentStatus": "Status Penyewaan",
+      "status": "Status Baterai",
+      "addTitle": "Tambah Baterai",
+      "notExist": "Baterai tidak ditemukan",
+      "noLocation": "Belum ada lokasi · Ketuk untuk lihat",
+      "params": "Parameter Baterai",
+      "voltage": "Tegangan",
+      "current": "Arus",
+      "health": "Kesehatan",
+      "cycles": "Jumlah Siklus",
+      "control": "Kontrol Baterai",
+      "service": "Layanan Baterai",
+      "rentRecord": "Riwayat Penyewaan",
+      "rentUser": "Penyewa",
+      "noRentRecord": "Belum ada riwayat penyewaan",
+      "charging": "Sedang Mengisi Daya",
+      "full": "Terisi Penuh",
+      "reserved": "Direservasi",
+      "abnormal": "Bermasalah",
+      "lastLocationUnknown": "Lokasi terakhir tidak diketahui",
+      "noExists": "Nomor baterai sudah ada",
+      "copiedNo": "Nomor baterai disalin",
+      "dischargeForbid": "Setelah dilarang, perangkat tidak dapat melepas muatan",
+      "dischargeAllow": "Setelah diizinkan, perangkat dapat melepas muatan secara normal",
+      "dischargeForbidden": "Pengosongan dilarang",
+      "dischargeAllowed": "Pengosongan diizinkan"
+    },
+    "cabinet": {
+      "empty": "Belum ada kabinet",
+      "station": "Stasiun Saat Ini",
+      "bizStatus": "Status Operasi",
+      "enabledStatus": "Status Aktif",
+      "alarmStatus": "Status Alarm",
+      "faultStatus": "Status Gangguan",
+      "detailTitle": "Detail Kabinet",
+      "notExist": "Kabinet tidak ditemukan",
+      "name": "Nama Kabinet",
+      "addr": "Alamat Saat Ini",
+      "control": "Kontrol Kabinet",
+      "offline": "Nonaktifkan Layanan",
+      "online": "Aktifkan Layanan",
+      "openAllDoors": "Buka Semua Pintu",
+      "openEmptyDoors": "Buka Slot Kosong",
+      "service": "Layanan Kabinet",
+      "alarm": "Alarm Kabinet",
+      "fault": "Gangguan Kabinet",
+      "usageRecord": "Riwayat Penggunaan",
+      "photos": "Foto Kabinet",
+      "slotStatus": "Status Slot",
+      "slot": {
+        "hasBattery": "Ada Baterai"
+      },
+      "noPhoto": "Belum ada foto",
+      "editTitle": "Ubah Kabinet",
+      "namePlaceholder": "Masukkan nama kabinet",
+      "selectStation": "Pilih Stasiun",
+      "maxPhotos": "Maksimal 10 foto",
+      "alarmList": "Daftar Peringatan",
+      "faultList": "Daftar Gangguan",
+      "alarmSearchPlaceholder": "Cari konten alarm",
+      "faultSearchPlaceholder": "Cari konten gangguan",
+      "currentStatus": "Status Saat Ini",
+      "slotLabel": "Slot",
+      "doorLabel": "Pintu",
+      "wholeCabinet": "Seluruh Kabinet",
+      "alarmContent": "Konten Alarm",
+      "faultContent": "Konten Gangguan",
+      "noUsageRecord": "Belum ada riwayat penggunaan",
+      "addTitle": "Tambah Kabinet",
+      "scanInput": "Pindai untuk Isi",
+      "manualTitle": "Masukkan Nomor Kabinet",
+      "manualDesc": "Masukkan nomor kabinet pada pelat nama",
+      "deletePhoto": "Hapus Foto",
+      "searchStation": "Cari nama stasiun",
+      "noStationFound": "Stasiun tidak ditemukan",
+      "doorOpened": "Slot Terbuka",
+      "doorIsOpen": "Pintu Terbuka",
+      "openDoor": "Buka Pintu",
+      "scanSuccess": "Pindai berhasil",
+      "scanSuccessFilled": "Pindai berhasil. Nomor telah diisi",
+      "imageDeleted": "Gambar dihapus",
+      "copiedNo": "Nomor kabinet disalin",
+      "bizOfflineTitle": "Nonaktifkan Operasi Kabinet",
+      "bizOnlineTitle": "Aktifkan Operasi Kabinet",
+      "bizOfflineConfirm": "Kabinet akan menghentikan layanan tukar baterai publik setelah offline. Konfirmasi?",
+      "bizOnlineConfirm": "Kabinet akan melanjutkan layanan tukar baterai publik setelah online. Konfirmasi?",
+      "faultClearTitle": "Hapus Penanda Gangguan",
+      "faultMarkTitle": "Tandai sebagai Gangguan",
+      "alarmClearTitle": "Hapus Alarm",
+      "alarmTriggerTitle": "Picu Alarm",
+      "enableTitle": "Aktifkan Kabinet",
+      "disableConfirm": "Kabinet tidak dapat digunakan setelah dinonaktifkan. Konfirmasi?",
+      "enableConfirm": "Kabinet dapat digunakan kembali setelah diaktifkan. Konfirmasi?",
+      "noEmptySlot": "Tidak ada slot kosong yang dapat dibuka di kabinet ini"
+    },
+    "home": {
+      "todayOverview": "Ringkasan Hari Ini",
+      "realtime": "Real-time",
+      "todaySwapCount": "Tukar Hari Ini",
+      "todayRevenue": "Pendapatan Hari Ini",
+      "cabinetOnlineRate": "Tingkat Online Kabinet",
+      "quickEntry": "Akses Cepat",
+      "storeManage": "Manajemen Toko",
+      "stationManage": "Manajemen Stasiun",
+      "dashboard": "Dasbor Data",
+      "deviceAlarm": "Alarm Perangkat",
+      "noAlarm": "Belum ada alarm perangkat",
+      "commonActions": "Fungsi Umum",
+      "switchFranchisee": "Ganti Mitra"
+    },
+    "record": {
+      "operator": "Operator",
+      "content": "Tindakan",
+      "platform": "Platform",
+      "result": "Hasil",
+      "time": "Waktu Operasi",
+      "statusAlarming": "Dalam Alarm",
+      "statusFaulting": "Dalam Gangguan",
+      "statusResolved": "Selesai",
+      "emptyAlarm": "Belum ada catatan alarm",
+      "emptyFault": "Belum ada catatan gangguan"
+    },
+    "dashboard": {
+      "cabinetTotal": "Total Kabinet",
+      "batteryInCabinet": "Baterai dalam Kabinet",
+      "renting": "Disewa",
+      "swapTrend7d": "Tren Tukar 7 Hari",
+      "cabinetStatusDist": "Distribusi Status Kabinet",
+      "batteryStatusDist": "Distribusi Status Baterai",
+      "alarmStats": "Statistik Alarm",
+      "noAlarm": "Tidak ada peringatan"
+    },
+    "map": {
+      "title": "Pilih Alamat",
+      "useCurrentLocation": "Gunakan Lokasi Saat Ini"
+    },
+    "station": {
+      "empty": "Belum ada stasiun",
+      "addr": "Alamat Stasiun",
+      "store": "Toko",
+      "notExist": "Stasiun tidak ditemukan",
+      "no": "No. Stasiun",
+      "phone": "Info Kontak",
+      "photos": "Sampul Stasiun",
+      "bindCabinet": "Ikat Kabinet",
+      "noBoundCabinet": "Belum ada kabinet terikat",
+      "unbindCabinet": "Lepas Ikat Kabinet",
+      "editTitle": "Ubah Stasiun",
+      "addTitle": "Tambah Stasiun",
+      "name": "Nama Stasiun",
+      "namePlaceholder": "Masukkan nama stasiun",
+      "contactPlaceholder": "Masukkan",
+      "bindSearchPlaceholder": "Masukkan nomor kabinet",
+      "noCabinetFound": "Kabinet tidak ditemukan",
+      "noFreeCabinet": "Belum ada kabinet kosong yang tersedia",
+      "confirmBind": "Konfirmasi Hubungkan",
+      "unbound": "Belum terhubung ke stasiun",
+      "phoneInvalid": "Format kontak tidak valid",
+      "coverRequired": "Silakan unggah foto sampul stasiun",
+      "addrRequired": "Masukkan atau pilih alamat stasiun",
+      "saveSuccess": "Informasi stasiun disimpan",
+      "addSuccess": "Stasiun ditambahkan"
+    },
+    "filter": {
+      "title": "Semua Filter",
+      "netStatus": "Status Jaringan",
+      "enabled": "Aktif",
+      "disabled": "Nonaktif",
+      "noAlarm": "Tanpa Alarm",
+      "noFault": "Tanpa Gangguan",
+      "hasFault": "Ada Gangguan",
+      "inCabinet": "Di Dalam Kabinet",
+      "outCabinet": "Di Luar Kabinet",
+      "unrented": "Belum Disewa",
+      "rented": "Disewa"
+    },
+    "location": {
+      "appAuthDesc": "Lokasi Anda akan digunakan untuk menemukan alamat toko",
+      "serviceDesc": "Aktifkan layanan lokasi di Pengaturan untuk mendapatkan alamat toko secara otomatis"
+    },
+    "alarmPage": {
+      "type": {
+        "cabFault": "Gangguan Kabinet",
+        "tempAlarm": "Alarm Suhu",
+        "bizOffline": "Operasi Offline",
+        "commError": "Komunikasi Tidak Normal",
+        "battOffline": "Baterai Offline"
+      }
+    },
+    "useSource": {
+      "system": "Sistem",
+      "platform": "Platform",
+      "merchant": "Merchant"
+    },
+    "slot": {
+      "disabledTag": "Dinonaktifkan"
+    },
+    "door": {
+      "remoteControl": "Kontrol Pintu Jarak Jauh",
+      "enable": "Aktifkan Pintu",
+      "disable": "Nonaktifkan Pintu",
+      "enableConfirm": "Slot akan melanjutkan layanan publik setelah diaktifkan. Konfirmasi?",
+      "disableConfirm": "Slot akan menghentikan layanan publik setelah dinonaktifkan. Konfirmasi?",
+      "remoteOpen": "Buka Pintu Jarak Jauh",
+      "openSent": "Perintah buka telah dikirim"
+    },
+    "alarm": {
+      "battType": {
+        "cellTempHigh": "Alarm Suhu Sel Tinggi"
+      }
+    },
+    "fault": {
+      "type": {
+        "overTemp": "Perlindungan Suhu Berlebih"
+      }
+    },
+    "form": {
+      "pickOnMap": "Silakan pilih alamat di peta",
+      "hoursRequired": "Silakan pilih jam operasional",
+      "hoursRange": "Waktu selesai harus lebih lambat dari waktu mulai",
+      "contactMax": "Kontak tidak boleh lebih dari 64 karakter"
+    },
+    "bindCab": {
+      "pickFirst": "Silakan pilih kabinet terlebih dahulu",
+      "unbindConfirm": "Lepas ikatan kabinet ini dari stasiun saat ini? Setelah dilepas, kabinet menjadi kosong dan dapat diikat kembali ke stasiun",
+      "unboundToast": "Ikatan stasiun dilepas"
+    }
+  },
+  "demo": {
+    "map": {
+      "road": {
+        "huangheMiddleRoad": "黄河中路",
+        "hangkonggangStreet": "航空港街道",
+        "xihanggangAvenue": "西航港大道",
+        "shuangliuWestSquare": "双流西站广场"
+      }
+    },
+    "battery": {
+      "trackZhonghe": "中和街道"
+    },
+    "poi": {
+      "p1": {
+        "name": "博雅城市广场"
+      }
+    }
+  },
+  "placeholder": {
+    "email": "Masukkan alamat email"
+  }
+}

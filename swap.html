@@ -10,7 +10,8 @@
 <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-i18n@11/dist/vue-i18n.global.prod.js"
         onerror="this.onerror=null;this.src='https://unpkg.com/vue-i18n@11/dist/vue-i18n.global.prod.js'"></script>
-<script src="locales/swap/i18n.swap.js"></script>
+<script src="locales/swap-user/i18n.swap-user.js"></script>
+<script src="locales/swap-merchant/i18n.swap-merchant.js"></script>
 <script>
 /* swap 多语言共享出口：双 app 各持一个 vue-i18n 实例，切换时统一驱动（实例未建时静默跳过）。
    与 index.html 同构：locale 值 = 语言包顶层 key（zh-CN/zh-HK/en/id/th），<html lang> 同步。 */
@@ -4796,8 +4797,8 @@ var _ua=Vue.createApp({
     auth.addNavRefs([tab,swapShow,swapStep,swapMode,showSwapManual,showLevelWarn,showChoice,showFlowEnd,curStation,curCab,batteryDetailRec,planOrderDetail,swapRecordsScope]);
     return Object.assign({pageLoading,tab,setTab,settingsOpen,toasts:toastBus.list,toast,goScan,goLocate,goRefresh,goLayer,mapType,MAP_TYPES,mapPoints,mapTheme,showMapSheet,pickMapType,openMapPoint,showSearch,searchQ,searchCenter,searchHistory,locNearby,searchList,poiList,openSearch,closeSearch,clearSearchQ,doSearch,pickHistory,pickPoi,clearSearchCenter,mapWorldStyle,clearSearchHistory,setSearchHistory,relocate,pickSearchStation,selPoint,selStore,closeSelPoint,closeSelStore,callStore,openStoreDetail,pointStat,openSelDetail,openReservedDetail,onMapClick,isCabReserved,hasReservedOther,bookCab,stationReserved,bookFromStation,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,callStation,scanFromCard,goReturnScan,bookFromCard,reservedCab,reserveLeft,swapOngoing,bookDisabled,fmtReserve,cancelReserve,askCancelReserve,closeCancelReserve,confirmCancelReserve,showCancelReserve,onBookClick,openReservedCard,goFlowNow,setSwapOngoing,showPrecheck,precheckDesc,precheckTitle,precheckConfirmText,closePrecheck,precheckPass,confirmPrecheck,showIdNeeded,closeIdNeeded,confirmIdNeeded,setIdAuthed,stations,locAppAuth,setLocAppAuth,showLocAppAuth,allowLocAppAuth,denyLocAppAuth,locReady,locAuth,setLocAuth,showLocAuth,allowLocAuth,dismissLocAuth,goEnableLoc,swapAreaSet,areaNoService,setSwapArea,goSetSwapArea,swapAreas,setSwapAreasEmpty,showAreaSheet,addedOperators,areaCityNode,areaOpStep,areaCrumbs,areaList,areaEmptyText,areaGoto,pickAreaItem,openSwapArea,pickSwapArea,openAreaSheet,closeAreaSheet,curArea,areaReloading,areaLabel,planList,planBought,setPlanBought,depositState,setDepositState,depositFree,setDepositFree,payDeposit,askRefund,confirmRefundTip,refundOkDone,showRefundTip,showRefundOk,openDeposit,DEPOSIT_TIPS,batteryList,batteryDetailRec,setBatteryEmpty,curStation,curCab,showBorrow,borrowLoading,returnLoading,cancelReserveLoading,cancelPlanLoading,refundTipLoading,showReturn,returnBattery,cabinetFull,setCabinetFull,openBorrow,confirmBorrow,openReturn,confirmReturn,BATTERY_STAT,GAUGE_TICKS,TRACK_POIS,openMyBattery,openBatteryDetail,openBatteryFind,openBatteryTrack,swapRecords,swapRecordsView,setSwapRecordsEmpty,openSwapRecords,openSwapRecordsAll,copyText,cards,activeCards,expiredCards,setCardPackEmpty,openCardPack,openCardExpired,goPlanRenew,planOrders,planOrdersView,PLAN_ORDER_FILTERS,planOrderFilter,setPlanOrderFilter,setPlanOrdersEmpty,openPlanOrders,planOrderDetail,openPlanOrder,payPlanOrder,planOrderLeft,fmtCountdown,cancelPlanOrder,showCancelPlanTip,depositEnabled,setDepositEnabled,setPlanEmpty,showDepositModal,planDetail,openPlanDetail,closePlanDetail,goPayDeposit,payPlan,swapShow,swapStep,swapCtx,swapTitle,demoQrOk,demoSameOperator,demoOnline,demoDist,demoResumeType,demoLevelLow,planMax,setPlanMax,swapStart,swapScan,swapTorch,showSwapManual,swapManualNo,swapManualOpen,confirmSwapManual,swapBranch,showChoice,choiceDesc,swapChoiceBorrow,swapChoiceSwap,swapToBorrow,isBorrowFlow,borrowOpenPct,borrowLeft,borrowSlotNo,borrowFailType,borrowFailTitle,stepDot,stepText,stepLine,swapBorrowRetry,swapBorrowDone,flowDoneHome,isReturnFlow,swapMode,returnOpenPct,returnLeft,returnSlotNo,returnOpenChoice,returnTakeChoice,returnRun,returnRetry,returnFailHome,borrowRun,borrowOpenChoice,borrowTakeChoice,netLost,setNetLost,showFlowEnd,flowEndHome,isSwapFlow,swapOpenPct,swapFullPct,swapLeft,swapTakeLeft,swapSlotNo,swapOpenChoice,swapPutChoice,swapFullChoice,swapTakeChoice,swapFailTitle,swapRun,swapFlowRetry,swapFailHome,swapClose,swapResume,showLevelWarn,swapLevelCancel,swapLevelContinue,setBoundCount,showOperatorPicker,operatorOptions,pickFirstLoginOperator,closeOperatorPicker,operatorPickerCity,mockCity,pickMockCity,firstLoginRegionFlow},auth,sideSetup('换电用户端',toastBus))
   }})
-/* ══ 用户端 i18n 实例（对齐 index.html：legacy:false + globalInjection，模板 $t / JS t） ══ */
-var i18nU=VueI18n.createI18n({legacy:false,globalInjection:true,locale:'zh-CN',fallbackLocale:'zh-CN',messages:window.__SWAP_I18N__||{}});
+/* ══ 用户端 i18n 实例（对齐 index.html：legacy:false + globalInjection，模板 $t / JS t；语言包 swap-user） ══ */
+var i18nU=VueI18n.createI18n({legacy:false,globalInjection:true,locale:'zh-CN',fallbackLocale:'zh-CN',messages:window.__SWAP_I18N_USER__||{}});
 registerSheetKit(_ua);_ua.use(i18nU);_ua.mount(document.getElementById('root-user'));
 window.__swapI18nInstances.push(i18nU);
 
@@ -5827,8 +5828,8 @@ var _ma=Vue.createApp({
       dashTrend,dashTrendMax,dashCabDist,dashBattDist,donut,dotColor,socColor,socIcon,battVolt,battAmp,CAB_TEXT,CAB_DOT,BATT_TEXT,BATT_DOT,battStateOf,battStateColor
     })
   }})
-/* ══ 商户端 i18n 实例（与用户端共享同一语言包；批次二商户端模板/JS 才全量 $t 化） ══ */
-var i18nM=VueI18n.createI18n({legacy:false,globalInjection:true,locale:'zh-CN',fallbackLocale:'zh-CN',messages:window.__SWAP_I18N__||{}});
+/* ══ 商户端 i18n 实例（语言包 swap-merchant，对齐 index 双端各自独立包的架构） ══ */
+var i18nM=VueI18n.createI18n({legacy:false,globalInjection:true,locale:'zh-CN',fallbackLocale:'zh-CN',messages:window.__SWAP_I18N_MERCHANT__||{}});
 registerSheetKit(_ma);_ma.use(i18nM);_ma.mount(document.getElementById('root-merchant'));
 window.__swapI18nInstances.push(i18nM);
 

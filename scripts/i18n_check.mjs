@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * ════════ i18n 校验 — 按 locales/{rent-user,rent-merchant,swap} 三目录分组检查五语一致性
+ * ════════ i18n 校验 — 按 locales/{rent-user,rent-merchant,swap-user,swap-merchant} 四目录分组检查五语一致性
  * ════════ 用法：node scripts/i18n_check.mjs
  *
  * 口径对齐 AGENTS.md §5：
  *  - 目录代替项目前缀命名空间：rent-user/（common./user./demo.）、
- *    rent-merchant/（common./merchant./demo.）、swap/
+ *    rent-merchant/（common./merchant./demo.）、swap-user/、swap-merchant/
  *  - zh-CN.json 为唯一权威源，en/id/th/zh-HK 单向派生
  *  - 某目录无 zh-CN.json 或内容为空时跳过该目录
  *  - rent-user / rent-merchant 的 common.* 与 demo.* **各自独立维护**，不要求键集镜像；
@@ -36,7 +36,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const DIRS = ['rent-user', 'rent-merchant', 'swap'];
+const DIRS = ['rent-user', 'rent-merchant', 'swap-user', 'swap-merchant'];
 const LANGS = ['zh-CN', 'en', 'id', 'th', 'zh-HK'];
 const SRC = 'zh-CN';
 
@@ -140,9 +140,12 @@ for (const dir of DIRS) {
 // 差异计入硬错误 TERM。demo.* 整体排除；TERM_ALLOW（品牌专名）命中项排除。
 // 说明：common 段不要求跨目录键集镜像——同句中文 key 各异也按本规则比对，key 同名而中文不同不算漂移。
 const TERM_PAIRS = [
-  ['rent-user', 'swap'],
-  ['rent-merchant', 'swap'],
+  ['rent-user', 'swap-user'],
+  ['rent-user', 'swap-merchant'],
+  ['rent-merchant', 'swap-user'],
+  ['rent-merchant', 'swap-merchant'],
   ['rent-user', 'rent-merchant'],
+  ['swap-user', 'swap-merchant'],
 ];
 
 /** 「同义中文」分组：zh-CN 值 → 该目录下所有 key（排除 demo.* 与 TERM_ALLOW 命中项） */

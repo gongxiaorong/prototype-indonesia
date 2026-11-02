@@ -1,0 +1,531 @@
+{
+  "user": {
+    "home": {
+      "buyPackage": "購買套餐",
+      "recommend": "推薦",
+      "searchPlaceholder": "請輸入目的地",
+      "processingNotice": "您有一個進行中的流程",
+      "notLoginTips": "您還未登入，點我快速登入",
+      "locationOffTitle": "定位服務未開啟",
+      "locationOffDesc": "開啟後才能獲取附近換電站點",
+      "areaUnsetTitle": "您尚未設定換電區域",
+      "areaClosed": "當前區域未開通服務",
+      "scanSwap": "掃碼換電",
+      "selectOperator": "請選擇營運商",
+      "cityUnopened": "該城市暫未開通換電服務"
+    },
+    "tab": {
+      "package": "我的套餐",
+      "orders": "我的訂單",
+      "battery": "我的電池"
+    },
+    "records": {
+      "swapRecord": "換電記錄",
+      "borrowCabinet": "取電櫃子",
+      "returnCabinet": "還電櫃子",
+      "borrowTime": "取電時間",
+      "returnTime": "還電時間",
+      "borrowSuccess": "借電成功",
+      "statusUsing": "使用中",
+      "returnSuccess": "還電成功",
+      "statusDone": "已完成",
+      "swapSuccess": "換電成功"
+    },
+    "deposit": {
+      "title": "我的按金",
+      "detailTitle": "按金詳情",
+      "swapDeposit": "換電按金",
+      "paid": "已繳纳",
+      "unpaid": "未繳纳",
+      "free": "已免按金",
+      "refundNotice": "退按金須知",
+      "notice": "按金須知",
+      "refunding": "退款審核中",
+      "refundTipDesc": "您當前持有生效中的換電套餐，按金退還後，換電權益將暫停。確認申請退還按金嗎？",
+      "refundOkTitle": "申請成功",
+      "unpaidTitle": "未繳纳按金",
+      "payFirstDesc": "請您先繳纳按金，再購買套餐",
+      "payFirstToast": "請先繳纳按金，方可使用換電服務",
+      "notice1Tag": "先繳後享",
+      "notice1Line1": "需繳纳按金後",
+      "notice1Line2": "方可享受換電服務",
+      "notice2Tag": "不可抵扣換電費",
+      "notice2Line1": "按金不可用於換電",
+      "notice2Line2": "費用抵扣",
+      "notice3Tag": "隨時可退",
+      "notice3Line1": "歸還電池後",
+      "notice3Line2": "按金隨時可退",
+      "notice4Tag": "損失賠償",
+      "notice4Line1": "設備丟失或損壞",
+      "notice4Line2": "需按金賠償損失"
+    },
+    "area": {
+      "title": "換電區域",
+      "empty": "暫無換電區域",
+      "emptyHint": "請點擊下方「新增」添加"
+    },
+    "station": {
+      "swappableBattery": "可換電池",
+      "emptySlot": "空倉",
+      "bookSwap": "預約換電",
+      "cancelBookingDesc": "確定取消預約？取消預約後，10分鐘內不可再次預約",
+      "storeDetail": "門店詳情",
+      "detail": "站點詳情"
+    },
+    "swap": {
+      "lowBatteryTitle": "電量偏低",
+      "choiceTitle": "選擇操作",
+      "borrow": "借電"
+    },
+    "login": {
+      "privacyPolicyLink": "《用戶隱私政策》",
+      "autoRegisterHint": "，未註冊的帳號將會自動註冊",
+      "resendPrefix": "重新獲取 ("
+    },
+    "dialcode": {
+      "noMatch": "未找到匹配地區"
+    },
+    "profile": {
+      "idVerify": "實名認證",
+      "verified": "已實名",
+      "unverified": "未實名",
+      "accountSaved": "帳號已儲存"
+    },
+    "pwd": {
+      "phoneVerify": "手機號驗證",
+      "newPlaceholder": "請輸入 6–64 位新密碼",
+      "confirmLabel": "確認新密碼",
+      "confirmPlaceholder": "請再次輸入新密碼",
+      "lengthToast": "密碼長度需為 6-64 位"
+    },
+    "id": {
+      "detailTitle": "實名詳情",
+      "photo": "身份證照片",
+      "cardNoPlaceholder": "請輸入證件號碼",
+      "photoTip": "請上傳清晰證件照，避免反光（最多2張）",
+      "neededDesc": "請先完成實名認證後再使用換電服務"
+    },
+    "version": {
+      "later": "稍後提醒"
+    },
+    "location": {
+      "title": "定位服務",
+      "desc": "需要獲取您的位置資訊，以便查找附近換電站點，請前往設定並打開定位服務",
+      "appAuthDesc": "您的位置資訊將用於查找附近換電站點"
+    },
+    "search": {
+      "title": "搜尋目的地",
+      "placeholder": "搜尋站點或地址",
+      "history": "搜尋歷史",
+      "nearby": "附近換電站點",
+      "noLocation": "未獲取您的位置資訊",
+      "noPoi": "沒有找到相關地點",
+      "noStation": "沒有找到相關站點"
+    },
+    "selectOperator": {
+      "title": "選擇營運商"
+    },
+    "battery": {
+      "empty": "暫無電池",
+      "location": "電池位置",
+      "bindTime": "綁定時間",
+      "soc": "剩餘電量",
+      "range": "剩餘里程",
+      "usageTime": "使用時長",
+      "no": "電池編號",
+      "track": "軌跡"
+    },
+    "borrow": {
+      "title": "確認借電",
+      "unavailable": "無法借電",
+      "fromPrefix": "將從",
+      "oneBattery": "借出一塊滿電電池",
+      "availableFull": "可用滿電電池",
+      "noFullBattery": "該櫃機暫無可借滿電電池，請前往其他櫃機或站點",
+      "noFullBatteryToast": "當前櫃機暫無可借滿電電池",
+      "successToast": "借電成功，電池已存入「我的電池」"
+    },
+    "return": {
+      "title": "還電到此櫃",
+      "confirm": "確認還電",
+      "select": "選擇要歸還的電池",
+      "noBattery": "您當前沒有可歸還的電池"
+    },
+    "network": {
+      "title": "網絡斷開",
+      "desc": "網絡連接已斷開，請檢查網絡狀況"
+    },
+    "swapFlow": {
+      "step1": "打開滿電倉",
+      "step2": "取出電池",
+      "opening": "滿電倉門打開中",
+      "openFailed": "倉門打開失敗",
+      "stepPutOld": "放入舊電池",
+      "stepTakeNew": "取出新電池",
+      "doorOpening": "倉門打開中",
+      "putAndClose": "請放入舊電池並關閉倉門",
+      "takeAndClose": "請取走電池並關閉倉門",
+      "doneTitle": "換電完成",
+      "doneDesc": "電池取出成功，換電完成",
+      "putOldFailed": "舊電池放入失敗",
+      "takeNewFailed": "新電池取出失敗"
+    },
+    "flow": {
+      "endReason": "流程結束原因說明"
+    },
+    "borrowFlow": {
+      "doorOpened": "倉門已打開",
+      "doorOpenedTip": "｜ 倉門已打開",
+      "takeAndClose": "請取走電池並關閉倉門 ｜",
+      "doneTitle": "借電完成",
+      "doneDesc": "電池取出成功，借電完成",
+      "notTaken": "未取出電池"
+    },
+    "returnFlow": {
+      "title": "還電",
+      "step1": "打開空倉",
+      "step2": "放入電池",
+      "opening": "空倉門打開中",
+      "putFailed": "電池放入失敗",
+      "putAndClose": "請放入舊電池並關閉倉門 ｜",
+      "doneTitle": "還電完成",
+      "doneDesc": "電池歸還成功，還電完成"
+    },
+    "manual": {
+      "cabinetNo": "機櫃編號",
+      "cabinetNoPlaceholder": "請輸入機櫃編號"
+    },
+    "map": {
+      "switchMap": "切換地圖"
+    },
+    "package": {
+      "expired": "已失效",
+      "active": "生效中",
+      "remainTimes": "剩餘次數",
+      "borrowableBattery": "可借電池",
+      "validity": "有效期",
+      "validUntil": "有效期至",
+      "empty": "暫無套餐",
+      "expiredTitle": "失效套餐",
+      "emptyExpired": "暫無失效套餐",
+      "swapPackage": "換電套餐",
+      "swapTimes": "換電次數",
+      "detailTitle": "套餐詳情",
+      "descTitle": "套餐描述",
+      "buyFirstDesc": "請您先購買套餐，再使用換電服務。",
+      "notBought": "未購買套餐"
+    },
+    "order": {
+      "status": {
+        "active": "已生效",
+        "refunded": "已退款"
+      },
+      "infoTitle": "訂單資訊",
+      "amount": "訂單金額",
+      "paidAmount": "實付金額",
+      "refundInfo": "退款資訊",
+      "refundAmount": "退款金額",
+      "refundTime": "退款時間"
+    },
+    "bindEmail": {
+      "lengthToast": "電郵長度不能超過255"
+    },
+    "idInfo": {
+      "photoMaxTwo": "最多上傳2張",
+      "photoDeleted": "照片已刪除",
+      "idPhotoRequired": "請至少上傳1張身份證照片",
+      "updated": "實名認證已更新",
+      "added": "實名認證已添加"
+    },
+    "locate": {
+      "searchPlaceholder": "請輸入站點名稱或地址",
+      "noResult": "未找到相關地點"
+    },
+    "reserve": {
+      "selectCabinet": "請選擇要預約的櫃機",
+      "timeoutToast": "預約已超時，可重新預約"
+    }
+  },
+  "action": {
+    "goNow": "立即前往",
+    "cancelBooking": "取消預約",
+    "goLogin": "前往登入",
+    "goEnable": "去開啟",
+    "goSet": "去設定",
+    "navigate": "導航",
+    "notUploaded": "未上傳",
+    "uploadImage": "上傳圖片",
+    "more": "更多操作",
+    "reupload": "重新上傳",
+    "deletePhoto": "刪除照片",
+    "deny": "不允許",
+    "allow": "允許",
+    "relocate": "重新定位",
+    "payNow": "立即付款",
+    "refund": "申請退款",
+    "thinkAgain": "我再想想",
+    "backHome": "返回首頁",
+    "scanReturn": "掃碼還電",
+    "goPay": "前往繳纳",
+    "goVerify": "去認證",
+    "buyNow": "立即購買"
+  },
+  "label": {
+    "noData": "暫無相關數據",
+    "tips": "溫馨提示",
+    "failed": "失敗",
+    "about": "約",
+    "noRecord": "暫無記錄",
+    "unit": {
+      "day": "天"
+    },
+    "langZhCN": "簡體中文",
+    "map": {
+      "amap": "高德地圖",
+      "baidu": "百度地圖",
+      "google": "谷歌地圖"
+    }
+  },
+  "common": {
+    "systemSwitch": {
+      "swap": "換電系統",
+      "action": "切換",
+      "title": "切換系統",
+      "rent": "租車系統",
+      "enter": "進入系統",
+      "charge": "充電系統",
+      "selectToast": "請選擇系統"
+    },
+    "tab": {
+      "home": "首頁",
+      "profile": "我的"
+    },
+    "action": {
+      "cancel": "取消",
+      "confirm": "確定",
+      "continue": "繼續",
+      "switchLang": "切換語言",
+      "deactivateAccount": "註銷帳號",
+      "save": "儲存",
+      "logout": "登出",
+      "confirmReplace": "確認替換",
+      "bind": "綁定",
+      "nextStep": "下一步",
+      "edit": "編輯",
+      "takePhoto": "拍照",
+      "album": "相冊",
+      "add": "新增",
+      "retry": "重試",
+      "done": "完成",
+      "enable": "開啟",
+      "close": "關閉"
+    },
+    "service": {
+      "swap": "換電"
+    },
+    "phone": "手機號",
+    "login": {
+      "phonePlaceholder": "請輸入手機號",
+      "passwordLabel": "密碼",
+      "passwordPlaceholder": "請輸入密碼",
+      "codeLabel": "驗證碼",
+      "codePlaceholder": "請輸入驗證碼",
+      "getCode": "獲取驗證碼",
+      "accountPlaceholder": "請輸入帳號",
+      "agreePrefix": "我已閱讀並同意",
+      "login": "登入",
+      "codeSub": "驗證碼登入",
+      "passwordSub": "密碼登入",
+      "emailMode": "電郵登入",
+      "accountMode": "帳號登入",
+      "phoneMode": "手機號登入",
+      "emailPlaceholder": "請輸入電郵",
+      "needAgree": "請先閱讀並同意隱私政策"
+    },
+    "label": {
+      "email": "電郵",
+      "account": "帳號",
+      "name": "姓名",
+      "none": "暫無",
+      "loggedIn": "已登入",
+      "yes": "是",
+      "no": "否",
+      "langZhHK": "繁體中文（中國香港）",
+      "assistantName": "小迪"
+    },
+    "profile": {
+      "personalInfo": "個人資訊",
+      "avatar": "頭像",
+      "nickname": "暱稱",
+      "notBound": "未綁定",
+      "emailAddress": "電郵地址",
+      "passwordManage": "密碼管理",
+      "changePassword": "修改密碼",
+      "setPassword": "設定密碼",
+      "editNickname": "修改暱稱",
+      "nicknamePlaceholder": "請輸入暱稱",
+      "nicknameHint": "支持輸入2-20個字符，不限中文、數字、字母、符號",
+      "editAccount": "修改帳號",
+      "accountFormatHint": "必須字母開頭，僅支持字母、數字、底線，長度4～20位",
+      "settings": "系統設定",
+      "settingsGeneral": "通用設定",
+      "settingsVersion": "當前版本",
+      "bindPhone": "綁定手機號",
+      "bindEmail": "綁定電郵",
+      "verifyByEmail": "電郵驗證",
+      "resetPassword": "重設密碼",
+      "newPassword": "新密碼",
+      "namePlaceholder": "請輸入姓名",
+      "positionDefaultName": "當前位置",
+      "emailFormatError": "電郵格式不正確",
+      "nicknameSaved": "暱稱已儲存",
+      "needBindFirst": "請先綁定手機號或電郵",
+      "inputNewPhone": "請輸入新的手機號",
+      "phoneReplaced": "手機號替換成功",
+      "phoneBoundSuccess": "手機號綁定成功",
+      "inputNewEmail": "請輸入新的電郵",
+      "emailReplaced": "電郵替換成功",
+      "emailBoundSuccess": "電郵綁定成功",
+      "pwdMismatch": "兩次輸入的密碼不一致",
+      "pwdUpdated": "密碼已更新"
+    },
+    "orders": {
+      "docIdCard": "身份證",
+      "orderId": "訂單編號",
+      "noOrders": "暫無訂單",
+      "detail": "訂單詳情",
+      "payPending": "待付款",
+      "cancelTime": "取消時間",
+      "payTime": "付款時間",
+      "cancelOrder": "取消訂單",
+      "confirmCancelDesc": "確定取消該訂單？取消後不可恢復"
+    },
+    "version": {
+      "newVersion": "發現新版本",
+      "latest": "已是最新版本",
+      "downloading": "下載中…",
+      "updateNow": "立即更新",
+      "gotIt": "知道了"
+    },
+    "unit": {
+      "battery": "塊"
+    },
+    "scan": {
+      "hint": "請將二維碼對準取景框"
+    },
+    "vehicles": {
+      "batteryDetail": "電池詳情",
+      "walkMin": "分鐘",
+      "distanceFromYou": "距您",
+      "meter": "米",
+      "walk": "步行",
+      "historyTrack": "歷史軌跡",
+      "trackStartPin": "起",
+      "trackEndPin": "終"
+    },
+    "startTime": "開始時間",
+    "endTime": "結束時間",
+    "orderStatus": {
+      "cancelled": "已取消"
+    },
+    "createTime": "建立時間",
+    "toast": {
+      "accountFormat": "帳號僅支援字母、數字、下劃線",
+      "phoneDigit": "手機號僅允許數字",
+      "pwdChars": "密碼僅支援大小寫字母、數字、鍵盤符號",
+      "codeFormat": "驗證碼格式不正確",
+      "loginSuccess": "登入成功",
+      "logout": "已登出"
+    },
+    "dateTime": {
+      "minute": "分",
+      "second": "秒"
+    }
+  },
+  "placeholder": {
+    "email": "請輸入郵箱地址",
+    "emailCode": "請輸入郵箱驗證碼"
+  },
+  "demoOps": {
+    "title": "原型操作",
+    "functionControl": "功能控制",
+    "loginStatus": "登入狀態",
+    "notLoggedIn": "未登入",
+    "firstLogin": "首次登入",
+    "locationAuth": "定位授權",
+    "authorized": "已授權",
+    "unauthorized": "未授權",
+    "on": "已開啟",
+    "off": "未開啟",
+    "mockCity": "定位城市",
+    "has": "有",
+    "set": "已設定",
+    "unset": "未設定",
+    "verified": "已認證",
+    "unverified": "未認證",
+    "deposit": "繳纳按金",
+    "bought": "已購買",
+    "notBought": "未購買",
+    "ongoingFlow": "進行中的流程",
+    "flowScene": "流程場景",
+    "borrowing": "借電中",
+    "swapping": "換電中",
+    "depositFreeStatus": "免按金狀態",
+    "notFree": "未免按金",
+    "depositStatus": "按金狀態",
+    "refunding": "退按金中",
+    "depositConfig": "按金配置",
+    "listData": "列表數據",
+    "hasData": "有數據",
+    "noData": "無數據",
+    "cabinetFullStock": "換電櫃滿電庫存",
+    "hasFull": "有滿電",
+    "noFull": "無滿電",
+    "flowControl": "流程控制",
+    "mainFlow": "主流程",
+    "simulate": "模擬",
+    "qrCode": "二維碼",
+    "valid": "有效",
+    "invalid": "無效",
+    "sameOperator": "同一營運商",
+    "cabinetStatus": "櫃機狀態",
+    "online": "在線",
+    "offline": "離線",
+    "distance": "距離",
+    "batteryPower": "可分配電池電量",
+    "boundBattery": "已綁定電池",
+    "bound0": "0塊",
+    "bound1": "1塊",
+    "bound2": "2塊",
+    "packageLimit": "套餐可借上限",
+    "borrowMainFlow": "借電主流程",
+    "doorOpen": "倉門開啟",
+    "success": "成功",
+    "batteryTaken": "電池取出",
+    "taken": "已取",
+    "notTaken": "未取",
+    "network": "網絡",
+    "hasNet": "有網",
+    "noNet": "斷網",
+    "returnMainFlow": "還電主流程",
+    "swapMainFlow": "換電主流程",
+    "exitedApp": "已退出應用（演示）",
+    "flowResume": "流程恢復",
+    "qrInvalid": "二維碼無效，請重新掃碼",
+    "crossOperator": "不支持跨營運商換電",
+    "deviceOffline": "設備已離線，暫無法使用",
+    "tooFar": "距離過遠無法操作，請靠近機櫃重新掃碼"
+  },
+  "merchant": {
+    "store": {
+      "service": {
+        "rent": "租車",
+        "repair": "售後/維修",
+        "sell": "賣車/電池"
+      }
+    },
+    "tab": {
+      "store": "門店"
+    }
+  }
+}

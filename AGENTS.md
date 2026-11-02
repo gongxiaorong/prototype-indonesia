@@ -52,8 +52,8 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 ## 1. 权威源与构建红线
 
 - `index.html` 是唯一权威源，直接手改。
-- `locales/rent-user/*.json`（租车用户端）、`locales/rent-merchant/*.json`（租车商户端）、`locales/swap/*.json`（换电）是各自权威文案源；新增/变更文案一律同步进对应目录。`index.html` 与 `swap.html` 均已接入 vue-i18n（模板 `$t` / JS `t`，见 §5）。
-- `locales/rent-user/i18n.rent-user.js` 与 `locales/rent-merchant/i18n.rent-merchant.js` 是**生成产物**（`node scripts/i18n_bundle.mjs`），不得手改。
+- `locales/rent-user/*.json`（租车用户端）、`locales/rent-merchant/*.json`（租车商户端）、`locales/swap-user/*.json`（换电用户端）、`locales/swap-merchant/*.json`（换电商户端）是各自权威文案源；新增/变更文案一律同步进对应目录。`index.html` 与 `swap.html` 均已接入 vue-i18n（模板 `$t` / JS `t`，见 §5）。
+- `locales/rent-user/i18n.rent-user.js`、`locales/rent-merchant/i18n.rent-merchant.js`、`locales/swap-user/i18n.swap-user.js` 与 `locales/swap-merchant/i18n.swap-merchant.js` 是**生成产物**（`node scripts/i18n_bundle.mjs`），不得手改。
 - 版本控制：改完必须自检（见 §6）；`swap.html` 的独立改动与 `index.html` 分开说明。
 - **持久化唯一特例**：全项目只允许一处 `localStorage` —— 键 `yadea:notify-prefs`（用户端消息通知偏好：总开关 / 分类渠道；**系统通知权限态为内存态、不入持久化**——仅由三级页「手机系统通知」开关驱动（原型操作面板入口已下线））。读写**只走** `loadNotifyPrefs()` / `saveNotifyPrefs()` 单一出口，解析异常静默回落默认值。其余任何状态一律内存态，**禁止新增 localStorage**（换电端 `swap.html` 同口径，当前 0 处）。
 
@@ -276,9 +276,9 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 
 ### 目录与方向
 
-- `locales/` 按项目与端拆分为三个目录：`rent-user/`（租车用户端 `index.html` 用户 app）、`rent-merchant/`（租车商户端 `index.html` 商户 app）与 `swap/`（换电 `swap.html`）。各目录内均为 5 个语言文件：`zh-CN.json`（**该端唯一权威源**）→ `zh-HK / en / id / th`。均为单向同步，互不派生、不回写。
+- `locales/` 按项目与端拆分为四个目录：`rent-user/`（租车用户端 `index.html` 用户 app）、`rent-merchant/`（租车商户端 `index.html` 商户 app）、`swap-user/`（换电用户端 `swap.html` 用户 app）与 `swap-merchant/`（换电商户端 `swap.html` 商户 app）。各目录内均为 5 个语言文件：`zh-CN.json`（**该端唯一权威源**）→ `zh-HK / en / id / th`。均为单向同步，互不派生、不回写。
 - **`index.html` 已接入 vue-i18n**：模板文案一律 `$t('key')`、JS 文案一律 `t('key')`，禁止中文字面量硬编码；用户端实例只取 `window.__RENT_I18N_USER__`（由 `rent-user/*.json` 生成），商户端只取 `window.__RENT_I18N_MERCHANT__`（由 `rent-merchant/*.json` 生成）。一个端区段只复用本端 key。
-- **`swap.html` 已接入 vue-i18n（2026-11-02）**：模板 `$t` / JS `t` 同口径；双 app 各建 `createI18n` 实例（共享 `window.__SWAP_I18N__`，由 `locales/swap/i18n.swap.js` 生成），切换统一走 `applySwapLang(id)` 同步双实例 + `<html lang>`，语言选择器五语（含 th）。模块层常量禁止 `t()`（实例时序未定），setup 内经实例代理调用；「数据库回显」性质演示数据（运营商/区划/权限树节点/流水备注/状态存储值）保留中文，展示层经映射函数转译。
+- **`swap.html` 已接入 vue-i18n（2026-11-02）**：模板 `$t` / JS `t` 同口径；双 app 各建 `createI18n` 实例（用户端取 `window.__SWAP_I18N_USER__`、商户端取 `window.__SWAP_I18N_MERCHANT__`，分别由 `locales/swap-user|swap-merchant` 生成，与 index 双端独立包架构一致），切换统一走 `applySwapLang(id)` 同步双实例 + `<html lang>`，语言选择器五语（含 th）。模块层常量禁止 `t()`（实例时序未定），setup 内经实例代理调用；「数据库回显」性质演示数据（运营商/区划/权限树节点/流水备注/状态存储值）保留中文，展示层经映射函数转译。双端共享区（authState/sideSetup/共享组件）的 key 双包各存一份，新增此类文案须两包同改且译法一致（TERM 校验覆盖）。
 - **`common.*` 两端各自独立**：`common.*`（及 `demo.*`）在 `rent-user` ↔ `rent-merchant` 之间**不要求键集镜像**，各端按自身引用情况增删键；但**同一句中文（zh-CN 值逐字相同）在两端出现时，`en / id / th / zh-HK` 译法必须一致**，由 `i18n_check.mjs` 的 `TERM` 硬错误校验（见「跨目录术语一致性」）。与 `swap/` 之间同此口径。
 - 嵌套 JSON、点路径 key、各目录内多语言同路径同名；UTF-8 无 BOM、2 空格缩进、结尾换行。
 - 占位符用 vue-i18n `{name}`，各目录内所有语言名称与数量必须一致。

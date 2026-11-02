@@ -1,0 +1,599 @@
+{
+  "label": {
+    "langZhCN": "简体中文",
+    "noData": "暂无相关数据",
+    "map": {
+      "amap": "高德地图",
+      "baidu": "百度地图",
+      "google": "谷歌地图"
+    },
+    "unit": {
+      "cabinet": "台"
+    },
+    "failed": "失败"
+  },
+  "common": {
+    "label": {
+      "langZhHK": "繁體中文（中國香港）",
+      "assistantName": "小迪",
+      "all": "全部",
+      "hasAlert": "有告警",
+      "email": "邮箱",
+      "account": "账号",
+      "name": "姓名"
+    },
+    "systemSwitch": {
+      "swap": "换电系统",
+      "selectToast": "请选择系统",
+      "action": "切换",
+      "title": "切换系统",
+      "rent": "租车系统",
+      "enter": "进入系统",
+      "charge": "充电系统"
+    },
+    "login": {
+      "accountPlaceholder": "请输入账号",
+      "phonePlaceholder": "请输入手机号",
+      "emailPlaceholder": "请输入邮箱",
+      "passwordPlaceholder": "请输入密码",
+      "codePlaceholder": "请输入验证码",
+      "needAgree": "请先阅读并同意隐私政策",
+      "passwordLabel": "密码",
+      "codeLabel": "验证码",
+      "getCode": "获取验证码",
+      "agreePrefix": "我已阅读并同意",
+      "login": "登录",
+      "codeSub": "验证码登录",
+      "passwordSub": "密码登录",
+      "emailMode": "邮箱登录",
+      "accountMode": "账号登录",
+      "phoneMode": "手机号登录",
+      "resend": "重新获取"
+    },
+    "toast": {
+      "accountFormat": "账号仅支持字母、数字、下划线",
+      "phoneDigit": "手机号仅支持数字",
+      "pwdChars": "密码仅支持大小写字母、数字、键盘符号",
+      "codeFormat": "验证码格式不正确",
+      "loginSuccess": "登录成功",
+      "logout": "已退出登录",
+      "copySuccess": "复制成功",
+      "saveSuccess": "保存成功"
+    },
+    "profile": {
+      "emailFormatError": "邮箱格式不正确",
+      "nicknameSaved": "昵称已保存",
+      "needBindFirst": "请先绑定手机号或邮箱",
+      "inputNewPhone": "请输入新的手机号",
+      "phoneReplaced": "手机号替换成功",
+      "phoneBoundSuccess": "手机号绑定成功",
+      "inputNewEmail": "请输入新的邮箱",
+      "emailReplaced": "邮箱替换成功",
+      "emailBoundSuccess": "邮箱绑定成功",
+      "pwdMismatch": "两次输入的密码不一致",
+      "pwdUpdated": "密码已更新",
+      "namePlaceholder": "请输入姓名",
+      "positionDefaultName": "当前位置",
+      "personalInfo": "个人信息",
+      "avatar": "头像",
+      "notBound": "未绑定",
+      "emailAddress": "邮箱地址",
+      "passwordManage": "密码管理",
+      "changePassword": "修改密码",
+      "setPassword": "设置密码",
+      "settings": "系统设置",
+      "settingsGeneral": "通用设置",
+      "settingsVersion": "当前版本",
+      "bindPhone": "绑定手机号",
+      "bindEmail": "绑定邮箱",
+      "verifyByEmail": "邮箱验证",
+      "resetPassword": "重置密码",
+      "newPassword": "新密码"
+    },
+    "action": {
+      "takePhoto": "拍照",
+      "album": "相册",
+      "edit": "编辑",
+      "save": "保存",
+      "cancel": "取消",
+      "confirm": "确定",
+      "add": "新增",
+      "viewDetail": "详情",
+      "switchLang": "切换语言",
+      "logout": "退出登录",
+      "confirmReplace": "确认替换",
+      "bind": "绑定",
+      "nextStep": "下一步"
+    },
+    "service": {
+      "swap": "换电"
+    },
+    "dateTime": {
+      "minute": "分",
+      "second": "秒",
+      "hour": "时"
+    },
+    "orders": {
+      "batteryNoPlaceholder": "请输入电池编号",
+      "orderId": "订单编号"
+    },
+    "vehicles": {
+      "batteryLevel": "电量",
+      "batteryDetail": "电池详情",
+      "historyTrack": "历史轨迹",
+      "batteryDischargeOff": "禁止放电",
+      "batteryDischargeOn": "允许放电",
+      "distanceFromYou": "距您",
+      "meter": "米",
+      "walk": "步行",
+      "walkMin": "分钟",
+      "trackStartPin": "起",
+      "trackEndPin": "终"
+    },
+    "tab": {
+      "battery": "电池",
+      "home": "首页",
+      "profile": "我的"
+    },
+    "status": {
+      "disabled": "禁用",
+      "enabled": "启用"
+    },
+    "startTime": "开始时间",
+    "endTime": "结束时间",
+    "scan": {
+      "hint": "请将二维码对准取景框"
+    },
+    "unit": {
+      "battery": "块"
+    },
+    "reset": "重置",
+    "phone": "手机号",
+    "dialcode": {
+      "searchPlaceholder": "搜索国家/地区或区号"
+    },
+    "version": {
+      "newVersion": "发现新版本",
+      "latest": "已是最新版本",
+      "gotIt": "知道了"
+    },
+    "copied": "已复制",
+    "cabinet": {
+      "disable": "禁用机柜"
+    }
+  },
+  "user": {
+    "profile": {
+      "accountSaved": "账号已保存"
+    },
+    "bindEmail": {
+      "lengthToast": "邮箱长度不能超过255"
+    },
+    "pwd": {
+      "confirmPlaceholder": "请再次输入新密码",
+      "lengthToast": "密码长度需为 6-64 位",
+      "phoneVerify": "手机号验证",
+      "newPlaceholder": "请输入 6–64 位新密码",
+      "confirmLabel": "确认新密码"
+    },
+    "idInfo": {
+      "photoMaxTwo": "最多上传2张",
+      "photoDeleted": "照片已删除",
+      "idPhotoRequired": "请至少上传1张身份证照片",
+      "updated": "实名认证已更新",
+      "added": "实名认证已添加"
+    },
+    "id": {
+      "cardNoPlaceholder": "请输入证件号码"
+    },
+    "borrow": {
+      "noFullBatteryToast": "当前柜机暂无可借满电电池",
+      "successToast": "借电成功，电池已存入「我的电池」"
+    },
+    "records": {
+      "borrowSuccess": "借电成功",
+      "statusUsing": "使用中",
+      "returnSuccess": "还电成功",
+      "statusDone": "已完成",
+      "swapSuccess": "换电成功",
+      "borrowCabinet": "取电柜子",
+      "returnCabinet": "还电柜子",
+      "borrowTime": "取电时间",
+      "returnTime": "还电时间"
+    },
+    "return": {
+      "noBattery": "您当前没有可归还的电池"
+    },
+    "returnFlow": {
+      "title": "还电"
+    },
+    "swap": {
+      "borrow": "借电"
+    },
+    "home": {
+      "scanSwap": "扫码换电",
+      "cityUnopened": "该城市暂未开通换电服务"
+    },
+    "manual": {
+      "cabinetNoPlaceholder": "请输入机柜编号",
+      "cabinetNo": "机柜编号"
+    },
+    "swapFlow": {
+      "openFailed": "仓门打开失败",
+      "putOldFailed": "旧电池放入失败",
+      "takeNewFailed": "新电池取出失败"
+    },
+    "borrowFlow": {
+      "notTaken": "未取出电池"
+    },
+    "deposit": {
+      "payFirstToast": "请先缴纳押金，方可使用换电服务",
+      "unpaidTitle": "未缴纳押金",
+      "notice1Tag": "先缴后享",
+      "notice1Line1": "需缴纳押金后",
+      "notice1Line2": "方可享受换电服务",
+      "notice2Tag": "不可抵扣换电费",
+      "notice2Line1": "押金不可用于换电",
+      "notice2Line2": "费用抵扣",
+      "notice3Tag": "随时可退",
+      "notice3Line1": "归还电池后",
+      "notice3Line2": "押金随时可退",
+      "notice4Tag": "损失赔偿",
+      "notice4Line1": "设备丢失或损坏",
+      "notice4Line2": "需押金赔偿损失"
+    },
+    "package": {
+      "buyFirstDesc": "请您先购买套餐，再使用换电服务。",
+      "notBought": "未购买套餐"
+    },
+    "locate": {
+      "searchPlaceholder": "请输入站点名称或地址",
+      "noResult": "未找到相关地点"
+    },
+    "reserve": {
+      "selectCabinet": "请选择要预约的柜机",
+      "timeoutToast": "预约已超时，可重新预约"
+    },
+    "battery": {
+      "empty": "暂无电池",
+      "no": "电池编号"
+    },
+    "station": {
+      "emptySlot": "空仓",
+      "storeDetail": "门店详情",
+      "detail": "站点详情"
+    },
+    "search": {
+      "noPoi": "没有找到相关地点"
+    },
+    "location": {
+      "title": "定位服务"
+    },
+    "login": {
+      "privacyPolicyLink": "《用户隐私政策》"
+    },
+    "dialcode": {
+      "noMatch": "未找到匹配地区"
+    },
+    "version": {
+      "later": "稍后提醒"
+    }
+  },
+  "demoOps": {
+    "exitedApp": "已退出应用（演示）",
+    "flowResume": "流程恢复",
+    "qrInvalid": "二维码无效，请重新扫码",
+    "crossOperator": "不支持跨运营商换电",
+    "deviceOffline": "设备已离线，暂无法使用",
+    "tooFar": "距离过远无法操作，请靠近机柜重新扫码",
+    "online": "在线",
+    "offline": "离线",
+    "cabNotExist": "机柜编码不存在",
+    "cabUsed": "机柜编码已被使用",
+    "addSuccess": "新增成功",
+    "success": "成功"
+  },
+  "action": {
+    "scanReturn": "扫码还电",
+    "goPay": "前往缴纳",
+    "buyNow": "立即购买",
+    "clearFilter": "清空筛选",
+    "uploadImage": "上传图片",
+    "more": "更多操作",
+    "reupload": "重新上传",
+    "tapToClose": "点击空白处关闭",
+    "deny": "不允许",
+    "allow": "允许",
+    "goEnable": "去开启"
+  },
+  "merchant": {
+    "store": {
+      "service": {
+        "rent": "租车",
+        "repair": "售后/维修",
+        "sell": "卖车/电池"
+      },
+      "searchPlaceholder": "搜索门店名称",
+      "empty": "暂无门店",
+      "addr": "门店地址",
+      "hours": "营业时间",
+      "station": "关联站点",
+      "notExist": "门店不存在",
+      "contact": "联系人",
+      "phone": "联系电话",
+      "services": "关键业务",
+      "photos": "门店封面",
+      "formTitle": "门店信息",
+      "name": "门店名称",
+      "namePlaceholder": "请输入门店名称",
+      "addrPlaceholder": "请输入地址或选择地址",
+      "pickOnMap": "地图选择地址",
+      "contactPlaceholder": "请输入联系人姓名",
+      "phonePlaceholder": "请输入联系电话",
+      "selectStation": "选择关联站点",
+      "addrMapSearch": "搜索地点",
+      "phoneInvalid": "联系电话格式不正确",
+      "coverRequired": "请上传门店封面",
+      "addrRequired": "请输入或选择门店地址",
+      "stationTaken": "该站点已被其他门店关联",
+      "saveSuccess": "门店信息已保存",
+      "addSuccess": "门店已新增"
+    },
+    "tab": {
+      "store": "门店",
+      "station": "站点",
+      "cabinet": "换电柜"
+    },
+    "battery": {
+      "owner": "当前归属",
+      "cabinetStatus": "在柜状态",
+      "rentStatus": "租用状态",
+      "status": "电池状态",
+      "addTitle": "新增电池",
+      "notExist": "电池不存在",
+      "noLocation": "暂无定位 · 点击查看",
+      "params": "电池参数",
+      "voltage": "电压",
+      "current": "电流",
+      "health": "健康度",
+      "cycles": "循环次数",
+      "control": "电池控制",
+      "service": "电池服务",
+      "rentRecord": "租借记录",
+      "rentUser": "租借用户",
+      "noRentRecord": "暂无租借记录",
+      "charging": "充电中",
+      "full": "已满电",
+      "reserved": "预约中",
+      "abnormal": "异常中",
+      "lastLocationUnknown": "最后位置未知",
+      "noExists": "电池编号已存在",
+      "copiedNo": "电池编号已复制",
+      "dischargeForbid": "禁止后设备将无法放电",
+      "dischargeAllow": "允许后设备可正常放电",
+      "dischargeForbidden": "已禁止放电",
+      "dischargeAllowed": "已允许放电"
+    },
+    "cabinet": {
+      "empty": "暂无换电柜",
+      "station": "当前站点",
+      "bizStatus": "运营状态",
+      "enabledStatus": "启用状态",
+      "alarmStatus": "告警状态",
+      "faultStatus": "故障状态",
+      "detailTitle": "换电柜详情",
+      "notExist": "换电柜不存在",
+      "name": "机柜名称",
+      "addr": "当前地址",
+      "control": "机柜控制",
+      "offline": "下线",
+      "online": "上线",
+      "openAllDoors": "仓门全开",
+      "openEmptyDoors": "空仓全开",
+      "service": "机柜服务",
+      "alarm": "机柜告警",
+      "fault": "机柜故障",
+      "usageRecord": "使用记录",
+      "photos": "机柜图片",
+      "slotStatus": "仓位状态",
+      "slot": {
+        "hasBattery": "有电池"
+      },
+      "noPhoto": "暂无图片",
+      "editTitle": "编辑换电柜",
+      "namePlaceholder": "请输入机柜名称",
+      "selectStation": "选择站点",
+      "maxPhotos": "最多上传10张",
+      "alarmList": "告警列表",
+      "faultList": "故障列表",
+      "alarmSearchPlaceholder": "请输入告警内容",
+      "faultSearchPlaceholder": "请输入故障内容",
+      "currentStatus": "当前状态",
+      "slotLabel": "仓位",
+      "doorLabel": "仓门",
+      "wholeCabinet": "整柜",
+      "alarmContent": "告警内容",
+      "faultContent": "故障内容",
+      "noUsageRecord": "暂无使用记录",
+      "addTitle": "新增换电柜",
+      "scanInput": "扫码录入",
+      "manualTitle": "输入机柜编号",
+      "manualDesc": "请输入机柜铭牌上的机柜编号",
+      "deletePhoto": "删除图片",
+      "searchStation": "搜索站点名称",
+      "noStationFound": "未找到站点",
+      "doorOpened": "已开仓",
+      "doorIsOpen": "门已开",
+      "openDoor": "开门",
+      "scanSuccess": "扫码成功",
+      "scanSuccessFilled": "扫码成功，编号已录入",
+      "imageDeleted": "图片已删除",
+      "copiedNo": "机柜编码已复制",
+      "bizOfflineTitle": "下线机柜",
+      "bizOnlineTitle": "上线机柜",
+      "bizOfflineConfirm": "下线后该机柜暂停对外换电服务，确认下线？",
+      "bizOnlineConfirm": "上线后该机柜恢复对外换电服务，确认上线？",
+      "faultClearTitle": "清除故障标记",
+      "faultMarkTitle": "标记为故障",
+      "alarmClearTitle": "清除告警",
+      "alarmTriggerTitle": "触发告警",
+      "enableTitle": "启用机柜",
+      "disableConfirm": "禁用后该机柜将不可使用，确认禁用？",
+      "enableConfirm": "启用后该机柜恢复可用，确认启用？",
+      "noEmptySlot": "该柜暂无可开仓的空仓"
+    },
+    "home": {
+      "todayOverview": "今日经营概览",
+      "realtime": "实时",
+      "todaySwapCount": "今日换电次数",
+      "todayRevenue": "今日营收",
+      "cabinetOnlineRate": "柜在线率",
+      "quickEntry": "快捷入口",
+      "storeManage": "门店管理",
+      "stationManage": "站点管理",
+      "dashboard": "数据看板",
+      "deviceAlarm": "设备告警",
+      "noAlarm": "暂无设备告警",
+      "commonActions": "常用功能",
+      "switchFranchisee": "切换加盟商"
+    },
+    "record": {
+      "operator": "操作人",
+      "content": "操作内容",
+      "platform": "操作平台",
+      "result": "操作结果",
+      "time": "操作时间",
+      "statusAlarming": "告警中",
+      "statusFaulting": "故障中",
+      "statusResolved": "已解除",
+      "emptyAlarm": "暂无告警记录",
+      "emptyFault": "暂无故障记录"
+    },
+    "dashboard": {
+      "cabinetTotal": "换电柜总数",
+      "batteryInCabinet": "柜内电池",
+      "renting": "租用中",
+      "swapTrend7d": "近 7 日换电趋势",
+      "cabinetStatusDist": "机柜状态分布",
+      "batteryStatusDist": "电池状态分布",
+      "alarmStats": "告警统计",
+      "noAlarm": "暂无告警"
+    },
+    "map": {
+      "title": "选择地址",
+      "useCurrentLocation": "使用当前定位"
+    },
+    "station": {
+      "empty": "暂无站点",
+      "addr": "站点地址",
+      "store": "所属门店",
+      "notExist": "站点不存在",
+      "no": "站点编号",
+      "phone": "联系方式",
+      "photos": "站点封面",
+      "bindCabinet": "绑定换电柜",
+      "noBoundCabinet": "暂未绑定换电柜",
+      "unbindCabinet": "解绑换电柜",
+      "editTitle": "编辑站点",
+      "addTitle": "新增站点",
+      "name": "站点名称",
+      "namePlaceholder": "请输入站点名称",
+      "contactPlaceholder": "请输入",
+      "bindSearchPlaceholder": "请输入换电柜编号",
+      "noCabinetFound": "未找到换电柜",
+      "noFreeCabinet": "暂无空闲换电柜可选",
+      "confirmBind": "确认绑定",
+      "unbound": "未绑定站点",
+      "phoneInvalid": "联系方式格式不正确",
+      "coverRequired": "请上传站点封面",
+      "addrRequired": "请输入或选择站点地址",
+      "saveSuccess": "站点信息已保存",
+      "addSuccess": "站点已新增"
+    },
+    "filter": {
+      "title": "全部筛选",
+      "netStatus": "联网状态",
+      "enabled": "已启用",
+      "disabled": "未启用",
+      "noAlarm": "无告警",
+      "noFault": "无故障",
+      "hasFault": "有故障",
+      "inCabinet": "柜内",
+      "outCabinet": "柜外",
+      "unrented": "未租用",
+      "rented": "已租用"
+    },
+    "location": {
+      "appAuthDesc": "您的位置信息将用于定位门店地址",
+      "serviceDesc": "请在系统设置中开启定位服务，以自动获取门店地址"
+    },
+    "alarmPage": {
+      "type": {
+        "cabFault": "柜故障",
+        "tempAlarm": "温度告警",
+        "bizOffline": "运营下线",
+        "commError": "通讯异常",
+        "battOffline": "电池离线"
+      }
+    },
+    "useSource": {
+      "system": "系统",
+      "platform": "平台端",
+      "merchant": "商家端"
+    },
+    "slot": {
+      "disabledTag": "禁用中"
+    },
+    "door": {
+      "remoteControl": "远程控制仓门",
+      "enable": "启用仓门",
+      "disable": "禁用仓门",
+      "enableConfirm": "启用后该仓门恢复对外服务，确认启用？",
+      "disableConfirm": "禁用后该仓门停止对外服务，确认禁用？",
+      "remoteOpen": "远程开仓",
+      "openSent": "开仓指令已下发"
+    },
+    "alarm": {
+      "battType": {
+        "cellTempHigh": "电芯高温告警"
+      }
+    },
+    "fault": {
+      "type": {
+        "overTemp": "过温保护"
+      }
+    },
+    "form": {
+      "pickOnMap": "请在地图上选择地址",
+      "hoursRequired": "请选择营业时间",
+      "hoursRange": "结束时间需晚于开始时间",
+      "contactMax": "联系人不能超过 64 个字符"
+    },
+    "bindCab": {
+      "pickFirst": "请先选择换电柜",
+      "unbindConfirm": "确认将该换电柜与当前站点解绑？解绑后该换电柜将变为空闲，可重新绑定站点",
+      "unboundToast": "已解绑站点"
+    }
+  },
+  "demo": {
+    "map": {
+      "road": {
+        "huangheMiddleRoad": "黄河中路",
+        "hangkonggangStreet": "航空港街道",
+        "xihanggangAvenue": "西航港大道",
+        "shuangliuWestSquare": "双流西站广场"
+      }
+    },
+    "battery": {
+      "trackZhonghe": "中和街道"
+    },
+    "poi": {
+      "p1": {
+        "name": "博雅城市广场"
+      }
+    }
+  },
+  "placeholder": {
+    "email": "请输入邮箱地址"
+  }
+}
