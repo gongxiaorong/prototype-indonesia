@@ -19,6 +19,24 @@
       "orders": "คำสั่งซื้อของฉัน",
       "battery": "แบตเตอรี่ของฉัน"
     },
+    "package": {
+      "validityDays": "ระยะเวลา: {n} วัน",
+      "expired": "หมดอายุแล้ว",
+      "active": "มีผลอยู่",
+      "remainTimes": "จำนวนครั้งคงเหลือ",
+      "borrowableBattery": "แบตเตอรี่ที่ยืมได้",
+      "validity": "อายุการใช้งาน",
+      "validUntil": "ใช้ได้ถึง",
+      "empty": "ไม่มีแพ็กเกจ",
+      "expiredTitle": "แพ็กเกจที่หมดอายุ",
+      "emptyExpired": "ยังไม่มีแพ็กเกจที่หมดอายุ",
+      "swapPackage": "แพ็กเกจสลับแบตเตอรี่",
+      "swapTimes": "จำนวนครั้งสลับ",
+      "detailTitle": "รายละเอียดแพ็กเกจ",
+      "descTitle": "คำอธิบายแพ็กเกจ",
+      "buyFirstDesc": "กรุณาซื้อแพ็กเกจก่อนใช้บริการสลับแบตเตอรี่",
+      "notBought": "ยังไม่ได้ซื้อแพ็กเกจ"
+    },
     "records": {
       "swapRecord": "ประวัติการสลับ",
       "borrowCabinet": "ตู้ยืมไฟ",
@@ -75,7 +93,9 @@
     "swap": {
       "lowBatteryTitle": "แบตเตอรี่ต่ำ",
       "choiceTitle": "เลือกการทำงาน",
-      "borrow": "ยืมไฟ"
+      "borrow": "ยืมไฟ",
+      "doorOpeningFullN": "กำลังเปิดช่องแบตเตอรี่เต็ม ({n})",
+      "doorOpeningEmptyN": "กำลังเปิดช่องว่าง ({n})"
     },
     "login": {
       "privacyPolicyLink": "นโยบายความเป็นส่วนตัวของผู้ใช้",
@@ -89,6 +109,7 @@
       "idVerify": "ยืนยันตัวตน",
       "verified": "ยืนยันแล้ว",
       "unverified": "ยังไม่ยืนยัน",
+      "currentBound": "ผูกไว้ปัจจุบัน: {v}",
       "accountSaved": "บันทึกบัญชีแล้ว"
     },
     "pwd": {
@@ -197,23 +218,6 @@
     },
     "map": {
       "switchMap": "เปลี่ยนแผนที่"
-    },
-    "package": {
-      "expired": "หมดอายุแล้ว",
-      "active": "มีผลอยู่",
-      "remainTimes": "จำนวนครั้งคงเหลือ",
-      "borrowableBattery": "แบตเตอรี่ที่ยืมได้",
-      "validity": "อายุการใช้งาน",
-      "validUntil": "ใช้ได้ถึง",
-      "empty": "ไม่มีแพ็กเกจ",
-      "expiredTitle": "แพ็กเกจที่หมดอายุ",
-      "emptyExpired": "ยังไม่มีแพ็กเกจที่หมดอายุ",
-      "swapPackage": "แพ็กเกจสลับแบตเตอรี่",
-      "swapTimes": "จำนวนครั้งสลับ",
-      "detailTitle": "รายละเอียดแพ็กเกจ",
-      "descTitle": "คำอธิบายแพ็กเกจ",
-      "buyFirstDesc": "กรุณาซื้อแพ็กเกจก่อนใช้บริการสลับแบตเตอรี่",
-      "notBought": "ยังไม่ได้ซื้อแพ็กเกจ"
     },
     "order": {
       "status": {
@@ -350,7 +354,6 @@
       "loggedIn": "เข้าสู่ระบบแล้ว",
       "yes": "ใช่",
       "no": "ไม่",
-      "langZhHK": "จีนตัวเต็ม (ฮ่องกง)",
       "assistantName": "เสี่ยวตี๋"
     },
     "profile": {
@@ -509,6 +512,7 @@
     "noNet": "ขาดเครือข่าย",
     "returnMainFlow": "ขั้นตอนหลักการคืนไฟ",
     "swapMainFlow": "ขั้นตอนหลักการสลับ",
+    "dataReset": "รีเซ็ตข้อมูลตัวอย่างแล้ว",
     "exitedApp": "ออกจากแอปแล้ว (ตัวอย่าง)",
     "flowResume": "กลับสู่ขั้นตอนเดิม",
     "qrInvalid": "คิวอาร์โค้ดไม่ถูกต้อง กรุณาสแกนใหม่",
@@ -518,6 +522,7 @@
   },
   "merchant": {
     "store": {
+      "formTitle": "ข้อมูลร้านค้า",
       "service": {
         "rent": "เช่ารถ",
         "repair": "บริการหลังการขาย/ซ่อม",

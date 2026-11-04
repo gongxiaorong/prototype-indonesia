@@ -542,7 +542,7 @@ body.host-single-m #root-user{display:none}
 <confirm-dialog :open="showPrecheck" z="1750" oid="swap-precheck-dialog" :title="precheckTitle" :desc="precheckDesc" :cancel-text="$t('common.action.cancel')" :confirm-text="precheckConfirmText" confirm-bg="var(--accent)" @close="closePrecheck()" @confirm="confirmPrecheck()"></confirm-dialog>
 <confirm-dialog :open="showLevelWarn" z="1800" oid="swap-level-warn-dialog" :title="$t('user.swap.lowBatteryTitle')" desc="可分配的电池电量偏低（&lt;70%），继续使用可能会影响您的续航里程。" :cancel-text="$t('common.action.cancel')" :confirm-text="$t('common.action.continue')" confirm-bg="var(--accent)" @close="swapLevelCancel" @confirm="swapLevelContinue"></confirm-dialog>
 <confirm-dialog :open="showChoice" z="1800" oid="swap-choice-dialog" :mask-close="false" :title="$t('user.swap.choiceTitle')" :desc="choiceDesc" :cancel-text="$t('user.swap.borrow')" :confirm-text="$t('common.service.swap')" confirm-bg="var(--accent)" @close="swapChoiceBorrow" @confirm="swapChoiceSwap"></confirm-dialog>
-<option-sheet :open="storeNavSheet" :title="$t('action.navigate')" :options="storeNavOptions" :mask-z="1100" oid="store-nav-mask" panel-oid="store-nav-sheet" @select="pickStoreNav" @close="closeStoreNav"></option-sheet>
+<option-sheet :open="storeNavSheet" :title="$t('action.navigate')" :options="storeNavOptions.value" :mask-z="1100" oid="store-nav-mask" panel-oid="store-nav-sheet" @select="pickStoreNav" @close="closeStoreNav"></option-sheet>
 <page :open="showLogin" :z="1900" trans="fd" oid="login-page"><div v-if="showLogin" class="absolute inset-0 z-[1900] bg-[#F6F7F9] flex flex-col rounded-[44px] overflow-hidden">
 <div v-show="loginView==='main'" class="flex-1 flex flex-col min-h-0 bg-[#F6F7F9]">
 <div class="pt-14 px-5 pb-1 flex items-center justify-between shrink-0">
@@ -1037,7 +1037,7 @@ body.host-single-m #root-user{display:none}
 <span class="inline-block w-[3px] h-[11px]" style="background:#E39A2E;transform:skewX(-30deg)"></span><span class="inline-block w-[3px] h-[11px]" style="background:#E39A2E;transform:skewX(-30deg)"></span>
 </div>
 <div class="grid grid-cols-2 gap-2.5">
-<div v-for="t in ((depositState==='paid'||depositState==='refunding')?DEPOSIT_TIPS.slice(2):DEPOSIT_TIPS)" :key="t.no" class="relative bg-white rounded-xl overflow-hidden" style="padding:38px 8px 12px 12px;box-shadow:0 1px 3px rgba(160,110,20,.06)">
+<div v-for="t in ((depositState==='paid'||depositState==='refunding')?DEPOSIT_TIPS.value.slice(2):DEPOSIT_TIPS.value)" :key="t.no" class="relative bg-white rounded-xl overflow-hidden" style="padding:38px 8px 12px 12px;box-shadow:0 1px 3px rgba(160,110,20,.06)">
 <div class="absolute top-0 right-0 text-[11px] font-semibold text-white whitespace-nowrap" style="padding:5px 10px 5px 16px;background:linear-gradient(90deg,#F6B14B,#EE8E1D);clip-path:polygon(14px 0,100% 0,100% 100%,0 100%)">{{ t.tag }}</div>
 <span class="absolute left-3 top-2 text-[20px] font-extrabold" style="color:#E9A23B">{{ t.no }}</span>
 <div v-for="(it,k) in t.items" :key="k" class="flex items-start gap-1.5 mt-1">
@@ -1282,7 +1282,7 @@ body.host-single-m #root-user{display:none}
 <bottom-sheet :open="showMapSheet" :title="$t('user.map.switchMap')" :mask-z="900" oid="map-type-mask" panel-oid="map-type-sheet" @close="showMapSheet=false">
 <div class="px-5 pt-1 pb-2">
 <div class="flex gap-3">
-<template v-for="t in MAP_TYPES" :key="t.key">
+<template v-for="t in MAP_TYPES.value" :key="t.key">
 <div class="sw-mt-opt" data-cp :data-od-id="'map-type-'+t.key" @click="pickMapType(t.key)">
 <div class="sw-mt-card" :style="mapType===t.key?{background:t.tint,borderColor:t.color}:''">
 <div class="sw-mt-pin"><div class="body" :style="{background:t.color}"><span class="g"><span v-if="t.icon" v-html="luci(t.icon,'w-4 h-4')"></span><span v-else>{{ t.text }}</span></span></div></div>
@@ -1556,38 +1556,38 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 </bottom-sheet>
-</div></div><div class="demo-ops-stack"><div class="demo-ops is-active"><div class="demo-ops-title">{{ $t('demoOps.title') }}</div>
-<div class="demo-ops-group-hd">{{ $t('demoOps.functionControl') }}</div>
+</div></div><div class="demo-ops-stack"><div class="demo-ops is-active"><div class="demo-ops-title">原型操作</div>
+<div class="demo-ops-group-hd">功能控制</div>
 <div v-if="!showSearch" class="demo-ops-section" data-od-id="demo-login-state">
-<div class="demo-ops-label">{{ $t('demoOps.loginStatus') }}</div>
+<div class="demo-ops-label">登录状态</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setLoggedIn(true)" :class="loggedIn?'is-on':''">{{ $t('common.label.loggedIn') }}</div>
-<div class="demo-ops-chip" data-cp @click="setLoggedIn(false)" :class="!loggedIn?'is-on':''">{{ $t('demoOps.notLoggedIn') }}</div>
+<div class="demo-ops-chip" data-cp @click="setLoggedIn(true)" :class="loggedIn?'is-on':''">已登录</div>
+<div class="demo-ops-chip" data-cp @click="setLoggedIn(false)" :class="!loggedIn?'is-on':''">未登录</div>
 </div>
 </div>
 <div v-if="showLogin" class="demo-ops-section" data-od-id="demo-first-login">
-<div class="demo-ops-label">{{ $t('demoOps.firstLogin') }}</div>
+<div class="demo-ops-label">首次登录</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="firstLogin=true" :class="firstLogin?'is-on':''">{{ $t('common.label.yes') }}</div>
-<div class="demo-ops-chip" data-cp @click="firstLogin=false" :class="!firstLogin?'is-on':''">{{ $t('common.label.no') }}</div>
+<div class="demo-ops-chip" data-cp @click="firstLogin=true" :class="firstLogin?'is-on':''">是</div>
+<div class="demo-ops-chip" data-cp @click="firstLogin=false" :class="!firstLogin?'is-on':''">否</div>
 </div>
 </div>
 <div v-if="tab==='home'&&!profileOV" class="demo-ops-section" data-od-id="demo-loc-app-auth">
-<div class="demo-ops-label">{{ $t('demoOps.locationAuth') }}</div>
+<div class="demo-ops-label">定位授权</div>
 <div class="demo-ops-chips">
-  <div class="demo-ops-chip" data-cp @click="setLocAppAuth(true)" :class="locAppAuth?'is-on':''">{{ $t('demoOps.authorized') }}</div>
-<div class="demo-ops-chip" data-cp @click="setLocAppAuth(false)" :class="!locAppAuth?'is-on':''">{{ $t('demoOps.unauthorized') }}</div>
+  <div class="demo-ops-chip" data-cp @click="setLocAppAuth(true)" :class="locAppAuth?'is-on':''">已授权</div>
+<div class="demo-ops-chip" data-cp @click="setLocAppAuth(false)" :class="!locAppAuth?'is-on':''">未授权</div>
 </div>
 </div>
 <div v-if="tab==='home'&&!profileOV" class="demo-ops-section" data-od-id="demo-loc-auth">
-<div class="demo-ops-label">{{ $t('user.location.title') }}</div>
+<div class="demo-ops-label">定位服务</div>
 <div class="demo-ops-chips">
-  <div class="demo-ops-chip" data-cp @click="setLocAuth(true)" :class="locAuth?'is-on':''">{{ $t('demoOps.on') }}</div>
-<div class="demo-ops-chip" data-cp @click="setLocAuth(false)" :class="!locAuth?'is-on':''">{{ $t('demoOps.off') }}</div>
+  <div class="demo-ops-chip" data-cp @click="setLocAuth(true)" :class="locAuth?'is-on':''">已开启</div>
+<div class="demo-ops-chip" data-cp @click="setLocAuth(false)" :class="!locAuth?'is-on':''">未开启</div>
 </div>
 </div>
 <div v-if="tab==='home'&&!profileOV&&!showSearch" class="demo-ops-section" data-od-id="demo-loc-city">
-<div class="demo-ops-label">{{ $t('demoOps.mockCity') }}</div>
+<div class="demo-ops-label">定位城市</div>
 <div class="demo-ops-chips">
   <div class="demo-ops-chip" data-cp @click="pickMockCity('成都市')" :class="mockCity==='成都市'?'is-on':''">成都市·多</div>
   <div class="demo-ops-chip" data-cp @click="pickMockCity('绵阳市')" :class="mockCity==='绵阳市'?'is-on':''">绵阳市·单</div>
@@ -1597,189 +1597,189 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div v-if="showSearch" class="demo-ops-section" data-od-id="demo-search-history">
-<div class="demo-ops-label">{{ $t('user.search.history') }}</div>
+<div class="demo-ops-label">搜索历史</div>
 <div class="demo-ops-chips">
-  <div class="demo-ops-chip" data-cp @click="setSearchHistory(true)" :class="searchHistory.length?'is-on':''">{{ $t('demoOps.has') }}</div>
-  <div class="demo-ops-chip" data-cp @click="setSearchHistory(false)" :class="!searchHistory.length?'is-on':''">{{ $t('common.label.none') }}</div>
+  <div class="demo-ops-chip" data-cp @click="setSearchHistory(true)" :class="searchHistory.length?'is-on':''">有</div>
+  <div class="demo-ops-chip" data-cp @click="setSearchHistory(false)" :class="!searchHistory.length?'is-on':''">暂无</div>
 </div>
 </div>
 <div v-if="(tab==='home'||tab==='plan')&&!profileOV&&!showSearch" class="demo-ops-section" data-od-id="demo-swap-area">
-<div class="demo-ops-label">{{ $t('user.area.title') }}</div>
+<div class="demo-ops-label">换电区域</div>
 <div class="demo-ops-chips">
-  <div class="demo-ops-chip" data-cp @click="setSwapArea(true)" :class="swapAreaSet?'is-on':''">{{ $t('demoOps.set') }}</div>
-<div class="demo-ops-chip" data-cp @click="setSwapArea(false)" :class="!swapAreaSet?'is-on':''">{{ $t('demoOps.unset') }}</div>
+  <div class="demo-ops-chip" data-cp @click="setSwapArea(true)" :class="swapAreaSet?'is-on':''">已设置</div>
+<div class="demo-ops-chip" data-cp @click="setSwapArea(false)" :class="!swapAreaSet?'is-on':''">未设置</div>
 </div>
 </div>
 <div v-if="tab==='home'&&!profileOV&&!showSearch" class="demo-ops-section" data-od-id="demo-id-auth">
-<div class="demo-ops-label">{{ $t('user.profile.idVerify') }}</div>
+<div class="demo-ops-label">实名认证</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setIdAuthed(true)" :class="idSingle?'is-on':''">{{ $t('demoOps.verified') }}</div>
-<div class="demo-ops-chip" data-cp @click="setIdAuthed(false)" :class="!idSingle?'is-on':''">{{ $t('demoOps.unverified') }}</div>
+<div class="demo-ops-chip" data-cp @click="setIdAuthed(true)" :class="idSingle?'is-on':''">已认证</div>
+<div class="demo-ops-chip" data-cp @click="setIdAuthed(false)" :class="!idSingle?'is-on':''">未认证</div>
 </div>
 </div>
 <div v-if="tab==='home'&&!profileOV&&!showSearch" class="demo-ops-section" data-od-id="demo-pay-deposit">
-<div class="demo-ops-label">{{ $t('demoOps.deposit') }}</div>
+<div class="demo-ops-label">缴纳押金</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setDepositState('paid')" :class="depositState==='paid'?'is-on':''">{{ $t('user.deposit.paid') }}</div>
-<div class="demo-ops-chip" data-cp @click="setDepositState('unpaid')" :class="depositState!=='paid'?'is-on':''">{{ $t('user.deposit.unpaid') }}</div>
+<div class="demo-ops-chip" data-cp @click="setDepositState('paid')" :class="depositState==='paid'?'is-on':''">已缴纳</div>
+<div class="demo-ops-chip" data-cp @click="setDepositState('unpaid')" :class="depositState!=='paid'?'is-on':''">未缴纳</div>
 </div>
 </div>
 <div v-if="tab==='home'&&!profileOV&&!showSearch" class="demo-ops-section" data-od-id="demo-buy-plan">
-<div class="demo-ops-label">{{ $t('user.home.buyPackage') }}</div>
+<div class="demo-ops-label">购买套餐</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setPlanBought(true)" :class="planBought?'is-on':''">{{ $t('demoOps.bought') }}</div>
-<div class="demo-ops-chip" data-cp @click="setPlanBought(false)" :class="!planBought?'is-on':''">{{ $t('demoOps.notBought') }}</div>
+<div class="demo-ops-chip" data-cp @click="setPlanBought(true)" :class="planBought?'is-on':''">已购买</div>
+<div class="demo-ops-chip" data-cp @click="setPlanBought(false)" :class="!planBought?'is-on':''">未购买</div>
 </div>
 </div>
 <div v-if="tab==='home'&&!profileOV&&!showSearch" class="demo-ops-section" data-od-id="demo-swap-flow">
-<div class="demo-ops-label">{{ $t('demoOps.ongoingFlow') }}</div>
+<div class="demo-ops-label">进行中的流程</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setSwapOngoing(true)" :class="swapOngoing?'is-on':''">{{ $t('demoOps.has') }}</div>
-<div class="demo-ops-chip" data-cp @click="setSwapOngoing(false)" :class="!swapOngoing?'is-on':''">{{ $t('common.label.none') }}</div>
+<div class="demo-ops-chip" data-cp @click="setSwapOngoing(true)" :class="swapOngoing?'is-on':''">有</div>
+<div class="demo-ops-chip" data-cp @click="setSwapOngoing(false)" :class="!swapOngoing?'is-on':''">暂无</div>
 </div>
-<div v-if="swapOngoing" class="demo-ops-row" style="margin-top:6px"><span class="text-[12px]">{{ $t('demoOps.flowScene') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="demoResumeType='borrow'" :class="demoResumeType==='borrow'?'is-on':''">{{ $t('demoOps.borrowing') }}</div>
-<div class="demo-ops-chip" data-cp @click="demoResumeType='swap'" :class="demoResumeType==='swap'?'is-on':''">{{ $t('demoOps.swapping') }}</div></div></div>
+<div v-if="swapOngoing" class="demo-ops-row" style="margin-top:6px"><span class="text-[12px]">流程场景</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="demoResumeType='borrow'" :class="demoResumeType==='borrow'?'is-on':''">借电中</div>
+<div class="demo-ops-chip" data-cp @click="demoResumeType='swap'" :class="demoResumeType==='swap'?'is-on':''">换电中</div></div></div>
 </div>
 <div v-if="profileOV==='deposit'" class="demo-ops-section" data-od-id="demo-deposit-free">
-<div class="demo-ops-label">{{ $t('demoOps.depositFreeStatus') }}</div>
+<div class="demo-ops-label">免押状态</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setDepositFree(true)" :class="depositFree?'is-on':''">{{ $t('user.deposit.free') }}</div>
-<div class="demo-ops-chip" data-cp @click="setDepositFree(false)" :class="!depositFree?'is-on':''">{{ $t('demoOps.notFree') }}</div>
+<div class="demo-ops-chip" data-cp @click="setDepositFree(true)" :class="depositFree?'is-on':''">已免押</div>
+<div class="demo-ops-chip" data-cp @click="setDepositFree(false)" :class="!depositFree?'is-on':''">未免押</div>
 </div>
 </div>
 <div v-if="profileOV==='deposit'" class="demo-ops-section" data-od-id="demo-deposit">
-<div class="demo-ops-label">{{ $t('demoOps.depositStatus') }}</div>
+<div class="demo-ops-label">押金状态</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setDepositState('unpaid')" :class="depositState==='unpaid'?'is-on':''">{{ $t('user.deposit.unpaid') }}</div>
-<div class="demo-ops-chip" data-cp @click="setDepositState('paid')" :class="depositState==='paid'?'is-on':''">{{ $t('user.deposit.paid') }}</div>
-<div class="demo-ops-chip" data-cp @click="setDepositState('refunding')" :class="depositState==='refunding'?'is-on':''">{{ $t('demoOps.refunding') }}</div>
+<div class="demo-ops-chip" data-cp @click="setDepositState('unpaid')" :class="depositState==='unpaid'?'is-on':''">未缴纳</div>
+<div class="demo-ops-chip" data-cp @click="setDepositState('paid')" :class="depositState==='paid'?'is-on':''">已缴纳</div>
+<div class="demo-ops-chip" data-cp @click="setDepositState('refunding')" :class="depositState==='refunding'?'is-on':''">退押中</div>
 </div>
 </div>
 <div v-if="(tab==='plan'&&!profileOV)||profileOV==='deposit'" class="demo-ops-section" data-od-id="demo-deposit-cfg">
-<div class="demo-ops-label">{{ $t('demoOps.depositConfig') }}</div>
+<div class="demo-ops-label">押金配置</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setDepositEnabled(true)" :class="depositEnabled?'is-on':''">{{ $t('common.action.enable') }}</div>
-<div class="demo-ops-chip" data-cp @click="setDepositEnabled(false)" :class="!depositEnabled?'is-on':''">{{ $t('common.action.close') }}</div>
+<div class="demo-ops-chip" data-cp @click="setDepositEnabled(true)" :class="depositEnabled?'is-on':''">开启</div>
+<div class="demo-ops-chip" data-cp @click="setDepositEnabled(false)" :class="!depositEnabled?'is-on':''">关闭</div>
 </div>
 </div>
 <div v-if="profileSub==='batteryRecords'" class="demo-ops-section" data-od-id="demo-swap-records">
-<div class="demo-ops-label">{{ $t('demoOps.listData') }}</div>
+<div class="demo-ops-label">列表数据</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setSwapRecordsEmpty(false)" :class="swapRecords.length?'is-on':''">{{ $t('demoOps.hasData') }}</div>
-<div class="demo-ops-chip" data-cp @click="setSwapRecordsEmpty(true)" :class="!swapRecords.length?'is-on':''">{{ $t('demoOps.noData') }}</div>
+<div class="demo-ops-chip" data-cp @click="setSwapRecordsEmpty(false)" :class="swapRecords.length?'is-on':''">有数据</div>
+<div class="demo-ops-chip" data-cp @click="setSwapRecordsEmpty(true)" :class="!swapRecords.length?'is-on':''">无数据</div>
 </div>
 </div>
 <div v-if="profileOV==='battery'" class="demo-ops-section" data-od-id="demo-battery-list">
-<div class="demo-ops-label">{{ $t('demoOps.listData') }}</div>
+<div class="demo-ops-label">列表数据</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setBatteryEmpty(false)" :class="batteryList.length?'is-on':''">{{ $t('demoOps.hasData') }}</div>
-<div class="demo-ops-chip" data-cp @click="setBatteryEmpty(true)" :class="!batteryList.length?'is-on':''">{{ $t('demoOps.noData') }}</div>
+<div class="demo-ops-chip" data-cp @click="setBatteryEmpty(false)" :class="batteryList.length?'is-on':''">有数据</div>
+<div class="demo-ops-chip" data-cp @click="setBatteryEmpty(true)" :class="!batteryList.length?'is-on':''">无数据</div>
 </div>
 </div>
 <div v-if="profileOV==='swapArea'" class="demo-ops-section" data-od-id="demo-swap-area-list">
-<div class="demo-ops-label">{{ $t('demoOps.listData') }}</div>
+<div class="demo-ops-label">列表数据</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setSwapAreasEmpty(false)" :class="swapAreas.length?'is-on':''">{{ $t('demoOps.hasData') }}</div>
-<div class="demo-ops-chip" data-cp @click="setSwapAreasEmpty(true)" :class="!swapAreas.length?'is-on':''">{{ $t('demoOps.noData') }}</div>
+<div class="demo-ops-chip" data-cp @click="setSwapAreasEmpty(false)" :class="swapAreas.length?'is-on':''">有数据</div>
+<div class="demo-ops-chip" data-cp @click="setSwapAreasEmpty(true)" :class="!swapAreas.length?'is-on':''">无数据</div>
 </div>
 </div>
 <div v-if="profileOV==='station'" class="demo-ops-section" data-od-id="demo-cabinet-full">
-<div class="demo-ops-label">{{ $t('demoOps.cabinetFullStock') }}</div>
+<div class="demo-ops-label">换电柜满电库存</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setCabinetFull(true)" :class="cabinetFull?'is-on':''">{{ $t('demoOps.hasFull') }}</div>
-<div class="demo-ops-chip" data-cp @click="setCabinetFull(false)" :class="!cabinetFull?'is-on':''">{{ $t('demoOps.noFull') }}</div>
+<div class="demo-ops-chip" data-cp @click="setCabinetFull(true)" :class="cabinetFull?'is-on':''">有满电</div>
+<div class="demo-ops-chip" data-cp @click="setCabinetFull(false)" :class="!cabinetFull?'is-on':''">无满电</div>
 </div>
 </div>
-<template v-if="profileOV==='swap'"><div class="demo-ops-group-hd">{{ $t('demoOps.flowControl') }}</div></template>
+<template v-if="profileOV==='swap'"><div class="demo-ops-group-hd">流程控制</div></template>
 <div class="demo-ops-section" data-od-id="demo-swap-flow" v-if="profileOV==='swap'&&!isBorrowFlow&&!isReturnFlow&&!isSwapFlow">
-<div class="demo-ops-label" style="display:flex;align-items:center;justify-content:space-between"><span>{{ $t('demoOps.mainFlow') }}</span><div class="demo-ops-chip" data-cp @click="swapScan" data-od-id="demo-swap-run">{{ $t('demoOps.simulate') }}</div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.qrCode') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="demoQrOk=true" :class="demoQrOk?'is-on':''">{{ $t('demoOps.valid') }}</div>
-<div class="demo-ops-chip" data-cp @click="demoQrOk=false" :class="!demoQrOk?'is-on':''">{{ $t('demoOps.invalid') }}</div></div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.sameOperator') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="demoSameOperator=true" :class="demoSameOperator?'is-on':''">{{ $t('common.label.yes') }}</div>
-<div class="demo-ops-chip" data-cp @click="demoSameOperator=false" :class="!demoSameOperator?'is-on':''">{{ $t('common.label.no') }}</div></div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.cabinetStatus') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="demoOnline=true" :class="demoOnline?'is-on':''">{{ $t('demoOps.online') }}</div>
-<div class="demo-ops-chip" data-cp @click="demoOnline=false" :class="!demoOnline?'is-on':''">{{ $t('demoOps.offline') }}</div></div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.distance') }}</span><div class="demo-ops-chips">
+<div class="demo-ops-label" style="display:flex;align-items:center;justify-content:space-between"><span>主流程</span><div class="demo-ops-chip" data-cp @click="swapScan" data-od-id="demo-swap-run">模拟</div></div>
+<div class="demo-ops-row"><span class="text-[12px]">二维码</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="demoQrOk=true" :class="demoQrOk?'is-on':''">有效</div>
+<div class="demo-ops-chip" data-cp @click="demoQrOk=false" :class="!demoQrOk?'is-on':''">无效</div></div></div>
+<div class="demo-ops-row"><span class="text-[12px]">同一运营商</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="demoSameOperator=true" :class="demoSameOperator?'is-on':''">是</div>
+<div class="demo-ops-chip" data-cp @click="demoSameOperator=false" :class="!demoSameOperator?'is-on':''">否</div></div></div>
+<div class="demo-ops-row"><span class="text-[12px]">柜机状态</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="demoOnline=true" :class="demoOnline?'is-on':''">在线</div>
+<div class="demo-ops-chip" data-cp @click="demoOnline=false" :class="!demoOnline?'is-on':''">离线</div></div></div>
+<div class="demo-ops-row"><span class="text-[12px]">距离</span><div class="demo-ops-chips">
 <div class="demo-ops-chip" data-cp @click="demoDist='near'" :class="demoDist==='near'?'is-on':''">≤30m</div>
 <div class="demo-ops-chip" data-cp @click="demoDist='far'" :class="demoDist==='far'?'is-on':''">>30m</div></div></div>
 <template v-if="swapMode!=='return'">
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.batteryPower') }}</span><div class="demo-ops-chips">
+<div class="demo-ops-row"><span class="text-[12px]">可分配电池电量</span><div class="demo-ops-chips">
 <div class="demo-ops-chip" data-cp @click="demoLevelLow=false" :class="!demoLevelLow?'is-on':''">≥70%</div>
 <div class="demo-ops-chip" data-cp @click="demoLevelLow=true" :class="demoLevelLow?'is-on':''">&lt;70%</div></div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.boundBattery') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setBoundCount(0)" :class="batteryList.length===0?'is-on':''">{{ $t('demoOps.bound0') }}</div>
-<div class="demo-ops-chip" data-cp @click="setBoundCount(1)" :class="batteryList.length===1?'is-on':''">{{ $t('demoOps.bound1') }}</div>
-<div class="demo-ops-chip" data-cp @click="setBoundCount(2)" :class="batteryList.length===2?'is-on':''">{{ $t('demoOps.bound2') }}</div></div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.packageLimit') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setPlanMax(1)" :class="planMax===1?'is-on':''">{{ $t('demoOps.bound1') }}</div>
-<div class="demo-ops-chip" data-cp @click="setPlanMax(2)" :class="planMax===2?'is-on':''">{{ $t('demoOps.bound2') }}</div></div></div>
+<div class="demo-ops-row"><span class="text-[12px]">已绑定电池</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="setBoundCount(0)" :class="batteryList.length===0?'is-on':''">0块</div>
+<div class="demo-ops-chip" data-cp @click="setBoundCount(1)" :class="batteryList.length===1?'is-on':''">1块</div>
+<div class="demo-ops-chip" data-cp @click="setBoundCount(2)" :class="batteryList.length===2?'is-on':''">2块</div></div></div>
+<div class="demo-ops-row"><span class="text-[12px]">套餐可借上限</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="setPlanMax(1)" :class="planMax===1?'is-on':''">1块</div>
+<div class="demo-ops-chip" data-cp @click="setPlanMax(2)" :class="planMax===2?'is-on':''">2块</div></div></div>
 </template>
 </div>
 <div v-if="isBorrowFlow" class="demo-ops-section" data-od-id="demo-borrow-flow">
-<div class="demo-ops-label" style="display:flex;align-items:center;justify-content:space-between"><span>{{ $t('demoOps.borrowMainFlow') }}</span><div class="demo-ops-chip" data-cp @click="borrowRun" data-od-id="demo-borrow-run">{{ $t('demoOps.simulate') }}</div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.doorOpen') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="borrowOpenChoice='ok'" :class="borrowOpenChoice==='ok'?'is-on':''">{{ $t('demoOps.success') }}</div>
-<div class="demo-ops-chip" data-cp @click="borrowOpenChoice='fail'" :class="borrowOpenChoice==='fail'?'is-on':''">{{ $t('label.failed') }}</div></div></div>
-<div v-if="borrowOpenChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.batteryTaken') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="borrowTakeChoice='ok'" :class="borrowTakeChoice==='ok'?'is-on':''">{{ $t('demoOps.taken') }}</div>
-<div class="demo-ops-chip" data-cp @click="borrowTakeChoice='fail'" :class="borrowTakeChoice==='fail'?'is-on':''">{{ $t('demoOps.notTaken') }}</div></div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.network') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setNetLost(false)" :class="!netLost?'is-on':''">{{ $t('demoOps.hasNet') }}</div>
-<div class="demo-ops-chip" data-cp @click="setNetLost(true)" :class="netLost?'is-on':''">{{ $t('demoOps.noNet') }}</div></div></div>
+<div class="demo-ops-label" style="display:flex;align-items:center;justify-content:space-between"><span>借电主流程</span><div class="demo-ops-chip" data-cp @click="borrowRun" data-od-id="demo-borrow-run">模拟</div></div>
+<div class="demo-ops-row"><span class="text-[12px]">仓门开启</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="borrowOpenChoice='ok'" :class="borrowOpenChoice==='ok'?'is-on':''">成功</div>
+<div class="demo-ops-chip" data-cp @click="borrowOpenChoice='fail'" :class="borrowOpenChoice==='fail'?'is-on':''">失败</div></div></div>
+<div v-if="borrowOpenChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">电池取出</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="borrowTakeChoice='ok'" :class="borrowTakeChoice==='ok'?'is-on':''">已取</div>
+<div class="demo-ops-chip" data-cp @click="borrowTakeChoice='fail'" :class="borrowTakeChoice==='fail'?'is-on':''">未取</div></div></div>
+<div class="demo-ops-row"><span class="text-[12px]">网络</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="setNetLost(false)" :class="!netLost?'is-on':''">有网</div>
+<div class="demo-ops-chip" data-cp @click="setNetLost(true)" :class="netLost?'is-on':''">断网</div></div></div>
 </div>
 <div v-if="isReturnFlow" class="demo-ops-section" data-od-id="demo-return-flow">
-<div class="demo-ops-label" style="display:flex;align-items:center;justify-content:space-between"><span>{{ $t('demoOps.returnMainFlow') }}</span><div class="demo-ops-chip" data-cp @click="returnRun" data-od-id="demo-return-run">{{ $t('demoOps.simulate') }}</div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('user.returnFlow.step1') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="returnOpenChoice='ok'" :class="returnOpenChoice==='ok'?'is-on':''">{{ $t('demoOps.success') }}</div>
-<div class="demo-ops-chip" data-cp @click="returnOpenChoice='fail'" :class="returnOpenChoice==='fail'?'is-on':''">{{ $t('label.failed') }}</div></div></div>
-<div v-if="returnOpenChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">{{ $t('user.returnFlow.step2') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="returnTakeChoice='ok'" :class="returnTakeChoice==='ok'?'is-on':''">{{ $t('demoOps.success') }}</div>
-<div class="demo-ops-chip" data-cp @click="returnTakeChoice='fail'" :class="returnTakeChoice==='fail'?'is-on':''">{{ $t('label.failed') }}</div></div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.network') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setNetLost(false)" :class="!netLost?'is-on':''">{{ $t('demoOps.hasNet') }}</div>
-<div class="demo-ops-chip" data-cp @click="setNetLost(true)" :class="netLost?'is-on':''">{{ $t('demoOps.noNet') }}</div></div></div>
+<div class="demo-ops-label" style="display:flex;align-items:center;justify-content:space-between"><span>还电主流程</span><div class="demo-ops-chip" data-cp @click="returnRun" data-od-id="demo-return-run">模拟</div></div>
+<div class="demo-ops-row"><span class="text-[12px]">打开空仓</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="returnOpenChoice='ok'" :class="returnOpenChoice==='ok'?'is-on':''">成功</div>
+<div class="demo-ops-chip" data-cp @click="returnOpenChoice='fail'" :class="returnOpenChoice==='fail'?'is-on':''">失败</div></div></div>
+<div v-if="returnOpenChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">放入电池</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="returnTakeChoice='ok'" :class="returnTakeChoice==='ok'?'is-on':''">成功</div>
+<div class="demo-ops-chip" data-cp @click="returnTakeChoice='fail'" :class="returnTakeChoice==='fail'?'is-on':''">失败</div></div></div>
+<div class="demo-ops-row"><span class="text-[12px]">网络</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="setNetLost(false)" :class="!netLost?'is-on':''">有网</div>
+<div class="demo-ops-chip" data-cp @click="setNetLost(true)" :class="netLost?'is-on':''">断网</div></div></div>
 </div>
 <div v-if="isSwapFlow" class="demo-ops-section" data-od-id="demo-swap-flow-run">
-<div class="demo-ops-label" style="display:flex;align-items:center;justify-content:space-between"><span>{{ $t('demoOps.swapMainFlow') }}</span><div class="demo-ops-chip" data-cp @click="swapRun" data-od-id="demo-swap-run-flow">{{ $t('demoOps.simulate') }}</div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('user.returnFlow.step1') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="swapOpenChoice='ok'" :class="swapOpenChoice==='ok'?'is-on':''">{{ $t('demoOps.success') }}</div>
-<div class="demo-ops-chip" data-cp @click="swapOpenChoice='fail'" :class="swapOpenChoice==='fail'?'is-on':''">{{ $t('label.failed') }}</div></div></div>
-<div v-if="swapOpenChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">{{ $t('user.swapFlow.stepPutOld') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="swapPutChoice='ok'" :class="swapPutChoice==='ok'?'is-on':''">{{ $t('demoOps.success') }}</div>
-<div class="demo-ops-chip" data-cp @click="swapPutChoice='fail'" :class="swapPutChoice==='fail'?'is-on':''">{{ $t('label.failed') }}</div></div></div>
-<div v-if="swapOpenChoice==='ok'&&swapPutChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">{{ $t('user.swapFlow.step1') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="swapFullChoice='ok'" :class="swapFullChoice==='ok'?'is-on':''">{{ $t('demoOps.success') }}</div>
-<div class="demo-ops-chip" data-cp @click="swapFullChoice='fail'" :class="swapFullChoice==='fail'?'is-on':''">{{ $t('label.failed') }}</div></div></div>
-<div v-if="swapOpenChoice==='ok'&&swapPutChoice==='ok'&&swapFullChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">{{ $t('user.swapFlow.stepTakeNew') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="swapTakeChoice='ok'" :class="swapTakeChoice==='ok'?'is-on':''">{{ $t('demoOps.success') }}</div>
-<div class="demo-ops-chip" data-cp @click="swapTakeChoice='fail'" :class="swapTakeChoice==='fail'?'is-on':''">{{ $t('label.failed') }}</div></div></div>
-<div class="demo-ops-row"><span class="text-[12px]">{{ $t('demoOps.network') }}</span><div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setNetLost(false)" :class="!netLost?'is-on':''">{{ $t('demoOps.hasNet') }}</div>
-<div class="demo-ops-chip" data-cp @click="setNetLost(true)" :class="netLost?'is-on':''">{{ $t('demoOps.noNet') }}</div></div></div>
+<div class="demo-ops-label" style="display:flex;align-items:center;justify-content:space-between"><span>换电主流程</span><div class="demo-ops-chip" data-cp @click="swapRun" data-od-id="demo-swap-run-flow">模拟</div></div>
+<div class="demo-ops-row"><span class="text-[12px]">打开空仓</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="swapOpenChoice='ok'" :class="swapOpenChoice==='ok'?'is-on':''">成功</div>
+<div class="demo-ops-chip" data-cp @click="swapOpenChoice='fail'" :class="swapOpenChoice==='fail'?'is-on':''">失败</div></div></div>
+<div v-if="swapOpenChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">放入旧电池</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="swapPutChoice='ok'" :class="swapPutChoice==='ok'?'is-on':''">成功</div>
+<div class="demo-ops-chip" data-cp @click="swapPutChoice='fail'" :class="swapPutChoice==='fail'?'is-on':''">失败</div></div></div>
+<div v-if="swapOpenChoice==='ok'&&swapPutChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">打开满电仓</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="swapFullChoice='ok'" :class="swapFullChoice==='ok'?'is-on':''">成功</div>
+<div class="demo-ops-chip" data-cp @click="swapFullChoice='fail'" :class="swapFullChoice==='fail'?'is-on':''">失败</div></div></div>
+<div v-if="swapOpenChoice==='ok'&&swapPutChoice==='ok'&&swapFullChoice==='ok'" class="demo-ops-row"><span class="text-[12px]">取出新电池</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="swapTakeChoice='ok'" :class="swapTakeChoice==='ok'?'is-on':''">成功</div>
+<div class="demo-ops-chip" data-cp @click="swapTakeChoice='fail'" :class="swapTakeChoice==='fail'?'is-on':''">失败</div></div></div>
+<div class="demo-ops-row"><span class="text-[12px]">网络</span><div class="demo-ops-chips">
+<div class="demo-ops-chip" data-cp @click="setNetLost(false)" :class="!netLost?'is-on':''">有网</div>
+<div class="demo-ops-chip" data-cp @click="setNetLost(true)" :class="netLost?'is-on':''">断网</div></div></div>
 </div>
 <div v-if="profileSub==='cardPack'||profileSub==='cardExpired'" class="demo-ops-section" data-od-id="demo-card-pack">
-<div class="demo-ops-label">{{ $t('demoOps.listData') }}</div>
+<div class="demo-ops-label">列表数据</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setCardPackEmpty(false)" :class="cards.length?'is-on':''">{{ $t('demoOps.hasData') }}</div>
-<div class="demo-ops-chip" data-cp @click="setCardPackEmpty(true)" :class="!cards.length?'is-on':''">{{ $t('demoOps.noData') }}</div>
+<div class="demo-ops-chip" data-cp @click="setCardPackEmpty(false)" :class="cards.length?'is-on':''">有数据</div>
+<div class="demo-ops-chip" data-cp @click="setCardPackEmpty(true)" :class="!cards.length?'is-on':''">无数据</div>
 </div>
 </div>
 <div v-if="profileSub==='planOrders'" class="demo-ops-section" data-od-id="demo-plan-orders">
-<div class="demo-ops-label">{{ $t('demoOps.listData') }}</div>
+<div class="demo-ops-label">列表数据</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setPlanOrdersEmpty(false)" :class="planOrders.length?'is-on':''">{{ $t('demoOps.hasData') }}</div>
-<div class="demo-ops-chip" data-cp @click="setPlanOrdersEmpty(true)" :class="!planOrders.length?'is-on':''">{{ $t('demoOps.noData') }}</div>
+<div class="demo-ops-chip" data-cp @click="setPlanOrdersEmpty(false)" :class="planOrders.length?'is-on':''">有数据</div>
+<div class="demo-ops-chip" data-cp @click="setPlanOrdersEmpty(true)" :class="!planOrders.length?'is-on':''">无数据</div>
 </div>
 </div>
 <div v-if="tab==='plan'&&!profileOV" class="demo-ops-section" data-od-id="demo-plan-data">
-<div class="demo-ops-label">{{ $t('demoOps.listData') }}</div>
+<div class="demo-ops-label">列表数据</div>
 <div class="demo-ops-chips">
-<div class="demo-ops-chip" data-cp @click="setPlanEmpty(false)" :class="planList.length?'is-on':''">{{ $t('demoOps.hasData') }}</div>
-<div class="demo-ops-chip" data-cp @click="setPlanEmpty(true)" :class="!planList.length?'is-on':''">{{ $t('demoOps.noData') }}</div>
+<div class="demo-ops-chip" data-cp @click="setPlanEmpty(false)" :class="planList.length?'is-on':''">有数据</div>
+<div class="demo-ops-chip" data-cp @click="setPlanEmpty(true)" :class="!planList.length?'is-on':''">无数据</div>
 </div>
 </div>
 </div></div></div>
@@ -1810,7 +1810,7 @@ body.host-single-m #root-user{display:none}
 <kv-row :label="$t('common.vehicles.batteryLevel')" :value="b.soc+'%'" value-class="tabular-nums" :value-style="{color:socColor(b.soc)}"></kv-row>
 <kv-row :label="$t('merchant.battery.cabinetStatus')" :value="BATT_TEXT.cab(b)" :value-style="{color:dotColor(BATT_DOT.cab(b))}"></kv-row>
 <kv-row :label="$t('merchant.battery.rentStatus')" :value="BATT_TEXT.rent(b)" :value-style="{color:dotColor(BATT_DOT.rent(b))}"></kv-row>
-<kv-row v-if="battStateOf(b)" :label="$t('merchant.battery.status')" :value="battStateOf(b)" :value-style="{color:battStateColor(b)}"></kv-row>
+<kv-row v-if="battStateOf(b)" :label="$t('merchant.battery.status')" :value="({'充电中':$t('merchant.battery.charging'),'已满电':$t('merchant.battery.full'),'异常中':$t('merchant.battery.abnormal'),'预约中':$t('merchant.battery.reserved')})[battStateOf(b)] || battStateOf(b)" :value-style="{color:battStateColor(b)}"></kv-row>
 </kv-card>
 </div>
 <!-- 新增电池入口（与机柜列表同一套右下悬浮钮：仅新增电池，故只放一个加号） -->
@@ -2333,7 +2333,7 @@ body.host-single-m #root-user{display:none}
 <kv-row :label="$t('merchant.battery.owner')" :value="battLocLabel(curBatt)"></kv-row>
 <kv-row :label="$t('merchant.battery.cabinetStatus')" :value="BATT_TEXT.cab(curBatt)" :value-style="{color:dotColor(BATT_DOT.cab(curBatt))}"></kv-row>
 <kv-row :label="$t('merchant.battery.rentStatus')" :value="BATT_TEXT.rent(curBatt)" :value-style="{color:dotColor(BATT_DOT.rent(curBatt))}"></kv-row>
-<kv-row v-if="battStateOf(curBatt)" :label="$t('merchant.battery.status')" :value="battStateOf(curBatt)" :value-style="{color:battStateColor(curBatt)}"></kv-row>
+<kv-row v-if="battStateOf(curBatt)" :label="$t('merchant.battery.status')" :value="({'充电中':$t('merchant.battery.charging'),'已满电':$t('merchant.battery.full'),'异常中':$t('merchant.battery.abnormal'),'预约中':$t('merchant.battery.reserved')})[battStateOf(curBatt)] || battStateOf(curBatt)" :value-style="{color:battStateColor(curBatt)}"></kv-row>
 </kv-card>
 <!-- 电池参数（4 列「值在上、标签在下」网格，字号/间距与「电池信息」各卡一致；电量与健康度按 3 阶梯色标着色） -->
 <kv-card :title="$t('merchant.battery.params')" class="mb-3">
@@ -2392,7 +2392,7 @@ body.host-single-m #root-user{display:none}
 <svg class="w-4 h-4 text-[#999] transition-transform" :class="battRentScopeOpen?'rotate-180':''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
 </button>
 <div v-if="battRentScopeOpen" data-cp @click.stop class="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-lg border border-[#EEE] py-1 z-50 min-w-[100px]">
-<div v-for="opt in battRentScopeOpts" :key="opt.v" data-cp @click="setBattRentScope(opt.v)" class="px-3 py-2 text-[12px] cursor-pointer hover:bg-[#F6F7F9]" :style="opt.v===battRentScope?{color:'var(--link)',fontWeight:600,background:'#EBF1FD'}:{color:'#333'}">{{ opt.l }}</div>
+<div v-for="opt in battRentScopeOpts.value" :key="opt.v" data-cp @click="setBattRentScope(opt.v)" class="px-3 py-2 text-[12px] cursor-pointer hover:bg-[#F6F7F9]" :style="opt.v===battRentScope?{color:'var(--link)',fontWeight:600,background:'#EBF1FD'}:{color:'#333'}">{{ opt.l }}</div>
 </div>
 </div>
 <input v-model="battRentQ" type="text" :placeholder="battRentPH" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" data-od-id="batt-rent-search">
@@ -2487,7 +2487,7 @@ body.host-single-m #root-user{display:none}
 <div class="bg-white rounded-2xl px-4 py-3.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)">
 <div class="flex items-center gap-1.5"><span v-html="luci('battery-charging','w-3.5 h-3.5 text-[#2B3F5F]')"></span><span class="text-[12px]" style="color:#999">{{ $t('merchant.dashboard.batteryInCabinet') }}</span></div>
 <div class="text-[22px] font-bold mt-1.5 leading-none" style="color:#111">{{ inCabCount }}</div>
-<div class="text-[11px] mt-1.5" style="color:#999">{{ $t('merchant.cabinet.slotRatio', {used: cabStats.inCabBatt, total: cabStats.doors}) }}</div>
+<div class="text-[11px] mt-1.5" style="color:#999">{{ $t('merchant.dashboard.slotRatio', {used: cabStats.inCabBatt, total: cabStats.doors}) }}</div>
 </div>
 <div class="bg-white rounded-2xl px-4 py-3.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)">
 <div class="flex items-center gap-1.5"><span v-html="luci('repeat','w-3.5 h-3.5 text-[#FF8A00]')"></span><span class="text-[12px]" style="color:#999">{{ $t('merchant.dashboard.renting') }}</span></div>
@@ -2666,7 +2666,7 @@ body.host-single-m #root-user{display:none}
 <div class="form-row">
 <div class="form-label">{{ $t('merchant.store.services') }}</div>
 <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
-<div v-for="sv in M_STORE_SERVICES" :key="sv" data-cp @click="toggleStoreService(sv)" class="flex items-center gap-1.5 cursor-pointer" :data-od-id="'store-form-service-'+sv">
+<div v-for="sv in M_STORE_SERVICES.value" :key="sv" data-cp @click="toggleStoreService(sv)" class="flex items-center gap-1.5 cursor-pointer" :data-od-id="'store-form-service-'+sv">
 <span class="w-4 h-4 rounded flex items-center justify-center shrink-0" :style="storeForm.services.indexOf(sv)>-1?{background:'var(--accent)',border:'1px solid var(--accent)'}:{background:'#fff',border:'1px solid #D9DEE7'}"><span v-if="storeForm.services.indexOf(sv)>-1" v-html="luci('check','w-3 h-3 text-white')"></span></span>
 <span class="text-[14px]" :style="storeForm.services.indexOf(sv)>-1?{color:'#111',fontWeight:'500'}:{color:'#666'}">{{ sv }}</span>
 </div>
@@ -3439,7 +3439,7 @@ document.getElementById('host-bar').addEventListener('click',function(e){
   var bn=e.target.closest&&e.target.closest('button[data-navhost]');if(bn)location.href=bn.dataset.navhost
 });
 
-function sideSetup(realm,bus){var toastPush=bus?bus.push:function(){};var t=function(k,a){var ins=window.__swapI18nInstances&&window.__swapI18nInstances[0];return ins?ins.global.t(k,a):k};return {realm:realm,goRental:function(){location.href='index.html'},clearData:function(){toastPush(t('demoOps.dataReset'))},luci,fmtRp,MONEY}}
+function sideSetup(realm,bus){var toastPush=bus?bus.push:function(){};var t=function(k,a){var ins=window.__swapI18nInstances&&window.__swapI18nInstances[0];return ins?ins.global.t(k,a):k};return {realm:realm,goRental:function(){location.href='index.html'},clearData:function(){toastPush('演示数据已重置')},luci,fmtRp,MONEY}}
 /* ===== 共享弹窗套件（registerSheetKit，移植自 index.html） ===== */
 function registerSheetKit(app){
   if(!app||app.__sheetKit)return;app.__sheetKit=true;
@@ -3664,7 +3664,8 @@ function authState(bus,ext){
   var dialFiltered=Vue.computed(function(){var q=(dialQ.value||'').trim().toLowerCase().replace(/\s+/g,'');if(!q)return dialCodes;return dialCodes.filter(function(c){var h=(c.name+c.code).toLowerCase().replace(/\s+/g,'');return h.indexOf(q)!==-1||c.code.replace('+','').indexOf(q.replace('+',''))!==-1})});
   var appLang=Vue.ref('zh-CN');
   /* 五语对齐 index（th 选项补齐）；label 为各语言自称，不参与翻译 */
-  var langOptions=[{id:'en',label:'English'},{id:'zh-CN',label:t('label.langZhCN')},{id:'zh-HK',label:t('common.label.langZhHK')},{id:'id',label:'Bahasa Indonesia'},{id:'th',label:'ไทย'}];
+  /* 语言自称不参与翻译（对齐 index：label 全字面量；zh 项显示简繁原文即语言本身） */
+  var langOptions=[{id:'en',label:'English'},{id:'zh-CN',label:'简体中文'},{id:'zh-HK',label:'繁體中文（中國香港）'},{id:'id',label:'Bahasa Indonesia'},{id:'th',label:'ไทย'}];
   var appLangLabel=Vue.computed(function(){var f=null;for(var i=0;i<langOptions.length;i++){if(langOptions[i].id===appLang.value)f=langOptions[i]};return f?f.label:t('label.langZhCN')});
   var canSendCode=Vue.computed(function(){if(loginCd.value>0||!loginAgree.value)return false;if(loginMode.value==='phone')return !!(loginPhone.value||'').trim();if(loginMode.value==='email')return !!(loginEmail.value||'').trim();return false});
   var canLogin=Vue.computed(function(){if(!loginAgree.value)return false;if(loginMode.value==='phone'){if(!(loginPhone.value||'').trim())return false;return loginSub.value==='password'?!!(loginPwd.value||'').trim():!!(loginCode.value||'').trim()}if(loginMode.value==='email'){if(!(loginEmail.value||'').trim())return false;return loginSub.value==='password'?!!(loginPwd.value||'').trim():!!(loginCode.value||'').trim()}return !!(loginAccount.value||'').trim()&&!!(loginPwd.value||'').trim()});
@@ -3687,7 +3688,8 @@ function authState(bus,ext){
   var npwd=Vue.ref(''),npwd2=Vue.ref(''),npwdVis=Vue.ref(false),npwd2Vis=Vue.ref(false);
   var canConfirmPwd=Vue.computed(function(){return /^[!-~]{6,64}$/.test(npwd.value||'')&&npwd.value===npwd2.value});
   var curStore=Vue.ref('');
-  var MSG={accountRequired:t('common.login.accountPlaceholder'),accountFormat:t('common.toast.accountFormat'),phoneRequired:t('common.login.phonePlaceholder'),phoneDigit:t('common.toast.phoneDigit'),emailRequired:t('common.login.emailPlaceholder'),emailFormat:t('common.profile.emailFormatError'),pwdRequired:t('common.login.passwordPlaceholder'),pwdChars:t('common.toast.pwdChars'),codeRequired:t('common.login.codePlaceholder'),codeFormat:t('common.toast.codeFormat')};
+  /* 表单校验文案：computed 包裹使切换语言时重新求值（对齐 index 同名模式） */
+  var MSG=Vue.computed(function(){return {accountRequired:t('common.login.accountPlaceholder'),accountFormat:t('common.toast.accountFormat'),phoneRequired:t('common.login.phonePlaceholder'),phoneDigit:t('common.toast.phoneDigit'),emailRequired:t('common.login.emailPlaceholder'),emailFormat:t('common.profile.emailFormatError'),pwdRequired:t('common.login.passwordPlaceholder'),pwdChars:t('common.toast.pwdChars'),codeRequired:t('common.login.codePlaceholder'),codeFormat:t('common.toast.codeFormat')}});
   var EMAIL_RE=/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   function resetLoginForm(){loginView.value='main';loginMode.value='phone';loginSub.value='password';loginPhone.value='';loginEmail.value='';loginAccount.value='';loginPwd.value='';loginCode.value='';loginPwdVisible.value=false;loginAgree.value=false;dialQ.value='';dialPickerSource.value=null;loginErr.phone='';loginErr.pwd='';loginErr.code='';loginErr.email='';loginErr.account='';if(loginCdTimer){clearInterval(loginCdTimer);loginCdTimer=null}loginCd.value=0}
   function openLogin(){navOpen('login');resetLoginForm();showLogin.value=true;profileSub.value=null}
@@ -3718,20 +3720,20 @@ function authState(bus,ext){
     if(!loginAgree.value){toastPush(t('common.login.needAgree'));return}
     var err='';
     if(loginMode.value==='phone'){
-      if(!(loginPhone.value||'').trim()){loginErr.phone=MSG.phoneRequired;err=MSG.phoneRequired}
-      else if(!/^\d+$/.test(loginPhone.value)){loginErr.phone=MSG.phoneDigit;err=MSG.phoneDigit}
-      else if(loginSub.value==='password'){if(!(loginPwd.value||'').trim()){loginErr.pwd=MSG.pwdRequired;err=MSG.pwdRequired}else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value)){loginErr.pwd=MSG.pwdChars;err=MSG.pwdChars}}
-      else{if(!(loginCode.value||'').trim()){loginErr.code=MSG.codeRequired;err=MSG.codeRequired}else if(!/^\d{6}$/.test(loginCode.value)){loginErr.code=MSG.codeFormat;err=MSG.codeFormat}}
+      if(!(loginPhone.value||'').trim()){loginErr.phone=MSG.value.phoneRequired;err=MSG.value.phoneRequired}
+      else if(!/^\d+$/.test(loginPhone.value)){loginErr.phone=MSG.value.phoneDigit;err=MSG.value.phoneDigit}
+      else if(loginSub.value==='password'){if(!(loginPwd.value||'').trim()){loginErr.pwd=MSG.value.pwdRequired;err=MSG.value.pwdRequired}else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value)){loginErr.pwd=MSG.value.pwdChars;err=MSG.value.pwdChars}}
+      else{if(!(loginCode.value||'').trim()){loginErr.code=MSG.value.codeRequired;err=MSG.value.codeRequired}else if(!/^\d{6}$/.test(loginCode.value)){loginErr.code=MSG.value.codeFormat;err=MSG.value.codeFormat}}
     }else if(loginMode.value==='email'){
-      if(!(loginEmail.value||'').trim()){loginErr.email=MSG.emailRequired;err=MSG.emailRequired}
-      else if(!EMAIL_RE.test(loginEmail.value)){loginErr.email=MSG.emailFormat;err=MSG.emailFormat}
-      else if(loginSub.value==='password'){if(!(loginPwd.value||'').trim()){loginErr.pwd=MSG.pwdRequired;err=MSG.pwdRequired}else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value)){loginErr.pwd=MSG.pwdChars;err=MSG.pwdChars}}
-      else{if(!(loginCode.value||'').trim()){loginErr.code=MSG.codeRequired;err=MSG.codeRequired}else if(!/^\d{6}$/.test(loginCode.value)){loginErr.code=MSG.codeFormat;err=MSG.codeFormat}}
+      if(!(loginEmail.value||'').trim()){loginErr.email=MSG.value.emailRequired;err=MSG.value.emailRequired}
+      else if(!EMAIL_RE.test(loginEmail.value)){loginErr.email=MSG.value.emailFormat;err=MSG.value.emailFormat}
+      else if(loginSub.value==='password'){if(!(loginPwd.value||'').trim()){loginErr.pwd=MSG.value.pwdRequired;err=MSG.value.pwdRequired}else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value)){loginErr.pwd=MSG.value.pwdChars;err=MSG.value.pwdChars}}
+      else{if(!(loginCode.value||'').trim()){loginErr.code=MSG.value.codeRequired;err=MSG.value.codeRequired}else if(!/^\d{6}$/.test(loginCode.value)){loginErr.code=MSG.value.codeFormat;err=MSG.value.codeFormat}}
     }else{
-      if(!(loginAccount.value||'').trim()){loginErr.account=MSG.accountRequired;err=MSG.accountRequired}
-      else if(!/^[a-zA-Z0-9_]{1,20}$/.test(loginAccount.value)){loginErr.account=MSG.accountFormat;err=MSG.accountFormat}
-      else if(!(loginPwd.value||'').trim()){loginErr.pwd=MSG.pwdRequired;err=MSG.pwdRequired}
-      else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value)){loginErr.pwd=MSG.pwdChars;err=MSG.pwdChars}
+      if(!(loginAccount.value||'').trim()){loginErr.account=MSG.value.accountRequired;err=MSG.value.accountRequired}
+      else if(!/^[a-zA-Z0-9_]{1,20}$/.test(loginAccount.value)){loginErr.account=MSG.value.accountFormat;err=MSG.value.accountFormat}
+      else if(!(loginPwd.value||'').trim()){loginErr.pwd=MSG.value.pwdRequired;err=MSG.value.pwdRequired}
+      else if(!/^[A-Za-z0-9!-~]{1,64}$/.test(loginPwd.value)){loginErr.pwd=MSG.value.pwdChars;err=MSG.value.pwdChars}
     }
     if(err){toastPush(err);return}
     resetLoginForm();loggedIn.value=true;showLogin.value=false;navDrop('login');
@@ -3792,10 +3794,10 @@ function authState(bus,ext){
   function sendBeCode(){if(!beEmail.value||beCd.value>0)return;if(beTmr)clearInterval(beTmr);beCd.value=60;beTmr=setInterval(function(){beCd.value--;if(beCd.value<=0){clearInterval(beTmr);beTmr=null}},1000)}
   function sendPwdCode(ch){if(ch==='phone'?!hasPhone.value:!hasEmail.value)return;if(pwdCd.value>0)return;if(pwdTmr)clearInterval(pwdTmr);pwdCd.value=60;pwdTmr=setInterval(function(){pwdCd.value--;if(pwdCd.value<=0){clearInterval(pwdTmr);pwdTmr=null}},1000)}
   function switchPwdChannel(ch){pwdChannel.value=ch;pwdCode.value='';if(pwdTmr){clearInterval(pwdTmr);pwdTmr=null}pwdCd.value=0}
-  function doBindPhone(){if(!(bpPhone.value||'').trim()){toastPush(MSG.phoneRequired);return}if(!/^\d+$/.test(bpPhone.value)){toastPush(MSG.phoneDigit);return}if(!(bpCode.value||'').trim()){toastPush(MSG.codeRequired);return}if(!/^\d{6}$/.test(bpCode.value)){toastPush(MSG.codeFormat);return}var next=bpArea.value+' '+bpPhone.value.trim();if(hasPhone.value&&next===boundPhone.value){toastPush(t('common.profile.inputNewPhone'));return}toastPush(hasPhone.value?t('common.profile.phoneReplaced'):t('common.profile.phoneBoundSuccess'));boundPhone.value=next;hasPhone.value=true;bpPhone.value='';bpCode.value='';if(bpTmr){clearInterval(bpTmr);bpTmr=null}bpCd.value=0;navBack()}
-  function doBindEmail(){if(!(beEmail.value||'').trim()){toastPush(MSG.emailRequired);return}if((beEmail.value||'').length>255){toastPush(t('user.bindEmail.lengthToast'));return}if(!EMAIL_RE.test(beEmail.value)){toastPush(MSG.emailFormat);return}if(!(beCode.value||'').trim()){toastPush(MSG.codeRequired);return}if(!/^\d{6}$/.test(beCode.value)){toastPush(MSG.codeFormat);return}var next=beEmail.value.trim();if(hasEmail.value&&next===boundEmail.value){toastPush(t('common.profile.inputNewEmail'));return}toastPush(hasEmail.value?t('common.profile.emailReplaced'):t('common.profile.emailBoundSuccess'));boundEmail.value=next;hasEmail.value=true;beEmail.value='';beCode.value='';if(beTmr){clearInterval(beTmr);beTmr=null}beCd.value=0;navBack()}
-  function nextPwdVerify(){if(!(pwdCode.value||'').trim()){toastPush(MSG.codeRequired);return}if(!/^\d{6}$/.test(pwdCode.value)){toastPush(MSG.codeFormat);return}npwd.value='';npwd2.value='';npwdVis.value=false;npwd2Vis.value=false;navOpen('subPwdReset')}
-  function doResetPwd(){var a=(npwd.value||'').trim(),b=(npwd2.value||'').trim();if(!a){toastPush(MSG.pwdRequired);return}if(!b){toastPush(t('user.pwd.confirmPlaceholder'));return}if(a.length<6||a.length>64){toastPush(t('user.pwd.lengthToast'));return}if(!/^[!-~]{6,64}$/.test(a)){toastPush(MSG.pwdChars);return}if(a!==b){toastPush(t('common.profile.pwdMismatch'));return}hasPwd.value=true;toastPush(t('common.profile.pwdUpdated'));if(pwdTmr){clearInterval(pwdTmr);pwdTmr=null}pwdCd.value=0;pwdCode.value='';npwd.value='';npwd2.value='';navBack()}
+  function doBindPhone(){if(!(bpPhone.value||'').trim()){toastPush(MSG.value.phoneRequired);return}if(!/^\d+$/.test(bpPhone.value)){toastPush(MSG.value.phoneDigit);return}if(!(bpCode.value||'').trim()){toastPush(MSG.value.codeRequired);return}if(!/^\d{6}$/.test(bpCode.value)){toastPush(MSG.value.codeFormat);return}var next=bpArea.value+' '+bpPhone.value.trim();if(hasPhone.value&&next===boundPhone.value){toastPush(t('common.profile.inputNewPhone'));return}toastPush(hasPhone.value?t('common.profile.phoneReplaced'):t('common.profile.phoneBoundSuccess'));boundPhone.value=next;hasPhone.value=true;bpPhone.value='';bpCode.value='';if(bpTmr){clearInterval(bpTmr);bpTmr=null}bpCd.value=0;navBack()}
+  function doBindEmail(){if(!(beEmail.value||'').trim()){toastPush(MSG.value.emailRequired);return}if((beEmail.value||'').length>255){toastPush(t('user.bindEmail.lengthToast'));return}if(!EMAIL_RE.test(beEmail.value)){toastPush(MSG.value.emailFormat);return}if(!(beCode.value||'').trim()){toastPush(MSG.value.codeRequired);return}if(!/^\d{6}$/.test(beCode.value)){toastPush(MSG.value.codeFormat);return}var next=beEmail.value.trim();if(hasEmail.value&&next===boundEmail.value){toastPush(t('common.profile.inputNewEmail'));return}toastPush(hasEmail.value?t('common.profile.emailReplaced'):t('common.profile.emailBoundSuccess'));boundEmail.value=next;hasEmail.value=true;beEmail.value='';beCode.value='';if(beTmr){clearInterval(beTmr);beTmr=null}beCd.value=0;navBack()}
+  function nextPwdVerify(){if(!(pwdCode.value||'').trim()){toastPush(MSG.value.codeRequired);return}if(!/^\d{6}$/.test(pwdCode.value)){toastPush(MSG.value.codeFormat);return}npwd.value='';npwd2.value='';npwdVis.value=false;npwd2Vis.value=false;navOpen('subPwdReset')}
+  function doResetPwd(){var a=(npwd.value||'').trim(),b=(npwd2.value||'').trim();if(!a){toastPush(MSG.value.pwdRequired);return}if(!b){toastPush(t('user.pwd.confirmPlaceholder'));return}if(a.length<6||a.length>64){toastPush(t('user.pwd.lengthToast'));return}if(!/^[!-~]{6,64}$/.test(a)){toastPush(MSG.value.pwdChars);return}if(a!==b){toastPush(t('common.profile.pwdMismatch'));return}hasPwd.value=true;toastPush(t('common.profile.pwdUpdated'));if(pwdTmr){clearInterval(pwdTmr);pwdTmr=null}pwdCd.value=0;pwdCode.value='';npwd.value='';npwd2.value='';navBack()}
   function maskNo(n){n=String(n||'');if(n.length<=7)return n;return n.slice(0,3)+'***********'+n.slice(-4)}
   function openIdForm(){var rec=idSingle.value;idName.value=rec?rec.name:'';idCardNo.value=rec?rec.idNo:'';idNameErr.value='';idCardErr.value='';idPhotoErr.value='';idPhotos.value=rec?(rec.idPhotos||[]).slice():[];navOpen('subIdForm')}
   /* 身份证照片上传交互（与租车系统一致）：未上传→拍照/相册选择器；已上传→大图预览 / 更多操作（重新上传、删除） */
@@ -3828,7 +3830,7 @@ function authState(bus,ext){
   var protoForceUpdate=Vue.ref('none'),hasNewVersion=Vue.ref(false),showVersionCheck=Vue.ref(false),latestVersion=Vue.ref('V1.30.0'),updateDesc=Vue.ref('优化了部分体验，建议更新到最新版本。'),updating=Vue.ref(0);
   function checkVersion(){showVersionCheck.value=true;hasNewVersion.value=(protoForceUpdate.value!=='none');latestVersion.value='V1.30.0'}
   function goUpdate(){if(updating.value)return;updating.value=1;setTimeout(function(){updating.value=0;showVersionCheck.value=false;toastPush('更新完成！已是最新版本')},1200)}
-  function exitApp(){showVersionCheck.value=false;toastPush(t('demoOps.exitedApp'))}
+  function exitApp(){showVersionCheck.value=false;toastPush('已退出应用（演示）')}
   var demoOpsActive=Vue.computed(function(){return !showLogin.value});
   var demoIsTopTab=Vue.computed(function(){return !profileOV.value&&!profileSub.value});
   var demoPagePermTitle=Vue.computed(function(){if(profileOV.value==='settings'||['lang','subSwitchSystem','bindPhone','bindEmail','pwdVerify','pwdReset'].indexOf(profileSub.value)!==-1)returnt('common.profile.settings');if(profileOV.value==='info'||['idDetail','idForm'].indexOf(profileSub.value)!==-1)returnt('common.profile.personalInfo');returnt('common.tab.profile')});
@@ -3985,7 +3987,7 @@ var _ua=Vue.createApp({
     function swapStart(){auth.navOpen('swap');swapStep.value='scan';swapShow.value=true;auth.profileOV.value='swap';auth.profileSub.value=null}
     /* 未完成订单恢复：入口校验命中后直接进入「进行中的流程」（流程页暂未实现，先用 toast 占位；
        后续实现时替换为：按 demoResumeType 落到 borrow-door / swap-put 并打开扫码流程页） */
-    function swapResume(){toastPush(t('demoOps.flowResume'))}
+    function swapResume(){toastPush('流程恢复')}
     /* 电量偏低：居中弹窗二次确认（取消 → 结束本次判断并停留在扫码页；继续 → 进入业务类型判断） */
     var showLevelWarn=Vue.ref(false);
     function swapLevelCancel(){showLevelWarn.value=false}
@@ -3996,11 +3998,11 @@ var _ua=Vue.createApp({
     function swapScan(){
       swapPickCab();
       /* 三项不通过：仅以 toast 提示并结束本次判断，停留在扫码页（不返回首页），可重新扫码或调整配置 */
-      if(!demoQrOk.value){toastPush(t('demoOps.qrInvalid'));return}
+      if(!demoQrOk.value){toastPush('二维码无效，请重新扫码');return}
       /* 跨运营商：仅 toast 提示并中止本次判断，停留在当前扫码页，不进入后续判断 */
-      if(!demoSameOperator.value){toastPush(t('demoOps.crossOperator'));return}
-      if(!demoOnline.value){toastPush(t('demoOps.deviceOffline'));return}
-      if(demoDist.value!=='near'){toastPush(t('demoOps.tooFar'));return}
+      if(!demoSameOperator.value){toastPush('不支持跨运营商换电');return}
+      if(!demoOnline.value){toastPush('设备已离线，暂无法使用');return}
+      if(demoDist.value!=='near'){toastPush('距离过远无法操作，请靠近机柜重新扫码');return}
       /* 还电：不校验「可分配电池电量」；扫码通过后进入还电页初始态（停在「空仓门打开中 0%」，不主动跑进度条） */
       if(swapMode.value==='return'){swapReturnIdle();return}
       if(demoLevelLow.value){showLevelWarn.value=true;return}
@@ -4325,12 +4327,12 @@ var _ua=Vue.createApp({
       return true
     }
     var showRefundTip=Vue.ref(false),showRefundOk=Vue.ref(false),refundTipLoading=Vue.ref(false);
-    var DEPOSIT_TIPS=[
+    var DEPOSIT_TIPS=Vue.computed(function(){return [
       {no:'01',tag:t('user.deposit.notice1Tag'),items:[t('user.deposit.notice1Line1'),t('user.deposit.notice1Line2')]},
       {no:'02',tag:t('user.deposit.notice2Tag'),items:[t('user.deposit.notice2Line1'),t('user.deposit.notice2Line2')]},
       {no:'03',tag:t('user.deposit.notice3Tag'),items:[t('user.deposit.notice3Line1'),t('user.deposit.notice3Line2')]},
       {no:'04',tag:t('user.deposit.notice4Tag'),items:[t('user.deposit.notice4Line1'),t('user.deposit.notice4Line2')]}
-    ];
+    ]});
     /* 所属加盟商的押金配置开关 */
     var depositEnabled=Vue.ref(true);
     var showDepositModal=Vue.ref(false),planDetail=Vue.ref(null);
@@ -4377,18 +4379,18 @@ var _ua=Vue.createApp({
       {id:3,badge:3,left:'80%',top:'38%',name:'锦城湖换电站',addr:'成都市高新区锦城湖公园南门',dist:'3.4km',cabinets:[{no:'C01',total:12,used:9,full:3}]},
       {id:4,rec:true,left:'34%',top:'61%',name:'益州大道换电站',addr:'成都市高新区益州大道中段722号',dist:'0.6km',cabinets:[{no:'D02',total:12,used:3,full:8}]}
     ];
-    var STORE_SERVICES=[t('common.service.swap'),t('merchant.store.service.rent'),t('merchant.store.service.repair'),t('merchant.store.service.sell')];
+    var STORE_SERVICES=Vue.computed(function(){return [t('common.service.swap'),t('merchant.store.service.rent'),t('merchant.store.service.repair'),t('merchant.store.service.sell')]});
     var storePoints=[
-      {id:1,left:'36%',top:'21%',name:'雅迪换电 · 剑南大道门店',addr:'成都市武侯区剑南大道188号1层',dist:'1.0km',hours:'09:00:00-19:00:00',services:STORE_SERVICES,cabinets:[{no:'A01',total:12,used:5,full:5},{no:'A02',total:12,used:8,full:2}]},
-      {id:2,left:'70%',top:'47%',name:'雅迪换电 · 天府三街门店',addr:'成都市高新区天府三街69号',dist:'2.1km',hours:'09:00:00-19:00:00',services:STORE_SERVICES,cabinets:[{no:'B01',total:12,used:6,full:4}]},
-      {id:3,left:'22%',top:'72%',name:'雅迪换电 · 锦城湖门店',addr:'成都市高新区锦城湖公园南门',dist:'3.2km',hours:'09:00:00-19:00:00',services:STORE_SERVICES,cabinets:[{no:'C01',total:12,used:3,full:7}]}
+      {id:1,left:'36%',top:'21%',name:'雅迪换电 · 剑南大道门店',addr:'成都市武侯区剑南大道188号1层',dist:'1.0km',hours:'09:00:00-19:00:00',services:STORE_SERVICES.value,cabinets:[{no:'A01',total:12,used:5,full:5},{no:'A02',total:12,used:8,full:2}]},
+      {id:2,left:'70%',top:'47%',name:'雅迪换电 · 天府三街门店',addr:'成都市高新区天府三街69号',dist:'2.1km',hours:'09:00:00-19:00:00',services:STORE_SERVICES.value,cabinets:[{no:'B01',total:12,used:6,full:4}]},
+      {id:3,left:'22%',top:'72%',name:'雅迪换电 · 锦城湖门店',addr:'成都市高新区锦城湖公园南门',dist:'3.2km',hours:'09:00:00-19:00:00',services:STORE_SERVICES.value,cabinets:[{no:'C01',total:12,used:3,full:7}]}
     ];
     /* 地图类型（对齐原首页「切换地图」）：换电 #15B88C / 还电 #FF5F00 / 门店 #1A82F4 */
-    var MAP_TYPES=[
+    var MAP_TYPES=Vue.computed(function(){return [
       {key:'charing',label:t('common.service.swap'),color:'#15B88C',tint:'#E8F8F3',icon:'zap'},
       {key:'reCharing',label:t('user.returnFlow.title'),color:'#FF5F00',tint:'#FFF0E6',icon:'inbox'},
       {key:'store',label:t('merchant.tab.store'),color:'#1A82F4',tint:'#E8F2FE',icon:'store'}
-    ];
+    ]});
     var MAP_POINTS={charing:stations,reCharing:reChargePoints,store:storePoints};
     var mapType=Vue.ref('charing'),showMapSheet=Vue.ref(false),selPoint=Vue.ref(null),selStore=Vue.ref(null);
     /* ── 搜索页（首页输入框点击进入） ── */
@@ -4450,7 +4452,7 @@ var _ua=Vue.createApp({
     function clearSearchCenter(){searchCenter.value=null}
     /* 点击搜索结果：切到换电视图并在地图上选中该站点（复用底部站点卡片） */
     function pickSearchStation(p){showSearch.value=false;mapType.value='charing';selStore.value=null;selPoint.value=p;searchCenter.value=null}
-    var mapTheme=Vue.computed(function(){var t=MAP_TYPES[0];MAP_TYPES.forEach(function(x){if(x.key===mapType.value)t=x});return t});
+    var mapTheme=Vue.computed(function(){var mt=MAP_TYPES.value;var t=mt[0];mt.forEach(function(x){if(x.key===mapType.value)t=x});return t});
     var mapPoints=Vue.computed(function(){return MAP_POINTS[mapType.value]||[]});
     function pickMapType(k){mapType.value=k;showMapSheet.value=false;selPoint.value=null;selStore.value=null}
     /* 地图点位点击：换电 / 还电 → 选中点位并弹出底部站点卡片；门店暂无详情页，仅原型提示 */
@@ -4491,7 +4493,7 @@ var _ua=Vue.createApp({
     function callStation(){var s=curStation.value;if(!s)return;toastPush('正在呼叫 '+s.phone)}
     /* 导航：底部拉起弹窗选择地图应用（对齐租车 index.html「导航到店」） */
     var storeNavSheet=Vue.ref(false);
-    var storeNavOptions=[{value:t('label.map.amap'),label:t('label.map.amap')},{value:t('label.map.baidu'),label:t('label.map.baidu')},{value:t('label.map.google'),label:t('label.map.google')}];
+    var storeNavOptions=Vue.computed(function(){return [{value:t('label.map.amap'),label:t('label.map.amap')},{value:t('label.map.baidu'),label:t('label.map.baidu')},{value:t('label.map.google'),label:t('label.map.google')}]});
     function openStoreNav(){storeNavSheet.value=true}
     function closeStoreNav(){storeNavSheet.value=false}
     function pickStoreNav(){storeNavSheet.value=false}
@@ -4539,7 +4541,7 @@ var _ua=Vue.createApp({
     function confirmCancelReserve(){if(cancelReserveLoading.value)return;cancelReserveLoading.value=true;setTimeout(function(){cancelReserveLoading.value=false;showCancelReserve.value=false;cancelReserve()},500)}
     function onBookClick(){if(stationReserved.value){askCancelReserve();return}bookFromCard()}
     function openReservedCard(){if(reservedCab.value)selPoint.value=reservedCab.value.point}
-    function goFlowNow(){selPoint.value=null;toastPush(t('demoOps.flowResume'))}
+    function goFlowNow(){selPoint.value=null;toastPush('流程恢复')}
     function setSwapOngoing(v){swapOngoing.value=v}
     /* 首次登录：定位授权后按定位信息匹配当前区域运营商；同区域存在多个运营商则弹窗选择 */
     var mockCity=Vue.ref('成都市');
@@ -4799,8 +4801,9 @@ var _ua=Vue.createApp({
   }})
 /* ══ 用户端 i18n 实例（对齐 index.html：legacy:false + globalInjection，模板 $t / JS t；语言包 swap-user） ══ */
 var i18nU=VueI18n.createI18n({legacy:false,globalInjection:true,locale:'zh-CN',fallbackLocale:'zh-CN',messages:window.__SWAP_I18N_USER__||{}});
-registerSheetKit(_ua);_ua.use(i18nU);_ua.mount(document.getElementById('root-user'));
+/* 先注册进实例列表再 mount：authState/sideSetup 的 t 代理在 setup 期（mount 过程中）即可取到实例 */
 window.__swapI18nInstances.push(i18nU);
+registerSheetKit(_ua);_ua.use(i18nU);_ua.mount(document.getElementById('root-user'));
 
 /* ===== 换电商户端 ===== */
 /* 商户端领域 Mock：门店 1:1 站点 → 站点 1:N 换电柜 → 柜 0:N 电池；电池 3 维状态（在柜 / 租用 / 电池联网） */
@@ -4808,7 +4811,7 @@ window.__swapI18nInstances.push(i18nU);
 function mSlots(total,occupiedNos,doorStates){var a=[],occ=occupiedNos||[],ds=doorStates||{};for(var i=1;i<=total;i++){var d=ds[i]||{};a.push({no:(i<10?'0':'')+i,occupied:occ.indexOf(i)!==-1,disabled:!!d.disabled,reserved:!!d.reserved,illegal:!!d.illegal,doorOpen:false})}return a}
 function mRec(time,type,note){return {time:time,type:type,note:note}}
 /* 门店关键业务（多选）：与用户端门店筛选口径一致（演示数据，保留中文） */
-var M_STORE_SERVICES=['换电','租车','售后/维修','卖车/电池'];
+var M_STORE_SERVICES=Vue.computed(function(){return [t('common.service.swap'),t('merchant.store.service.rent'),t('merchant.store.service.repair'),t('merchant.store.service.sell')]});
 /* 门店地理位置候选点（门店表单「选择地址」地图页取点用，按距离升序）
    lx/ly = 假地图世界层内的百分比坐标，用于拖拽吸附与「准星居中」对齐（单一数据源，定位点也取自本表） */
 var M_STORE_ADDR_POINTS=[
@@ -5011,7 +5014,7 @@ var _ma=Vue.createApp({
     /* ── 状态文案与色标映射（机柜 7 维 / 电池 3 维 + 电池状态色标） ── */
     var CAB_TEXT={
       biz:function(c){return c.bizOnline?t('merchant.cabinet.online'):t('merchant.cabinet.offline')},
-      net:function(c){return c.netOnline?t('demoOps.online'):t('demoOps.offline')},
+      net:function(c){return c.netOnline?'在线':'离线'},
       fault:function(c){return c.fault?t('merchant.filter.hasFault'):t('merchant.filter.noFault')},
       alarm:function(c){return c.alarm?t('common.label.hasAlert'):t('merchant.filter.noAlarm')},
       enabled:function(c){return c.enabled?t('merchant.filter.enabled'):t('merchant.filter.disabled')}
@@ -5027,7 +5030,7 @@ var _ma=Vue.createApp({
     var BATT_TEXT={
       cab:function(b){return b.cabState==='inCab'?t('merchant.filter.inCabinet'):t('merchant.filter.outCabinet')},
       rent:function(b){return b.rentState==='rented'?t('merchant.filter.rented'):t('merchant.filter.unrented')},
-      net:function(b){return b.netOnline?t('demoOps.online'):t('demoOps.offline')}
+      net:function(b){return b.netOnline?'在线':'离线'}
     };
     /* 二元状态色标：同 CAB_DOT，只用 绿 / 红；「柜外 / 未租用」不算异常 → 用 value 默认色（norm） */
     var BATT_DOT={
@@ -5039,14 +5042,14 @@ var _ma=Vue.createApp({
     function battStateOf(b){
       if(!b)return '';
       var parts=String(b.at||'').split('-'),cab=parts.length>1?cabOf(parts[0]):null,slot=cab?slotOf(cab,parts[1]):null;
-      if((slot&&slot.illegal)||String(b.at||'').indexOf('维修')!==-1||(b.cabState==='inCab'&&!b.netOnline))return t('merchant.battery.abnormal');
-      if(slot&&slot.reserved)return t('merchant.battery.reserved');
-      if(b.charging)return t('merchant.battery.charging');
-      if(b.cabState==='inCab'&&b.soc>=95)return t('merchant.battery.full');
+      if((slot&&slot.illegal)||String(b.at||'').indexOf('维修')!==-1||(b.cabState==='inCab'&&!b.netOnline))return '异常中';
+      if(slot&&slot.reserved)return '预约中';
+      if(b.charging)return '充电中';
+      if(b.cabState==='inCab'&&b.soc>=95)return '已满电';
       return '';
     }
     /* 电池状态色标（与仓门弹窗一致）：充电中 橙 / 已满电 绿 / 异常中 红 / 预约中 蓝 */
-    function battStateColor(b){var lab=battStateOf(b);return lab===t('merchant.battery.charging')?WARN_C:lab===t('merchant.battery.full')?OK_C:lab===t('merchant.battery.abnormal')?BAD_C:'#2F6FEB'}
+    function battStateColor(b){var lab=battStateOf(b);return lab==='充电中'?WARN_C:lab==='已满电'?OK_C:lab==='异常中'?BAD_C:'#2F6FEB'}
     /* norm = 非异常但需按状态展示的二元值 → 用 value 默认色，不加绿/红 */
     function dotColor(k){return k==='ok'?OK_C:k==='bad'?BAD_C:k==='warn'?WARN_C:k==='norm'?NORM_C:OFF_C}
     /* 电量色标：80%~100% 绿 / 30%~79% 黄 / 0%~29% 红 */
@@ -5086,8 +5089,8 @@ var _ma=Vue.createApp({
     var battRentQ=Vue.ref('');
     var battRentScope=Vue.ref('swapOrderNo');
     var battRentScopeOpen=Vue.ref(false);
-    var battRentScopeOpts=[{v:'swapOrderNo',l:t('common.orders.orderId')},{v:'account',l:t('common.label.account')},{v:'phone',l:t('common.phone')},{v:'email',l:t('common.label.email')}];
-    var battRentScopeLabel=Vue.computed(function(){var o=battRentScopeOpts.filter(function(x){return x.v===battRentScope.value})[0];return o?o.l:t('common.orders.orderId')});
+    var battRentScopeOpts=Vue.computed(function(){return [{v:'swapOrderNo',l:t('common.orders.orderId')},{v:'account',l:t('common.label.account')},{v:'phone',l:t('common.phone')},{v:'email',l:t('common.label.email')}]});
+    var battRentScopeLabel=Vue.computed(function(){var opts=battRentScopeOpts.value;var o=opts.filter(function(x){return x.v===battRentScope.value})[0];return o?o.l:t('common.orders.orderId')});
     var battRentPH=Vue.computed(function(){return t('merchant.station.contactPlaceholder')+battRentScopeLabel.value});
     function setBattRentScope(v){battRentScope.value=v;battRentScopeOpen.value=false;mPageLoading.value=true;setTimeout(function(){mPageLoading.value=false},600)}
     document.addEventListener('click',function(){battRentScopeOpen.value=false});
@@ -5197,7 +5200,7 @@ var _ma=Vue.createApp({
     var dashBattDist=Vue.computed(function(){return [
       {label:t('merchant.filter.inCabinet'),v:inCabCount.value,color:OK_C},
       {label:t('merchant.filter.outCabinet'),v:batteries.value.length-inCabCount.value,color:WARN_C},
-      {label:t('demoOps.offline'),v:batteries.value.filter(function(b){return !b.netOnline}).length,color:BAD_C}
+      {label:'离线',v:batteries.value.filter(function(b){return !b.netOnline}).length,color:BAD_C}
     ]});
     function donut(items){var total=0;items.forEach(function(i){total+=i.v});if(!total)return 'conic-gradient(#E5E5E5 0deg 360deg)';var acc=0,parts=[];items.forEach(function(i){var deg=i.v/total*360;parts.push(i.color+' '+acc+'deg '+(acc+deg)+'deg');acc+=deg});return 'conic-gradient('+parts.join(',')+')'}
 
@@ -5308,9 +5311,9 @@ var _ma=Vue.createApp({
     function cabImgActionDelete(){var i=cabImgActionTarget.value;if(i==null)return;var arr=cabImgList.value.slice();arr.splice(i,1);cabImgSet(arr);showCabImgAction.value=false;cabImgActionTarget.value=null;toastPush(t('merchant.cabinet.imageDeleted'))}
     function submitCabAdd(){var no=(cabAddNo.value||'').trim();if(!no){cabAddNoErr.value=t('user.manual.cabinetNoPlaceholder');return}
       /* 保存结果三分支由原型操作「保存结果」控制：失败两分支只写行内错误并停留当前页（不弹 toast），不写入数据 */
-      if(demoCabAddResult.value==='notFound'){cabAddNoErr.value=t('demoOps.cabNotExist');return}
-      if(demoCabAddResult.value==='used'){cabAddNoErr.value=t('demoOps.cabUsed');return}
-      var now=nowRecStr();var rec={no:no,name:(cabAddName.value||'').trim(),stationId:cabAddStationId.value||'',model:'',doors:0,bizOnline:false,netOnline:false,fault:false,alarm:false,enabled:true,slots:[],imgs:cabAddImgs.value.slice(),createdAt:now,updatedAt:now,flow:'0 M',power:'0 kw.h'};cabinets.value.unshift(rec);toastPush(t('demoOps.addSuccess'),'success');closeCabAdd()}
+      if(demoCabAddResult.value==='notFound'){cabAddNoErr.value='机柜编码不存在';return}
+      if(demoCabAddResult.value==='used'){cabAddNoErr.value='机柜编码已被使用';return}
+      var now=nowRecStr();var rec={no:no,name:(cabAddName.value||'').trim(),stationId:cabAddStationId.value||'',model:'',doors:0,bizOnline:false,netOnline:false,fault:false,alarm:false,enabled:true,slots:[],imgs:cabAddImgs.value.slice(),createdAt:now,updatedAt:now,flow:'0 M',power:'0 kw.h'};cabinets.value.unshift(rec);toastPush('新增成功','success');closeCabAdd()}
     /* ── 新增电池（对标「新增换电柜」的极简版：仅电池编号一个字段，编号可输入 / 扫码录入） ── */
     var battAddNo=Vue.ref(''),battAddNoErr=Vue.ref('');
     function openBattAdd(){battAddNo.value='';battAddNoErr.value='';openPage('battAdd')}
@@ -5320,7 +5323,7 @@ var _ma=Vue.createApp({
     function submitBattAdd(){var no=(battAddNo.value||'').trim();if(!no){battAddNoErr.value=t('common.orders.batteryNoPlaceholder');return}
       if(battOf(no)){battAddNoErr.value=t('merchant.battery.noExists');return}
       /* 新电池按「柜外 · 未租用 · 离线 · 允许放电」入库，电量/循环次数留 0、健康度 100，列表与详情按空值正常渲染 */
-      var now=nowRecStr();var rec={no:no,soc:0,cycles:0,health:100,cabState:'outCab',rentState:'unrented',netOnline:false,charging:false,at:'',discharge:true,createdAt:now,updatedAt:now};batteries.value.unshift(rec);toastPush(t('demoOps.addSuccess'),'success');closeBattAdd()}
+      var now=nowRecStr();var rec={no:no,soc:0,cycles:0,health:100,cabState:'outCab',rentState:'unrented',netOnline:false,charging:false,at:'',discharge:true,createdAt:now,updatedAt:now};batteries.value.unshift(rec);toastPush('新增成功','success');closeBattAdd()}
     function openDashboard(){openPage('dashboard')}
     function openFranchiseeList(){openPage('franchisees')}
     /* 切换加盟商（对标租车「切换门店」）：改当前加盟商后返回；切到同一项不提示 */
@@ -5355,7 +5358,7 @@ var _ma=Vue.createApp({
       return (cab.slots||[]).map(function(s){
         var b=s.occupied?(battBySlot.value[cab.no+'-'+s.no]||null):null;
         var st=b?battStateOf(b):'';
-        var stC=st===t('merchant.battery.charging')?WARN_C:st===t('merchant.battery.full')?OK_C:st===t('merchant.battery.abnormal')?BAD_C:st===t('merchant.battery.reserved')?'#2F6FEB':(b?socColor(b.soc):'#BBB');
+        var stC=st==='充电中'?WARN_C:st==='已满电'?OK_C:st==='异常中'?BAD_C:st==='预约中'?'#2F6FEB':(b?socColor(b.soc):'#BBB');
         return {no:s.no,occupied:s.occupied,disabled:s.disabled,doorOpen:s.doorOpen,soc:b?b.soc:null,tone:b?socColor(b.soc):'',state:st,stateColor:stC}
       })
     });
@@ -5397,7 +5400,7 @@ var _ma=Vue.createApp({
       return r.phone||r.email||r.account||t('merchant.useSource.system')
     }
     function cabUseSourceLabel(t){return {MAINTAIN:t('merchant.useSource.platform'),MERCHANT:t('merchant.useSource.merchant'),SYSTEM:t('merchant.useSource.platform')}[t]||t||'-'}
-    function cabUseResultLabel(r){return (r&&r.result===0)?t('label.failed'):t('demoOps.success')}
+    function cabUseResultLabel(r){return (r&&r.result===0)?t('label.failed'):'成功'}
     var cabUseList=Vue.computed(function(){
       if(demoListEmpty.value)return [];/* 原型操作「列表数据 = 空数据」 */
       var c=curCab.value;if(!c)return [];
@@ -5830,8 +5833,9 @@ var _ma=Vue.createApp({
   }})
 /* ══ 商户端 i18n 实例（语言包 swap-merchant，对齐 index 双端各自独立包的架构） ══ */
 var i18nM=VueI18n.createI18n({legacy:false,globalInjection:true,locale:'zh-CN',fallbackLocale:'zh-CN',messages:window.__SWAP_I18N_MERCHANT__||{}});
-registerSheetKit(_ma);_ma.use(i18nM);_ma.mount(document.getElementById('root-merchant'));
+/* 同用户端：先注册再 mount（商户端 t 代理取 instances[1]） */
 window.__swapI18nInstances.push(i18nM);
+registerSheetKit(_ma);_ma.use(i18nM);_ma.mount(document.getElementById('root-merchant'));
 
 hostSetMode('split');
 hostSetCurrency(MONEY.cur);

@@ -19,6 +19,24 @@
       "orders": "我的訂單",
       "battery": "我的電池"
     },
+    "package": {
+      "validityDays": "有效期：{n}天",
+      "expired": "已失效",
+      "active": "生效中",
+      "remainTimes": "剩餘次數",
+      "borrowableBattery": "可借電池",
+      "validity": "有效期",
+      "validUntil": "有效期至",
+      "empty": "暫無套餐",
+      "expiredTitle": "失效套餐",
+      "emptyExpired": "暫無失效套餐",
+      "swapPackage": "換電套餐",
+      "swapTimes": "換電次數",
+      "detailTitle": "套餐詳情",
+      "descTitle": "套餐描述",
+      "buyFirstDesc": "請您先購買套餐，再使用換電服務。",
+      "notBought": "未購買套餐"
+    },
     "records": {
       "swapRecord": "換電記錄",
       "borrowCabinet": "取電櫃子",
@@ -75,7 +93,9 @@
     "swap": {
       "lowBatteryTitle": "電量偏低",
       "choiceTitle": "選擇操作",
-      "borrow": "借電"
+      "borrow": "借電",
+      "doorOpeningFullN": "滿電倉門打開中（{n}）",
+      "doorOpeningEmptyN": "空倉門打開中（{n}）"
     },
     "login": {
       "privacyPolicyLink": "《用戶隱私政策》",
@@ -89,6 +109,7 @@
       "idVerify": "實名認證",
       "verified": "已實名",
       "unverified": "未實名",
+      "currentBound": "當前已綁定：{v}",
       "accountSaved": "帳號已儲存"
     },
     "pwd": {
@@ -197,23 +218,6 @@
     },
     "map": {
       "switchMap": "切換地圖"
-    },
-    "package": {
-      "expired": "已失效",
-      "active": "生效中",
-      "remainTimes": "剩餘次數",
-      "borrowableBattery": "可借電池",
-      "validity": "有效期",
-      "validUntil": "有效期至",
-      "empty": "暫無套餐",
-      "expiredTitle": "失效套餐",
-      "emptyExpired": "暫無失效套餐",
-      "swapPackage": "換電套餐",
-      "swapTimes": "換電次數",
-      "detailTitle": "套餐詳情",
-      "descTitle": "套餐描述",
-      "buyFirstDesc": "請您先購買套餐，再使用換電服務。",
-      "notBought": "未購買套餐"
     },
     "order": {
       "status": {
@@ -350,7 +354,6 @@
       "loggedIn": "已登入",
       "yes": "是",
       "no": "否",
-      "langZhHK": "繁體中文（中國香港）",
       "assistantName": "小迪"
     },
     "profile": {
@@ -509,6 +512,7 @@
     "noNet": "斷網",
     "returnMainFlow": "還電主流程",
     "swapMainFlow": "換電主流程",
+    "dataReset": "演示數據已重設",
     "exitedApp": "已退出應用（演示）",
     "flowResume": "流程恢復",
     "qrInvalid": "二維碼無效，請重新掃碼",
@@ -518,6 +522,7 @@
   },
   "merchant": {
     "store": {
+      "formTitle": "門店資訊",
       "service": {
         "rent": "租車",
         "repair": "售後/維修",

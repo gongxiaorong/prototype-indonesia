@@ -1,285 +1,6 @@
 {
-  "label": {
-    "langZhCN": "Simplified Chinese",
-    "noData": "No data",
-    "map": {
-      "amap": "Amap",
-      "baidu": "Baidu Maps",
-      "google": "Google Maps"
-    },
-    "unit": {
-      "cabinet": " units"
-    },
-    "failed": "Failed"
-  },
-  "common": {
-    "label": {
-      "langZhHK": "Traditional Chinese (Hong Kong)",
-      "assistantName": "Xiaodi",
-      "all": "All",
-      "hasAlert": "Has Alerts",
-      "email": "Email",
-      "account": "Account",
-      "name": "Name"
-    },
-    "systemSwitch": {
-      "swap": "Battery-Swap System",
-      "selectToast": "Please select a system",
-      "action": "Switch",
-      "title": "Switch System",
-      "rent": "Rental System",
-      "enter": "Enter",
-      "charge": "Charging System"
-    },
-    "login": {
-      "accountPlaceholder": "Please enter account",
-      "phonePlaceholder": "Please enter phone number",
-      "emailPlaceholder": "Please enter email",
-      "passwordPlaceholder": "Please enter password",
-      "codePlaceholder": "Please enter verification code",
-      "needAgree": "Please read and agree to the Privacy Policy first",
-      "passwordLabel": "Password",
-      "codeLabel": "Verification Code",
-      "getCode": "Get Code",
-      "agreePrefix": "I have read and agree to the",
-      "login": "Sign In",
-      "codeSub": "Verification Code",
-      "passwordSub": "Password",
-      "emailMode": "Email",
-      "accountMode": "Account",
-      "phoneMode": "Phone",
-      "resend": "Resend"
-    },
-    "toast": {
-      "accountFormat": "Account can only contain letters, numbers and underscores",
-      "phoneDigit": "Phone number must contain digits only",
-      "pwdChars": "Password can only contain letters, numbers and keyboard symbols",
-      "codeFormat": "Invalid verification code format",
-      "loginSuccess": "Login successful",
-      "logout": "Logged out",
-      "copySuccess": "Copied",
-      "saveSuccess": "Saved successfully"
-    },
-    "profile": {
-      "emailFormatError": "Invalid email format",
-      "nicknameSaved": "Nickname saved",
-      "needBindFirst": "Please bind a phone number or email first",
-      "inputNewPhone": "Enter a new phone number",
-      "phoneReplaced": "Phone number replaced successfully",
-      "phoneBoundSuccess": "Phone number bound successfully",
-      "inputNewEmail": "Enter a new email",
-      "emailReplaced": "Email replaced successfully",
-      "emailBoundSuccess": "Email bound successfully",
-      "pwdMismatch": "The two passwords do not match",
-      "pwdUpdated": "Password updated",
-      "namePlaceholder": "Please enter your name",
-      "positionDefaultName": "Current Location",
-      "personalInfo": "Personal Information",
-      "avatar": "Avatar",
-      "notBound": "Not Bound",
-      "emailAddress": "Email Address",
-      "passwordManage": "Password Management",
-      "changePassword": "Change Password",
-      "setPassword": "Set Password",
-      "settings": "System Settings",
-      "settingsGeneral": "General Settings",
-      "settingsVersion": "Current Version",
-      "bindPhone": "Bind Phone",
-      "bindEmail": "Bind Email",
-      "verifyByEmail": "Email Verification",
-      "resetPassword": "Reset Password",
-      "newPassword": "New Password"
-    },
-    "action": {
-      "takePhoto": "Take Photo",
-      "album": "Album",
-      "edit": "Edit",
-      "save": "Save",
-      "cancel": "Cancel",
-      "confirm": "Confirm",
-      "add": "Add",
-      "viewDetail": "Details",
-      "switchLang": "Language",
-      "logout": "Log Out",
-      "confirmReplace": "Confirm Change",
-      "bind": "Bind",
-      "nextStep": "Next"
-    },
-    "service": {
-      "swap": "Swap"
-    },
-    "dateTime": {
-      "minute": "Minute",
-      "second": "Second",
-      "hour": "Hour"
-    },
-    "orders": {
-      "batteryNoPlaceholder": "Please enter battery number",
-      "orderId": "Order Number"
-    },
-    "vehicles": {
-      "batteryLevel": "Battery Level",
-      "batteryDetail": "Battery Details",
-      "historyTrack": "History Track",
-      "batteryDischargeOff": "Disable Discharge",
-      "batteryDischargeOn": "Allow Discharge",
-      "distanceFromYou": "From you",
-      "meter": "m",
-      "walk": "Walk",
-      "walkMin": "min",
-      "trackStartPin": "Start",
-      "trackEndPin": "End"
-    },
-    "tab": {
-      "battery": "Battery",
-      "home": "Home",
-      "profile": "Profile"
-    },
-    "status": {
-      "disabled": "Disabled",
-      "enabled": "Enabled"
-    },
-    "startTime": "Start Time",
-    "endTime": "End Time",
-    "scan": {
-      "hint": "Align the QR code with the frame"
-    },
-    "unit": {
-      "battery": "battery(ies)"
-    },
-    "reset": "Reset",
-    "phone": "Phone Number",
-    "dialcode": {
-      "searchPlaceholder": "Search country/region or code"
-    },
-    "version": {
-      "newVersion": "New Version Found",
-      "latest": "Already the latest version",
-      "gotIt": "Got it"
-    },
-    "copied": "Copied",
-    "cabinet": {
-      "disable": "Disable Cabinet"
-    }
-  },
-  "user": {
-    "profile": {
-      "accountSaved": "Account saved"
-    },
-    "bindEmail": {
-      "lengthToast": "Email must not exceed 255 characters"
-    },
-    "pwd": {
-      "confirmPlaceholder": "Please enter the new password again",
-      "lengthToast": "Password must be 6-64 characters",
-      "phoneVerify": "Phone Verification",
-      "newPlaceholder": "Please enter a new password (6-64 characters)",
-      "confirmLabel": "Confirm New Password"
-    },
-    "idInfo": {
-      "photoMaxTwo": "Up to 2 photos",
-      "photoDeleted": "Photo deleted",
-      "idPhotoRequired": "Please upload at least 1 ID photo",
-      "updated": "Identity verification updated",
-      "added": "Identity verification added"
-    },
-    "id": {
-      "cardNoPlaceholder": "Please enter the ID number"
-    },
-    "borrow": {
-      "noFullBatteryToast": "No fully charged battery available in this cabinet",
-      "successToast": "Battery borrowed successfully. It has been saved to My Batteries"
-    },
-    "records": {
-      "borrowSuccess": "Borrow Successful",
-      "statusUsing": "In Use",
-      "returnSuccess": "Return Successful",
-      "statusDone": "Completed",
-      "swapSuccess": "Swap Successful",
-      "borrowCabinet": "Borrow Cabinet",
-      "returnCabinet": "Return Cabinet",
-      "borrowTime": "Borrow Time",
-      "returnTime": "Return Time"
-    },
-    "return": {
-      "noBattery": "You have no battery to return"
-    },
-    "returnFlow": {
-      "title": "Return"
-    },
-    "swap": {
-      "borrow": "Borrow"
-    },
-    "home": {
-      "scanSwap": "Scan to Swap",
-      "cityUnopened": "Battery swap service is not yet available in this city"
-    },
-    "manual": {
-      "cabinetNoPlaceholder": "Please enter cabinet number",
-      "cabinetNo": "Cabinet Number"
-    },
-    "swapFlow": {
-      "openFailed": "Failed to open the door",
-      "putOldFailed": "Failed to insert the old battery",
-      "takeNewFailed": "Failed to take out the new battery"
-    },
-    "borrowFlow": {
-      "notTaken": "Battery not taken"
-    },
-    "deposit": {
-      "payFirstToast": "Please pay the deposit before using the swap service",
-      "unpaidTitle": "Deposit Unpaid",
-      "notice1Tag": "Pay First",
-      "notice1Line1": "A deposit is required before",
-      "notice1Line2": "you can enjoy the swap service",
-      "notice2Tag": "Not Deductible",
-      "notice2Line1": "The deposit cannot be used for",
-      "notice2Line2": "swap fee deduction",
-      "notice3Tag": "Refundable Anytime",
-      "notice3Line1": "After returning the battery,",
-      "notice3Line2": "the deposit can be refunded anytime",
-      "notice4Tag": "Compensation",
-      "notice4Line1": "If the device is lost or damaged,",
-      "notice4Line2": "the deposit will cover the loss"
-    },
-    "package": {
-      "buyFirstDesc": "Please purchase a plan before using the swap service.",
-      "notBought": "No plan purchased"
-    },
-    "locate": {
-      "searchPlaceholder": "Enter a station name or address",
-      "noResult": "No matching place found"
-    },
-    "reserve": {
-      "selectCabinet": "Please select a cabinet to reserve",
-      "timeoutToast": "Reservation timed out. You can reserve again"
-    },
-    "battery": {
-      "empty": "No Batteries",
-      "no": "Battery No."
-    },
-    "station": {
-      "emptySlot": "Empty Slot",
-      "storeDetail": "Store Details",
-      "detail": "Station Details"
-    },
-    "search": {
-      "noPoi": "No matching places found"
-    },
-    "location": {
-      "title": "Location Services"
-    },
-    "login": {
-      "privacyPolicyLink": "User Privacy Policy"
-    },
-    "dialcode": {
-      "noMatch": "No matching region found"
-    },
-    "version": {
-      "later": "Remind Me Later"
-    }
-  },
   "demoOps": {
+    "dataReset": "Demo Data Reset",
     "exitedApp": "App exited (demo)",
     "flowResume": "Flow resumed",
     "qrInvalid": "Invalid QR code. Please scan again",
@@ -293,21 +14,9 @@
     "addSuccess": "Added successfully",
     "success": "Success"
   },
-  "action": {
-    "scanReturn": "Scan to Return",
-    "goPay": "Pay Now",
-    "buyNow": "Buy Now",
-    "clearFilter": "Clear Filters",
-    "uploadImage": "Upload Image",
-    "more": "More Actions",
-    "reupload": "Re-upload",
-    "tapToClose": "Tap blank area to close",
-    "deny": "Don't Allow",
-    "allow": "Allow",
-    "goEnable": "Open Settings"
-  },
   "merchant": {
     "store": {
+      "formTitle": "Store Information",
       "service": {
         "rent": "Rental",
         "repair": "After-sales/Repair",
@@ -323,7 +32,6 @@
       "phone": "Contact Phone",
       "services": "Key Services",
       "photos": "Store Cover",
-      "formTitle": "Store Information",
       "name": "Store Name",
       "namePlaceholder": "Please enter store name",
       "addrPlaceholder": "Enter or select an address",
@@ -457,7 +165,13 @@
       "commonActions": "Common Features",
       "switchFranchisee": "Switch Franchisee"
     },
+    "common": {
+      "totalItems": "Total {n}",
+      "totalStores": "{n} stores",
+      "totalStations": "{n} stations"
+    },
     "record": {
+      "batterySeg": " · Battery {no}",
       "operator": "Operator",
       "content": "Action",
       "platform": "Platform",
@@ -471,9 +185,14 @@
     },
     "dashboard": {
       "cabinetTotal": "Total Cabinets",
+      "onlineOffline": "{online} online · {offline} offline",
+      "faultAlarm": "{fault} faulty · {alarm} alarms",
       "batteryInCabinet": "Batteries in Cabinet",
+      "slotRatio": "Slots {used} / {total}",
       "renting": "Rented",
+      "totalBatteries": "{n} batteries",
       "swapTrend7d": "7-Day Swap Trend",
+      "trendPeak": "Peak {n}",
       "cabinetStatusDist": "Cabinet Status Distribution",
       "batteryStatusDist": "Battery Status Distribution",
       "alarmStats": "Alarm Statistics",
@@ -574,6 +293,300 @@
       "unbindConfirm": "Unbind this cabinet from the current station? After unbinding, the cabinet becomes idle and can be bound to a station again",
       "unboundToast": "Unbound from station"
     }
+  },
+  "label": {
+    "langZhCN": "Simplified Chinese",
+    "noData": "No data",
+    "map": {
+      "amap": "Amap",
+      "baidu": "Baidu Maps",
+      "google": "Google Maps"
+    },
+    "unit": {
+      "cabinet": " units"
+    },
+    "failed": "Failed"
+  },
+  "common": {
+    "systemSwitch": {
+      "swap": "Battery-Swap System",
+      "selectToast": "Please select a system",
+      "action": "Switch",
+      "title": "Switch System",
+      "rent": "Rental System",
+      "enter": "Enter",
+      "charge": "Charging System"
+    },
+    "login": {
+      "accountPlaceholder": "Please enter account",
+      "phonePlaceholder": "Please enter phone number",
+      "emailPlaceholder": "Please enter email",
+      "passwordPlaceholder": "Please enter password",
+      "codePlaceholder": "Please enter verification code",
+      "needAgree": "Please read and agree to the Privacy Policy first",
+      "passwordLabel": "Password",
+      "codeLabel": "Verification Code",
+      "getCode": "Get Code",
+      "agreePrefix": "I have read and agree to the",
+      "login": "Sign In",
+      "codeSub": "Verification Code",
+      "passwordSub": "Password",
+      "emailMode": "Email",
+      "accountMode": "Account",
+      "phoneMode": "Phone",
+      "resend": "Resend"
+    },
+    "toast": {
+      "accountFormat": "Account can only contain letters, numbers and underscores",
+      "phoneDigit": "Phone number must contain digits only",
+      "pwdChars": "Password can only contain letters, numbers and keyboard symbols",
+      "codeFormat": "Invalid verification code format",
+      "loginSuccess": "Login successful",
+      "logout": "Logged out",
+      "copySuccess": "Copied",
+      "saveSuccess": "Saved successfully"
+    },
+    "profile": {
+      "emailFormatError": "Invalid email format",
+      "nicknameSaved": "Nickname saved",
+      "needBindFirst": "Please bind a phone number or email first",
+      "inputNewPhone": "Enter a new phone number",
+      "phoneReplaced": "Phone number replaced successfully",
+      "phoneBoundSuccess": "Phone number bound successfully",
+      "inputNewEmail": "Enter a new email",
+      "emailReplaced": "Email replaced successfully",
+      "emailBoundSuccess": "Email bound successfully",
+      "pwdMismatch": "The two passwords do not match",
+      "pwdUpdated": "Password updated",
+      "namePlaceholder": "Please enter your name",
+      "positionDefaultName": "Current Location",
+      "personalInfo": "Personal Information",
+      "avatar": "Avatar",
+      "notBound": "Not Bound",
+      "emailAddress": "Email Address",
+      "passwordManage": "Password Management",
+      "changePassword": "Change Password",
+      "setPassword": "Set Password",
+      "settings": "System Settings",
+      "settingsGeneral": "General Settings",
+      "settingsVersion": "Current Version",
+      "bindPhone": "Bind Phone",
+      "bindEmail": "Bind Email",
+      "verifyByEmail": "Email Verification",
+      "resetPassword": "Reset Password",
+      "newPassword": "New Password"
+    },
+    "label": {
+      "assistantName": "Xiaodi",
+      "all": "All",
+      "hasAlert": "Has Alerts",
+      "email": "Email",
+      "account": "Account",
+      "name": "Name"
+    },
+    "action": {
+      "takePhoto": "Take Photo",
+      "album": "Album",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "add": "Add",
+      "viewDetail": "Details",
+      "switchLang": "Language",
+      "logout": "Log Out",
+      "confirmReplace": "Confirm Change",
+      "bind": "Bind",
+      "nextStep": "Next"
+    },
+    "service": {
+      "swap": "Swap"
+    },
+    "dateTime": {
+      "minute": "Minute",
+      "second": "Second",
+      "hour": "Hour"
+    },
+    "orders": {
+      "batteryNoPlaceholder": "Please enter battery number",
+      "orderId": "Order Number"
+    },
+    "vehicles": {
+      "batteryLevel": "Battery Level",
+      "batteryDetail": "Battery Details",
+      "historyTrack": "History Track",
+      "batteryDischargeOff": "Disable Discharge",
+      "batteryDischargeOn": "Allow Discharge",
+      "distanceFromYou": "From you",
+      "meter": "m",
+      "walk": "Walk",
+      "walkMin": "min",
+      "trackStartPin": "Start",
+      "trackEndPin": "End"
+    },
+    "tab": {
+      "battery": "Battery",
+      "home": "Home",
+      "profile": "Profile"
+    },
+    "status": {
+      "disabled": "Disabled",
+      "enabled": "Enabled"
+    },
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "scan": {
+      "hint": "Align the QR code with the frame"
+    },
+    "unit": {
+      "battery": "battery(ies)"
+    },
+    "reset": "Reset",
+    "phone": "Phone Number",
+    "dialcode": {
+      "searchPlaceholder": "Search country/region or code"
+    },
+    "version": {
+      "newVersion": "New Version Found",
+      "latest": "Already the latest version",
+      "gotIt": "Got it"
+    },
+    "copied": "Copied",
+    "cabinet": {
+      "disable": "Disable Cabinet"
+    }
+  },
+  "user": {
+    "profile": {
+      "accountSaved": "Account saved",
+      "currentBound": "Currently bound: {v}"
+    },
+    "bindEmail": {
+      "lengthToast": "Email must not exceed 255 characters"
+    },
+    "pwd": {
+      "confirmPlaceholder": "Please enter the new password again",
+      "lengthToast": "Password must be 6-64 characters",
+      "phoneVerify": "Phone Verification",
+      "newPlaceholder": "Please enter a new password (6-64 characters)",
+      "confirmLabel": "Confirm New Password"
+    },
+    "idInfo": {
+      "photoMaxTwo": "Up to 2 photos",
+      "photoDeleted": "Photo deleted",
+      "idPhotoRequired": "Please upload at least 1 ID photo",
+      "updated": "Identity verification updated",
+      "added": "Identity verification added"
+    },
+    "id": {
+      "cardNoPlaceholder": "Please enter the ID number"
+    },
+    "borrow": {
+      "noFullBatteryToast": "No fully charged battery available in this cabinet",
+      "successToast": "Battery borrowed successfully. It has been saved to My Batteries"
+    },
+    "records": {
+      "borrowSuccess": "Borrow Successful",
+      "statusUsing": "In Use",
+      "returnSuccess": "Return Successful",
+      "statusDone": "Completed",
+      "swapSuccess": "Swap Successful",
+      "borrowCabinet": "Borrow Cabinet",
+      "returnCabinet": "Return Cabinet",
+      "borrowTime": "Borrow Time",
+      "returnTime": "Return Time"
+    },
+    "return": {
+      "noBattery": "You have no battery to return"
+    },
+    "returnFlow": {
+      "title": "Return"
+    },
+    "swap": {
+      "borrow": "Borrow"
+    },
+    "home": {
+      "scanSwap": "Scan to Swap",
+      "cityUnopened": "Battery swap service is not yet available in this city"
+    },
+    "manual": {
+      "cabinetNoPlaceholder": "Please enter cabinet number",
+      "cabinetNo": "Cabinet Number"
+    },
+    "swapFlow": {
+      "openFailed": "Failed to open the door",
+      "putOldFailed": "Failed to insert the old battery",
+      "takeNewFailed": "Failed to take out the new battery"
+    },
+    "borrowFlow": {
+      "notTaken": "Battery not taken"
+    },
+    "deposit": {
+      "payFirstToast": "Please pay the deposit before using the swap service",
+      "unpaidTitle": "Deposit Unpaid",
+      "notice1Tag": "Pay First",
+      "notice1Line1": "A deposit is required before",
+      "notice1Line2": "you can enjoy the swap service",
+      "notice2Tag": "Not Deductible",
+      "notice2Line1": "The deposit cannot be used for",
+      "notice2Line2": "swap fee deduction",
+      "notice3Tag": "Refundable Anytime",
+      "notice3Line1": "After returning the battery,",
+      "notice3Line2": "the deposit can be refunded anytime",
+      "notice4Tag": "Compensation",
+      "notice4Line1": "If the device is lost or damaged,",
+      "notice4Line2": "the deposit will cover the loss"
+    },
+    "package": {
+      "buyFirstDesc": "Please purchase a plan before using the swap service.",
+      "notBought": "No plan purchased"
+    },
+    "locate": {
+      "searchPlaceholder": "Enter a station name or address",
+      "noResult": "No matching place found"
+    },
+    "reserve": {
+      "selectCabinet": "Please select a cabinet to reserve",
+      "timeoutToast": "Reservation timed out. You can reserve again"
+    },
+    "battery": {
+      "empty": "No Batteries",
+      "no": "Battery No."
+    },
+    "station": {
+      "emptySlot": "Empty Slot",
+      "storeDetail": "Store Details",
+      "detail": "Station Details"
+    },
+    "search": {
+      "noPoi": "No matching places found"
+    },
+    "location": {
+      "appAuthTitle": "Allow “{app}” to use your location?",
+      "title": "Location Services"
+    },
+    "login": {
+      "privacyPolicyLink": "User Privacy Policy"
+    },
+    "dialcode": {
+      "noMatch": "No matching region found"
+    },
+    "version": {
+      "later": "Remind Me Later"
+    }
+  },
+  "action": {
+    "scanReturn": "Scan to Return",
+    "goPay": "Pay Now",
+    "buyNow": "Buy Now",
+    "clearFilter": "Clear Filters",
+    "uploadImage": "Upload Image",
+    "more": "More Actions",
+    "reupload": "Re-upload",
+    "tapToClose": "Tap blank area to close",
+    "deny": "Don't Allow",
+    "allow": "Allow",
+    "goEnable": "Open Settings"
   },
   "demo": {
     "map": {

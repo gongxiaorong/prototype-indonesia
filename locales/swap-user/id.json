@@ -19,6 +19,24 @@
       "orders": "Pesanan Saya",
       "battery": "Baterai Saya"
     },
+    "package": {
+      "validityDays": "Masa berlaku: {n} hari",
+      "expired": "Kedaluwarsa",
+      "active": "Aktif",
+      "remainTimes": "Sisa Pemakaian",
+      "borrowableBattery": "Baterai Dapat Dipinjam",
+      "validity": "Masa Berlaku",
+      "validUntil": "Berlaku Hingga",
+      "empty": "Tidak ada paket",
+      "expiredTitle": "Paket Kedaluwarsa",
+      "emptyExpired": "Belum ada paket kedaluwarsa",
+      "swapPackage": "Paket Tukar Baterai",
+      "swapTimes": "Jumlah Tukar",
+      "detailTitle": "Detail Paket",
+      "descTitle": "Deskripsi Paket",
+      "buyFirstDesc": "Beli paket terlebih dahulu sebelum menggunakan layanan tukar.",
+      "notBought": "Belum membeli paket"
+    },
     "records": {
       "swapRecord": "Riwayat Tukar Baterai",
       "borrowCabinet": "Kabinet Pinjam",
@@ -75,7 +93,9 @@
     "swap": {
       "lowBatteryTitle": "Daya Rendah",
       "choiceTitle": "Pilih Tindakan",
-      "borrow": "Pinjam Daya"
+      "borrow": "Pinjam Daya",
+      "doorOpeningFullN": "Membuka pintu baterai penuh ({n})",
+      "doorOpeningEmptyN": "Membuka pintu kosong ({n})"
     },
     "login": {
       "privacyPolicyLink": "Kebijakan Privasi Pengguna",
@@ -89,6 +109,7 @@
       "idVerify": "Verifikasi Identitas",
       "verified": "Sudah Verifikasi",
       "unverified": "Belum Verifikasi",
+      "currentBound": "Saat ini terikat: {v}",
       "accountSaved": "Akun disimpan"
     },
     "pwd": {
@@ -197,23 +218,6 @@
     },
     "map": {
       "switchMap": "Ganti Peta"
-    },
-    "package": {
-      "expired": "Kedaluwarsa",
-      "active": "Aktif",
-      "remainTimes": "Sisa Pemakaian",
-      "borrowableBattery": "Baterai Dapat Dipinjam",
-      "validity": "Masa Berlaku",
-      "validUntil": "Berlaku Hingga",
-      "empty": "Tidak ada paket",
-      "expiredTitle": "Paket Kedaluwarsa",
-      "emptyExpired": "Belum ada paket kedaluwarsa",
-      "swapPackage": "Paket Tukar Baterai",
-      "swapTimes": "Jumlah Tukar",
-      "detailTitle": "Detail Paket",
-      "descTitle": "Deskripsi Paket",
-      "buyFirstDesc": "Beli paket terlebih dahulu sebelum menggunakan layanan tukar.",
-      "notBought": "Belum membeli paket"
     },
     "order": {
       "status": {
@@ -350,7 +354,6 @@
       "loggedIn": "Sudah Masuk",
       "yes": "Ya",
       "no": "Tidak",
-      "langZhHK": "Tionghoa Tradisional (Hong Kong)",
       "assistantName": "Xiaodi"
     },
     "profile": {
@@ -509,6 +512,7 @@
     "noNet": "Tanpa jaringan",
     "returnMainFlow": "Proses Utama Pengembalian",
     "swapMainFlow": "Proses Utama Tukar",
+    "dataReset": "Data Demo Direset",
     "exitedApp": "Aplikasi keluar (demo)",
     "flowResume": "Alur dilanjutkan",
     "qrInvalid": "Kode QR tidak valid. Silakan pindai ulang",
@@ -518,6 +522,7 @@
   },
   "merchant": {
     "store": {
+      "formTitle": "Informasi Toko",
       "service": {
         "rent": "Sewa",
         "repair": "Purnajual/Perbaikan",

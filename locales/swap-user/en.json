@@ -19,6 +19,24 @@
       "orders": "My Orders",
       "battery": "My Battery"
     },
+    "package": {
+      "validityDays": "Validity: {n} days",
+      "expired": "Expired",
+      "active": "Active",
+      "remainTimes": "Remaining Uses",
+      "borrowableBattery": "Borrowable Batteries",
+      "validity": "Validity",
+      "validUntil": "Valid Until",
+      "empty": "No Packages",
+      "expiredTitle": "Expired Packages",
+      "emptyExpired": "No expired packages",
+      "swapPackage": "Swap Package",
+      "swapTimes": "Swap Count",
+      "detailTitle": "Package Details",
+      "descTitle": "Package Description",
+      "buyFirstDesc": "Please purchase a plan before using the swap service.",
+      "notBought": "No plan purchased"
+    },
     "records": {
       "swapRecord": "Swap Records",
       "borrowCabinet": "Borrow Cabinet",
@@ -75,7 +93,9 @@
     "swap": {
       "lowBatteryTitle": "Low Battery",
       "choiceTitle": "Select Action",
-      "borrow": "Borrow"
+      "borrow": "Borrow",
+      "doorOpeningFullN": "Opening full-battery door ({n})",
+      "doorOpeningEmptyN": "Opening empty door ({n})"
     },
     "login": {
       "privacyPolicyLink": "User Privacy Policy",
@@ -89,6 +109,7 @@
       "idVerify": "Identity Verification",
       "verified": "Verified",
       "unverified": "Not verified",
+      "currentBound": "Currently bound: {v}",
       "accountSaved": "Account saved"
     },
     "pwd": {
@@ -197,23 +218,6 @@
     },
     "map": {
       "switchMap": "Switch Map"
-    },
-    "package": {
-      "expired": "Expired",
-      "active": "Active",
-      "remainTimes": "Remaining Uses",
-      "borrowableBattery": "Borrowable Batteries",
-      "validity": "Validity",
-      "validUntil": "Valid Until",
-      "empty": "No Packages",
-      "expiredTitle": "Expired Packages",
-      "emptyExpired": "No expired packages",
-      "swapPackage": "Swap Package",
-      "swapTimes": "Swap Count",
-      "detailTitle": "Package Details",
-      "descTitle": "Package Description",
-      "buyFirstDesc": "Please purchase a plan before using the swap service.",
-      "notBought": "No plan purchased"
     },
     "order": {
       "status": {
@@ -350,7 +354,6 @@
       "loggedIn": "Logged In",
       "yes": "Yes",
       "no": "No",
-      "langZhHK": "Traditional Chinese (Hong Kong)",
       "assistantName": "Xiaodi"
     },
     "profile": {
@@ -509,6 +512,7 @@
     "noNet": "Disconnected",
     "returnMainFlow": "Return Main Flow",
     "swapMainFlow": "Swap Main Flow",
+    "dataReset": "Demo Data Reset",
     "exitedApp": "App exited (demo)",
     "flowResume": "Flow resumed",
     "qrInvalid": "Invalid QR code. Please scan again",
@@ -518,6 +522,7 @@
   },
   "merchant": {
     "store": {
+      "formTitle": "Store Information",
       "service": {
         "rent": "Rental",
         "repair": "After-sales/Repair",

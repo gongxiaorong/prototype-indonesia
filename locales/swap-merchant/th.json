@@ -1,285 +1,6 @@
 {
-  "label": {
-    "langZhCN": "จีนตัวย่อ",
-    "noData": "ไม่มีข้อมูล",
-    "map": {
-      "amap": "Amap",
-      "baidu": "Baidu Maps",
-      "google": "Google Maps"
-    },
-    "unit": {
-      "cabinet": " เครื่อง"
-    },
-    "failed": "ไม่สำเร็จ"
-  },
-  "common": {
-    "label": {
-      "langZhHK": "จีนตัวเต็ม (ฮ่องกง)",
-      "assistantName": "เสี่ยวตี๋",
-      "all": "ทั้งหมด",
-      "hasAlert": "มีการแจ้งเตือน",
-      "email": "อีเมล",
-      "account": "บัญชี",
-      "name": "ชื่อ"
-    },
-    "systemSwitch": {
-      "swap": "ระบบเปลี่ยนแบต",
-      "selectToast": "กรุณาเลือกระบบ",
-      "action": "สลับ",
-      "title": "เปลี่ยนระบบ",
-      "rent": "ระบบเช่า",
-      "enter": "เข้าสู่ระบบ",
-      "charge": "ระบบชาร์จ"
-    },
-    "login": {
-      "accountPlaceholder": "กรุณากรอกบัญชี",
-      "phonePlaceholder": "กรุณากรอกหมายเลขโทรศัพท์",
-      "emailPlaceholder": "กรุณากรอกอีเมล",
-      "passwordPlaceholder": "กรุณากรอกรหัสผ่าน",
-      "codePlaceholder": "กรุณากรอกรหัสยืนยัน",
-      "needAgree": "กรุณาอ่านและยอมรับนโยบายความเป็นส่วนตัวก่อน",
-      "passwordLabel": "รหัสผ่าน",
-      "codeLabel": "รหัสยืนยัน",
-      "getCode": "รับรหัส",
-      "agreePrefix": "ฉันได้อ่านและยอมรับ",
-      "login": "เข้าสู่ระบบ",
-      "codeSub": "รหัสยืนยัน",
-      "passwordSub": "รหัสผ่าน",
-      "emailMode": "อีเมล",
-      "accountMode": "บัญชี",
-      "phoneMode": "โทรศัพท์",
-      "resend": "ส่งใหม่"
-    },
-    "toast": {
-      "accountFormat": "บัญชีสามารถมีได้เฉพาะตัวอักษร ตัวเลข และขีดเส้นใต้",
-      "phoneDigit": "หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น",
-      "pwdChars": "รหัสผ่านสามารถมีได้เฉพาะตัวอักษร ตัวเลข และสัญลักษณ์บนแป้นพิมพ์",
-      "codeFormat": "รูปแบบรหัสยืนยันไม่ถูกต้อง",
-      "loginSuccess": "เข้าสู่ระบบสำเร็จ",
-      "logout": "ออกจากระบบแล้ว",
-      "copySuccess": "คัดลอกแล้ว",
-      "saveSuccess": "บันทึกสำเร็จ"
-    },
-    "profile": {
-      "emailFormatError": "รูปแบบอีเมลไม่ถูกต้อง",
-      "nicknameSaved": "บันทึกชื่อเล่นแล้ว",
-      "needBindFirst": "กรุณาผูกหมายเลขโทรศัพท์หรืออีเมลก่อน",
-      "inputNewPhone": "กรุณากรอกหมายเลขโทรศัพท์ใหม่",
-      "phoneReplaced": "เปลี่ยนหมายเลขโทรศัพท์สำเร็จ",
-      "phoneBoundSuccess": "ผูกหมายเลขโทรศัพท์สำเร็จ",
-      "inputNewEmail": "กรุณากรอกอีเมลใหม่",
-      "emailReplaced": "เปลี่ยนอีเมลสำเร็จ",
-      "emailBoundSuccess": "ผูกอีเมลสำเร็จ",
-      "pwdMismatch": "รหัสผ่านทั้งสองไม่ตรงกัน",
-      "pwdUpdated": "อัปเดตรหัสผ่านแล้ว",
-      "namePlaceholder": "กรุณากรอกชื่อของคุณ",
-      "positionDefaultName": "ตำแหน่งปัจจุบัน",
-      "personalInfo": "ข้อมูลส่วนบุคคล",
-      "avatar": "รูปโปรไฟล์",
-      "notBound": "ยังไม่ได้ผูก",
-      "emailAddress": "ที่อยู่อีเมล",
-      "passwordManage": "การจัดการรหัสผ่าน",
-      "changePassword": "เปลี่ยนรหัสผ่าน",
-      "setPassword": "ตั้งรหัสผ่าน",
-      "settings": "การตั้งค่าระบบ",
-      "settingsGeneral": "การตั้งค่าทั่วไป",
-      "settingsVersion": "เวอร์ชันปัจจุบัน",
-      "bindPhone": "ผูกเบอร์โทรศัพท์",
-      "bindEmail": "ผูกอีเมล",
-      "verifyByEmail": "ยืนยันอีเมล",
-      "resetPassword": "รีเซ็ตรหัสผ่าน",
-      "newPassword": "รหัสผ่านใหม่"
-    },
-    "action": {
-      "takePhoto": "ถ่ายรูป",
-      "album": "อัลบั้ม",
-      "edit": "แก้ไข",
-      "save": "บันทึก",
-      "cancel": "ยกเลิก",
-      "confirm": "ยืนยัน",
-      "add": "เพิ่ม",
-      "viewDetail": "รายละเอียด",
-      "switchLang": "ภาษา",
-      "logout": "ออกจากระบบ",
-      "confirmReplace": "ยืนยันการเปลี่ยน",
-      "bind": "ผูก",
-      "nextStep": "ถัดไป"
-    },
-    "service": {
-      "swap": "สลับ"
-    },
-    "dateTime": {
-      "minute": "นาที",
-      "second": "วินาที",
-      "hour": "ชั่วโมง"
-    },
-    "orders": {
-      "batteryNoPlaceholder": "กรุณากรอกหมายเลขแบตเตอรี่",
-      "orderId": "หมายเลขคำสั่งซื้อ"
-    },
-    "vehicles": {
-      "batteryLevel": "ระดับแบตเตอรี่",
-      "batteryDetail": "รายละเอียดแบตเตอรี่",
-      "historyTrack": "ประวัติเส้นทาง",
-      "batteryDischargeOff": "ปิดการปล่อยประจุ",
-      "batteryDischargeOn": "อนุญาตการปล่อยประจุ",
-      "distanceFromYou": "ห่างจากคุณ",
-      "meter": "ม.",
-      "walk": "เดิน",
-      "walkMin": "นาที",
-      "trackStartPin": "เริ่มต้น",
-      "trackEndPin": "สิ้นสุด"
-    },
-    "tab": {
-      "battery": "แบตเตอรี่",
-      "home": "หน้าแรก",
-      "profile": "โปรไฟล์"
-    },
-    "status": {
-      "disabled": "ปิดใช้งาน",
-      "enabled": "เปิดใช้งาน"
-    },
-    "startTime": "เวลาเริ่มต้น",
-    "endTime": "เวลาสิ้นสุด",
-    "scan": {
-      "hint": "จัดแนวรหัส QR กับกรอบ"
-    },
-    "unit": {
-      "battery": "ก้อน"
-    },
-    "reset": "รีเซ็ต",
-    "phone": "หมายเลขโทรศัพท์",
-    "dialcode": {
-      "searchPlaceholder": "ค้นหาประเทศ/ภูมิภาค หรือรหัส"
-    },
-    "version": {
-      "newVersion": "พบเวอร์ชันใหม่",
-      "latest": "เป็นเวอร์ชันล่าสุดแล้ว",
-      "gotIt": "เข้าใจแล้ว"
-    },
-    "copied": "คัดลอกแล้ว",
-    "cabinet": {
-      "disable": "ปิดใช้งานตู้"
-    }
-  },
-  "user": {
-    "profile": {
-      "accountSaved": "บันทึกบัญชีแล้ว"
-    },
-    "bindEmail": {
-      "lengthToast": "อีเมลต้องไม่เกิน 255 ตัวอักษร"
-    },
-    "pwd": {
-      "confirmPlaceholder": "กรุณากรอกรหัสผ่านใหม่อีกครั้ง",
-      "lengthToast": "รหัสผ่านต้องมีความยาว 6-64 ตัวอักษร",
-      "phoneVerify": "ยืนยันเบอร์โทรศัพท์",
-      "newPlaceholder": "กรุณากรอกรหัสผ่านใหม่ (6-64 ตัวอักษร)",
-      "confirmLabel": "ยืนยันรหัสผ่านใหม่"
-    },
-    "idInfo": {
-      "photoMaxTwo": "อัปโหลดได้สูงสุด 2 รูป",
-      "photoDeleted": "ลบรูปแล้ว",
-      "idPhotoRequired": "กรุณาอัปโหลดรูปบัตรประชาชนอย่างน้อย 1 รูป",
-      "updated": "อัปเดตการยืนยันตัวตนแล้ว",
-      "added": "เพิ่มการยืนยันตัวตนแล้ว"
-    },
-    "id": {
-      "cardNoPlaceholder": "กรุณากรอกหมายเลขบัตรประชาชน"
-    },
-    "borrow": {
-      "noFullBatteryToast": "ตู้นี้ยังไม่มีแบตเตอรี่เต็มให้ยืม",
-      "successToast": "ยืมแบตเตอรี่สำเร็จ จัดเก็บไว้ในแบตเตอรี่ของฉันแล้ว"
-    },
-    "records": {
-      "borrowSuccess": "ยืมแบตเตอรี่สำเร็จ",
-      "statusUsing": "กำลังใช้งาน",
-      "returnSuccess": "คืนแบตเตอรี่สำเร็จ",
-      "statusDone": "เสร็จสิ้น",
-      "swapSuccess": "สลับแบตเตอรี่สำเร็จ",
-      "borrowCabinet": "ตู้ยืมไฟ",
-      "returnCabinet": "ตู้คืนไฟ",
-      "borrowTime": "เวลายืมไฟ",
-      "returnTime": "เวลาคืนไฟ"
-    },
-    "return": {
-      "noBattery": "คุณไม่มีแบตเตอรี่ให้คืนในขณะนี้"
-    },
-    "returnFlow": {
-      "title": "คืนไฟ"
-    },
-    "swap": {
-      "borrow": "ยืมไฟ"
-    },
-    "home": {
-      "scanSwap": "สแกนเพื่อสลับ",
-      "cityUnopened": "เมืองนี้ยังไม่เปิดให้บริการสลับแบตเตอรี่"
-    },
-    "manual": {
-      "cabinetNoPlaceholder": "กรุณากรอกหมายเลขตู้",
-      "cabinetNo": "หมายเลขตู้"
-    },
-    "swapFlow": {
-      "openFailed": "เปิดประตูไม่สำเร็จ",
-      "putOldFailed": "ใส่แบตเตอรี่เก่าไม่สำเร็จ",
-      "takeNewFailed": "นำแบตเตอรี่ใหม่ออกไม่สำเร็จ"
-    },
-    "borrowFlow": {
-      "notTaken": "ยังไม่ได้นำแบตเตอรี่ออก"
-    },
-    "deposit": {
-      "payFirstToast": "กรุณาชำระเงินมัดจำก่อนใช้บริการสลับแบตเตอรี่",
-      "unpaidTitle": "ยังไม่ชำระเงินประกัน",
-      "notice1Tag": "ชำระก่อนใช้",
-      "notice1Line1": "ต้องชำระเงินมัดจำก่อน",
-      "notice1Line2": "จึงจะใช้บริการสลับแบตเตอรี่ได้",
-      "notice2Tag": "ไม่สามารถหักค่าใช้จ่าย",
-      "notice2Line1": "เงินมัดจำไม่สามารถใช้สำหรับ",
-      "notice2Line2": "หักค่าใช้จ่ายการสลับ",
-      "notice3Tag": "ขอคืนได้ทุกเมื่อ",
-      "notice3Line1": "หลังจากคืนแบตเตอรี่",
-      "notice3Line2": "เงินมัดจำขอคืนได้ทุกเมื่อ",
-      "notice4Tag": "ชดเชยความเสียหาย",
-      "notice4Line1": "หากอุปกรณ์สูญหายหรือเสียหาย",
-      "notice4Line2": "เงินมัดจำจะใช้ชดเชยความเสียหาย"
-    },
-    "package": {
-      "buyFirstDesc": "กรุณาซื้อแพ็กเกจก่อนใช้บริการสลับแบตเตอรี่",
-      "notBought": "ยังไม่ได้ซื้อแพ็กเกจ"
-    },
-    "locate": {
-      "searchPlaceholder": "กรอกชื่อหรือที่อยู่สถานี",
-      "noResult": "ไม่พบสถานที่ที่เกี่ยวข้อง"
-    },
-    "reserve": {
-      "selectCabinet": "กรุณาเลือกตู้ที่ต้องการจอง",
-      "timeoutToast": "การจองหมดเวลา สามารถจองใหม่ได้"
-    },
-    "battery": {
-      "empty": "ไม่มีแบตเตอรี่",
-      "no": "หมายเลขแบตเตอรี่"
-    },
-    "station": {
-      "emptySlot": "ช่องว่าง",
-      "storeDetail": "รายละเอียดร้านค้า",
-      "detail": "รายละเอียดสถานี"
-    },
-    "search": {
-      "noPoi": "ไม่พบสถานที่ที่เกี่ยวข้อง"
-    },
-    "location": {
-      "title": "บริการตำแหน่ง"
-    },
-    "login": {
-      "privacyPolicyLink": "นโยบายความเป็นส่วนตัวของผู้ใช้"
-    },
-    "dialcode": {
-      "noMatch": "ไม่พบภูมิภาคที่ตรงกัน"
-    },
-    "version": {
-      "later": "เตือนภายหลัง"
-    }
-  },
   "demoOps": {
+    "dataReset": "รีเซ็ตข้อมูลตัวอย่างแล้ว",
     "exitedApp": "ออกจากแอปแล้ว (ตัวอย่าง)",
     "flowResume": "กลับสู่ขั้นตอนเดิม",
     "qrInvalid": "คิวอาร์โค้ดไม่ถูกต้อง กรุณาสแกนใหม่",
@@ -293,21 +14,9 @@
     "addSuccess": "เพิ่มสำเร็จ",
     "success": "สำเร็จ"
   },
-  "action": {
-    "scanReturn": "สแกนเพื่อคืนไฟ",
-    "goPay": "ไปชำระเงิน",
-    "buyNow": "ซื้อเลย",
-    "clearFilter": "ล้างตัวกรอง",
-    "uploadImage": "อัปโหลดรูปภาพ",
-    "more": "การดำเนินการเพิ่มเติม",
-    "reupload": "อัปโหลดใหม่",
-    "tapToClose": "แตะพื้นที่ว่างเพื่อปิด",
-    "deny": "ไม่อนุญาต",
-    "allow": "อนุญาต",
-    "goEnable": "เปิดการตั้งค่า"
-  },
   "merchant": {
     "store": {
+      "formTitle": "ข้อมูลร้านค้า",
       "service": {
         "rent": "เช่ารถ",
         "repair": "บริการหลังการขาย/ซ่อม",
@@ -323,7 +32,6 @@
       "phone": "เบอร์ติดต่อ",
       "services": "บริการหลัก",
       "photos": "ภาพหน้าร้าน",
-      "formTitle": "ข้อมูลร้านค้า",
       "name": "ชื่อร้านค้า",
       "namePlaceholder": "กรุณากรอกชื่อร้านค้า",
       "addrPlaceholder": "กรอกหรือเลือกที่อยู่",
@@ -457,7 +165,13 @@
       "commonActions": "ฟังก์ชันที่ใช้บ่อย",
       "switchFranchisee": "เปลี่ยนผู้รับสิทธิ์"
     },
+    "common": {
+      "totalItems": "ทั้งหมด {n} รายการ",
+      "totalStores": "{n} ร้าน",
+      "totalStations": "{n} สถานี"
+    },
     "record": {
+      "batterySeg": " · แบตเตอรี่ {no}",
       "operator": "ผู้ดำเนินการ",
       "content": "การดำเนินการ",
       "platform": "แพลตฟอร์ม",
@@ -471,9 +185,14 @@
     },
     "dashboard": {
       "cabinetTotal": "ตู้สลับทั้งหมด",
+      "onlineOffline": "ออนไลน์ {online} · ออฟไลน์ {offline}",
+      "faultAlarm": "ขัดข้อง {fault} · แจ้งเตือน {alarm}",
       "batteryInCabinet": "แบตเตอรี่ในตู้",
+      "slotRatio": "ช่อง {used} / {total}",
       "renting": "เช่าแล้ว",
+      "totalBatteries": "แบตเตอรี่ {n} ก้อน",
       "swapTrend7d": "แนวโน้มการสลับ 7 วัน",
+      "trendPeak": "สูงสุด {n} ครั้ง",
       "cabinetStatusDist": "สัดส่วนสถานะตู้",
       "batteryStatusDist": "สัดส่วนสถานะแบตเตอรี่",
       "alarmStats": "สถิติการแจ้งเตือน",
@@ -574,6 +293,300 @@
       "unbindConfirm": "ยืนยันยกเลิกการผูกตู้สลับแบตเตอรี่นี้กับสถานีปัจจุบันหรือไม่ หลังยกเลิกตู้จะว่างและสามารถผูกกับสถานีใหม่ได้",
       "unboundToast": "ยกเลิกการผูกสถานีแล้ว"
     }
+  },
+  "label": {
+    "langZhCN": "จีนตัวย่อ",
+    "noData": "ไม่มีข้อมูล",
+    "map": {
+      "amap": "Amap",
+      "baidu": "Baidu Maps",
+      "google": "Google Maps"
+    },
+    "unit": {
+      "cabinet": " เครื่อง"
+    },
+    "failed": "ไม่สำเร็จ"
+  },
+  "common": {
+    "systemSwitch": {
+      "swap": "ระบบเปลี่ยนแบต",
+      "selectToast": "กรุณาเลือกระบบ",
+      "action": "สลับ",
+      "title": "เปลี่ยนระบบ",
+      "rent": "ระบบเช่า",
+      "enter": "เข้าสู่ระบบ",
+      "charge": "ระบบชาร์จ"
+    },
+    "login": {
+      "accountPlaceholder": "กรุณากรอกบัญชี",
+      "phonePlaceholder": "กรุณากรอกหมายเลขโทรศัพท์",
+      "emailPlaceholder": "กรุณากรอกอีเมล",
+      "passwordPlaceholder": "กรุณากรอกรหัสผ่าน",
+      "codePlaceholder": "กรุณากรอกรหัสยืนยัน",
+      "needAgree": "กรุณาอ่านและยอมรับนโยบายความเป็นส่วนตัวก่อน",
+      "passwordLabel": "รหัสผ่าน",
+      "codeLabel": "รหัสยืนยัน",
+      "getCode": "รับรหัส",
+      "agreePrefix": "ฉันได้อ่านและยอมรับ",
+      "login": "เข้าสู่ระบบ",
+      "codeSub": "รหัสยืนยัน",
+      "passwordSub": "รหัสผ่าน",
+      "emailMode": "อีเมล",
+      "accountMode": "บัญชี",
+      "phoneMode": "โทรศัพท์",
+      "resend": "ส่งใหม่"
+    },
+    "toast": {
+      "accountFormat": "บัญชีสามารถมีได้เฉพาะตัวอักษร ตัวเลข และขีดเส้นใต้",
+      "phoneDigit": "หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น",
+      "pwdChars": "รหัสผ่านสามารถมีได้เฉพาะตัวอักษร ตัวเลข และสัญลักษณ์บนแป้นพิมพ์",
+      "codeFormat": "รูปแบบรหัสยืนยันไม่ถูกต้อง",
+      "loginSuccess": "เข้าสู่ระบบสำเร็จ",
+      "logout": "ออกจากระบบแล้ว",
+      "copySuccess": "คัดลอกแล้ว",
+      "saveSuccess": "บันทึกสำเร็จ"
+    },
+    "profile": {
+      "emailFormatError": "รูปแบบอีเมลไม่ถูกต้อง",
+      "nicknameSaved": "บันทึกชื่อเล่นแล้ว",
+      "needBindFirst": "กรุณาผูกหมายเลขโทรศัพท์หรืออีเมลก่อน",
+      "inputNewPhone": "กรุณากรอกหมายเลขโทรศัพท์ใหม่",
+      "phoneReplaced": "เปลี่ยนหมายเลขโทรศัพท์สำเร็จ",
+      "phoneBoundSuccess": "ผูกหมายเลขโทรศัพท์สำเร็จ",
+      "inputNewEmail": "กรุณากรอกอีเมลใหม่",
+      "emailReplaced": "เปลี่ยนอีเมลสำเร็จ",
+      "emailBoundSuccess": "ผูกอีเมลสำเร็จ",
+      "pwdMismatch": "รหัสผ่านทั้งสองไม่ตรงกัน",
+      "pwdUpdated": "อัปเดตรหัสผ่านแล้ว",
+      "namePlaceholder": "กรุณากรอกชื่อของคุณ",
+      "positionDefaultName": "ตำแหน่งปัจจุบัน",
+      "personalInfo": "ข้อมูลส่วนบุคคล",
+      "avatar": "รูปโปรไฟล์",
+      "notBound": "ยังไม่ได้ผูก",
+      "emailAddress": "ที่อยู่อีเมล",
+      "passwordManage": "การจัดการรหัสผ่าน",
+      "changePassword": "เปลี่ยนรหัสผ่าน",
+      "setPassword": "ตั้งรหัสผ่าน",
+      "settings": "การตั้งค่าระบบ",
+      "settingsGeneral": "การตั้งค่าทั่วไป",
+      "settingsVersion": "เวอร์ชันปัจจุบัน",
+      "bindPhone": "ผูกเบอร์โทรศัพท์",
+      "bindEmail": "ผูกอีเมล",
+      "verifyByEmail": "ยืนยันอีเมล",
+      "resetPassword": "รีเซ็ตรหัสผ่าน",
+      "newPassword": "รหัสผ่านใหม่"
+    },
+    "label": {
+      "assistantName": "เสี่ยวตี๋",
+      "all": "ทั้งหมด",
+      "hasAlert": "มีการแจ้งเตือน",
+      "email": "อีเมล",
+      "account": "บัญชี",
+      "name": "ชื่อ"
+    },
+    "action": {
+      "takePhoto": "ถ่ายรูป",
+      "album": "อัลบั้ม",
+      "edit": "แก้ไข",
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "confirm": "ยืนยัน",
+      "add": "เพิ่ม",
+      "viewDetail": "รายละเอียด",
+      "switchLang": "ภาษา",
+      "logout": "ออกจากระบบ",
+      "confirmReplace": "ยืนยันการเปลี่ยน",
+      "bind": "ผูก",
+      "nextStep": "ถัดไป"
+    },
+    "service": {
+      "swap": "สลับ"
+    },
+    "dateTime": {
+      "minute": "นาที",
+      "second": "วินาที",
+      "hour": "ชั่วโมง"
+    },
+    "orders": {
+      "batteryNoPlaceholder": "กรุณากรอกหมายเลขแบตเตอรี่",
+      "orderId": "หมายเลขคำสั่งซื้อ"
+    },
+    "vehicles": {
+      "batteryLevel": "ระดับแบตเตอรี่",
+      "batteryDetail": "รายละเอียดแบตเตอรี่",
+      "historyTrack": "ประวัติเส้นทาง",
+      "batteryDischargeOff": "ปิดการปล่อยประจุ",
+      "batteryDischargeOn": "อนุญาตการปล่อยประจุ",
+      "distanceFromYou": "ห่างจากคุณ",
+      "meter": "ม.",
+      "walk": "เดิน",
+      "walkMin": "นาที",
+      "trackStartPin": "เริ่มต้น",
+      "trackEndPin": "สิ้นสุด"
+    },
+    "tab": {
+      "battery": "แบตเตอรี่",
+      "home": "หน้าแรก",
+      "profile": "โปรไฟล์"
+    },
+    "status": {
+      "disabled": "ปิดใช้งาน",
+      "enabled": "เปิดใช้งาน"
+    },
+    "startTime": "เวลาเริ่มต้น",
+    "endTime": "เวลาสิ้นสุด",
+    "scan": {
+      "hint": "จัดแนวรหัส QR กับกรอบ"
+    },
+    "unit": {
+      "battery": "ก้อน"
+    },
+    "reset": "รีเซ็ต",
+    "phone": "หมายเลขโทรศัพท์",
+    "dialcode": {
+      "searchPlaceholder": "ค้นหาประเทศ/ภูมิภาค หรือรหัส"
+    },
+    "version": {
+      "newVersion": "พบเวอร์ชันใหม่",
+      "latest": "เป็นเวอร์ชันล่าสุดแล้ว",
+      "gotIt": "เข้าใจแล้ว"
+    },
+    "copied": "คัดลอกแล้ว",
+    "cabinet": {
+      "disable": "ปิดใช้งานตู้"
+    }
+  },
+  "user": {
+    "profile": {
+      "accountSaved": "บันทึกบัญชีแล้ว",
+      "currentBound": "ผูกไว้ปัจจุบัน: {v}"
+    },
+    "bindEmail": {
+      "lengthToast": "อีเมลต้องไม่เกิน 255 ตัวอักษร"
+    },
+    "pwd": {
+      "confirmPlaceholder": "กรุณากรอกรหัสผ่านใหม่อีกครั้ง",
+      "lengthToast": "รหัสผ่านต้องมีความยาว 6-64 ตัวอักษร",
+      "phoneVerify": "ยืนยันเบอร์โทรศัพท์",
+      "newPlaceholder": "กรุณากรอกรหัสผ่านใหม่ (6-64 ตัวอักษร)",
+      "confirmLabel": "ยืนยันรหัสผ่านใหม่"
+    },
+    "idInfo": {
+      "photoMaxTwo": "อัปโหลดได้สูงสุด 2 รูป",
+      "photoDeleted": "ลบรูปแล้ว",
+      "idPhotoRequired": "กรุณาอัปโหลดรูปบัตรประชาชนอย่างน้อย 1 รูป",
+      "updated": "อัปเดตการยืนยันตัวตนแล้ว",
+      "added": "เพิ่มการยืนยันตัวตนแล้ว"
+    },
+    "id": {
+      "cardNoPlaceholder": "กรุณากรอกหมายเลขบัตรประชาชน"
+    },
+    "borrow": {
+      "noFullBatteryToast": "ตู้นี้ยังไม่มีแบตเตอรี่เต็มให้ยืม",
+      "successToast": "ยืมแบตเตอรี่สำเร็จ จัดเก็บไว้ในแบตเตอรี่ของฉันแล้ว"
+    },
+    "records": {
+      "borrowSuccess": "ยืมแบตเตอรี่สำเร็จ",
+      "statusUsing": "กำลังใช้งาน",
+      "returnSuccess": "คืนแบตเตอรี่สำเร็จ",
+      "statusDone": "เสร็จสิ้น",
+      "swapSuccess": "สลับแบตเตอรี่สำเร็จ",
+      "borrowCabinet": "ตู้ยืมไฟ",
+      "returnCabinet": "ตู้คืนไฟ",
+      "borrowTime": "เวลายืมไฟ",
+      "returnTime": "เวลาคืนไฟ"
+    },
+    "return": {
+      "noBattery": "คุณไม่มีแบตเตอรี่ให้คืนในขณะนี้"
+    },
+    "returnFlow": {
+      "title": "คืนไฟ"
+    },
+    "swap": {
+      "borrow": "ยืมไฟ"
+    },
+    "home": {
+      "scanSwap": "สแกนเพื่อสลับ",
+      "cityUnopened": "เมืองนี้ยังไม่เปิดให้บริการสลับแบตเตอรี่"
+    },
+    "manual": {
+      "cabinetNoPlaceholder": "กรุณากรอกหมายเลขตู้",
+      "cabinetNo": "หมายเลขตู้"
+    },
+    "swapFlow": {
+      "openFailed": "เปิดประตูไม่สำเร็จ",
+      "putOldFailed": "ใส่แบตเตอรี่เก่าไม่สำเร็จ",
+      "takeNewFailed": "นำแบตเตอรี่ใหม่ออกไม่สำเร็จ"
+    },
+    "borrowFlow": {
+      "notTaken": "ยังไม่ได้นำแบตเตอรี่ออก"
+    },
+    "deposit": {
+      "payFirstToast": "กรุณาชำระเงินมัดจำก่อนใช้บริการสลับแบตเตอรี่",
+      "unpaidTitle": "ยังไม่ชำระเงินประกัน",
+      "notice1Tag": "ชำระก่อนใช้",
+      "notice1Line1": "ต้องชำระเงินมัดจำก่อน",
+      "notice1Line2": "จึงจะใช้บริการสลับแบตเตอรี่ได้",
+      "notice2Tag": "ไม่สามารถหักค่าใช้จ่าย",
+      "notice2Line1": "เงินมัดจำไม่สามารถใช้สำหรับ",
+      "notice2Line2": "หักค่าใช้จ่ายการสลับ",
+      "notice3Tag": "ขอคืนได้ทุกเมื่อ",
+      "notice3Line1": "หลังจากคืนแบตเตอรี่",
+      "notice3Line2": "เงินมัดจำขอคืนได้ทุกเมื่อ",
+      "notice4Tag": "ชดเชยความเสียหาย",
+      "notice4Line1": "หากอุปกรณ์สูญหายหรือเสียหาย",
+      "notice4Line2": "เงินมัดจำจะใช้ชดเชยความเสียหาย"
+    },
+    "package": {
+      "buyFirstDesc": "กรุณาซื้อแพ็กเกจก่อนใช้บริการสลับแบตเตอรี่",
+      "notBought": "ยังไม่ได้ซื้อแพ็กเกจ"
+    },
+    "locate": {
+      "searchPlaceholder": "กรอกชื่อหรือที่อยู่สถานี",
+      "noResult": "ไม่พบสถานที่ที่เกี่ยวข้อง"
+    },
+    "reserve": {
+      "selectCabinet": "กรุณาเลือกตู้ที่ต้องการจอง",
+      "timeoutToast": "การจองหมดเวลา สามารถจองใหม่ได้"
+    },
+    "battery": {
+      "empty": "ไม่มีแบตเตอรี่",
+      "no": "หมายเลขแบตเตอรี่"
+    },
+    "station": {
+      "emptySlot": "ช่องว่าง",
+      "storeDetail": "รายละเอียดร้านค้า",
+      "detail": "รายละเอียดสถานี"
+    },
+    "search": {
+      "noPoi": "ไม่พบสถานที่ที่เกี่ยวข้อง"
+    },
+    "location": {
+      "appAuthTitle": "อนุญาตให้ “{app}” ใช้ตำแหน่งของคุณหรือไม่?",
+      "title": "บริการตำแหน่ง"
+    },
+    "login": {
+      "privacyPolicyLink": "นโยบายความเป็นส่วนตัวของผู้ใช้"
+    },
+    "dialcode": {
+      "noMatch": "ไม่พบภูมิภาคที่ตรงกัน"
+    },
+    "version": {
+      "later": "เตือนภายหลัง"
+    }
+  },
+  "action": {
+    "scanReturn": "สแกนเพื่อคืนไฟ",
+    "goPay": "ไปชำระเงิน",
+    "buyNow": "ซื้อเลย",
+    "clearFilter": "ล้างตัวกรอง",
+    "uploadImage": "อัปโหลดรูปภาพ",
+    "more": "การดำเนินการเพิ่มเติม",
+    "reupload": "อัปโหลดใหม่",
+    "tapToClose": "แตะพื้นที่ว่างเพื่อปิด",
+    "deny": "ไม่อนุญาต",
+    "allow": "อนุญาต",
+    "goEnable": "เปิดการตั้งค่า"
   },
   "demo": {
     "map": {
