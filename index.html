@@ -7094,6 +7094,11 @@ var LUCI_CUSTOM={
   /* WhatsApp 品牌标（绿色气泡） */
   'whatsapp':['svg',{xmlns:'http://www.w3.org/2000/svg',width:24,height:24,viewBox:'0 0 24 24',fill:'none',stroke:'none'},[
     ['path',{fill:'#25D366',d:'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z'}]
+  ]],
+  /* LINE 品牌标（绿底白色对话气泡） */
+  'line':['svg',{xmlns:'http://www.w3.org/2000/svg',width:24,height:24,viewBox:'0 0 24 24',fill:'none',stroke:'none'},[
+    ['rect',{x:2,y:2,width:20,height:20,rx:4.5,fill:'#06C755'}],
+    ['path',{fill:'#fff',d:'M12 6.4c-3.75 0-6.8 2.48-6.8 5.54 0 2.74 2.43 5.03 5.71 5.46.22.05.53.15.6.34.07.17.05.45.02.63l-.1.58c-.03.17-.14.68.6.37.74-.31 3.94-2.32 5.38-3.98.99-1.09 1.58-2.28 1.58-3.4 0-3.06-3.04-5.54-6.99-5.54z'}]
   ]]
 };
 function luci(n,c){if(!n)return'';try{var p=(s)=>s.replace(/(\w)(\w*)(-|\s*)/g,(_,a,b)=>a.toUpperCase()+b.toLowerCase());var d=LUCI_CUSTOM[n]||(window.lucide&&lucide.icons?lucide.icons[p(n)]:null);if(!d||d[0]!=='svg')return'';var a=d[1],cls='lucide lucide-'+n+(c?' '+c:''),sv='<svg';for(var k in a)if(a.hasOwnProperty(k))sv+=' '+k+'="'+String(a[k]).replace(/"/g,'&quot;')+'"';sv+=' class="'+cls+'">';function b(ch){var h='';for(var i=0;i<ch.length;i++){var t=ch[i][0],at=ch[i][1];h+='<'+t;for(var k in at)if(at.hasOwnProperty(k))h+=' '+k+'="'+String(at[k]).replace(/"/g,'&quot;')+'"';if(ch[i][2]&&ch[i][2].length)h+='>'+b(ch[i][2])+'</'+t+'>';else h+='/>'}return h}sv+=b(d[2])+'</svg>';return sv}catch(ex){return''}}
@@ -8089,7 +8094,7 @@ function setLoginMode(m){loginMode.value=m;loginSub.value='password';loginCodeCh
 /* 账号登录时的「注册账号」入口（原型无注册页：toast 提示） */
 function openRegister(){toast(t('user.login.registerDemo'),'info')}
 const LOGIN_MODE_OPTS=[{v:'phone',lc:'common.phone',icon:'smartphone'},{v:'email',lc:'common.label.email',icon:'mail'},{v:'account',lc:'common.label.account',icon:'user'}];
-const LOGIN_SOCIAL_OPTS=[{v:'google',l:'Google',icon:'google'},{v:'whatsapp',l:'WhatsApp',icon:'whatsapp'}];
+const LOGIN_SOCIAL_OPTS=[{v:'google',l:'Google',icon:'google'},{v:'whatsapp',l:'WhatsApp',icon:'whatsapp'},{v:'line',l:'LINE',icon:'line'}];
 /* 入口：账号方式只列「非当前模式」；例外——正在用 WhatsApp 验证码时仍显示「手机号」入口（点它回到短信/密码登录）。
    三方 Google 常驻，WhatsApp 正在使用（验证码渠道=whatsapp）时隐藏 */
 const loginSwitchEntries=computed(()=>LOGIN_MODE_OPTS.filter(function(m){return m.v!==loginMode.value||(m.v==='phone'&&loginCodeChannel.value==='whatsapp')}).map(function(m){return {...m,l:t(m.lc)}}));
@@ -10722,7 +10727,7 @@ function setLoginMode(m){loginMode.value=m;loginSub.value=m==='account'?'passwor
 /* 账号登录时的「注册账号」入口（原型无注册页：toast 提示） */
 function openRegister(){toast(t('merchant.login.registerDemo'),'info')}
 const LOGIN_MODE_OPTS=[{v:'phone',lc:'common.phone',icon:'smartphone'},{v:'email',lc:'common.label.email',icon:'mail'},{v:'account',lc:'common.label.account',icon:'user'}];
-const LOGIN_SOCIAL_OPTS=[{v:'google',l:'Google',icon:'google'},{v:'whatsapp',l:'WhatsApp',icon:'whatsapp'}];
+const LOGIN_SOCIAL_OPTS=[{v:'google',l:'Google',icon:'google'},{v:'whatsapp',l:'WhatsApp',icon:'whatsapp'},{v:'line',l:'LINE',icon:'line'}];
 /* 入口：账号方式只列「非当前模式」；例外——正在用 WhatsApp 验证码时仍显示「手机号」入口（点它回到短信/密码登录）。
    三方 Google 常驻，WhatsApp 正在使用（验证码渠道=whatsapp）时隐藏 */
 const loginSwitchEntries=computed(()=>LOGIN_MODE_OPTS.filter(function(m){return m.v!==loginMode.value||(m.v==='phone'&&loginCodeChannel.value==='whatsapp')}).map(m=>({...m,l:t(m.lc)})));
