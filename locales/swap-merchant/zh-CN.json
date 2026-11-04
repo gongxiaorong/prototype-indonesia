@@ -1,18 +1,7 @@
 {
   "demoOps": {
-    "dataReset": "演示数据已重置",
-    "exitedApp": "已退出应用（演示）",
-    "flowResume": "流程恢复",
-    "qrInvalid": "二维码无效，请重新扫码",
-    "crossOperator": "不支持跨运营商换电",
-    "deviceOffline": "设备已离线，暂无法使用",
-    "tooFar": "距离过远无法操作，请靠近机柜重新扫码",
     "online": "在线",
-    "offline": "离线",
-    "cabNotExist": "机柜编码不存在",
-    "cabUsed": "机柜编码已被使用",
-    "addSuccess": "新增成功",
-    "success": "成功"
+    "offline": "离线"
   },
   "merchant": {
     "store": {

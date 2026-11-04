@@ -1,18 +1,7 @@
 {
   "demoOps": {
-    "dataReset": "演示數據已重設",
-    "exitedApp": "已退出應用（演示）",
-    "flowResume": "流程恢復",
-    "qrInvalid": "二維碼無效，請重新掃碼",
-    "crossOperator": "不支持跨營運商換電",
-    "deviceOffline": "設備已離線，暫無法使用",
-    "tooFar": "距離過遠無法操作，請靠近機櫃重新掃碼",
     "online": "在線",
-    "offline": "離線",
-    "cabNotExist": "機櫃編碼不存在",
-    "cabUsed": "機櫃編碼已被使用",
-    "addSuccess": "新增成功",
-    "success": "成功"
+    "offline": "離線"
   },
   "merchant": {
     "store": {

@@ -1,18 +1,7 @@
 {
   "demoOps": {
-    "dataReset": "Demo Data Reset",
-    "exitedApp": "App exited (demo)",
-    "flowResume": "Flow resumed",
-    "qrInvalid": "Invalid QR code. Please scan again",
-    "crossOperator": "Cross-operator battery swap is not supported",
-    "deviceOffline": "Device is offline and temporarily unavailable",
-    "tooFar": "You are too far away. Please move closer to the cabinet and scan again",
     "online": "Online",
-    "offline": "Offline",
-    "cabNotExist": "Cabinet Code Not Found",
-    "cabUsed": "Cabinet Code Already Used",
-    "addSuccess": "Added successfully",
-    "success": "Success"
+    "offline": "Offline"
   },
   "merchant": {
     "store": {
