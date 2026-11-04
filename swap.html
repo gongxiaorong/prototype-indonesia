@@ -428,8 +428,8 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 </div>
-<div class="flex-1 overflow-y-auto hide-scroll px-4 pt-3 pb-4" :class="(swapAreaSet&&planList.length)?'':'flex flex-col items-center justify-center'" data-od-id="plan-body">
-<template v-if="swapAreaSet&&planList.length">
+<div class="flex-1 overflow-y-auto hide-scroll px-4 pt-3 pb-4" :class="(loggedIn&&swapAreaSet&&planList.length)?'':'flex flex-col items-center justify-center'" data-od-id="plan-body">
+<template v-if="loggedIn&&swapAreaSet&&planList.length">
 <div v-for="(p,i) in planList" :key="p.id" data-cp @click="openPlanDetail(i)" class="w-full bg-white rounded-2xl p-3 mb-3 flex items-center gap-3 cursor-pointer active:bg-[#FAFAFA]" style="border:1px solid #F0F0F0;box-shadow:0 1px 3px rgba(0,0,0,.04)" :data-od-id="'plan-item-'+p.id">
 <div class="w-14 h-14 rounded-xl shrink-0 flex items-center justify-center" style="background:linear-gradient(145deg,#EAF2FF 0%,#D9E7FF 100%)"><span v-html="luci('battery-charging','w-8 h-8 text-[#2F6FEB]')"></span></div>
 <div class="flex-1 min-w-0">
@@ -3533,7 +3533,7 @@ function registerSheetKit(app){
     emits:['copy'],
     computed:{kvLineOn:function(){var d=this.divider;if(d===undefined||d===null)return null;return d===''?true:!!d},kvLineClass:function(){var on=this.kvLineOn;return on===null?'':(on?'':'kv-noline')},kvLineStyle:function(){return this.kvLineOn===true?'border-top:1px dashed #E5E5E5;margin-top:-1px':''}},
     methods:{kvCopy:function(){this.$emit('copy',this.copyText||this.value)}},
-    template:'<div class="kv-row flex py-2" :class="[align===\'top\'?\'items-start\':\'items-center\',kvLineClass]" :style="kvLineStyle"><span class="shrink-0 text-[13px]" style="color:#999" :class="labelClass" :style="{width:labelWidth||kvLabelWidth}"><slot name="key">{{ label }}</slot></span><span class="flex-1 min-w-0 text-right pl-3 text-[13px] truncate" style="color:#333333" :class="valueClass" :style="valueStyle||{}"><slot name="value">{{ value }}</slot></span><span v-if="copyable" class="shrink-0 pl-1.5" data-cp @click.stop="kvCopy" v-html="luci(\'copy\',\'w-4 h-4 text-[#999] cursor-pointer active:text-[var(--link)]\')"></span></div>'
+    template:'<div class="kv-row flex py-2" :class="[align===\'top\'?\'items-start\':\'items-center\',kvLineClass]" :style="kvLineStyle"><span class="shrink-0 text-[13px] break-words" style="color:#999" :class="labelClass" :style="{minWidth:labelWidth||kvLabelWidth,maxWidth:\'60%\'}"><slot name="key">{{ label }}</slot></span><span class="flex-1 min-w-0 text-right pl-3 text-[13px] truncate" style="color:#333333" :class="valueClass" :style="valueStyle||{}"><slot name="value">{{ value }}</slot></span><span v-if="copyable" class="shrink-0 pl-1.5" data-cp @click.stop="kvCopy" v-html="luci(\'copy\',\'w-4 h-4 text-[#999] cursor-pointer active:text-[var(--link)]\')"></span></div>'
   });
   /* FormField：页面级表单字段外壳（label + 状态容器 + 计数 + 错误/提示）。
      用法：<form-field label="套餐名称" required :error="fE.name" :counter="(fpk.name||'').length" counter-max="64">
