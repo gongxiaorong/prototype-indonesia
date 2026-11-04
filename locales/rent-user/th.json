@@ -487,10 +487,13 @@
       "guestTip": "เข้าสู่ระบบเพื่อดูคำสั่งซื้อและกระเป๋าเงิน"
     },
     "about": {
-      "hotline": "โทรศัพท์ลูกค้า",
-      "email": "อีเมลลูกค้า",
+      "hotline": "โทรศัพท์",
+      "email": "อีเมล",
       "currentVersion": "เวอร์ชันปัจจุบัน",
-      "copyright": "© 2026 PT YADEA DISTRIBUTOR INDONESIA. All Rights Reserved."
+      "copyright": "© 2026 PT YADEA DISTRIBUTOR INDONESIA. All Rights Reserved.",
+      "complaintTitle": "บริการรับเรื่องร้องเรียนผู้บริโภค",
+      "complaintDesc": "หากคุณมีความคิดเห็นหรือข้อร้องเรียนเกี่ยวกับผลิตภัณฑ์หรือบริการของเรา โปรดติดต่อเราผ่านช่องทางด้านล่าง",
+      "govChannelTitle": "ช่องทางร้องเรียนผู้บริโภค"
     },
     "feedback": {
       "typeLabel": "ประเภทข้อเสนอแนะ",

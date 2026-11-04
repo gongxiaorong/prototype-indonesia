@@ -487,10 +487,13 @@
       "guestTip": "Log in to view orders and wallet"
     },
     "about": {
-      "hotline": "Customer service phone",
-      "email": "Customer service email",
+      "hotline": "Phone",
+      "email": "Email",
       "currentVersion": "Current version",
-      "copyright": "© 2026 PT YADEA DISTRIBUTOR INDONESIA. All Rights Reserved."
+      "copyright": "© 2026 PT YADEA DISTRIBUTOR INDONESIA. All Rights Reserved.",
+      "complaintTitle": "Consumer Complaint Service",
+      "complaintDesc": "If you have any comments or complaints about our products or services, please contact us via the channels below.",
+      "govChannelTitle": "Consumer Complaint Channel"
     },
     "feedback": {
       "typeLabel": "Feedback type",

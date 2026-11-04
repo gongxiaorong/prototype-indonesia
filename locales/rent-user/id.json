@@ -487,10 +487,13 @@
       "guestTip": "Masuk untuk melihat pesanan dan dompet"
     },
     "about": {
-      "hotline": "Telepon layanan",
-      "email": "Email layanan",
+      "hotline": "Telepon",
+      "email": "Email",
       "currentVersion": "Versi saat ini",
-      "copyright": "© 2026 PT YADEA DISTRIBUTOR INDONESIA. All Rights Reserved."
+      "copyright": "© 2026 PT YADEA DISTRIBUTOR INDONESIA. All Rights Reserved.",
+      "complaintTitle": "Layanan Pengaduan Konsumen",
+      "complaintDesc": "Jika Anda memiliki keluhan atau masukan mengenai produk atau layanan kami, silakan hubungi kami melalui saluran berikut.",
+      "govChannelTitle": "Saluran Pengaduan Konsumen"
     },
     "feedback": {
       "typeLabel": "Jenis masukan",

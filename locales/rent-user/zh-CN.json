@@ -490,7 +490,10 @@
       "hotline": "客服电话",
       "email": "客服邮箱",
       "currentVersion": "当前版本",
-      "copyright": "© 2026 PT YADEA DISTRIBUTOR INDONESIA. All Rights Reserved."
+      "copyright": "© 2026 PT YADEA DISTRIBUTOR INDONESIA. All Rights Reserved.",
+      "complaintTitle": "消费者投诉服务",
+      "complaintDesc": "如对我们的产品或服务有任何意见或不满，请通过以下渠道联系我们。",
+      "govChannelTitle": "消费者投诉渠道"
     },
     "feedback": {
       "typeLabel": "反馈类型",
