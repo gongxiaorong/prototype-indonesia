@@ -166,9 +166,7 @@
       "switchFranchisee": "Ganti Mitra"
     },
     "common": {
-      "totalItems": "Total {n}",
-      "totalStores": "{n} toko",
-      "totalStations": "{n} stasiun"
+      "totalItems": "Total {n}"
     },
     "record": {
       "batterySeg": " · Baterai {no}",
@@ -454,7 +452,8 @@
     "copied": "Tersalin",
     "cabinet": {
       "disable": "Nonaktifkan Kabinet"
-    }
+    },
+    "listTotal": "Total {n}"
   },
   "user": {
     "profile": {

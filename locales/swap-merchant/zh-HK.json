@@ -166,9 +166,7 @@
       "switchFranchisee": "切換加盟商"
     },
     "common": {
-      "totalItems": "共 {n} 條",
-      "totalStores": "共 {n} 家",
-      "totalStations": "共 {n} 個"
+      "totalItems": "共 {n} 條"
     },
     "record": {
       "batterySeg": " · 電池 {no}",
@@ -454,7 +452,8 @@
     "copied": "已複製",
     "cabinet": {
       "disable": "停用機櫃"
-    }
+    },
+    "listTotal": "共 {n} 條"
   },
   "user": {
     "profile": {

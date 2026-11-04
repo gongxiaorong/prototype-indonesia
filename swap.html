@@ -1800,6 +1800,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div v-if="battList.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:battList.length}) }}</div>
 <empty-state v-if="!battList.length" icon="battery-charging" :text="$t('user.battery.empty')">
 <div v-if="battQ||battFilterActive" data-cp @click="battQ='';battFilterReset();battFilterConfirm()" class="mt-4 h-9 px-5 rounded-full flex items-center text-[13px] font-medium cursor-pointer" style="background:#EEF1F8;color:#2B3F5F" data-od-id="batt-empty-reset">{{ $t('action.clearFilter') }}</div>
 </empty-state>
@@ -1832,6 +1833,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto min-h-0 px-5 pt-3 pb-24 hide-scroll" style="touch-action:pan-y;-webkit-overflow-scrolling:touch">
+<div v-if="cabList.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:cabList.length}) }}</div>
 <empty-state v-if="!cabList.length" icon="box" :text="$t('merchant.cabinet.empty')">
 <div v-if="cabQ||cabFilterActive" data-cp @click="cabQ='';cabFilterReset();cabFilterConfirm()" class="mt-4 h-9 px-5 rounded-full flex items-center text-[13px] font-medium cursor-pointer" style="background:#EEF1F8;color:#2B3F5F" data-od-id="cab-empty-reset">{{ $t('action.clearFilter') }}</div>
 </empty-state>
@@ -1949,12 +1951,12 @@ body.host-single-m #root-user{display:none}
 <div data-cp @click="openStoreList()" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border-bottom:1px solid #EDEDED" data-od-id="mine-store-entry">
 <div class="w-7 h-7 flex items-center justify-center mr-3 text-[#666]"><span v-html="luci('store','w-5 h-5')"></span></div>
 <span class="flex-1 text-[15px] font-medium" style="color:#111">{{ $t('merchant.home.storeManage') }}</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] mr-1">{{ $t('merchant.common.totalStores', {n: stores.length}) }}</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
+<div class="flex items-center gap-1"><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
 </div>
 <div data-cp @click="openStationList()" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" data-od-id="mine-station-entry">
 <div class="w-7 h-7 flex items-center justify-center mr-3 text-[#666]"><span v-html="luci('map-pin','w-5 h-5')"></span></div>
 <span class="flex-1 text-[15px] font-medium" style="color:#111">{{ $t('merchant.home.stationManage') }}</span>
-<div class="flex items-center gap-1"><span class="text-[13px] text-[#666] mr-1">{{ $t('merchant.common.totalStations', {n: stations.length}) }}</span><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
+<div class="flex items-center gap-1"><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span></div>
 </div>
 <!-- 数据看板入口暂时隐藏（恢复：去掉本段 HTML 注释即可；分隔线已改为该行的 border-top） -->
 <!-- <div data-cp @click="openDashboard()" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9] transition-colors" style="border-top:1px solid #EDEDED" data-od-id="mine-dashboard-entry">
@@ -2564,6 +2566,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+<div v-if="storeView.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:storeView.length}) }}</div>
 <empty-state v-if="!storeView.length" icon="store" :text="$t('merchant.store.empty')" root-class="flex flex-col items-center justify-center py-14" circle-class="w-14 h-14 rounded-full flex items-center justify-center mb-4 bg-[#F0F0F0]" icon-class="w-7 h-7 text-[#BBB]" text-class="text-[14px] font-semibold text-[#333]"></empty-state>
 <kv-card v-for="s in storeView" :key="s.id" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="openStoreDetail(s.id)" :data-od-id="'store-item-'+s.id">
 <template #title><span class="min-w-0 truncate">{{ s.name }}</span></template>
@@ -2744,6 +2747,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hide-scroll">
+<div v-if="stationView.length" class="text-[12px] mb-2.5" style="color:#999">{{ $t('common.listTotal',{n:stationView.length}) }}</div>
 <empty-state v-if="!stationView.length" icon="map-pin" :text="$t('merchant.station.empty')" root-class="flex flex-col items-center justify-center py-14" circle-class="w-14 h-14 rounded-full flex items-center justify-center mb-4 bg-[#F0F0F0]" icon-class="w-7 h-7 text-[#BBB]" text-class="text-[14px] font-semibold text-[#333]"></empty-state>
 <kv-card v-for="s in stationView" :key="s.id" class="mb-2.5 cursor-pointer active:bg-[#F6F7F9]" data-cp @click="openStationDetail(s.id)" :data-od-id="'station-item-'+s.id">
 <template #title><span class="min-w-0 truncate">{{ s.name }}</span></template>

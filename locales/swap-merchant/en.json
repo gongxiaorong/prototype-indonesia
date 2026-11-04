@@ -166,9 +166,7 @@
       "switchFranchisee": "Switch Franchisee"
     },
     "common": {
-      "totalItems": "Total {n}",
-      "totalStores": "{n} stores",
-      "totalStations": "{n} stations"
+      "totalItems": "Total {n}"
     },
     "record": {
       "batterySeg": " · Battery {no}",
@@ -454,7 +452,8 @@
     "copied": "Copied",
     "cabinet": {
       "disable": "Disable Cabinet"
-    }
+    },
+    "listTotal": "Total {n}"
   },
   "user": {
     "profile": {

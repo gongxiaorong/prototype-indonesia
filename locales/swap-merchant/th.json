@@ -166,9 +166,7 @@
       "switchFranchisee": "เปลี่ยนผู้รับสิทธิ์"
     },
     "common": {
-      "totalItems": "ทั้งหมด {n} รายการ",
-      "totalStores": "{n} ร้าน",
-      "totalStations": "{n} สถานี"
+      "totalItems": "ทั้งหมด {n} รายการ"
     },
     "record": {
       "batterySeg": " · แบตเตอรี่ {no}",
@@ -454,7 +452,8 @@
     "copied": "คัดลอกแล้ว",
     "cabinet": {
       "disable": "ปิดใช้งานตู้"
-    }
+    },
+    "listTotal": "ทั้งหมด {n} รายการ"
   },
   "user": {
     "profile": {
