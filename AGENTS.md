@@ -155,7 +155,8 @@ ui(user): 搜索框文案「搜索目的地」改为「搜索地点」（首页�
 ```
 
 - 遮罩 rgba(0,0,0,.45) + 300px 白卡 + 双按钮 + loading 遮罩 spinner；额外中间内容放默认 slot。
-- `confirm-text/cancel-text` 定制按钮文案；**`cancel-text` 传空串隐藏取消键**（单按钮形态）；`confirm-bg` 支持危险红钮/`var(--accent)`；`:mask-close="false"` 禁点遮罩（loading 时双按钮自动禁点）。
+- `confirm-text/cancel-text` 定制按钮文案；**`cancel-text` 传空串隐藏取消键**（单按钮形态）；`:mask-close="false"` 禁点遮罩（loading 时双按钮自动禁点）。
+- **确认按钮配色统一主色**：一律 `confirm-bg="var(--accent)"`（或省略走组件默认 `#2B3F5F`）；**禁止用红色（`#DC2626` / `--danger`）表示“危险操作”**——禁用、删除、结束订单、退款等确认弹窗同样用主色；红色只用于状态文字/图标与错误提示，**不用于按钮底色**。取消键保持灰底（组件默认）。
 - 例外（保留手写）：`newAccCred`（账号创建成功单按钮结果页）；`swap.html` 的 `loc-auth-modal`（图标位于标题**上方**，而组件渲染顺序固定为 标题→描述→slot，无法表达）。
 - 卡片宽度固定 **300px**，按钮用 **`rounded-xl`**；`confirm-bg` 可传渐变字符串（如 `:confirm-bg="'linear-gradient(135deg,#33456B,#22304E)'"`）；单按钮用 `cancel-text=""`；文案/动态色用 `confirm-text`/`confirm-bg` 表达式。
 
