@@ -2258,7 +2258,7 @@ body.host-single-m #root-user{display:none}
 <div class="conf-pay" :class="paymentType==='balance'?'is-selected':''" data-cp @click="paymentType='balance'" data-page-node-id="2QJUxXdzIUzZ7ZHWMuzw0p"><span class="text-[11px]" data-page-node-id="hQ94HnoiCg6HxerZsdCLOH">{{ $t('user.wallet.balancePay') }}</span><span class="text-[10px] text-[#999]" data-page-node-id="WDWFVwhDxeRsfAUQNHcU0j">{{ walletActive?fmtRp(walletActive.totalBalance,2):'-' }}</span></div>
 </div>
 </div>
-<div class="px-5 shrink-0" data-page-node-id="4B1sFvXG3k6vCvftW8LRI2"><button data-cp @click="confirmPayment" :disabled="paymentBusy" class="w-full h-12 rounded-xl text-[15px] font-semibold text-white flex items-center justify-center disabled:opacity-50" style="background:var(--accent)" data-page-node-id="6nffh7by1EuxYgurgHYmLt">{{ $t('user.orders.payNow') }}</button></div></bottom-sheet>
+<div class="px-5 pt-4 shrink-0" data-page-node-id="4B1sFvXG3k6vCvftW8LRI2"><button data-cp @click="confirmPayment" :disabled="paymentBusy" class="w-full h-12 rounded-xl text-[15px] font-semibold text-white flex items-center justify-center disabled:opacity-50" style="background:var(--accent)" data-page-node-id="6nffh7by1EuxYgurgHYmLt">{{ $t('user.orders.payNow') }}</button></div></bottom-sheet>
 
 <!-- 扫码页（次级页面，样式固定） -->
 <page :open="scanning" :z="1890" oid="scan-page" data-page-node-id="QfMXHkH40r1wWKCBWrjHkx">
@@ -4965,7 +4965,7 @@ body.host-single-m #root-user{display:none}
 <textarea v-model="roRefundForm.reason" maxlength="255" :placeholder="$t('merchant.orders.refundModalReasonPlaceholder')" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px] placeholder:text-[#999]" style="font-family:inherit"></textarea>
 </form-field>
 <div class="mt-2">
-<button data-cp @click="roSubmitRefund" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer" style="background:var(--accent)">{{ $t('common.action.confirmLabel') }}</button>
+<button data-cp @click="roSubmitRefund" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer active:opacity-90 transition-colors" style="background:var(--accent)">{{ $t('common.action.confirmLabel') }}</button>
 </div></div></bottom-sheet>
 
 <!-- ═══ RECHARGE ORDER REFUND CONFIRM MODAL ═══ -->
@@ -5144,7 +5144,7 @@ body.host-single-m #root-user{display:none}
 <textarea v-model="rReason" maxlength="255" :placeholder="$t('merchant.orders.refundModalReasonPlaceholder')" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px]" style="font-family:inherit"></textarea>
 </form-field>
 </div>
-<div class="px-5 shrink-0"><button data-cp @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.confirmLabel') }}</button></div></bottom-sheet>
+<div class="px-5 pt-4 shrink-0"><button data-cp @click="submitRefund" :disabled="refundSaving" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.confirmLabel') }}</button></div></bottom-sheet>
 
 <!-- ═══ ADD DOC SHEET ═══ -->
 <bottom-sheet :open="showDocSheet" :title="$t('merchant.profile.addUserInfo')" :mask-z="604" max-h="70%" @close="showDocSheet=false">
@@ -5211,7 +5211,7 @@ body.host-single-m #root-user{display:none}
 <textarea v-model="psReason" maxlength="255" :placeholder="$t('merchant.profile.remarkPlaceholder')" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[80px]" style="font-family:inherit"></textarea>
 </form-field>
 </div>
-<div class="px-5 shrink-0"><button data-cp @click="submitPaySplit" :disabled="!psValid" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50" style="background:var(--accent)">{{ $t('common.action.confirmLabel') }}</button></div></bottom-sheet>
+<div class="px-5 pt-4 shrink-0"><button data-cp @click="submitPaySplit" :disabled="!psValid" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50" style="background:var(--accent)">{{ $t('common.action.confirmLabel') }}</button></div></bottom-sheet>
 
 <!-- ═══ 改价二次确认弹窗 ═══ -->
 <confirm-dialog :open="!!psConfirmMod" :title="psConfirmMod&&psConfirmMod.title" :desc="psConfirmMod&&psConfirmMod.desc" :loading="psDoLoading" z="999" @close="psConfirmMod=null" @confirm="psDoSubmit"></confirm-dialog>
@@ -5387,7 +5387,7 @@ body.host-single-m #root-user{display:none}
 </form-field>
 </div>
 <div class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
-<button data-cp @click="cdSaveAdd" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="cd-add-submit">{{ $t('common.action.save') }}</button>
+<button data-cp @click="cdSaveAdd" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer active:opacity-90 transition-colors" style="background:var(--accent)" data-od-id="cd-add-submit">{{ $t('common.action.save') }}</button>
 </div>
 </page>
 
@@ -5418,7 +5418,7 @@ body.host-single-m #root-user{display:none}
 </form-field>
 </div>
 <div class="absolute bottom-0 left-0 right-0 px-5 pb-7 pt-3 z-[10]" style="background:rgba(246,247,249,.95);backdrop-filter:blur(10px)">
-<button data-cp @click="cdSaveEdit" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="cd-edit-submit">{{ $t('common.action.save') }}</button>
+<button data-cp @click="cdSaveEdit" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer active:opacity-90 transition-colors" style="background:var(--accent)" data-od-id="cd-edit-submit">{{ $t('common.action.save') }}</button>
 </div>
 </page>
 
@@ -5434,7 +5434,7 @@ body.host-single-m #root-user{display:none}
 <span class="pl-2 pr-3.5 text-[14px] shrink-0" style="color:#999">{{ $t('common.vehicles.walkMin') }}</span>
 </form-field>
 <div class="mt-2">
-<button data-cp @click="cdSavePrice" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="cd-mod-submit">{{ $t('common.action.save') }}</button>
+<button data-cp @click="cdSavePrice" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer active:opacity-90 transition-colors" style="background:var(--accent)" data-od-id="cd-mod-submit">{{ $t('common.action.save') }}</button>
 </div>
 </div></bottom-sheet>
 
@@ -5503,17 +5503,20 @@ body.host-single-m #root-user{display:none}
 <!-- ═══ 充电桩 · 更换门店（OptionSheet：统一单选列表；选中即更换） ═══ -->
 <!-- ═══ 商户端 · 更换门店弹窗（对标「选择车型」：搜索 + 列表行；行内回显同门店列表＝门店名 + 地址；
      车辆 / 电池 / 充电桩三处共用，由 shopPickTarget 分派回写） ═══ -->
-<bottom-sheet :open="shopPickTarget!==''" :title="$t('merchant.chargingDevice.changeShop')" :mask-z="800" max-h="65%" panel-oid="shop-pick-sheet" @close="closeShopPick">
-<div class="sheet-search">
+<bottom-sheet :open="shopPickTarget!==''" :title="$t('merchant.chargingDevice.changeShop')" :mask-z="800" max-h="80%" panel-oid="shop-pick-sheet" @close="closeShopPick">
+<div class="sheet-search shrink-0">
 <span v-html="luci('search','w-4 h-4 text-[#999]')"></span>
 <input v-model="shopPickQ" type="text" :placeholder="$t('merchant.profile.searchStore')" class="flex-1 bg-transparent border-none text-sm outline-none min-w-0 placeholder:text-[#999]" data-od-id="shop-pick-search">
 </div>
-<div class="flex-1 overflow-y-auto" data-od-id="shop-pick-list">
+<div class="flex-1 min-h-0 max-h-[320px] overflow-y-auto conf-scroll-hide" data-od-id="shop-pick-list">
 <div v-for="s in shopPickList" :key="s.id" data-cp @click="pickShop(s.id)" class="flex items-center px-5 py-4 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #EDEDED" :data-od-id="'shop-pick-' + s.id">
 <div class="w-12 h-12 rounded-lg bg-[#EBF1FD] flex items-center justify-center mr-3 shrink-0"><span v-html="luci('building-2','w-7 h-7 text-[var(--accent)]')"></span></div>
 <div class="flex-1 min-w-0"><div class="text-[15px] font-medium truncate">{{ s.name }}</div><div class="text-[12px] text-[#999] truncate mt-0.5">{{ s.addr }}</div></div>
-<span v-if="shopPickCurId===s.id" v-html="luci('check','w-5 h-5 text-[var(--accent)] shrink-0')"></span>
+<span v-if="shopPickSelId===s.id" v-html="luci('check','w-5 h-5 text-[var(--accent)] shrink-0')"></span>
 </div>
+</div>
+<div class="px-5 pt-4 shrink-0" data-page-node-id="ShopPickFoot">
+<button data-cp @click="confirmShopPick" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer transition-colors active:opacity-90" style="background:var(--accent)" data-od-id="shop-pick-confirm">{{ $t('common.action.confirmLabel') }}</button>
 </div>
 </bottom-sheet>
 
@@ -5686,7 +5689,7 @@ body.host-single-m #root-user{display:none}
 <form-field :label="$t('merchant.chargingOrder.cancelReason')" box-class="ff-box-gray is-area" :error="coCancelErr" :counter="(coCancelForm.reason||'').length" counter-max="64">
 <textarea v-model="coCancelForm.reason" maxlength="64" :placeholder="$t('merchant.orders.cancelReasonPlaceholder')" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px] placeholder:text-[#999]" style="font-family:inherit"></textarea>
 </form-field>
-<div class="mt-2"><button type="button" data-cp @click="coSubmitCancel" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="co-cancel-submit">{{ $t('common.action.confirmLabel') }}</button></div>
+<div class="mt-4"><button type="button" data-cp @click="coSubmitCancel" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer active:opacity-90 transition-colors" style="background:var(--accent)" data-od-id="co-cancel-submit">{{ $t('common.action.confirmLabel') }}</button></div>
 </div></bottom-sheet>
 
 <confirm-dialog :open="coCancelConfirm" :title="$t('common.orders.cancelOrder')" :desc="$t('common.orders.confirmCancelDesc')" :loading="coCancelLoading" z="820" @close="coCancelConfirm=false" @confirm="coConfirmCancel"></confirm-dialog>
@@ -5697,7 +5700,7 @@ body.host-single-m #root-user{display:none}
 <textarea v-model="coFinishForm.reason" maxlength="255" :placeholder="$t('merchant.orders.endReasonPlaceholder')" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px] placeholder:text-[#999]" style="font-family:inherit"></textarea>
 </form-field>
 <p class="text-[12px] text-[#999] mt-1 px-1 leading-relaxed">{{ $t('merchant.orders.endOrderHint') }}</p>
-<div class="mt-2"><button type="button" data-cp @click="coSubmitFinish" class="w-full py-3.5 rounded-xl text-[15px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="co-finish-submit">{{ $t('common.action.confirmLabel') }}</button></div>
+<div class="mt-4"><button type="button" data-cp @click="coSubmitFinish" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer active:opacity-90 transition-colors" style="background:var(--accent)" data-od-id="co-finish-submit">{{ $t('common.action.confirmLabel') }}</button></div>
 </div></bottom-sheet>
 
 <confirm-dialog :open="coFinishConfirm" :title="$t('merchant.chargingOrder.finishOrder')" :desc="$t('merchant.orders.endOrderConfirmDesc')" :loading="coFinishLoading" z="820" @close="coFinishConfirm=false" @confirm="coConfirmFinish"></confirm-dialog>
@@ -5713,7 +5716,7 @@ body.host-single-m #root-user{display:none}
 <textarea v-model="coRefundForm.reason" maxlength="255" :placeholder="$t('merchant.orders.refundModalReasonPlaceholder')" class="w-full p-4 pb-8 text-[15px] outline-none resize-none min-h-[90px]" style="font-family:inherit"></textarea>
 </form-field>
 </div>
-<div class="px-5 shrink-0"><button type="button" data-cp @click="coSubmitRefund" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)" data-od-id="co-refund-submit">{{ $t('common.action.confirmLabel') }}</button></div>
+<div class="px-5 pt-4 shrink-0"><button type="button" data-cp @click="coSubmitRefund" class="w-full py-4 rounded-xl text-[17px] font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)" data-od-id="co-refund-submit">{{ $t('common.action.confirmLabel') }}</button></div>
 </bottom-sheet>
 
 <confirm-dialog :open="coRefundConfirm" :title="$t('common.wallet.orderRefund')" :desc="$t('merchant.orders.refundConfirmAmount',{amount:fmtRp(coRefundForm.amount||0,0)})" :loading="coRefundLoading" z="820" @close="coRefundConfirm=false" @confirm="coConfirmRefund"></confirm-dialog>
@@ -11413,15 +11416,26 @@ const shopPickTarget=ref('');            // '' | 'veh' | 'batt' | 'cd'
 const shopPickQ=ref('');
 const shopPickList=computed(()=>{const q=shopPickQ.value.trim().toLowerCase();return stores.value.map((s,i)=>({id:i+1,name:s.name,addr:s.addr||''})).filter(s=>!q||s.name.toLowerCase().includes(q)||s.addr.toLowerCase().includes(q))});
 const shopPickCurId=computed(()=>shopPickTarget.value==='veh'?Number(dv.value.shopId)||0:shopPickTarget.value==='batt'?Number(curBatt.value&&curBatt.value.shopId)||0:shopPickTarget.value==='cd'?Number(curChargeDev.value&&curChargeDev.value.shopId)||0:0);
-function openShopPick(target){shopPickQ.value='';shopPickTarget.value=target}
-function closeShopPick(){shopPickTarget.value=''}
-/* 选中即提交：门店未变仅关闭；车辆详情是副本，需同步回列表源数据 */
-function pickShop(id){const sid=Number(id)||0;if(!sid)return;const t=shopPickTarget.value;
+const shopPickSelId=ref(0);
+function openShopPick(target){shopPickQ.value='';shopPickTarget.value=target;shopPickSelId.value=Number(shopPickCurId.value)||0}
+function closeShopPick(){shopPickTarget.value='';shopPickSelId.value=0}
+/* 点击行只更新选中态（打钩），底部「确定」才写回；门店未变仅关闭。
+   车辆详情是副本，需同步回列表源数据 */
+function pickShop(id){const sid=Number(id)||0;if(sid)shopPickSelId.value=sid}
+function confirmShopPick(){const sid=Number(shopPickSelId.value)||0;if(!sid)return;const t=shopPickTarget.value;
   if(t==='veh'){const v=dv.value;if(sid===Number(v.shopId)){closeShopPick();return}v.shopId=sid;const i=vehicles.value.findIndex(x=>x.vin===v.vin);if(i>=0)vehicles.value[i].shopId=sid}
   else if(t==='batt'){const b=curBatt.value;if(!b)return;if(sid===Number(b.shopId)){closeShopPick();return}b.shopId=sid;const i=batteries.value.findIndex(x=>x.battNo===b.battNo);if(i>=0)batteries.value[i].shopId=sid}
   else if(t==='cd'){const d=curChargeDev.value;if(!d)return;if(sid===Number(d.shopId)){closeShopPick();return}d.shopId=sid}
   else return;
-  closeShopPick();toast(i18n.global.t('merchant.chargingDevice.shopChanged'),'success')}
+  /* 更换成功后回到列表页并重新拉取列表（原型：列表与详情同源，回列表即呈现新门店） */
+  closeShopPick();
+  navDrop();
+  if(t==='veh')vehOV.value=null;
+  else if(t==='batt')ordersOV.value=null;
+  else cdOV.value='list';
+  brandLoading.value=true;
+  setTimeout(function(){brandLoading.value=false},350);
+  toast(i18n.global.t('merchant.chargingDevice.shopChanged'),'success')}
 function cdAskToggle(){var d=curChargeDev.value;if(!d)return;cdConfirm.value=d.status==='ENABLE'?'disable':'enable'}
 function cdDoToggle(){if(cdConfirmLoading.value)return;cdConfirmLoading.value=true;setTimeout(function(){cdConfirmLoading.value=false;var d=curChargeDev.value;if(d)d.status=(d.status==='ENABLE'?'DISABLE':'ENABLE');var was=cdConfirm.value;cdConfirm.value='';toast(t(was==='disable'?'merchant.chargingDevice.disabledToast':'merchant.chargingDevice.enabledToast'),'success')},500)}
 const cdConfirmTitle=computed(()=>cdConfirm.value==='disable'?t('merchant.chargingDevice.disableAction'):(cdConfirm.value==='enable'?t('merchant.chargingDevice.enableAction'):''));
@@ -11793,7 +11807,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDeta
  ordersOpenFS,ordersResetFS,ordersApplyFS,ordersSetPill,ordersPickSt,ordersPickPlan,ordersPickPay,ordersPickPaySt,ordersPillActive,ordersClearFilters,ordersSaving,
   showDocCard,canEditDocs,curDocs,showDocSheet,docSheetTab,docText,docImageTypes,openDocsPage,openDocSheet,addDocImage,addDocText,deleteDoc,confirmDeleteDoc,docDeleteMod,previewImage,
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,navOpen,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
-  curStore,menuGroups,openMenu,stores,doSwitch,orderStoreNameOf,orderPaidAmountOf,orderUnpaidAmountOf,shopPickTarget,shopPickQ,shopPickList,shopPickCurId,openShopPick,closeShopPick,pickShop,
+  curStore,menuGroups,openMenu,stores,doSwitch,orderStoreNameOf,orderPaidAmountOf,orderUnpaidAmountOf,shopPickTarget,shopPickQ,shopPickList,shopPickCurId,shopPickSelId,openShopPick,closeShopPick,pickShop,confirmShopPick,
 appLang,appLangLabel,intlLocale,langOptions,selectLang,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,loginErr,doLogout,demoLogin,demoLogout,
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,confirmModelSync,modelSyncOrder,modelSyncConfirm,modelSyncCount,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,confirmBattSync,battSyncOrder,battSyncConfirm,battSyncCount,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgSyncOrder,pkgSyncConfirm,pkgSyncCount,confirmPkgSync,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,pkgPickerSel,openPkgPicker,pkgToggle,pkgPickerConfirm,closePkgPicker,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
