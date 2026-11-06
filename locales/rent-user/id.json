@@ -407,7 +407,11 @@
       "payPartialRefund": "Pengembalian Sebagian",
       "payFullRefund": "Pengembalian Penuh",
       "payProcessing": "Pembayaran Diproses",
-      "rentDurationShort": "Total {n} {unit}"
+      "rentDurationShort": "Total {n} {unit}",
+      "noRefund": "Belum ada pengembalian dana",
+      "goodsInfo": "Info barang",
+      "basicInfo": "Info dasar",
+      "storeName": "Nama toko"
     },
     "toast": {
       "deviceBound": "Perangkat berhasil diikat",

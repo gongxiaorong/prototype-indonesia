@@ -2036,30 +2036,28 @@ body.host-single-m #root-user{display:none}
   <span class="text-[13px] text-[#DC2626] font-medium" data-page-node-id="OKCnkbm4D9dNOrRE9wtCRD">{{ $t('user.orders.breachReminder') }}</span>
 </div>
 <div class="flex-1 overflow-y-auto min-h-0 conf-scroll-hide px-4 pt-3 pb-[112px]" style="touch-action:pan-y;-webkit-overflow-scrolling:touch" data-page-node-id="f6LZUMyfiPLxSFBDY50FyT">
-<div class="bg-white rounded-2xl p-4 mb-3" data-od-id="od-rent" data-page-node-id="ekHCIjyKOCaISDai62F3QZ">
-<div class="flex items-center justify-between mb-2" data-page-node-id="bamOZXWn97mFD7KKOjpxPx">
-<span class="text-[13px] font-semibold text-[#333] truncate" data-page-node-id="mpFgSju4Gsov1w6spd8r9W">{{ orderInfo.storeName }}</span>
-<span class="text-[14px] font-semibold" :style="'color:'+(orderInfo.statusColor||'#999')" data-page-node-id="7uhuMZygbiSpWUCcnfVsir">{{ orderStatusText(orderInfo) }}</span>
-</div>
-<div class="flex items-start gap-3 mb-2.5" data-page-node-id="AcaR79A4KbuGey9NjVh0h1">
+<kv-card :title="$t('user.orders.basicInfo')" class="mb-3" data-od-id="od-goods" data-page-node-id="ekHCIjyKOCaISDai62F3QZ">
+<template #extra><span class="text-[13px] font-semibold" :style="'color:'+(orderInfo.statusColor||'#999')" data-page-node-id="7uhuMZygbiSpWUCcnfVsir">{{ orderStatusText(orderInfo) }}</span></template>
+<div class="flex items-start gap-3" data-page-node-id="AcaR79A4KbuGey9NjVh0h1">
 <div class="flex-1 min-w-0" data-page-node-id="hl0PL2pBw5QAyiZ24AKhor">
-<div class="text-[15px] font-bold text-[#111]" data-page-node-id="wXXVyuhzMiNWdwp1kLeOXy">{{ orderInfo.model || (selectedVehicle?selectedVehicle.name:'乐迪SAA') }}</div>
+<div class="text-[15px] font-bold text-[#111]" data-page-node-id="wXXVyuhzMiNWdwp1kLeOXy">{{ orderInfo.item || orderInfo.model || (selectedVehicle?selectedVehicle.name:'') }}</div>
 <div class="text-[12px] text-[#999] line-clamp-2 mt-0.5" data-page-node-id="OEfsYWDEvQC5LGbBQJEAk1">{{ orderInfo.desc || (selectedVehicle?selectedVehicle.desc:'') }}</div>
 </div>
-<div class="store-thumb flex-shrink-0" :style="{background:((orderInfo&&orderInfo.img||(selectedVehicle&&selectedVehicle.img)||'#2B3F5F')+'10')}" data-page-node-id="R0xKS0500W2K4Ia7X0PA3E"><span v-html="luci('bike','w-6 h-6')" :style="{color:(orderInfo&&orderInfo.img||(selectedVehicle&&selectedVehicle.img)||'#2B3F5F')}" data-page-node-id="XzzPevqN4Fq89rjqgqbF0b"></span></div>
+<div class="store-thumb flex-shrink-0" :style="{background:((orderInfo&&orderInfo.img||(selectedVehicle&&selectedVehicle.img)||'#2B3F5F')+'10')}" data-page-node-id="R0xKS0500W2K4Ia7X0PA3E"><span v-html="luci('package','w-6 h-6')" :style="{color:(orderInfo&&orderInfo.img||(selectedVehicle&&selectedVehicle.img)||'#2B3F5F')}" data-page-node-id="XzzPevqN4Fq89rjqgqbF0b"></span></div>
 </div>
 <div class="pt-3 text-[13px] space-y-2.5" data-page-node-id="uThFvxsxjBabrSOKe50YIb">
-<div class="flex items-start gap-2" data-page-node-id="8CVzDTxZpOfuwmpRCuHCst"><span class="text-[#999] w-16 flex-shrink-0 leading-[1.5]" data-page-node-id="CHaof6eqiy4Fgx3n6gvTU4">{{ $t('common.profile.rentTime') }}</span><span class="flex-1 min-w-0 text-right text-[#333] leading-[1.5]" data-page-node-id="wBsmqsnjII2hD5tDNQMrmh">{{ feeCardRow?feeCardRow.periodStart:'-' }}<br data-page-node-id="1ZDkUoVFoFKQAVPjEjIrNB">{{ feeCardRow?feeCardRow.periodEnd:'-' }}</span></div>
+<div class="flex items-center gap-2" data-page-node-id="bamOZXWn97mFD7KKOjpxPx"><span class="text-[#999] w-16 flex-shrink-0" data-page-node-id="CHaof6eqiy4Fgx3n6gvTU4">{{ $t('user.orders.storeName') }}</span><div class="flex-1 min-w-0 flex items-center justify-end gap-2">
+<span class="min-w-0 text-right text-[#333] truncate" data-page-node-id="mpFgSju4Gsov1w6spd8r9W">{{ orderInfo.storeName }}</span>
+<span class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 cursor-pointer active:scale-95 transition-transform" style="background:rgba(43,63,95,.08)" v-if="csReceptionFlag" data-cp @click.stop="openStorePhone()" data-page-node-id="AVjKWkmJlP3iJaEgfM0IXu"><span v-html="luci('phone','w-3.5 h-3.5')" style="color:#2B3F5F"></span></span>
+<span class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 cursor-pointer active:scale-95 transition-transform" style="background:rgba(255,106,0,.1)" data-cp @click.stop="openStoreNav()" data-page-node-id="iQQavabWTmO0M4KRyRvhWS"><span v-html="luci('navigation','w-3 h-3')" style="color:#FF6A00"></span></span>
+</div></div>
+<div class="flex items-start gap-2" data-page-node-id="8CVzDTxZpOfuwmpRCuHCst"><span class="text-[#999] w-16 flex-shrink-0 leading-[1.5]" data-page-node-id="ZaipQ2mS8dRkP3xWnV7cLb">{{ $t('common.profile.rentTime') }}</span><span class="flex-1 min-w-0 text-right text-[#333] leading-[1.5]" data-page-node-id="wBsmqsnjII2hD5tDNQMrmh">{{ feeCardRow?feeCardRow.periodStart:'-' }}<br data-page-node-id="1ZDkUoVFoFKQAVPjEjIrNB">{{ feeCardRow?feeCardRow.periodEnd:'-' }}</span></div>
 <div class="flex items-center gap-2" data-page-node-id="Nmw3Kh7NjpEGnqnguh2il2"><span class="text-[#999] w-16 flex-shrink-0" data-page-node-id="A9GhIJZ022sULiiRudAX85">{{ $t('common.orders.orderId') }}</span><span class="flex-1 text-right text-[#333]" data-page-node-id="IuTfQ9ZlBNEE8kEijDmTtO">{{ orderInfo.orderId }}</span></div>
 <div class="flex items-center gap-2" data-page-node-id="7Qt6PFHjqHgfOaKhzcsqO0"><span class="text-[#999] w-16 flex-shrink-0" data-page-node-id="KEMprUjmddNASK9QyEpIIa">{{ $t('common.createTime') }}</span><span class="flex-1 text-right text-[#333]" data-page-node-id="Kg0USBhSMUlDNnyBShEbK6">{{ orderInfo.createTime }}</span></div>
 <div v-if="orderInfo.status==='complete' && orderInfo.finishTime" class="flex items-center gap-2" data-page-node-id="A2nJwlCPteDTvMUiO3GzLy"><span class="text-[#999] w-16 flex-shrink-0" data-page-node-id="PjeEKICRQKkyeLD26cfpKQ">{{ $t('common.orders.finishTime') }}</span><span class="flex-1 text-right text-[#333]" data-page-node-id="DIh7oSXG0eJCgXHB5owj9T">{{ orderInfo.finishTime }}</span></div>
 <div v-if="orderInfo.status==='cancelled' && orderInfo.cancelTime" class="flex items-center gap-2" data-page-node-id="DFmxnfmKydTTMxHarzLVEO"><span class="text-[#999] w-16 flex-shrink-0" data-page-node-id="j420u8tZ3Cj5Sa5LmEtv1Z">{{ $t('common.orders.cancelTime') }}</span><span class="flex-1 text-right text-[#333]" data-page-node-id="hiuHxpYpAp6bClrYstwGw2">{{ orderInfo.cancelTime }}</span></div>
 </div>
-<div class="flex gap-2 pt-2.5" data-page-node-id="uk3Mmp7etYxhNRoHuxKqAN">
-<button class="flex-1 py-2.5 rounded-xl text-[14px] text-[#1A1A1A] bg-transparent border border-[#E5E5E5]" data-page-node-id="AVjKWkmJlP3iJaEgfM0IXu" v-if="csReceptionFlag" data-cp @click="openStorePhone()">{{ $t('user.orders.contactStore') }}</button>
-<button class="flex-1 py-2.5 rounded-xl text-[14px] text-[#1A1A1A] bg-transparent border border-[#E5E5E5]" data-page-node-id="iQQavabWTmO0M4KRyRvhWS" data-cp @click="openStoreNav()">{{ $t('user.store.navToStore') }}</button>
-</div>
-</div>
+</kv-card>
 
 <kv-card v-if="feeCardRow" :title="$t('common.profile.feeDetail')" class="mb-3" data-od-id="od-fee-entry" data-page-node-id="4cHtHKHvoTtfVzFWfVyUZu">
 <template #extra><span class="inline-flex items-center justify-center w-4 h-4 shrink-0 cursor-pointer active:opacity-70" data-cp @click="showFeeDetail=true" data-page-node-id="tfa3FKYom8vVMFJbn70CjB"><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="Oiq3eUVZnMyjIEjrv4A4ZF"></span></span></template>
@@ -2085,9 +2083,12 @@ body.host-single-m #root-user{display:none}
 <div v-if="totalOpen" class="space-y-1 pb-1 pl-1" data-page-node-id="kJUVIvjNkIpSKhJuRyD6DT">
 <div v-for="c in feeStatChannels.total" :key="c.channel" class="flex items-center justify-between text-[12px]" data-page-node-id="VHaoEsgnXNyI1yRVFu9WFg"><span class="text-[#999]" data-page-node-id="D5dSL8Hb3FW42BokZbklew">{{ rechargeChannelText(c.channel) }}</span><span class="text-[#666]" data-page-node-id="tsyuDLTCmjNM65hvFCWFw2">{{ fmtRp(c.amount,2) }}</span></div>
 </div>
+
 <div v-if="feeCardRow.no&&feeCardRow.payCode!=='paid'" class="mt-2 flex gap-2" data-page-node-id="4yMHtvIBBnun0TfAB81gQH"><div class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-center cursor-pointer active:opacity-90" style="border:1px solid var(--accent);color:var(--accent)" data-cp @click="requestCancelRenew(feeCardRow.no)" data-page-node-id="0AhwhMjBh3CiD37M7RTtHj">{{ $t('user.orders.cancelRenew') }}</div><div v-if="feeCardRow.payCode==='pending'&&feeCardRow.payMethod!=='线下支付'" class="flex-1 py-2 rounded-xl text-[13px] font-semibold text-white text-center cursor-pointer active:opacity-90" style="background:var(--accent)" data-cp @click="payRenewDirect(feeCardRow.no)" data-page-node-id="UiyIXGTTQqNFum2CvTiPKk">{{ $t('user.orders.payNow') }}</div></div>
 </div>
 </kv-card>
+
+
 
 <kv-card :title="$t('common.orders.refundDetail')" class="mb-3 cursor-pointer active:opacity-70" data-od-id="od-refund" data-page-node-id="PN4dkWoEermif1aSXdefAE" data-cp @click="openRefundList">
 <template #extra><span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="1if3yPqCm0BgoU9QJvB4pz"></span></template>
@@ -2152,8 +2153,9 @@ body.host-single-m #root-user{display:none}
 <kv-row v-if="orderInfo.status==='progress'||orderInfo.status==='return'||orderInfo.status==='overdue'||orderInfo.status==='breach'||orderInfo.status==='complete'||orderInfo.status==='cancelled'" :label="$t('common.orders.pickupTime')" :value="orderInfo.pickupTime || '-'" data-page-node-id="t0BY8IT0goplR50sT15sJ2"></kv-row>
 </kv-card>
 
-<div class="bg-white rounded-2xl p-4 mb-3 flex items-center justify-between" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="od-autorenew" data-page-node-id="AJDuQkvXIT8uT3grsCj7HG">
-<div class="flex-1 min-w-0 pr-3" data-page-node-id="3TD7rN5L95wZUF1pU35p0e">
+<div class="bg-white rounded-2xl p-4 mb-3" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="od-autorenew" data-page-node-id="AJDuQkvXIT8uT3grsCj7HG">
+<div class="flex items-center justify-between" data-page-node-id="3TD7rN5L95wZUF1pU35p0e">
+<div class="flex-1 min-w-0 pr-3">
 <div class="text-[14px] font-semibold text-[#111]" data-page-node-id="UqfzoARNNi6L3FYGvGPzct">{{ $t('common.orders.autoRenew') }}</div>
 <div class="text-[12px] text-[#999] mt-0.5" data-page-node-id="ZYTogHW4Lmq4GmnYLgBOHd">{{ $t('user.renew.walletAutoDeduct') }}</div>
 </div>
@@ -2161,9 +2163,10 @@ body.host-single-m #root-user{display:none}
 <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200" :class="autoRenew?'translate-x-5':''" data-page-node-id="2Rtwj9R6ulHSdIjs3NPmPR"></div>
 </div>
 </div>
-<div v-if="renewEntryVisible" class="bg-white rounded-2xl p-4 mb-3 flex items-center justify-between cursor-pointer active:bg-[#F6F7F9]" data-od-id="od-renew-entry" data-cp @click="openRenew" data-page-node-id="0xhYT3hAaGJW6I8QX2wOYK">
+<div v-if="renewEntryVisible" class="flex items-center justify-between mt-3 pt-3 cursor-pointer active:opacity-70" style="border-top:1px solid #F0F0F0" data-od-id="od-renew-entry" data-cp @click="openRenew" data-page-node-id="0xhYT3hAaGJW6I8QX2wOYK">
 <div class="flex-1 min-w-0 pr-3" data-page-node-id="wCYrckkaEB25Wfe3VvugNz"><div class="text-[14px] font-semibold text-[#111]" data-page-node-id="u5e5Mi4G0hWythdFrvVKpc">{{ $t('common.label.renewal') }}</div><div class="text-[12px] text-[#999] mt-0.5" data-page-node-id="VnDjRmykYWvaa8ekEmIzNZ">{{ $t('user.orders.selectPlanAndPay') }}</div></div>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="ZKDKx0r4nCfxHtO1FEPG89"></span>
+</div>
 </div>
 
 <div class="bg-white rounded-2xl mb-6" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="od-rules" data-page-node-id="5EWhq9gYzoIE8F0i948mPp">
@@ -5363,7 +5366,7 @@ body.host-single-m #root-user{display:none}
 <template #title><span class="min-w-0 truncate">{{ d.deviceNo }}</span></template>
 <template #extra><span class="font-medium shrink-0" :style="{color:cdEnableTag(d.status).c}">{{ cdEnableTag(d.status).l }}</span></template>
 <kv-row :label="$t('merchant.chargingDevice.shop')" :value="storeNameOf(d.shopId)" align="top" value-class="whitespace-normal break-words"></kv-row>
-<kv-row :label="$t('merchant.chargingDevice.address')" :value="d.address" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row :label="$t('merchant.chargingDevice.address')" :value="d.address || '-'" align="top" value-class="whitespace-normal break-words"></kv-row>
 <kv-row :label="$t('merchant.chargingDevice.price')" :value="cdPriceText(d)"></kv-row>
 <kv-row :label="$t('merchant.chargingDevice.maxDuration')" :value="cdDurText(d)"></kv-row>
 <kv-row :label="$t('merchant.chargingDevice.usageStatus')"><template #value><span class="font-medium" :style="{color:cdUsageTag(d.usageStatus).c}">{{ cdUsageTag(d.usageStatus).l }}</span></template></kv-row>
@@ -5385,7 +5388,7 @@ body.host-single-m #root-user{display:none}
 <kv-card :title="curChargeDev?curChargeDev.deviceNo:'-'" label-width="5rem" class="mb-3" :copyable="!!(curChargeDev&&curChargeDev.deviceNo)" @copy="t=>copyText(t,$t('merchant.chargingDevice.deviceNo'))" data-od-id="cd-detail-basic">
 <template #extra><span class="font-medium shrink-0" :style="{color:curChargeDev?cdEnableTag(curChargeDev.status).c:'#999'}">{{ curChargeDev?cdEnableTag(curChargeDev.status).l:'' }}</span></template>
 <kv-row :label="$t('merchant.chargingDevice.shop')" :value="curChargeDev?storeNameOf(curChargeDev.shopId):'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
-<kv-row :label="$t('merchant.chargingDevice.address')" :value="curChargeDev?curChargeDev.address:'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
+<kv-row :label="$t('merchant.chargingDevice.address')" :value="(curChargeDev&&curChargeDev.address)||'-'" align="top" value-class="whitespace-normal break-words"></kv-row>
 <kv-row :label="$t('merchant.chargingDevice.price')" :value="cdPriceText(curChargeDev)"></kv-row>
 <kv-row :label="$t('merchant.chargingDevice.maxDuration')" :value="cdDurText(curChargeDev)"></kv-row>
 <kv-row :label="$t('merchant.chargingDevice.usageStatus')"><template #value><span class="font-medium" :style="{color:curChargeDev?cdUsageTag(curChargeDev.usageStatus).c:'#999'}">{{ curChargeDev?cdUsageTag(curChargeDev.usageStatus).l:'-' }}</span></template></kv-row>
@@ -5401,8 +5404,8 @@ body.host-single-m #root-user{display:none}
 <form-field :label="$t('merchant.chargingDevice.deviceNo')" required :error="cdErr.deviceNo" :counter="(cdAddForm.deviceNo||'').length" counter-max="64">
 <input v-model="cdAddForm.deviceNo" maxlength="64" :placeholder="$t('merchant.chargingDevice.inputDeviceNo')" class="w-full pl-3.5 pr-14 py-3.5 text-[15px]">
 </form-field>
-<form-field :label="$t('merchant.chargingDevice.address')" required bare :error="cdErr.address">
-<div class="ff-box" :class="cdErr.address?'is-error':''">
+<form-field :label="$t('merchant.chargingDevice.address')" bare>
+<div class="ff-box">
 <div data-cp @click="cdOpenAddrMap('add')" class="w-full flex items-center gap-2 px-3.5 py-3 cursor-pointer" data-od-id="cd-add-addr">
 <span class="flex-1 text-[15px] truncate" :class="cdAddForm.address?'':'text-[#B0B8C4]'">{{ cdAddForm.address || $t('merchant.chargingDevice.addrPlaceholder') }}</span>
 <span class="shrink-0" v-html="luci('map-pin','w-[18px] h-[18px] text-[#2B3F5F]')"></span>
@@ -5432,8 +5435,8 @@ body.host-single-m #root-user{display:none}
 <form-field :label="$t('merchant.chargingDevice.deviceNo')" required :error="cdErr.deviceNo" :counter="(cdModForm.deviceNo||'').length" counter-max="64">
 <input v-model="cdModForm.deviceNo" maxlength="64" :placeholder="$t('merchant.chargingDevice.inputDeviceNo')" class="w-full pl-3.5 pr-14 py-3.5 text-[15px]">
 </form-field>
-<form-field :label="$t('merchant.chargingDevice.address')" required bare :error="cdErr.address">
-<div class="ff-box" :class="cdErr.address?'is-error':''">
+<form-field :label="$t('merchant.chargingDevice.address')" bare>
+<div class="ff-box">
 <div data-cp @click="cdOpenAddrMap('edit')" class="w-full flex items-center gap-2 px-3.5 py-3 cursor-pointer" data-od-id="cd-mod-addr">
 <span class="flex-1 text-[15px] truncate" :class="cdModForm.address?'':'text-[#B0B8C4]'">{{ cdModForm.address || $t('merchant.chargingDevice.addrPlaceholder') }}</span>
 <span class="shrink-0" v-html="luci('map-pin','w-[18px] h-[18px] text-[#2B3F5F]')"></span>
@@ -7048,7 +7051,7 @@ body.host-single-m #root-user{display:none}
     </div>
   </div>
   <template v-if="demoOpsActive">
-    <div v-if="!showLogin&&((tab==='vehicles'&&!vehOV)||(tab==='orders'&&(!ordersOV||ordersOV==='olist'))||roOV==='list'||uWalletView==='flow'||((profileOV==='user'||profileOV==='package'||['model','battModel','account','pos','cs','recharge'].indexOf(profileOV)!==-1)&&!profileSub))" class="demo-ops-section" data-od-id="demo-list-data">
+    <div v-if="!showLogin&&((tab==='vehicles'&&!vehOV)||(tab==='orders'&&(!ordersOV||ordersOV==='olist'))||roOV==='list'||uWalletView==='flow'||cdOV==='list'||((profileOV==='user'||profileOV==='package'||['model','battModel','account','pos','cs','recharge'].indexOf(profileOV)!==-1)&&!profileSub))" class="demo-ops-section" data-od-id="demo-list-data">
       <div class="demo-ops-label">列表数据</div>
       <div class="demo-ops-chips">
         <div class="demo-ops-chip" :class="{'is-on':!demoListEmpty}" data-od-id="demo-list-data-full" data-cp @click="demoSetListEmpty(false)">有数据</div>
@@ -7064,11 +7067,12 @@ body.host-single-m #root-user{display:none}
         </div>
       </div>
     </template>
-    <template v-else-if="tab==='home'&&!homeOV&&!curAlert">
+    <template v-else-if="tab==='home'&&!homeOV&&!curAlert&&!cdOV">
       <div class="demo-ops-section">
         <div class="demo-ops-label">告警数据</div>
         <div class="demo-ops-chips">
-          <div class="demo-ops-chip" :class="{'is-on':demoHasAlerts}" data-od-id="demo-alerts-on" data-cp @click="demoSetHasAlerts(!demoHasAlerts)">有告警</div>
+          <div class="demo-ops-chip" :class="{'is-on':demoHasAlerts}" data-od-id="demo-alerts-on" data-cp @click="demoSetHasAlerts(true)">有告警</div>
+          <div class="demo-ops-chip" :class="{'is-on-warn':!demoHasAlerts}" data-od-id="demo-alerts-off" data-cp @click="demoSetHasAlerts(false)">无告警</div>
         </div>
       </div>
     </template>
@@ -11438,17 +11442,15 @@ function cdCloseMod(){cdMod.value='';cdErr.value={}}
 function cdSaveAdd(){if(cdSaving.value)return;var f=cdAddForm.value,e={};
   if(!String(f.deviceNo||'').trim())e.deviceNo=t('merchant.chargingDevice.inputDeviceNo');
   if(String(f.deviceNo||'').trim()&&chargeDevices.value.some(function(d){return d.deviceNo===String(f.deviceNo).trim()}))e.deviceNo=t('merchant.chargingDevice.deviceNoExists');
-  if(!String(f.address||'').trim())e.address=t('merchant.chargingDevice.addrRequired');
   cdErr.value=e;if(Object.keys(e).length)return;
   cdSaving.value=true;brandLoading.value=true;
   setTimeout(function(){brandLoading.value=false;cdSaving.value=false;
     var ids=chargeDevices.value.map(function(d){return d.id}),nid=(ids.length?Math.max.apply(null,ids):0)+1;
-    chargeDevices.value.unshift({id:nid,shopId:null,deviceNo:String(f.deviceNo).trim(),address:String(f.address||'').trim()||'待补充设备地址',price:0,maxDuration:0,status:'ENABLE',usageStatus:0,createTime:now()});
+    chargeDevices.value.unshift({id:nid,shopId:null,deviceNo:String(f.deviceNo).trim(),address:String(f.address||'').trim(),price:0,maxDuration:0,status:'ENABLE',usageStatus:0,createTime:now()});
     navDrop();cdOV.value='list';toast(t('merchant.chargingDevice.addSuccess'),'success')},400)}
 function cdSaveEdit(){if(cdSaving.value)return;var d=curChargeDev.value;if(!d)return;var f=cdModForm.value,e={};
   if(!String(f.deviceNo||'').trim())e.deviceNo=t('merchant.chargingDevice.inputDeviceNo');
   if(String(f.deviceNo||'').trim()&&chargeDevices.value.some(function(x){return x!==d&&x.deviceNo===String(f.deviceNo).trim()}))e.deviceNo=t('merchant.chargingDevice.deviceNoExists');
-  if(!String(f.address||'').trim())e.address=t('merchant.chargingDevice.addrRequired');
   cdErr.value=e;if(Object.keys(e).length)return;
   cdSaving.value=true;setTimeout(function(){d.deviceNo=String(f.deviceNo).trim();d.address=String(f.address||'').trim();cdSaving.value=false;navDrop();cdOV.value='detail';toast(t('merchant.chargingDevice.infoSaved'),'success')},400)}
 function cdSavePrice(){if(cdSaving.value)return;var d=curChargeDev.value;if(!d)return;var f=cdModForm.value,e={};

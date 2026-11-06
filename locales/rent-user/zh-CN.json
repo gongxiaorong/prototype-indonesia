@@ -407,7 +407,11 @@
       "payPartialRefund": "部分退款",
       "payFullRefund": "全部退款",
       "payProcessing": "支付中",
-      "rentDurationShort": "共{n}{unit}"
+      "rentDurationShort": "共{n}{unit}",
+      "noRefund": "无退款",
+      "goodsInfo": "商品信息",
+      "basicInfo": "基础信息",
+      "storeName": "门店名称"
     },
     "toast": {
       "deviceBound": "设备绑定成功",

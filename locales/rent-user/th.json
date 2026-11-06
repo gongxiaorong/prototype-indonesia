@@ -407,7 +407,11 @@
       "payPartialRefund": "คืนเงินบางส่วน",
       "payFullRefund": "คืนเงินเต็มจำนวน",
       "payProcessing": "กำลังดำเนินการ",
-      "rentDurationShort": "รวม {n} {unit}"
+      "rentDurationShort": "รวม {n} {unit}",
+      "noRefund": "ยังไม่มีการคืนเงิน",
+      "goodsInfo": "ข้อมูลสินค้า",
+      "basicInfo": "ข้อมูลพื้นฐาน",
+      "storeName": "ชื่อร้าน"
     },
     "toast": {
       "deviceBound": "ผูกอุปกรณ์สำเร็จ",

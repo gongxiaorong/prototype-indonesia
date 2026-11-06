@@ -360,7 +360,7 @@
       "changeShopFirst": "Please disable the device before changing its store",
       "confirmDisableDesc": "Are you sure you want to disable this device?",
       "confirmEnableDesc": "Are you sure you want to enable this device?",
-      "empty": "No device",
+      "empty": "No charging stations",
       "addSuccess": "Device added",
       "infoSaved": "Device info saved",
       "priceSaved": "Pricing saved",

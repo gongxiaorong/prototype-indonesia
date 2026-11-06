@@ -407,7 +407,11 @@
       "payPartialRefund": "Partial Refund",
       "payFullRefund": "Full Refund",
       "payProcessing": "Processing",
-      "rentDurationShort": "Total {n} {unit}"
+      "rentDurationShort": "Total {n} {unit}",
+      "noRefund": "No refund",
+      "goodsInfo": "Item info",
+      "basicInfo": "Basic info",
+      "storeName": "Store name"
     },
     "toast": {
       "deviceBound": "Device bound successfully",

@@ -360,7 +360,7 @@
       "changeShopFirst": "请先禁用设备后再更换门店",
       "confirmDisableDesc": "确定要禁用该设备吗？",
       "confirmEnableDesc": "确定要启用该设备吗？",
-      "empty": "暂无设备",
+      "empty": "暂无充电桩",
       "addSuccess": "设备已新增",
       "infoSaved": "设备信息已保存",
       "priceSaved": "定价已保存",
