@@ -751,8 +751,8 @@
       "confirmRefundTotal": "Konfirmasi pengembalian dana? Total pengembalian Rp{amount}",
       "payConfirmed": "Konfirmasi pembayaran berhasil",
       "noIdleVehicle": "Tidak ada kendaraan kosong tersedia",
-      "anyVehicle": "Model Kendaraan Apa Saja",
-      "anyBatteryModel": "Model Apa Saja",
+      "anyVehicle": "Tanpa Batasan",
+      "anyBatteryModel": "Tanpa Batasan",
       "reportLost": "Laporkan Kendaraan Hilang",
       "lostSuccess": "Laporan hilang berhasil",
       "unlostSuccess": "Pembatalan laporan hilang berhasil",
@@ -930,6 +930,12 @@
       "orderAdjustedTitle": "Jumlah Pesanan Disesuaikan",
       "orderRefundingTitle": "Pengembalian Dana Diproses",
       "orderRefundedTitle": "Pengembalian Dana Berhasil"
+    }
+  },
+  "user": {
+    "orders": {
+      "rentedPeriods": "Periode tersewa",
+      "periodUnit": "periode"
     }
   }
 }

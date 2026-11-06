@@ -56,8 +56,8 @@
     },
     "orders": {
       "cancelOrder": "取消訂單",
-      "anyVehicle": "任意車型",
-      "anyBatteryModel": "任意型號",
+      "anyVehicle": "不限制",
+      "anyBatteryModel": "不限制",
       "cancelTime": "取消時間",
       "confirmCancelDesc": "確定取消該訂單？取消後不可恢復",
       "deposit": "按金",
@@ -411,7 +411,9 @@
       "noRefund": "無退款",
       "goodsInfo": "商品資訊",
       "basicInfo": "基本資訊",
-      "storeName": "門店名稱"
+      "storeName": "門店名稱",
+      "rentedPeriods": "已租期數",
+      "periodUnit": "期"
     },
     "toast": {
       "deviceBound": "設備綁定成功",

@@ -56,8 +56,8 @@
     },
     "orders": {
       "cancelOrder": "取消订单",
-      "anyVehicle": "任意车型",
-      "anyBatteryModel": "任意型号",
+      "anyVehicle": "不限制",
+      "anyBatteryModel": "不限制",
       "cancelTime": "取消时间",
       "confirmCancelDesc": "确定取消该订单？取消后不可恢复",
       "deposit": "押金",
@@ -411,7 +411,9 @@
       "noRefund": "无退款",
       "goodsInfo": "商品信息",
       "basicInfo": "基础信息",
-      "storeName": "门店名称"
+      "storeName": "门店名称",
+      "rentedPeriods": "已租期数",
+      "periodUnit": "期"
     },
     "toast": {
       "deviceBound": "设备绑定成功",

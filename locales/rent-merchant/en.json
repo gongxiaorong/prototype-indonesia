@@ -751,8 +751,8 @@
       "confirmRefundTotal": "Confirm the refund? Total refund Rp{amount}",
       "payConfirmed": "Payment confirmed successfully",
       "noIdleVehicle": "No idle vehicle available",
-      "anyVehicle": "Any Vehicle Model",
-      "anyBatteryModel": "Any Model",
+      "anyVehicle": "No Restriction",
+      "anyBatteryModel": "No Restriction",
       "reportLost": "Report Vehicle Lost",
       "lostSuccess": "Reported lost successfully",
       "unlostSuccess": "Lost status cleared",
@@ -930,6 +930,12 @@
       "orderAdjustedTitle": "Order Amount Adjusted",
       "orderRefundingTitle": "Refund in Progress",
       "orderRefundedTitle": "Refund Successful"
+    }
+  },
+  "user": {
+    "orders": {
+      "rentedPeriods": "Rented periods",
+      "periodUnit": "periods"
     }
   }
 }

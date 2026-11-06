@@ -56,8 +56,8 @@
     },
     "orders": {
       "cancelOrder": "ยกเลิกคำสั่งซื้อ",
-      "anyVehicle": "รุ่นรถใดก็ได้",
-      "anyBatteryModel": "รุ่นใดก็ได้",
+      "anyVehicle": "ไม่จำกัด",
+      "anyBatteryModel": "ไม่จำกัด",
       "cancelTime": "เวลายกเลิก",
       "confirmCancelDesc": "คุณแน่ใจหรือไม่ที่จะยกเลิกคำสั่งซื้อนี้? การกระทำนี้ไม่สามารถย้อนกลับได้",
       "deposit": "เงินมัดจำ",
@@ -411,7 +411,9 @@
       "noRefund": "ยังไม่มีการคืนเงิน",
       "goodsInfo": "ข้อมูลสินค้า",
       "basicInfo": "ข้อมูลพื้นฐาน",
-      "storeName": "ชื่อร้าน"
+      "storeName": "ชื่อร้าน",
+      "rentedPeriods": "จำนวนงวดที่เช่า",
+      "periodUnit": "งวด"
     },
     "toast": {
       "deviceBound": "ผูกอุปกรณ์สำเร็จ",

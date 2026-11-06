@@ -751,8 +751,8 @@
       "confirmRefundTotal": "确认执行退款？合计退款 Rp{amount}",
       "payConfirmed": "支付确认成功",
       "noIdleVehicle": "暂无空闲车辆可选",
-      "anyVehicle": "任意车型",
-      "anyBatteryModel": "任意型号",
+      "anyVehicle": "不限制",
+      "anyBatteryModel": "不限制",
       "reportLost": "车辆报失",
       "lostSuccess": "报失成功",
       "unlostSuccess": "解除报失成功",
@@ -930,6 +930,12 @@
       "orderAdjustedTitle": "订单金额已调整",
       "orderRefundingTitle": "退款处理中",
       "orderRefundedTitle": "退款成功"
+    }
+  },
+  "user": {
+    "orders": {
+      "rentedPeriods": "已租期数",
+      "periodUnit": "期"
     }
   }
 }

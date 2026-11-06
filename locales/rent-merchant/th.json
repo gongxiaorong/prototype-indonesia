@@ -751,8 +751,8 @@
       "confirmRefundTotal": "ยืนยันการคืนเงินหรือไม่? รวมการคืนเงิน Rp{amount}",
       "payConfirmed": "ยืนยันการชำระเงินสำเร็จ",
       "noIdleVehicle": "ไม่มียานพาหนะว่าง",
-      "anyVehicle": "รุ่นรถใดก็ได้",
-      "anyBatteryModel": "รุ่นใดก็ได้",
+      "anyVehicle": "ไม่จำกัด",
+      "anyBatteryModel": "ไม่จำกัด",
       "reportLost": "แจ้งยานพาหนะหาย",
       "lostSuccess": "แจ้งหายสำเร็จ",
       "unlostSuccess": "ล้างสถานะหายแล้ว",
@@ -930,6 +930,12 @@
       "orderAdjustedTitle": "ปรับจำนวนเงินคำสั่งซื้อแล้ว",
       "orderRefundingTitle": "กำลังดำเนินการคืนเงิน",
       "orderRefundedTitle": "คืนเงินสำเร็จ"
+    }
+  },
+  "user": {
+    "orders": {
+      "rentedPeriods": "จำนวนงวดที่เช่า",
+      "periodUnit": "งวด"
     }
   }
 }

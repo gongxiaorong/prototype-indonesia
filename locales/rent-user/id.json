@@ -56,8 +56,8 @@
     },
     "orders": {
       "cancelOrder": "Batalkan Pesanan",
-      "anyVehicle": "Model Kendaraan Apa Saja",
-      "anyBatteryModel": "Model Apa Saja",
+      "anyVehicle": "Tanpa Batasan",
+      "anyBatteryModel": "Tanpa Batasan",
       "cancelTime": "Waktu Pembatalan",
       "confirmCancelDesc": "Yakin batalkan pesanan ini? Tindakan ini tidak dapat dibatalkan.",
       "deposit": "Deposit",
@@ -411,7 +411,9 @@
       "noRefund": "Belum ada pengembalian dana",
       "goodsInfo": "Info barang",
       "basicInfo": "Info dasar",
-      "storeName": "Nama toko"
+      "storeName": "Nama toko",
+      "rentedPeriods": "Periode tersewa",
+      "periodUnit": "periode"
     },
     "toast": {
       "deviceBound": "Perangkat berhasil diikat",

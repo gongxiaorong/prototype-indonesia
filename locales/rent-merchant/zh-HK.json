@@ -751,8 +751,8 @@
       "confirmRefundTotal": "確認執行退款？合計退款 Rp{amount}",
       "payConfirmed": "付款確認成功",
       "noIdleVehicle": "暫無空閒車輛可選",
-      "anyVehicle": "任意車型",
-      "anyBatteryModel": "任意型號",
+      "anyVehicle": "不限制",
+      "anyBatteryModel": "不限制",
       "reportLost": "車輛報失",
       "lostSuccess": "報失成功",
       "unlostSuccess": "解除報失成功",
@@ -930,6 +930,12 @@
       "orderAdjustedTitle": "訂單金額已調整",
       "orderRefundingTitle": "退款處理中",
       "orderRefundedTitle": "退款成功"
+    }
+  },
+  "user": {
+    "orders": {
+      "rentedPeriods": "已租期數",
+      "periodUnit": "期"
     }
   }
 }

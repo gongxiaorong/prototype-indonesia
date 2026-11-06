@@ -56,8 +56,8 @@
     },
     "orders": {
       "cancelOrder": "Cancel Order",
-      "anyVehicle": "Any Vehicle Model",
-      "anyBatteryModel": "Any Model",
+      "anyVehicle": "No Restriction",
+      "anyBatteryModel": "No Restriction",
       "cancelTime": "Cancellation Time",
       "confirmCancelDesc": "Are you sure you want to cancel this order? This cannot be undone.",
       "deposit": "Deposit",
@@ -411,7 +411,9 @@
       "noRefund": "No refund",
       "goodsInfo": "Item info",
       "basicInfo": "Basic info",
-      "storeName": "Store name"
+      "storeName": "Store name",
+      "rentedPeriods": "Rented periods",
+      "periodUnit": "periods"
     },
     "toast": {
       "deviceBound": "Device bound successfully",
