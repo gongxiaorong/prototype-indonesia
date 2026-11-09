@@ -2563,7 +2563,7 @@ body.host-single-m #root-user{display:none}
 <template #extra><span data-page-node-id="MsgCenterTime">{{ m.time }}</span></template>
 <div class="text-[13px] leading-relaxed" style="color:#666" data-page-node-id="MsgCenterText">{{ m.body }}</div>
 </kv-card>
-<empty-state v-if="!notifyList.length" icon="bell" :text="$t('user.message.empty')" :sub="$t('user.message.emptySub')" data-page-node-id="MsgCenterEmpty"></empty-state>
+<empty-state v-if="!notifyMsgs.length" icon="bell" :text="$t('user.message.empty')" data-page-node-id="MsgCenterEmpty"></empty-state>
 </div>
 </page>
 
@@ -3173,7 +3173,7 @@ body.host-single-m #root-user{display:none}
 <aside class="demo-ops is-active" data-page-node-id="mQEBtJhdQe5jBXNfswBXxr">
 <div class="demo-ops-title" data-page-node-id="4zsIJzUqTiTJnOVorZ6HS5">原型操作</div>
 <div class="demo-ops-group-hd" data-page-node-id="nnAUA4bdOGD5d4rDqXCO1q">功能控制</div>
-<div class="demo-ops-section" data-od-id="demo-login-state">
+<div class="demo-ops-section" data-od-id="demo-login-state" v-if="!profileOV && !profileSub && !showOrderDetail && !showFeeDetail && !showFindPage && !showTrackPage">
 <div class="demo-ops-label">登录状态</div>
 <div class="demo-ops-chips">
 <div class="demo-ops-chip" :class="loggedIn?'is-on':''" data-cp @click="setLoggedIn(true)">已登录</div>
@@ -3181,7 +3181,7 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 
-<div class="demo-ops-section" data-od-id="demo-feedback-state">
+<div class="demo-ops-section" data-od-id="demo-feedback-state" v-if="profileSub==='feedback'">
 <div class="demo-ops-label">新反馈状态</div>
 <div class="demo-ops-chips">
 <div class="demo-ops-chip" :class="!demoFbHandled?'is-on':''" data-cp @click="setFbHandled(false)" data-od-id="demo-fb-pending">待处理</div>
@@ -3347,6 +3347,15 @@ body.host-single-m #root-user{display:none}
 </div>
 </template>
 <template v-if="showWalletLedger" data-page-node-id="htV1OjxbIECapHWmf57Kg8">
+<div class="demo-ops-section" data-od-id="demo-list-data">
+<div class="demo-ops-label">列表数据</div>
+<div class="demo-ops-chips">
+<div class="demo-ops-chip" :class="{'is-on':!demoListEmpty}" data-cp @click="demoSetListEmpty(false)">有数据</div>
+<div class="demo-ops-chip" :class="{'is-on':demoListEmpty}" data-cp @click="demoSetListEmpty(true)">空数据</div>
+</div>
+</div>
+</template>
+<template v-if="profileOV==='message'" data-page-node-id="MsgCenterDemoSec01">
 <div class="demo-ops-section" data-od-id="demo-list-data">
 <div class="demo-ops-label">列表数据</div>
 <div class="demo-ops-chips">
@@ -5806,7 +5815,10 @@ body.host-single-m #root-user{display:none}
 <div class="min-w-0"><div class="text-[18px] font-bold truncate">Manager Wang</div><div class="text-[13px] text-[#666]">+86 13571893628</div></div>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
 </div>
+<div class="flex items-center gap-1 shrink-0">
+<div data-cp @click="navOpen();profileOV='mcMessage'" class="w-9 h-9 flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] rounded-full shrink-0 relative" data-od-id="profile-message"><span v-html="luci('bell','w-5 h-5 text-[#666]')"></span><span v-if="mcNotifyUnread" class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full" style="background:#DC2626"></span></div>
 <div data-cp @click="navOpen();profileOV='settings'" class="w-9 h-9 flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] rounded-full shrink-0" data-od-id="profile-settings"><span v-html="luci('settings','w-5 h-5 text-[#666]')"></span></div>
+</div>
   </div>
 
 <div v-for="g in menuGroups" :key="g.name" class="mb-3">
@@ -6701,7 +6713,7 @@ body.host-single-m #root-user{display:none}
      事件的触发规则（到期前提前多久、连续失败几次）不在本页配置——统一由「订单配置」页管理
      （cfg.renewAdvanceMinutes / renewAdvanceDays / renewFailThreshold），本页不再重复设置，故无 timing 状态与校验 -->
 <page :open="profileOV==='msg'" :z="500" :swipe-close="()=>goBack()">
-<nav-bar :title="$t('common.label.messageNotify')" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('message_config.edit')" class="text-sm font-medium cursor-pointer shrink-0" :style="msgSaving?{color:'#999',pointerEvents:'none'}:{color:'var(--link)'}" data-cp @click="saveMsgCfg">{{ $t('common.action.save') }}</span></template></nav-bar>
+<nav-bar :title="$t('merchant.profile.menuMessage')" border-color="#E5E5E5" @back="goBack"><template #right><span v-if="can('message_config.edit')" class="text-sm font-medium cursor-pointer shrink-0" :style="msgSaving?{color:'#999',pointerEvents:'none'}:{color:'var(--link)'}" data-cp @click="saveMsgCfg">{{ $t('common.action.save') }}</span></template></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
 <div class="form-plain" data-od-id="msg-config-form">
 <div class="od-card">
@@ -6824,6 +6836,23 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
+
+<page :open="profileOV==='mcMessage'" :z="500" :swipe-close="()=>goBack()" oid="mc-message-center">
+<nav-bar :title="$t('merchant.message.centerTitle')" border-color="#E5E5E5" right-wide @back="goBack()">
+<template #right>
+<span class="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EDEDED] shrink-0" :class="mcNotifyUnread?'':'opacity-40 pointer-events-none'" style="color:#333" data-cp @click="markAllMcRead" data-od-id="mc-msg-read-all"><span v-html="luci('brush-cleaning','w-5 h-5')"></span></span>
+<span class="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer active:bg-[#EDEDED] shrink-0" style="color:#333" data-cp @click="openMsgSettings" data-od-id="mc-msg-settings"><span v-html="luci('settings','w-5 h-5')"></span></span>
+</template>
+</nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<kv-card v-for="m in mcNotifyMsgsShow" :key="m.id" class="mb-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'mc-msg-'+m.id" data-cp @click="mcReadOne(m.id)">
+<template #title><span class="flex items-center gap-1.5 min-w-0"><span class="min-w-0 truncate">{{ $t(m.titleKey) }}</span><span v-if="!m.read" class="w-1.5 h-1.5 rounded-full shrink-0" style="background:#DC2626"></span></span></template>
+<template #extra><span class="text-[12px] text-[#999]">{{ m.time }}</span></template>
+<div class="text-[13px] leading-relaxed" style="color:#666">{{ notifyBodySample(m.k,{orderNo:m.orderNo}) }}</div>
+</kv-card>
+<empty-state v-if="!mcNotifyMsgsShow.length" icon="bell" :text="$t('merchant.message.empty')"></empty-state>
+</div>
+</page>
 
 <page :open="profileOV==='settings'" :z="500" :swipe-close="()=>goBack()" oid="settings-page">
 <nav-bar :title="$t('common.profile.settings')" border-color="#E5E5E5" @back="goBack"></nav-bar>
@@ -7069,7 +7098,7 @@ body.host-single-m #root-user{display:none}
 <aside class="demo-ops is-active" data-od-id="demo-ops" :aria-hidden="!demoOpsActive">
   <div class="demo-ops-title">原型操作</div>
   <div class="demo-ops-group-hd">功能控制</div>
-  <div class="demo-ops-section" data-od-id="demo-login-state">
+  <div class="demo-ops-section" data-od-id="demo-login-state" v-if="!profileOV && !profileSub && !ordersOV && !vehOV && !roOV && !cdOV && !homeOV">
     <div class="demo-ops-label">登录状态</div>
     <div class="demo-ops-chips">
       <div class="demo-ops-chip" :class="!showLogin?'is-on':''" data-cp @click="demoLogin">已登录</div>
@@ -7077,7 +7106,7 @@ body.host-single-m #root-user{display:none}
     </div>
   </div>
   <template v-if="demoOpsActive">
-    <div v-if="!showLogin&&((tab==='vehicles'&&!vehOV)||(tab==='orders'&&(!ordersOV||ordersOV==='olist'))||roOV==='list'||uWalletView==='flow'||cdOV==='list'||((profileOV==='user'||profileOV==='package'||['model','battModel','account','pos','cs','recharge'].indexOf(profileOV)!==-1)&&!profileSub))" class="demo-ops-section" data-od-id="demo-list-data">
+    <div v-if="!showLogin&&((tab==='vehicles'&&!vehOV)||(tab==='orders'&&(!ordersOV||ordersOV==='olist'))||roOV==='list'||uWalletView==='flow'||cdOV==='list'||profileOV==='mcMessage'||((profileOV==='user'||profileOV==='package'||['model','battModel','account','pos','cs','recharge'].indexOf(profileOV)!==-1)&&!profileSub))" class="demo-ops-section" data-od-id="demo-list-data">
       <div class="demo-ops-label">列表数据</div>
       <div class="demo-ops-chips">
         <div class="demo-ops-chip" :class="{'is-on':!demoListEmpty}" data-od-id="demo-list-data-full" data-cp @click="demoSetListEmpty(false)">有数据</div>
@@ -7701,7 +7730,7 @@ const notifyUnread=computed(()=>notifyList.value.filter(m=>!m.read).length);
 /* 卡片：标题＝消息类型、内容＝消息内容、extra＝通知时间（当天只显示时分，其它显示年月日）
    列表顺序＝通知时间倒序（最新在上）：先比天数（daysAgo 小者靠前），同一天再比时分（hhmm 大者靠前）；
    排序在此计算属性内执行，不依赖 notifyList 的种子书写顺序（同刻消息保持种子中先者在前，sort 稳定） */
-const notifyMsgs=computed(()=>{const d=notifySample();const now=new Date();const mins=s=>{const p=String(s||'00:00').split(':');return (Number(p[0])||0)*60+(Number(p[1])||0)};return notifyList.value.slice().sort((a,b)=>(a.daysAgo-b.daysAgo)||(mins(b.hhmm)-mins(a.hhmm))).map(m=>{const t=notifyTemplates[m.eventId]||{title:'',body:()=>''};let time=m.hhmm;if(m.daysAgo){const dt=new Date(now.getFullYear(),now.getMonth(),now.getDate()-m.daysAgo);time=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0')}return{id:m.id,title:typeof t.title==='function'?t.title(d):t.title,body:t.body(d),time,read:m.read}})});
+const notifyMsgs=computed(()=>{if(demoListEmpty.value)return [];const d=notifySample();const now=new Date();const mins=s=>{const p=String(s||'00:00').split(':');return (Number(p[0])||0)*60+(Number(p[1])||0)};return notifyList.value.slice().sort((a,b)=>(a.daysAgo-b.daysAgo)||(mins(b.hhmm)-mins(a.hhmm))).map(m=>{const t=notifyTemplates[m.eventId]||{title:'',body:()=>''};let time=m.hhmm;if(m.daysAgo){const dt=new Date(now.getFullYear(),now.getMonth(),now.getDate()-m.daysAgo);time=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0')}return{id:m.id,title:typeof t.title==='function'?t.title(d):t.title,body:t.body(d),time,read:m.read}})});
 /* 消息 → 对应订单：在「用户端演示订单册」orderDataByCategory 里按订单号取（连分类一起回） */
 function findOrderById(id){if(!id)return null;const book=orderDataByCategory||{};for(const k in book){const hit=(book[k]||[]).find(o=>o.id===id);if(hit)return{order:hit,cat:k}}return null}
 /* 点击消息：先标已读 → 装载该消息对应订单并直达对应页——退款类（orderRefunding / orderRefunded）直达「订单详情-退款记录」，
@@ -9629,7 +9658,7 @@ const demoPagePermCtx=computed(()=>{
     if(sub==='csEdit'||ov==='cs')return{title:sub==='csEdit'?(csIdx.value===-1?'新增客服':'编辑客服'):'客服信息',groups:[pickPermGroup('sys',sub==='csEdit'?(csIdx.value===-1?['cs_info.add']:['cs_info.edit','cs_info.delete']):['cs_info.add','cs_info.edit','cs_info.delete'])].filter(Boolean)};
     /* 已在配置页：不露 order_config.detail（入口在「我的」） */
     if(ov==='config')return{title:'订单配置',groups:[pickPermGroup('sys',['order_config.edit'])].filter(Boolean)};
-    if(ov==='msg')return{title:'消息通知',groups:[pickPermGroup('sys',['message_config.edit'])].filter(Boolean)};
+    if(ov==='msg')return{title:'消息推送',groups:[pickPermGroup('sys',['message_config.edit'])].filter(Boolean)};
     if(ov==='recharge'||sub==='rechargeEdit')return{title:sub==='rechargeEdit'?(rechargeIdx.value===-1?'新增充值配置':'编辑充值配置'):'充值配置',groups:[pickPermGroup('sys',sub==='rechargeEdit'?[rechargeIdx.value===-1?'recharge.add':'recharge.edit']:['recharge.add','recharge.edit','recharge.delete'])].filter(Boolean)};
     if(ov==='store')return{title:'切换门店',groups:[]};
     if(ov==='user'||sub==='userDetail'){
@@ -9641,7 +9670,7 @@ const demoPagePermCtx=computed(()=>{
     return{title:'我的',groups:[{id:'profileRoot',name:'我的',codes:['model.list','batt_model.list','package.list','account.list','position.list','user.list','order_config.detail','message_config.detail','cs_info.list','recharge.list'],items:[
       {c:'model.list',n:'车型管理'},{c:'batt_model.list',n:'电池型号管理'},{c:'package.list',n:'套餐管理'},
       {c:'account.list',n:'账号管理'},{c:'position.list',n:'职位管理'},{c:'user.list',n:'用户管理'},
-      {c:'order_config.detail',n:'订单配置'},{c:'message_config.detail',n:'消息通知'},{c:'cs_info.list',n:'客服信息'},{c:'recharge.list',n:'充值配置'}
+      {c:'order_config.detail',n:'订单配置'},{c:'message_config.detail',n:'消息推送'},{c:'cs_info.list',n:'客服信息'},{c:'recharge.list',n:'充值配置'}
     ]}].filter(Boolean)};
   }
   return{title:'-',groups:[]};
@@ -10776,7 +10805,7 @@ const menuGroups=computed(()=>{
     {id:'pos',label:t('merchant.profile.menuPosition'),icon:'clock',code:'position.list'},
     {id:'user',label:t('merchant.profile.userManage'),icon:'users',code:'user.list'},
     {id:'config',label:t('merchant.profile.menuConfig'),icon:'settings',code:'order_config.detail'},
-    {id:'msg',label:t('common.label.messageNotify'),icon:'bell',code:'message_config.detail'},
+    {id:'msg',label:t('merchant.profile.menuMessage'),icon:'bell',code:'message_config.detail'},
     {id:'cs',label:t('merchant.profile.csInfo'),icon:'headset',code:'cs_info.list'},
     {id:'recharge',label:t('merchant.wallet.rechargeConfig'),icon:'wallet',code:'recharge.list'}
   ];
@@ -11230,6 +11259,25 @@ const msgEventOpts=computed(()=>[
 {k:'orderRefunding',l:t('merchant.notify.orderRefundingTitle'),cat:'feeRefund'},
 {k:'orderRefunded',l:t('merchant.notify.orderRefundedTitle'),cat:'feeRefund'}
 ]);
+/* 通知正文示例参数：配置页与消息中心共用同一套占位值 */
+const NOTIFY_SAMPLE={orderNo:'YZ202512180001',n:30,start:'2026-09-01 10:30:00',end:'2026-10-01 10:30:00',time:'2026-10-01 10:30:00',amount:'Rp150.000',total:3,failReason:'余额不足',days:7,oldAmount:'Rp150.000',newAmount:'Rp200.000'};
+function notifyBodySample(k,over){const p=Object.assign({},NOTIFY_SAMPLE,over||{});return t('merchant.notify.'+k+'Body',p)}
+/* 商户端消息中心：入口在「我的」页头部铃铛，列表由商户通知模板生成（未读红点） */
+const mcNotifyMsgs=ref([
+{id:1,k:'orderPaid',titleKey:'merchant.notify.orderPaidTitle',orderNo:'YD202608210002',time:'2026-11-09 10:12',read:false},
+{id:2,k:'deviceBound',titleKey:'merchant.notify.deviceBoundTitle',orderNo:'YD202608210003',time:'2026-11-09 09:40',read:false},
+{id:3,k:'orderExpiring',titleKey:'merchant.notify.orderExpiringTitle',orderNo:'YD202608180004',time:'2026-11-08 18:20',read:true},
+{id:4,k:'renewSuccess',titleKey:'merchant.notify.renewSuccessTitle',orderNo:'YD202608170006',time:'2026-11-08 15:05',read:true},
+{id:5,k:'orderOverdue',titleKey:'merchant.notify.orderOverdueTitle',orderNo:'YD202608150007',time:'2026-11-07 11:30',read:true},
+{id:6,k:'orderCompleted',titleKey:'merchant.notify.orderCompletedTitle',orderNo:'YD202608100007',time:'2026-11-06 20:16',read:true}
+]);
+/* 列表数据（原型面板）：空数据时消息列表为空、铃铛红点同步隐藏 */
+const mcNotifyMsgsShow=computed(()=>demoListEmpty.value?[]:mcNotifyMsgs.value);
+const mcNotifyUnread=computed(()=>mcNotifyMsgsShow.value.filter(m=>!m.read).length);
+function mcReadOne(id){const it=mcNotifyMsgs.value.find(x=>x.id===id);if(it)it.read=true}
+/* 一键已读：未读清零并提示；设置：跳到「消息推送」配置页 */
+function markAllMcRead(){mcNotifyMsgs.value.forEach(m=>{m.read=true});toast(t('merchant.message.markAllRead'),'success')}
+function openMsgSettings(){navOpen();profileOV.value='msg'}
 /* 推送渠道：系统推送（手机系统推送，OS）/ 邮件（EMAIL）——按大类分组配置，可各自独立开关 */
 const msgChannelOpts=computed(()=>[
 {v:'OS',l:t('merchant.message.channelPhone')},
@@ -11913,7 +11961,7 @@ appLang,appLangLabel,intlLocale,langOptions,selectLang,showLogin,loginView,login
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,modelDepositKey,openModelEdit,openModelPrice,saveModelPrice,saveModelSort,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,openBattModelPrice,saveBattModelPrice,saveBattModelSort,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,openPackagePrice,savePackagePrice,savePackageInfo,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,pkgPickerSel,openPkgPicker,pkgToggle,pkgPickerConfirm,closePkgPicker,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
-csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,msgCfg,msgCatOpts,msgEventOpts,msgChannelOpts,msgSaving,saveMsgCfg,toggleMsgChannel,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,
+csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,msgCfg,msgCatOpts,msgEventOpts,msgChannelOpts,msgSaving,saveMsgCfg,toggleMsgChannel,mcNotifyMsgs,mcNotifyMsgsShow,mcNotifyUnread,mcReadOne,markAllMcRead,openMsgSettings,notifyBodySample,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,
 profileMdT,profileMdD,profileMdDanger,profileMdOk,
 fE,vErr,vClr,tip,tipShow,tipToggle,tipHide,stage,

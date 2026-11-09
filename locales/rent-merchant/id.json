@@ -551,7 +551,8 @@
       "unbindVehicleTitle": "Lepas Kendaraan",
       "unbindBatteryTitle": "Lepas Baterai",
       "rangeInteger": "Masukkan bilangan bulat antara {min} dan {max}",
-      "pricing": "Penetapan harga"
+      "pricing": "Penetapan harga",
+      "menuMessage": "Push Pesan"
     },
     "home": {
       "noMatchingAlertsSub": "Tidak ada peringatan yang cocok dengan filter saat ini",
@@ -889,10 +890,13 @@
     },
     "message": {
       "channel": "Saluran Push",
-      "channelPhone": "Push Sistem",
+      "channelPhone": "Sistem Ponsel",
       "settingsCategoryHead": "Jenis Pesan",
       "categoryFeeRefund": "Biaya & Pengembalian Dana",
-      "channelEmail": "Email"
+      "channelEmail": "Email",
+      "centerTitle": "Pusat Pesan",
+      "empty": "Belum ada pesan",
+      "markAllRead": "Semua ditandai dibaca"
     },
     "map": {
       "noResult": "Tempat terkait tidak ditemukan"
@@ -926,7 +930,21 @@
       "orderCancelledTitle": "Pesanan telah dibatalkan",
       "orderAdjustedTitle": "Jumlah Pesanan Disesuaikan",
       "orderRefundingTitle": "Pengembalian Dana Diproses",
-      "orderRefundedTitle": "Pengembalian Dana Berhasil"
+      "orderRefundedTitle": "Pengembalian Dana Berhasil",
+      "orderCreatedBody": "Pesanan {orderNo} telah dibuat. Pengguna memiliki {n} menit untuk membayar sebelum dibatalkan otomatis.",
+      "orderPaidBody": "Pesanan {orderNo} berhasil dibayar. Harap segera pindai kode QR kendaraan/baterai untuk menyelesaikan pengikatan; penagihan dimulai setelah terikat.",
+      "deviceBoundBody": "Pesanan {orderNo} sudah terikat ke kendaraan/baterai, periode sewa {start} hingga {end}.",
+      "orderExpiringBody": "Pesanan {orderNo} akan berakhir pada {time}. Perhatikan pengembalian atau perpanjangan.",
+      "renewReminderBody": "Perpanjangan otomatis akan dijalankan pada {time} dan menagih {amount}.",
+      "renewSuccessBody": "Penagihan perpanjangan otomatis sebesar {amount} berhasil; sewa diperpanjang hingga {time}.",
+      "renewFailedBody": "Perpanjangan otomatis gagal pada percobaan {n}/{total} karena {failReason}. Mohon pantau pesanan ini.",
+      "orderOverdueBody": "Pesanan {orderNo} telah jatuh tempo. Ingatkan pengguna segera mengembalikan.",
+      "orderBreachBody": "Pesanan {orderNo} terlambat {days} hari. Perangkat dikunci jarak jauh; mohon tindak lanjuti.",
+      "orderCompletedBody": "Pesanan {orderNo} telah selesai.",
+      "orderCancelledBody": "Pesanan {orderNo} dibatalkan. Jumlah yang dibayar akan dikembalikan ke pengguna.",
+      "orderAdjustedBody": "Jumlah pesanan {orderNo} diubah dari {oldAmount} menjadi {newAmount}.",
+      "orderRefundingBody": "Pengembalian dana {amount} untuk pesanan {orderNo} sedang diproses, 1-7 hari kerja.",
+      "orderRefundedBody": "Pengembalian dana {amount} untuk pesanan {orderNo} telah dikembalikan ke metode pembayaran asal."
     }
   },
   "user": {
