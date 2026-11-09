@@ -896,7 +896,15 @@
       "channelEmail": "อีเมล",
       "centerTitle": "ศูนย์ข้อความ",
       "empty": "ยังไม่มีข้อความ",
-      "markAllRead": "อ่านทั้งหมดแล้ว"
+      "markAllRead": "อ่านทั้งหมดแล้ว",
+      "prefsTitle": "การแจ้งเตือน",
+      "settingsGroupOuter": "นอกแอป",
+      "settingsOsRow": "การแจ้งเตือนระบบมือถือ",
+      "settingsEmailRow": "การแจ้งเตือนทางอีเมล",
+      "settingsGroupInner": "ในแอป",
+      "settingsPageRow": "หน้าศูนย์ข้อความ",
+      "masterRow": "รับการแจ้งเตือน",
+      "osDeniedRow": "สิทธิ์การแจ้งเตือนระบบ"
     },
     "map": {
       "noResult": "ไม่พบสถานที่ที่เกี่ยวข้อง"

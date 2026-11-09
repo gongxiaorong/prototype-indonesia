@@ -896,7 +896,15 @@
       "channelEmail": "郵件",
       "centerTitle": "訊息中心",
       "empty": "暫無訊息",
-      "markAllRead": "全部已讀"
+      "markAllRead": "全部已讀",
+      "prefsTitle": "訊息通知",
+      "settingsGroupOuter": "應用外",
+      "settingsOsRow": "手機系統通知",
+      "settingsEmailRow": "郵件通知",
+      "settingsGroupInner": "應用內",
+      "settingsPageRow": "訊息中心頁",
+      "masterRow": "接收訊息通知",
+      "osDeniedRow": "系統通知權限"
     },
     "map": {
       "noResult": "沒有找到相關地點"

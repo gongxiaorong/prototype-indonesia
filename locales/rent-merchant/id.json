@@ -896,7 +896,15 @@
       "channelEmail": "Email",
       "centerTitle": "Pusat Pesan",
       "empty": "Belum ada pesan",
-      "markAllRead": "Semua ditandai dibaca"
+      "markAllRead": "Semua ditandai dibaca",
+      "prefsTitle": "Notifikasi",
+      "settingsGroupOuter": "Di luar aplikasi",
+      "settingsOsRow": "Notifikasi sistem ponsel",
+      "settingsEmailRow": "Notifikasi email",
+      "settingsGroupInner": "Di dalam aplikasi",
+      "settingsPageRow": "Halaman pusat pesan",
+      "masterRow": "Terima notifikasi",
+      "osDeniedRow": "Izin notifikasi sistem"
     },
     "map": {
       "noResult": "Tempat terkait tidak ditemukan"

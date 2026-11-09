@@ -953,6 +953,8 @@ body.host-single-m #root-user{display:none}
 <div class="absolute inset-0 z-[13] flex items-center justify-center pointer-events-none" data-od-id="home-map-center-pin">
 <div class="map-center-pin"><div class="mcp-head"></div><div class="mcp-stem"></div></div>
 </div>
+<!-- 地图内容层：选中搜索地址后整层平移，使该地址落在屏幕中心准星下（准星本身不动） -->
+<div class="absolute inset-0" :style="{transform:'translate('+homeMapShift.x+'%,'+homeMapShift.y+'%)',transition:'transform .4s cubic-bezier(.22,.61,.36,1)'}" data-od-id="home-map-content">
 <div v-for="(d,i) in chargeDevices" :key="'hmd-'+i" data-cp class="absolute z-[15] -translate-x-1/2 -translate-y-full cursor-pointer active:opacity-80 transition-transform" :style="{left:d.x+'%',top:d.y+'%'}" :data-od-id="'home-charge-device-'+i" @click="openChargeDevice(d)">
 <div class="flex flex-col items-center">
 <div class="w-9 h-9 rounded-full flex items-center justify-center text-white" :style="d.status==='空闲'?{background:'#17A34A',boxShadow:'0 2px 10px rgba(23,163,74,.4)'}:{background:'#DC2626',boxShadow:'0 2px 10px rgba(220,38,38,.4)'}">
@@ -968,6 +970,7 @@ body.host-single-m #root-user{display:none}
 <div v-for="(s,i) in mapStores" :key="'hms-'+i" data-cp class="absolute z-[17] -translate-x-1/2 -translate-y-1/2 cursor-pointer active:opacity-80 transition-transform" :style="{left:s.x+'%',top:s.y+'%'}" :data-od-id="'home-map-store-'+i" @click.stop="selectMapStore(s)">
 <div class="w-[34px] h-[34px] rounded-xl flex items-center justify-center text-white" style="background:#1A82F4;box-shadow:0 2px 6px rgba(0,0,0,.18)">
 <span v-html="luci('store','w-4 h-4')"></span>
+</div>
 </div>
 </div>
 </div>
@@ -1366,10 +1369,10 @@ body.host-single-m #root-user{display:none}
 <page :open="showPoiSearch" :z="1920" trans="fd" oid="poi-search-page" :swipe-close="navBack">
 <div class="shrink-0 flex items-center gap-2.5 pt-[52px] px-3.5 pb-3" style="background:#F7F8FA">
 <div data-cp @click="navBack()" class="w-8 h-8 shrink-0 flex items-center justify-center cursor-pointer" style="color:#111" data-od-id="poi-search-back"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
-<div class="flex-1 min-w-0 flex items-center gap-2 h-[38px] bg-white rounded-[19px] px-3.5" style="border:1px solid #EDEDED" data-od-id="poi-search-bar">
+<div data-cp @click="openPoiInput" class="flex-1 min-w-0 flex items-center gap-2 h-[38px] bg-white rounded-[19px] px-3.5 cursor-pointer active:opacity-95" style="border:1px solid #EDEDED" data-od-id="poi-search-bar">
 <span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-4 h-4')"></span>
-<input v-model="poiQuery" type="text" enterkeyhint="search" :placeholder="$t('user.search.placeholder')" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="poi-search-input" @keyup.enter="poiSearchEnter()">
-<span v-if="poiQuery" data-cp @click="poiQuery=''" class="shrink-0 flex items-center cursor-pointer" style="color:#C4C4C4" data-od-id="poi-search-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
+<span class="flex-1 min-w-0 truncate text-[14px]" :class="poiQuery?'text-[#111]':'text-[#999]'" data-od-id="poi-search-bar-text">{{ poiQuery || $t('user.search.placeholder') }}</span>
+<span v-if="poiQuery" data-cp @click.stop="poiQuery=''" class="shrink-0 flex items-center cursor-pointer" style="color:#C4C4C4" data-od-id="poi-search-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
 </div>
 </div>
 <div class="flex-1 min-h-0 overflow-y-auto hide-scroll px-3.5 pb-7" style="background:#F7F8FA;touch-action:pan-y" data-od-id="poi-search-scroll">
@@ -1415,6 +1418,30 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <empty-state v-if="!poiDisplay.length&&(poiQuery.trim()||uLocReady)" icon="search-x" :text="$t('user.search.noPoi')" data-od-id="poi-search-empty"></empty-state>
+</div>
+</page>
+
+<!-- 搜索地点·输入页（用户端）：搜索地点页的搜索框点击后进入，输入关键词选地点后回填 -->
+<page :open="poiInputOpen" :z="1935" :swipe-close="closePoiInput" oid="poi-input-page" data-od-id="poi-input-page">
+<div class="shrink-0 flex items-center gap-2.5 pt-[52px] px-3.5 pb-3" style="background:#F7F8FA">
+<div data-cp @click="closePoiInput" class="w-8 h-8 shrink-0 flex items-center justify-center cursor-pointer" style="color:#111" data-od-id="poi-input-back"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 min-w-0 flex items-center gap-2 h-[38px] bg-white rounded-[19px] px-3.5" style="border:1px solid #EDEDED" data-od-id="poi-input-bar">
+<span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-4 h-4')"></span>
+<input v-model="poiInputQ" type="text" enterkeyhint="search" :placeholder="$t('user.search.placeholder')" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="poi-input-input">
+<span v-if="poiInputQ" data-cp @click="poiInputQ=''" class="shrink-0 flex items-center cursor-pointer" style="color:#C4C4C4" data-od-id="poi-input-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
+</div>
+</div>
+<div class="flex-1 min-h-0 overflow-y-auto hide-scroll px-3.5 pb-7" style="background:#F7F8FA;touch-action:pan-y" data-od-id="poi-input-list">
+<div v-if="poiInputList.length" class="bg-white rounded-[14px] overflow-hidden">
+<div v-for="(p,pi) in poiInputList" :key="p.key" data-cp @click="pickPoiInput(p)" class="p-3.5 cursor-pointer active:bg-[#F7F8FA]" :style="pi?{borderTop:'1px solid #F2F3F5'}:{}" :data-od-id="'poi-input-item-'+pi">
+<div class="flex items-center gap-2 min-w-0">
+<span class="flex-1 min-w-0 truncate text-[15px]" style="color:#111">{{ p.name }}</span>
+<span class="shrink-0 text-[12px]" style="color:#999">{{ fmtDist(p.dist) }}</span>
+</div>
+<div class="text-[12px] mt-1 truncate" style="color:#999">{{ p.sub }}</div>
+</div>
+</div>
+<empty-state v-else-if="poiInputQ.trim()" icon="" :text="$t('user.search.noPoi')" text-class="text-[13px] font-normal text-[#999]" root-class="flex flex-col items-center justify-center text-center py-[34px]" data-od-id="poi-input-empty"></empty-state>
 </div>
 </page>
 
@@ -1619,8 +1646,14 @@ body.host-single-m #root-user{display:none}
 </div>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="71UzRVKUzbMqOZDWxPy1Q7"></span>
 </div>
+<div class="flex items-center gap-1 shrink-0">
+<div data-cp @click="navOpen('ovMessage')" class="w-9 h-9 flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] rounded-full shrink-0 relative" data-od-id="profile-message" data-page-node-id="UmsgBellEntry01">
+<span v-html="luci('bell','w-5 h-5 text-[#666]')" data-page-node-id="UmsgBellEntry01Icon"></span>
+<span v-if="notifyUnread" class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full" style="background:#DC2626" data-page-node-id="UmsgBellEntry01Dot"></span>
+</div>
 <div data-cp @click="navOpen('ovSettings')" class="w-9 h-9 flex items-center justify-center cursor-pointer active:bg-[#F0F0F0] rounded-full shrink-0" data-od-id="profile-settings" data-page-node-id="13yCysryZVCDr10uWVH7Gm">
 <span v-html="luci('settings','w-5 h-5 text-[#666]')" data-page-node-id="laRXpys5SS2LkJzYvTcmjE"></span>
+</div>
 </div>
 </div>
 
@@ -1638,12 +1671,7 @@ body.host-single-m #root-user{display:none}
 <span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="Dcl7hiCo64dBVmygFrfzLB"></span>
 </div>
 
-<div v-if="loggedIn" data-cp @click="navOpen('ovMessage')" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-message" data-page-node-id="PrMsgRow">
-<div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#EBF1FD" data-page-node-id="PrMsgIcon"><span v-html="luci('bell','w-[18px] h-[18px] text-[#2B3F5F]')" data-page-node-id="PrMsgIconSvg"></span></div>
-<span class="flex-1 text-[15px] font-medium" data-page-node-id="PrMsgLabel">{{ $t('user.message.title') }}</span>
-<span v-if="notifyUnread>0" class="min-w-[18px] h-[18px] px-1.5 rounded-full flex items-center justify-center text-[11px] font-semibold text-white shrink-0 tabular-nums" style="background:#DC2626" data-od-id="profile-message-badge" data-page-node-id="PrMsgBadge">{{ notifyUnread>99?'99+':notifyUnread }}</span>
-<span v-html="luci('chevron-right','w-4 h-4 text-[#CCC]')" data-page-node-id="PrMsgChev"></span>
-</div>
+
 
 <div v-if="loggedIn" data-cp @click="openWallet" class="px-4 py-3 flex items-center gap-3 cursor-pointer active:bg-[#F6F7F9]" style="border-bottom:1px solid #F0F0F0" data-od-id="profile-wallet" data-page-node-id="0RgyfkVdCuLoS8c6JRaPd7">
 <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#F0FDF4" data-page-node-id="NXmQ8MucT7IamLtutSguEL"><span v-html="luci('wallet','w-[18px] h-[18px] text-[#17A34A]')" data-page-node-id="VvRhZzzgfRTACMjn4nImTW"></span></div>
@@ -5527,11 +5555,10 @@ body.host-single-m #root-user{display:none}
 <nav-bar :title="$t('merchant.chargingDevice.selectAddr')" border-color="#E5E5E5" @back="goBack()"></nav-bar>
 <div ref="cdMapBox" class="flex-1 min-h-0 relative overflow-hidden select-none" style="background:#EAEFE7;touch-action:none" @pointerdown="cdMapDown" @pointermove="cdMapMove" @pointerup="cdMapUp" @pointercancel="cdMapUp" data-od-id="cd-map-canvas">
 <!-- POI 搜索：浮层置于地图之上，阻止 pointer 事件冒泡以免误触发地图拖拽 -->
-<div class="absolute left-3 right-3 top-3 z-10" @pointerdown.stop @pointermove.stop @pointerup.stop @pointercancel.stop data-od-id="cd-map-search">
-<div class="flex items-center gap-2 px-3 h-10 rounded-xl bg-white" style="box-shadow:0 1px 5px rgba(0,0,0,.15)">
-<span class="shrink-0 flex items-center" style="color:#6B6B6B" v-html="luci('search','w-4 h-4')"></span>
-<input :value="cdMapQ" @input="cdMapQ=$event.target.value" type="text" :placeholder="$t('merchant.chargingDevice.addrMapSearch')" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="cd-map-search-input">
-<span v-if="cdMapQ" data-cp @click="cdMapQ=''" class="shrink-0 flex items-center justify-center cursor-pointer" style="color:#C4C4C4" data-od-id="cd-map-search-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
+<div class="absolute left-3 right-3 top-3 z-10" @pointerdown.stop @pointermove.stop @pointerup.stop @pointercancel.stop data-od-id="cd-map-search-wrap">
+<div data-cp @click="cdOpenAddrSearch" class="flex items-center gap-2.5 px-3.5 h-10 rounded-full bg-white cursor-pointer active:opacity-95 transition-opacity" style="box-shadow:0 4px 16px rgba(0,0,0,.16)" data-od-id="cd-map-search">
+<span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-[18px] h-[18px]')"></span>
+<span class="flex-1 min-w-0 truncate text-[13px]" :style="cdMapDraft?{color:'#111'}:{color:'#8A9999'}">{{ cdMapDraft || $t('merchant.chargingDevice.addrMapSearch') }}</span>
 </div>
 </div>
 <div class="cdsm-world" :style="cdMapWorldStyle">
@@ -5564,7 +5591,7 @@ body.host-single-m #root-user{display:none}
 </div>
 <div class="shrink-0 bg-white" style="border-top:1px solid #F0F0F0">
 <div class="overflow-y-auto hide-scroll pt-2 pb-2" style="max-height:34vh">
-<div v-for="(p,pi) in cdMapList" :key="p.addr" data-cp @click="cdPickMapPoint(p)" class="flex items-center gap-3 px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'cd-map-point-'+pi">
+<div v-for="(p,pi) in cdMapNearby" :key="p.addr" data-cp @click="cdPickMapPoint(p)" class="flex items-center gap-3 px-5 py-3 cursor-pointer active:bg-[#F6F7F9]" :data-od-id="'cd-map-point-'+pi">
 <div class="flex-1 min-w-0">
 <div class="text-[14px] font-medium truncate" :style="cdMapDraft===p.addr?{color:'var(--accent)'}:{color:'#111'}">{{ p.name }}</div>
 <div class="text-[12px] mt-0.5 truncate" style="color:#999">{{ p.addr }}</div>
@@ -5572,11 +5599,35 @@ body.host-single-m #root-user{display:none}
 <span class="text-[11px] shrink-0" style="color:#BBB">{{ p.dist }}</span>
 <span v-if="cdMapDraft===p.addr" v-html="luci('check','w-4 h-4 text-[var(--accent)]')"></span>
 </div>
-<empty-state v-if="!cdMapList.length" icon="" :text="$t('merchant.map.noResult')" text-class="text-[13px] font-normal text-[#999]" root-class="flex flex-col items-center justify-center text-center py-[34px]" data-od-id="cd-map-search-empty"></empty-state>
+<empty-state v-if="!cdMapNearby.length" icon="" :text="$t('merchant.map.noResult')" text-class="text-[13px] font-normal text-[#999]" root-class="flex flex-col items-center justify-center text-center py-[34px]" data-od-id="cd-map-search-empty"></empty-state>
 </div>
 <div class="px-5 pb-[calc(12px+env(safe-area-inset-bottom,0px))] pt-1">
 <button data-cp @click="cdConfirmAddrMap" class="w-full h-12 rounded-xl text-[16px] font-semibold text-white border-none cursor-pointer active:opacity-90 transition-opacity" style="background:var(--accent)" data-od-id="cd-map-confirm">{{ $t('common.action.confirmLabel') }}</button>
 </div>
+</div>
+</page>
+
+<!-- ═══ 充电桩 · 地址搜索页（对标用户端 POI 搜索页：点选地址后回地址页并居中地图） ═══ -->
+<page :open="cdAddrSearchOpen" :z="540" :swipe-close="cdCloseAddrSearch" oid="mc-addr-search-page" data-od-id="mc-addr-search-page">
+<div class="shrink-0 flex items-center gap-2.5 pt-[52px] px-3.5 pb-3" style="background:#F7F8FA">
+<div data-cp @click="cdCloseAddrSearch" class="w-8 h-8 shrink-0 flex items-center justify-center cursor-pointer" style="color:#111" data-od-id="cd-addr-search-back"><span v-html="luci('chevron-left','w-5 h-5')"></span></div>
+<div class="flex-1 min-w-0 flex items-center gap-2 h-[38px] bg-white rounded-[19px] px-3.5" style="border:1px solid #EDEDED" data-od-id="cd-addr-search-bar">
+<span class="shrink-0 flex items-center" style="color:#111" v-html="luci('search','w-4 h-4')"></span>
+<input v-model="cdAddrSearchQ" type="text" enterkeyhint="search" :placeholder="$t('merchant.chargingDevice.addrMapSearch')" class="flex-1 min-w-0 bg-transparent border-none outline-none text-[14px]" style="color:#111;user-select:text" data-od-id="cd-addr-search-input">
+<span v-if="cdAddrSearchQ" data-cp @click="cdAddrSearchQ=''" class="shrink-0 flex items-center cursor-pointer" style="color:#C4C4C4" data-od-id="cd-addr-search-clear"><span v-html="luci('x','w-4 h-4')"></span></span>
+</div>
+</div>
+<div class="flex-1 min-h-0 overflow-y-auto hide-scroll px-3.5 pb-7" style="background:#F7F8FA;touch-action:pan-y" data-od-id="cd-addr-search-list">
+<div v-if="cdAddrSearchList.length" class="bg-white rounded-[14px] overflow-hidden">
+<div v-for="(p,pi) in cdAddrSearchList" :key="p.addr" data-cp @click="cdPickAddrSearch(p)" class="p-3.5 cursor-pointer active:bg-[#F7F8FA]" :style="pi?{borderTop:'1px solid #F2F3F5'}:{}" :data-od-id="'cd-addr-result-'+pi">
+<div class="flex items-center gap-2 min-w-0">
+<span class="flex-1 min-w-0 truncate text-[15px]" style="color:#111">{{ p.name }}</span>
+<span class="shrink-0 text-[12px]" style="color:#999">{{ p.dist }}</span>
+</div>
+<div class="text-[12px] mt-1 truncate" style="color:#999">{{ p.addr }}</div>
+</div>
+</div>
+<empty-state v-else-if="cdAddrSearchQ.trim()" icon="" :text="$t('merchant.map.noResult')" text-class="text-[13px] font-normal text-[#999]" root-class="flex flex-col items-center justify-center text-center py-[34px]" data-od-id="cd-addr-search-empty"></empty-state>
 </div>
 </page>
 
@@ -6854,6 +6905,88 @@ body.host-single-m #root-user{display:none}
 </div>
 </page>
 
+<!-- 账号级消息通知偏好（商户端）：与用户端同构——应用外（手机系统通知 / 邮件）+ 应用内（消息中心页） -->
+<page :open="profileOV==='mcNotify'" :z="510" :swipe-close="()=>goBack()" oid="mc-notify-prefs">
+<nav-bar :title="$t('merchant.message.prefsTitle')" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="text-[13px] font-medium text-[#999] mb-2 px-1">{{ $t('merchant.message.settingsGroupOuter') }}</div>
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
+<div data-cp @click="openMcNotifyOs" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="mc-notify-os-row">
+<span class="flex-1 text-[15px] font-medium">{{ $t('merchant.message.settingsOsRow') }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
+</div>
+<div data-cp @click="openMcNotifyEmail" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #F0F0F0" data-od-id="mc-notify-email-row">
+<span class="flex-1 text-[15px] font-medium">{{ $t('merchant.message.settingsEmailRow') }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
+</div>
+</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1">{{ $t('merchant.message.settingsGroupInner') }}</div>
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
+<div data-cp @click="openMcNotifyCenter" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" data-od-id="mc-notify-center-row">
+<span class="flex-1 text-[15px] font-medium">{{ $t('merchant.message.settingsPageRow') }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')"></span>
+</div>
+</div>
+</div>
+</page>
+
+<page :open="profileOV==='mcNotifyOs'" :z="512" :swipe-close="()=>goBack()" oid="mc-notify-os">
+<nav-bar :title="$t('merchant.message.settingsOsRow')" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
+<div class="flex items-center px-4 py-3.5">
+<span class="flex-1 text-[15px] font-medium">{{ $t('merchant.message.settingsOsRow') }}</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0" :class="mcNotifyPrefs.osDenied?'bg-[#E5E5E5]':'bg-[#2B3F5F]'" data-cp @click="toggleMcOsPerm" data-od-id="mc-os-perm-switch"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="mcNotifyPrefs.osDenied?'':'translate-x-5'"></span></div>
+</div>
+</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1">{{ $t('merchant.message.settingsCategoryHead') }}</div>
+<div v-for="c in msgCatOpts" :key="c.k" class="bg-white rounded-xl overflow-hidden mb-2" style="border:1px solid #E5E5E5">
+<div class="flex items-center px-4 py-3.5">
+<span class="flex-1 text-[15px] font-medium pr-3">{{ c.l }}</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0" :class="mcSwCls(mcNotifyPrefs.cats[c.k].os,mcOsSwEnabled)" :data-cp="mcOsSwEnabled?'':null" @click="toggleMcOs(c.k)" :data-od-id="'mc-os-cat-'+c.k"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="mcNotifyPrefs.cats[c.k].os?'translate-x-5':''"></span></div>
+</div>
+</div>
+</div>
+</page>
+
+<page :open="profileOV==='mcNotifyEmail'" :z="512" :swipe-close="()=>goBack()" oid="mc-notify-email">
+<nav-bar :title="$t('merchant.message.settingsEmailRow')" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
+<div class="flex items-center px-4 py-3.5">
+<span class="flex-1 text-[15px] font-medium">{{ $t('merchant.message.settingsEmailRow') }}</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0" :class="mcNotifyPrefs.email?'bg-[#2B3F5F]':'bg-[#E5E5E5]'" data-cp @click="toggleMcEmail" data-od-id="mc-email-switch"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="mcNotifyPrefs.email?'translate-x-5':''"></span></div>
+</div>
+</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1">{{ $t('merchant.message.settingsCategoryHead') }}</div>
+<div v-for="c in msgCatOpts" :key="c.k" class="bg-white rounded-xl overflow-hidden mb-2" style="border:1px solid #E5E5E5">
+<div class="flex items-center px-4 py-3.5">
+<span class="flex-1 text-[15px] font-medium pr-3">{{ c.l }}</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0" :class="mcSwCls(mcNotifyPrefs.cats[c.k].email,mcEmailSwEnabled)" :data-cp="mcEmailSwEnabled?'':null" @click="toggleMcEmailCat(c.k)" :data-od-id="'mc-email-cat-'+c.k"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="mcNotifyPrefs.cats[c.k].email?'translate-x-5':''"></span></div>
+</div>
+</div>
+</div>
+</page>
+
+<page :open="profileOV==='mcNotifyCenter'" :z="512" :swipe-close="()=>goBack()" oid="mc-notify-center">
+<nav-bar :title="$t('merchant.message.settingsPageRow')" border-color="#E5E5E5" @back="goBack()"></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5">
+<div class="flex items-center px-4 py-3.5">
+<span class="flex-1 text-[15px] font-medium">{{ $t('merchant.message.masterRow') }}</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0" :class="mcNotifyPrefs.master?'bg-[#2B3F5F]':'bg-[#E5E5E5]'" data-cp @click="toggleMcMaster" data-od-id="mc-center-master-switch"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="mcNotifyPrefs.master?'translate-x-5':''"></span></div>
+</div>
+</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1">{{ $t('merchant.message.settingsCategoryHead') }}</div>
+<div v-for="c in msgCatOpts" :key="c.k" class="bg-white rounded-xl overflow-hidden mb-2" style="border:1px solid #E5E5E5">
+<div class="flex items-center px-4 py-3.5">
+<span class="flex-1 text-[15px] font-medium pr-3">{{ c.l }}</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0" :class="mcSwCls(mcNotifyPrefs.cats[c.k].center,mcCenterSwEnabled)" :data-cp="mcCenterSwEnabled?'':null" @click="toggleMcCenterCat(c.k)" :data-od-id="'mc-center-cat-'+c.k"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="mcNotifyPrefs.cats[c.k].center?'translate-x-5':''"></span></div>
+</div>
+</div>
+</div>
+</page>
+
 <page :open="profileOV==='settings'" :z="500" :swipe-close="()=>goBack()" oid="settings-page">
 <nav-bar :title="$t('common.profile.settings')" border-color="#E5E5E5" @back="goBack"></nav-bar>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-28 hid">
@@ -7826,6 +7959,8 @@ const chargeDeviceSheet=ref(false),chargeDevice=ref(null);
 const chargeDevices=ref([]);
 /* 首页地图「当前位置」点：跟随当前定位候选点坐标（默认首个候选＝原 (28,62)，视觉与现状一致） */
 const chargeUserPt=computed(function(){const p=POI_LOC_CANDIDATES[poiLocIdx.value];return {x:p.x,y:p.y}});
+/* 首页地图「内容平移」：选中搜索地址后整层 pin 平移，使该地址落在屏幕中心准星下（百分比相对地图容器尺寸） */
+const homeMapShift=ref({x:0,y:0});
 /* 「附近充电桩」列表页（首页定位 Fab 下方的列表入口打开，行样式对标 POI 搜索页「附近」列表） */
 const showChargeList=ref(false);
 function openChargeList(){navOpen('chargeList');closeChargeDevice()}
@@ -7928,14 +8063,18 @@ const POI_LOC_CANDIDATES=[
 const poiLocIdx=ref(0);
 const poiLoc=computed(function(){return POI_LOC_CANDIDATES[poiLocIdx.value].name});
 const POI_LOC_REF=POI_LOC_CANDIDATES[0];
+/* 搜索选中的地址作为地图中心：为 POI 地点补一份地图坐标（围绕基准点按序号散布，稳定可复现） */
+POI_POIS.forEach(function(p,i){var a=i*0.85,r=4+(i%6)*2.5;p.x=Math.max(8,Math.min(92,POI_LOC_REF.x+Math.cos(a)*r));p.y=Math.max(8,Math.min(92,POI_LOC_REF.y+Math.sin(a)*r))});
+const poiCenter=ref(null);
 /* 以当前定位点重算距离：base 为基准点下的距离，按「到当前定位点 / 到基准点」的平面距离比例等比缩放（基准点下比例恒为 1，故默认数值与现状一致） */
 function poiDistAt(x,y,base){
-  const p=POI_LOC_CANDIDATES[poiLocIdx.value];
+  /* 基准点：搜索选中的地址优先，否则当前定位候选点 */
+  const p=poiCenter.value||POI_LOC_CANDIDATES[poiLocIdx.value];
   const dRef=Math.max(1,Math.hypot(x-POI_LOC_REF.x,y-POI_LOC_REF.y));
   return Math.max(20,Math.round(base*Math.hypot(x-p.x,y-p.y)/dRef));
 }
 /* 定位链就绪后真正执行的重新定位（候选地名轮换，按需求不再出提示） */
-function poiRelocateNow(){poiLocIdx.value=(poiLocIdx.value+1)%POI_LOC_CANDIDATES.length}
+function poiRelocateNow(){poiCenter.value=null;homeMapShift.value={x:0,y:0};poiLocIdx.value=(poiLocIdx.value+1)%POI_LOC_CANDIDATES.length}
 /* 搜索页入口：定位链未就绪先走两层弹窗（uLocWant='poi' 记住续跑动作） */
 function poiRelocate(){
   if(!uLocAppAuth.value){uLocWant.value='poi';uShowLocAppAuth.value=true;return}
@@ -7943,6 +8082,29 @@ function poiRelocate(){
   poiRelocateNow();
 }
 function openPoiSearch(){navOpen('poiSearch');poiQuery.value=''}
+/* 搜索地点页搜索框改为只读：点击进入输入页，输入关键词选地点后回填 */
+const poiInputOpen=ref(false),poiInputQ=ref('');
+const poiInputList=computed(function(){
+  var q=String(poiInputQ.value||'').trim().toLowerCase();
+  if(!q)return [];
+  return POI_POIS.filter(function(p){return (p.name+p.addr).toLowerCase().indexOf(q)>=0})
+    .sort(function(a,b){return (a.dist||0)-(b.dist||0)})
+    .map(function(p){return {key:'p-'+p.id,name:p.name,sub:p.addr,dist:p.dist,x:p.x,y:p.y}});
+});
+function openPoiInput(){poiInputQ.value=poiQuery.value||'';poiInputOpen.value=true}
+function closePoiInput(){poiInputOpen.value=false}
+/* 输入页选中地址 = 完成选择：直接回首页，并把地图中心切到该地址（附近充电桩/门店距离随之重算） */
+function pickPoiInput(p){
+  if(!p)return;
+  poiQuery.value=p.name;
+  if(p.name)poiHistoryAdd(p.name);
+  if(p.x!=null&&p.y!=null){
+    poiCenter.value={x:p.x,y:p.y,name:p.name};
+    homeMapShift.value={x:50-p.x,y:50-p.y};
+  }
+  poiInputOpen.value=false;
+  navBack();
+}
 /* 关闭动作只复位搜索页开关（弹栈还原走 navBack）；另供「门店 → 选择方案」分支入栈后隐掉本页使用（见 poiOpen 注释） */
 function closePoiSearch(){if(showPoiSearch.value)showPoiSearch.value=false}
 /* 结果点击：充电桩 → 原地弹设备详情（留在搜索页；弹窗 mask-z 2590 高于本页 1920）；POI 目的地 → 回首页；门店 → 该门店的「选择方案」页（与门店页点门店同一出口）。
@@ -7951,8 +8113,17 @@ function closePoiSearch(){if(showPoiSearch.value)showPoiSearch.value=false}
    仅「搜索态」（有关键词）的结果点击写入搜索历史；无关键词的「附近」列表点击不写。 */
 function poiOpen(p){
   if(poiQuery.value.trim())poiHistoryAdd(p.name);
+  if(p.kind==='poi'){
+    /* 选中目的地：直接回首页，地图内容平移使该地点落在中心准星下（附近充电桩/门店距离按该点重算） */
+    var ref=p.ref||{};
+    if(ref.x!=null&&ref.y!=null){
+      poiCenter.value={x:ref.x,y:ref.y,name:ref.name||p.name};
+      homeMapShift.value={x:50-ref.x,y:50-ref.y};
+    }
+    navBack();
+    return;
+  }
   if(p.kind==='charger'){openChargeDevice(p.ref);return}
-  if(p.kind==='poi'){navBack();return}
   openStorePlan(p.ref);closePoiSearch();
 }
 /* 回车：直接取首条结果（对标换电端 doSearch，无结果时提示） */
@@ -8340,6 +8511,7 @@ const mapStores=computed(function(){
 function selectMapStore(s){openStorePlan(s&&s.ref?s.ref:s)}
 const selectedStore=ref(null);
 var storePtrInit=false;function openStore(){navOpen('store')}function searchStore(){const q=storeSearch.value.trim();if(q===storeQuery.value.trim())return;storeQuery.value=storeSearch.value;if(showRentLoading.value)return;showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}
+
 /* 门店 → 「选择方案」页（唯一出口）：门店页点门店 与 搜索页点门店 共用，保证两处进入的门店信息与 loading 体感一致 */
 function openStorePlan(s){if(!s)return;selectedStore.value=s;navOpen('vehicle');showRentLoading.value=true;setTimeout(()=>{showRentLoading.value=false},600)}
 function selectStore(i){const s=storeFiltered.value[i];if(walletStorePick.value){ensureWalletOpened(s.name);walletAccount.value.activeStoreId=s.name;navDrop('store');toast(t('user.wallet.storeSelected'),'success')}else{openStorePlan(s)}}
@@ -8953,7 +9125,7 @@ if(showChargeList.value)return 'chargeList';
 
 onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);buildChargeDevices();setInterval(function(){goHomeBanner((homeBannerIdx.value+1)%homeBanners.length)},4000);if(!fbHistory.value.length)fbHistory.value.push({id:'fb-mock-1',tag:'issue',content:t('user.feedback.mockContent'),photos:[{id:'fb-mock-p1',time:'2026-10-20 09:12:35'},{id:'fb-mock-p2',time:'2026-10-20 09:12:36'}],status:'handled',handleTime:'2026-10-21 10:26:40',reply:t('user.feedback.mockHandledReply'),time:'2026-10-20 09:12:30'})});
 function setLoggedIn(v){loggedIn.value=v}
-return{fbTagOpts,fbTag,fbTagErr,fbContent,fbContentErr,fbPhotos,fbHistory,demoFbHandled,setFbHandled,showFbPicker,showFbAction,showFbPreview,fbPreviewItem,fbActionTarget,pickFbTag,pickFbSource,openFbPicker,openFbPreview,openFbPreviewFrom,openFbMore,fbActionReupload,fbActionDelete,fbTagLabel,submitFeedback,goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyCenter,toggleNotifyOs,toggleOsNotifyPerm,centerSwEnabled,osSwEnabled,swCls,enterOsNotify,enterEmailNotify,toggleEmailNotify,toggleNotifyEmail,emailSwEnabled,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,orderStatusText,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,intlLocale,langOptions,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,protoForceUpdate,setProtoForceUpdate,aboutContact,govContact,aboutOpen,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,catOptLabels,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confFeeDetail,confFeePlans,confFeeUnit,confCycleUnit,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,planText,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,orderScopeText,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,orderListTitle,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,closeCashier,confirmPayment,orderRentItems,orderRentTotal,rentedPeriodsOf,feeRentOpenMap,feeRentKey,toggleFeeRent,feeRowRentItems,feeRowRentSum,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,chargePayTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,setLoggedIn,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
+return{fbTagOpts,fbTag,fbTagErr,fbContent,fbContentErr,fbPhotos,fbHistory,demoFbHandled,setFbHandled,showFbPicker,showFbAction,showFbPreview,fbPreviewItem,fbActionTarget,pickFbTag,pickFbSource,openFbPicker,openFbPreview,openFbPreviewFrom,openFbMore,fbActionReupload,fbActionDelete,fbTagLabel,submitFeedback,goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyCenter,toggleNotifyOs,toggleOsNotifyPerm,centerSwEnabled,osSwEnabled,swCls,enterOsNotify,enterEmailNotify,toggleEmailNotify,toggleNotifyEmail,emailSwEnabled,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,orderStatusText,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,intlLocale,langOptions,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,protoForceUpdate,setProtoForceUpdate,aboutContact,govContact,aboutOpen,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,catOptLabels,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confFeeDetail,confFeePlans,confFeeUnit,confCycleUnit,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,planText,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,orderScopeText,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,orderListTitle,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,closeCashier,confirmPayment,orderRentItems,orderRentTotal,rentedPeriodsOf,feeRentOpenMap,feeRentKey,toggleFeeRent,feeRowRentItems,feeRowRentSum,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,poiCenter,homeMapShift,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiInputOpen,poiInputQ,poiInputList,openPoiInput,closePoiInput,pickPoiInput,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,chargePayTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,setLoggedIn,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
 });
 
 app.directive('swipe-close',{mounted(el,b){var sx=0,sy=0;el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(sx<40&&dx>60&&Math.abs(dy)<Math.abs(dx)*0.5)b.value()},{passive:true})}});
@@ -9666,8 +9838,13 @@ const demoPagePermCtx=computed(()=>{
       return{title:sub==='userDetail'?'用户详情':'用户管理',groups:[pickPermGroup('user',uc)].filter(Boolean)}
     }
     if(ov==='info'||ov==='settings'||sub==='lang'||sub==='bindPhone'||sub==='bindEmail'||sub==='pwdVerify'||sub==='pwdReset')return{title:ov==='settings'||sub==='lang'?'系统设置':ov==='info'?'个人信息':'我的',groups:[]};
-    /* 我的根页：10 个菜单入口码按页面菜单顺序展示（经营管理→员工与用户→运营配置） */
-    return{title:'我的',groups:[{id:'profileRoot',name:'我的',codes:['model.list','batt_model.list','package.list','account.list','position.list','user.list','order_config.detail','message_config.detail','cs_info.list','recharge.list'],items:[
+    /* 消息中心 / 账号级通知偏好：均为查看/个人偏好，不挂权限节点 */
+      if(ov==='mcMessage')return{title:t('merchant.message.centerTitle'),groups:[]};
+      if(ov==='mcNotify'||ov==='mcNotifyOs'||ov==='mcNotifyEmail'||ov==='mcNotifyCenter')return{title:t('merchant.message.prefsTitle'),groups:[]};
+      /* 其它未登记的二级页：不展示任何权限组（避免误显示「我的」） */
+      if(ov)return{title:'',groups:[]};
+      /* 我的根页：10 个菜单入口码按页面菜单顺序展示（经营管理→员工与用户→运营配置） */
+      return{title:'我的',groups:[{id:'profileRoot',name:'我的',codes:['model.list','batt_model.list','package.list','account.list','position.list','user.list','order_config.detail','message_config.detail','cs_info.list','recharge.list'],items:[
       {c:'model.list',n:'车型管理'},{c:'batt_model.list',n:'电池型号管理'},{c:'package.list',n:'套餐管理'},
       {c:'account.list',n:'账号管理'},{c:'position.list',n:'职位管理'},{c:'user.list',n:'用户管理'},
       {c:'order_config.detail',n:'订单配置'},{c:'message_config.detail',n:'消息推送'},{c:'cs_info.list',n:'客服信息'},{c:'recharge.list',n:'充值配置'}
@@ -11277,7 +11454,27 @@ const mcNotifyUnread=computed(()=>mcNotifyMsgsShow.value.filter(m=>!m.read).leng
 function mcReadOne(id){const it=mcNotifyMsgs.value.find(x=>x.id===id);if(it)it.read=true}
 /* 一键已读：未读清零并提示；设置：跳到「消息推送」配置页 */
 function markAllMcRead(){mcNotifyMsgs.value.forEach(m=>{m.read=true});toast(t('merchant.message.markAllRead'),'success')}
-function openMsgSettings(){navOpen();profileOV.value='msg'}
+/* 设置入口：进账号级通知偏好（与用户端同构），商户级「消息推送」配置仍在常用功能菜单里 */
+function openMsgSettings(){navOpen();profileOV.value='mcNotify'}
+/* ══ 账号级消息通知偏好（商户端）：应用外（手机系统通知 / 邮件）+ 应用内（消息中心页）══ */
+const MC_NOTIFY_KEY='mc_notify_prefs_v1';
+const mcNotifyPrefs=ref({master:true,email:true,osDenied:true,cats:{orderStatus:{os:true,center:true,email:true},feeRefund:{os:true,center:true,email:true}}});
+function loadMcNotifyPrefs(){try{const s=localStorage.getItem(MC_NOTIFY_KEY);if(!s)return;const o=JSON.parse(s);if(o&&typeof o==='object'){if(typeof o.master==='boolean')mcNotifyPrefs.value.master=o.master;if(typeof o.email==='boolean')mcNotifyPrefs.value.email=o.email;if(typeof o.osDenied==='boolean')mcNotifyPrefs.value.osDenied=o.osDenied;if(o.cats&&typeof o.cats==='object'){Object.keys(mcNotifyPrefs.value.cats).forEach(function(k){const c=o.cats[k];if(!c||typeof c!=='object')return;if(typeof c.os==='boolean')mcNotifyPrefs.value.cats[k].os=c.os;if(typeof c.center==='boolean')mcNotifyPrefs.value.cats[k].center=c.center;if(typeof c.email==='boolean')mcNotifyPrefs.value.cats[k].email=c.email})}}}catch(e){}}
+function saveMcNotifyPrefs(){try{localStorage.setItem(MC_NOTIFY_KEY,JSON.stringify(mcNotifyPrefs.value))}catch(e){}}
+loadMcNotifyPrefs();
+function mcSwCls(on,enabled){return enabled?(on?'bg-[#2B3F5F] cursor-pointer':'bg-[#E5E5E5] cursor-pointer'):'bg-[#E5E5E5] opacity-50 cursor-not-allowed'}
+const mcOsSwEnabled=computed(()=>mcNotifyPrefs.value.master&&!mcNotifyPrefs.value.osDenied);
+const mcEmailSwEnabled=computed(()=>mcNotifyPrefs.value.master&&mcNotifyPrefs.value.email);
+const mcCenterSwEnabled=computed(()=>mcNotifyPrefs.value.master);
+function toggleMcOsPerm(){mcNotifyPrefs.value.osDenied=!mcNotifyPrefs.value.osDenied;saveMcNotifyPrefs()}
+function toggleMcEmail(){mcNotifyPrefs.value.email=!mcNotifyPrefs.value.email;saveMcNotifyPrefs()}
+function toggleMcMaster(){mcNotifyPrefs.value.master=!mcNotifyPrefs.value.master;saveMcNotifyPrefs()}
+function toggleMcOs(k){const p=mcNotifyPrefs.value;if(!p.master||p.osDenied)return;const c=p.cats[k];c.os=!c.os;saveMcNotifyPrefs()}
+function toggleMcEmailCat(k){const p=mcNotifyPrefs.value;if(!p.master||!p.email)return;const c=p.cats[k];c.email=!c.email;saveMcNotifyPrefs()}
+function toggleMcCenterCat(k){const p=mcNotifyPrefs.value;if(!p.master)return;const c=p.cats[k];c.center=!c.center;saveMcNotifyPrefs()}
+function openMcNotifyOs(){navOpen();profileOV.value='mcNotifyOs'}
+function openMcNotifyEmail(){navOpen();profileOV.value='mcNotifyEmail'}
+function openMcNotifyCenter(){navOpen();profileOV.value='mcNotifyCenter'}
 /* 推送渠道：系统推送（手机系统推送，OS）/ 邮件（EMAIL）——按大类分组配置，可各自独立开关 */
 const msgChannelOpts=computed(()=>[
 {v:'OS',l:t('merchant.message.channelPhone')},
@@ -11458,13 +11655,26 @@ const CD_ADDR_POINTS=[{name:'双流航空港商圈',addr:'成都市双流区航�
 /* 表单地址不再做输入联想：地址只能经「选择地址」页的 POI 搜索取点回填（字段本身为只读选择行） */
 /* —— 选择地址页：地图拖拽取点（世界层 2×2 + 松手吸附候选点，算法照搬换电端） —— */
 const cdAddrTarget=ref('add');
-/* POI 搜索：关键字过滤候选地址（name + addr 模糊匹配），清空即恢复全量 */
-const cdMapQ=ref('');
-const cdMapList=computed(function(){
-  var q=String(cdMapQ.value||'').trim().toLowerCase();
-  if(!q)return CD_ADDR_POINTS;
+/* 地址搜索改为独立搜索页（点击地图上的搜索条进入）；搜索页关键字过滤候选地址 */
+const cdAddrSearchOpen=ref(false),cdAddrSearchQ=ref('');
+const cdAddrSearchList=computed(function(){
+  var q=String(cdAddrSearchQ.value||'').trim().toLowerCase();
+  /* 无关键词不预置任何地址（保持空白，输入后才出结果） */
+  if(!q)return [];
   return CD_ADDR_POINTS.filter(function(p){return (p.name+' '+p.addr).toLowerCase().indexOf(q)!==-1});
 });
+/* 附近 POI：按与当前中心点（选中地址，缺省当前定位）的直线距离由近到远 */
+const cdMapList=computed(function(){
+  var c=null;
+  CD_ADDR_POINTS.forEach(function(p){if(p.addr===cdMapDraft.value)c=p});
+  if(!c)c=cdStoreLoc;
+  if(!c)return CD_ADDR_POINTS;
+  return CD_ADDR_POINTS.slice().sort(function(a,b){
+    var da=Math.pow(a.lx-c.lx,2)+Math.pow(a.ly-c.ly,2),db=Math.pow(b.lx-c.lx,2)+Math.pow(b.ly-c.ly,2);
+    return da-db;
+  });
+});
+const cdMapNearby=cdMapList;
 const cdMapBox=ref(null),cdMapOff=reactive({x:0,y:0}),cdMapDragging=ref(false),cdMapDraft=ref('');
 var cdMapDrag=null,cdMapRo=null,cdMapLastSize=null;
 const cdMapWorldStyle=computed(function(){return {transform:'translate('+cdMapOff.x+'px,'+cdMapOff.y+'px)',transition:cdMapDragging.value?'none':'transform .35s cubic-bezier(.22,.61,.36,1)'}});
@@ -11504,13 +11714,22 @@ function cdOpenAddrMap(which){
   cdAddrTarget.value=which||'add';
   var cur=String(cdMapAddrOf(cdAddrTarget.value)||'').trim();
   var hit=cdMapPointOf(cur);
-  cdMapQ.value='';
+  cdAddrSearchQ.value='';
   /* 命中候选 → 回显选中并居中该点；未命中（尚未选择 / 地址非候选点）→ 不预选中，地图回到当前定位 */
   cdMapDraft.value=hit?hit.addr:'';
   navOpen();cdOV.value='addrMap';
   nextTick(function(){cdMapCenterOn(hit||cdStoreLoc);cdMapWatchSize()});
 }
 function cdPickMapPoint(p){if(!p)return;cdMapDraft.value=p.addr;cdMapCenterOn(p)}
+/* 搜索页：打开 / 关闭 / 选择（选择后回地址页并把地图中心切到该点，下方附近 POI 随之更新） */
+function cdOpenAddrSearch(){cdAddrSearchQ.value='';cdAddrSearchOpen.value=true}
+function cdCloseAddrSearch(){cdAddrSearchOpen.value=false}
+function cdPickAddrSearch(p){
+  if(!p)return;
+  cdMapDraft.value=p.addr;
+  cdAddrSearchOpen.value=false;
+  nextTick(function(){cdMapCenterOn(p);cdMapWatchSize()});
+}
 function cdConfirmAddrMap(){
   var v=cdMapDraft.value||'';
   if(!v){toast(t('merchant.chargingDevice.addrMapHint'),'warn');return}
@@ -11961,12 +12180,12 @@ appLang,appLangLabel,intlLocale,langOptions,selectLang,showLogin,loginView,login
 mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,modelDepositKey,openModelEdit,openModelPrice,saveModelPrice,saveModelSort,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,openBattModelPrice,saveBattModelPrice,saveBattModelSort,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,openPackagePrice,savePackagePrice,savePackageInfo,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,pkgPickerSel,openPkgPicker,pkgToggle,pkgPickerConfirm,closePkgPicker,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
-csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,msgCfg,msgCatOpts,msgEventOpts,msgChannelOpts,msgSaving,saveMsgCfg,toggleMsgChannel,mcNotifyMsgs,mcNotifyMsgsShow,mcNotifyUnread,mcReadOne,markAllMcRead,openMsgSettings,notifyBodySample,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,
+csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,msgCfg,msgCatOpts,msgEventOpts,msgChannelOpts,msgSaving,saveMsgCfg,toggleMsgChannel,mcNotifyMsgs,mcNotifyMsgsShow,mcNotifyUnread,mcReadOne,markAllMcRead,openMsgSettings,mcNotifyPrefs,mcSwCls,mcOsSwEnabled,mcEmailSwEnabled,mcCenterSwEnabled,toggleMcOsPerm,toggleMcEmail,toggleMcMaster,toggleMcOs,toggleMcEmailCat,toggleMcCenterCat,openMcNotifyOs,openMcNotifyEmail,openMcNotifyCenter,notifyBodySample,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,
 hmPicker,hmDraft,hmMins,hmWheelHour,hmWheelMin,openHmPicker,setHmHour,setHmMin,cancelHmPicker,confirmHmPicker,onHmWheelScroll,
 profileMdT,profileMdD,profileMdDanger,profileMdOk,
 fE,vErr,vClr,tip,tipShow,tipToggle,tipHide,stage,
 roOV,curRechargeOrder,roRefundMod,roRefundConfirm,roRefundForm,roRefunds,rechargeOrders,roPayStatusTag,roPayChannelText,roOpenList,roOpenDetail,roCloseList,roGoBack,roCanRefund,roCanRefundRecords,roOpenRefunds,roRefundTotal,roOpenRefund,roSubmitRefund,roConfirmRefund,roCancelMod,roCancelLoading,ignoreLoading,vehModLoading,battModLoading,psDoLoading,ordersModLoading,profileModLoading,uUnbindLoading,roRefundLoading,delDocLoading,roRequestCancel,roConfirmCancel,roQ,roSearchScope,roSearchScopeOpen,roSearchScopeOpts,roSearchScopeLabel,roSearchPH,roStatus,roStatusTabs,roStatusActive,roTabCnt,roHasF,rechargeFiltered,roShowFS,roFsPayC,roFsPayStC,roFsPayStOpts,roPayChannels,roFsStartC,roFsEndC,roFsMinC,roFsMaxC,roOpenFS,roToggleFsPay,roToggleFsPaySt,roResetFS,roApplyFS,roDoSearch,setRoSearchScope,roClearFilters,rechargeCustomerText,roDatePicker,roDateDraft,roDateWheelYear,roDateWheelMonth,roDateWheelDay,roDateYears,roDateDays,openRoDatePicker,cancelRoDatePicker,confirmRoDatePicker,onRoDateWheelScroll,
-chargeDevices,cdOV,curChargeDev,cdQ,cdPill,cdMod,cdConfirm,cdAddForm,cdModForm,cdErr,cdSaving,cdConfirmLoading,cdMoreOpen,cdPills,cdCnt,cdPillActive,cdSetPill,cdOpenFS,cdResetFS,cdApplyFS,cdDoSearch,cdClearFilters,cdFsStatus,cdFsStatusC,cdFsUsage,cdShowFS,cdHasF,chargeDevFiltered,cdEnableTag,cdUsageTag,cdPriceText,cdDurText,storeNameOf,cdOpenList,cdOpenDetail,cdOpenAdd,cdListScan,CD_ADDR_POINTS,cdStoreLoc,cdAddrTarget,cdMapQ,cdMapList,cdMapBox,cdMapOff,cdMapDragging,cdMapDraft,cdMapWorldStyle,cdMapDown,cdMapMove,cdMapUp,cdOpenAddrMap,cdPickMapPoint,cdConfirmAddrMap,cdLocAppAuth,cdLocService,cdShowLocAppAuth,cdShowLocService,cdUseLoc,cdAllowLocAppAuth,cdDenyLocAppAuth,cdCancelLocService,cdAllowLocService,cdCloseList,cdGoBack,cdOpenMod,cdCloseMod,cdSaveAdd,cdSaveEdit,cdSavePrice,cdAskToggle,cdDoToggle,cdConfirmTitle,cdConfirmDesc,refreshCd,
+chargeDevices,cdOV,curChargeDev,cdQ,cdPill,cdMod,cdConfirm,cdAddForm,cdModForm,cdErr,cdSaving,cdConfirmLoading,cdMoreOpen,cdPills,cdCnt,cdPillActive,cdSetPill,cdOpenFS,cdResetFS,cdApplyFS,cdDoSearch,cdClearFilters,cdFsStatus,cdFsStatusC,cdFsUsage,cdShowFS,cdHasF,chargeDevFiltered,cdEnableTag,cdUsageTag,cdPriceText,cdDurText,storeNameOf,cdOpenList,cdOpenDetail,cdOpenAdd,cdListScan,CD_ADDR_POINTS,cdStoreLoc,cdAddrTarget,cdMapList,cdMapNearby,cdAddrSearchOpen,cdAddrSearchQ,cdAddrSearchList,cdOpenAddrSearch,cdCloseAddrSearch,cdPickAddrSearch,cdMapBox,cdMapOff,cdMapDragging,cdMapDraft,cdMapWorldStyle,cdMapDown,cdMapMove,cdMapUp,cdOpenAddrMap,cdPickMapPoint,cdConfirmAddrMap,cdLocAppAuth,cdLocService,cdShowLocAppAuth,cdShowLocService,cdUseLoc,cdAllowLocAppAuth,cdDenyLocAppAuth,cdCancelLocService,cdAllowLocService,cdCloseList,cdGoBack,cdOpenMod,cdCloseMod,cdSaveAdd,cdSaveEdit,cdSavePrice,cdAskToggle,cdDoToggle,cdConfirmTitle,cdConfirmDesc,refreshCd,
 coOrders,coOV,curChargeOrder,coQ,coSearchScope,coSearchScopeOpen,coSearchScopeOpts,coSearchScopeLabel,coSearchPH,coPill,coPills,coOrderStatusOpts,coCnt,coPillActive,coSetPill,coPickSt,coToggleFsChannel,coSetSearchScope,coDoSearch,coOpenFS,coToggleFsPaySt,coResetFS,coApplyFS,coClearFilters,coFiltered,coFsOrderSt,coFsOrderStC,coFsChannel,coFsChannelC,coFsPaySt,coFsPayStC,coFsStart,coFsEnd,coFsStartC,coFsEndC,coShowFS,coHasF,coPayStatusOpts,CO_PAY_CHANNELS,coOrderStatusTag,coPayStatusTag,coRefundStatusTag,coPayChannelText,coRefundedAmount,coRefundable,coCanRefund,coCanRefundRecords,coShowPayTime,coDurText,coAmountText,coOpenList,coOpenDetail,coCloseList,coGoBack,coOpenRefundRecords,coRefunds,coCancelMod,coCancelConfirm,coCancelLoading,coCancelForm,coCancelErr,coRequestCancel,coSubmitCancel,coConfirmCancel,coFinishMod,coFinishConfirm,coFinishLoading,coFinishForm,coFinishErr,coRequestFinish,coSubmitFinish,coConfirmFinish,coRefundMod,coRefundConfirm,coRefundLoading,coRefundForm,coRefundErr,coOpenRefund,coSubmitRefund,coConfirmRefund,refreshCo,coActionsVisible,coDatePicker,coDateDraft,coDateYears,coDateDays,coDateWheelYear,coDateWheelMonth,coDateWheelDay,openCoDatePicker,cancelCoDatePicker,confirmCoDatePicker,onCoDateWheelScroll
 };
 }

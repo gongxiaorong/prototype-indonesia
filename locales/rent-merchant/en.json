@@ -896,7 +896,15 @@
       "channelEmail": "Email",
       "centerTitle": "Message Center",
       "empty": "No messages",
-      "markAllRead": "All marked as read"
+      "markAllRead": "All marked as read",
+      "prefsTitle": "Notifications",
+      "settingsGroupOuter": "Outside app",
+      "settingsOsRow": "Phone system notification",
+      "settingsEmailRow": "Email notification",
+      "settingsGroupInner": "In app",
+      "settingsPageRow": "Message center page",
+      "masterRow": "Receive notifications",
+      "osDeniedRow": "System notification permission"
     },
     "map": {
       "noResult": "No matching places found"
