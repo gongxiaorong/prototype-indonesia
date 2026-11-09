@@ -471,11 +471,7 @@
       "storeLevelLabel": "ระดับร้านค้า",
       "positionDeleted": "ลบตำแหน่งแล้ว",
       "commonFunctions": "ฟังก์ชันที่ใช้บ่อย",
-      "syncOrderTip": "ซิงค์ {n} รายการสั่งซื้อเป็นราคาใหม่ ไม่สามารถย้อนกลับได้ โปรดดำเนินการอย่างระมัดระวัง",
-      "syncOrderTitle": "ซิงค์ราคารายการสั่งซื้อ",
-      "syncOrderConfirmDesc": "ยืนยันซิงค์ {n} รายการสั่งซื้อเป็นราคาใหม่หรือไม่? ไม่สามารถย้อนกลับได้ โปรดดำเนินการอย่างระมัดระวัง",
       "pkgEditSaved": "บันทึกสำเร็จ",
-      "syncOrderSavedSynced": "บันทึกสำเร็จ ซิงค์ {n} รายการสั่งซื้อเป็นราคาใหม่แล้ว",
       "addUserInfo": "เพิ่มข้อมูลผู้ใช้",
       "modelCount": "ยานพาหนะทั้งหมด {n} คัน",
       "csAdd": "เพิ่มบริการลูกค้า",
@@ -554,7 +550,8 @@
       "editPushConfig": "แก้ไขการตั้งค่าการแจ้งเตือน",
       "unbindVehicleTitle": "ยกเลิกการผูกยานพาหนะ",
       "unbindBatteryTitle": "ยกเลิกการผูกแบตเตอรี่",
-      "rangeInteger": "กรุณากรอกจำนวนเต็มระหว่าง {min} ถึง {max}"
+      "rangeInteger": "กรุณากรอกจำนวนเต็มระหว่าง {min} ถึง {max}",
+      "pricing": "กำหนดราคา"
     },
     "home": {
       "noMatchingAlertsSub": "ไม่มีการแจ้งเตือนที่ตรงกับตัวกรองปัจจุบัน",
@@ -892,10 +889,10 @@
     },
     "message": {
       "channel": "ช่องทางพุช",
-      "channelPhone": "การแจ้งเตือนบนมือถือ",
+      "channelPhone": "การแจ้งเตือนระบบ",
       "settingsCategoryHead": "ประเภทข้อความ",
-      "channelCenter": "ศูนย์ข้อความ",
-      "categoryFeeRefund": "ค่าใช้จ่ายและการคืนเงิน"
+      "categoryFeeRefund": "ค่าใช้จ่ายและการคืนเงิน",
+      "channelEmail": "อีเมล"
     },
     "map": {
       "noResult": "ไม่พบสถานที่ที่เกี่ยวข้อง"

@@ -418,7 +418,7 @@
     "toast": {
       "deviceBound": "设备绑定成功",
       "deviceUnbound": "设备已解绑",
-      "msgAllRead": "已将消息置为已读",
+      "msgAllRead": "全部已读",
       "renewFailedUnpaid": "存在未支付订单，续租失败"
     },
     "home": {
@@ -441,7 +441,7 @@
         "orderCreatedTitle": "订单已创建",
         "orderCreatedBodyTpl": "您的订单{orderNo}已创建，请在30分钟内完成支付，超时未支付订单将自动取消。",
         "orderPaidTitle": "订单支付成功",
-        "orderPaidBodyTpl": "您的订单{orderNo}已支付成功。请尽快扫描车辆/电池二维码完成绑定，绑定成功后订单即开始计费。",
+        "orderPaidBodyTpl": "您的订单{orderNo}已支付成功。请尽快扫描车辆/电池二维码完成绑定，绑定成功后订单开始计费。",
         "deviceBoundTitle": "订单已开始",
         "deviceBoundBodyTpl": "您的订单{orderNo}已绑定车辆/电池，租期{rentStart}至{rentEnd}。",
         "orderExpiringTitle": "订单即将到期",
@@ -453,7 +453,7 @@
         "orderCompletedTitle": "订单已完成",
         "orderCompletedBodyTpl": "您的订单{orderNo}已完成，感谢您的使用，期待再次为您服务。",
         "orderCancelledTitle": "订单已取消",
-        "orderCancelledBodyTpl": "您的订单{orderNo}已取消。已支付金额将原路退回。",
+        "orderCancelledBodyTpl": "您的订单{orderNo}已取消，已支付金额将原路退回。",
         "orderAdjustedTitle": "订单金额已调整",
         "orderAdjustedBodyTpl": "您的订单{orderNo}金额已由{oldAmount}调整为{newAmount}，如有疑问请联系门店。",
         "orderRefundingTitle": "退款处理中",
@@ -718,7 +718,8 @@
       "settingsGroupOuter": "应用外",
       "settingsGroupInner": "应用内",
       "settingsOsRow": "手机系统通知",
-      "settingsPageRow": "消息中心页"
+      "settingsPageRow": "消息中心页",
+      "settingsEmailRow": "邮件通知"
     },
     "renew": {
       "walletAutoDeduct": "续租费用从钱包自动扣除"

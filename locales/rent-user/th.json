@@ -418,7 +418,7 @@
     "toast": {
       "deviceBound": "ผูกอุปกรณ์สำเร็จ",
       "deviceUnbound": "ยกเลิกการผูกอุปกรณ์",
-      "msgAllRead": "ทำเครื่องหมายข้อความว่าอ่านแล้ว",
+      "msgAllRead": "อ่านทั้งหมดแล้ว",
       "renewFailedUnpaid": "ต่ออายุไม่สำเร็จ: มีคำสั่งซื้อที่ยังไม่ชำระ"
     },
     "home": {
@@ -718,7 +718,8 @@
       "settingsGroupOuter": "นอกแอป",
       "settingsGroupInner": "ในแอป",
       "settingsOsRow": "การแจ้งเตือนระบบมือถือ",
-      "settingsPageRow": "หน้าศูนย์ข้อความ"
+      "settingsPageRow": "หน้าศูนย์ข้อความ",
+      "settingsEmailRow": "การแจ้งเตือนทางอีเมล"
     },
     "renew": {
       "walletAutoDeduct": "ค่าต่ออายุถูกหักจากกระเป๋าเงินโดยอัตโนมัติ"

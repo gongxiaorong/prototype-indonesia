@@ -418,7 +418,7 @@
     "toast": {
       "deviceBound": "Perangkat berhasil diikat",
       "deviceUnbound": "Perangkat dilepas",
-      "msgAllRead": "Pesan ditandai sudah dibaca",
+      "msgAllRead": "Semua ditandai dibaca",
       "renewFailedUnpaid": "Perpanjangan gagal: ada pesanan yang belum dibayar"
     },
     "home": {
@@ -718,7 +718,8 @@
       "settingsGroupOuter": "Di Luar Aplikasi",
       "settingsGroupInner": "Di Dalam Aplikasi",
       "settingsOsRow": "Notifikasi Sistem Ponsel",
-      "settingsPageRow": "Halaman Pusat Pesan"
+      "settingsPageRow": "Halaman Pusat Pesan",
+      "settingsEmailRow": "Notifikasi Email"
     },
     "renew": {
       "walletAutoDeduct": "Biaya perpanjangan dipotong otomatis dari dompet"

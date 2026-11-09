@@ -2461,6 +2461,10 @@ body.host-single-m #root-user{display:none}
 <span class="flex-1 text-[15px] font-medium" data-page-node-id="MsgSetOsRowLabel">{{ $t('user.message.settingsOsRow') }}</span>
 <span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="MsgSetOsRowChev"></span>
 </div>
+<div data-cp @click="enterEmailNotify" class="flex items-center px-4 py-3.5 cursor-pointer active:bg-[#F6F7F9]" style="border-top:1px solid #F0F0F0" data-od-id="notify-email-row" data-page-node-id="MsgSetEmailRow">
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="MsgSetEmailRowLabel">{{ $t('user.message.settingsEmailRow') }}</span>
+<span v-html="luci('chevron-right','w-4 h-4 text-[#999]')" data-page-node-id="MsgSetEmailRowChev"></span>
+</div>
 </div>
 <div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1" data-page-node-id="MsgSetInnerHead">{{ $t('user.message.settingsGroupInner') }}</div>
 <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5" data-page-node-id="MsgSetInnerCard">
@@ -2516,6 +2520,30 @@ body.host-single-m #root-user{display:none}
 <div class="text-[12px] mt-1 leading-relaxed" style="color:#999" data-page-node-id="MsgOsCatRenewDesc">{{ c.d }}</div>
 </div>
 <div class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0" :class="swCls(notifyPrefs.cats[c.k].os,osSwEnabled)" :data-cp="osSwEnabled?'':null" @click="toggleNotifyOs(c.k)" :data-od-id="'os-cat-switch-'+c.k" data-page-node-id="MsgOsCatRenewSw"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="notifyPrefs.cats[c.k].os?'translate-x-5':''" data-page-node-id="MsgOsCatRenewKnob"></span></div>
+</div>
+</div>
+</div>
+</page>
+
+<!-- 邮件通知（用户端三级页）：总开关 + 各消息类型的邮件接收偏好；
+     由「消息通知」页「应用外」分组的「邮件通知」行进入 -->
+<page :open="profileOV==='notifyEmail'" :z="564" :swipe-close="navBack" oid="email-notify-page" data-page-node-id="MsgEmailPage">
+<nav-bar :title="$t('user.message.settingsEmailRow')" border-color="#E5E5E5" @back="navBack()" data-page-node-id="MsgEmailNav"></nav-bar>
+<div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid" data-page-node-id="MsgEmailScroll">
+<div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E5E5" data-page-node-id="MsgEmailStatusCard">
+<div class="flex items-center px-4 py-3.5" data-od-id="email-notify-status-row" data-page-node-id="MsgEmailStatusRow">
+<span class="flex-1 text-[15px] font-medium" data-page-node-id="MsgEmailStatusLabel">{{ $t('user.message.settingsEmailRow') }}</span>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 cursor-pointer shrink-0" :class="notifyPrefs.email?'bg-[#2B3F5F]':'bg-[#E5E5E5]'" data-cp @click="toggleEmailNotify" data-od-id="email-notify-switch" data-page-node-id="MsgEmailStatusSw"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="notifyPrefs.email?'translate-x-5':''" data-page-node-id="MsgEmailStatusKnob"></span></div>
+</div>
+</div>
+<div class="text-[13px] font-medium text-[#999] mb-2 mt-5 px-1" data-page-node-id="MsgEmailTypeHead">{{ $t('user.message.settingsCategoryHead') }}</div>
+<div v-for="c in notifyCatOpts" :key="c.k" class="bg-white rounded-xl overflow-hidden mb-2" style="border:1px solid #E5E5E5" data-page-node-id="MsgEmailCatCard">
+<div class="flex items-center px-4 py-3.5" data-page-node-id="MsgEmailCatRow">
+<div class="flex-1 min-w-0" data-page-node-id="MsgEmailCatLeft">
+<div class="text-[15px] font-medium" data-page-node-id="MsgEmailCatLabel">{{ c.l }}</div>
+<div class="text-[12px] mt-1 leading-relaxed" style="color:#999" data-page-node-id="MsgEmailCatDesc">{{ c.d }}</div>
+</div>
+<div class="relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0" :class="swCls(notifyPrefs.cats[c.k].email,emailSwEnabled)" :data-cp="emailSwEnabled?'':null" @click="toggleNotifyEmail(c.k)" :data-od-id="'email-cat-switch-'+c.k" data-page-node-id="MsgEmailCatSw"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform" :class="notifyPrefs.cats[c.k].email?'translate-x-5':''" data-page-node-id="MsgEmailCatKnob"></span></div>
 </div>
 </div>
 </div>
@@ -5982,17 +6010,18 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
-<div v-if="mFilter.length" class="bg-white rounded-2xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="model-list">
-<div v-for="(m,i) in mFilter" :key="m.name" class="px-4 py-3.5" :style="i?'border-top:1px solid #F0F0F0':''" :data-od-id="'model-row-'+i">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center shrink-0"><span v-html="luci('bike','w-5 h-5 text-[var(--accent)]')"></span></div>
+<div v-if="mFilter.length" class="flex flex-col gap-2.5" data-od-id="model-list">
+<div v-for="(m,i) in mFilter" :key="m.name" class="bg-white rounded-2xl p-3.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" :data-od-id="'model-card-'+i">
+<div class="flex items-start gap-3">
+<div class="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 overflow-hidden" style="background:#F1F3F6" :data-od-id="'model-img-'+i"><span v-html="luci('image','w-7 h-7 text-[#B4BAC2]')"></span></div>
 <div class="flex-1 min-w-0">
 <div class="text-[15px] font-semibold text-[#111] truncate">{{ m.name }}</div>
-<div class="text-[12px] text-[#999] mt-0.5 truncate">{{ $t('merchant.profile.modelCount',{n:m.count}) }}</div>
+<div class="text-[12px] text-[#999] mt-1 truncate">{{ $t('merchant.profile.modelCount',{n:m.count}) }}</div>
 </div>
 </div>
-<div v-if="can('model.edit')" class="flex items-center justify-end mt-3">
-<div class="h-7 px-3.5 rounded-full text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid #B5BFC8;background:#fff;color:#1A1A1A" data-cp @click="openModelEdit(m)">{{ $t('common.action.edit') }}</div>
+<div class="flex items-center justify-end gap-2 mt-3">
+<div v-if="can('model.price')" class="h-7 px-3.5 rounded-lg text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid var(--accent);background:#fff;color:var(--accent)" data-cp @click="openModelPrice(m)" data-od-id="model-price-btn">{{ $t('merchant.profile.pricing') }}</div>
+<div v-if="can('model.edit')" class="h-7 px-3.5 rounded-lg text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid #B5BFC8;background:#fff;color:#1A1A1A" data-cp @click="openModelEdit(m)">{{ $t('common.action.edit') }}</div>
 </div>
 </div>
 </div>
@@ -6009,17 +6038,18 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
-<div v-if="bmFilter.length" class="bg-white rounded-2xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="batt-model-list">
-<div v-for="(m,i) in bmFilter" :key="m.name" class="px-4 py-3.5" :style="i?'border-top:1px solid #F0F0F0':''" :data-od-id="'batt-model-row-'+i">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-xl bg-[#EBF1FD] flex items-center justify-center shrink-0"><span v-html="luci('battery-charging','w-5 h-5 text-[var(--accent)]')"></span></div>
+<div v-if="bmFilter.length" class="flex flex-col gap-2.5" data-od-id="batt-model-list">
+<div v-for="(m,i) in bmFilter" :key="m.name" class="bg-white rounded-2xl p-3.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" :data-od-id="'batt-model-card-'+i">
+<div class="flex items-start gap-3">
+<div class="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 overflow-hidden" style="background:#F1F3F6" :data-od-id="'batt-model-img-'+i"><span v-html="luci('image','w-7 h-7 text-[#B4BAC2]')"></span></div>
 <div class="flex-1 min-w-0">
 <div class="text-[15px] font-semibold text-[#111] truncate">{{ m.name }}</div>
-<div class="text-[12px] text-[#999] mt-0.5 truncate">{{ $t('merchant.orders.batteryTotal',{n:m.count}) }}</div>
+<div class="text-[12px] text-[#999] mt-1 truncate">{{ $t('merchant.orders.batteryTotal',{n:m.count}) }}</div>
 </div>
 </div>
-<div class="flex items-center justify-end mt-3">
-<div class="h-7 px-3.5 rounded-full text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid #B5BFC8;background:#fff;color:#1A1A1A" data-cp @click="openBattModelEdit(m)">{{ $t('common.action.edit') }}</div>
+<div class="flex items-center justify-end gap-2 mt-3">
+<div class="h-7 px-3.5 rounded-lg text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid var(--accent);background:#fff;color:var(--accent)" data-cp @click="openBattModelPrice(m)" data-od-id="batt-price-btn">{{ $t('merchant.profile.pricing') }}</div>
+<div class="h-7 px-3.5 rounded-lg text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid #B5BFC8;background:#fff;color:#1A1A1A" data-cp @click="openBattModelEdit(m)">{{ $t('common.action.edit') }}</div>
 </div>
 </div>
 </div>
@@ -6036,13 +6066,17 @@ body.host-single-m #root-user{display:none}
 </div>
 </div>
 <div class="flex-1 overflow-y-auto px-5 pt-4 pb-10 hid">
-<div v-if="pkgFilter.length" class="bg-white rounded-2xl overflow-hidden" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" data-od-id="pkg-list">
-<div v-for="(m,i) in pkgFilter" :key="m.name" class="px-4 py-3.5" :style="i?'border-top:1px solid #F0F0F0':''" :data-od-id="'pkg-row-'+i">
+<div v-if="pkgFilter.length" class="flex flex-col gap-2.5" data-od-id="pkg-list">
+<div v-for="(m,i) in pkgFilter" :key="m.name" class="bg-white rounded-2xl p-3.5" style="border:1px solid #E5E5E5;box-shadow:0 1px 3px rgba(0,0,0,.04)" :data-od-id="'pkg-card-'+i">
+<div class="flex items-start gap-3">
+<div class="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 overflow-hidden" style="background:#F1F3F6" :data-od-id="'pkg-img-'+i"><span v-html="luci('image','w-7 h-7 text-[#B4BAC2]')"></span></div>
 <div class="flex-1 min-w-0">
 <div class="text-[15px] font-semibold text-[#111] truncate">{{ m.name }}</div>
 </div>
-<div v-if="can('package.edit')" class="flex items-center justify-end mt-3">
-<div class="h-7 px-3.5 rounded-full text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid #B5BFC8;background:#fff;color:#1A1A1A" data-cp @click="openPackageEdit(m)">{{ $t('common.action.edit') }}</div>
+</div>
+<div class="flex items-center justify-end gap-2 mt-3">
+<div v-if="can('package.price')" class="h-7 px-3.5 rounded-lg text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid var(--accent);background:#fff;color:var(--accent)" data-cp @click="openPackagePrice(m)" data-od-id="pkg-price-btn">{{ $t('merchant.profile.pricing') }}</div>
+<div v-if="can('package.edit')" class="h-7 px-3.5 rounded-lg text-[12px] font-medium flex items-center justify-center cursor-pointer active:opacity-80" style="border:1px solid #B5BFC8;background:#fff;color:#1A1A1A" data-cp @click="openPackageEdit(m)">{{ $t('common.action.edit') }}</div>
 </div>
 </div>
 </div>
@@ -6055,38 +6089,53 @@ body.host-single-m #root-user{display:none}
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
 <div class="form-plain">
 <div class="form-row"><div class="form-label">{{ $t('merchant.profile.modelName') }}</div><div class="text-[15px] font-semibold text-[#111] py-1">{{ fm.name }}</div></div>
+<form-field :label="$t('common.action.sort')" :error="fE.sort">
+<input v-model.number="fm.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
+</form-field>
+</div>
+</div>
+<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="saveModelSort" :disabled="modelSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
+</page>
+
+<page :open="profileSub==='mPrice'" :z="510" :swipe-close="()=>goBack()">
+<nav-bar :title="$t('merchant.profile.pricing')" border-color="#E5E5E5" @back="goBack"></nav-bar>
+<div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
+<div class="form-plain">
+<div class="form-row"><div class="form-label">{{ $t('merchant.profile.modelName') }}</div><div class="text-[15px] font-semibold text-[#111] py-1">{{ fm.name }}</div></div>
 <form-field :label="$t('common.orders.plan')" bare>
 <div class="flex flex-wrap gap-2"><div v-for="p in modelPlanOpts" :key="p.v" data-cp @click="fm.plans[p.v]=!fm.plans[p.v]" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fm.plans[p.v]?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid '+(fE[p.v]?'#DC2626':'#EBEDF0')}">{{ {planHour:$t('common.profile.planHour'),planDay:$t('common.profile.planDay'),planWeek:$t('common.label.periodWeek'),planMonth:$t('common.label.planMonth')}[p.l] }}</div></div>
 </form-field>
 <template v-for="p in modelPlanOpts" :key="'pr-'+p.v"><form-field v-if="fm.plans[p.v]" :label="{priceHour:$t('common.profile.planHour'),priceDay:$t('common.profile.planDay'),priceWeek:$t('common.label.periodWeek'),priceMonth:$t('common.label.planMonth')}[modelPriceKey[p.v]]" required :error="fE[p.v]">
 <span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
 <input v-model.number="fm[modelPriceKey[p.v]]" type="number" min="0" @input="vClr(p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
+</form-field><form-field v-if="fm.plans[p.v]" :label="$t('common.orders.deposit')" required :error="fE['d'+p.v]">
+<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
+<input v-model.number="fm[modelDepositKey[p.v]]" type="number" min="0" @input="vClr('d'+p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
 </form-field><form-field v-if="fm.plans[p.v]&&(p.v==='week'||p.v==='month')" :label="p.v==='week'?$t('merchant.profile.baseWeekDays'):$t('merchant.profile.baseMonthDays')" required :error="fE[p.v==='week'?'baseWeekDays':'baseMonthDays']">
 <input v-model.number="fm[p.v==='week'?'baseWeekDays':'baseMonthDays']" type="number" min="0" max="366" :placeholder="$t('merchant.profile.baseDaysPlaceholder')" @input="vClr(p.v==='week'?'baseWeekDays':'baseMonthDays')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
 </form-field></template>
-<form-field :label="$t('common.orders.deposit')" required :error="fE.deposit">
-<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
-<input v-model.number="fm.deposit" type="number" min="0" @input="vClr('deposit')" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
-</form-field>
-<form-field :label="$t('common.action.sort')" :error="fE.sort">
-<input v-model.number="fm.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
-</form-field>
-<!-- 同步订单定价：编辑页最后一项，勾选后保存前二次确认 -->
-<form-field :label="$t('merchant.profile.syncOrderTitle')" bare>
-<div data-cp @click="modelSyncOrder=!modelSyncOrder" class="flex items-start gap-2.5 cursor-pointer active:opacity-80" data-od-id="model-sync-order">
-<span class="w-4 h-4 rounded flex items-center justify-center shrink-0 mt-0.5" style="border-width:1px;border-style:solid" :style="modelSyncOrder?{background:'var(--accent)',borderColor:'var(--accent)'}:{background:'#fff',borderColor:'#C9CDD4'}"><span v-if="modelSyncOrder" v-html="luci('check','w-3 h-3 text-white')"></span></span>
-<div class="text-[13px] leading-[1.45]" style="color:#666">{{ $t('merchant.profile.syncOrderTip',{n:modelSyncCount}) }}</div>
-</div>
-</form-field>
 </div>
 </div>
-<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="saveModel" :disabled="modelSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
+<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="saveModelPrice" :disabled="modelSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
 </page>
 
-<confirm-dialog :open="modelSyncConfirm" :title="$t('merchant.profile.syncOrderTitle')" :desc="$t('merchant.profile.syncOrderConfirmDesc',{n:modelSyncCount})" :loading="modelSaving" z="2020" oid="model-sync-confirm" confirm-bg="var(--accent)" @close="modelSyncConfirm=false" @confirm="confirmModelSync()"></confirm-dialog>
+
 
 <page :open="profileSub==='bmEdit'" :z="510" :swipe-close="()=>goBack()">
 <nav-bar :title="$t('merchant.vehicles.batteryModelEdit')" border-color="#E5E5E5" @back="goBack"></nav-bar>
+<div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
+<div class="form-plain">
+<div class="form-row"><div class="form-label">{{ $t('merchant.vehicles.batteryModelName') }}</div><div class="text-[15px] font-semibold text-[#111] py-1">{{ fbm.name }}</div></div>
+<form-field :label="$t('common.action.sort')" :error="fE.sort">
+<input v-model.number="fbm.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
+</form-field>
+</div>
+</div>
+<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="saveBattModelSort" :disabled="battModelSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
+</page>
+
+<page :open="profileSub==='bmPrice'" :z="510" :swipe-close="()=>goBack()">
+<nav-bar :title="$t('merchant.profile.pricing')" border-color="#E5E5E5" @back="goBack"></nav-bar>
 <div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
 <div class="form-plain">
 <div class="form-row"><div class="form-label">{{ $t('merchant.vehicles.batteryModelName') }}</div><div class="text-[15px] font-semibold text-[#111] py-1">{{ fbm.name }}</div></div>
@@ -6096,29 +6145,18 @@ body.host-single-m #root-user{display:none}
 <template v-for="p in modelPlanOpts" :key="'br-'+p.v"><form-field v-if="fbm.plans[p.v]" :label="{priceHour:$t('common.profile.planHour'),priceDay:$t('common.profile.planDay'),priceWeek:$t('common.label.periodWeek'),priceMonth:$t('common.label.planMonth')}[modelPriceKey[p.v]]" required :error="fE[p.v]">
 <span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
 <input v-model.number="fbm[modelPriceKey[p.v]]" type="number" min="0" @input="vClr(p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
+</form-field><form-field v-if="fbm.plans[p.v]" :label="$t('common.orders.deposit')" required :error="fE['d'+p.v]">
+<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
+<input v-model.number="fbm[modelDepositKey[p.v]]" type="number" min="0" @input="vClr('d'+p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
 </form-field><form-field v-if="fbm.plans[p.v]&&(p.v==='week'||p.v==='month')" :label="p.v==='week'?$t('merchant.profile.baseWeekDays'):$t('merchant.profile.baseMonthDays')" required :error="fE[p.v==='week'?'baseWeekDays':'baseMonthDays']">
 <input v-model.number="fbm[p.v==='week'?'baseWeekDays':'baseMonthDays']" type="number" min="0" max="366" :placeholder="$t('merchant.profile.baseDaysPlaceholder')" @input="vClr(p.v==='week'?'baseWeekDays':'baseMonthDays')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
 </form-field></template>
-<form-field :label="$t('common.orders.deposit')" required :error="fE.deposit">
-<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
-<input v-model.number="fbm.deposit" type="number" min="0" @input="vClr('deposit')" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
-</form-field>
-<form-field :label="$t('common.action.sort')" :error="fE.sort">
-<input v-model.number="fbm.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
-</form-field>
-<!-- 同步订单定价：编辑页最后一项，勾选后保存前二次确认 -->
-<form-field :label="$t('merchant.profile.syncOrderTitle')" bare>
-<div data-cp @click="battSyncOrder=!battSyncOrder" class="flex items-start gap-2.5 cursor-pointer active:opacity-80" data-od-id="batt-sync-order">
-<span class="w-4 h-4 rounded flex items-center justify-center shrink-0 mt-0.5" style="border-width:1px;border-style:solid" :style="battSyncOrder?{background:'var(--accent)',borderColor:'var(--accent)'}:{background:'#fff',borderColor:'#C9CDD4'}"><span v-if="battSyncOrder" v-html="luci('check','w-3 h-3 text-white')"></span></span>
-<div class="text-[13px] leading-[1.45]" style="color:#666">{{ $t('merchant.profile.syncOrderTip',{n:battSyncCount}) }}</div>
-</div>
-</form-field>
 </div>
 </div>
-<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="saveBattModel" :disabled="battModelSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
+<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="saveBattModelPrice" :disabled="battModelSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
 </page>
 
-<confirm-dialog :open="battSyncConfirm" :title="$t('merchant.profile.syncOrderTitle')" :desc="$t('merchant.profile.syncOrderConfirmDesc',{n:battSyncCount})" :loading="battModelSaving" z="2020" oid="batt-sync-confirm" confirm-bg="var(--accent)" @close="battSyncConfirm=false" @confirm="confirmBattSync()"></confirm-dialog>
+
 
 <page :open="profileSub==='pkgEdit'" :z="510" :swipe-close="()=>goBack()">
 <nav-bar :title="$t('merchant.profile.packageEdit')" border-color="#E5E5E5" @back="goBack"></nav-bar>
@@ -6145,25 +6183,6 @@ body.host-single-m #root-user{display:none}
 <template v-else><span v-html="luci('camera','w-6 h-6 text-[#999]')"></span><span class="text-[13px] text-[#999] mt-1">{{ $t('merchant.common.clickUpload') }}</span></template>
 </div>
 </form-field>
-<form-field :label="$t('merchant.common.thumbnail')" :hint="$t('merchant.common.uploadSpec')+'：170px × 170px'" box-class="ff-upload py-5">
-<div data-cp @click="fpk.thumbImg=!fpk.thumbImg" class="flex flex-col items-center justify-center cursor-pointer transition-colors active:opacity-90">
-<template v-if="fpk.thumbImg"><div class="w-16 h-16 rounded-xl flex items-center justify-center" style="background:linear-gradient(145deg,var(--accent) 0%,#22324A 100%)"><span v-html="luci('image','w-7 h-7 text-white')"></span></div></template>
-<template v-else><span v-html="luci('image','w-6 h-6 text-[#999]')"></span><span class="text-[13px] text-[#999] mt-1">{{ $t('merchant.common.clickUpload') }}</span></template>
-</div>
-</form-field>
-<form-field :label="$t('common.orders.plan')" bare>
-<div class="flex flex-wrap gap-2"><div v-for="p in modelPlanOpts" :key="p.v" data-cp @click="fpk.plans[p.v]=!fpk.plans[p.v]" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fpk.plans[p.v]?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid '+(fE[p.v]?'#DC2626':'#EBEDF0')}">{{ {planHour:$t('common.profile.planHour'),planDay:$t('common.profile.planDay'),planWeek:$t('common.label.periodWeek'),planMonth:$t('common.label.planMonth')}[p.l] }}</div></div>
-</form-field>
-<template v-for="p in modelPlanOpts" :key="'bp-'+p.v"><form-field v-if="fpk.plans[p.v]" :label="{priceHour:$t('common.profile.planHour'),priceDay:$t('common.profile.planDay'),priceWeek:$t('common.label.periodWeek'),priceMonth:$t('common.label.planMonth')}[modelPriceKey[p.v]]" required :error="fE[p.v]">
-<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
-<input v-model.number="fpk[modelPriceKey[p.v]]" type="number" min="0" @input="vClr(p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
-</form-field><form-field v-if="fpk.plans[p.v]&&(p.v==='week'||p.v==='month')" :label="p.v==='week'?$t('merchant.profile.baseWeekDays'):$t('merchant.profile.baseMonthDays')" required :error="fE[p.v==='week'?'baseWeekDays':'baseMonthDays']">
-<input v-model.number="fpk[p.v==='week'?'baseWeekDays':'baseMonthDays']" type="number" min="0" max="366" :placeholder="$t('merchant.profile.baseDaysPlaceholder')" @input="vClr(p.v==='week'?'baseWeekDays':'baseMonthDays')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
-</form-field></template>
-<form-field :label="$t('common.orders.deposit')" required :error="fE.deposit">
-<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
-<input v-model.number="fpk.deposit" type="number" min="0" @input="vClr('deposit')" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
-</form-field>
 <form-field :label="$t('common.action.sort')" :error="fE.sort">
 <input v-model.number="fpk.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
 </form-field>
@@ -6173,19 +6192,36 @@ body.host-single-m #root-user{display:none}
 <form-field :label="$t('merchant.profile.remark')" :counter="(fpk.remark||'').length" counter-max="255" box-class="is-area">
 <textarea v-model="fpk.remark" maxlength="255" :placeholder="$t('merchant.profile.remarkPlaceholder')" class="w-full p-3.5 pb-8 text-[15px]" style="min-height:90px;resize:none;line-height:1.5"></textarea>
 </form-field>
-<!-- 同步订单定价：编辑页最后一项，勾选后保存前二次确认 -->
-<form-field v-if="profileSub==='pkgEdit'" :label="$t('merchant.profile.syncOrderTitle')" bare>
-<div data-cp @click="pkgSyncOrder=!pkgSyncOrder" class="flex items-start gap-2.5 cursor-pointer active:opacity-80" data-od-id="pkg-sync-order">
-<span class="w-4 h-4 rounded flex items-center justify-center shrink-0 mt-0.5" style="border-width:1px;border-style:solid" :style="pkgSyncOrder?{background:'var(--accent)',borderColor:'var(--accent)'}:{background:'#fff',borderColor:'#C9CDD4'}"><span v-if="pkgSyncOrder" v-html="luci('check','w-3 h-3 text-white')"></span></span>
-<div class="text-[13px] leading-[1.45]" style="color:#666">{{ $t('merchant.profile.syncOrderTip',{n:pkgSyncCount}) }}</div>
-</div>
-</form-field>
 </div>
 </div>
-<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="savePackage" :disabled="packageSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
+<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="savePackageInfo" :disabled="packageSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
 </page>
 
-<confirm-dialog :open="pkgSyncConfirm" :title="$t('merchant.profile.syncOrderTitle')" :desc="$t('merchant.profile.syncOrderConfirmDesc',{n:pkgSyncCount})" :loading="packageSaving" z="2020" oid="pkg-sync-confirm" confirm-bg="var(--accent)" @close="pkgSyncConfirm=false" @confirm="confirmPkgSync()"></confirm-dialog>
+<page :open="profileSub==='pkgPrice'" :z="510" :swipe-close="()=>goBack()">
+<nav-bar :title="$t('merchant.profile.pricing')" border-color="#E5E5E5" @back="goBack"></nav-bar>
+<div class="flex-1 overflow-y-auto px-4 pt-4 pb-24 hid">
+<div class="form-plain">
+<form-field :label="$t('merchant.profile.packageName')" bare>
+<div class="text-[15px] font-semibold text-[#111] py-1">{{ fpk.name }}</div>
+</form-field>
+<form-field :label="$t('common.orders.plan')" bare>
+<div class="flex flex-wrap gap-2"><div v-for="p in modelPlanOpts" :key="p.v" data-cp @click="fpk.plans[p.v]=!fpk.plans[p.v]" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fpk.plans[p.v]?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid '+(fE[p.v]?'#DC2626':'#EBEDF0')}">{{ {planHour:$t('common.profile.planHour'),planDay:$t('common.profile.planDay'),planWeek:$t('common.label.periodWeek'),planMonth:$t('common.label.planMonth')}[p.l] }}</div></div>
+</form-field>
+<template v-for="p in modelPlanOpts" :key="'bp-'+p.v"><form-field v-if="fpk.plans[p.v]" :label="{priceHour:$t('common.profile.planHour'),priceDay:$t('common.profile.planDay'),priceWeek:$t('common.label.periodWeek'),priceMonth:$t('common.label.planMonth')}[modelPriceKey[p.v]]" required :error="fE[p.v]">
+<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
+<input v-model.number="fpk[modelPriceKey[p.v]]" type="number" min="0" @input="vClr(p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
+</form-field><form-field v-if="fpk.plans[p.v]" :label="$t('common.orders.deposit')" required :error="fE['d'+p.v]">
+<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
+<input v-model.number="fpk[modelDepositKey[p.v]]" type="number" min="0" @input="vClr('d'+p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
+</form-field><form-field v-if="fpk.plans[p.v]&&(p.v==='week'||p.v==='month')" :label="p.v==='week'?$t('merchant.profile.baseWeekDays'):$t('merchant.profile.baseMonthDays')" required :error="fE[p.v==='week'?'baseWeekDays':'baseMonthDays']">
+<input v-model.number="fpk[p.v==='week'?'baseWeekDays':'baseMonthDays']" type="number" min="0" max="366" :placeholder="$t('merchant.profile.baseDaysPlaceholder')" @input="vClr(p.v==='week'?'baseWeekDays':'baseMonthDays')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
+</form-field></template>
+</div>
+</div>
+<div class="absolute bottom-7 left-5 right-5"><button data-cp @click="savePackagePrice" :disabled="packageSaving" class="w-full h-[50px] flex items-center justify-center rounded-xl text-lg font-bold text-white border-none cursor-pointer disabled:opacity-50 transition-colors" style="background:var(--accent)">{{ $t('common.action.save') }}</button></div>
+</page>
+
+
 
 <page :open="profileSub==='pkgAdd'" :z="510" :swipe-close="()=>goBack()">
 <nav-bar :title="$t('merchant.profile.packageAdd')" border-color="#E5E5E5" @back="goBack"></nav-bar>
@@ -6212,25 +6248,19 @@ body.host-single-m #root-user{display:none}
 <template v-else><span v-html="luci('camera','w-6 h-6 text-[#999]')"></span><span class="text-[13px] text-[#999] mt-1">{{ $t('merchant.common.clickUpload') }}</span></template>
 </div>
 </form-field>
-<form-field :label="$t('merchant.common.thumbnail')" :hint="$t('merchant.common.uploadSpec')+'：170px × 170px'" box-class="ff-upload py-5">
-<div data-cp @click="fpk.thumbImg=!fpk.thumbImg" class="flex flex-col items-center justify-center cursor-pointer transition-colors active:opacity-90">
-<template v-if="fpk.thumbImg"><div class="w-16 h-16 rounded-xl flex items-center justify-center" style="background:linear-gradient(145deg,var(--accent) 0%,#22324A 100%)"><span v-html="luci('image','w-7 h-7 text-white')"></span></div></template>
-<template v-else><span v-html="luci('image','w-6 h-6 text-[#999]')"></span><span class="text-[13px] text-[#999] mt-1">{{ $t('merchant.common.clickUpload') }}</span></template>
-</div>
-</form-field>
+
 <form-field :label="$t('common.orders.plan')" bare>
 <div class="flex flex-wrap gap-2"><div v-for="p in modelPlanOpts" :key="p.v" data-cp @click="fpk.plans[p.v]=!fpk.plans[p.v]" class="px-4 py-2 rounded-full text-sm font-medium cursor-pointer transition-all" :style="fpk.plans[p.v]?{background:'#EBF1FD',color:'var(--link)',border:'1px solid var(--link)'}:{background:'#fff',color:'#666',border:'1px solid '+(fE[p.v]?'#DC2626':'#EBEDF0')}">{{ {planHour:$t('common.profile.planHour'),planDay:$t('common.profile.planDay'),planWeek:$t('common.label.periodWeek'),planMonth:$t('common.label.planMonth')}[p.l] }}</div></div>
 </form-field>
 <template v-for="p in modelPlanOpts" :key="'ba-'+p.v"><form-field v-if="fpk.plans[p.v]" :label="{priceHour:$t('common.profile.planHour'),priceDay:$t('common.profile.planDay'),priceWeek:$t('common.label.periodWeek'),priceMonth:$t('common.label.planMonth')}[modelPriceKey[p.v]]" required :error="fE[p.v]">
 <span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
 <input v-model.number="fpk[modelPriceKey[p.v]]" type="number" min="0" @input="vClr(p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
+</form-field><form-field v-if="fpk.plans[p.v]" :label="$t('common.orders.deposit')" required :error="fE['d'+p.v]">
+<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
+<input v-model.number="fpk[modelDepositKey[p.v]]" type="number" min="0" @input="vClr('d'+p.v)" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
 </form-field><form-field v-if="fpk.plans[p.v]&&(p.v==='week'||p.v==='month')" :label="p.v==='week'?$t('merchant.profile.baseWeekDays'):$t('merchant.profile.baseMonthDays')" required :error="fE[p.v==='week'?'baseWeekDays':'baseMonthDays']">
 <input v-model.number="fpk[p.v==='week'?'baseWeekDays':'baseMonthDays']" type="number" min="0" max="366" :placeholder="$t('merchant.profile.baseDaysPlaceholder')" @input="vClr(p.v==='week'?'baseWeekDays':'baseMonthDays')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
 </form-field></template>
-<form-field :label="$t('common.orders.deposit')" required :error="fE.deposit">
-<span class="pl-3.5 text-[14px] font-medium text-[#333]">Rp</span>
-<input v-model.number="fpk.deposit" type="number" min="0" @input="vClr('deposit')" class="flex-1 px-2 py-3.5 text-[15px] font-medium text-[#333]">
-</form-field>
 <form-field :label="$t('common.action.sort')" :error="fE.sort">
 <input v-model.number="fpk.sort" type="number" min="0" @input="vClr('sort')" class="w-full pl-3.5 pr-3 py-3.5 text-[15px]">
 </form-field>
@@ -7622,10 +7652,10 @@ const notifyCatOpts=computed(()=>[
 {k:'orderStatus',l:t('common.orders.status'),d:t('user.message.categoryOrderStatusDesc')},
 {k:'feeRefund',l:t('user.message.categoryFeeRefund'),d:t('user.message.categoryFeeRefundDesc')}
 ]);
-const notifyPrefs=ref({master:true,cats:{orderStatus:{os:true,center:true},feeRefund:{os:true,center:true}},osDenied:true});
+const notifyPrefs=ref({master:true,email:true,cats:{orderStatus:{os:true,center:true,email:true},feeRefund:{os:true,center:true,email:true}},osDenied:true});
 /* 兼容旧结构 {orderRenew:{os}}：原「订单与续租」大类已拆为三类，旧值并入 orderStatus */
-function loadNotifyPrefs(){try{const s=localStorage.getItem(NOTIFY_PREFS_KEY);if(!s)return;const o=JSON.parse(s);if(o&&typeof o==='object'){if(typeof o.master==='boolean')notifyPrefs.value.master=o.master;if(o.orderRenew&&typeof o.orderRenew==='object'){notifyPrefs.value.cats.orderStatus.os=o.orderRenew.os!==false}if(o.cats&&typeof o.cats==='object'){Object.keys(notifyPrefs.value.cats).forEach(function(k){const c=o.cats[k];if(!c||typeof c!=='object')return;if(typeof c.os==='boolean')notifyPrefs.value.cats[k].os=c.os;if(typeof c.center==='boolean')notifyPrefs.value.cats[k].center=c.center})}}}catch(e){}}
-function saveNotifyPrefs(){try{const cats={};Object.keys(notifyPrefs.value.cats).forEach(function(k){cats[k]={os:notifyPrefs.value.cats[k].os,center:notifyPrefs.value.cats[k].center}});localStorage.setItem(NOTIFY_PREFS_KEY,JSON.stringify({master:notifyPrefs.value.master,cats:cats}))}catch(e){}}
+function loadNotifyPrefs(){try{const s=localStorage.getItem(NOTIFY_PREFS_KEY);if(!s)return;const o=JSON.parse(s);if(o&&typeof o==='object'){if(typeof o.master==='boolean')notifyPrefs.value.master=o.master;if(typeof o.email==='boolean')notifyPrefs.value.email=o.email;if(o.orderRenew&&typeof o.orderRenew==='object'){notifyPrefs.value.cats.orderStatus.os=o.orderRenew.os!==false}if(o.cats&&typeof o.cats==='object'){Object.keys(notifyPrefs.value.cats).forEach(function(k){const c=o.cats[k];if(!c||typeof c!=='object')return;if(typeof c.os==='boolean')notifyPrefs.value.cats[k].os=c.os;if(typeof c.center==='boolean')notifyPrefs.value.cats[k].center=c.center;if(typeof c.email==='boolean')notifyPrefs.value.cats[k].email=c.email})}}}catch(e){}}
+function saveNotifyPrefs(){try{const cats={};Object.keys(notifyPrefs.value.cats).forEach(function(k){cats[k]={os:notifyPrefs.value.cats[k].os,center:notifyPrefs.value.cats[k].center,email:notifyPrefs.value.cats[k].email}});localStorage.setItem(NOTIFY_PREFS_KEY,JSON.stringify({master:notifyPrefs.value.master,email:notifyPrefs.value.email,cats:cats}))}catch(e){}}
 loadNotifyPrefs();
 /* 投递：站内（消息中心）必达；系统通知受总开关与各分类开关控制（无免打扰时段） */
 /* 开关一律静默：切换只改状态并落盘，不弹任何提示（状态由开关本身回显） */
@@ -7642,6 +7672,12 @@ const centerSwEnabled=computed(()=>notifyPrefs.value.master);
 function toggleNotifyCenter(k){const p=notifyPrefs.value;if(!p.master)return;const c=p.cats[k]||p.cats.orderStatus;c.center=!c.center;saveNotifyPrefs()}
 /* 一级页「手机系统通知」行：始终可进入三级页（权限开关已页内化，未开启时也需能进入开启） */
 function enterOsNotify(){navOpen('ovNotifyOs')}
+/* 一级页「邮件通知」行：进入邮件通知三级页 */
+function enterEmailNotify(){navOpen('ovNotifyEmail')}
+/* 邮件渠道：总开关 + 各消息类型开关（无系统权限概念，仅受总开关约束） */
+const emailSwEnabled=computed(()=>notifyPrefs.value.master&&notifyPrefs.value.email);
+function toggleEmailNotify(){notifyPrefs.value.email=!notifyPrefs.value.email;saveNotifyPrefs()}
+function toggleNotifyEmail(k){const p=notifyPrefs.value;if(!p.master||!p.email)return;const c=p.cats[k]||p.cats.orderStatus;c.email=!c.email;saveNotifyPrefs()}
 /* 两个页面的分类开关各自独立：消息中心页=center（站内），手机系统通知页=os（系统推送），随 saveNotifyPrefs 一并落盘 */
 /* ══ 消息中心列表：平铺卡片，无「今天/昨天」分组；时间倒序（最新在上），覆盖全部事件 ══
    orderId＝该消息「对应订单」的订单号，点击后直达该订单的「费用明细」页 */
@@ -8844,7 +8880,8 @@ chargeList:{open:()=>{showChargeList.value=true},close:()=>closeChargeList()},
 ovMessage:{open:()=>{profileOV.value='message'},close:()=>{if(profileOV.value==='message')profileOV.value=null}},
 ovNotify:{open:()=>{profileOV.value='notify'},close:()=>{if(profileOV.value==='notify')profileOV.value=null}},
 ovNotifyPage:{open:()=>{profileOV.value='notifyPage'},close:()=>{if(profileOV.value==='notifyPage')profileOV.value=null}},
-ovNotifyOs:{open:()=>{profileOV.value='notifyOs'},close:()=>{if(profileOV.value==='notifyOs')profileOV.value=null}}
+ovNotifyOs:{open:()=>{profileOV.value='notifyOs'},close:()=>{if(profileOV.value==='notifyOs')profileOV.value=null}},
+ovNotifyEmail:{open:()=>{profileOV.value='notifyEmail'},close:()=>{if(profileOV.value==='notifyEmail')profileOV.value=null}}
 };
 function _navClone(v){return (v&&typeof v==='object')?JSON.parse(JSON.stringify(v)):v}
 function _navR(r){return{get:function(){return r.value},set:function(v){r.value=v}}}
@@ -8887,7 +8924,7 @@ if(showChargeList.value)return 'chargeList';
 
 onMounted(()=>{initPullToRefresh('sc-home','ptr-home',refreshHome);buildChargeDevices();setInterval(function(){goHomeBanner((homeBannerIdx.value+1)%homeBanners.length)},4000);if(!fbHistory.value.length)fbHistory.value.push({id:'fb-mock-1',tag:'issue',content:t('user.feedback.mockContent'),photos:[{id:'fb-mock-p1',time:'2026-10-20 09:12:35'},{id:'fb-mock-p2',time:'2026-10-20 09:12:36'}],status:'handled',handleTime:'2026-10-21 10:26:40',reply:t('user.feedback.mockHandledReply'),time:'2026-10-20 09:12:30'})});
 function setLoggedIn(v){loggedIn.value=v}
-return{fbTagOpts,fbTag,fbTagErr,fbContent,fbContentErr,fbPhotos,fbHistory,demoFbHandled,setFbHandled,showFbPicker,showFbAction,showFbPreview,fbPreviewItem,fbActionTarget,pickFbTag,pickFbSource,openFbPicker,openFbPreview,openFbPreviewFrom,openFbMore,fbActionReupload,fbActionDelete,fbTagLabel,submitFeedback,goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyCenter,toggleNotifyOs,toggleOsNotifyPerm,centerSwEnabled,osSwEnabled,swCls,enterOsNotify,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,orderStatusText,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,intlLocale,langOptions,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,protoForceUpdate,setProtoForceUpdate,aboutContact,govContact,aboutOpen,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,catOptLabels,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confFeeDetail,confFeePlans,confFeeUnit,confCycleUnit,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,planText,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,orderScopeText,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,orderListTitle,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,closeCashier,confirmPayment,orderRentItems,orderRentTotal,rentedPeriodsOf,feeRentOpenMap,feeRentKey,toggleFeeRent,feeRowRentItems,feeRowRentSum,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,chargePayTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,setLoggedIn,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
+return{fbTagOpts,fbTag,fbTagErr,fbContent,fbContentErr,fbPhotos,fbHistory,demoFbHandled,setFbHandled,showFbPicker,showFbAction,showFbPreview,fbPreviewItem,fbActionTarget,pickFbTag,pickFbSource,openFbPicker,openFbPreview,openFbPreviewFrom,openFbMore,fbActionReupload,fbActionDelete,fbTagLabel,submitFeedback,goHomeBanner,onHomeBannerScroll,mapStores,selectMapStore,tab,toasts,toast,copyText,setTab,luci,weatherScene,weatherData,demoActive,demoListEmpty,demoSetListEmpty,demoUnpaidRenew,demoSetUnpaidRenew,hasUnpaidRenew,mapCtx,showFindPage,showTrackPage,refundRentOpen,refundDepositOpen,refundTotalOpen,refundChannels,locLoading,locRinging,locFocus,locAddressFull,locAddressShort,locDistM,locWalkMin,locVehPt,locUserPt,openFindPage,openFindPageBattery,closeFindPage,locFocusUser,locFocusVehicle,locRingDevice,locOpenNav,trackStartLabel,trackEndLabel,trackLoading,trackPoints,trackPolyline,trackStartPt,trackEndPt,trackPois,trackTimePicker,openTrackPage,openTrackPageBattery,closeTrackPage,openTrackTimePicker,cancelTrackTimePicker,confirmTrackTimePicker,trackDraft,trackDays,trackMonths,trackYears,trackHours,trackMins,p2u,trackWheelDay,trackWheelMonth,trackWheelYear,trackWheelHour,trackWheelMin,onTrackWheelScroll,vehicles,vehicleCount,setVehicleCount,vehicleSource,setVehicleSource,opLock,opHorn,myVehicleIdx,showVehiclePicker,currentVehicle,toggleVehiclePicker,selectMyVehicle,openMyVehicleFromHome,showMyDevices,openMyDevices,gotoVehicleFromDevices,openVehicleDetail,closeVehicleDetail,openVNameEdit,closeVNameEdit,saveVNameEdit,vNameLoading,openUnbindConfirm,closeUnbindConfirm,confirmUnbind,notifyTemplates,notifyCatOpts,notifyPrefs,notifyList,notifyMsgs,notifyUnread,toggleNotifyMaster,toggleNotifyCenter,toggleNotifyOs,toggleOsNotifyPerm,centerSwEnabled,osSwEnabled,swCls,enterOsNotify,enterEmailNotify,toggleEmailNotify,toggleNotifyEmail,emailSwEnabled,onNotifyClick,markAllNotifyRead,unbindLoading,showVehicleDetail,showUnbindConfirm,showVNameEdit,vNameInput,vNameError,locked,lockLoading,toggleLock,hornLoading,sendHorn,openMyCarOrder,currentOrder,orderStatusText,refreshHome,refreshRent,openRent,loggedIn,pendingRoute,appLang,appLangLabel,intlLocale,langOptions,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,openLogin,profileOV,profileSub,profileMod,profileModLoading,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,checkVersion,goUpdate,exitApp,relaunchApp,scanning,doScan,scanTorch,manualVin,showManualVin,scanCtx,scanFromOrder,openManualInput,confirmManualVin,scanBindMode,scanBindDevice,vdDevice,bdDevice,showBindConfirm,bindConfirmLoading,openBindConfirm,closeBindConfirm,confirmBind,homeDevSeg,homeBatteries,bSocColor,batteryAdd,showBatteryDetail,currentBattery,currentBatteryOrder,openBatteryDetail,openBatteryOrder,closeBatteryDetail,openBatteryUnbind,closeBatteryUnbind,confirmBatteryUnbind,showBatteryUnbind,batteryUnbindLoading,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,appExited,protoForceUpdate,setProtoForceUpdate,aboutContact,govContact,aboutOpen,selectLang,doLogout,profileMdT,profileMdD,profileMdDanger,profileMdOk,showRent,rentBannerIdx,rentBanners,showRentLoading,homeBannerIdx,homeBanners,showDatePicker,rentTypeIdx,rentTypeOptions,catOptLabels,dateOptions,rentDateLabel,datePickerTitle,rentDateSel,closeDatePicker,selectDate,showPeriodPicker,rentPlanIdx,rentPeriodIdx,periodOptions,rentPlanOptions,rentPeriodLabel,periodPickerTitle,rentPeriodSel,closePeriodPicker,selectPeriod,showStore,storeSearch,storeFiltered,selectStore,openStore,searchStore,selectedStore,confStore,showVehicle,vehicleList,rentNow,showConfirm,selectedVehicle,confRentDays,confTotal,confTotalDays,confDurationLabel,confFeeDetail,confFeePlans,confFeeUnit,confCycleUnit,confTab,confPayType,cancelRules,noticeRules,billingRules,overdueRules,renewRules,rulesOf,planText,confAddDays,confSubDays,confirmOrder,confTotal,confDeposit,confGrandTotal,confPickupDate,confReturnDate,confPickupISO,confReturnISO,showOrderDetail,showRefundList,openRefundList,navBack,navOpen,refundRecords,confirmDocs,autoRenew,toggleAutoRenew,uploadIdEnabled,showConfirmDocs,showDocSheet,docSheetTab,docText,docImageTypes,docDeleteMod,docDeleteTarget,previewImage,openDocSheet,addDocImage,addDocText,requestDeleteDoc,confirmDeleteDoc,showCancelModal,idInfoList,showIdInfoSheet,idInfoTypes,idInfoCount,openIdInfoSheet,idName,idEditingId,openIdAdd,openIdEditRecord,deleteIdRecord,idCardNo,driverNo,idPhotos,driverPhotos,idDetailRec,openIdDetail,openIdDetailPreview,idNameErr,idCardErr,driverErr,idPhotoErr,driverPhotoErr,idActionTarget,openIdEditRecord,deleteIdRecord,showIdDelete,idDeleteTarget,openIdDelete,confirmIdDelete,idSelectMode,confirmIdInfo,openIdSelect,closeIdSelect,confirmIdSelect,showIdAction,idPickerSource,showIdPreview,idPreviewItem,showIdPicker,idPickerKind,idPickerSH,maskNo,maskNoFull,submitIdInfo,openIdPicker,pickIdSource,commitIdPhoto,openIdMore,idActionReupload,doIdReupload,idActionDelete,openIdPreview,cancelLoading,orderCountdown,orderCountdownText,orderDetailTab,cancelOrder,goToPay,orderInfo,orderScopeText,startOrderTimer,stopOrderTimer,showMyOrders,showOrderList,orderListCategory,currentOrderList,openOrderCategory,openMyOrders,openOrderDetailFromList,orderFilter,orderFilterTabs,orderFilterMap,orderListTitle,setOrderFilter,relocateRent,payChannel,setPayChannel,cancelBeforePay,setCancelBeforePay,delDocLoading,showWallet,showWalletLedger,showTopup,walletBalanceVisible,walletAccount,walletActive,walletLedgerActive,walletStorePick,pickStoreForWallet,walletStoreSheet,walletOpenedStores,walletSwitchStore,storeInfoOf,ensureWalletOpened,walletLedger,walletLedgerTab,walletLedgerList,walletLedgerMonthOpen,setWalletLedgerTab,toggleWalletLedgerMonth,rechargeLedger,bonusLedger,topupAmount,topupCustom,topupShowCustom,walletTopupAmounts,walletTopupBonus,openWallet,openWalletLedger,openTopup,selectTopupAmount,confirmTopup,onCustomAmountInput,walletLedgerTxn,walletLedgerTxnOpts,showRenewPlan,openRenew,confirmRenew,renewDateIdx,renewPeriodIdx,renewDateLabel,renewPeriodLabel,renewRentFee,showFeeDetail,feeRows,feeCardRow,feeStatRows,feeStatAgg,feeStatChannels,feeChannelBreakdown,feeSummary,rentOpen,depositOpen,totalOpen,showPayment,closeCashier,confirmPayment,orderRentItems,orderRentTotal,rentedPeriodsOf,feeRentOpenMap,feeRentKey,toggleFeeRent,feeRowRentItems,feeRowRentSum,paymentType,paymentBusy,payOfflineVisible,payTarget,openPayRenew,cancelRenew,requestCancelRenew,confirmCancelRenew,payRenewDirect,showCancelRenewModal,cancelRenewTarget,cancelRenewLoading,openPayOrder,markRenewPaid,deductWallet,parseRp,formatNow,pickerMode,renewDays,renewDetail,renewDurationLabel,renewPlanDisplay,renewAddDays,renewSubDays,detailOpen,feeRowChannels,showRechargeOrder,rechargeOrder,rechargeStatusTag,payRechargeOrder,rechargeChannelText,fmtRp,openRechargeOrderFromList,openRechargeList,setRechargeFilter,showRechargeList,rechargeFilterTabs,rechargeFilterMap,rechargeFilter,currentRechargeList,dialRechargePhone,setRechargeRefundState,showCancelRechargeModal,cancelRechargeLoading,requestCancelRecharge,confirmCancelRecharge,rechargeCustomFlag,rechargeEnabledFlag,csReceptionFlag,autoRenewEntryVisible,renewEntryVisible,rechargeTiers,csPhones,storePhoneSheet,storePhoneList,openStorePhone,closeStorePhone,dialStorePhone,storeNavSheet,storeNavOptions,openStoreNav,closeStoreNav,pickStoreNav,batteryCount,setBatteryCount,chargeDevices,chargeUserPt,fmtDist,showPoiSearch,poiQuery,poiResult,poiDisplay,openPoiSearch,closePoiSearch,poiOpen,poiHistory,clearPoiHistory,poiLoc,poiRelocate,poiSearchEnter,uLocAppAuth,uLocService,uShowLocAppAuth,uShowLocService,uAllowLocAppAuth,uDenyLocAppAuth,uCancelLocService,uAllowLocService,setULocAppAuth,setULocService,uLocReady,uGoEnableLoc,openChargeList,openChargeListItem,showChargeList,chargeDevice,chargeDeviceSheet,openChargeDevice,closeChargeDevice,chargeFocusUser,openChargeNav,openChargeScan,showChargeOrder,showChargeOrderDetail,chargeOrderMinutes,chargePayType,chargeOrderInfo,chargeOrderAmount,chargeMaxMinutes,chargeDurationOptions,chargeEffectiveMinutes,fmtChargeMinutes,onChargeMinuteInput,commitChargeMinutes,openChargeOrder,closeChargeOrder,closeChargeOrderDetail,chargePickDuration,chargeAddMinutes,chargeSubMinutes,confirmChargeOrder,showChargeOrderList,currentChargeOrderList,chargeFilterTabs,chargeFilter,chargeFilterMap,chargeStatusTag,chargePayTag,openChargeOrderList,setChargeFilter,openChargeOrderFromList,showCancelChargeModal,cancelChargeLoading,requestCancelCharge,confirmCancelCharge,payChargeOrder,setLoggedIn,profileAccount,profileNickname,accDraft,nickDraft,accValid,nickValid,openAccountEdit,saveAccount,openNicknameEdit,saveNickname};}
 });
 
 app.directive('swipe-close',{mounted(el,b){var sx=0,sy=0;el.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});el.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(sx<40&&dx>60&&Math.abs(dy)<Math.abs(dx)*0.5)b.value()},{passive:true})}});
@@ -10875,48 +10912,41 @@ function doSwitch(n){if(n===curStore.value){navDrop();profileOV.value=null;retur
 const mQ=ref('');
 const profileModels=ref([]);
 const mFilter=computed(()=>demoListEmpty.value?[]:mQ.value?profileModels.value.filter(m=>m.name.toLowerCase().includes(mQ.value.toLowerCase())):profileModels.value);
-const fm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,baseWeekDays:7,baseMonthDays:30,deposit:0,sort:0});
+const fm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,depositHour:0,depositDay:0,depositWeek:0,depositMonth:0,baseWeekDays:7,baseMonthDays:30,deposit:0,sort:0});
 const modelPlanOpts=[{v:'hour',l:'planHour'},{v:'day',l:'planDay'},{v:'week',l:'planWeek'},{v:'month',l:'planMonth'}];
 const modelPriceKey={hour:'priceHour',day:'priceDay',week:'priceWeek',month:'priceMonth'};
-function openModelEdit(m){navOpen();if(!can('model.edit')){deny();return}fm.value={name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,baseWeekDays:m.baseWeekDays==null?7:m.baseWeekDays,baseMonthDays:m.baseMonthDays==null?30:m.baseMonthDays,deposit:m.deposit||0,sort:m.sort||0};/* 打开编辑页时勾选态复位 */modelSyncOrder.value=false;profileSub.value='mEdit'}
+const modelDepositKey={hour:'depositHour',day:'depositDay',week:'depositWeek',month:'depositMonth'};
+function fmOf(m){return {name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,depositHour:m.depositHour==null?(m.deposit||0):m.depositHour,depositDay:m.depositDay==null?(m.deposit||0):m.depositDay,depositWeek:m.depositWeek==null?(m.deposit||0):m.depositWeek,depositMonth:m.depositMonth==null?(m.deposit||0):m.depositMonth,baseWeekDays:m.baseWeekDays==null?7:m.baseWeekDays,baseMonthDays:m.baseMonthDays==null?30:m.baseMonthDays,deposit:m.deposit||0,sort:m.sort||0}}
+function openModelEdit(m){navOpen();if(!can('model.edit')){deny();return}fm.value=fmOf(m);profileSub.value='mEdit'}
+function openModelPrice(m){navOpen();if(!can('model.price')){deny();return}fm.value=fmOf(m);fE.value={};profileSub.value='mPrice'}
 var modelSaving=ref(false);
-/* 同步订单定价：车型编辑页默认展示勾选项，勾选后保存前二次确认 */
-const modelSyncOrder=ref(false);
-const modelSyncConfirm=ref(false);
-/* 待同步订单数（占位值：按列表行 id 推算，后续接真实统计接口） */
-const modelSyncCount=computed(()=>{var i=profileModels.value.findIndex(m=>m.name===fm.value.name);var id=i<0?1:i+1;return 3+(id*7)%20});
-function saveModel(){if(modelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fm.value.plans[p]&&(fm.value[k]===null||fm.value[k]===undefined||fm.value[k]==='')){e[p]=t('merchant.profile.priceRequired')}else if(fm.value.plans[p]&&!isAmt(fm.value[k])){e[p]=t('merchant.profile.priceNotNegative')}});['week','month'].forEach(function(p){var dk=p==='week'?'baseWeekDays':'baseMonthDays';if(fm.value.plans[p]){var dv=fm.value[dk];if(dv===''||dv==null){e[dk]=t(p==='week'?'merchant.package.weekDaysRequired':'merchant.package.monthDaysRequired')}else if(!(Number.isInteger(dv)&&dv>=0&&dv<=366)){e[dk]=t('merchant.profile.baseDaysRangeError')}}});if(fm.value.deposit===''||fm.value.deposit==null){e.deposit=t('merchant.profile.modelDepositError')}else if(!isAmt(fm.value.deposit)){e.deposit=t('merchant.profile.priceNotNegative')}if(fm.value.sort!==''&&!(Number.isInteger(fm.value.sort)&&fm.value.sort>=1&&fm.value.sort<=99)){e.sort=t('merchant.profile.sortNotNegative')}if(Object.keys(e).length){fE.value=e;return}fE.value={};/* 勾选「同步订单定价」→ 先弹二次确认，确认后才保存 */if(modelSyncOrder.value){modelSyncConfirm.value=true;return}doSaveModel(false)}
-function confirmModelSync(){modelSyncConfirm.value=false;doSaveModel(true)}
-function doSaveModel(synced){if(modelSaving.value)return;modelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileModels.value.findIndex(m=>m.name===fm.value.name);if(i>=0){Object.assign(profileModels.value[i],{plans:Object.assign({},fm.value.plans),priceHour:fm.value.priceHour,priceDay:fm.value.priceDay,priceWeek:fm.value.priceWeek,priceMonth:fm.value.priceMonth,baseWeekDays:fm.value.baseWeekDays,baseMonthDays:fm.value.baseMonthDays,deposit:fm.value.deposit,sort:fm.value.sort,time:now()})}navDrop();profileSub.value=null;fE.value={};toast(synced?t('merchant.profile.syncOrderSavedSynced',{n:modelSyncCount.value}):t('merchant.profile.modelSaved'),'success');modelSyncOrder.value=false;modelSaving.value=false},400)}
+function saveModelPrice(){if(modelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fm.value.plans[p]&&(fm.value[k]===null||fm.value[k]===undefined||fm.value[k]==='')){e[p]=t('merchant.profile.priceRequired')}else if(fm.value.plans[p]&&!isAmt(fm.value[k])){e[p]=t('merchant.profile.priceNotNegative')}var dk=modelDepositKey[p];if(fm.value.plans[p]&&(fm.value[dk]===null||fm.value[dk]===undefined||fm.value[dk]==='')){e['d'+p]=t('merchant.profile.modelDepositError')}else if(fm.value.plans[p]&&!isAmt(fm.value[dk])){e['d'+p]=t('merchant.profile.priceNotNegative')}});['week','month'].forEach(function(p){var dk=p==='week'?'baseWeekDays':'baseMonthDays';if(fm.value.plans[p]){var dv=fm.value[dk];if(dv===''||dv==null){e[dk]=t(p==='week'?'merchant.package.weekDaysRequired':'merchant.package.monthDaysRequired')}else if(!(Number.isInteger(dv)&&dv>=0&&dv<=366)){e[dk]=t('merchant.profile.baseDaysRangeError')}}});if(Object.keys(e).length){fE.value=e;return}fE.value={};doSaveModelPrice()}
+function doSaveModelPrice(){if(modelSaving.value)return;modelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileModels.value.findIndex(m=>m.name===fm.value.name);if(i>=0){Object.assign(profileModels.value[i],{plans:Object.assign({},fm.value.plans),priceHour:fm.value.priceHour,priceDay:fm.value.priceDay,priceWeek:fm.value.priceWeek,priceMonth:fm.value.priceMonth,depositHour:fm.value.depositHour,depositDay:fm.value.depositDay,depositWeek:fm.value.depositWeek,depositMonth:fm.value.depositMonth,baseWeekDays:fm.value.baseWeekDays,baseMonthDays:fm.value.baseMonthDays,deposit:(fm.value.plans.hour?fm.value.depositHour:(fm.value.plans.day?fm.value.depositDay:(fm.value.plans.week?fm.value.depositWeek:fm.value.depositMonth))),time:now()})}navDrop();profileSub.value=null;fE.value={};toast(t('merchant.profile.modelSaved'),'success');modelSaving.value=false},400)}
+function saveModelSort(){if(modelSaving.value)return;var e={};if(fm.value.sort!==''&&!(Number.isInteger(fm.value.sort)&&fm.value.sort>=1&&fm.value.sort<=99)){e.sort=t('merchant.profile.sortNotNegative')}if(Object.keys(e).length){fE.value=e;return}fE.value={};modelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileModels.value.findIndex(m=>m.name===fm.value.name);if(i>=0){Object.assign(profileModels.value[i],{sort:fm.value.sort,time:now()})}navDrop();profileSub.value=null;fE.value={};toast(t('merchant.profile.modelSaved'),'success');modelSaving.value=false},400)}
 function planText(v){if(v&&typeof v==='object'){var sp=planSpanOf(v);if(sp){var L=[t('common.profile.planHour'),t('common.profile.planDay'),t('common.label.periodWeek'),t('common.label.planMonth')],U=[t('merchant.orders.unitHour'),t('merchant.orders.unitDay'),t('merchant.orders.unitWeek'),t('merchant.orders.unitMonth')];return L[sp.period]+'×'+sp.count+U[sp.period]}v=v.plan}var s=String(v||'');if(!s)return s;var m={'时租':t('common.profile.planHour'),'日租':t('common.profile.planDay'),'周租':t('common.label.periodWeek'),'月租':t('common.label.planMonth'),'小时':t('merchant.orders.unitHour'),'天':t('merchant.orders.unitDay'),'周':t('merchant.orders.unitWeek'),'月':t('merchant.orders.unitMonth')};return s.replace(/时租|日租|周租|月租|小时|天|周|月/g,function(k){return m[k]})}function mPlanText(m){var PLANS={hour:t('common.profile.planHour'),day:t('common.profile.planDay'),week:t('common.label.periodWeek'),month:t('common.label.planMonth')};var s=[];['hour','day','week','month'].forEach(function(p){if(m.plans&&m.plans[p])s.push(PLANS[p])});return s.length?s.join('、'):'-'}
-function mPlanPrices(m){var M={hour:[t('common.profile.planHour'),'priceHour'],day:[t('common.profile.planDay'),'priceDay'],week:[t('common.label.periodWeek'),'priceWeek'],month:[t('common.label.planMonth'),'priceMonth']};var out=[];['hour','day','week','month'].forEach(function(k){if(m.plans&&m.plans[k])out.push({label:M[k][0],price:m[M[k][1]]||0,days:k==='week'?(m.baseWeekDays==null?7:m.baseWeekDays):k==='month'?(m.baseMonthDays==null?30:m.baseMonthDays):null})});return out}
+function mPlanPrices(m){var M={hour:[t('common.profile.planHour'),'priceHour'],day:[t('common.profile.planDay'),'priceDay'],week:[t('common.label.periodWeek'),'priceWeek'],month:[t('common.label.planMonth'),'priceMonth']};var out=[];['hour','day','week','month'].forEach(function(k){if(m.plans&&m.plans[k]){var dk='deposit'+k.charAt(0).toUpperCase()+k.slice(1);out.push({key:k,label:M[k][0],price:m[M[k][1]]||0,deposit:(m[dk]!=null?Number(m[dk]):(Number(m.deposit)||0)),days:k==='week'?(m.baseWeekDays==null?7:m.baseWeekDays):k==='month'?(m.baseMonthDays==null?30:m.baseMonthDays):null})}});return out}
 const bmQ=ref('');
 const profileBattModels=ref([]);
 const bmFilter=computed(()=>demoListEmpty.value?[]:bmQ.value?profileBattModels.value.filter(m=>m.name.toLowerCase().includes(bmQ.value.toLowerCase())):profileBattModels.value);
-const fbm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,baseWeekDays:7,baseMonthDays:30,deposit:0,sort:0});
-function openBattModelEdit(m){if(!can('batt_model.edit')){deny();return}navOpen();fbm.value={name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,baseWeekDays:m.baseWeekDays==null?7:m.baseWeekDays,baseMonthDays:m.baseMonthDays==null?30:m.baseMonthDays,deposit:m.deposit||0,sort:m.sort||0};/* 打开编辑页时勾选态复位 */battSyncOrder.value=false;profileSub.value='bmEdit'}
+const fbm=ref({name:'',plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,depositHour:0,depositDay:0,depositWeek:0,depositMonth:0,baseWeekDays:7,baseMonthDays:30,deposit:0,sort:0});
+function fbmOf(m){return {name:m.name,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,depositHour:m.depositHour==null?(m.deposit||0):m.depositHour,depositDay:m.depositDay==null?(m.deposit||0):m.depositDay,depositWeek:m.depositWeek==null?(m.deposit||0):m.depositWeek,depositMonth:m.depositMonth==null?(m.deposit||0):m.depositMonth,baseWeekDays:m.baseWeekDays==null?7:m.baseWeekDays,baseMonthDays:m.baseMonthDays==null?30:m.baseMonthDays,deposit:m.deposit||0,sort:m.sort||0}}
+function openBattModelEdit(m){if(!can('batt_model.edit')){deny();return}navOpen();fbm.value=fbmOf(m);profileSub.value='bmEdit'}
+function openBattModelPrice(m){if(!can('batt_model.edit')){deny();return}navOpen();fbm.value=fbmOf(m);fE.value={};profileSub.value='bmPrice'}
 var battModelSaving=ref(false);
-/* 同步订单定价：电池型号编辑页默认展示勾选项，勾选后保存前二次确认 */
-const battSyncOrder=ref(false);
-const battSyncConfirm=ref(false);
-/* 待同步订单数（占位值：按列表行 id 推算，后续接真实统计接口） */
-const battSyncCount=computed(()=>{var i=profileBattModels.value.findIndex(m=>m.name===fbm.value.name);var id=i<0?1:i+1;return 3+(id*7)%20});
-function saveBattModel(){if(battModelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fbm.value.plans[p]&&(fbm.value[k]===null||fbm.value[k]===undefined||fbm.value[k]==='')){e[p]=t('merchant.profile.priceRequired')}else if(fbm.value.plans[p]&&!isAmt(fbm.value[k])){e[p]=t('merchant.profile.priceNotNegative')}});['week','month'].forEach(function(p){var dk=p==='week'?'baseWeekDays':'baseMonthDays';if(fbm.value.plans[p]){var dv=fbm.value[dk];if(dv===''||dv==null){e[dk]=t(p==='week'?'merchant.package.weekDaysRequired':'merchant.package.monthDaysRequired')}else if(!(Number.isInteger(dv)&&dv>=0&&dv<=366)){e[dk]=t('merchant.profile.baseDaysRangeError')}}});if(fbm.value.deposit===''||fbm.value.deposit==null){e.deposit=t('merchant.profile.modelDepositError')}else if(!isAmt(fbm.value.deposit)){e.deposit=t('merchant.profile.priceNotNegative')}if(fbm.value.sort!==''&&!(Number.isInteger(fbm.value.sort)&&fbm.value.sort>=1&&fbm.value.sort<=99)){e.sort=t('merchant.profile.sortNotNegative')}if(Object.keys(e).length){fE.value=e;return}fE.value={};/* 勾选「同步订单定价」→ 先弹二次确认，确认后才保存 */if(battSyncOrder.value){battSyncConfirm.value=true;return}doSaveBattModel(false)}
-function confirmBattSync(){battSyncConfirm.value=false;doSaveBattModel(true)}
-function doSaveBattModel(synced){if(battModelSaving.value)return;battModelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileBattModels.value.findIndex(m=>m.name===fbm.value.name);if(i>=0){Object.assign(profileBattModels.value[i],{plans:Object.assign({},fbm.value.plans),priceHour:fbm.value.priceHour,priceDay:fbm.value.priceDay,priceWeek:fbm.value.priceWeek,priceMonth:fbm.value.priceMonth,baseWeekDays:fbm.value.baseWeekDays,baseMonthDays:fbm.value.baseMonthDays,deposit:fbm.value.deposit,sort:fbm.value.sort,time:now()})}navDrop();profileSub.value=null;fE.value={};toast(synced?t('merchant.profile.syncOrderSavedSynced',{n:battSyncCount.value}):t('merchant.vehicles.battModelSaved'),'success');battSyncOrder.value=false;battModelSaving.value=false},400)}
+function saveBattModelPrice(){if(battModelSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fbm.value.plans[p]&&(fbm.value[k]===null||fbm.value[k]===undefined||fbm.value[k]==='')){e[p]=t('merchant.profile.priceRequired')}else if(fbm.value.plans[p]&&!isAmt(fbm.value[k])){e[p]=t('merchant.profile.priceNotNegative')}var dk=modelDepositKey[p];if(fbm.value.plans[p]&&(fbm.value[dk]===null||fbm.value[dk]===undefined||fbm.value[dk]==='')){e['d'+p]=t('merchant.profile.modelDepositError')}else if(fbm.value.plans[p]&&!isAmt(fbm.value[dk])){e['d'+p]=t('merchant.profile.priceNotNegative')}});['week','month'].forEach(function(p){var dk=p==='week'?'baseWeekDays':'baseMonthDays';if(fbm.value.plans[p]){var dv=fbm.value[dk];if(dv===''||dv==null){e[dk]=t(p==='week'?'merchant.package.weekDaysRequired':'merchant.package.monthDaysRequired')}else if(!(Number.isInteger(dv)&&dv>=0&&dv<=366)){e[dk]=t('merchant.profile.baseDaysRangeError')}}});if(Object.keys(e).length){fE.value=e;return}fE.value={};doSaveBattModelPrice()}
+function doSaveBattModelPrice(){if(battModelSaving.value)return;battModelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileBattModels.value.findIndex(m=>m.name===fbm.value.name);if(i>=0){Object.assign(profileBattModels.value[i],{plans:Object.assign({},fbm.value.plans),priceHour:fbm.value.priceHour,priceDay:fbm.value.priceDay,priceWeek:fbm.value.priceWeek,priceMonth:fbm.value.priceMonth,depositHour:fbm.value.depositHour,depositDay:fbm.value.depositDay,depositWeek:fbm.value.depositWeek,depositMonth:fbm.value.depositMonth,baseWeekDays:fbm.value.baseWeekDays,baseMonthDays:fbm.value.baseMonthDays,deposit:(fbm.value.plans.hour?fbm.value.depositHour:(fbm.value.plans.day?fbm.value.depositDay:(fbm.value.plans.week?fbm.value.depositWeek:fbm.value.depositMonth))),time:now()})}navDrop();profileSub.value=null;fE.value={};toast(t('merchant.vehicles.battModelSaved'),'success');battModelSaving.value=false},400)}
+function saveBattModelSort(){if(battModelSaving.value)return;var e={};if(fbm.value.sort!==''&&!(Number.isInteger(fbm.value.sort)&&fbm.value.sort>=1&&fbm.value.sort<=99)){e.sort=t('merchant.profile.sortNotNegative')}if(Object.keys(e).length){fE.value=e;return}fE.value={};battModelSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profileBattModels.value.findIndex(m=>m.name===fbm.value.name);if(i>=0){Object.assign(profileBattModels.value[i],{sort:fbm.value.sort,time:now()})}navDrop();profileSub.value=null;fE.value={};toast(t('merchant.vehicles.battModelSaved'),'success');battModelSaving.value=false},400)}
 const pkgQ=ref('');
 const profilePackages=ref([]);
 const pkgFilter=computed(()=>demoListEmpty.value?[]:pkgQ.value?profilePackages.value.filter(m=>m.name.toLowerCase().includes(pkgQ.value.toLowerCase())):profilePackages.value);
-const fpk=ref({name:'',vehicleModels:[],batteryModels:[],mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,baseWeekDays:7,baseMonthDays:30,deposit:0,sort:0,remark:'',status:'上架'});
+const fpk=ref({name:'',vehicleModels:[],batteryModels:[],mainImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,depositHour:0,depositDay:0,depositWeek:0,depositMonth:0,baseWeekDays:7,baseMonthDays:30,deposit:0,sort:0,remark:'',status:'上架'});
 /* 编辑中的套餐原对象：名称可改，故保存时按对象引用回写（不能用名称回查） */
 let pkgEditTarget=null;
-/* 同步订单定价：编辑页默认展示勾选项，勾选后保存前二次确认（不再做价格变动判定） */
-const pkgSyncOrder=ref(false);
-const pkgSyncConfirm=ref(false);
-/* 待同步订单数（占位值：按列表行 id 推算，后续接真实统计接口） */
-const pkgSyncCount=computed(()=>{var i=profilePackages.value.indexOf(pkgEditTarget);var id=i<0?1:i+1;return 3+(id*7)%20});
-function openPackageEdit(m){if(!can('package.edit')){deny();return}navOpen();pkgEditTarget=m;fE.value={};fpk.value={name:m.name,vehicleModels:(m.vehicleModels||[]).slice(),batteryModels:(m.batteryModels||[]).slice(),mainImg:!!m.mainImg,thumbImg:!!m.thumbImg,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,baseWeekDays:m.baseWeekDays==null?7:m.baseWeekDays,baseMonthDays:m.baseMonthDays==null?30:m.baseMonthDays,deposit:m.deposit||0,sort:m.sort||0,remark:m.remark||'',status:m.status||'上架'};/* 打开编辑页时勾选态复位 */pkgSyncOrder.value=false;profileSub.value='pkgEdit'}
-function openPackageAdd(){if(!can('package.add')){deny();return}navOpen();fpk.value={name:'',vehicleModels:[],batteryModels:[],mainImg:false,thumbImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,baseWeekDays:7,baseMonthDays:30,deposit:0,sort:0,remark:'',status:'上架'};fE.value={};/* 同步订单定价仅在编辑页展示，新增页复位勾选态 */pkgSyncOrder.value=false;profileSub.value='pkgAdd'}
+
+function pkgOf(m){return {name:m.name,vehicleModels:(m.vehicleModels||[]).slice(),batteryModels:(m.batteryModels||[]).slice(),mainImg:!!m.mainImg,plans:Object.assign({hour:false,day:false,week:false,month:false},m.plans||{}),priceHour:m.priceHour||0,priceDay:m.priceDay||0,priceWeek:m.priceWeek||0,priceMonth:m.priceMonth||0,depositHour:m.depositHour==null?(m.deposit||0):m.depositHour,depositDay:m.depositDay==null?(m.deposit||0):m.depositDay,depositWeek:m.depositWeek==null?(m.deposit||0):m.depositWeek,depositMonth:m.depositMonth==null?(m.deposit||0):m.depositMonth,baseWeekDays:m.baseWeekDays==null?7:m.baseWeekDays,baseMonthDays:m.baseMonthDays==null?30:m.baseMonthDays,deposit:m.deposit||0,sort:m.sort||0,remark:m.remark||'',status:m.status||'上架'}}
+function openPackageEdit(m){if(!can('package.edit')){deny();return}navOpen();pkgEditTarget=m;fE.value={};fpk.value=pkgOf(m);profileSub.value='pkgEdit'}
+function openPackagePrice(m){if(!can('package.price')){deny();return}navOpen();pkgEditTarget=m;fE.value={};fpk.value=pkgOf(m);profileSub.value='pkgPrice'}
+function openPackageAdd(){if(!can('package.add')){deny();return}navOpen();fpk.value={name:'',vehicleModels:[],batteryModels:[],mainImg:false,plans:{hour:false,day:false,week:false,month:false},priceHour:0,priceDay:0,priceWeek:0,priceMonth:0,depositHour:0,depositDay:0,depositWeek:0,depositMonth:0,baseWeekDays:7,baseMonthDays:30,deposit:0,sort:0,remark:'',status:'上架'};fE.value={};profileSub.value='pkgAdd'}
 const pkgPicker=ref(null);
 const pkgPickerQ=ref('');
 const pkgPickerList=computed(()=>pkgPicker.value==='vehicle'?profileModels.value.map(m=>m.name):pkgPicker.value==='battery'?profileBattModels.value.map(m=>m.name):[]);
@@ -10926,11 +10956,11 @@ function openPkgPicker(mode){pkgPickerQ.value='';pkgPickerSel.value=(mode==='veh
 function pkgToggle(name){var a=pkgPickerSel.value.slice();var i=a.indexOf(name);if(i===-1)a.push(name);else a.splice(i,1);pkgPickerSel.value=a}
 function closePkgPicker(){pkgPicker.value=null;pkgPickerQ.value='';pkgPickerSel.value=[]}
 function pkgPickerConfirm(){if(pkgPicker.value==='vehicle'){fpk.value.vehicleModels=pkgPickerSel.value.slice()}else if(pkgPicker.value==='battery'){fpk.value.batteryModels=pkgPickerSel.value.slice()}closePkgPicker()}
-function submitPackageAdd(){if(packageSaving.value)return;var e={};if(!(fpk.value.name||'').trim()){e.name=t('merchant.package.namePlaceholder')}['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]=t('merchant.profile.priceRequired')}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]=t('merchant.profile.priceNotNegative')}});['week','month'].forEach(function(p){var dk=p==='week'?'baseWeekDays':'baseMonthDays';if(fpk.value.plans[p]){var dv=fpk.value[dk];if(dv===''||dv==null){e[dk]=t(p==='week'?'merchant.package.weekDaysRequired':'merchant.package.monthDaysRequired')}else if(!(Number.isInteger(dv)&&dv>=0&&dv<=366)){e[dk]=t('merchant.profile.baseDaysRangeError')}}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit=t('merchant.profile.modelDepositError')}else if(!isAmt(fpk.value.deposit)){e.deposit=t('merchant.profile.priceNotNegative')}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort=t('merchant.profile.sortNotNegative')}if(!fpk.value.mainImg){e.mainImg=t('merchant.profile.packageImageRequired')}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;profilePackages.value.push({name:fpk.value.name.trim(),vehicleModels:fpk.value.vehicleModels.slice(),batteryModels:fpk.value.batteryModels.slice(),mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,count:0,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,baseWeekDays:fpk.value.baseWeekDays,baseMonthDays:fpk.value.baseMonthDays,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()});navDrop();profileSub.value=null;fE.value={};toast(t('merchant.profile.packageAdded'),'success');packageSaving.value=false},400)}
+function submitPackageAdd(){if(packageSaving.value)return;var e={};if(!(fpk.value.name||'').trim()){e.name=t('merchant.package.namePlaceholder')}['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]=t('merchant.profile.priceRequired')}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]=t('merchant.profile.priceNotNegative')}});['week','month'].forEach(function(p){var dk=p==='week'?'baseWeekDays':'baseMonthDays';if(fpk.value.plans[p]){var dv=fpk.value[dk];if(dv===''||dv==null){e[dk]=t(p==='week'?'merchant.package.weekDaysRequired':'merchant.package.monthDaysRequired')}else if(!(Number.isInteger(dv)&&dv>=0&&dv<=366)){e[dk]=t('merchant.profile.baseDaysRangeError')}}});['hour','day','week','month'].forEach(function(p){var dk=modelDepositKey[p];if(fpk.value.plans[p]&&(fpk.value[dk]===null||fpk.value[dk]===undefined||fpk.value[dk]==='')){e['d'+p]=t('merchant.profile.modelDepositError')}else if(fpk.value.plans[p]&&!isAmt(fpk.value[dk])){e['d'+p]=t('merchant.profile.priceNotNegative')}});if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort=t('merchant.profile.sortNotNegative')}if(!fpk.value.mainImg){e.mainImg=t('merchant.profile.packageImageRequired')}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;profilePackages.value.push({name:fpk.value.name.trim(),vehicleModels:fpk.value.vehicleModels.slice(),batteryModels:fpk.value.batteryModels.slice(),mainImg:fpk.value.mainImg,count:0,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,depositHour:fpk.value.depositHour,depositDay:fpk.value.depositDay,depositWeek:fpk.value.depositWeek,depositMonth:fpk.value.depositMonth,baseWeekDays:fpk.value.baseWeekDays,baseMonthDays:fpk.value.baseMonthDays,deposit:(fpk.value.plans.hour?fpk.value.depositHour:(fpk.value.plans.day?fpk.value.depositDay:(fpk.value.plans.week?fpk.value.depositWeek:fpk.value.depositMonth))),sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()});navDrop();profileSub.value=null;fE.value={};toast(t('merchant.profile.packageAdded'),'success');packageSaving.value=false},400)}
 var packageSaving=ref(false);
-function savePackage(){if(packageSaving.value)return;var e={};if(!(fpk.value.name||'').trim()){e.name=t('merchant.package.namePlaceholder')}['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]=t('merchant.profile.priceRequired')}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]=t('merchant.profile.priceNotNegative')}});['week','month'].forEach(function(p){var dk=p==='week'?'baseWeekDays':'baseMonthDays';if(fpk.value.plans[p]){var dv=fpk.value[dk];if(dv===''||dv==null){e[dk]=t(p==='week'?'merchant.package.weekDaysRequired':'merchant.package.monthDaysRequired')}else if(!(Number.isInteger(dv)&&dv>=0&&dv<=366)){e[dk]=t('merchant.profile.baseDaysRangeError')}}});if(fpk.value.deposit===''||fpk.value.deposit==null){e.deposit=t('merchant.profile.modelDepositError')}else if(!isAmt(fpk.value.deposit)){e.deposit=t('merchant.profile.priceNotNegative')}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort=t('merchant.profile.sortNotNegative')}if(!fpk.value.mainImg){e.mainImg=t('merchant.profile.packageImageRequired')}if(Object.keys(e).length){fE.value=e;return}fE.value={};/* 勾选「同步订单定价」→ 先弹二次确认，确认后才保存 */if(pkgSyncOrder.value){pkgSyncConfirm.value=true;return}doSavePackage(false)}
-function confirmPkgSync(){pkgSyncConfirm.value=false;doSavePackage(true)}
-function doSavePackage(synced){if(packageSaving.value)return;packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profilePackages.value.indexOf(pkgEditTarget);if(i>=0){Object.assign(profilePackages.value[i],{name:fpk.value.name.trim(),vehicleModels:fpk.value.vehicleModels.slice(),batteryModels:fpk.value.batteryModels.slice(),mainImg:fpk.value.mainImg,thumbImg:fpk.value.thumbImg,plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,baseWeekDays:fpk.value.baseWeekDays,baseMonthDays:fpk.value.baseMonthDays,deposit:fpk.value.deposit,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()})}navDrop();profileSub.value=null;fE.value={};toast(synced?t('merchant.profile.syncOrderSavedSynced',{n:pkgSyncCount.value}):t('merchant.profile.pkgEditSaved'),'success');pkgSyncOrder.value=false;packageSaving.value=false},400)}
+function savePackagePrice(){if(packageSaving.value)return;var e={};['hour','day','week','month'].forEach(function(p){var k=modelPriceKey[p];if(fpk.value.plans[p]&&(fpk.value[k]===null||fpk.value[k]===undefined||fpk.value[k]==='')){e[p]=t('merchant.profile.priceRequired')}else if(fpk.value.plans[p]&&!isAmt(fpk.value[k])){e[p]=t('merchant.profile.priceNotNegative')}var dk=modelDepositKey[p];if(fpk.value.plans[p]&&(fpk.value[dk]===null||fpk.value[dk]===undefined||fpk.value[dk]==='')){e['d'+p]=t('merchant.profile.modelDepositError')}else if(fpk.value.plans[p]&&!isAmt(fpk.value[dk])){e['d'+p]=t('merchant.profile.priceNotNegative')}});['week','month'].forEach(function(p){var dk=p==='week'?'baseWeekDays':'baseMonthDays';if(fpk.value.plans[p]){var dv=fpk.value[dk];if(dv===''||dv==null){e[dk]=t(p==='week'?'merchant.package.weekDaysRequired':'merchant.package.monthDaysRequired')}else if(!(Number.isInteger(dv)&&dv>=0&&dv<=366)){e[dk]=t('merchant.profile.baseDaysRangeError')}}});if(Object.keys(e).length){fE.value=e;return}fE.value={};doSavePackagePrice()}
+function doSavePackagePrice(){if(packageSaving.value)return;packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profilePackages.value.indexOf(pkgEditTarget);if(i>=0){Object.assign(profilePackages.value[i],{plans:Object.assign({},fpk.value.plans),priceHour:fpk.value.priceHour,priceDay:fpk.value.priceDay,priceWeek:fpk.value.priceWeek,priceMonth:fpk.value.priceMonth,depositHour:fpk.value.depositHour,depositDay:fpk.value.depositDay,depositWeek:fpk.value.depositWeek,depositMonth:fpk.value.depositMonth,baseWeekDays:fpk.value.baseWeekDays,baseMonthDays:fpk.value.baseMonthDays,deposit:(fpk.value.plans.hour?fpk.value.depositHour:(fpk.value.plans.day?fpk.value.depositDay:(fpk.value.plans.week?fpk.value.depositWeek:fpk.value.depositMonth))),time:now()})}navDrop();profileSub.value=null;fE.value={};toast(t('merchant.profile.pkgEditSaved'),'success');packageSaving.value=false},400)}
+function savePackageInfo(){if(packageSaving.value)return;var e={};if(!(fpk.value.name||'').trim()){e.name=t('merchant.package.namePlaceholder')}if(!fpk.value.mainImg){e.mainImg=t('merchant.profile.packageImageRequired')}if(fpk.value.sort!==''&&!(Number.isInteger(fpk.value.sort)&&fpk.value.sort>=1&&fpk.value.sort<=99)){e.sort=t('merchant.profile.sortNotNegative')}if(Object.keys(e).length){fE.value=e;return}fE.value={};packageSaving.value=true;brandLoading.value=true;setTimeout(function(){brandLoading.value=false;const i=profilePackages.value.indexOf(pkgEditTarget);if(i>=0){Object.assign(profilePackages.value[i],{name:fpk.value.name.trim(),vehicleModels:fpk.value.vehicleModels.slice(),batteryModels:fpk.value.batteryModels.slice(),mainImg:fpk.value.mainImg,sort:fpk.value.sort,remark:fpk.value.remark,status:fpk.value.status,time:now()})}navDrop();profileSub.value=null;fE.value={};toast(t('merchant.profile.pkgEditSaved'),'success');packageSaving.value=false},400)}
 const aQ=ref(''),allRoles=computed(()=>[{v:'店长',l:t('merchant.profile.roleStoreManager')},{v:'管理员',l:t('merchant.profile.roleAdmin')},{v:'员工',l:t('merchant.profile.roleStaff')},{v:'财务',l:t('merchant.profile.roleFinance')},{v:'运维',l:t('merchant.profile.roleOps')}]);const ROLE_L=computed(()=>({'店长':t('merchant.profile.roleStoreManager'),'管理员':t('merchant.profile.roleAdmin'),'员工':t('merchant.profile.roleStaff'),'财务':t('merchant.profile.roleFinance'),'运维':t('merchant.profile.roleOps')}));function roleLabel(v){return ROLE_L.value[v]||v}function roleText(v){return String(v||'').split('、').map(roleLabel).join('、')}
 const accounts=ref([]);
 const aFilter=computed(()=>{if(demoListEmpty.value)return[];const q=aQ.value.toLowerCase();return q?accounts.value.filter(a=>(a.account+a.name+a.phone).toLowerCase().includes(q)):accounts.value});
@@ -11200,16 +11230,16 @@ const msgEventOpts=computed(()=>[
 {k:'orderRefunding',l:t('merchant.notify.orderRefundingTitle'),cat:'feeRefund'},
 {k:'orderRefunded',l:t('merchant.notify.orderRefundedTitle'),cat:'feeRefund'}
 ]);
-/* 推送渠道：消息中心（站内消息，CENTER）/ 手机通知（手机系统推送，OS）——按大类分组配置，两条可各自独立开关 */
+/* 推送渠道：系统推送（手机系统推送，OS）/ 邮件（EMAIL）——按大类分组配置，可各自独立开关 */
 const msgChannelOpts=computed(()=>[
-{v:'CENTER',l:t('merchant.message.channelCenter')},
-{v:'OS',l:t('merchant.message.channelPhone')}
+{v:'OS',l:t('merchant.message.channelPhone')},
+{v:'EMAIL',l:t('merchant.message.channelEmail')}
 ]);
 const msgCfg=ref({
 enabled:true,
 cats:{orderStatus:true,feeRefund:true},
 events:msgEventOpts.value.reduce(function(m,e){m[e.k]=true;return m},{}),
-channel:msgCatOpts.value.reduce(function(m,c){m[c.k]=['CENTER','OS'];return m},{})
+channel:msgCatOpts.value.reduce(function(m,c){m[c.k]=['OS','EMAIL'];return m},{})
 });
 const msgSaving=ref(false);
 /* 渠道开关（分组级）：该大类开启时可改；大类关闭时拦截程序化触发 */
@@ -11795,19 +11825,19 @@ function initI18nData(){
   const _storePhones=['138 8001 2345','139 8002 6789','137 8003 4567','136 8004 7890'];
   stores.value.forEach(function(s,i){if(!s.phone)s.phone=_storePhones[i]||_storePhones[_storePhones.length-1]});
   profileModels.value=[
-    {name:'雅迪冠能Q7',count:15,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:1200000,deposit:500000,sort:1,time:'2025-01-20 09:00:00'},
-    {name:'雅迪小钢炮',count:8,plans:{hour:true,day:true,week:true,month:true},priceHour:20000,priceDay:120000,priceWeek:700000,priceMonth:2800000,deposit:400000,sort:2,time:'2025-01-19 16:30:00'},
-    {name:'雅迪乐跑版',count:22,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:150000,priceWeek:800000,priceMonth:3200000,deposit:600000,sort:3,time:'2025-01-18 14:00:00'}
+    {name:'雅迪冠能Q7',count:15,mainImg:true,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:1200000,deposit:500000,depositMonth:500000,sort:1,time:'2025-01-20 09:00:00'},
+    {name:'雅迪小钢炮',count:8,mainImg:true,plans:{hour:true,day:true,week:true,month:true},priceHour:20000,priceDay:120000,priceWeek:700000,priceMonth:2800000,deposit:400000,depositHour:200000,depositDay:300000,depositWeek:350000,depositMonth:400000,sort:2,time:'2025-01-19 16:30:00'},
+    {name:'雅迪乐跑版',count:22,mainImg:true,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:150000,priceWeek:800000,priceMonth:3200000,deposit:600000,depositDay:450000,depositWeek:550000,depositMonth:600000,sort:3,time:'2025-01-18 14:00:00'}
   ];
   profileBattModels.value=[
-    {name:'天能锂电 72V20Ah',count:26,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:300000,deposit:200000,sort:1,time:'2025-01-20 09:00:00'},
-    {name:'超威黑金 72V32Ah',count:18,plans:{hour:true,day:true,week:true,month:true},priceHour:8000,priceDay:50000,priceWeek:300000,priceMonth:1100000,deposit:250000,sort:2,time:'2025-01-19 16:30:00'},
-    {name:'星恒锂电 48V24Ah',count:12,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:40000,priceWeek:220000,priceMonth:850000,deposit:180000,sort:3,time:'2025-01-18 14:00:00'}
+    {name:'天能锂电 72V20Ah',count:26,mainImg:true,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:300000,deposit:200000,depositMonth:200000,sort:1,time:'2025-01-20 09:00:00'},
+    {name:'超威黑金 72V32Ah',count:18,mainImg:true,plans:{hour:true,day:true,week:true,month:true},priceHour:8000,priceDay:50000,priceWeek:300000,priceMonth:1100000,deposit:250000,depositHour:100000,depositDay:150000,depositWeek:200000,depositMonth:250000,sort:2,time:'2025-01-19 16:30:00'},
+    {name:'星恒锂电 48V24Ah',count:12,mainImg:true,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:40000,priceWeek:220000,priceMonth:850000,deposit:180000,depositDay:120000,depositWeek:150000,depositMonth:180000,sort:3,time:'2025-01-18 14:00:00'}
   ];
   profilePackages.value=[
-    {name:'乐迪SAA+天能72V20Ah',vehicleModels:['雅迪乐跑版'],batteryModels:['天能锂电 72V20Ah'],mainImg:true,thumbImg:true,count:14,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:1800000,deposit:600000,sort:1,remark:'热销组合套餐，含车辆与电池',status:'上架',time:'2025-01-20 09:00:00'},
-    {name:'雅迪冠能3+超威黑金',vehicleModels:['雅迪冠能Q7'],batteryModels:['超威黑金 72V32Ah'],mainImg:true,thumbImg:false,count:9,plans:{hour:true,day:true,week:true,month:true},priceHour:25000,priceDay:150000,priceWeek:900000,priceMonth:3600000,deposit:700000,sort:2,remark:'',status:'上架',time:'2025-01-19 16:30:00'},
-    {name:'乐迪E8+星恒锂电48V24Ah',vehicleModels:['雅迪小钢炮'],batteryModels:['星恒锂电 48V24Ah'],mainImg:false,thumbImg:false,count:11,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:180000,priceWeek:950000,priceMonth:3800000,deposit:650000,sort:3,remark:'长续航车型套餐',status:'下架',time:'2025-01-18 14:00:00'}
+    {name:'乐迪SAA+天能72V20Ah',vehicleModels:['雅迪乐跑版'],batteryModels:['天能锂电 72V20Ah'],mainImg:true,count:14,plans:{hour:false,day:false,week:false,month:true},priceHour:0,priceDay:0,priceWeek:0,priceMonth:1800000,deposit:600000,depositMonth:600000,sort:1,remark:'热销组合套餐，含车辆与电池',status:'上架',time:'2025-01-20 09:00:00'},
+    {name:'雅迪冠能3+超威黑金',vehicleModels:['雅迪冠能Q7'],batteryModels:['超威黑金 72V32Ah'],mainImg:true,count:9,plans:{hour:true,day:true,week:true,month:true},priceHour:25000,priceDay:150000,priceWeek:900000,priceMonth:3600000,deposit:700000,depositHour:300000,depositDay:400000,depositWeek:500000,depositMonth:700000,sort:2,remark:'',status:'上架',time:'2025-01-19 16:30:00'},
+    {name:'乐迪E8+星恒锂电48V24Ah',vehicleModels:['雅迪小钢炮'],batteryModels:['星恒锂电 48V24Ah'],mainImg:true,count:11,plans:{hour:false,day:true,week:true,month:true},priceHour:0,priceDay:180000,priceWeek:950000,priceMonth:3800000,deposit:650000,depositDay:450000,depositWeek:550000,depositMonth:650000,sort:3,remark:'长续航车型套餐',status:'下架',time:'2025-01-18 14:00:00'}
   ];
   accounts.value=[
     {account:'Manager Wang',name:'Wang Jianguo',code:'+86',phone:'13871893628',email:'wang@test.com',roles:'店长'+'、'+'管理员',remark:'测试账号',status:'启用',created:'2024-10-01 09:00:00'},
@@ -11880,7 +11910,7 @@ sl,stg,hasVehicle,fmtRp,ordersOpenDetail,demoSetPm,copyId,copyText,goVehicleDeta
   profileOV,profileSub,profileMod,showVersionCheck,hasNewVersion,latestVersion,updateDesc,updating,homeVersionBanner,protoForceUpdate,appExited,brandLoading,checkVersion,goUpdate,exitApp,relaunchApp,goBack,navOpen,hdrTitle,hdrAction,hasPhone,hasEmail,hasPwd,boundPhone,boundEmail,bpArea,bpPhone,bpCode,bpCd,beEmail,beCode,beCd,openBindPhone,openBindEmail,sendBpCode,doBindPhone,sendBeCode,doBindEmail,pwdChannel,pwdCode,pwdCd,npwd,npwd2,npwdVis,npwd2Vis,canConfirmPwd,openPwdFlow,switchPwdChannel,sendPwdCode,nextPwdVerify,doResetPwd,pwdErr,
   curStore,menuGroups,openMenu,stores,doSwitch,orderStoreNameOf,orderPaidAmountOf,orderUnpaidAmountOf,shopPickTarget,shopPickQ,shopPickList,shopPickCurId,shopPickSelId,openShopPick,closeShopPick,pickShop,confirmShopPick,
 appLang,appLangLabel,intlLocale,langOptions,selectLang,showLogin,loginView,loginCodeChannel,loginSwitchEntries,loginSocialEntries,loginEnvOptions,loginEnv,loginBrand,loginEnvSheet,loginEnvDraft,loginBrandDraft,loginEnvWheel,loginBrandWheel,loginBrandOptions,openLoginEnv,setLoginEnvDraft,onLoginEnvWheelScroll,setLoginBrandDraft,onLoginBrandWheelScroll,confirmLoginEnv,loginMode,loginSub,loginDial,loginPhone,loginEmail,loginAccount,loginPwd,loginCode,loginPwdVisible,loginAgree,loginCd,dialQ,dialFiltered,showDialPicker,activeDialCode,closeDialPicker,canSendCode,canLogin,closeLogin,loginOpenLang,selectLangFromLogin,openDialCode,pickDial,setLoginMode,openRegister,setLoginSub,sendLoginCode,doLogin,socialLogin,loginSocialClick,loginErr,doLogout,demoLogin,demoLogout,
-mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,openModelEdit,saveModel,confirmModelSync,modelSyncOrder,modelSyncConfirm,modelSyncCount,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,saveBattModel,confirmBattSync,battSyncOrder,battSyncConfirm,battSyncCount,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,savePackage,openPackageAdd,submitPackageAdd,packageSaving,pkgSyncOrder,pkgSyncConfirm,pkgSyncCount,confirmPkgSync,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,pkgPickerSel,openPkgPicker,pkgToggle,pkgPickerConfirm,closePkgPicker,
+mQ,profileModels,mFilter,fm,modelPlanOpts,modelPriceKey,modelDepositKey,openModelEdit,openModelPrice,saveModelPrice,saveModelSort,mPlanText,mPlanPrices,modelSaving,bmQ,profileBattModels,bmFilter,fbm,openBattModelEdit,openBattModelPrice,saveBattModelPrice,saveBattModelSort,battModelSaving,pkgQ,profilePackages,pkgFilter,fpk,openPackageEdit,openPackagePrice,savePackagePrice,savePackageInfo,openPackageAdd,submitPackageAdd,packageSaving,pkgPicker,pkgPickerQ,pkgPickerList,pkgPickerFiltered,pkgPickerSel,openPkgPicker,pkgToggle,pkgPickerConfirm,closePkgPicker,
 aQ,allRoles,accounts,aFilter,fa,da,adRows,mask,togRole,openAccDetail,openAccEdit,openAccAdd,saveAccEdit,saveAccAdd,accSaving,toggleAcc,accState,isAccEdit,accBasicDisabled,onAccBlur,onAccInput,newAccCred,copyCred,closeAccCred,uQ,uStatus,uSearchScope,uSearchScopeOpen,uSearchScopeOpts,uSearchScopeLabel,uSearchPH,setUSearchScope,uStatusTabs,uPillCnt,uDoSearch,uSetPill,uClearFilters,userList,uFiltered,openUserDetail,du,uWallet,uVehicles,uBatteries,uBindMod,uBindQ,uBindSel,uBindIsBatt,uBindList,uBindEmpty,openUBind,closeUBind,confirmUBind,uBindScan,uUnbindMod,uUnbindTarget,uUnbindTitle,uUnbindDesc,openUUnbind,confirmUUnbind,goUserDetail,openUFlow,openUAdjust,closeUWallet,uWalletOps,openUWalletOps,opsPick,uWalletView,uWalletSheet,uFlowType,uFlowTxn,uFlowList,uFlowAmt,uAdjust,uAdjustErr,submitUAdjust,handleUBalanceChange,uFlowAll,walletLedgerTxnOpts,
 pQ,positions,pFilter,dp,pdRows,fp,pTreeP,pTreeM,gCb,togG,selAll,openPosDetail,openPosEdit,openPosAdd,savePos,posSaving,delPos,
 csList,csIdx,fc,openCsEdit,saveCs,csSaving,delCs,csReceptionEnabled,cfg,saveCfg,msgCfg,msgCatOpts,msgEventOpts,msgChannelOpts,msgSaving,saveMsgCfg,toggleMsgChannel,cfgSaving,cfgErr,renewTypeOpts,renewStatusOpts,toggleCfgArr,rechargeEnabled,rechargeCustom,rechargeList,rechargeIdx,rfc,openRechargeEdit,saveRecharge,rechargeSaving,rfcErr,delRecharge,p2,

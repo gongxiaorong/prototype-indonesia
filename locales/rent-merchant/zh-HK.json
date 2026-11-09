@@ -471,11 +471,7 @@
       "storeLevelLabel": "門店級別",
       "positionDeleted": "職位已刪除",
       "commonFunctions": "常用功能",
-      "syncOrderTip": "同步 {n} 個訂單為新定價，同步後無法回退，請謹慎操作",
-      "syncOrderTitle": "同步訂單定價",
-      "syncOrderConfirmDesc": "確定同步 {n} 個訂單為新定價嗎？同步後無法回退，請謹慎操作。",
       "pkgEditSaved": "編輯成功",
-      "syncOrderSavedSynced": "編輯成功，已同步 {n} 個訂單為新定價",
       "addUserInfo": "添加用戶資料",
       "modelCount": "共{n}輛",
       "csAdd": "新增客戶服務",
@@ -554,7 +550,8 @@
       "editPushConfig": "編輯推送配置",
       "unbindVehicleTitle": "解綁車輛",
       "unbindBatteryTitle": "解綁電池",
-      "rangeInteger": "請輸入 {min}–{max} 之間的整數"
+      "rangeInteger": "請輸入 {min}–{max} 之間的整數",
+      "pricing": "定價"
     },
     "home": {
       "noMatchingAlertsSub": "當前篩選下無匹配告警",
@@ -892,10 +889,10 @@
     },
     "message": {
       "channel": "推送渠道",
-      "channelPhone": "手機通知",
+      "channelPhone": "系統推送",
       "settingsCategoryHead": "訊息類型",
-      "channelCenter": "訊息中心",
-      "categoryFeeRefund": "費用與退款"
+      "categoryFeeRefund": "費用與退款",
+      "channelEmail": "郵件"
     },
     "map": {
       "noResult": "沒有找到相關地點"

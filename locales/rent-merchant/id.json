@@ -471,11 +471,7 @@
       "storeLevelLabel": "Tingkat Toko",
       "positionDeleted": "Posisi dihapus",
       "commonFunctions": "Fungsi Umum",
-      "syncOrderTip": "Sinkronkan {n} pesanan ke harga baru. Tindakan ini tidak dapat dibatalkan, harap berhati-hati.",
-      "syncOrderTitle": "Sinkronkan Harga Pesanan",
-      "syncOrderConfirmDesc": "Sinkronkan {n} pesanan ke harga baru? Tindakan ini tidak dapat dibatalkan, harap berhati-hati.",
       "pkgEditSaved": "Berhasil disimpan",
-      "syncOrderSavedSynced": "Berhasil disimpan. {n} pesanan disinkronkan ke harga baru.",
       "addUserInfo": "Tambah Info Pengguna",
       "modelCount": "Total {n} kendaraan",
       "csAdd": "Tambah Layanan Pelanggan",
@@ -554,7 +550,8 @@
       "editPushConfig": "Edit Konfigurasi Push",
       "unbindVehicleTitle": "Lepas Kendaraan",
       "unbindBatteryTitle": "Lepas Baterai",
-      "rangeInteger": "Masukkan bilangan bulat antara {min} dan {max}"
+      "rangeInteger": "Masukkan bilangan bulat antara {min} dan {max}",
+      "pricing": "Penetapan harga"
     },
     "home": {
       "noMatchingAlertsSub": "Tidak ada peringatan yang cocok dengan filter saat ini",
@@ -892,10 +889,10 @@
     },
     "message": {
       "channel": "Saluran Push",
-      "channelPhone": "Notifikasi Ponsel",
+      "channelPhone": "Push Sistem",
       "settingsCategoryHead": "Jenis Pesan",
-      "channelCenter": "Pusat Pesan",
-      "categoryFeeRefund": "Biaya & Pengembalian Dana"
+      "categoryFeeRefund": "Biaya & Pengembalian Dana",
+      "channelEmail": "Email"
     },
     "map": {
       "noResult": "Tempat terkait tidak ditemukan"

@@ -471,11 +471,7 @@
       "storeLevelLabel": "Store Level",
       "positionDeleted": "Position deleted",
       "commonFunctions": "Common Features",
-      "syncOrderTip": "Sync {n} orders to the new pricing. This cannot be undone, please proceed with caution.",
-      "syncOrderTitle": "Sync Order Pricing",
-      "syncOrderConfirmDesc": "Sync {n} orders to the new pricing? This cannot be undone, please proceed with caution.",
       "pkgEditSaved": "Saved successfully",
-      "syncOrderSavedSynced": "Saved successfully. {n} orders synced to the new pricing.",
       "addUserInfo": "Add User Info",
       "modelCount": "{n} vehicles total",
       "csAdd": "Add Customer Service",
@@ -554,7 +550,8 @@
       "editPushConfig": "Edit Push Config",
       "unbindVehicleTitle": "Unbind Vehicle",
       "unbindBatteryTitle": "Unbind Battery",
-      "rangeInteger": "Please enter an integer between {min} and {max}"
+      "rangeInteger": "Please enter an integer between {min} and {max}",
+      "pricing": "Pricing"
     },
     "home": {
       "noMatchingAlertsSub": "No alerts match the current filters",
@@ -892,10 +889,10 @@
     },
     "message": {
       "channel": "Push Channel",
-      "channelPhone": "Phone Notification",
+      "channelPhone": "System Push",
       "settingsCategoryHead": "Message Types",
-      "channelCenter": "Message Center",
-      "categoryFeeRefund": "Fees & Refunds"
+      "categoryFeeRefund": "Fees & Refunds",
+      "channelEmail": "Email"
     },
     "map": {
       "noResult": "No matching places found"

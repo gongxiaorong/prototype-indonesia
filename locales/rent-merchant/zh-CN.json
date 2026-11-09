@@ -471,11 +471,7 @@
       "storeLevelLabel": "门店级别",
       "positionDeleted": "职位已删除",
       "commonFunctions": "常用功能",
-      "syncOrderTip": "同步 {n} 个订单为新定价，同步后无法回退，请谨慎操作",
-      "syncOrderTitle": "同步订单定价",
-      "syncOrderConfirmDesc": "确定同步 {n} 个订单为新定价吗？同步后无法回退，请谨慎操作。",
       "pkgEditSaved": "编辑成功",
-      "syncOrderSavedSynced": "编辑成功，已同步 {n} 个订单为新定价",
       "addUserInfo": "添加用户资料",
       "modelCount": "共{n}辆",
       "csAdd": "新增客服",
@@ -554,7 +550,8 @@
       "editPushConfig": "编辑推送配置",
       "unbindVehicleTitle": "解绑车辆",
       "unbindBatteryTitle": "解绑电池",
-      "rangeInteger": "请输入 {min}–{max} 之间的整数"
+      "rangeInteger": "请输入 {min}–{max} 之间的整数",
+      "pricing": "定价"
     },
     "home": {
       "noMatchingAlertsSub": "当前筛选下无匹配告警",
@@ -892,10 +889,10 @@
     },
     "message": {
       "channel": "推送渠道",
-      "channelPhone": "手机通知",
+      "channelPhone": "系统推送",
       "settingsCategoryHead": "消息类型",
-      "channelCenter": "消息中心",
-      "categoryFeeRefund": "费用与退款"
+      "categoryFeeRefund": "费用与退款",
+      "channelEmail": "邮件"
     },
     "map": {
       "noResult": "没有找到相关地点"
