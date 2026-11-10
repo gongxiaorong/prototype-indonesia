@@ -7784,19 +7784,12 @@ function toast(msg,type='info'){toastPush(toasts.value,_tt,msg,type)}
    事件清单与触发时机见 notify-events-timing.md；大类两分：订单状态 / 费用与退款 */
 const notifyTemplates={
 /* ── 订单状态 ── */
-orderCreated:{title:()=>t('user.home.pushNotify.orderCreatedTitle'),body:d=>t('user.home.pushNotify.orderCreatedBodyTpl',{orderNo:d.orderNo})},
-orderPaid:{title:()=>t('user.home.pushNotify.orderPaidTitle'),body:d=>t('user.home.pushNotify.orderPaidBodyTpl',{orderNo:d.orderNo})},
-deviceBound:{title:()=>t('user.home.pushNotify.deviceBoundTitle'),body:d=>t('user.home.pushNotify.deviceBoundBodyTpl',{orderNo:d.orderNo,rentStart:d.rentStart,rentEnd:d.rentEnd})},
 orderExpiring:{title:()=>t('user.home.pushNotify.orderExpiringTitle'),body:d=>t('user.home.pushNotify.orderExpiringBodyTpl',{orderNo:d.orderNo,rentEnd:d.rentEnd})},
-renewReminder:{title:()=>t('user.home.pushNotify.renewReminderTitle'),body:d=>t('user.home.pushNotify.renewReminderBodyTpl',{dueDate:d.dueDate,amount:d.amount})},
 renewSuccess:{title:()=>t('user.home.pushNotify.renewSuccessTitle'),body:d=>t('user.home.pushNotify.renewSuccessBodyTpl',{amount:d.amount,newDueDate:d.newDueDate})},
 renewFailed:{title:()=>t('user.home.pushNotify.renewFailedTitle'),body:d=>t('user.home.pushNotify.renewFailedBodyTpl',{failCount:d.failCount,threshold:d.threshold})},
 orderOverdue:{title:()=>t('user.home.pushNotify.orderOverdueTitle'),body:d=>t('user.home.pushNotify.orderOverdueBodyTpl',{orderNo:d.orderNo})},
 orderBreach:{title:()=>t('user.home.pushNotify.orderBreachTitle'),body:d=>t('user.home.pushNotify.orderBreachBodyTpl',{orderNo:d.orderNo,days:d.days})},
-orderCompleted:{title:()=>t('user.home.pushNotify.orderCompletedTitle'),body:d=>t('user.home.pushNotify.orderCompletedBodyTpl',{orderNo:d.orderNo})},
-orderCancelled:{title:()=>t('user.home.pushNotify.orderCancelledTitle'),body:d=>t('user.home.pushNotify.orderCancelledBodyTpl',{orderNo:d.orderNo})},
 /* ── 费用与退款 ── */
-orderAdjusted:{title:()=>t('user.home.pushNotify.orderAdjustedTitle'),body:d=>t('user.home.pushNotify.orderAdjustedBodyTpl',{orderNo:d.orderNo,oldAmount:d.oldAmount,newAmount:d.newAmount})},
 orderRefunding:{title:()=>t('user.home.pushNotify.orderRefundingTitle'),body:d=>t('user.home.pushNotify.orderRefundingBodyTpl',{orderNo:d.orderNo,amount:d.amount})},
 orderRefunded:{title:()=>t('user.home.pushNotify.orderRefundedTitle'),body:d=>t('user.home.pushNotify.orderRefundedBodyTpl',{orderNo:d.orderNo,amount:d.amount})}
 };
@@ -7846,18 +7839,11 @@ function toggleNotifyEmail(k){const p=notifyPrefs.value;if(!p.master||!p.email)r
 const notifyList=ref([
 {id:'msg01',eventId:'orderRefunded',daysAgo:6,hhmm:'16:30',read:false,orderId:'YZ202511100005'},
 {id:'msg02',eventId:'orderRefunding',daysAgo:6,hhmm:'15:00',read:true,orderId:'YZ202511100005'},
-{id:'msg03',eventId:'orderAdjusted',daysAgo:6,hhmm:'14:05',read:true,orderId:'YZ202512100002'},
-{id:'msg04',eventId:'orderCancelled',daysAgo:6,hhmm:'11:40',read:true,orderId:'YZ202511100005'},
-{id:'msg05',eventId:'orderCompleted',daysAgo:5,hhmm:'15:20',read:true,orderId:'YZ202511150004'},
 {id:'msg06',eventId:'orderBreach',daysAgo:4,hhmm:'10:00',read:false,orderId:'YZ202511200008'},
 {id:'msg07',eventId:'orderOverdue',daysAgo:3,hhmm:'10:00',read:false,orderId:'YZ202511280003'},
 {id:'msg08',eventId:'renewFailed',daysAgo:2,hhmm:'09:30',read:false,orderId:'YZ202512180001'},
 {id:'msg09',eventId:'renewSuccess',daysAgo:1,hhmm:'12:00',read:true,orderId:'YZ202512180001'},
-{id:'msg10',eventId:'renewReminder',daysAgo:1,hhmm:'12:00',read:false,orderId:'YZ202512180001'},
-{id:'msg11',eventId:'orderExpiring',daysAgo:1,hhmm:'09:00',read:false,orderId:'YZ202512080003'},
-{id:'msg12',eventId:'deviceBound',daysAgo:0,hhmm:'11:02',read:true,orderId:'YZ202512100002'},
-{id:'msg13',eventId:'orderPaid',daysAgo:0,hhmm:'10:35',read:true,orderId:'YZ202512180001'},
-{id:'msg14',eventId:'orderCreated',daysAgo:0,hhmm:'10:30',read:false,orderId:'YZ202512190001'}
+{id:'msg11',eventId:'orderExpiring',daysAgo:1,hhmm:'09:00',read:false,orderId:'YZ202512080003'}
 ]);
 const notifyUnread=computed(()=>notifyList.value.filter(m=>!m.read).length);
 /* 卡片：标题＝消息类型、内容＝消息内容、extra＝通知时间（当天只显示时分，其它显示年月日）
@@ -11414,25 +11400,19 @@ function toggleCfgArr(k,v){var a=cfg.value[k];var i=a.indexOf(v);if(i>=0)a.splic
 /* 消息类型＝两级：大类（msgCatOpts）→ 小类（msgEventOpts，cat 指向所属大类）；
    大类各占一张独立卡（od-cat-card），关闭时其下小类整块隐藏（v-if → 卡头成为卡内唯一内容并自动收边），
    并保留逻辑守卫拦截程序化触发 */
-/* 大类两分（2026-10-16 定稿）：订单状态 / 费用与退款——续租 3 条属订单生命周期，
-   归入「订单状态」；退款按触发点拆「退款处理中 / 已退款」两个事件（各一个开关、可分别关闭） */
+/* 大类两分（2026-10-16 定稿，2026-11-10 精简为 7 条）：订单状态 / 费用与退款——续租 2 条
+   （成功 / 失败）属订单生命周期，归入「订单状态」；退款按触发点拆「退款处理中 / 已退款」
+   两个事件（各一个开关、可分别关闭）。事件清单与触发时机见 notify-events-timing.md */
 const msgCatOpts=computed(()=>[
 {k:'orderStatus',l:t('common.orders.status')},
 {k:'feeRefund',l:t('merchant.message.categoryFeeRefund')}
 ]);
 const msgEventOpts=computed(()=>[
-{k:'orderCreated',l:t('merchant.notify.orderCreatedTitle'),cat:'orderStatus'},
-{k:'orderPaid',l:t('merchant.notify.orderPaidTitle'),cat:'orderStatus'},
-{k:'deviceBound',l:t('merchant.notify.deviceBoundTitle'),cat:'orderStatus'},
 {k:'orderExpiring',l:t('merchant.notify.orderExpiringTitle'),cat:'orderStatus'},
-{k:'renewReminder',l:t('merchant.notify.renewReminderTitle'),cat:'orderStatus'},
 {k:'renewSuccess',l:t('merchant.notify.renewSuccessTitle'),cat:'orderStatus'},
 {k:'renewFailed',l:t('merchant.notify.renewFailedTitle'),cat:'orderStatus'},
 {k:'orderOverdue',l:t('merchant.notify.orderOverdueTitle'),cat:'orderStatus'},
 {k:'orderBreach',l:t('merchant.notify.orderBreachTitle'),cat:'orderStatus'},
-{k:'orderCompleted',l:t('merchant.notify.orderCompletedTitle'),cat:'orderStatus'},
-{k:'orderCancelled',l:t('merchant.notify.orderCancelledTitle'),cat:'orderStatus'},
-{k:'orderAdjusted',l:t('merchant.notify.orderAdjustedTitle'),cat:'feeRefund'},
 {k:'orderRefunding',l:t('merchant.notify.orderRefundingTitle'),cat:'feeRefund'},
 {k:'orderRefunded',l:t('merchant.notify.orderRefundedTitle'),cat:'feeRefund'}
 ]);
@@ -11441,12 +11421,11 @@ const NOTIFY_SAMPLE={orderNo:'YZ202512180001',n:30,start:'2026-09-01 10:30:00',e
 function notifyBodySample(k,over){const p=Object.assign({},NOTIFY_SAMPLE,over||{});return t('merchant.notify.'+k+'Body',p)}
 /* 商户端消息中心：入口在「我的」页头部铃铛，列表由商户通知模板生成（未读红点） */
 const mcNotifyMsgs=ref([
-{id:1,k:'orderPaid',titleKey:'merchant.notify.orderPaidTitle',orderNo:'YD202608210002',time:'2026-11-09 10:12',read:false},
-{id:2,k:'deviceBound',titleKey:'merchant.notify.deviceBoundTitle',orderNo:'YD202608210003',time:'2026-11-09 09:40',read:false},
-{id:3,k:'orderExpiring',titleKey:'merchant.notify.orderExpiringTitle',orderNo:'YD202608180004',time:'2026-11-08 18:20',read:true},
+{id:3,k:'orderExpiring',titleKey:'merchant.notify.orderExpiringTitle',orderNo:'YD202608180004',time:'2026-11-08 18:20',read:false},
 {id:4,k:'renewSuccess',titleKey:'merchant.notify.renewSuccessTitle',orderNo:'YD202608170006',time:'2026-11-08 15:05',read:true},
 {id:5,k:'orderOverdue',titleKey:'merchant.notify.orderOverdueTitle',orderNo:'YD202608150007',time:'2026-11-07 11:30',read:true},
-{id:6,k:'orderCompleted',titleKey:'merchant.notify.orderCompletedTitle',orderNo:'YD202608100007',time:'2026-11-06 20:16',read:true}
+{id:7,k:'renewFailed',titleKey:'merchant.notify.renewFailedTitle',orderNo:'YD202608160005',time:'2026-11-07 09:10',read:true},
+{id:8,k:'orderBreach',titleKey:'merchant.notify.orderBreachTitle',orderNo:'YD202608150007',time:'2026-11-06 20:16',read:true}
 ]);
 /* 列表数据（原型面板）：空数据时消息列表为空、铃铛红点同步隐藏 */
 const mcNotifyMsgsShow=computed(()=>demoListEmpty.value?[]:mcNotifyMsgs.value);
